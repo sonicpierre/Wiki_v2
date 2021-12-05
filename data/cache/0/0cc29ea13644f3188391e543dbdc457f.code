@@ -1,0 +1,4 @@
+<span class="kw1">for</span><span class="br0">&#40;</span>i <span class="kw1">in</span> <span class="nu0">0</span>:n_iteration<span class="br0">&#41;</span><span class="br0">&#123;</span>
+    gradient <span class="sy0">&lt;</span>- <span class="nu0">2</span>/m * aperm<span class="br0">&#40;</span>X_b<span class="br0">&#41;</span> %*% <span class="br0">&#40;</span><span class="br0">&#40;</span>X_b %*% theta<span class="br0">&#41;</span> - y<span class="br0">&#41;</span>
+    theta <span class="sy0">&lt;</span>- theta - eta * gradient 
+<span class="br0">&#125;</span>

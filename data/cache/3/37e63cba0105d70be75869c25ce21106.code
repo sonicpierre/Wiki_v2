@@ -1,0 +1,1 @@
+listeFichier <span class="sy0">&lt;</span>- <span class="kw2">list</span>.<span class="me1">files</span><span class="br0">&#40;</span><span class="st0">&quot;Regrouper donnees Covid&quot;</span><span class="sy0">,</span> full.<span class="me1">names</span> <span class="sy0">=</span> TRUE<span class="br0">&#41;</span>

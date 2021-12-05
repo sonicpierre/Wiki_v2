@@ -1,0 +1,9 @@
+library<span class="br0">&#40;</span>gbm<span class="br0">&#41;</span>
+<span class="co1">#Notez qu'il est nécessaire d'encoder la sortie pour appliquer cette algorithme sous R pour certaines distribution comme binomiale</span>
+<span class="co1">#data$V61 &lt;- ifelse(data$V61 == &quot;R&quot;, 1, 0)</span>
+&nbsp;
+gbm_mod <span class="sy0">&lt;</span>- gbm<span class="br0">&#40;</span>formula <span class="sy0">=</span> V61 <span class="sy0">~</span> .<span class="sy0">,</span>
+                  distribution<span class="sy0">=</span><span class="st0">&quot;multinomial&quot;</span><span class="sy0">,</span>
+                  data <span class="sy0">=</span> data<span class="sy0">,</span>
+                  n.<span class="me1">trees</span> <span class="sy0">=</span> <span class="nu0">3</span><span class="sy0">,</span>
+                  interaction.<span class="me1">depth</span> <span class="sy0">=</span> <span class="nu0">2</span><span class="br0">&#41;</span>

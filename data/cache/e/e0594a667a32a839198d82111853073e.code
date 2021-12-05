@@ -1,0 +1,13 @@
+<span class="kw1">from</span> <span class="kw3">collections</span> <span class="kw1">import</span> Counter
+<span class="kw1">import</span> seaborn <span class="kw1">as</span> sns
+&nbsp;
+eap_list <span class="sy0">=</span> recompositionDuText<span class="br0">&#40;</span>data<span class="br0">&#41;</span>.<span class="me1">split</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+eap_counts <span class="sy0">=</span> Counter<span class="br0">&#40;</span>eap_list<span class="br0">&#41;</span>
+eap_common_words <span class="sy0">=</span> <span class="br0">&#91;</span>word<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> <span class="kw1">for</span> word <span class="kw1">in</span> eap_counts.<span class="me1">most_common</span><span class="br0">&#40;</span><span class="nu0">25</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+eap_common_counts <span class="sy0">=</span> <span class="br0">&#91;</span>word<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span> <span class="kw1">for</span> word <span class="kw1">in</span> eap_counts.<span class="me1">most_common</span><span class="br0">&#40;</span><span class="nu0">25</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+&nbsp;
+plt.<span class="me1">style</span>.<span class="me1">use</span><span class="br0">&#40;</span><span class="st0">'dark_background'</span><span class="br0">&#41;</span>
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">15</span><span class="sy0">,</span> <span class="nu0">12</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+sns.<span class="me1">barplot</span><span class="br0">&#40;</span>x<span class="sy0">=</span>eap_common_words<span class="sy0">,</span> y<span class="sy0">=</span>eap_common_counts<span class="br0">&#41;</span>
+plt.<span class="me1">title</span><span class="br0">&#40;</span><span class="st0">'Fréquence des mots'</span><span class="br0">&#41;</span><span class="sy0">;</span>

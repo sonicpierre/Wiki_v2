@@ -1,0 +1,11 @@
+pd.<span class="me1">read_csv</span><span class="br0">&#40;</span><span class="st0">&quot;Train_Titanic.csv&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+library<span class="br0">&#40;</span>rpart<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>rpart.<span class="me1">plot</span><span class="br0">&#41;</span>
+&nbsp;
+model <span class="sy0">&lt;</span>- rpart<span class="br0">&#40;</span>formula <span class="sy0">=</span> Survived<span class="sy0">~</span>.<span class="sy0">,</span>
+               data <span class="sy0">=</span> data<span class="sy0">,</span>
+               method <span class="sy0">=</span> <span class="st0">&quot;class&quot;</span><span class="sy0">,</span>
+               parms <span class="sy0">=</span> <span class="kw2">list</span><span class="br0">&#40;</span>split <span class="sy0">=</span> <span class="st0">&quot;gini&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+rpart.<span class="me1">plot</span><span class="br0">&#40;</span>x <span class="sy0">=</span> model<span class="sy0">,</span> yesno <span class="sy0">=</span> <span class="nu0">2</span><span class="sy0">,</span> <span class="kw2">type</span> <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">,</span> extra <span class="sy0">=</span> <span class="nu0">0</span><span class="br0">&#41;</span>

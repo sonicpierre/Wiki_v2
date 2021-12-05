@@ -1,0 +1,118 @@
+[[cpp:Data exploration | Data exploration]]
+
+====Compléments de l'algorithme ACP====
+
+L'Analyse en Composantes Principales admet d'autres types de traitement de données. Cela permet de gérer le flux d'arrivée des données mais aussi de traiter des données à formes particulières.
+
+Ces méthodes ne sont pas utilisées comme une ACP classique mais ont plutôt une vocation d'adaptation à la forme des données ainsi qu'à leur fond.
+
+
+<alert info> **Remarque :** les notions présentées ici nécessitent des prérequis, disponibles sur la page [[https://llamaspartan.fr/doku.php?id=cpp:acp|ACP]]. </alert>
+
+
+=====ACP incrémentale=====
+
+{{ :cpp:principe_acp_incr.png?500 |Principe ACP incrémentale}}
+
+La particularité de cet algorithme est qu'il permet de fournir progressivement, des données de même "taille" à l'algorithme. Cela peut être utile lorsqu'on a énormément de données, dont le stockage entier n'est pas possible, ou encore lorsque les données arrivent en continu.
+
+<alert info> **Dataset :** Pour ce cas on va utiliser le jeu de données digits, dont l'importation est disponible dans les fichiers de codes.</alert>
+
+__Code Python__
+
+<code python>
+from sklearn.decomposition import IncrementalPCA
+
+nombre_lot = 100#Initialisation des lots à fournir à l'algorithme
+model = IncrementalPCA(n_components=150)#Création du modèle de réduction incrémental
+for lot_X in np.array_split(X_train, nombre_lot):#Boucle d'entrainement des données par lots de 100
+    model.partial_fit(lot_X)
+X_reduced = model.transform(X_train)#Données réduitent à 150 dimensions
+</code>
+
+__Code R__
+
+<code python>
+library(onlinePCA)
+
+model <- incRpca.block(digit, B = 10, q = 150)#Création du modèle de réduction en initialisant 10 lots et un nombre de composantes principales égal à 150.
+</code>
+
+<alert info> **Remarque :** Sous R, la commande retourne deux résultats : les **q** premières valeurs propres et les **q** premières composantes principales.</alert>
+=====ACP à noyaux===== 
+
+{{ :cpp:methode_du_noyau.png?600 |}}
+
+Cette méthode est utilisée lorsqu'on veut réduire la dimension d'un dataset à données non linéaires. La démarche est de transformer l'espace où sont représentées les données d'entrées, en un espace de plus grande dimension (espace de redescription). 
+
+Cela est permis puisque la frontière de décision linéaire dans un espace de grande dimension correspond à la frontière de décision non linéaire dans l'espace d'origine.
+
+**Théorie**
+
+Considérons $X_{n}$ un ensemble de vecteurs non linéaires, à valeurs dans $\mathbb{R^{n}}$. La méthode du noyau introduit une application non linéaire $\phi$, qui transforme les observations $X_{0}$,  $X_{1}$,..., $X_{n}$ de $\mathbb{R^{n}}$ en de nouvelles observations $\phi(X_{0})$, $\phi(X_{1})$,..., $\phi(X_{n})$ de $\mathbb{R^{m}}$, avec $n << m$. Les nouvelles observations étant maintenant linéaires, elles sont donc plus faciles à séparer, ce qui permet de mieux prédire les classes.
+
+Vous devez vous demander comment est défini l'application $\phi$ ? En fait il n'est pas nécessaire d'avoir son expression car celle-ci est implicite au type de noyau qu'on choisira. On a qu'à connaitre la fonction $K$ telle que $K(X,Y) = \phi(X)^{T}.\phi(Y)$
+
+Le choix du noyau approprié est conditionné par la forme des données. Aussi il sera nécessaire de choisir le noyau qui rend compte des mêmes propriétés que le produit scalaire entre les nouvelles données  $\phi(X_{0})$, $\phi(X_{1})$,..., $\phi(X_{n})$.
+
+**Les types de noyaux**
+
+^      Type de noyau        ^ Description^ Forme de la fonction^ Remarques^
+|  **Noyau Gaussien radial**  | Permet de se ramener à des données non linéaires en passant les observations à la fonction K. Il s'agit du noyau le plus couramment utilisé. | $K(x,y) = e^{-\gamma \|x - y\|^{2}}$ | Le réglage de **gamma** est important.  Il peut être utilisé comme hyper paramètre de régularisation :  Si le modèle sur ajuste on doit réduire sa valeur (inversement lorsqu'il sous-ajuste).| 
+|   **Noyau polynomial**      | Permet de représenter les données polynomiales dans un espace de plus haut degré que celui de l'espace d'origine.| $K(x,y) = (x^{T} y + 1)^{d}$| d est le degré de l'espace de redescription.  |
+|    **Noyau sigmoïde**     | Permet de se ramener à une dimension plus grande en passant les données à la fonction $K$. | $K(x,y) = tanh(\gamma x^{T} y + r)$ | Aucune|
+
+===Modèle de réduction avec ACP à noyaux=== 
+
+<alert alert>**Dataset :**  Dans la suite, on va générer des données du dataset **make_circles**, qui permettront d'étudier l'impact de cette méthode.</alert>
+
+On commence par importer le jeu de données.
+
+__Code Python__
+
+<code python>
+from sklearn.datasets import make_circles
+
+X, y = make_circles(n_samples = 1000, factor = .3, noise = .05)
+</code>
+
+__Code R__
+
+**Résultat**
+
+{{ :cpp:make_circles_py.png?600 |Données générées}}
+
+;#;**Figure 1 :** Données circulaires générées
+;#;
+
+Nous pouvons maintenant appliquer l'algorithme d'ACP à noyau, en choisissant ici un noyau radial gaussien et en réglant l'hyper paramètre gamma à 10.
+
+__Code Python__
+
+<code python>
+from sklearn.decomposition import KernelPCA
+
+KernelACP = KernelPCA(n_components = 24, kernel = "rbf", gamma = 10, random_state = 2)
+X = KernelACP.fit_transform(X)
+</code>
+
+__Code R__
+
+<code python>
+library(kernlab)
+
+KernelACP <- kpca(data, kernel="rbfdot", features = 24, kpar = list(sigma = 10))#Application de la réduction à noyau aux données
+</code>
+
+**Résultat**
+
+{{ :cpp:make_circles_kernel.png?600 |Résultat du noyau gaussien sur les données générées}}
+
+<alert alert>**Remarque :**  En pratique, l'ACP à noyaux n'est pas très utilisée car il n'est pas toujours évident de trouver le noyau adapté aux données. C'est pourquoi le plus souvent, la recherche des bons hyper-paramètres se fait avec un **GridSearchCV**.</alert>
+
+===Sources===
+
+  * Machine Learning avec Scikit-Learn, Aurélien Géron
+  * [[https://www.researchgate.net/post/Does_anyone_know_what_is_the_Gamma_parameter_about_RBF_kernel_function|researchgate]]
+  * Data science : fondamentaux et études de cas, Eric Biernat et Michel Lutz
+  * Big Data et Machine Learning, Pirmin Lemberger, Marc Batty, Médéric Morel et Jean-Luc Raffaelli

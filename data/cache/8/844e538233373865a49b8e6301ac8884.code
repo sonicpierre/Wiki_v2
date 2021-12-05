@@ -1,0 +1,5 @@
+<span class="kw1">from</span> sklearn.<span class="me1">model_selection</span> <span class="kw1">import</span> cross_val_score
+&nbsp;
+lin_mod <span class="sy0">=</span> LinearRegression<span class="br0">&#40;</span><span class="br0">&#41;</span>
+scores <span class="sy0">=</span> cross_val_score<span class="br0">&#40;</span>lin_mod<span class="sy0">,</span> data_train<span class="sy0">,</span> data_etiquette<span class="sy0">,</span> scoring<span class="sy0">=</span><span class="st0">&quot;neg_mean_squared_error&quot;</span><span class="sy0">,</span> cv <span class="sy0">=</span> <span class="nu0">5</span><span class="br0">&#41;</span>
+lin_rmse <span class="sy0">=</span> np.<span class="me1">sqrt</span><span class="br0">&#40;</span>-scores<span class="br0">&#41;</span>

@@ -1,0 +1,6 @@
+<span class="co1">#Intégration utilisant la librairie QUADRAPACK de FORTRAN</span>
+<span class="kw1">from</span> scipy.<span class="me1">integrate</span> <span class="kw1">import</span> quad
+Val<span class="sy0">,</span> err <span class="sy0">=</span> quad<span class="br0">&#40;</span>f<span class="sy0">,</span> -<span class="nu0">10</span><span class="sy0">,</span> <span class="nu0">10</span><span class="br0">&#41;</span> <span class="co1">#Calcule l'intégrale sur l'intervalle [-10,10]</span>
+<span class="co1">#Intégration multiple</span>
+<span class="kw1">from</span> scipy.<span class="me1">integrate</span> <span class="kw1">import</span> nquad
+Val<span class="sy0">,</span> err <span class="sy0">=</span> nquad<span class="br0">&#40;</span>g<span class="sy0">,</span> <span class="br0">&#91;</span><span class="br0">&#91;</span>-<span class="nu0">10</span><span class="sy0">,</span> <span class="nu0">10</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="br0">&#91;</span>-<span class="nu0">5</span><span class="sy0">,</span><span class="nu0">5</span><span class="br0">&#93;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>

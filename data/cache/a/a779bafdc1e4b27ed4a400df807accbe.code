@@ -1,0 +1,10 @@
+<span class="kw1">import</span> pymysql.<span class="me1">cursors</span>  
+&nbsp;
+<span class="co1"># Connectez- vous à la base de données.</span>
+connection <span class="sy0">=</span> pymysql.<span class="me1">connect</span><span class="br0">&#40;</span>host<span class="sy0">=</span><span class="st0">'localhost'</span><span class="sy0">,</span> <span class="co1">#Endroit d'hébergement</span>
+                             <span class="kw3">user</span><span class="sy0">=</span><span class="st0">'pivirgaux'</span><span class="sy0">,</span> <span class="co1">#Nom d'utilisateur</span>
+                             password<span class="sy0">=</span><span class="st0">'pivirgaux'</span><span class="sy0">,</span> <span class="co1">#Mot de Passe                             </span>
+                             db<span class="sy0">=</span><span class="st0">'France'</span><span class="sy0">,</span> <span class="co1">#Nom de la base de donnée</span>
+                             charset<span class="sy0">=</span><span class="st0">'utf8mb4'</span><span class="sy0">,</span> <span class="co1">#Encodage</span>
+                             cursorclass<span class="sy0">=</span>pymysql.<span class="me1">cursors</span>.<span class="me1">DictCursor</span><span class="br0">&#41;</span> <span class="co1">#Lecteur qui nous permettra d'exécuter la requète</span>
+<span class="kw1">print</span> <span class="br0">&#40;</span><span class="st0">&quot;Connection effective !!&quot;</span><span class="br0">&#41;</span>

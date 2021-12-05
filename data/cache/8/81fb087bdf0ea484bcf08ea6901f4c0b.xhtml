@@ -1,0 +1,592 @@
+
+<p>
+<a href="/doku.php?id=cpp:ia" class="wikilink1" title="cpp:ia"> Machine Learning</a>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_lineaire_interpret_pierre&amp;media=cpp:residus.png" class="media" title="cpp:residus.png"><img src="/lib/exe/fetch.php?w=450&amp;tok=a5cfbf&amp;media=cpp:residus.png" class="mediacenter" alt="" width="450" /></a>
+</p>
+
+<p>
+Pour attester d&#039;une relation linéaire entre la variable cible et les variables explicatives, il est nécessaire que les résidus (différence entre une valeur réelle et sa projection sur la droite de régression) respectent les conditions suivantes :
+</p>
+<ul>
+<li class="level1"><div class="li"> La distribution normale des résidus</div>
+</li>
+<li class="level1"><div class="li"> L&#039;abscence d&#039;auto correlation</div>
+</li>
+<li class="level1"><div class="li"> Une distribution homogène des résidus donc avec une variance constante </div>
+</li>
+</ul>
+
+<p>
+Chacun de ces points est donc <span style="color:#ff0000;">indispensable</span> à la validation du modèle puis à l&#039;interprétation des résultats.
+</p>
+
+<p>
+<div class='alert alert-info'> <strong>Dataset :</strong> Dans cette page, on utilisera des données reliant le nombre de ventes et l’investissement dans différents médias. Vous les trouverez <a href="https://github.com/LlamasPartan/Machine_Learning_Ressource/blob/master/R%C3%A9gression/R%C3%A9gression%20Lin%C3%A9aire/Advertising.csv" class="urlextern" title="https://github.com/LlamasPartan/Machine_Learning_Ressource/blob/master/R%C3%A9gression/R%C3%A9gression%20Lin%C3%A9aire/Advertising.csv" rel="nofollow"> ici</a>.</div>
+</p>
+
+<h2 class="sectionedit1" id="la_distribution_normale_des_residus">La distribution normale des résidus</h2>
+<div class="level2">
+
+<p>
+On peut tout d&#039;abord commencer par afficher la distribution des résidus pour avoir une première idée de leur normalité.
+</p>
+
+<p>
+<em class="u">Code Python :</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> numpy <span class="kw1">as</span> np
+<span class="kw1">import</span> scipy.<span class="me1">stats</span> <span class="kw1">as</span> stats
+<span class="kw1">import</span> matplolib.<span class="me1">pyplot</span> <span class="kw1">as</span> plt
+plt.<span class="me1">style</span>.<span class="me1">use</span><span class="br0">&#40;</span><span class="st0">'fivethirtyeight'</span><span class="br0">&#41;</span>
+&nbsp;
+Regression_Lin.<span class="me1">resid</span>.<span class="me1">plot</span><span class="br0">&#40;</span>kind<span class="sy0">=</span><span class="st0">'density'</span><span class="sy0">,</span> linewidth<span class="sy0">=</span><span class="nu0">4</span><span class="sy0">,</span> fontsize<span class="sy0">=</span><span class="nu0">6</span><span class="sy0">,</span> label <span class="sy0">=</span> <span class="st0">&quot;Distribution résidus&quot;</span><span class="br0">&#41;</span>
+Regression_Lin.<span class="me1">resid</span>.<span class="me1">hist</span><span class="br0">&#40;</span>density <span class="sy0">=</span> <span class="kw2">True</span><span class="sy0">,</span> alpha <span class="sy0">=</span> <span class="nu0">0.5</span><span class="br0">&#41;</span>
+&nbsp;
+mu <span class="sy0">=</span> <span class="nu0">0</span>
+variance <span class="sy0">=</span> <span class="nu0">1</span>
+sigma <span class="sy0">=</span> np.<span class="me1">sqrt</span><span class="br0">&#40;</span>variance<span class="br0">&#41;</span>
+x <span class="sy0">=</span> np.<span class="me1">linspace</span><span class="br0">&#40;</span>mu - <span class="nu0">10</span>*sigma<span class="sy0">,</span> mu + <span class="nu0">10</span>*sigma<span class="sy0">,</span> <span class="nu0">100</span><span class="br0">&#41;</span>
+plt.<span class="me1">plot</span><span class="br0">&#40;</span>x<span class="sy0">,</span> stats.<span class="me1">norm</span>.<span class="me1">pdf</span><span class="br0">&#40;</span>x<span class="sy0">,</span> mu<span class="sy0">,</span> sigma<span class="br0">&#41;</span><span class="sy0">,</span> label <span class="sy0">=</span> <span class="st0">&quot;Normal Distribution&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R :</em>
+</p>
+<pre class="code python">hist<span class="br0">&#40;</span>residuals<span class="br0">&#40;</span>Regression_Lin<span class="br0">&#41;</span><span class="sy0">,</span>col<span class="sy0">=</span><span class="st0">&quot;grey&quot;</span><span class="sy0">,</span>freq<span class="sy0">=</span>F<span class="br0">&#41;</span>
+densite <span class="sy0">&lt;</span>- density<span class="br0">&#40;</span>residuals<span class="br0">&#40;</span>Regression_Lin<span class="br0">&#41;</span><span class="br0">&#41;</span>
+lines<span class="br0">&#40;</span>densite<span class="sy0">,</span> col <span class="sy0">=</span> <span class="st0">&quot;red&quot;</span><span class="sy0">,</span>lwd<span class="sy0">=</span><span class="nu0">3</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_lineaire_interpret_pierre&amp;media=cpp:normalite_des_res.png.png" class="media" title="cpp:normalite_des_res.png.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=3ad99a&amp;media=cpp:normalite_des_res.png.png" class="mediacenter" title="Représentation de la normalité des résidus" alt="Représentation de la normalité des résidus" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 1 :</strong> Représentation de la normalité des résidus</p><!--divalign-->
+
+<p>
+On peut remarquer avec le graphique que la normalité des résidus n&#039;est pas évidente.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La distribution normale des r\u00e9sidus&quot;,&quot;hid&quot;:&quot;la_distribution_normale_des_residus&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;919-2000&quot;} -->
+<h3 class="sectionedit2" id="test_de_shapiro-wilk">Test de Shapiro-Wilk</h3>
+<div class="level3">
+
+<p>
+<div class='alert alert-warning'> <strong>Remarque :</strong> Pour ce test nous utiliserons un échantillon de 50 individus, parmi les 200 composants la population.</div>
+</p>
+
+<p>
+Le test de Shapiro-Wilk a pour but de tester l&#039;hypothèse $H_{0}$ telle qu&#039;un échantillon $x_{0},x_{1},x_{2},\ldots,x_{n}$ provient d&#039;une population <strong>distribuée normalement</strong>. Ici, il permettra de vérifier la normalité des résidus de la régression linéaire. De ce fait si elle est attestée, on pourra continuer l&#039;analyse des résultats afin de valider le modèle.
+</p>
+
+<p>
+Son expression est donnée par :
+</p>
+
+<p>
+$$ W = \frac{[\sum_{i = 1}^{n} a_{i} (x_{(n-i+1)} - x_{(i)})]^{2}}{ \sum_{i = 1}^{n} (x_{i} - \sigma_{x})^{2}}$$
+</p>
+<div class="table sectionedit3"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">      Paramètre        </th><th class="col1"> Signification</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  $x_{(i)}$  </td><td class="col1"> Série des observations trié dans l&#039;ordre croissant. </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">   $a_{i}$     </td><td class="col1"> Constantes générées à partir de la moyenne et de la matrice de covariance des quantiles d&#039;un échantillon de taille n, suivant une loi normale. <strong>(*)</strong></td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:3,&quot;range&quot;:&quot;2693-2981&quot;} -->
+<p>
+<strong>(*)</strong> Les coefficients $a_{i}$ sont donnés sur cette <a href="http://www.santetropicale.com/SANTEMAG/algerie/stat/stat_10.htm#28" class="urlextern" title="http://www.santetropicale.com/SANTEMAG/algerie/stat/stat_10.htm#28" rel="nofollow">page</a>. La lecture du tableau se fait en partant de n (taille de l&#039;échantillon) et en récupérant les index $j$ correspondant. 
+</p>
+
+<p>
+Pour interpréter le résultat obtenu, <span style="color:#ff0000;">on compare dans un premier temps</span>  la valeur de $W_{observée}$, à une valeur $W_{critique}$, donnée dans ce <a href="http://www.biostat.ulg.ac.be/pages/Site_r/normalite_files/table-W.png" class="urlextern" title="http://www.biostat.ulg.ac.be/pages/Site_r/normalite_files/table-W.png" rel="nofollow">tableau</a>. Celle valeur critique dépend de la taille de l&#039;échantillon et du risque. Si  $W_{observée}$ &lt; $W_{critique}$, alors on rejete $H_{0}$. Ce qui veut dire qu&#039;on n’admet pas la normalité des données.
+</p>
+
+<p>
+<span style="color:#ff0000;">Par la suite</span> on étudie la p-valeur associée au test. Si celle-ci est inférieure au risque, alors l&#039;échantillon ne suit pas une loi normale.
+</p>
+
+<p>
+<strong>Hypothèses du test :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> $H_{0}$ les résidus suivent une distribution normale.</div>
+</li>
+<li class="level1"><div class="li"> $H_{1}$ les résidus ne suivent pas de loi normale.</div>
+</li>
+</ul>
+
+<p>
+On commence par ajuster notre modèle avec l&#039;échantillon des 50 individus. Les variables explicatives sont désignées par <strong>X</strong> et la variable cible par <strong>y</strong>.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> scipy <span class="kw1">as</span> sc
+<span class="kw1">from</span> scipy <span class="kw1">import</span> stats
+<span class="kw1">import</span> statsmodels.<span class="me1">api</span> <span class="kw1">as</span> sm
+&nbsp;
+X <span class="sy0">=</span> sm.<span class="me1">add_constant</span><span class="br0">&#40;</span>X<span class="br0">&#41;</span><span class="co1">#Ajout de la constante aux données</span>
+Regression_Lin <span class="sy0">=</span> sm.<span class="me1">OLS</span><span class="br0">&#40;</span>y<span class="sy0">,</span>X<span class="br0">&#41;</span>.<span class="me1">fit</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="co1">#Ajustement des données</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">Regression_Lin <span class="sy0">&lt;</span>- lm<span class="br0">&#40;</span>Sales<span class="sy0">~</span>.<span class="sy0">,</span> data <span class="sy0">=</span> echantillon<span class="br0">&#41;</span><span class="co1">#Ajustement des données</span></pre>
+
+<p>
+Puis on procède au <strong>test de normalité des résidus</strong> avec Shapiro-Wilk.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">sc.<span class="me1">stats</span>.<span class="me1">shapiro</span><span class="br0">&#40;</span>Regression_Lin.<span class="me1">resid</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">shapiro.<span class="kw3">test</span><span class="br0">&#40;</span>Regression_Lin$residuals<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_lineaire_interpret_pierre&amp;media=cpp:test_shapiro_wilk.png" class="media" title="cpp:test_shapiro_wilk.png"><img src="/lib/exe/fetch.php?w=300&amp;tok=e05474&amp;media=cpp:test_shapiro_wilk.png" class="mediacenter" title="Résultat test de shapiro-Wilk" alt="Résultat test de shapiro-Wilk" width="300" /></a>
+</p>
+
+<p>
+ Pour notre exemple, on observe un $W_{observée}$ &lt; $W_{critique}$ (0.942 &lt; 0.947) et une p-valeur = 0.01 &lt; 0.05. Donc on rejette $H_{0}$. 
+</p>
+
+<p>
+<strong>Visualisation</strong>
+</p>
+
+<p>
+Les résultats de ce test se fait grâce à un diagramme quantile-quantile aussi appelé <strong>QQ-plot</strong>.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> statsmodels
+&nbsp;
+statsmodels.<span class="me1">graphics</span>.<span class="me1">gofplots</span>.<span class="me1">qqplot</span><span class="br0">&#40;</span>Regression_Lin.<span class="me1">resid</span><span class="sy0">,</span>fit<span class="sy0">=</span><span class="kw2">True</span><span class="sy0">,</span>line<span class="sy0">=</span><span class="st0">&quot;r&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">qqnorm<span class="br0">&#40;</span>Regression_Lin$residuals<span class="br0">&#41;</span><span class="co1">#Traçage de la courbe de distribution</span>
+qqline<span class="br0">&#40;</span>Regression_Lin$residuals<span class="br0">&#41;</span><span class="co1">#Ajout de la droite sur le graphique</span></pre>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_lineaire_interpret_pierre&amp;media=cpp:theorical_quant.png" class="media" title="cpp:theorical_quant.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=9d90bc&amp;media=cpp:theorical_quant.png" class="mediacenter" title="Diagramme quantile-quantile du prix de vente" alt="Diagramme quantile-quantile du prix de vente" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 3 :</strong> Diagramme quantile-quantile du prix de vente</p><!--divalign-->
+
+<p>
+On voit que les quantiles de notre échantillon sont assez dispersés par rapport à ceux de la distribution normale (droite). Cela confirme notre décision concernant la non-normalité de l&#039;échantillon.
+</p>
+
+<p>
+<strong>Sources :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.imo.universite-paris-saclay.fr/~pansu/web_ifips/Tests.pdf" class="urlextern" title="https://www.imo.universite-paris-saclay.fr/~pansu/web_ifips/Tests.pdf" rel="nofollow"> J-P Lenoir, Université Paris Saclay, Les tests d&#039;hypothèses</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.duclert.org/r-tests-statistiques/test-shapiro-wilk-R.php" class="urlextern" title="http://www.duclert.org/r-tests-statistiques/test-shapiro-wilk-R.php" rel="nofollow">duclert.org, Aymeric Duclert</a> </div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.biostat.ulg.ac.be/pages/Site_r/Normalite.html#graph" class="urlextern" title="http://www.biostat.ulg.ac.be/pages/Site_r/Normalite.html#graph" rel="nofollow">Biostat.ulg.ac.be</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://sites.google.com/site/rgraphiques/4--stat/r%C3%A9gressions-lin%C3%A9aires-avec-r" class="urlextern" title="https://sites.google.com/site/rgraphiques/4--stat/r%C3%A9gressions-lin%C3%A9aires-avec-r" rel="nofollow">Régression linéaire avec R, Antoine Massé</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.santetropicale.com/SANTEMAG/algerie/stat/stat_10.htm#28" class="urlextern" title="http://www.santetropicale.com/SANTEMAG/algerie/stat/stat_10.htm#28" rel="nofollow">Santetropicale.com</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://eric.univ-lyon2.fr/~ricco/cours/cours/Test_Normalite.pdf" class="urlextern" title="http://eric.univ-lyon2.fr/~ricco/cours/cours/Test_Normalite.pdf" rel="nofollow"> Université de Lyon 2, Test de Normalité, Ricco Rakotomalala</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://becominghuman.ai/stats-models-vs-sklearn-for-linear-regression-f19df95ad99b" class="urlextern" title="https://becominghuman.ai/stats-models-vs-sklearn-for-linear-regression-f19df95ad99b" rel="nofollow">Becominghuman.ai, Stats Models vs SKLearn for Linear Regression
+ de Rowan Langford </a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Test de Shapiro-Wilk&quot;,&quot;hid&quot;:&quot;test_de_shapiro-wilk&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:2,&quot;range&quot;:&quot;2001-6642&quot;} -->
+<h2 class="sectionedit4" id="l_auto_correlation_des_residus">L&#039;auto corrélation des résidus</h2>
+<div class="level2">
+
+<p>
+Jojo choisit ses chapeaux en suivant les cycles de la mode.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_lineaire_interpret_pierre&amp;media=cpp:auto_corr_dessin.png" class="media" title="cpp:auto_corr_dessin.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=b74a2f&amp;media=cpp:auto_corr_dessin.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+
+<p>
+En l&#039;occurence, ici on suppose qu&#039;un cycle dure 20 ans donc si on a le chapeau de Jojo il y a 20 ans on sait celui qu&#039;il porte actuellement. Cependant, il y a des légères variantes aléatoires, la couleur ou des petits changements de forme, on appellera ça le bruit blanc. On peut écrire la formule suivante :
+</p>
+
+<p>
+$$Chapeau_{Jojo} = Chapeau_{Jojo_{-20 ans}} + Légers \, changements$$
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;L&#039;auto corr\u00e9lation des r\u00e9sidus&quot;,&quot;hid&quot;:&quot;l_auto_correlation_des_residus&quot;,&quot;codeblockOffset&quot;:8,&quot;secid&quot;:4,&quot;range&quot;:&quot;6643-7172&quot;} -->
+<h3 class="sectionedit5" id="acf">ACF</h3>
+<div class="level3">
+
+<p>
+L&#039;Auto Correlation Function est beaucoup utilisée pour l&#039;étude des séries temporelles afin de détecter ou par la suite modéliser l&#039;auto corrélation. Ici, cette représentation graphique va nous permettre de détecter si les résidus sont corrélés ou non.
+</p>
+
+<p>
+<strong>Formule :</strong>
+</p>
+
+<p>
+Pour calculer l&#039;auto corrélation on peut commencer tout d&#039;abord par calculer l&#039;auto covariance pour un décalage entre 2 variables de $k$ et une moyenne $\mu$ de la variable $X_t$ :
+</p>
+
+<p>
+$$\gamma_k = E(( X_t - \mu) (X_{t+k} - \mu))$$
+</p>
+
+<p>
+On en tire ensuite la formule pour l&#039;auto corrélation en divisant par la variance ($\sigma^2$) :
+</p>
+
+<p>
+$$\rho_k = \frac{\gamma_k}{\sigma^2}$$
+</p>
+
+<p>
+<em class="u">Code Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> statsmodels.<span class="me1">graphics</span> <span class="kw1">import</span> tsaplots
+<span class="kw1">import</span> matplotlib.<span class="me1">pyplot</span> <span class="kw1">as</span> plt
+plt.<span class="me1">style</span>.<span class="me1">use</span><span class="br0">&#40;</span><span class="st0">'fivethirtyeight'</span><span class="br0">&#41;</span>
+&nbsp;
+tsaplots.<span class="me1">plot_acf</span><span class="br0">&#40;</span>Regression_Lin.<span class="me1">resid</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>lmtest<span class="br0">&#41;</span>
+acf<span class="br0">&#40;</span>residuals<span class="br0">&#40;</span>reg_lin<span class="br0">&#41;</span><span class="sy0">,</span> main<span class="sy0">=</span><span class="st0">&quot;Corrélation des résidus&quot;</span><span class="sy0">,</span> ci<span class="sy0">=</span><span class="nu0">0.95</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+On obtient en abscisse le décalage (lag) et en ordonné le coefficient de corrélation.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_lineaire_interpret_pierre&amp;media=cpp:auto_corr_res.png" class="media" title="cpp:auto_corr_res.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=7fef98&amp;media=cpp:auto_corr_res.png" class="mediacenter" title="Diagramme d&#039;auto-corrélation des résidus" alt="Diagramme d&#039;auto-corrélation des résidus" width="400" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 4 :</strong> Diagramme d&#039;auto-corrélation des résidus</p><!--divalign-->
+
+<p>
+Précisons le sens des traits en pointillé. Il s&#039;agit d&#039;un intervalle de confiance. On peut affirmer à 95% que si les valeurs du coefficient d&#039;auto corrélation sont dans l&#039;intervalle, il n&#039;y a pas d&#039;auto corrélation. Cette variable changera en fonction de $n$ ou de la valeur de confiance choisie. 
+</p>
+
+<p>
+<strong>Sources :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://perso.ens-lyon.fr/lise.vaudor/autocorrelation-de-series-temporelles-ou-spatiales/" class="urlextern" title="http://perso.ens-lyon.fr/lise.vaudor/autocorrelation-de-series-temporelles-ou-spatiales/" rel="nofollow">Blog R-atique, Lise Vaudor</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://campus.datacamp.com/courses/time-series-analysis-in-python/some-simple-time-series?ex=1" class="urlextern" title="https://campus.datacamp.com/courses/time-series-analysis-in-python/some-simple-time-series?ex=1" rel="nofollow">Datacamp, Rob Reider, NYU-Courant Consultant, Quantopian</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://perso.ens-lyon.fr/lise.vaudor/non-respect-des-hypotheses-du-modele-lineaire-anova-regression-cest-grave-docteur/#:~:text=Ils%20testeront%20la%20normalit%C3%A9%20des,sont%20ni%20gaussiens%2C%20ni%20homosc%C3%A9dastiques." class="urlextern" title="http://perso.ens-lyon.fr/lise.vaudor/non-respect-des-hypotheses-du-modele-lineaire-anova-regression-cest-grave-docteur/#:~:text=Ils%20testeront%20la%20normalit%C3%A9%20des,sont%20ni%20gaussiens%2C%20ni%20homosc%C3%A9dastiques." rel="nofollow">Blog R-atique, Lise Vaudor</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;ACF&quot;,&quot;hid&quot;:&quot;acf&quot;,&quot;codeblockOffset&quot;:8,&quot;secid&quot;:5,&quot;range&quot;:&quot;7173-9262&quot;} -->
+<h3 class="sectionedit6" id="test_durbin-watson">Test Durbin-Watson</h3>
+<div class="level3">
+
+<p>
+Il s&#039;agit d&#039;un test assez vieux datant de 1950. Il permet aussi de calculer l&#039;auto correlation des résidus dans les modèles de régression. Cette indice varie entre 0 et 4 et permet de choisir grace au tableau ci-dessous si la variable est corrélée ou non.
+</p>
+<div class="table sectionedit7"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Résidu corrélé négativement  </th><th class="col1 centeralign">  On en sait rien  </th><th class="col2 centeralign">  Pas auto corrélation  </th><th class="col3 centeralign">  On en sait rien  </th><th class="col4 centeralign">  Auto corrélé positif  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  $[0,d_1]$  </td><td class="col1 centeralign">  $[d_1, d_2]$  </td><td class="col2 centeralign">  $[d_2, 4-d_2]$  </td><td class="col3 centeralign">  $[4 - d_2, 4 - d_1]$  </td><td class="col4 centeralign">  $[4-d_1,4]$  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:7,&quot;range&quot;:&quot;9553-9776&quot;} -->
+<p>
+On utilise les tables présentes <a href="https://www.real-statistics.com/statistics-tables/durbin-watson-table/" class="urlextern" title="https://www.real-statistics.com/statistics-tables/durbin-watson-table/" rel="nofollow"> ici</a> pour pouvoir savoir dans quelles sont les valeurs de $d_1$ et de $d_2$ à prendre. On peut aussi utiliser la p-value avec $H_0$ l&#039;hypothèse que résidus ne soient pas auto-corrélés et $H_1$ l&#039;hypothèse contraire afin d&#039;accepter ou refuser l&#039;hypothèse.
+</p>
+
+<p>
+<strong>Théorie :</strong>
+</p>
+
+<p>
+On cherche à voir si $\rho$ est significativement différent de 0 dans la formule ci-dessous :
+</p>
+
+<p>
+$$\epsilon_t = \rho \epsilon_{t-1} + u_t$$
+</p>
+
+<p>
+Pour savoir si $\rho$ est significatif on calcule ensuite le coefficient de Durbin-Watson avec la formule ci-dessous où $e$ est le résidu :
+</p>
+
+<p>
+$$DW = \frac{\sum^n_{i = 2} (e_i - e_{i-1})^2}{\sum^n_{i = 1} e_i^2}$$
+</p>
+
+<p>
+Notons que plus DW se rapproche de 2 plus l&#039;hypothèse d&#039;auto corrélation ($H_0$) peut être refusé.
+</p>
+
+<p>
+<em class="u">Code Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> statsmodels.<span class="me1">stats</span>.<span class="me1">stattools</span> <span class="kw1">import</span> durbin_watson
+&nbsp;
+durbin_watson<span class="br0">&#40;</span>Regression_Lin.<span class="me1">resid</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R :</em>
+</p>
+<pre class="code python">durbinWatsonTest<span class="br0">&#40;</span>reg_lin<span class="br0">&#41;</span> </pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<div class='alert alert-warning'><strong>Attention :</strong> Il est important de noter que les intervalles où on ne peut pas décider sont assez larges. C&#039;est pourquoi il est nécessaire de compléter ce test avec un corrélogramme pour assurer ses conclusions sur l&#039;auto corrélation.</div>
+</p>
+
+<p>
+<strong>Sources :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://fr.wikipedia.org/wiki/Test_de_Durbin-Watson" class="urlextern" title="https://fr.wikipedia.org/wiki/Test_de_Durbin-Watson" rel="nofollow">Wikipédia</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.statsmodels.org/stable/generated/statsmodels.stats.stattools.durbin_watson.html" class="urlextern" title="https://www.statsmodels.org/stable/generated/statsmodels.stats.stattools.durbin_watson.html" rel="nofollow"> Documentation statsmodels</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.jybaudot.fr/Correl_regress/dw.html" class="urlextern" title="http://www.jybaudot.fr/Correl_regress/dw.html" rel="nofollow">jybaudot.fr, JY Baudot</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Test Durbin-Watson&quot;,&quot;hid&quot;:&quot;test_durbin-watson&quot;,&quot;codeblockOffset&quot;:10,&quot;secid&quot;:6,&quot;range&quot;:&quot;9263-11394&quot;} -->
+<h2 class="sectionedit8" id="l_homogenite_des_residus">L&#039;homogénité des résidus</h2>
+<div class="level2">
+
+<p>
+Sortons les grands mots scientifiques, y a-t-il homoscédasticité ou heteroscédasticité ? En d&#039;autre termes, la variance des résidus est-elle constante ou non ? Il existe de nombreux tests pour vérifier ces hypothèses et il est préférable d&#039;en faire plusieurs pour assurer ses conclusions. On peut se donner une première idée des résultats à attendre en affichant un premier graphique.
+</p>
+
+<p>
+<em class="u">Code Python :</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+fitted_values <span class="sy0">=</span>  Regression_Lin.<span class="me1">predict</span><span class="br0">&#40;</span>X.<span class="me1">drop</span><span class="br0">&#40;</span><span class="st0">'Residu'</span><span class="sy0">,</span> axis <span class="sy0">=</span> <span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+residues_std <span class="sy0">=</span> Regression_Lin.<span class="me1">resid</span>/np.<span class="me1">sqrt</span><span class="br0">&#40;</span><span class="kw2">sum</span><span class="br0">&#40;</span>Regression_Lin.<span class="me1">resid</span>**<span class="nu0">2</span><span class="br0">&#41;</span>/<span class="br0">&#40;</span><span class="kw2">len</span><span class="br0">&#40;</span>Regression_Lin.<span class="me1">resid</span><span class="br0">&#41;</span>-<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+momo_smooth <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>sm.<span class="me1">nonparametric</span>.<span class="me1">lowess</span><span class="br0">&#40;</span>sqrt_residues_std<span class="sy0">,</span> fitted_values<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+sqrt_residues_std <span class="sy0">=</span> np.<span class="me1">sqrt</span><span class="br0">&#40;</span><span class="kw2">abs</span><span class="br0">&#40;</span>residues_std<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+plt.<span class="me1">scatter</span><span class="br0">&#40;</span>momo_smooth<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span> momo_smooth<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+plt.<span class="me1">scatter</span><span class="br0">&#40;</span>fitted_values<span class="sy0">,</span>sqrt_residues_std<span class="br0">&#41;</span>
+plt.<span class="me1">xlabel</span><span class="br0">&#40;</span><span class="st0">&quot;Fitted values&quot;</span><span class="br0">&#41;</span>
+plt.<span class="me1">ylabel</span><span class="br0">&#40;</span><span class="st0">&quot;Racine carrée des résidus standardisés&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R :</em>
+</p>
+<pre class="code python">plot<span class="br0">&#40;</span>Regression_Lin<span class="sy0">,</span> which <span class="sy0">=</span> <span class="nu0">3</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_lineaire_interpret_pierre&amp;media=cpp:heterostasticite.png" class="media" title="cpp:heterostasticite.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=ac255e&amp;media=cpp:heterostasticite.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<p>
+Le but ici est de se rapprocher au plus près d&#039;une droite plane pour conclure l&#039;hétéroscédasticité.
+</p>
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> Si on connait l&#039;origine de l&#039;hétérostaticité on peut appliquer un modèle des moindres carrés pondéré.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;L&#039;homog\u00e9nit\u00e9 des r\u00e9sidus&quot;,&quot;hid&quot;:&quot;l_homogenite_des_residus&quot;,&quot;codeblockOffset&quot;:12,&quot;secid&quot;:8,&quot;range&quot;:&quot;11395-12752&quot;} -->
+<h3 class="sectionedit9" id="test_de_breusch-pagan">Test de Breusch-Pagan</h3>
+<div class="level3">
+
+<p>
+Le test a été créé en 1979 par Adrian Pagan et Trevor Breuch. Il est utilisé si le nombre d&#039;observations est supérieur à 50 et se compare avec le test du $\chi^2$ pour obtenir la validation ou le rejet de ses hypothèses. Explicitons les 2 hypothèses de ce test bilatéral.
+</p>
+<ul>
+<li class="level1"><div class="li"> La première $H_0$ qui signifie que la variance est fixe :</div>
+</li>
+</ul>
+
+<p>
+$$H_0 : y_i = \alpha + \beta x_i + \gamma x_i + \epsilon_i , \, V(\epsilon_i) = \sigma^2$$
+</p>
+<ul>
+<li class="level1"><div class="li"> La seconde $H_1$ qui signifie que la variance est distribuée linéairement :</div>
+</li>
+</ul>
+
+<p>
+$$H_1 : y_i = \alpha + \beta x_i + \gamma x_i + \epsilon_i , \, \, V(\epsilon_i) = \eta_1 + \eta_2 x_i + \eta_3 z_i + w_i$$
+</p>
+
+<p>
+Pour choisir entre ces 2 hypothèses on commence par calculer grâce à la MCO la formule ci-dessous : 
+</p>
+
+<p>
+$$\epsilon_i^2 = \eta_1 + \eta_2 x_i + \eta_3 z_i + w_i$$
+</p>
+
+<p>
+Ensuite on peut obtenir le coefficient de Brech-Pagan 
+</p>
+
+<p>
+$$BP = R^2 n$$
+</p>
+
+<p>
+On peut alors comparer la valeur optenue avec celle de la statistique du $\chi^2(K -1)$ pour un risque $\alpha$ où $K$ est le nombre de paramètres à estimer avec la MCO ci-dessus. Si le coefficient de Brech-Pagan est supérieur à celui du $\chi^2$ on rejette l&#039;hypothèse $H_0$ sinon on l&#039;accepte.
+</p>
+
+<p>
+<em class="u">Code Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> statsmodels.<span class="me1">compat</span> <span class="kw1">import</span> lzip
+<span class="kw1">import</span> statsmodels.<span class="me1">stats</span>.<span class="me1">api</span> <span class="kw1">as</span> sms
+&nbsp;
+name <span class="sy0">=</span> <span class="br0">&#91;</span><span class="st0">'Lagrange multiplier statistic'</span><span class="sy0">,</span> <span class="st0">'p-value'</span><span class="sy0">,</span>
+        <span class="st0">'f-value'</span><span class="sy0">,</span> <span class="st0">'f p-value'</span><span class="br0">&#93;</span>
+<span class="kw3">test</span> <span class="sy0">=</span> sms.<span class="me1">stats</span>.<span class="me1">diagnostic</span>.<span class="me1">het_breuschpagan</span><span class="br0">&#40;</span>Regression_Lin.<span class="me1">resid</span><span class="sy0">,</span> Regression_Lin.<span class="me1">model</span>.<span class="me1">exog</span><span class="br0">&#41;</span>
+lzip<span class="br0">&#40;</span>name<span class="sy0">,</span> <span class="kw3">test</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>lmtest<span class="br0">&#41;</span>
+bptest<span class="br0">&#40;</span>reg_lin<span class="br0">&#41;</span></pre>
+
+<p>
+<div class='alert alert-info'><strong>Info :</strong> On peut compléter ce test avec le test de White très ressemblant qui est moins fiable mais nous permet d&#039;appuyer notre conclusion sur le premier test.</div>
+</p>
+
+<p>
+<strong>Sources :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://fr.wikipedia.org/wiki/Test_de_Breusch-Pagan" class="urlextern" title="https://fr.wikipedia.org/wiki/Test_de_Breusch-Pagan" rel="nofollow">Wikipédia</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://econometrie.pagesperso-orange.fr/Chapitre%203/heteroscedasticite.pdf" class="urlextern" title="https://econometrie.pagesperso-orange.fr/Chapitre%203/heteroscedasticite.pdf" rel="nofollow">Econométrie des séries chronologiques, Claudette Babusiaux</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Test de Breusch-Pagan&quot;,&quot;hid&quot;:&quot;test_de_breusch-pagan&quot;,&quot;codeblockOffset&quot;:14,&quot;secid&quot;:9,&quot;range&quot;:&quot;12753-14765&quot;} -->
+<h3 class="sectionedit10" id="test_de_goldfeld-quandt">Test de Goldfeld-Quandt</h3>
+<div class="level3">
+
+<p>
+Ce test a été formulé en 1965 pour l&#039;appliquer il est nécessaire d&#039;avoir un petit échantillon (inférieur à 100 individus) et avoir vérifier la normalité des résidus. On peut alors poser les 2 hypothèses qui définisse le test où $\sigma$ est l&#039;écart type :
+</p>
+
+<p>
+$$H_0 : \sigma_t^2 = \sigma^2$$
+$$H_1 : \sigma_1^2 &lt; \sigma_2^2 &lt; \sigma_3^2 &lt; \ldots &lt; \sigma_n^2$$
+</p>
+
+<p>
+Pour décider entre ces deux hypothèses on suit 3 grandes étapes : 
+</p>
+<ul>
+<li class="level1"><div class="li"> On commence par classer les observations celon une variable on prend généralement la variable cible</div>
+</li>
+<li class="level1"><div class="li"> On enlève un $\frac{1}{4}$ (choix arbitraire) des observations au milieu du dataset</div>
+</li>
+<li class="level1"><div class="li"> On entraîne ensuite 2 régressions linéaires, une sur chacune des parties</div>
+</li>
+</ul>
+
+<p>
+On pourra ensuite posé 2 constantes qui nous permettrons de prendre une décision :
+</p>
+
+<p>
+$$RSS_1 = \epsilon_1^t \epsilon_1$$
+$$RSS_2 = \epsilon_2^t \epsilon_2$$
+</p>
+
+<p>
+Ensuite, on compare enfin le coefficient $\lambda = \frac{RSS_1}{RSS_2}$ à la loi de Fisher de paramètres $\frac{n - d}{2} - p - 1$ avec n le nombre d&#039;observation, p le nombre de coefficient et d la portion soustraite dans notre cas 4 comme on a enlevé $\frac{1}{4}$. 
+</p>
+
+<p>
+Si il y a égalité on accepte $H_0$ sinon on rejette.
+</p>
+
+<p>
+<em class="u">Code Python :</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> statsmodels.<span class="me1">stats</span>.<span class="me1">api</span> <span class="kw1">as</span> sms
+<span class="kw1">from</span> statsmodels.<span class="me1">compat</span> <span class="kw1">import</span> lzip
+&nbsp;
+name <span class="sy0">=</span> <span class="br0">&#91;</span><span class="st0">'F statistic'</span><span class="sy0">,</span> <span class="st0">'p-value'</span><span class="br0">&#93;</span>
+<span class="kw3">test</span> <span class="sy0">=</span> sms.<span class="me1">het_goldfeldquandt</span><span class="br0">&#40;</span>Regression_Lin.<span class="me1">resid</span><span class="sy0">,</span> Regression_Lin.<span class="me1">model</span>.<span class="me1">exog</span><span class="br0">&#41;</span>
+lzip<span class="br0">&#40;</span>name<span class="sy0">,</span> <span class="kw3">test</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span><span class="st0">&quot;lmtest&quot;</span><span class="br0">&#41;</span>
+gqtest<span class="br0">&#40;</span>Regression_Lin<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://fr.wikipedia.org/wiki/Test_de_Goldfeld_et_Quandt" class="urlextern" title="https://fr.wikipedia.org/wiki/Test_de_Goldfeld_et_Quandt" rel="nofollow">Wikipédia</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://sites.google.com/view/aide-python/statistiques/r%C3%A9gressions-lin%C3%A9aires-en-python" class="urlextern" title="https://sites.google.com/view/aide-python/statistiques/r%C3%A9gressions-lin%C3%A9aires-en-python" rel="nofollow"> Google site</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.statsmodels.org/dev/examples/notebooks/generated/regression_diagnostics.html" class="urlextern" title="https://www.statsmodels.org/dev/examples/notebooks/generated/regression_diagnostics.html" rel="nofollow"> Stats Model</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Test de Goldfeld-Quandt&quot;,&quot;hid&quot;:&quot;test_de_goldfeld-quandt&quot;,&quot;codeblockOffset&quot;:16,&quot;secid&quot;:10,&quot;range&quot;:&quot;14766-&quot;} -->

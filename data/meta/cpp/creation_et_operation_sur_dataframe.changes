@@ -1,0 +1,137 @@
+1592992032	86.216.219.72	C	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	créée		3390
+1592999941	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Constituer à partir d'une BDD] 		3262
+1592999961	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Récupérer les données du le web] 		4
+1593014066	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Récupérer les données depuis le web] 		-2993
+1593014081	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Constituer à partir d'une BDD] 		2722
+1593014119	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux			36
+1593014152	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Récupérer les données depuis le web] 		2
+1593014271	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Constituer son dataset] 		270
+1593014366	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Constituer son dataset] 		53
+1593021407	82.64.124.27	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir de MySQL] 		93
+1593024957	82.64.124.27	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Récupérer les données depuis le web] 		-16
+1593025266	82.64.124.27	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Récupérer les données depuis le web] 		23
+1593031082	82.64.124.27	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Récupérer les données depuis un fichier] 		2067
+1593031426	82.64.124.27	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Depuis un fichier] 		146
+1593031438	82.64.124.27	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Récupération classique de données ordonnées] 		-261
+1593031673	82.64.124.27	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Depuis un fichier] 		62
+1593031892	82.64.124.27	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Depuis un fichier] 		96
+1593032172	82.64.124.27	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Depuis un fichier] 		42
+1593035986	91.69.217.178	E	cpp:creation_et_operation_sur_dataframe	danilouchouchou			0
+1593036181	91.69.217.178	E	cpp:creation_et_operation_sur_dataframe	danilouchouchou	[Depuis un fichier] 		1
+1593036796	82.64.124.27	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Depuis un fichier] 		194
+1593036837	82.64.124.27	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Depuis un fichier] 		-17
+1593070672	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Depuis un fichier] 		100
+1593081213	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir de MySQL] 		17
+1593082377	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir de MongoDB] 		171
+1593082421	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir de MongoDB] 		8
+1593084541	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir de MongoDB] 		418
+1593084987	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir de MongoDB] 		27
+1593087902	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir de MongoDB] 		103
+1593098240	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir de MongoDB] 		347
+1593165549	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir de MongoDB] 		92
+1593165580	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Récupérer les données depuis le web] 		5
+1593165634	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Récupérer les données depuis le web] 		7
+1593165801	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Depuis un fichier] 		-6
+1593165821	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Récupérer les données depuis le web] 		7
+1593170584	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir de MongoDB] 		944
+1593171375	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir de MySQL] 		268
+1593173916	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Constituer son dataset] 		134
+1593173963	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Constituer son dataset] 		-2
+1593174082	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Depuis un fichier] 		17
+1593174138	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Récupérer les données depuis le web] 		161
+1593176335	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Récupérer les données depuis le web] 		747
+1593176883	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Récupérer les données depuis le web] 		527
+1593176990	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Récupérer les données depuis le web] 		95
+1593177284	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Récupérer des données textuelles] 		-634
+1593177683	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux			-3900
+1593177828	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Constituer son dataset] 		-131
+1593340370	91.69.217.178	E	cpp:creation_et_operation_sur_dataframe	danilouchouchou			13
+1593340396	91.69.217.178	E	cpp:creation_et_operation_sur_dataframe	danilouchouchou			0
+1593429148	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir de MySQL] 		511
+1593429179	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir de MySQL] 		71
+1593429240	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Depuis un fichier] 		-7
+1593434348	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir de MongoDB] 		27
+1593434558	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir d'un URL] 		66
+1593434993	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Les différents status] 		-30
+1593435002	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Les différents status] 		-30
+1593435010	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir d'un URL] 		-28
+1593442666	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir de MySQL] 		68
+1593506787	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Constituer son dataset] 		-20
+1593506843	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Constituer son dataset] 		0
+1593509961	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir de MySQL] 		401
+1593510717	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir de MySQL] 		220
+1593525220	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir de MySQL] 		12
+1593525880	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir de MySQL] 		78
+1593526659	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir de MySQL] 		144
+1593528431	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir de MySQL] 		126
+1593529675	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Depuis un fichier] 		87
+1593548451	82.64.124.27	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Constituer son dataset] 		-36
+1593589527	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir de MySQL] 		19
+1593956029	82.64.124.27	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Depuis un fichier] 		18
+1593957228	82.64.124.27	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Depuis un fichier] 		436
+1593957256	82.64.124.27	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Depuis un fichier] 		2
+1593970659	82.64.124.27	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Depuis un fichier] 		30
+1593973615	82.64.124.27	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Depuis un fichier hébergé sur Kaggle ou autre] 		479
+1593973673	82.64.124.27	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Depuis un fichier hébergé sur Kaggle ou autre] 		-19
+1593973858	82.64.124.27	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Depuis un fichier hébergé sur Kaggle ou autre] 		111
+1593973968	82.64.124.27	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Depuis un fichier hébergé sur Kaggle ou autre] 		-3280
+1593975552	82.64.124.27	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Récupération classique de données ordonnées] 		38
+1594021027	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Lecture classique de fichier] 		2
+1594022692	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Récupération classique de données ordonnées] 		-70
+1594023874	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Lecture classique de fichier] 		665
+1594024044	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Lecture classique de fichier] 		123
+1594024138	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Lecture classique de fichier] 		137
+1595923229	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Lecture classique de fichier] 		179
+1595923646	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Constituer à partir d'une BDD] 		77
+1595923786	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Constituer à partir d'une BDD] 		55
+1595923812	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Constituer à partir d'une BDD] 		-132
+1595923830	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Regrouper les fichiers] 		133
+1595924918	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Regrouper les fichiers] 		356
+1595925001	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Recenser le contenu d'un dossier] 		17
+1595932881	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Recenser le contenu d'un dossier] 		30
+1595936308	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Recenser le contenu d'un dossier] 		406
+1596038250	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Regrouper les fichiers] 		83
+1596040538	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Recenser le contenu d'un dossier] 		305
+1596188133	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Recenser le contenu d'un dossier] 		32
+1596188994	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Regrouper les données] 		124
+1596191551	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Regrouper les données] 		67
+1596456414	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Regrouper les données] 		532
+1596456500	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Regrouper les données] 		-218
+1596457402	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Regrouper les données partageant un même ID] 		37
+1596457421	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Regrouper les données partageant un même ID] 		0
+1596457537	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Regrouper les données partageant un même ID] 		-66
+1596457679	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Regrouper les fichiers] 		-14
+1596457719	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Regrouper les données similaires] 		4
+1596461489	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Regrouper les données partageant un même ID] 		449
+1596464250	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Regrouper les données partageant un même ID] 		54
+1596468489	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Regrouper les données partageant un même ID] 		285
+1596468678	86.216.219.72	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Regrouper les données partageant un même ID] 		68
+1597441213	88.124.10.73	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux			29
+1611698380	193.248.237.26	E	cpp:creation_et_operation_sur_dataframe	malama			-7
+1611698584	193.248.237.26	E	cpp:creation_et_operation_sur_dataframe	malama	[Récupération classique de données ordonnées] 		16
+1611698794	193.248.237.26	E	cpp:creation_et_operation_sur_dataframe	malama	[Lecture classique de fichier] 		17
+1611699071	193.248.237.26	E	cpp:creation_et_operation_sur_dataframe	malama	[Lecture classique de fichier] 		8
+1611699096	193.248.237.26	E	cpp:creation_et_operation_sur_dataframe	malama	[Lecture classique de fichier] 		0
+1611699190	193.248.237.26	E	cpp:creation_et_operation_sur_dataframe	malama	[Regrouper les fichiers] 		6
+1611699237	193.248.237.26	E	cpp:creation_et_operation_sur_dataframe	malama	[Regrouper les fichiers] 		0
+1611699258	193.248.237.26	E	cpp:creation_et_operation_sur_dataframe	malama	[Regrouper les fichiers] 		2
+1611699776	193.248.237.26	E	cpp:creation_et_operation_sur_dataframe	malama	[Constituer à partir d'une BDD] 		9
+1611699878	193.248.237.26	E	cpp:creation_et_operation_sur_dataframe	malama	[A partir de MySQL] 		-6
+1611700079	193.248.237.26	E	cpp:creation_et_operation_sur_dataframe	malama	[A partir de MySQL] 		-2
+1611700280	193.248.237.26	E	cpp:creation_et_operation_sur_dataframe	malama	[A partir de MySQL] 		5
+1611700351	193.248.237.26	E	cpp:creation_et_operation_sur_dataframe	malama	[A partir de MySQL] 		1
+1611700388	193.248.237.26	E	cpp:creation_et_operation_sur_dataframe	malama	[A partir de MySQL] 		0
+1611700440	193.248.237.26	E	cpp:creation_et_operation_sur_dataframe	malama	[A partir de MySQL] 		2
+1611700513	193.248.237.26	E	cpp:creation_et_operation_sur_dataframe	malama	[A partir de MySQL] 		1
+1611700566	193.248.237.26	E	cpp:creation_et_operation_sur_dataframe	malama	[A partir de MySQL] 		0
+1611700678	193.248.237.26	E	cpp:creation_et_operation_sur_dataframe	malama	[A partir de MongoDB] 		2
+1611700702	193.248.237.26	E	cpp:creation_et_operation_sur_dataframe	malama	[A partir de MongoDB] 		1
+1611700769	193.248.237.26	E	cpp:creation_et_operation_sur_dataframe	malama	[À partir de MongoDB] 		1
+1611700793	193.248.237.26	E	cpp:creation_et_operation_sur_dataframe	malama	[À partir de MongoDB] 		0
+1611700856	193.248.237.26	E	cpp:creation_et_operation_sur_dataframe	malama	[À partir de MongoDB] 		2
+1611700905	193.248.237.26	E	cpp:creation_et_operation_sur_dataframe	malama	[À partir de MongoDB] 		1
+1612258750	88.124.10.73	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Lecture classique de fichier] 		19
+1612259121	88.124.10.73	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Regrouper des fichiers de même forme] 		6
+1612259540	88.124.10.73	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Recenser le contenu d'un dossier] 		2
+1612260269	88.124.10.73	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[Recenser le contenu d'un dossier] 		1
+1612260429	88.124.10.73	E	cpp:creation_et_operation_sur_dataframe	pierrevirgaux	[A partir de MySQL] 		3

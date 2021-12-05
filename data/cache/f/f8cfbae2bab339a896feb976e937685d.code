@@ -1,0 +1,2 @@
+<span class="kw2">sudo</span> npm <span class="kw2">install</span> <span class="re5">-g</span> electron<span class="sy0">@</span>6.1.4 orca
+<span class="kw2">sudo</span> apt <span class="kw2">install</span> npm

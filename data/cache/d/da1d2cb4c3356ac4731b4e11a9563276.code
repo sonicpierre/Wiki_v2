@@ -1,0 +1,8 @@
+<span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+<span class="kw1">from</span> sklearn.<span class="me1">model_selection</span> <span class="kw1">import</span> train_test_split
+&nbsp;
+feature_col <span class="sy0">=</span> data.<span class="me1">columns</span>.<span class="me1">drop</span><span class="br0">&#40;</span><span class="st0">'target_feature'</span><span class="br0">&#41;</span>
+X <span class="sy0">=</span> data<span class="br0">&#91;</span>feature_col<span class="br0">&#93;</span>
+y <span class="sy0">=</span> data<span class="br0">&#91;</span><span class="st0">'target_feature'</span><span class="br0">&#93;</span>
+&nbsp;
+X_train<span class="sy0">,</span> X_test<span class="sy0">,</span> y_train<span class="sy0">,</span> y_test <span class="sy0">=</span> train_test_split<span class="br0">&#40;</span>X<span class="sy0">,</span> y<span class="sy0">,</span> test_size <span class="sy0">=</span> <span class="nu0">0.2</span><span class="sy0">,</span> random_state<span class="sy0">=</span><span class="nu0">7</span><span class="br0">&#41;</span>

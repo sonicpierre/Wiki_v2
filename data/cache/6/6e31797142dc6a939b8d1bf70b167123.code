@@ -1,0 +1,6 @@
+tableauTraite <span class="sy0">=</span> html_table<span class="br0">&#40;</span>tableau<span class="sy0">,</span> header <span class="sy0">=</span> TRUE<span class="sy0">,</span> trim <span class="sy0">=</span> TRUE<span class="sy0">,</span> fill <span class="sy0">=</span> FALSE<span class="sy0">,</span> dec <span class="sy0">=</span> <span class="st0">&quot;.&quot;</span><span class="br0">&#41;</span>
+<span class="co1">#header : Permet de savoir si la première ligne définit les colonnes</span>
+<span class="co1">#trim : Permet de savoir si on supprimes les éventuels espaces avant et après les données</span>
+<span class="co1">#fill : Permet de remplir avec des valeurs nulles si il y a des tableaux de taille différentes</span>
+<span class="co1">#dec : Définit le séparateur</span>
+data.<span class="me1">frame</span><span class="br0">&#40;</span>tableauTraite<span class="br0">&#41;</span>

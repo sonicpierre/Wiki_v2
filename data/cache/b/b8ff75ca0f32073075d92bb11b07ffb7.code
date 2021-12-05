@@ -1,0 +1,6 @@
+<span class="co1">#On déclare les participants au vote et la façon de voter</span>
+voting_clf <span class="sy0">=</span> VotingClassifier<span class="br0">&#40;</span>
+    estimators<span class="sy0">=</span><span class="br0">&#91;</span><span class="br0">&#40;</span><span class="st0">'lr'</span><span class="sy0">,</span> log_clf<span class="br0">&#41;</span><span class="sy0">,</span> <span class="br0">&#40;</span><span class="st0">'rf'</span><span class="sy0">,</span> rnd_clf<span class="br0">&#41;</span><span class="sy0">,</span> <span class="br0">&#40;</span><span class="st0">'svc'</span><span class="sy0">,</span> svm_clf<span class="br0">&#41;</span><span class="br0">&#93;</span><span class="sy0">,</span>
+    voting <span class="sy0">=</span> <span class="st0">'soft'</span>
+<span class="br0">&#41;</span>
+voting_clf.<span class="me1">fit</span><span class="br0">&#40;</span>data_train<span class="sy0">,</span> data_res<span class="br0">&#41;</span>

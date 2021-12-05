@@ -1,0 +1,2 @@
+library<span class="br0">&#40;</span>rpart<span class="br0">&#41;</span>
+rpart<span class="br0">&#40;</span>y<span class="sy0">~</span>.<span class="sy0">,</span> data<span class="sy0">=</span>data<span class="sy0">,</span> method <span class="sy0">=</span> <span class="st0">&quot;anova&quot;</span><span class="br0">&#41;</span>

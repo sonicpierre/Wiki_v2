@@ -1,0 +1,5 @@
+<span class="co1">#Nom du jour</span>
+date_mon_annive.<span class="me1">day_name</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Permet de savoir combien de temps me sépare de la mort d'Einstein</span>
+date_mon_annive - pd.<span class="me1">to_datetime</span><span class="br0">&#40;</span><span class="st0">&quot;1955-04-18&quot;</span><span class="br0">&#41;</span>

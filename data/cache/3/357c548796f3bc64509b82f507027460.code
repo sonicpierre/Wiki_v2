@@ -1,0 +1,12 @@
+<span class="co1">#Remplace tout les caractères spéciaux</span>
+toSpace <span class="sy0">&lt;</span>- content_transformer<span class="br0">&#40;</span>function <span class="br0">&#40;</span>x <span class="sy0">,</span> pattern <span class="br0">&#41;</span> gsub<span class="br0">&#40;</span>pattern<span class="sy0">,</span> <span class="st0">&quot; &quot;</span><span class="sy0">,</span> x<span class="br0">&#41;</span><span class="br0">&#41;</span>
+docs <span class="sy0">&lt;</span>- tm_map<span class="br0">&#40;</span>docs<span class="sy0">,</span> toSpace<span class="sy0">,</span> <span class="st0">&quot;/&quot;</span><span class="br0">&#41;</span>
+docs <span class="sy0">&lt;</span>- tm_map<span class="br0">&#40;</span>docs<span class="sy0">,</span> toSpace<span class="sy0">,</span> <span class="st0">&quot;@&quot;</span><span class="br0">&#41;</span>
+docs <span class="sy0">&lt;</span>- tm_map<span class="br0">&#40;</span>docs<span class="sy0">,</span> toSpace<span class="sy0">,</span> <span class="st0">&quot;<span class="es0">\\</span>|&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># Supprimer les ponctuations</span>
+docs <span class="sy0">&lt;</span>- tm_map<span class="br0">&#40;</span>docs<span class="sy0">,</span> removePunctuation<span class="br0">&#41;</span>
+<span class="co1"># Supprimer les espaces vides supplémentaires</span>
+docs <span class="sy0">&lt;</span>- tm_map<span class="br0">&#40;</span>docs<span class="sy0">,</span> stripWhitespace<span class="br0">&#41;</span>
+<span class="co1"># Supprimer les nombres</span>
+docs <span class="sy0">&lt;</span>- tm_map<span class="br0">&#40;</span>docs<span class="sy0">,</span> removeNumbers<span class="br0">&#41;</span>

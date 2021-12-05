@@ -1,0 +1,2 @@
+  <span class="co1">//delta permet d'avoir le jeux et les frames adaptées aux performances du PC qui le fait tourner</span>
+  <span class="kw1">public</span> <span class="kw1">override</span> <span class="kw4">void</span> _Process<span class="br0">&#40;</span><span class="kw4">float</span> delta<span class="br0">&#41;</span><span class="br0">&#123;</span><span class="br0">&#125;</span>

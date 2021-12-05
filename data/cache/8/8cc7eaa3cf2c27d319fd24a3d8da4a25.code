@@ -1,0 +1,1 @@
+optic_model <span class="sy0">&lt;</span>- dbscan::optics<span class="br0">&#40;</span>DS3<span class="sy0">,</span> minPts <span class="sy0">=</span> <span class="nu0">50</span><span class="br0">&#41;</span>

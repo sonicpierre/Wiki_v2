@@ -1,0 +1,5 @@
+====== Trucs et astuces avec Ubuntu ======
+===== Permet de lister les bibliothèques installées sur le systèmes =====
+<code bash>
+/sbin/ldconfig -p
+</code>

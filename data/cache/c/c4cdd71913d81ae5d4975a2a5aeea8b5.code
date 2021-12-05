@@ -1,0 +1,7 @@
+data <span class="sy0">=</span> digits<span class="br0">&#91;</span><span class="nu0">0</span>:<span class="nu0">10000</span><span class="sy0">,</span>:<span class="br0">&#93;</span>
+&nbsp;
+gmm <span class="sy0">=</span> GaussianMixture<span class="br0">&#40;</span><span class="nu0">100</span><span class="sy0">,</span> covariance_type<span class="sy0">=</span><span class="st0">'full'</span><span class="sy0">,</span> random_state<span class="sy0">=</span><span class="nu0">0</span><span class="br0">&#41;</span>
+gmm.<span class="me1">fit</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span>
+&nbsp;
+data_new <span class="sy0">=</span> gmm.<span class="me1">sample</span><span class="br0">&#40;</span><span class="nu0">100</span><span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+plot_digits<span class="br0">&#40;</span>digits_new<span class="br0">&#41;</span>

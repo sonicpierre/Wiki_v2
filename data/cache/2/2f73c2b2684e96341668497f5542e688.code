@@ -1,0 +1,7 @@
+Game
+├── bin
+├── Game.cbp
+├── Game.depend
+├── Game.layout
+├── main.cpp
+└── obj

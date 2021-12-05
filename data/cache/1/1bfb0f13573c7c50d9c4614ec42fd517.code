@@ -1,0 +1,5 @@
+<span class="kw1">from</span> sklearn.<span class="me1">linear_model</span> <span class="kw1">import</span> LinearRegression
+model <span class="sy0">=</span> LinearRegression<span class="br0">&#40;</span><span class="br0">&#41;</span>
+model.<span class="me1">fit</span><span class="br0">&#40;</span>X_poly<span class="sy0">,</span> y<span class="br0">&#41;</span>
+<span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;Coefficient constant :&quot;</span><span class="sy0">,</span> model.<span class="me1">intercept_</span><span class="br0">&#41;</span>
+<span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;Coefficient X et X^2 : &quot;</span><span class="sy0">,</span> model.<span class="me1">coef_</span><span class="br0">&#41;</span>

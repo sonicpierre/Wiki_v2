@@ -1,0 +1,11 @@
+{{  :cpp:veilletechno.png?400  |}}
+
+Cette partie est un condensé de résumé d'article que nous lirons sur les prochains mois. Chacun peu faire son résumé mais le tout doit être associé à une source et une date. Nous essayerons de rester le plus subjectif pour ne pas altérer l'article. Nous définissons différents thèmes qui sont voué à évoluer.
+
+=====Section culturelle=====
+
+  * [[cpp: Machine learning et finance | Machine Learning et finance]]
+  * [[cpp: Les crypto monnais | Les crypto monnais]]
+  * [[cpp: La monétisation des données | La monétisation des données]]
+  * [[cpp: Mathématiques | Mathématiques]]
+=====Section technique=====

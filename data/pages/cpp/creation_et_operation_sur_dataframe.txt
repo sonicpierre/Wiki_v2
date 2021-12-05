@@ -1,0 +1,294 @@
+[[cpp:IA| Machine Learning]]
+{{:cpp:donneesrecup.jpg?500|}}
+
+Il est bon de rappeler qu'il est inutile de construire un modèle de Machine Learning s’il n'est pas entrainé avec des données de bonne qualité. Il faut donc savoir comment et où récupérer les données.
+
+
+=====Récupération classique de données ordonnées=====
+
+Dans cette partie, nous supposerons que les données sont organisées et nous verrons  comment les récupérer pour les traiter. Il faut bien prendre en compte que la récupération des données constitue une étape capitale pour la suite de notre travail. 
+
+====Lecture classique de fichier====
+
+Il est parfois nécessaire de ne pas passer par un URL pour récupérer les données mais plutôt par un fichier sauvegardé localement. Il est alors indispensable de le lire en ayant connaissance du type de fichier pour avoir un dataFrame correctement découpé.
+
+**Rappel :**
+
+Un dataFrame est un objet qui se différencie d'une liste à 2 dimensions. En effet, il utilise des séries qui diffèrent des listes car elles sont indexées ce qui sera pratique pour sélectionner et traiter les données.
+
+__En Python :__
+
+<code python>
+import pandas as pd
+dataFrame = pd.read_csv("donnee.csv", sep=";")
+</code>
+
+__En R :__
+
+<code python>
+dataFrame = read.csv("donnee.csv", sep = ";", header=T);
+</code>
+
+Maintenant que votre dataFrame est chargé dans une variable vous pouvez le manipuler, le nettoyer et, par la suite, élaborer votre modèle.
+
+<alert info>**Remarque :** il suffira de changer la méthode associée au read pour lire d'autres types de fichiers.</alert>
+----
+
+=====Regrouper les fichiers=====
+
+Les fichiers contenant les données se trouvent rarement dans un seul dossier mais découpés dans une multitude de fichiers rangés dans un dossier (par date, type...).  Pour développer ce point, nous allons utiliser les données présentes [[https://github.com/LlamasPartan/Ressource-Wiki/tree/master/Intelligence%20Artificielle/Machine%20Learning/Constituer%20son%20Dataset| ici]]. Il s'agit de données sur le Covid aux USA qui ont été recensées pour mieux appréhender la maladie.
+====Recenser le contenu d'un dossier====
+
+Avant de regrouper les données, il faut savoir lesquelles sont présentes dans le dossier afin de pouvoir les rassembler.
+
+__En Python :__
+
+<code python>
+import os
+listeFichier = os.listdir('Regrouper donnees Covid/*')
+</code>
+
+__En R :__
+
+<code python>
+listeFichier <- list.files("Regrouper donnees Covid", full.names = TRUE)
+</code>
+
+====Regrouper des fichiers de même forme====
+
+Il faut ensuite regrouper les fichiers en un seul fichier synthétique. Pour cela, on va créer un dataFrame par fichier puis les regrouper afin d'obtenir un seul dataFrame complet sur lequel entrainer notre modèle.
+
+__En Python :__
+
+<code python>
+dataFrameFinal = pd.read_csv(listeFichier[0])
+for i in range(1,len(listeFichier)):
+    dataFrameFinal.merge(pd.read_csv(listeFichier[i]), how = 'inner')
+</code>
+
+__En R :__
+
+<code python>
+library("dplyr")
+dataFrame = read.csv(listeFichier[1])
+for (i in 2:length(listeFichier)){
+    dataFrame = bind_rows(dataFrame, read.csv(listeFichier[i]))
+}
+</code>
+
+====Regrouper les données partageant un même ID====
+
+Nous allons maintenant assembler des données qui sont liées par un ID. Vous trouverez les données utilisées [[https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Constituer%20son%20Dataset/Regrouper%20donnees%20LEGO| ici]].
+
+{{ :cpp:repartitionlego.png?800 |}}
+
+Essayons de rassembler tous les fichiers dans un seul un même document.
+
+__En Python :__
+
+<code python>
+#On charge les fichiers
+inventory_sets = pd.read_csv('inventory_sets.csv')
+sets = pd.read_csv('sets.csv')
+themes = pd.read_csv("themes.csv")
+#On rassemble les fichiers qui ont une collonne en commun 
+dataInter = pd.merge(inventory_sets, sets, on=["set_num"])
+#On rassemble les fichiers sur des colonnes qui n'ont pas le même nom
+dataFinale = pd.merge(dataInter, themes, left_on=["theme_id"], right_on=["id"])
+</code>
+
+__En R :__
+
+<code python>
+inventory_sets <- read.csv("inventory_sets.csv")
+sets <- read.csv('sets.csv')
+themes <- read_csv("themes.csv")
+dataInter <- data %>%
+    inner_join(sets, by = c("set_num"))
+dataFinal <- dataInter %>%
+    inner_join(themes, by = c("theme_id" = "id"))
+</code>
+
+**Résultat :**
+
+{{ :cpp:datasetregroupe.png?800 |}}
+
+**Source :**
+  * [[https://rebrickable.com/downloads/]]
+  * [[https://campus.datacamp.com/courses/joining-data-with-dplyr]]
+=====Constituer le dataset à partir d'une BDD=====
+
+Bien souvent, les données sont rangées dans une BDD pour des questions d'ordre et de clarté c'est pourquoi il est nécessaire de savoir se connecter et faire des opérations sur celle-ci pour créer, lire et modifier sa BDD.
+
+
+====A partir de MySQL====
+
+Ici, on partira du principe que la base de données est hébergée sur votre ordinateur en local et que vous avez un login et un password. De même, nous partons du principe que **vous connaissez la façon de faire les requêtes**. Il faut tout d'abord effectuer une connexion :
+
+__En Python :__
+
+<code python>
+import pymysql.cursors  
+ 
+# Connectez- vous à la base de données.
+connection = pymysql.connect(host='localhost', #Endroit d'hébergement
+                             user='pivirgaux', #Nom d'utilisateur
+                             password='pivirgaux', #Mot de Passe                             
+                             db='France', #Nom de la base de donnée
+                             charset='utf8mb4', #Encodage
+                             cursorclass=pymysql.cursors.DictCursor) #Lecteur qui nous permettra d'exécuter la requète
+print ("Connection effective !!")
+</code>
+
+Si vous êtes sous Window et que vous avez du mal avec l'installation de MySQL je vous invite à aller voir ce [[https://techexpert.tips/fr/windows-fr/installer-mysql-sur-windows/| tuto]].
+
+__En R :__
+
+<code python>
+# load the package
+library('RMySQL')
+library('DBI') #Sinon vous risquez d'avoir l'erreur Plugin caching_sha2_password could not be loaded
+
+# create a MySQL connection object
+con <- dbConnect(MySQL(),
+                 user = 'pivirgaux',
+                 password = 'pivirgaux',
+                 host = 'localhost',
+                 dbname = 'France')
+</code>
+
+Maintenant, voyons comment faire une requête, il est nécessaire de gérer toutes les possibilités d'erreur c'est pourquoi on fait un try en Python :
+
+__En Python :__
+
+<code python>
+try:
+    #On commence par récupérer le curseur pour pouvoir l'utiliser
+    with connection.cursor() as cursor:
+       
+        # On prépare notre requète
+        sql = "SELECT * from Region"
+        
+        # Exécutez la requête (Execute Query).
+        cursor.execute(sql)
+</code>
+
+__En R :__
+
+<code python>
+region = dbReadTable(con, "Region")
+data.frame(region)
+</code>
+
+**Attaque par injection de BDD :**
+si on fait rentrer des données à l'utilisateur, il est bon de se rappeler qu'il n'est pas forcément bien intentionné. Il pourrait, par exemple, rentrer du SQL dans le champ éditable que vous lui proposez. Il pourrait accéder à des données ou, tout simplement, supprimer toute votre BDD c'est pourquoi il est bon de "préparer ses requêtes".
+
+Donnons un exemple de requête qui demande une entrée à l'utilisateur :
+
+<code python>
+ cursor = connection.cursor()    
+ sql = "Delete from Region where nom = %s"
+    
+ # Exécutez sql et passez un paramètre
+ rowCount = cursor.execute(sql, ( "Guadeloupe" ) )    
+ connection.commit() 
+</code>
+
+ Une fois la requête exécutée, on récupère les colonnes voulues dans un DataFrame pour pouvoir les manipuler :
+
+__En Python :__
+
+<code python>
+#On crée les listes qui contiendront les différents attributs
+listeNom = []
+listeDeSlug = []
+#On passe les différentes lignes venant de notre requète
+for row in cursor:
+     listeNom.append(row.get('nom'))
+     listeDeSlug.append(row.get('slug'))
+     #On construit le dataFrame
+df = pd.DataFrame({"Région" : listeNom, "Slug" : listeDeSlug})
+ </code>
+
+__En R :__
+
+<code python>
+res <- dbSendQuery(con, "Select nom FROM Region")
+data <- dbFetch(res, n=3) #n donne le nombre de données on veut récupérer
+</code>
+
+ Enfin, on referme la connexion, pour éviter (s’il y a trop de connexions en même temps) que le serveur soit sujet à la latence.
+
+__En Python :__
+
+<code python>   
+finally:
+    connection.close()
+</code>
+
+__En R :__
+
+<code python>   
+dbDisconnect(con)
+</code>
+
+**Remarque :**
+il est nécessaire de garder en tête qu'il s'agira du même principe avec différentes BDD. Il faudra juste changer le connecteur et adapter la requête si elle n'est pas en SQL mais en NoSQL. Voici quelques connecteurs qui pourraient vous être utiles :
+
+^ Base de donnée ^ Connecteur    Python    ^ Connecteur R ^ Avantages ^ Inconvénients   ^
+| MySQL | pymysql | RMySQL |Il est multiplateforme, il est natif dans la majorité des Framework web. | A du mal à gérer des grosses masses de données |
+| Postgresql | py-postgresql | RPostgres |Son mode de licence, son comportement très stable est reconnu | Son déploiement.  |
+| mariadb                | mariadb |RMariaDB | Capacité à stocker dans une même table des types de données différents (Clés/Valeur) | A tendance à devenir très volumineux rapidement ce qui ralentit les performances |
+| Oracle Database              | cx_Oracle | ROracle | Ce moteur est capable de supporter un grand nombre de bases de données par instance | Le coût des licences. Il est un grand consommateur de ressources.  |
+
+**Source :**
+
+  * [[https://www.218labs.ma/comparaison-de-3-bases-de-donnees-open-source-postgresql-mariadb-et-sqlite/]]
+  * [[http://www.open-source-guide.com/Actualites/Mariadb-10-les-nouveautes-et-avantages]]
+  * [[https://www.editions-ellipses.fr/PDF/9782340016620_extrait.pdf]]
+  * [[https://gist.github.com/aravindhebbali/f2cc73794e9f9bfaa673]]
+====À partir de MongoDB====
+
+Si vous ne connaissez pas du tout le principe du NoSQL,  je vous propose d'aller voir [[https://openclassrooms.com/fr/courses/4462426-maitrisez-les-bases-de-donnees-nosql | ici]]. Parfois, le nombre de données est très important et les BDD utilisant le NoSQL sont plus efficaces. Ici, nous allons essayer de voir comment se connecter à ce type de BDD et interagir avec elle.
+
+Comme pour les bases de données SQL, on commence par établir un lien :
+
+<code python>
+from pymongo import MongoClient
+client = MongoClient()
+db = client['my_database']
+</code>
+
+Ensuite, il faut préparer l'élément qui sera inséré dans le futur :
+
+<code python>
+post = {"username": "Martin",
+             "password": "OnPasseParPython"}
+</code>
+
+Une fois la collection créée, il faut l'insérer dans la bonne table de la base de données :
+
+<code python>
+#On indique clairement la table dans laquelle on veut insérer la base de donnée
+posts = db.posts
+#On insert la collection dans cette table
+post_id = posts.insert_one(post).inserted_id
+</code>
+
+**Remarque :** on peut observer que les collections dans une BDD NoSQL sont similaires à des objets et leur accès y est identique.
+
+Il existe d'autres BDDs utilisant le NoSQL, nous allons en citer quelques-unes.
+
+^ Base de donnée ^ Connecteur   Python    ^      Avantage                  ^  Inconvénient                  ^
+| MongoDB | pymongo | L'installation est facile. La BDD  permet la conversion en JSon rapidement | La BDD ne supporte pas les jointures . La taille des données est importante. |
+| Cassandra | cassandra-driver | La BDD évolue régulièrement et n'a aucun point de défaillance unique. | Les performances restent imprévisibles et elle ne prend pas en compte les requêtes ad hoc. |
+| HBase | hbase-python | Donne des résultats de recherche rapides sur des grandes tables, contient une API Java facilement manipulable. | Il n'y a pas de permission d'authentification intégrée, la BDD ne supporte pas le SQL |
+
+**Source :**
+
+  * [[https://pymongo.readthedocs.io/en/stable/tutorial.html]]
+  * [[https://www.ambient-it.net/top-meilleures-db-nosql-2019/]]
+
+
+
+

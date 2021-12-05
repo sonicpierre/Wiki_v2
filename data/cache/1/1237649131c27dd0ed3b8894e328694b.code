@@ -1,0 +1,6 @@
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">4</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="co1">#La fonction table Poisson itère les simulations de Poisson et les place dans un tableau.</span>
+A <span class="sy0">=</span> tabDeLoiPoisson<span class="br0">&#40;</span><span class="nu0">0.8</span><span class="sy0">,</span> <span class="nu0">10000</span><span class="br0">&#41;</span>
+plt.<span class="me1">title</span><span class="br0">&#40;</span><span class="st0">&quot;Loi de poisson&quot;</span><span class="br0">&#41;</span>
+label<span class="sy0">,</span> nb <span class="sy0">=</span> np.<span class="me1">unique</span><span class="br0">&#40;</span>A<span class="sy0">,</span> return_counts<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span>
+plt.<span class="me1">bar</span><span class="br0">&#40;</span>label<span class="sy0">,</span>nb<span class="sy0">,</span> width<span class="sy0">=</span><span class="nu0">0.3</span><span class="br0">&#41;</span>

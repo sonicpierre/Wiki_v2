@@ -1,0 +1,4 @@
+<span class="kw4">void</span> Joueur<span class="sy4">::</span><span class="me2">seDeplacer</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    _positionX <span class="sy2">+</span><span class="sy1">=</span> 
+<span class="br0">&#125;</span>

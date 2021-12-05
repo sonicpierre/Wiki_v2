@@ -1,0 +1,38 @@
+&quot;spells&quot;:
+[
+    {
+        name: &quot;value&quot;
+        &quot;targetEffect&quot;:
+        [
+            {
+                typeOfTarget:Abolute/relatif/selection
+                targetAvailable:Ennemy/Ally (rien pour les deux)
+                effets:
+                [
+                    {
+                        &quot;target&quot;: (Dépend de type of Target) 
+                        &quot;stats&quot;:&quot;taunt&quot;
+                        &quot;type&quot;:&quot;=&quot;
+                        &quot;value&quot;:
+                        {
+                            &quot;type&quot;: &quot;physical&quot;,
+                            &quot;formula&quot;:
+                            {
+                                &quot;base&quot;: 150,
+                                &quot;str&quot;: 0.5
+                            }
+                        }
+                    },
+                ]
+&nbsp;
+            },
+            {
+                targetSelection:fefeef
+                effets:
+                [
+                ]
+&nbsp;
+            }
+        ]
+    }
+]

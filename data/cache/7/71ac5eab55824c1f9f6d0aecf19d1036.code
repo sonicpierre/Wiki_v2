@@ -1,0 +1,1 @@
+dataFrame <span class="sy0">=</span> pd.<span class="me1">read_csv</span><span class="br0">&#40;</span><span class="st0">&quot;donnee.csv&quot;</span><span class="sy0">,</span> sep<span class="sy0">=</span><span class="st0">&quot;;&quot;</span><span class="br0">&#41;</span>

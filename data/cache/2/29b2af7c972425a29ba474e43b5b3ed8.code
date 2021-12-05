@@ -1,0 +1,2 @@
+<span class="kw1">from</span> sklearn.<span class="me1">model_selection</span> <span class="kw1">import</span> train_test_split
+data_train<span class="sy0">,</span> data_test <span class="sy0">=</span> train_test_split<span class="br0">&#40;</span>data<span class="sy0">,</span> test_size <span class="sy0">=</span> <span class="nu0">0.2</span><span class="sy0">,</span> random_state<span class="sy0">=</span><span class="nu0">0</span><span class="br0">&#41;</span>

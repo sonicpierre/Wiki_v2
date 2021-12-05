@@ -1,0 +1,137 @@
+
+<h1 class="sectionedit1" id="fonctionnement_de_l_objet">Fonctionnement de l&#039;objet</h1>
+<div class="level1">
+
+<p>
+Partie théorique
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Fonctionnement de l&#039;objet&quot;,&quot;hid&quot;:&quot;fonctionnement_de_l_objet&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-58&quot;} -->
+<h1 class="sectionedit2" id="creation_d_un_joueur">Création d&#039;un joueur</h1>
+<div class="level1">
+
+<p>
+Anticipons l&#039;avenir, grâce à la POO on va pouvoir rassembler dans une classe mère des fonctionnalités communes.
+Le joueur a besoin de :
+</p>
+<ul>
+<li class="level1"><div class="li"> pouvoir se déplacer</div>
+</li>
+<li class="level1"><div class="li"> l&#039;afficher</div>
+</li>
+<li class="level1"><div class="li"> vérifier les collisions</div>
+</li>
+</ul>
+
+<p>
+Mais les ennemis et les tirs du joueurs vont aussi devoir avoir un affichage et des collisions. On va donc rassembler ces éléments dans un objet : Entité (Entity en anglais).
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Cr\u00e9ation d&#039;un joueur&quot;,&quot;hid&quot;:&quot;creation_d_un_joueur&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;59-481&quot;} -->
+<h2 class="sectionedit3" id="creation_d_une_entite">Création d&#039;une entité</h2>
+<div class="level2">
+
+<p>
+La création d&#039;une entité va tout d&#039;abord demander la création de fichiers pour faire une nouvelle classe.
+On pourra ensuite préciser dans cette classe les capacités de notre objet.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Cr\u00e9ation d&#039;une entit\u00e9&quot;,&quot;hid&quot;:&quot;creation_d_une_entite&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;482-703&quot;} -->
+<h3 class="sectionedit4" id="creation_de_l_objet">Création de l&#039;objet</h3>
+<div class="level3">
+
+<p>
+On va tout d&#039;abord créer les fichiers nécessaires pour faire une classe.
+<em class="u">En C++ :</em>
+On utilise le menu de création d&#039;une nouvelle classe depuis le menu : <strong>Fichier&gt;Nouveau Fichier</strong>
+La fenêtre suivante apparaîtra, remplissez là comme ici :
+<a href="/lib/exe/detail.php?id=cpp%3Acontroler_le_joueur&amp;media=cpp:screenshot_class_creation.png" class="media" title="cpp:screenshot_class_creation.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=2c50d3&amp;media=cpp:screenshot_class_creation.png" class="mediacenter" title=" Capture d&#039;écran de la création d&#039;une classe avec code::blocks" alt=" Capture d&#039;écran de la création d&#039;une classe avec code::blocks" width="500" /></a>
+On ne fait que peu de modifications sur les paramètres par défaut. On désactive l&#039;ajout d&#039;un destructeur. On n&#039;ajoute pas de variables. Enfin on renomme, le fichier de <strong>header</strong> tout en bas, ainsi que le mot correspondant en dessous. On reviendra sur le fonctionnement de tout ça plus tard.
+</p>
+
+<p>
+Une fois que tout est rempli, on peut créer la classe. On a ensuite deux popups, le premier sur l&#039;ajout du fichier au projet, et le second sur l&#039;ajout du fichier aux compilations du programme. On laisse tout par défaut et on accepte les deux.
+Classe et méthode update
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Cr\u00e9ation de l&#039;objet&quot;,&quot;hid&quot;:&quot;creation_de_l_objet&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;704-1660&quot;} -->
+<h3 class="sectionedit5" id="traitement_des_collisions">Traitement des collisions</h3>
+<div class="level3">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Traitement des collisions&quot;,&quot;hid&quot;:&quot;traitement_des_collisions&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;1661-1697&quot;} -->
+<h3 class="sectionedit6" id="implementation_graphique">Implémentation graphique</h3>
+<div class="level3">
+
+<p>
+<em class="u">En C++ :</em>
+Héritage depuis sf::Drawable
+<em class="u">En Java :</em>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Impl\u00e9mentation graphique&quot;,&quot;hid&quot;:&quot;implementation_graphique&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;1698-1790&quot;} -->
+<h2 class="sectionedit7" id="de_entite_a_joueur">De entité à joueur</h2>
+<div class="level2">
+
+<p>
+Héritage depuis Entité.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;De entit\u00e9 \u00e0 joueur&quot;,&quot;hid&quot;:&quot;de_entite_a_joueur&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;1791-1849&quot;} -->
+<h1 class="sectionedit8" id="ajout_du_controle_du_joueur">Ajout du contrôle du joueur</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Ajout du contr\u00f4le du joueur&quot;,&quot;hid&quot;:&quot;ajout_du_controle_du_joueur&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;1850-1892&quot;} -->
+<h2 class="sectionedit9" id="deplacements">Déplacements</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;D\u00e9placements&quot;,&quot;hid&quot;:&quot;deplacements&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:9,&quot;range&quot;:&quot;1893-1918&quot;} -->
+<h2 class="sectionedit10" id="tir">Tir</h2>
+<div class="level2">
+
+<p>
+Réutilisation depuis Entité
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Tir&quot;,&quot;hid&quot;:&quot;tir&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:10,&quot;range&quot;:&quot;1919-1964&quot;} -->
+<h3 class="sectionedit11" id="creation_des_tirs">Création des tirs</h3>
+<div class="level3">
+
+<p>
+Utilisation de la souris
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Cr\u00e9ation des tirs&quot;,&quot;hid&quot;:&quot;creation_des_tirs&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:11,&quot;range&quot;:&quot;1965-2019&quot;} -->
+<h1 class="sectionedit12" id="bonuscompatibilite_manette">Bonus : Compatibilité manette</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Bonus : Compatibilit\u00e9 manette&quot;,&quot;hid&quot;:&quot;bonuscompatibilite_manette&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:12,&quot;range&quot;:&quot;2020-2064&quot;} -->
+<h2 class="sectionedit13" id="deplacements1">Déplacements</h2>
+<div class="level2">
+
+<p>
+Joystick gauche + flèches
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;D\u00e9placements&quot;,&quot;hid&quot;:&quot;deplacements1&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:13,&quot;range&quot;:&quot;2065-2117&quot;} -->
+<h2 class="sectionedit14" id="tirs">Tirs</h2>
+<div class="level2">
+
+<p>
+Joystick droit + gachette
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Tirs&quot;,&quot;hid&quot;:&quot;tirs&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:14,&quot;range&quot;:&quot;2118-&quot;} -->

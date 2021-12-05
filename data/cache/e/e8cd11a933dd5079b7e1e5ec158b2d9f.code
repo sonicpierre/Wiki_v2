@@ -1,0 +1,12 @@
+<span class="co1">#Recherche de la variable sortante</span>
+indiceVarSortante<span class="sy0">=</span><span class="nu0">0</span>
+rapportMin<span class="sy0">=</span>np.<span class="me1">inf</span>
+<span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span>tab.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>:
+    <span class="kw1">if</span> tab<span class="br0">&#91;</span>i<span class="sy0">,</span>indiceVarEntrante<span class="br0">&#93;</span><span class="sy0">&gt;</span><span class="nu0">0</span>:
+        rapport<span class="sy0">=</span>tab<span class="br0">&#91;</span>i<span class="sy0">,</span>tab.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>-<span class="nu0">1</span><span class="br0">&#93;</span>/tab<span class="br0">&#91;</span>i<span class="sy0">,</span>indiceVarEntrante<span class="br0">&#93;</span>
+        <span class="kw1">if</span> rapport<span class="sy0">&lt;</span>rapportMin <span class="kw1">and</span> rapport<span class="sy0">&gt;=</span><span class="nu0">0</span>:
+            indiceVarSortante<span class="sy0">=</span>i
+            rapportMin<span class="sy0">=</span>rapport
+<span class="kw1">if</span> indiceVarSortante<span class="sy0">==</span><span class="nu0">0</span>:
+    <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;Pas de variable sortante&quot;</span><span class="br0">&#41;</span>
+    exit<span class="br0">&#40;</span><span class="br0">&#41;</span>

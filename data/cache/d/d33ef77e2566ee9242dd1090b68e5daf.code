@@ -1,0 +1,4 @@
+<span class="kw1">import</span> scipy <span class="kw1">as</span> sc
+<span class="kw1">from</span> scipy <span class="kw1">import</span> stats
+&nbsp;
+sc.<span class="me1">stats</span>.<span class="me1">shapiro</span><span class="br0">&#40;</span>data<span class="br0">&#91;</span><span class="st0">'Alcohol'</span><span class="br0">&#93;</span><span class="br0">&#41;</span>

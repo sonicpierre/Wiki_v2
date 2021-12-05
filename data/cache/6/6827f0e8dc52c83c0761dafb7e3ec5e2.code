@@ -1,0 +1,14 @@
+<span class="kw1">from</span> sklearn.<span class="me1">ensemble</span> <span class="kw1">import</span> RandomForestClassifier
+<span class="kw1">from</span> sklearn.<span class="me1">ensemble</span> <span class="kw1">import</span> VotingClassifier
+<span class="kw1">from</span> sklearn.<span class="me1">linear_model</span> <span class="kw1">import</span> LogisticRegression
+<span class="kw1">from</span> sklearn.<span class="me1">svm</span> <span class="kw1">import</span> SVC
+&nbsp;
+log_clf <span class="sy0">=</span> LogisticRegression<span class="br0">&#40;</span><span class="br0">&#41;</span>
+rnd_clf <span class="sy0">=</span> RandomForestClassifier<span class="br0">&#40;</span><span class="br0">&#41;</span>
+svm_clf <span class="sy0">=</span> SVC<span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+voting_clf <span class="sy0">=</span> VotingClassifier<span class="br0">&#40;</span>
+    estimators<span class="sy0">=</span><span class="br0">&#91;</span><span class="br0">&#40;</span><span class="st0">'lr'</span><span class="sy0">,</span> log_clf<span class="br0">&#41;</span><span class="sy0">,</span> <span class="br0">&#40;</span><span class="st0">'rf'</span><span class="sy0">,</span> rnd_clf<span class="br0">&#41;</span><span class="sy0">,</span> <span class="br0">&#40;</span><span class="st0">'svc'</span><span class="sy0">,</span> svm_clf<span class="br0">&#41;</span><span class="br0">&#93;</span><span class="sy0">,</span>
+    voting <span class="sy0">=</span> <span class="st0">'hard'</span>
+<span class="br0">&#41;</span>
+voting_clf.<span class="me1">fit</span><span class="br0">&#40;</span>data_train<span class="sy0">,</span> data_res<span class="br0">&#41;</span>

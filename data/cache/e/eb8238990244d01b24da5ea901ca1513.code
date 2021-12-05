@@ -1,0 +1,6 @@
+<span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+<span class="kw1">import</span> requests
+&nbsp;
+url <span class="sy0">=</span> <span class="st0">&quot;http://ptrckprry.com/course/ssd/data/federalist.json&quot;</span>
+s<span class="sy0">=</span>requests.<span class="me1">get</span><span class="br0">&#40;</span>url<span class="br0">&#41;</span>.<span class="me1">content</span>
+pd.<span class="me1">read_json</span><span class="br0">&#40;</span>s<span class="sy0">,</span> lines<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span>

@@ -1,0 +1,234 @@
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Amanipuler_les_series_temporelles&amp;media=cpp:temps_illustration.jpg" class="media" title="cpp:temps_illustration.jpg"><img src="/lib/exe/fetch.php?w=350&amp;tok=69d886&amp;media=cpp:temps_illustration.jpg" class="mediacenter" alt="" width="350" /></a>
+</p>
+
+<p>
+Les données suivant un ordre chronologique ne se manipulent aussi facilement que les données classiques. En effet, le temps ne peut être traité ni comme un entier ni comme une chaine de caractère. C&#039;est pourquoi il a un type unique, lui permettant d&#039;être manipulé facilement, afin d&#039;obtenir les informations voulues. Vous allez devenir le maitre du temps et apprendre à le manipuler.
+</p>
+
+<h2 class="sectionedit1" id="le_format_temps">Le format temps</h2>
+<div class="level2">
+
+<p>
+Et si nous commencions par travailler avec votre date d&#039;anniversaire. Commençons par la rentrer dans notre environnement pour mieux la manipuler et obtenir des informations dessus.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+<span class="kw1">import</span> <span class="kw3">time</span>
+&nbsp;
+<span class="co1">#Date sous la forme d'une chaine de caractère comme on pourrait le lire dans un fichier</span>
+mon_annive <span class="sy0">=</span> <span class="st0">&quot;24-10-1998&quot;</span>
+mon_annive_melange <span class="sy0">=</span> <span class="st0">&quot;10/24/1998&quot;</span>
+&nbsp;
+<span class="co1">#Date transformée</span>
+date_mon_annive <span class="sy0">=</span> pd.<span class="me1">to_datetime</span><span class="br0">&#40;</span>mon_annive<span class="sy0">,</span> dayfirst<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span>
+date_mon_annive <span class="sy0">=</span> pd.<span class="me1">to_datetime</span><span class="br0">&#40;</span>mon_annive_melange<span class="sy0">,</span> format<span class="sy0">=</span><span class="st0">&quot;%m/%d/%Y&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Permet d'obtenir la date en secondes</span>
+second <span class="sy0">=</span> <span class="kw3">time</span>.<span class="me1">mktime</span><span class="br0">&#40;</span>date_mon_annive.<span class="me1">timetuple</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python"><span class="co1">#Date sous la forme d'une chaine de caractère comme on pourrait le lire dans un fichier</span>
+mon_annive_melange <span class="sy0">=</span> <span class="st0">&quot;10/24/1998&quot;</span>
+&nbsp;
+<span class="co1">#Date transformée</span>
+date <span class="sy0">=</span> <span class="kw1">as</span>.<span class="me1">Date</span><span class="br0">&#40;</span>x <span class="sy0">=</span> mon_annive_melange<span class="sy0">,</span> format <span class="sy0">=</span> <span class="st0">&quot;%m/%d/%Y&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Permet d'obtenir la date en secondes</span>
+format<span class="br0">&#40;</span>date<span class="sy0">,</span> <span class="st0">&quot;%s&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+Maintenant que nous sommes passés de la chaîne de caractères au format date nous pouvons en obtenir des informations et effectuer des opérations. 
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#On ajoute 10 jours après mon anniversaire</span>
+date_ajout <span class="sy0">=</span> date_mon_annive + <span class="kw3">datetime</span>.<span class="me1">timedelta</span><span class="br0">&#40;</span>days<span class="sy0">=</span><span class="nu0">10</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Nom du jour</span>
+date_ajout.<span class="me1">day_name</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Permet de savoir combien de temps me sépare de la mort d'Einstein (en jours)</span>
+date_mon_annive - pd.<span class="me1">to_datetime</span><span class="br0">&#40;</span><span class="st0">&quot;1955-04-18&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python"><span class="co1">#On ajoute 10 jours après mon anniversaire</span>
+date_ajout <span class="sy0">=</span> date + <span class="nu0">10</span>
+&nbsp;
+<span class="co1">#Nom du jour</span>
+weekdays<span class="br0">&#40;</span>date_ajout<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Permet de savoir combien de temps me sépare de la mort d'Einstein (en jours)</span>
+date - <span class="kw1">as</span>.<span class="me1">Date</span><span class="br0">&#40;</span><span class="st0">&quot;1955-04-18&quot;</span><span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le format temps&quot;,&quot;hid&quot;:&quot;le_format_temps&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;434-2106&quot;} -->
+<h2 class="sectionedit2" id="construire_les_series_temporelles">Construire les séries temporelles</h2>
+<div class="level2">
+
+<p>
+Vous savez maintenant manipuler une date et en tirez des informations mais quand est-il si vous aviez un ensemble de date à trier, manipuler, représenter ? On fait alors appelle aux séries temporelles qui permettent toutes ces opérations.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Amanipuler_les_series_temporelles&amp;media=cpp:bitcoin.jpg" class="media" title="cpp:bitcoin.jpg"><img src="/lib/exe/fetch.php?w=400&amp;tok=00c041&amp;media=cpp:bitcoin.jpg" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<p>
+Les données financières se prêtes particulièrement bien à ces études. N&#039;avez vous jamais voulu devenir un génis du bitcoin ? Alors allons-y… Vous pouvez trouver les données directement sur le site <a href="https://fr.finance.yahoo.com/quote/BTC-EUR/history?period1=1453593600&amp;period2=1611446400&amp;interval=1d&amp;filter=history&amp;frequency=1d&amp;includeAdjustedClose=true" class="urlextern" title="https://fr.finance.yahoo.com/quote/BTC-EUR/history?period1=1453593600&amp;period2=1611446400&amp;interval=1d&amp;filter=history&amp;frequency=1d&amp;includeAdjustedClose=true" rel="nofollow"> ici</a> ou sur nos répertoires ici.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Construire les s\u00e9ries temporelles&quot;,&quot;hid&quot;:&quot;construire_les_series_temporelles&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:2,&quot;range&quot;:&quot;2107-2825&quot;} -->
+<h3 class="sectionedit3" id="quelle_est_l_evolution_du_bitcoin_anuellement">Quelle est l&#039;évolution du bitcoin anuellement ?</h3>
+<div class="level3">
+
+<p>
+On commence par lire les données et garder pour simplifier que 2 colonnes, les dates et le volume associé. Ici les dates se trouvent directement dans le fichier, on va donc lire directement le fichier comme une série temporelle.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+data_original <span class="sy0">=</span> pd.<span class="me1">read_csv</span><span class="br0">&#40;</span><span class="st0">&quot;BTC-EUR.csv&quot;</span><span class="sy0">,</span> index_col<span class="sy0">=</span> <span class="st0">&quot;Date&quot;</span><span class="sy0">,</span> parse_dates<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span>
+data_empute <span class="sy0">=</span> data_original<span class="br0">&#91;</span><span class="st0">&quot;Volume&quot;</span><span class="br0">&#93;</span>
+data_empute.<span class="me1">plot</span><span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<div class='alert alert-info'><strong>Info :</strong> La librairie pandas même si on l&#039;utilise souvent pour créer et manipuler des DataFrame a été conçu à la base pour gérer les séries temporelles.</div>
+</p>
+
+<p>
+<em class="u">En R :</em>
+</p>
+
+<p>
+En R le parsing de la date est moins automatique, il faut au préalable indiquer le format de la date puis dans un second temps indique le format de chacune des colonnes. Enfin, il faut indiquer comment sont reconnues les valeurs manquantes.
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>zoo<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>dplyr<span class="br0">&#41;</span>
+&nbsp;
+setClass<span class="br0">&#40;</span><span class="st0">&quot;myDate&quot;</span><span class="br0">&#41;</span>
+setAs<span class="br0">&#40;</span><span class="st0">&quot;character&quot;</span><span class="sy0">,</span> <span class="st0">&quot;myDate&quot;</span><span class="sy0">,</span> function<span class="br0">&#40;</span><span class="kw1">from</span><span class="br0">&#41;</span> <span class="kw1">as</span>.<span class="me1">POSIXct</span><span class="br0">&#40;</span>strptime<span class="br0">&#40;</span><span class="kw1">from</span><span class="sy0">,</span><span class="st0">&quot;%Y-%m-%d&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+data_original <span class="sy0">=</span> read.<span class="kw3">csv</span><span class="br0">&#40;</span><span class="st0">&quot;BTC-EUR.csv&quot;</span><span class="sy0">,</span> na.<span class="me1">strings</span><span class="sy0">=</span><span class="st0">'null'</span><span class="sy0">,</span>
+         colClasses <span class="sy0">=</span> c<span class="br0">&#40;</span><span class="st0">&quot;myDate&quot;</span><span class="sy0">,</span><span class="st0">&quot;numeric&quot;</span><span class="sy0">,</span><span class="st0">&quot;numeric&quot;</span><span class="sy0">,</span><span class="st0">&quot;numeric&quot;</span><span class="sy0">,</span><span class="st0">&quot;numeric&quot;</span><span class="sy0">,</span><span class="st0">&quot;numeric&quot;</span><span class="sy0">,</span><span class="st0">&quot;numeric&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+data_empute <span class="sy0">=</span> data_original %<span class="sy0">&gt;</span>%
+  <span class="kw3">select</span><span class="br0">&#40;</span><span class="st0">&quot;Date&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Volume&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+time_serie <span class="sy0">=</span> zoo<span class="br0">&#40;</span>data_empute$Volume<span class="sy0">,</span> order.<span class="me1">by</span> <span class="sy0">=</span> data_empute$Date<span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>time_serie<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Amanipuler_les_series_temporelles&amp;media=cpp:evolution_anuelle_bitcoin.png" class="media" title="cpp:evolution_anuelle_bitcoin.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=d15f72&amp;media=cpp:evolution_anuelle_bitcoin.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<p>
+On remarque à première vue qu&#039;il n&#039;y a pas de tendance anuelle qui se dégage. On observe que la volatilité de la monnaie a augmenté concidérablement durant les 3 dernières années. Nous reviendrons plus tard sur la visualisation de la série temporelle.
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.imo.universite-paris-saclay.fr/~goude/Materials/time_series/cours1_R_serie_temp.pdf" class="urlextern" title="https://www.imo.universite-paris-saclay.fr/~goude/Materials/time_series/cours1_R_serie_temp.pdf" rel="nofollow">https://www.imo.universite-paris-saclay.fr/~goude/Materials/time_series/cours1_R_serie_temp.pdf</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Quelle est l&#039;\u00e9volution du bitcoin anuellement ?&quot;,&quot;hid&quot;:&quot;quelle_est_l_evolution_du_bitcoin_anuellement&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:3,&quot;range&quot;:&quot;2826-4650&quot;} -->
+<h3 class="sectionedit4" id="creer_la_serie_temporelle">Créer la série temporelle</h3>
+<div class="level3">
+
+<p>
+Il arrive parfois que nous ayons en notre possession les données mais pas les dates correspondantes. Dans ce cas, il va donc falloir créer nous même l&#039;index avec les dates. Nous allons travailler avec un dataset qui comptabilise le nombre de fois que le mot macron a été recherché sur Google malheureusement les mesures de temps ont été supprmées et il faut les ajouter. On sait seulement que les mesures sont hebdomadaires et ont commencé le 2020-02-16.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">data <span class="sy0">=</span> pd.<span class="me1">read_csv</span><span class="br0">&#40;</span><span class="st0">&quot;multiTimeline.csv&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#On récupère la taille du tableau lu pour connaître la longueur de l'index à créer</span>
+nb_element <span class="sy0">=</span> data.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+&nbsp;
+<span class="co1">#On génère l'index</span>
+index <span class="sy0">=</span> pd.<span class="me1">date_range</span><span class="br0">&#40;</span>start <span class="sy0">=</span><span class="st0">'2020-02-16'</span><span class="sy0">,</span> periods<span class="sy0">=</span> nb_element<span class="sy0">,</span> freq <span class="sy0">=</span> <span class="st0">&quot;W&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#On crée le dataFrame</span>
+data.<span class="me1">index</span> <span class="sy0">=</span> index</pre>
+
+<p>
+<div class='alert alert-info'> <strong>Info :</strong> Si vous avez besoin d&#039;aller chercher une autre fréquence vous pouvez vous référez au tableau <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#timeseries-offset-aliases" class="urlextern" title="https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#timeseries-offset-aliases" rel="nofollow"> ici</a>. </div>
+</p>
+
+<p>
+Il est possible que cet index ne vous convienne pas. C&#039;est pourquoi il peut être intéressant de l&#039;adapter pour que vous puissiez observer ce que vous souhaitez. Dans le cas où on rajouterait des observations il faut indiquer la technique utilisée.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Amanipuler_les_series_temporelles&amp;media=cpp:resampling_positif.png" class="media" title="cpp:resampling_positif.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=d12bfb&amp;media=cpp:resampling_positif.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> Cette technique est ré-utiliser plus généralement pour combler les valeurs manquantes dans les jeux de données incomplets. </div>
+</p>
+<pre class="code python"><span class="co1">#Re-index avec une mesure toutes les 2 semaines</span>
+weekly_dates <span class="sy0">=</span> pd.<span class="me1">date_range</span><span class="br0">&#40;</span>start <span class="sy0">=</span> <span class="st0">'2020-02-16'</span><span class="sy0">,</span> periods <span class="sy0">=</span> <span class="nu0">26</span><span class="sy0">,</span> freq <span class="sy0">=</span> <span class="st0">'2W'</span><span class="br0">&#41;</span>
+data.<span class="me1">reindex</span><span class="br0">&#40;</span>weekly_dates<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Re-index avec une mesure tout les 4 jours</span>
+index <span class="sy0">=</span> pd.<span class="me1">date_range</span><span class="br0">&#40;</span>start <span class="sy0">=</span><span class="st0">'2020-02-16'</span><span class="sy0">,</span> periods<span class="sy0">=</span> <span class="nu0">91</span><span class="sy0">,</span> freq <span class="sy0">=</span> <span class="st0">&quot;4D&quot;</span><span class="br0">&#41;</span>
+data.<span class="me1">reindex</span><span class="br0">&#40;</span>index<span class="sy0">,</span> method <span class="sy0">=</span> <span class="st0">'nearest'</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+
+<p>
+Le resampling n&#039;est pas facilement mis en place en R malheureusement. 
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>zoo<span class="br0">&#41;</span>
+data <span class="sy0">=</span> read.<span class="kw3">csv</span><span class="br0">&#40;</span><span class="st0">&quot;multiTimeline.csv&quot;</span><span class="br0">&#41;</span>
+nb_element <span class="sy0">=</span> longudim<span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>
+index_col <span class="sy0">=</span> seq<span class="br0">&#40;</span><span class="kw1">from</span> <span class="sy0">=</span> <span class="kw1">as</span>.<span class="me1">Date</span><span class="br0">&#40;</span><span class="st0">&quot;16/02/20&quot;</span><span class="sy0">,</span> <span class="st0">&quot;%d/%m/%y&quot;</span><span class="br0">&#41;</span><span class="sy0">,</span> by <span class="sy0">=</span> <span class="st0">&quot;week&quot;</span><span class="sy0">,</span> length.<span class="me1">out</span> <span class="sy0">=</span> <span class="nu0">52</span><span class="br0">&#41;</span>
+time_serie <span class="sy0">=</span>zoo<span class="br0">&#40;</span>data<span class="sy0">,</span> order.<span class="me1">by</span> <span class="sy0">=</span> index_col<span class="br0">&#41;</span></pre>
+
+<p>
+On peut maintenant facilement observer la série avec la fonction <strong>plot</strong> présente dans les deux langages.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Cr\u00e9er la s\u00e9rie temporelle&quot;,&quot;hid&quot;:&quot;creer_la_serie_temporelle&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:4,&quot;range&quot;:&quot;4651-6945&quot;} -->
+<h3 class="sectionedit5" id="visualiser_la_serie_temporelle">Visualiser la série temporelle</h3>
+<div class="level3">
+
+<p>
+Lire le dataframe comme une série temporelle nous permet de mieux représenter le représenter et ainsi aide à la prise de décision.  Nous allons essayé ici de décrire d&#039;autres façon de représenter les données tout aussi intéressante.
+</p>
+<pre class="code python"><span class="co1">#Python</span>
+data.<span class="me1">plot</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#R</span>
+plot<span class="br0">&#40;</span>time_serie<span class="br0">&#41;</span></pre>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Amanipuler_les_series_temporelles&amp;media=cpp:macron_temps.png" class="media" title="cpp:macron_temps.png"><img src="/lib/exe/fetch.php?w=450&amp;tok=9b64eb&amp;media=cpp:macron_temps.png" class="mediacenter" alt="" width="450" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Visualiser la s\u00e9rie temporelle&quot;,&quot;hid&quot;:&quot;visualiser_la_serie_temporelle&quot;,&quot;codeblockOffset&quot;:9,&quot;secid&quot;:5,&quot;range&quot;:&quot;6946-&quot;} -->

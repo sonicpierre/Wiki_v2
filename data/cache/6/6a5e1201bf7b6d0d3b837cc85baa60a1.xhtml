@@ -1,0 +1,262 @@
+
+<p>
+<a href="/doku.php?id=cpp:ia" class="wikilink1" title="cpp:ia"> Machine Learning</a>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_clustering&amp;media=cpp:cluster.jpg" class="media" title="cpp:cluster.jpg"><img src="/lib/exe/fetch.php?w=470&amp;tok=c64692&amp;media=cpp:cluster.jpg" class="mediacenter" alt="" width="470" /></a>
+</p>
+
+<p>
+ Plusieurs types de données doivent être <span style='color:#ed1c24; '><strong>explorés et préparés</strong></span> avant de pouvoir appliquer les <span style='color:#ed1c24; '><strong>algorithmes</strong></span> de traitement et <span style='color:#ed1c24; '><strong>prédiction</strong></span> :
+</p>
+<ul>
+<li class="level1"><div class="li"> Les données <span style='color:#ed1c24; '><strong>qualifiées</strong></span> (qui ont déjà une étiquette), dans ce cas on peut <span style='color:#ed1c24; '><strong>directement</strong></span> préparer les données pour les algorithmes de classification comme les <span style='color:#ed1c24; '><strong>arbres ou les Support Vector Machin (SVM)</strong></span>.</div>
+</li>
+<li class="level1"><div class="li"> Les données <span style='color:#ed1c24; '><strong>non qualifiées</strong></span> et dans ce cas il est nécessaire de <span style='color:#ed1c24; '><strong>trouver les étiquettes</strong></span> avant d&#039;appliquer un algorithme.</div>
+</li>
+</ul>
+
+<p>
+<div class='alert alert-info'><strong>Définition</strong> : Une étiquette est une variable cible que l&#039;on essaie de prédire en fonction des autres variables (exogènes). </div>
+</p>
+
+<p>
+Le clustering est une méthode d&#039;apprentissage <span style='color:#ed1c24; '><strong>non supervisée</strong></span> qui répond au second cas. La machine va apprendre toute seule  à <span style='color:#ed1c24; '><strong>reconnaître</strong></span> les différents groupements de données en identifiant des <span style='color:#ed1c24; '><strong>“nuages” de données</strong></span>.
+</p>
+
+<h2 class="sectionedit1" id="les_differents_algorithmes_de_clustering">Les différents algorithmes de clustering</h2>
+<div class="level2">
+
+<p>
+Il existe de <span style='color:#ed1c24; '><strong>nombreux algorithmes utiles</strong></span> pour faire du clustering;  nous verrons ici les plus connus.
+</p>
+
+<p>
+<div class='alert alert-info'> <strong>Info :</strong> il est préférable de centrer et réduire ses données avant d&#039;appliquer un algorithme de clustering.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les diff\u00e9rents algorithmes de clustering&quot;,&quot;hid&quot;:&quot;les_differents_algorithmes_de_clustering&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1215-1533&quot;} -->
+<h3 class="sectionedit2" id="les_algorithmes_classiques">Les algorithmes classiques</h3>
+<div class="level3">
+
+<p>
+Commençons par les algorithmes classiques qui sont intéressants dans le cadre de l&#039;exploration de données et qui sont très efficaces quand on peut distinguer des nuages de données circulaires :
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="/doku.php?id=cpp:le_k-means" class="wikilink1" title="cpp:le_k-means"> Introduction avec K-means</a></div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> <a href="/doku.php?id=cpp:le_cah" class="wikilink1" title="cpp:le_cah"> Le CAH et Mean Shift</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les algorithmes classiques&quot;,&quot;hid&quot;:&quot;les_algorithmes_classiques&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;1534-1864&quot;} -->
+<h3 class="sectionedit3" id="gerer_les_clusters_de_forme_exotique">Gérer les clusters de forme exotique</h3>
+<div class="level3">
+
+<p>
+Les algorithmes classiques ont leurs limites et nous allons ici développer quelques méthodes permettant de gérer les clusters de taille moins conventionnelle.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_clustering&amp;media=cpp:comparaisonclusteringdensite.png" class="media" title="cpp:comparaisonclusteringdensite.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=3fa7d5&amp;media=cpp:comparaisonclusteringdensite.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="/doku.php?id=cpp:la_methode_a_densite" class="wikilink1" title="cpp:la_methode_a_densite"> Les algorithmes à densité</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;G\u00e9rer les clusters de forme exotique&quot;,&quot;hid&quot;:&quot;gerer_les_clusters_de_forme_exotique&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;1865-2191&quot;} -->
+<h3 class="sectionedit4" id="d_autre_algorithmes">D&#039;autre algorithmes</h3>
+<div class="level3">
+
+<p>
+Savoir combien il y a de clusters c&#039;est bien mais savoir quelle est la probabilité que chacune des observations appartienne à un cluster c&#039;est mieux ! Détaillons ici un algorithme permettant de le découvrir : 
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="/doku.php?id=cpp:gaussian_mixture_models" class="wikilink1" title="cpp:gaussian_mixture_models"> Gaussian Mixture Models</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;D&#039;autre algorithmes&quot;,&quot;hid&quot;:&quot;d_autre_algorithmes&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;2192-2502&quot;} -->
+<h2 class="sectionedit5" id="autre_utilisation">Autre utilisation</h2>
+<div class="level2">
+
+<p>
+Le clustering permet d&#039;étiqueter les données mais a aussi d&#039;autres utilisations qu&#039;il est intéressant d&#039;expliciter. Les utilisations sont nombreuses et nous n&#039;en donnerons ici qu&#039;un avant-goût. 
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Autre utilisation&quot;,&quot;hid&quot;:&quot;autre_utilisation&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;2503-2730&quot;} -->
+<h3 class="sectionedit6" id="le_traitement_d_image">Le traitement d&#039;image</h3>
+<div class="level3">
+
+<p>
+Il est souvent <span style='color:#ed1c24; '><strong>difficile</strong></span> de <span style='color:#ed1c24; '><strong>traiter des images</strong></span> car elles sont parfois trop <span style='color:#ed1c24; '><strong>complexes</strong></span> à cause du nombre de <span style='color:#ed1c24; '><strong>couleurs</strong></span> qui les compose. Chacun des pixels est représenté par une <span style='color:#ed1c24; '><strong>combinaison RVB</strong></span> ce qui amène une grande complexité. Nous allons utiliser l&#039;<span style='color:#ed1c24; '><strong>algorithme des K-Means</strong></span> pour essayer de <span style='color:#ed1c24; '><strong>simplifier l&#039;image</strong></span>.
+</p>
+
+<p>
+Nous allons repérer les couleurs les plus représentatives de l&#039;image et nous remplacerons chacune des couleurs par celle qui la représente le plus. Commençons par charger l&#039;image :
+</p>
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> je vous invite à choisir votre propre image sur Internet.</div>
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> matplotlib.<span class="me1">image</span> <span class="kw1">as</span> mpimg
+<span class="kw1">import</span> matplotlib.<span class="me1">pyplot</span> <span class="kw1">as</span> plt
+&nbsp;
+img <span class="sy0">=</span> mpimg.<span class="me1">imread</span><span class="br0">&#40;</span><span class="st0">&quot;lama_clustering.jpg&quot;</span><span class="br0">&#41;</span>
+<span class="co1"># plt.imshow(img) pour visualiser l'image</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span><span class="kw3">jpeg</span><span class="br0">&#41;</span>
+img <span class="sy0">&lt;</span>- readJPEG<span class="br0">&#40;</span><span class="st0">&quot;lama.jpg&quot;</span><span class="br0">&#41;</span>
+imgDm <span class="sy0">&lt;</span>- dim<span class="br0">&#40;</span>img<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># On transforme en un dataframe clair</span>
+imgRGB <span class="sy0">&lt;</span>- data.<span class="me1">frame</span><span class="br0">&#40;</span>
+    x <span class="sy0">=</span> rep<span class="br0">&#40;</span><span class="nu0">1</span>:imgDm<span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span><span class="sy0">,</span> each <span class="sy0">=</span> imgDm<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    y <span class="sy0">=</span> rep<span class="br0">&#40;</span>imgDm<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>:<span class="nu0">1</span><span class="sy0">,</span> imgDm<span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    R <span class="sy0">=</span> <span class="kw1">as</span>.<span class="me1">vector</span><span class="br0">&#40;</span>img<span class="br0">&#91;</span><span class="sy0">,,</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    G <span class="sy0">=</span> <span class="kw1">as</span>.<span class="me1">vector</span><span class="br0">&#40;</span>img<span class="br0">&#91;</span><span class="sy0">,,</span><span class="nu0">2</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    B <span class="sy0">=</span> <span class="kw1">as</span>.<span class="me1">vector</span><span class="br0">&#40;</span>img<span class="br0">&#91;</span><span class="sy0">,,</span><span class="nu0">3</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+<span class="br0">&#41;</span></pre>
+
+<p>
+Nous allons maintenant <span style='color:#ed1c24; '><strong>remodeler</strong></span> un peu l&#039;image pour qu&#039;elle soit sous la forme d&#039;une <span style='color:#ed1c24; '><strong>liste de pixels</strong></span> ayants 3 valeurs, <span style='color:#ed1c24; '><strong>rouge, vert et bleu</strong></span>. Ensuite on entraîne l&#039;algorithme des <span style='color:#ed1c24; '><strong>K-Means</strong></span> pour trouver les couleurs les plus représentatives de l&#039;image. On <span style='color:#ed1c24; '><strong>remplace</strong></span> enfin chacun des pixels par son <span style='color:#ed1c24; '><strong>centre le plus proche</strong></span> et on reforme l&#039;image pour l&#039;afficher.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">X <span class="sy0">=</span> img.<span class="me1">reshape</span><span class="br0">&#40;</span>-<span class="nu0">1</span><span class="sy0">,</span><span class="nu0">3</span><span class="br0">&#41;</span>
+kmeans <span class="sy0">=</span> KMeans<span class="br0">&#40;</span>n_clusters<span class="sy0">=</span><span class="nu0">12</span><span class="br0">&#41;</span>.<span class="me1">fit</span><span class="br0">&#40;</span>X<span class="br0">&#41;</span>
+segmented_img <span class="sy0">=</span> kmeans.<span class="me1">cluster_centers_</span><span class="br0">&#91;</span>kmeans.<span class="me1">labels_</span><span class="br0">&#93;</span>
+segmented_img <span class="sy0">=</span> segmented_img.<span class="me1">reshape</span><span class="br0">&#40;</span>img.<span class="me1">shape</span><span class="br0">&#41;</span>
+plt.<span class="me1">imshow</span><span class="br0">&#40;</span><span class="br0">&#40;</span>segmented_img * <span class="nu0">255</span><span class="br0">&#41;</span>.<span class="me1">astype</span><span class="br0">&#40;</span>np.<span class="me1">uint8</span><span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>ggplot2<span class="br0">&#41;</span>
+kClusters <span class="sy0">&lt;</span>- <span class="nu0">12</span>
+kMeans <span class="sy0">&lt;</span>- kmeans<span class="br0">&#40;</span>imgRGB<span class="br0">&#91;</span><span class="sy0">,</span> c<span class="br0">&#40;</span><span class="st0">&quot;R&quot;</span><span class="sy0">,</span> <span class="st0">&quot;G&quot;</span><span class="sy0">,</span> <span class="st0">&quot;B&quot;</span><span class="br0">&#41;</span><span class="br0">&#93;</span><span class="sy0">,</span> centers <span class="sy0">=</span> kClusters<span class="br0">&#41;</span>
+kColours <span class="sy0">&lt;</span>- rgb<span class="br0">&#40;</span>kMeans$centers<span class="br0">&#91;</span>kMeans$cluster<span class="sy0">,</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+ggplot<span class="br0">&#40;</span>data <span class="sy0">=</span> imgRGB<span class="sy0">,</span> aes<span class="br0">&#40;</span>x <span class="sy0">=</span> x<span class="sy0">,</span> y <span class="sy0">=</span> y<span class="br0">&#41;</span><span class="br0">&#41;</span> + 
+    geom_point<span class="br0">&#40;</span>colour <span class="sy0">=</span> kColours<span class="br0">&#41;</span> +
+    labs<span class="br0">&#40;</span>title <span class="sy0">=</span> paste<span class="br0">&#40;</span><span class="st0">&quot;k-Means Clustering of&quot;</span><span class="sy0">,</span> kClusters<span class="sy0">,</span> <span class="st0">&quot;Colours&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> +
+    xlab<span class="br0">&#40;</span><span class="st0">&quot;x&quot;</span><span class="br0">&#41;</span> +
+    ylab<span class="br0">&#40;</span><span class="st0">&quot;y&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+Ici, on a fait varier un peu le nombre de clusters pour voir comment évoluait l&#039;image :
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_clustering&amp;media=cpp:traitement_image_kmeans.png" class="media" title="cpp:traitement_image_kmeans.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=65c32e&amp;media=cpp:traitement_image_kmeans.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.quantmetry.com/initiation-au-clustering/" class="urlextern" title="https://www.quantmetry.com/initiation-au-clustering/" rel="nofollow">https://www.quantmetry.com/initiation-au-clustering/</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://ensip.gitlab.io/pages-info/ressources/transverse/tuto_images.html" class="urlextern" title="https://ensip.gitlab.io/pages-info/ressources/transverse/tuto_images.html" rel="nofollow">https://ensip.gitlab.io/pages-info/ressources/transverse/tuto_images.html</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.r-bloggers.com/2014/09/r-k-means-clustering-on-an-image/#:~:text=k%2Dmeans%20clustering%20aims%20to,a%20prototype%20of%20the%20cluster." class="urlextern" title="https://www.r-bloggers.com/2014/09/r-k-means-clustering-on-an-image/#:~:text=k%2Dmeans%20clustering%20aims%20to,a%20prototype%20of%20the%20cluster." rel="nofollow">https://www.r-bloggers.com/2014/09/r-k-means-clustering-on-an-image/#:~:text=k%2Dmeans%20clustering%20aims%20to,a%20prototype%20of%20the%20cluster.</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le traitement d&#039;image&quot;,&quot;hid&quot;:&quot;le_traitement_d_image&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;2731-5664&quot;} -->
+<h3 class="sectionedit7" id="generer_des_images">Générer des images</h3>
+<div class="level3">
+
+<p>
+Si nous sommes capables de connaître, pour chacun des <span style='color:#ed1c24; '><strong>clusters, la loi de probabilité</strong></span> qui régit la distribution des observations nous pouvons <span style='color:#ed1c24; '><strong>générer</strong></span> de nouvelles observations !! Nous pouvons donc créer des données qui respectent la distribution et, donc, <span style='color:#ed1c24; '><strong>agrandir notre dataset</strong></span>. Nous pourrons ainsi <span style='color:#ed1c24; '><strong>entraîner</strong></span> notre modèle sur un <span style='color:#ed1c24; '><strong>plus grand dataset</strong></span> et obtenir, par la suite, de <span style='color:#ed1c24; '><strong>meilleurs estimations</strong></span>.
+</p>
+
+<p>
+Prenons comme exemple un dataset MNIST utilisé pour la reconnaissance de chiffres écrits à la main :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">datasets</span> <span class="kw1">import</span> fetch_openml
+digits <span class="sy0">=</span> fetch_openml<span class="br0">&#40;</span><span class="st0">'mnist_784'</span><span class="sy0">,</span> version <span class="sy0">=</span> <span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#91;</span><span class="st0">'data'</span><span class="br0">&#93;</span>
+&nbsp;
+<span class="kw1">def</span> plot_digits<span class="br0">&#40;</span>data<span class="br0">&#41;</span>:
+    fig<span class="sy0">,</span> ax <span class="sy0">=</span> plt.<span class="me1">subplots</span><span class="br0">&#40;</span><span class="nu0">10</span><span class="sy0">,</span> <span class="nu0">10</span><span class="sy0">,</span> figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">10</span><span class="sy0">,</span> <span class="nu0">10</span><span class="br0">&#41;</span><span class="sy0">,</span>
+                           subplot_kw<span class="sy0">=</span><span class="kw2">dict</span><span class="br0">&#40;</span>xticks<span class="sy0">=</span><span class="br0">&#91;</span><span class="br0">&#93;</span><span class="sy0">,</span> yticks<span class="sy0">=</span><span class="br0">&#91;</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    fig.<span class="me1">subplots_adjust</span><span class="br0">&#40;</span>hspace<span class="sy0">=</span><span class="nu0">0.05</span><span class="sy0">,</span> wspace<span class="sy0">=</span><span class="nu0">0.05</span><span class="br0">&#41;</span>
+    <span class="kw1">for</span> i<span class="sy0">,</span> axi <span class="kw1">in</span> <span class="kw2">enumerate</span><span class="br0">&#40;</span>ax.<span class="me1">flat</span><span class="br0">&#41;</span>:
+        im <span class="sy0">=</span> axi.<span class="me1">imshow</span><span class="br0">&#40;</span>data<span class="br0">&#91;</span>i<span class="br0">&#93;</span>.<span class="me1">reshape</span><span class="br0">&#40;</span><span class="nu0">28</span><span class="sy0">,</span> <span class="nu0">28</span><span class="br0">&#41;</span><span class="sy0">,</span> cmap<span class="sy0">=</span><span class="st0">'binary'</span><span class="br0">&#41;</span>
+        im.<span class="me1">set_clim</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">16</span><span class="br0">&#41;</span>
+&nbsp;
+plot_digits<span class="br0">&#40;</span>digits<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">par<span class="br0">&#40;</span>mfrow<span class="sy0">=</span>c<span class="br0">&#40;</span><span class="nu0">5</span><span class="sy0">,</span><span class="nu0">5</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="kw1">for</span> <span class="br0">&#40;</span>i <span class="kw1">in</span> <span class="nu0">1</span>:<span class="nu0">25</span><span class="br0">&#41;</span><span class="br0">&#123;</span>
+    digit <span class="sy0">&lt;</span>- matrix<span class="br0">&#40;</span>digits<span class="br0">&#91;</span>i<span class="sy0">,</span><span class="br0">&#93;</span><span class="sy0">,</span> nrow <span class="sy0">=</span> <span class="nu0">28</span><span class="sy0">,</span> ncol <span class="sy0">=</span> <span class="nu0">28</span><span class="br0">&#41;</span>
+    image<span class="br0">&#40;</span>digit<span class="br0">&#91;</span><span class="sy0">,</span><span class="nu0">28</span>:<span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">,</span> col <span class="sy0">=</span> gray<span class="br0">&#40;</span><span class="nu0">255</span>:<span class="nu0">0</span> / <span class="nu0">255</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#125;</span></pre>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_clustering&amp;media=cpp:digit_mnist.png" class="media" title="cpp:digit_mnist.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=b19acb&amp;media=cpp:digit_mnist.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<p>
+On va ici entraîner l&#039;algorithme sur un échantillon pour que l&#039;algorithme s&#039;exécute en un temps raisonable. 
+<div class='alert alert-info'><strong>Info :</strong> l&#039;entraînement peut quand même prendre quelques minutes, tout dépend de la puissance de votre ordinateur. L&#039;algorithme restera néanmoins moins performant que celui des K-means.</div>
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">data <span class="sy0">=</span> digits<span class="br0">&#91;</span><span class="nu0">0</span>:<span class="nu0">10000</span><span class="sy0">,</span>:<span class="br0">&#93;</span>
+&nbsp;
+gmm <span class="sy0">=</span> GaussianMixture<span class="br0">&#40;</span><span class="nu0">100</span><span class="sy0">,</span> covariance_type<span class="sy0">=</span><span class="st0">'full'</span><span class="sy0">,</span> random_state<span class="sy0">=</span><span class="nu0">0</span><span class="br0">&#41;</span>
+gmm.<span class="me1">fit</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span>
+&nbsp;
+data_new <span class="sy0">=</span> gmm.<span class="me1">sample</span><span class="br0">&#40;</span><span class="nu0">100</span><span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+plot_digits<span class="br0">&#40;</span>digits_new<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+
+<p>
+En R, l&#039;algorithme classique (CRAN) ne permet pas la génération de données. Si vous voulez un package permettant plus de fonctionnalités, vous pouvez aller voir <a href="https://cran.rstudio.com/bin/windows/Rtools/" class="urlextern" title="https://cran.rstudio.com/bin/windows/Rtools/" rel="nofollow">ici</a>.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_clustering&amp;media=cpp:digit_generated.png" class="media" title="cpp:digit_generated.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=5f0c93&amp;media=cpp:digit_generated.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> il serait judicieux d&#039;appliquer une ACP vue <a href="/doku.php?id=cpp:acp" class="wikilink1" title="cpp:acp"> ici</a> avant d&#039;appliquer l&#039;algorithme. Ainsi, le nombre de dimensions en serait drastiquement réduit sans une grosse perte d&#039;informations. L&#039;algorithme serait plus rapide et pourrait être plus efficace.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;G\u00e9n\u00e9rer des images&quot;,&quot;hid&quot;:&quot;generer_des_images&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:7,&quot;range&quot;:&quot;5665-&quot;} -->

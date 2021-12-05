@@ -1,0 +1,3 @@
+model <span class="sy0">=</span> PCA<span class="br0">&#40;</span>n_components <span class="sy0">=</span> <span class="nu0">150</span><span class="br0">&#41;</span><span class="co1">#Création du modèle de réduction sur toutes les variables du dataset</span>
+X_reduced <span class="sy0">=</span> model.<span class="me1">fit_transform</span><span class="br0">&#40;</span>face<span class="br0">&#41;</span><span class="co1">#Compression de l'image sur les 150 premières composantes principales </span>
+X_recovered <span class="sy0">=</span> model.<span class="me1">inverse_transform</span><span class="br0">&#40;</span>X_reduced<span class="br0">&#41;</span><span class="co1">#Décompression de l'image</span>

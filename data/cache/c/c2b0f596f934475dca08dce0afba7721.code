@@ -1,0 +1,5 @@
+echantillon <span class="sy0">&lt;</span>- data.<span class="me1">frame</span><span class="br0">&#40;</span>linspace<span class="br0">&#40;</span>-<span class="nu0">15</span><span class="sy0">,</span><span class="nu0">15</span><span class="sy0">,</span><span class="nu0">10000</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+colnames<span class="br0">&#40;</span>echantillon<span class="br0">&#41;</span> <span class="sy0">&lt;</span>- <span class="st0">&quot;X&quot;</span>
+prediction <span class="sy0">&lt;</span>- rpart.<span class="me1">predict</span><span class="br0">&#40;</span>modele<span class="sy0">,</span> newdata <span class="sy0">=</span> echantillon<span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>X<span class="sy0">,</span>y<span class="br0">&#41;</span>
+lines<span class="br0">&#40;</span>linspace<span class="br0">&#40;</span>-<span class="nu0">15</span><span class="sy0">,</span><span class="nu0">15</span><span class="sy0">,</span><span class="nu0">10000</span><span class="br0">&#41;</span><span class="sy0">,</span> prediction<span class="br0">&#41;</span>

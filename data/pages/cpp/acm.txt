@@ -1,0 +1,84 @@
+L'Analyse des Correspondances Multiples est une méthode  qui permet d'étudier les corrélations entre au moins **trois variables exclusivement qualitatives** (pour deux variables qualitatives, on utilise une méthode appelée AFC). 
+
+De la même manière que [[https://llamaspartan.fr/doku.php?id=cpp:acp|l'Analyse en Composantes Principales]], elle permet : 
+  * Une représentation des similitudes entre les observations et chacune des modalités prises par les variables (<fc #00ff00>Ex :</fc> La variable taille peut prendre les modalités : petit, moyen, grand).
+  * La transformation des données, précédant une tâche de classification.
+
+Cette méthode est généralement utilisée pour analyser les données issues d'une enquête ou d'un sondage.
+
+====Traitement des données pour une ACM====
+
+<alert info> **Dataset :** On va utiliser l'enquête réalisée dans des crèches slovène durant les années 80. Elle est disponible sur la plateforme [[https://archive.ics.uci.edu/ml/datasets/Nursery|Machine Learning Repository]]. Le dataset présente une variable quantitative que nous avons pris soin de supprimer.</alert>
+
+Comme mentionné précédemment, cette méthode est utilisée dans un contexte d'enquête ou de sondage. Ainsi, les jeux de données qu'on aura à notre disposition seront semblables à celui-ci :
+
+{{ :cpp:donnees_qualitatives.png?500 |Jeu de données à variables qualitatives}}
+
+;#;**Figure 1 :** Jeu de données à variables qualitatives
+;#;
+
+Une fois les données mises en forme, on construit un tableau appelé **Tableau Disjonctif Complet**. Cette transformation repose sur le [[https://llamaspartan.fr/doku.php?id=cpp:preprocessing_et_encodage#encodage_one-hot|principe de l'encodage One-Hot]].
+
+Le but est de créer, pour chaque variable à $n$ modalités,  $n$ nouvelles variables binaires correspondant à chaque modalité.
+
+{{ :cpp:tableau_disjonctif_complet.png?900 |Exemple de tableau disjonctif complet}}
+
+;#;**Figure 2 :** Transformation en tableau disjonctif complet
+;#;
+
+<alert info> **Remarque :** Avant toute ACM, il est nécessaire de faire une étude de chaque variable afin de vérifier si toutes les modalités sont bien représentées. En effet cette méthode est sensible aux classes déséquilibrées, c'est pourquoi il  vaut mieux regrouper  les modalités peu représentées.</alert>
+
+
+L'ACM permettra de réunir les individus selon la distance de leurs modalités. Ainsi deux observations seront définies comme proches si elles ont les mêmes modalités (inversement pour deux individus éloignés).  Le but de cette analyse sera donc d'étudier la **variabilité des individus**.
+
+<fc #ff0000>Mais alors par quel moyen mesure-t-on si deux individus sont proches ou non ?</fc>
+
+**Mesure de distance**
+
+En ACM, on utilise le test du <fc #ff0000>Chi-deux</fc> pour comparer deux individus ou deux modalités.  On va travailler avec :   
+  * Un risque $\alpha = 5%$
+  * H0 les individus/modalités sont indépendantes
+  * H1 les individus/modalités ne sont pas indépendantes
+
+<alert warning> **Remarque :** Le test du Chi-deux est un test de dépendance entre deux variables qualitatives. En terme d'acceptation, plus le score de dépendance sera élevé, plus les variables seront indépendantes.</alert>
+
+====Distance entre deux individus====
+
+Soit M un tableau disjonctif complet de dimension $n \times p$. Si on considère **i et i* deux individus**, alors la distance entre les deux est donnée par : 
+
+$$d^{2}(i,i^{*}) = \sum_{j = 1}^{n}  \frac{1}{\frac{n_{j}}{n \times p}} (\frac{M_{i,j} }{p}- \frac{M_{i^{*},j}}{p})^{2} $$
+
+^      Paramètre        ^ Signification^
+|  $n$  | Nombre de lignes |
+|   $p$     | Valeur de la somme des composantes unitaires de chaque ligne |
+|    $n_{j}$     | Nombre d'individus possédant la modalité $j$ |
+|    $M_{i,j}$     | Valeur de la j-ième colonne pour l'individu i |
+
+Pour vous donner un exemple, calculons la distance entre Sophie et Romain.
+
+{{ :cpp:sophie_ro.png?600 |Exemple avec calcul des paramètres}}
+
+Le carré de la distance entre les deux est donné par : 
+
+{{ :cpp:distanceso.png?700 |Carré de la distance entre Sophie et Romain}}
+====Distance entre deux modalités====
+
+Soit M un tableau disjonctif complet de dimension $n \times p$. Si on considère **i et i* deux modalités**, alors la distance entre les deux est donnée par : 
+
+$$d^{2}(i,i^{*}) = \sum_{j = 1}^{n}  \frac{1}{\frac{1}{n}} (\frac{M_{i,j}}{n_{j}} - \frac{M_{i^{*},j}}{n_{j^{*}}})^{2} $$
+
+^      Paramètre        ^ Signification^
+|  $n$  | Nombre de lignes |
+|   $p$     | Nombre de colonnes|
+|    $n_{j{*}}$     | Nombre d'individus possédant la modalité $j^{*}$ |
+|    $M_{i,j}$     | Valeur de la j-ième colonne pour l'individu i |
+
+====Inertie totale====
+
+Cette mesure permet d'identifier la dispersion totale des individus dans l'ACM. 
+
+
+==Sources==
+  * [[https://fr.wikipedia.org/wiki/Test_du_%CF%87%C2%B2#:~:text=X%20en%20pr%C3%A9sence.-,Test%20du%20%CF%872%20d'ind%C3%A9pendance,deux%20variables%20X%20et%20Y.&text=En%20termes%20de%20valeur%20p%2C%20l'hypoth%C3%A8se%20nulle%20est%20g%C3%A9n%C3%A9ralement,lorsque%20p%20%E2%89%A4%200%2C05.| Wikipédia, Test du χ²]]
+  * [[http://www.math.u-bordeaux.fr/~mchave100p/wordpress/wp-content/uploads/2013/10/ACM.pdf| Marie Chavent, Université de Bordeaux]]
+  * [[https://eric.univ-lyon2.fr/~ricco/cours/slides/ACM.pdf|Ricco RAKOTOMALALA, Université de Lyon 2]]

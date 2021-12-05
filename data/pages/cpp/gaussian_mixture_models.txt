@@ -1,0 +1,132 @@
+[[cpp:Le Clustering | Le Clustering]]
+
+{{ :cpp:gmm.gif?380 |}}
+\\
+L'algorithme <color #ed1c24>**Gaussian Mixture Models**</color> (GMM) peut être vu comme une amélioration de l'algorithme des K-Means. En effet, quand on associe des observations à un cluster avec les K-Means on <color #ed1c24>**ne connaît pas la probabilité**</color> pour chacune d'entre elles <color #ed1c24>**d'appartenir au cluster prédit**</color>.
+
+**Source :**
+  * [[https://towardsdatascience.com/the-5-clustering-algorithms-data-scientists-need-to-know-a36d136ef68]]
+
+=====L'algorithme et son paramétrage=====
+
+Nous allons générer les données nécessaires à l'entrainement de notre modèle. Contrairement à l'algorithme de KMeans, nous allons générer des observations qui ne sont pas forcément circulaires.
+
+__En Python :__
+
+<code python>
+from sklearn.datasets import make_moons
+Xmoon = make_moons(n_samples=500, noise = 0.09)[0]
+Xmoon = pd.DataFrame(Xmoon)
+</code>
+
+__En R :__
+
+<code python>
+library(dbscan)
+data("moons")
+</code>
+====L'algorithme====
+
+L'algorithme GMM est basé sur l'algorithme EM (Espérance et Maximisation).  À chaque itération, l'algorithme va appliquer la partie Espérance puis la partie Maximisation tour après tour :
+
+  * <color #ed1c24>**Espérance :**</color> dans cette phase, l'algorithme estime, pour chaque observation, la probabilité qu'elle appartienne à chacun des clusters en fonction des paramètres du cluster.
+
+  * <color #ed1c24>**Maximisation :**</color> on met à jour les paramètres du cluster en utilisant les observations pondérées par leur probabilité. On appelle chacune de ces probabilités les responsabilités des clusters. La maximisation sera très influencée par les observations dont le cluster est très responsable.  
+
+__En Python :__
+
+<code python>
+from sklearn.mixture import GaussianMixture
+GMM = GaussianMixture(6, covariance_type='full', random_state=0).fit(Xmoon)
+</code>
+
+__En R :__
+
+<code python>
+library(ClusterR)
+gmm = GMM(moons, gaussian_comps = 4)
+prediction = predict_GMM(moons, gmm$centroids, gmm$covariance_matrices, gmm$weights)
+plot(moons, col = prediction$cluster_labels)
+</code>
+
+{{ :cpp:gmm_result.png?400 |}}
+
+<alert warning>**Remarque :** on voit rapidement que les résultats ne sont pas formidables  c'est pourquoi l'algorithme doit d'abord être vu comme une possibilité d'estimer la fonction de densité. Puis, dans un second temps, il peut être utilisé  pour faire du clustering dans certains cas spécifiques.</alert>
+
+**Source :**
+  * [[https://www.ics.uci.edu/~smyth/courses/cs274/notes/EMnotes.pdf]]
+====Choisir la bonne covariance====
+L'entrainement d'un algorithme de GMM repose sur un paramètre important : le **covariance_type** qui permet d'ajuster la forme du cluster en modifiant la matrice de covariance calculée :
+
+{{ :cpp:gmm_covariance.png?800 |}}
+
+^  Les covariances  ^  Signification  ^
+|  Full  | Chaque cluster peut être d'une taille quelconque. |
+|  Spherical  | Les clusters sont sphériques mais peuvent être de taille différente.|
+|  Diag  | Les clusters peuvent être ellipsoïdaux, de tailles différentes mais les axes ellipsoïdes doivent être parallèles.|
+|  Tied  | Tous les clusters doivent être de la même taille, de la même orientation et de la même forme donc avoir la même matrice de covariance. |
+
+<color #ed1c24>Faire varier ce paramètre fait aussi varier la complexité de l'algorithme !</color>
+
+En effet, en appliquant les arguments **spherical** et **diag**, l'algorithme va avoir une complexité en $O(kmn)$ avec k le nombre de clusters, m le nombre d'observations et n le nombre de variables. En appliquant les arguments **tied** et **full**, l'algorithme aura une complexité de $O(kmn^2 + kn^3)$. Il est donc nécessaire de choisir le critère en fonction du dataset.
+
+**Source :**
+  * [[https://jakevdp.github.io/PythonDataScienceHandbook/05.12-gaussian-mixtures.html]]
+
+=====Evaluation du modèle=====
+
+Il revient, encore une fois, la problématique liée au choix du nombre de centres de <color #ed1c24>**clusters à l'initialisation**</color>. Nous allons présenter deux <color #ed1c24>**nouveaux indices**</color> mieux adaptés aux clusters ovales. Ils vous permettront de mieux juger de la <color #ed1c24>**pertinence de votre partitionnement**</color>.
+====Les différents critères de choix====
+
+Le critère d'information d'Akaike ou le critère d'information baysienne viennent de la théorie de l'information. Ils ne sont pas seulement utilisés dans l'évaluation de cet algorithme mais aussi, plus largement, pour évaluer de manière générale les modèles et les comparer entre eux.
+
+**Théorie Akaike :** 
+
+$$AIC = 2p - 2 log(L)$$
+
+^  Théorie  ^  Signification  ^
+|  p  |  Nombre de paramètres appris par le modèle  |
+|  L  |  Fonction de vraisemblance du modèle  |
+
+**Théorie Baysienne :**
+
+$$BIC = log(m)p - 2 log(L)$$
+
+<color #ed1c24>**Minimiser ces indices**</color> revient à augmenter les performances du modèle. Notons que le BIC aura tendance à minimiser plus le nombre de paramètres tandis que le AIC ajustera souvent mieux les données. Faisons varier le nombre de centres à l'initialisation pour voir l'évolution du nombre des critères.
+
+__En Python :__
+
+<code python>
+n_components = np.arange(1, 21)
+
+models = [GaussianMixture(n, covariance_type='full', random_state=0).fit(Xmoon)
+          for n in n_components]
+
+plt.plot(n_components, [m.bic(Xmoon) for m in models], label='BIC')
+plt.plot(n_components, [m.aic(Xmoon) for m in models], label='AIC')
+plt.legend(loc='best')
+plt.xlabel('n_components');
+</code>
+
+__En R :__
+
+<code python>
+gmmAIC = Optimal_Clusters_GMM(moons, criterion = "AIC", max_clusters = 8)
+gmmBIC = Optimal_Clusters_GMM(moons, criterion = "BIC", max_clusters = 8)
+
+plot(gmmAIC, type = "b", col = "blue", xlab="Nombre de clusters", ylab="Score AIC")
+lines(gmmBIC, pch=18, col="red", type="b", lty=2)
+
+legend(5, 550, legend=c("Evolution du AIC", "Evolution du BIC"), col=c("blue", "red"), lty=1:2, cex=0.9)
+</code>
+
+**Résultat :**
+
+{{ :cpp:gmm_aikake_bic.png?500 |}}
+
+On choisira ici de prendre 6 clusters car ils correspondent aux minima des fonctions.
+
+**Source :**
+  * [[http://www.jybaudot.fr/Stats/aic.html]]
+
+

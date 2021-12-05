@@ -1,0 +1,11 @@
+====== Trucs & Astuces en Bash ======
+
+===== Afficher tout les arguments passés en paramètre du script =====
+<code bash>
+#!/bin/bash
+
+while test $# -gt 0 ; do
+        echo $1
+        shift
+done
+</code>

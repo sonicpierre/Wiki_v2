@@ -1,0 +1,338 @@
+
+<p>
+<a href="/doku.php?id=cpp:commande_systeme" class="wikilink1" title="cpp:commande_systeme"> Commandes système</a>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ales_flux_et_les_processus&amp;media=cpp:lesfluxs.jpg" class="media" title="cpp:lesfluxs.jpg"><img src="/lib/exe/fetch.php?w=500&amp;tok=d1bc5c&amp;media=cpp:lesfluxs.jpg" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<h2 class="sectionedit1" id="les_flux">Les flux</h2>
+<div class="level2">
+
+<p>
+Quand on tape une commande, le résultat s&#039;affiche généralement dans la <span style="color:#008000;"><strong>console</strong></span>, comme pour <span style="color:#800000;"><strong>ls/dir</strong></span> par exemple. Cependant, il est possible de <span style="color:#ff0000;"><strong>rediriger</strong></span> cette sortie dans un <span style="color:#008000;"><strong>fichier</strong></span> ou dans une <span style="color:#008000;"><strong>autre commande</strong></span>.
+</p>
+
+<p>
+Le but de cette partie sera de remplir les fichiers de <span style="color:#fa8072;"><strong>Valkyries</strong></span> de texte pour faire un dialogue entre elles.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les flux&quot;,&quot;hid&quot;:&quot;les_flux&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;78-546&quot;} -->
+<h3 class="sectionedit2" id="rediriger_la_sortie">Rediriger la sortie &gt;</h3>
+<div class="level3">
+
+<p>
+Vous serez surpris de savoir que vous avez déjà peut être utilisé ces flux ! En effet, un peu plus haut quand nous avons créé <strong>Brunhilde.txt</strong> sur Windows la commande était
+</p>
+<pre class="code">echo.&gt;Brunhilde.txt</pre>
+
+<p>
+On peut décomposer cette commande en <span style="color:#ff0000;"><strong>trois</strong></span> parties :
+</p>
+<pre class="code">echo.</pre>
+
+<p>
+que vous pouvez essayer dans votre console (si vous êtes sur Linux ne mettez pas de point). Vous remarquerez que … rien ne se passe. En effet, <span style="color:#800000;"><strong>echo</strong></span> est une commande qui sert à afficher son paramètre dans la console. Puisque nous donnons un <span style="color:#008000;"><strong>paramètre vide</strong></span> elle n&#039;affiche rien. Essayez si vous voulez voir la commande en action
+</p>
+<pre class="code">echo Je suis Brunhilde la Valkyrie</pre>
+
+<p>
+La seconde partie de la commande est
+</p>
+<pre class="code">&gt;</pre>
+
+<p>
+Dans ma petite introduction, j&#039;ai dit qu&#039;il est possible de <span style="color:#008000;"><strong>rediriger le résultat d&#039;une commande</strong></span> : voici l&#039;utilité du <span style="color:#800000;"> <strong>chevron &gt;</strong></span>. Au lieu d&#039;afficher notre texte dans la console on le <span style="color:#ff0000;"><strong>redirige</strong></span> vers la troisième partie de la commande,
+</p>
+<pre class="code">Brunhilde.txt</pre>
+
+<p>
+qui est un fichier qui sera créé si il n&#039;existe pas déjà et dont le contenu sera <span style="color:#ff0000;"><strong>écrasé</strong></span> si il existe. Le fichier que nous avions créé était <span style="color:#008000;"><strong>vide</strong></span> mais vous pouvez le remplir avec par exemple
+</p>
+<pre class="code">echo Salut Hrist ça biche ? &gt; Brunhilde.txt</pre>
+<pre class="code">echo Ca biche comme jamais ma soeur ;) &gt; Hrist.txt</pre>
+
+<p>
+Il est important de noter que le résultat de la commande redirigée envoyé <span style="color:#ff0000;"><strong>écrasera</strong></span> le contenu du fichier texte cible. Pour que le texte se rajoute à la suite du fichier au lieu d&#039;effacer le contenu du fichier vous pouvez utiliser le <span style="color:#800000;"><strong>double chevron »</strong></span>
+</p>
+<pre class="code">echo Hop hop hop c&#039;est l&#039;heure de moissonner les âmes ! &gt;&gt; Brunhilde.txt</pre>
+<pre class="code">echo Je te parie que j&#039;en récupère deux fois plus que toi :) &gt;&gt; Hrist.txt</pre>
+
+<p>
+Si vous avez essayé d&#039;envoyer le résultat d&#039;une commande générant une <span style="color:#ff0000;"><strong>erreur</strong></span> dans un fichier, vous aurez peut-être remarqué que le message d&#039;erreur <span style="color:#008000;"><strong>n&#039;a pas été envoyé</strong></span> dans le fichier. Pour envoyer le flux d&#039;erreur dans le fichier <span style="color:#ff0000;"><strong>au lieu</strong></span> du résultat de la commande, il faut utiliser
+</p>
+<pre class="code">2&gt;</pre>
+
+<p>
+Cette commande <span style="color:#ff0000;"><strong>écrasera</strong></span> l&#039;ancien contenu du fichier. Si vous voulez écrire l&#039;erreur <span style="color:#008000;"><strong>à la suite</strong></span> du fichier il faudra choisir
+</p>
+<pre class="code">2&gt;&gt;</pre>
+
+<p>
+Pour vous donner un exemple d’utilisation, imaginez que vous exécutez régulièrement une commande <span style="color:#008000;"><strong>très bavarde</strong></span> dont vous vous fichez de la sortie console. Si un jour vous avez des <span style="color:#ff0000;"><strong>problèmes</strong></span>, vous pourrez simplement ouvrir le fichier où vous avez redirigé le message d&#039;erreur pour connaître la source de la panne.
+</p>
+
+<p>
+Finalement, si vous voulez envoyer les erreurs d&#039;une commande <span style="color:#008000;"><strong>avec</strong></span> les résultats de la commande dans un fichier, il faudra rajouter à la fin de votre ligne de commande <span style="color:#800000;"><strong>2&gt;&amp;1</strong></span>
+</p>
+<pre class="code">echo Comment t&#039;as eu plus d&#039;âmes que moi -_- &gt;&gt; Brunhilde.txt 2&gt;&amp;1</pre>
+
+<p>
+Il peut arriver que vous ne voulez ni avoir le résultat d&#039;une commande dans la console ni dans un ficher. Dans ce cas il faut savoir qu&#039;il existe dans un fichier toujours vide. Il est en <span style="color:#9400d3;"><strong>/dev/null</strong></span> sur Linux et <span style="color:#9400d3;"><strong>partout</strong></span> sur Windows sous le nom de <span style="color:#9400d3;"><strong>nul</strong></span>. Oui, vous avez bien lu, <span style="color:#9400d3;"><strong>partout</strong></span> ! Il y a <strong><span style="color:#fa8072;">Valkyries</span>\<span style="color:#9400d3;">nul</span></strong> qui existe, <strong>system32\<span style="color:#9400d3;">nul</span></strong> ou <strong>n&#039;importe quel dossier\<span style="color:#9400d3;">nul</span></strong>, c&#039;est d&#039;ailleurs pour cette raison qu&#039;on lui fera référence par un simple <span style="color:#9400d3;"><strong>nul</strong></span>. 
+</p>
+
+<p>
+Comment utiliser ce fichier toujours vide me demanderez vous ? Eh bien il suffit de rediriger la sortie de la commande vers le <span style="color:#9400d3;"><strong>fichier nul</strong></span>. Par exemple, supposons que vous voulez installer un paquet sans que votre console soit remplie de lignes indiquant quels fichiers sont téléchargés, si il faut beau dehors etc.. il suffit de faire :
+</p>
+<div class="table sectionedit3"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1">Windows</th><th class="col2" colspan="2">Mac</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">sudo apt install gimp&gt;/dev/null</td><td class="col1">choco install gimp &gt; nul (en mode administrateur)</td><td class="col2" colspan="2">sudo brew cask install gimp&gt;/dev/null</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:3,&quot;range&quot;:&quot;4740-4883&quot;} -->
+<p>
+<strong>Note :</strong> il existe deux autres <span style="color:#008080;"><strong>fichiers spéciaux</strong></span> sur Linux : <span style="color:#9400d3;"><strong>/dev/zero</strong></span> et <span style="color:#9400d3;"><strong>/dev/random</strong></span>. Le premier sert à donner un flux continu de <strong>null</strong> pour certains usages avancés mais peut être utilisé de la même manière que <span style="color:#9400d3;"><strong>/dev/null</strong></span> en redirection de sortie. Le second fichier fournit un générateur de caractères aléatoires utilisable encore une fois dans certaines situations.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Rediriger la sortie &gt;&quot;,&quot;hid&quot;:&quot;rediriger_la_sortie&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;547-5352&quot;} -->
+<h3 class="sectionedit4" id="rediriger_l_entree">Rediriger l&#039;entrée &lt;</h3>
+<div class="level3">
+
+<p>
+Vous l&#039;aurez deviné, si on peut rediriger la <span style="color:#008000;"><strong>sortie</strong></span> d&#039;une commande on peut aussi rediriger son <span style="color:#ff0000;"><strong>entrée</strong></span>. Pour ce faire on utilise
+</p>
+<pre class="code">&lt;</pre>
+
+<p>
+La redirection de l&#039;<span style="color:#008000;"><strong>entrée</strong></span> est beaucoup moins utilisée que celle de la <span style="color:#ff0000;"><strong>sortie</strong></span> cependant. En guise d&#039;exemple, nous utiliserons la commande <span style="color:#800000;"><strong>sort</strong></span> qui sert à trier le contenu d&#039;un fichier.
+</p>
+<pre class="code">sort &lt; Brunhilde.txt</pre>
+
+<p>
+produira le même résultat que
+</p>
+<pre class="code">sort Brunhilde.txt</pre>
+
+<p>
+mais le <span style="color:#008080;"><strong>fontionnement</strong></span> n&#039;est pas le même. Sans la redirection d&#039;<span style="color:#008000;"><strong>entrée</strong></span>, la commande ouvre et lit le fichier <strong>Brunhilde.txt</strong>, le trie et l&#039;affiche. Avec la redirection, la commande reçoit le contenu du fichier, le trie et l&#039;affiche. Ce sont deux méthodes légèrement différentes pour faire <span style="color:#ff0000;"><strong>la même action</strong></span>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Rediriger l&#039;entr\u00e9e &lt;&quot;,&quot;hid&quot;:&quot;rediriger_l_entree&quot;,&quot;codeblockOffset&quot;:12,&quot;secid&quot;:4,&quot;range&quot;:&quot;5353-6295&quot;} -->
+<h3 class="sectionedit5" id="le_pipe">Le pipe |</h3>
+<div class="level3">
+
+<p>
+Sans aucun doute une des fonctionnalités <span style="color:#ff0000;"><strong>les plus importantes</strong></span> de la console : il permet d&#039;envoyer le résultat d&#039;une commande en tant que source dans une autre, combinant en quelque sorte <span style="color:#800000;"><strong>&gt;</strong></span> et <span style="color:#800000;"><strong>&lt;</strong></span>. Pour que vous voyez ce que je veux dire, rien ne vaut un exemple. Supposons que vous affichez le contenu d&#039;un répertoire bien rempli et que vous cherchez un dossier ou fichier en particulier. Il est possible de le retrouver en <span style="color:#008000;"><strong>combinant</strong></span> <span style="color:#800000;"><strong>dir/ls</strong></span> et <span style="color:#800000;"><strong>find/grep</strong></span>.
+</p>
+<div class="table sectionedit6"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">ls | grep Brunhilde.txt</td><td class="col1" colspan="2">dir | find “Brunhilde.txt”</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:6,&quot;range&quot;:&quot;6898-7002&quot;} -->
+<p>
+affichera la ligne de <span style="color:#800000;"><strong>ls/dir</strong></span> faisant référence à <strong>Brunhilde.txt</strong>. Vous remarquerez que rien se sera affiché si vous n&#039;êtes pas dans le dossier <span style="color:#fa8072;"><strong>Valkyries</strong></span> car <span style="color:#800000;"><strong>ls/dir</strong></span> n&#039;affiche que le contenu du dossier courant souvenez vous !
+</p>
+
+<p>
+Oui, nous avons vu un peu plus haut comment utiliser une autre commande à la place pour cela mais la façon dont nous le faisons est en lisant les lignes du <span style="color:#800000;"><strong>dir/ls</strong></span> avec <span style="color:#800000;"><strong>find/grep</strong></span>, pas en cherchant dans le système de fichier.
+</p>
+
+<p>
+Il s&#039;agit juste d&#039;un exemple pour illustrer l&#039;utilisation du pipe | qui peut combiner une <span style="color:#008000;"><strong>multitude</strong></span> de commandes (d&#039;ailleurs les commandes de recherche de la partie précédente fouillent dans l&#039;arborescence alors que nous nous limitons au dossier courant).
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le pipe |&quot;,&quot;hid&quot;:&quot;le_pipe&quot;,&quot;codeblockOffset&quot;:15,&quot;secid&quot;:5,&quot;range&quot;:&quot;6296-7848&quot;} -->
+<h2 class="sectionedit7" id="les_processus">Les processus</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les processus&quot;,&quot;hid&quot;:&quot;les_processus&quot;,&quot;codeblockOffset&quot;:15,&quot;secid&quot;:7,&quot;range&quot;:&quot;7849-7873&quot;} -->
+<h3 class="sectionedit8" id="lancer_des_processus_en_arriere_plan">Lancer des processus en arrière plan</h3>
+<div class="level3">
+
+<p>
+Jusqu&#039;à présent, vous aurez remarqué que l&#039;on rentrait les commandes dans le terminal <span style="color:#ff0000;"><strong>une par une</strong></span> et qu&#039;il fallait attendre qu&#039;elles se <span style="color:#ff0000;"><strong>terminent</strong></span> pour en relancer une autre. Rassurez vous, il est possible de contourner ce problème !
+</p>
+
+<p>
+Sur <span style="color:#008080;"><strong>Linux</strong></span>, si vous êtes face à un processus que vous voulez passer en <span style="color:#008000;"><strong>arrière plan</strong></span>, que ce soit car il est trop long ou autre, vous pouvez utiliser <span style="color:#800000;"><strong>Ctrl+C</strong></span> pour le mettre en pause. Ensuite si vous en restez là vous pouvez utiliser votre <span style="color:#008000;"><strong>console</strong></span> comme d&#039;habitude mais vous pouvez aussi taper
+</p>
+<pre class="code">bg</pre>
+
+<p>
+pour faire passer le processus en <span style="color:#008000;"><strong>arrière plan</strong></span>. Vous pouvez faire passer autant de processus en <span style="color:#008000;"><strong>arrière plan</strong></span> que vous voulez ! Pour consulter la <span style="color:#ff0000;"><strong>liste</strong></span> de ces processus vous pouvez bien sûr faire <span style="color:#800000;"><strong>ps -A</strong></span> mais pour n&#039;avoir que les processus que vous avez passé en <span style="color:#008000;"><strong>arrière plan</strong></span> utilisez
+</p>
+<pre class="code">jobs</pre>
+
+<p>
+Quand vous voudrez refaire passer un processus en <span style="color:#ff0000;"><strong>premier plan</strong></span> il vous suffira d&#039;utiliser
+</p>
+<pre class="code">bg</pre>
+
+<p>
+suivi éventuellement du <span style="color:#ffa500;"><strong>numéro</strong></span> du processus dans la liste de <span style="color:#800000;"><strong>jobs</strong></span> si vous en avez plusieurs lancés en <span style="color:#008000;"><strong>arrière plan</strong></span>.
+</p>
+
+<p>
+Il existe aussi une autre méthode qui sert à lancer un processus <span style="color:#ff0000;"><strong>directement</strong></span> en <span style="color:#008000;"><strong>arrière plan</strong></span>. Il suffit d&#039;ajouter
+</p>
+<div class="table sectionedit9"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">nohup</td><td class="col1" colspan="2">start</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table2&quot;,&quot;secid&quot;:9,&quot;range&quot;:&quot;9475-9506&quot;} -->
+<p>
+au début de votre ligne de commande ! (bonus : sur <span style="color:#008080;"><strong>Linux</strong></span>, le processus sera toujours en marche même si vous fermez la console).
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Lancer des processus en arri\u00e8re plan&quot;,&quot;hid&quot;:&quot;lancer_des_processus_en_arriere_plan&quot;,&quot;codeblockOffset&quot;:15,&quot;secid&quot;:8,&quot;range&quot;:&quot;7874-9658&quot;} -->
+<h3 class="sectionedit10" id="gerer_les_processus_en_cours">Gérer les processus en cours</h3>
+<div class="level3">
+
+<p>
+Pour visualiser les <span style="color:#9400d3;"><strong>processus</strong></span> en cours, vous avez sans doute l&#039;habitude sur <span style="color:#008080;"><strong>Windows</strong></span> d&#039;utiliser le gestionnaire des tâches pour fermer des applications récalcitrantes et que parfois ce dernier refuse de mettre fin à la tache malgré les <span style="color:#ff0000;"><strong>pressions répétées</strong></span> de votre part sur le bouton. Eh bien figurez vous qu&#039;il est aussi possible de faire ça à partir de la <span style="color:#008000;"><strong>console</strong></span> ! Pour afficher tous les processus en cours d&#039;utilisation :
+</p>
+<div class="table sectionedit11"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">ps -A</td><td class="col1" colspan="2">tasklist</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table3&quot;,&quot;secid&quot;:11,&quot;range&quot;:&quot;10215-10249&quot;} -->
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ales_flux_et_les_processus&amp;media=cpp:tasklist.png" class="media" title="cpp:tasklist.png"><img src="/lib/exe/fetch.php?w=1000&amp;tok=8195e1&amp;media=cpp:tasklist.png" class="media" alt="" width="1000" /></a>
+</p>
+
+<p>
+Je sais, ça fait beaucoup de <span style="color:#9400d3;"><strong>processus</strong></span> ! Vous trouverez d&#039;ailleurs une ligne intitulée du nom de votre navigateur sue lequel vous lisez cette page ! D&#039;ailleurs, c&#039;est une excellente occasion d&#039;utiliser un <span style="color:#800000;"><strong>pipe |</strong></span> pour trouver rapidement votre navigateur !
+</p>
+<div class="table sectionedit12"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">ps -A | grep firefox</td><td class="col1" colspan="2">tasklist | find “firefox”</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table4&quot;,&quot;secid&quot;:12,&quot;range&quot;:&quot;10579-10679&quot;} -->
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ales_flux_et_les_processus&amp;media=cpp:tasklist_firefox.png" class="media" title="cpp:tasklist_firefox.png"><img src="/lib/exe/fetch.php?w=1000&amp;tok=31541c&amp;media=cpp:tasklist_firefox.png" class="media" alt="" width="1000" /></a>
+</p>
+
+<p>
+Vous remarquerez que chaque <span style="color:#9400d3;"><strong>processus</strong></span> a un nom et identifiant propre appelé <span style="color:#ffa500;"><strong>PID</strong></span>. Pour fermer un <span style="color:#9400d3;"><strong>processus</strong></span> en particulier il vaut mieux utiliser le <span style="color:#ffa500;"><strong>PID</strong></span> mais si vous voulez fermer tout les <span style="color:#9400d3;"><strong>processus</strong></span> <strong>firefox</strong> par exemple le référer par son nom est la meilleure méthode.
+</p>
+
+<p>
+Tout d&#039;abord, pour tuer un processus en fonction de son nom, la commande est :
+</p>
+<div class="table sectionedit13"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">killall -9 firefox</td><td class="col1" colspan="2">taskkill /f /im firefox.exe</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table5&quot;,&quot;secid&quot;:13,&quot;range&quot;:&quot;11177-11243&quot;} -->
+<p>
+Attention, si vous entrez cette commande, vous fermerez cette fenêtre et vous serez interrompu dans la lecture de cette <span style="color:#ff00ff;"><strong>magnifique</strong></span> page ;)
+</p>
+
+<p>
+Pour ce qui en est de mettre fin à un <span style="color:#9400d3;"><strong>processus</strong></span> précis dont le <span style="color:#ffa500;"><strong>PID</strong></span> est 12345, il faut entrer :
+</p>
+<div class="table sectionedit14"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">kill -9 12345</td><td class="col1" colspan="2">taskkill /f /PID 12345</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table6&quot;,&quot;secid&quot;:14,&quot;range&quot;:&quot;11545-11601&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;G\u00e9rer les processus en cours&quot;,&quot;hid&quot;:&quot;gerer_les_processus_en_cours&quot;,&quot;codeblockOffset&quot;:18,&quot;secid&quot;:10,&quot;range&quot;:&quot;9659-11602&quot;} -->
+<h2 class="sectionedit15" id="les_raccourcis_clavier_dans_la_console">Les raccourcis clavier dans la console</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les raccourcis clavier dans la console&quot;,&quot;hid&quot;:&quot;les_raccourcis_clavier_dans_la_console&quot;,&quot;codeblockOffset&quot;:18,&quot;secid&quot;:15,&quot;range&quot;:&quot;11603-11652&quot;} -->
+<h3 class="sectionedit16" id="l_historique">L&#039;historique</h3>
+<div class="level3">
+
+<p>
+Vous aurez peut être remarqué en faisant vos tests, mais il est possible d&#039;accéder aux <span style="color:#9400d3;"><strong>commandes</strong></span> que vous avez entré précédemment avec les flèches directionnelles haut et bas. On peut même accéder à l&#039;historique des commandes avec
+</p>
+<div class="table sectionedit17"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">history</td><td class="col1" colspan="2">doskey /h</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table7&quot;,&quot;secid&quot;:17,&quot;range&quot;:&quot;11936-11973&quot;} -->
+<p>
+Cependant, alors que <span style="color:#008080;"><strong>Linux</strong></span> mémorise les commandes entre les différentes utilisations du terminal, sur <span style="color:#008080;"><strong>Windows</strong></span> vous n&#039;avez accès qu&#039;aux <span style="color:#9400d3;"><strong>commandes</strong></span> que vous avez entré pendant cette session.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;L&#039;historique&quot;,&quot;hid&quot;:&quot;l_historique&quot;,&quot;codeblockOffset&quot;:18,&quot;secid&quot;:16,&quot;range&quot;:&quot;11653-12229&quot;} -->
+<h3 class="sectionedit18" id="affichage">Affichage</h3>
+<div class="level3">
+
+<p>
+Sur <span style="color:#008080;"><strong>Windows</strong></span>, pour effacer une ligne de commande particulièrement longue que vous avez tapée, une simple pression sur la touche <span style="color:#800000;"><strong>échap</strong></span> vous évitera de mitrailler la touche effacer. Si votre écran de console est trop rempli et que vous voulez une <span style="color:#008000;"><strong>console propre</strong></span>, presser <span style="color:#800000;"><strong>Ctrl+L</strong></span> sur <span style="color:#008080;"><strong>Linux</strong></span> ou entrez <span style="color:#800000;"><strong>cls</strong></span> sur <span style="color:#008080;"><strong>Windows</strong></span>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Affichage&quot;,&quot;hid&quot;:&quot;affichage&quot;,&quot;codeblockOffset&quot;:18,&quot;secid&quot;:18,&quot;range&quot;:&quot;12230-12712&quot;} -->
+<h3 class="sectionedit19" id="copier-coller">Copier-Coller</h3>
+<div class="level3">
+
+<p>
+Si vous êtes sur <span style="color:#008080;"><strong>Windows</strong></span> vous aurez sans doute remarqué que les classiques <span style="color:#800000;"><strong>Ctrl+C</strong></span> et <span style="color:#800000;"><strong>Ctrl+V</strong></span> fonctionnent à merveille. Sur <span style="color:#008080;"><strong>Linux</strong></span>, en revanche, il vous aura peut être échappé qu&#039;il faut faire <span style="color:#800000;"><strong>Ctrl+Maj+C</strong></span> et <span style="color:#800000;"><strong>Ctrl+Maj+V</strong></span> pour arriver à ce résultat. D&#039;ailleurs, <span style="color:#800000;"><strong>Ctrl+C</strong></span> est pour les deux systèmes la commande servant à annuler une commande, que ce soit parce qu&#039;elle est trop lente ou parce qu&#039;elle n&#039;affiche que des erreurs.
+</p>
+
+<p>
+<a href="/doku.php?id=cpp:le_scripting" class="wikilink1" title="cpp:le_scripting"> Introduction au scripting</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Copier-Coller&quot;,&quot;hid&quot;:&quot;copier-coller&quot;,&quot;codeblockOffset&quot;:18,&quot;secid&quot;:19,&quot;range&quot;:&quot;12713-&quot;} -->

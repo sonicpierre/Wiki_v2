@@ -1,0 +1,5 @@
+# Installer
+install.packages(&quot;tm&quot;)  # pour le text mining
+install.packages(&quot;SnowballC&quot;) # pour le text stemming
+install.packages(&quot;wordcloud&quot;) # générateur de word-cloud 
+install.packages(&quot;RColorBrewer&quot;) # Palettes de couleurs

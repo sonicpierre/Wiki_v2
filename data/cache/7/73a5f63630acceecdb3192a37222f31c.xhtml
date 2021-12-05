@@ -1,0 +1,859 @@
+
+<p>
+<a href="/doku.php?id=cpp:geometrique" class="wikilink1" title="cpp:geometrique">Introduction : méthode géométrique</a>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Asimplexe&amp;media=cpp:tableaux.jpg" class="media" title="cpp:tableaux.jpg"><img src="/lib/exe/fetch.php?w=500&amp;tok=f3f72c&amp;media=cpp:tableaux.jpg" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+Nous présenterons la méthode du <strong><span style="color:#ff0000;">simplexe</span></strong> dans sa forme pratique que nous appellerons la méthode des tableaux, puis, nous la programmerons en <strong><span style="color:#4682b4;">Python</span></strong> et <strong><span style="color:#4682b4;">Matlab</span></strong>.
+</p>
+
+<h2 class="sectionedit1" id="mise_en_forme">Mise en forme</h2>
+<div class="level2">
+
+<p>
+La première chose que nous allons faire est de changer la forme de notre système pour que nous puissions appliquer la méthode du <strong><span style="color:#ff0000;">simplexe</span></strong>. Petit rappel de la forme actuelle de notre système :
+</p>
+<p class="divalign-center">$\begin{cases} \underset{x}{max}(142x_1+241x_2) \\ 0.23x_1+0.7x_2 \le 20.21 \\ 0.015x_1+0.015x_2 \le 0.705 \\ 1.8x_1+1.1x_2 \le 75 \\ x_1,x_2 \ge 0\end{cases}$</p><!--divalign-->
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Mise en forme&quot;,&quot;hid&quot;:&quot;mise_en_forme&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;318-729&quot;} -->
+<h3 class="sectionedit2" id="la_forme_canonique">La forme canonique</h3>
+<div class="level3">
+
+<p>
+Nous allons, dans un premier temps, réécrire le système sous sa forme dite <strong><span style="color:#ff0000;">canonique</span></strong> :
+</p>
+<p class="divalign-center">$\begin{cases} \underset{x}{max}(c|x) \\ Ax \le b, x \ge 0 \end{cases}$</p><!--divalign-->
+
+<p>
+avec :
+</p>
+<ul>
+<li class="level1"><div class="li"> $A$ la matrice des coefficients des contraintes $\begin{pmatrix} 0.23 &amp; 0.7 \\ 0.015 &amp; 0.015 \\ 1.8 &amp; 1.1 \end{pmatrix}$</div>
+</li>
+<li class="level1"><div class="li"> $b$ le vecteur des seconds membres des contraintes $\begin{pmatrix} 20.21 \\ 0.705 \\ 75 \end{pmatrix}$</div>
+</li>
+<li class="level1"><div class="li"> $c$ le vecteur des coefficients du critère $\begin{pmatrix} 142 \\ 241 \end{pmatrix}$</div>
+</li>
+<li class="level1"><div class="li"> $x$ le vecteur des inconnues appelées variables de décision $\begin{pmatrix} x_1 \\ x_2 \end{pmatrix}$</div>
+</li>
+</ul>
+
+<p>
+<div class='alert alert-info'>J&#039;ai ajouté une partie sur la mise sous forme canonique des cas <strong>non conventionnels</strong> dans la dernière section.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La forme canonique&quot;,&quot;hid&quot;:&quot;la_forme_canonique&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;730-1525&quot;} -->
+<h3 class="sectionedit3" id="la_forme_standard">La forme standard</h3>
+<div class="level3">
+
+<p>
+Maintenant que votre problème est sous sa forme <strong><span style="color:#008000;">canonique</span></strong>, il faut l&#039;écrire sous sa forme <strong><span style="color:#ff0000;">standard</span></strong> :
+</p>
+<p class="divalign-center">$\begin{cases} \underset{x}{max}(c|x) \\ Ax = b, x \ge 0 \end{cases}$</p><!--divalign-->
+
+<p>
+Oui, la seule chose qui change c&#039;est que nous avons dorénavant une <strong><span style="color:#008000;">égalité</span></strong> au lieu d&#039;une inégalité. Pour cela, il faut simplement ajouter des quantités appelées <strong><span style="color:#ff0000;">variables d&#039;écart</span></strong> aux différentes lignes du système :
+</p>
+<p class="divalign-center">$\begin{cases} \underset{x}{max}(142x_1+241x_2) \\ 0.23x_1+0.7x_2+y_1+0y_2+0y_3 = 20.21 \\ 0.015x_1+0.015x_2+0y_1+y_2+0y_3 = 0.705 \\ 1.8x_1+1.1x_2+0y_1+0y_2+y_3 = 75 \\ x_1,x_2 \ge 0\end{cases}$</p><!--divalign-->
+
+<p>
+Et donc, vous l&#039;aurez deviné, $A$, $c$ et $x$ ne sont pas les mêmes que pour la forme canonique :
+</p>
+<div class="table sectionedit4"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">$$A$$</th><th class="col1">$$b$$</th><th class="col2">$$c$$</th><th class="col3" colspan="2">$$x$$</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">$$\begin{pmatrix} 0.23&amp;0.7&amp;1&amp;0&amp;0 \\ 0.015&amp;0.015&amp;0&amp;1&amp;0 \\ 1.8&amp;1.1&amp;0&amp;0&amp;1 \end{pmatrix}$$</td><td class="col1">$$\begin{pmatrix} 20.21 \\ 0.705 \\ 75 \end{pmatrix}$$</td><td class="col2">$$\begin{pmatrix} 142 \\ 241 \\ 0 \\ 0 \\ 0\end{pmatrix}$$</td><td class="col3" colspan="2">$$\begin{pmatrix} x_1 \\ x_2 \\ y_1 \\ y_2 \\ y_3\end{pmatrix}$$</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:4,&quot;range&quot;:&quot;2352-2647&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La forme standard&quot;,&quot;hid&quot;:&quot;la_forme_standard&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;1526-2647&quot;} -->
+<h2 class="sectionedit5" id="la_methode_du_simplexe">La méthode du simplexe</h2>
+<div class="level2">
+
+<p>
+Je vais commencer par vous expliquer, rapidement, en quoi consiste cette méthode. Maintenant que vous connaissez la méthode <strong><span style="color:#008000;">géométrique</span></strong>, vous aurez peut-être remarqué que l&#039;<strong><span style="color:#ffa500;">optimum</span></strong> se trouve forcément sur l&#039;un des sommets du <strong>domaine des contraintes</strong> (la zone incolore). Eh bien la méthode du <strong><span style="color:#ff0000;">simplexe</span></strong> consiste à avancer <strong>sommet par sommet</strong> en améliorant le critère à chaque itération. Quand il n&#039;est plus possible d&#039;<strong>améliorer</strong> le critère, c&#039;est qu&#039;on a trouvé le sommet <strong><span style="color:#ffa500;">optimal</span></strong>.
+</p>
+<pre class="code">Remplir le tableau;
+
+Tant que les coefficients de la ligne f sont positifs :
+    -&gt; Trouver la variable d&#039;entrée;
+    -&gt; Trouver la variable de sortie;
+    -&gt; Ramener le coefficient principal à 1;
+    -&gt; Ramener les coefficients secondaires à zéro;</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La m\u00e9thode du simplexe&quot;,&quot;hid&quot;:&quot;la_methode_du_simplexe&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;2648-3538&quot;} -->
+<h3 class="sectionedit6" id="remplir_le_tableau">Remplir le tableau</h3>
+<div class="level3">
+
+<p>
+Nous allons commencer par <strong><span style="color:#008000;">remplir</span></strong> le tableau qui a donné son nom à la méthode :
+</p>
+<div class="table sectionedit7"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  142  </td><td class="col2 centeralign">  241  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  0.23  </td><td class="col2 centeralign">  0.7  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  20.21  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  0.015  </td><td class="col2 centeralign">  0.015  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0.705  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  1.8  </td><td class="col2 centeralign">  1.1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  75  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:7,&quot;range&quot;:&quot;3672-3947&quot;} -->
+<p>
+<div class='alert alert-info'>Les valeurs des variables $x_1$, $x_2$, $y_1$, $y_2$ et $y_3$ sont visibles en dernière colonne : $y_1$ vaut 20.21, $y_2$ vaut 0.705 et $y_3$ vaut 75. Quant à $x_1$ et $x_2$, ils sont <strong>nuls</strong>. Souvenez-vous : je vous ai dit que cette méthode consistait à parcourir tous les sommets du domaine des contraintes. Le sommet par lequel  nous commençons est … $(0,0)$ !</div>
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+
+<p>
+On va importer le module numpy pour avoir accès aux matrices et on remplit chaque coefficient.
+</p>
+<pre class="code python"><span class="kw1">import</span> numpy <span class="kw1">as</span> np
+&nbsp;
+<span class="co1">#Initialisation</span>
+tab<span class="sy0">=</span>np.<span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#91;</span>
+<span class="br0">&#91;</span><span class="nu0">142</span><span class="sy0">,</span><span class="nu0">241</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span>
+<span class="br0">&#91;</span><span class="nu0">0.23</span><span class="sy0">,</span><span class="nu0">0.7</span><span class="sy0">,</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">20.21</span><span class="br0">&#93;</span><span class="sy0">,</span>
+<span class="br0">&#91;</span><span class="nu0">0.015</span><span class="sy0">,</span><span class="nu0">0.015</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0.705</span><span class="br0">&#93;</span><span class="sy0">,</span>
+<span class="br0">&#91;</span><span class="nu0">1.8</span><span class="sy0">,</span><span class="nu0">1.1</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">75</span><span class="br0">&#93;</span><span class="br0">&#93;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+
+<p>
+Pas besoin d&#039;importer de module cette fois et on peut directement remplir la matrice en la créant :
+</p>
+<pre class="code matlab"><span class="co1">%Initialisation</span>
+tab=<span class="br0">&#91;</span>
+<span class="nu0">142</span>,<span class="nu0">241</span>,<span class="nu0">0</span>,<span class="nu0">0</span>,<span class="nu0">0</span>,<span class="nu0">0</span>;
+<span class="nu0">0.23</span>,<span class="nu0">0.7</span>,<span class="nu0">1</span>,<span class="nu0">0</span>,<span class="nu0">0</span>,<span class="nu0">20.21</span>;
+<span class="nu0">0.015</span>,<span class="nu0">0.015</span>,<span class="nu0">0</span>,<span class="nu0">1</span>,<span class="nu0">0</span>,<span class="nu0">0.705</span>;
+<span class="nu0">1.8</span>,<span class="nu0">1.1</span>,<span class="nu0">0</span>,<span class="nu0">0</span>,<span class="nu0">1</span>,<span class="nu0">75</span><span class="br0">&#93;</span></pre>
+
+<p>
+<div class='alert alert-danger'><strong>Danger :</strong> en Python, les indices pour les lignes et colonnes commencent à 0 alors qu&#039;en Matlab ils commencent à 1.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Remplir le tableau&quot;,&quot;hid&quot;:&quot;remplir_le_tableau&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:6,&quot;range&quot;:&quot;3539-5007&quot;} -->
+<h3 class="sectionedit8" id="la_boucle_principale">La boucle principale</h3>
+<div class="level3">
+
+<p>
+Nous continuons d&#039;itérer tant que les valeurs de la ligne $f$ sont <strong><span style="color:#008000;">positives</span></strong>.
+</p>
+<div class="table sectionedit9"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  <span style="color:#008000;">142</span>  </td><td class="col2 centeralign">  <span style="color:#008000;">241</span>  </td><td class="col3 centeralign">  <span style="color:#008000;">0</span>  </td><td class="col4 centeralign">  <span style="color:#008000;">0</span>  </td><td class="col5 centeralign">  <span style="color:#008000;">0</span>  </td><td class="col6 centeralign">  0  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  0.23  </td><td class="col2 centeralign">  0.7  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  20.21  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  0.015  </td><td class="col2 centeralign">  0.015  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0.705  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  1.8  </td><td class="col2 centeralign">  1.1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  75  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table2&quot;,&quot;secid&quot;:9,&quot;range&quot;:&quot;5139-5499&quot;} -->
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#Tant que les coefficients de Lf sont positifs</span>
+<span class="kw1">while</span> <span class="br0">&#40;</span>tab<span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span>:-<span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">&gt;</span>np.<span class="me1">zeros</span><span class="br0">&#40;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span>tab.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>-<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>.<span class="kw2">any</span><span class="br0">&#40;</span><span class="br0">&#41;</span>:</pre>
+
+<p>
+On compare les termes de la première ligne du tableau avec une ligne de zéros et tant qu&#039;au moins un terme est positif on continue.
+</p>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab"><span class="co1">%Tant que les coefficients de Lf sont positifs</span>
+<span class="kw1">while</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/sum.html"><span class="kw2">sum</span></a><span class="br0">&#40;</span>tab<span class="br0">&#40;</span><span class="nu0">1</span>,<span class="nu0">1</span>:end-<span class="nu0">1</span><span class="br0">&#41;</span>&gt;<span class="nu0">0</span><span class="br0">&#41;</span>&gt;<span class="nu0">0</span></pre>
+
+<p>
+Il n&#039;y a pas de <code>.any()</code> en Matlab donc on doit ruser. <code>tab(1,1:end-1)&gt;0</code> vérifie si chaque terme de la première ligne de tab est positif et retourne une matrice ligne avec un 1 si c&#039;est le cas et un 0 sinon. Je vais donner un exemple au cas où l&#039;explication ne serait pas claire :
+<code>[52,33,-10]&gt;0</code> retourne <code>[1 1 0]</code>. Ensuite, on fait la somme des coefficients de cette matrice et, si cette somme est strictement positive, c&#039;est qu&#039;il y a des coefficients positifs :)
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La boucle principale&quot;,&quot;hid&quot;:&quot;la_boucle_principale&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:8,&quot;range&quot;:&quot;5008-6370&quot;} -->
+<h3 class="sectionedit10" id="la_recherche_de_la_variable_entrante">La recherche de la variable entrante</h3>
+<div class="level3">
+
+<p>
+À chaque itération, nous choisissons la plus <strong><span style="color:#008000;">grande</span></strong> valeur de la ligne $f$, donc, dans notre cas, la variable <strong><span style="color:#ff0000;">entrante</span></strong> sera $x_2$.
+</p>
+<div class="table sectionedit11"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  <span style="color:#ff0000;">$x_2$</span>  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  142  </td><td class="col2 centeralign">  <span style="color:#ff0000;">241</span>  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  0.23  </td><td class="col2 centeralign">  0.7  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  20.21  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  0.015  </td><td class="col2 centeralign">  0.015  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0.705  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  1.8  </td><td class="col2 centeralign">  1.1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  75  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table3&quot;,&quot;secid&quot;:11,&quot;range&quot;:&quot;6593-6902&quot;} -->
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#Recherche de la variable entrante</span>
+indiceVarEntrante<span class="sy0">=</span><span class="nu0">0</span>
+<span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span>tab.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>-<span class="nu0">1</span><span class="br0">&#41;</span>:
+    <span class="kw1">if</span> tab<span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span>i<span class="br0">&#93;</span><span class="sy0">&gt;</span>tab<span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span>indiceVarEntrante<span class="br0">&#93;</span>:
+        indiceVarEntrante<span class="sy0">=</span>i</pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab"><span class="co1">%Recherche de la variable entrante</span>
+indiceVarEntrante=<span class="nu0">1</span>
+<span class="kw1">for</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>=<span class="nu0">2</span>:<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tab<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="br0">&#41;</span>-<span class="nu0">1</span>
+    <span class="kw1">if</span> tab<span class="br0">&#40;</span><span class="nu0">1</span>,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a><span class="br0">&#41;</span>&gt;tab<span class="br0">&#40;</span><span class="nu0">1</span>,indiceVarEntrante<span class="br0">&#41;</span>
+        indiceVarEntrante=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>
+    endif
+endfor</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La recherche de la variable entrante&quot;,&quot;hid&quot;:&quot;la_recherche_de_la_variable_entrante&quot;,&quot;codeblockOffset&quot;:5,&quot;secid&quot;:10,&quot;range&quot;:&quot;6371-7304&quot;} -->
+<h3 class="sectionedit12" id="la_recherche_de_la_variable_sortante">La recherche de la variable sortante</h3>
+<div class="level3">
+
+<p>
+Pour ce qui est de la variable <strong><span style="color:#ff0000;">sortante</span></strong>, nous choisirons celle  dont le rapport du coefficient vert sur le coefficient orange (celui de la colonne de variables entrantes donc) est le plus <strong><span style="color:#008000;">faible</span></strong>.
+</p>
+
+<p>
+<div class='alert alert-danger'>Il faut que ce <strong>rapport</strong> de coefficients soit <strong>positif</strong> !</div>
+<div class='alert alert-warning'>La valeur de la variable sortante ne doit <strong>pas</strong> être <strong>négative</strong>. Nous verrons comment gérer ce cas de figure dans la page suivante.</div>
+</p>
+<div class="table sectionedit13"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  142  </td><td class="col2 centeralign">  241  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  0.23  </td><td class="col2 centeralign">  <span style="color:#ffa500;">0.7</span>  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  <span style="color:#008000;">20.21</span>  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  0.015  </td><td class="col2 centeralign">  <span style="color:#ffa500;">0.015</span>  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  <span style="color:#008000;">0.705</span>  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  1.8  </td><td class="col2 centeralign">  <span style="color:#ffa500;">1.1</span>  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  <span style="color:#008000;">75</span>  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table4&quot;,&quot;secid&quot;:13,&quot;range&quot;:&quot;7837-8214&quot;} -->
+<p>
+Or <span style="color:#ff0000;">$\frac{20.21}{0.7}\approx28.9$</span>, $\frac{0.705}{0.015}=47$ et $\frac{75}{1.1}\approx68.2$ donc notre variable sortante est $y_1$ que nous remplaçons par notre variable entrante $x_2$.
+</p>
+
+<p>
+<div class='alert alert-info'>Si deux coefficients sont identiques, vous pouvez prendre celui que vous voulez. Par convention, nous prendrons la variable de la ligne de plus faible indice.</div>
+</p>
+<div class="table sectionedit14"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  142  </td><td class="col2 centeralign">  241  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  <span style="color:#ff0000;">$x_2$</span>  </th><td class="col1 centeralign">  0.23  </td><td class="col2 centeralign">  0.7  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  20.21  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  0.015  </td><td class="col2 centeralign">  0.015  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0.705  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  1.8  </td><td class="col2 centeralign">  1.1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  75  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table5&quot;,&quot;secid&quot;:14,&quot;range&quot;:&quot;8600-8892&quot;} -->
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#Recherche de la variable sortante</span>
+indiceVarSortante<span class="sy0">=</span><span class="nu0">0</span>
+rapportMin<span class="sy0">=</span>np.<span class="me1">inf</span>
+<span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span>tab.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>:
+    <span class="kw1">if</span> tab<span class="br0">&#91;</span>i<span class="sy0">,</span>indiceVarEntrante<span class="br0">&#93;</span><span class="sy0">&gt;</span><span class="nu0">0</span>:
+        rapport<span class="sy0">=</span>tab<span class="br0">&#91;</span>i<span class="sy0">,</span>tab.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>-<span class="nu0">1</span><span class="br0">&#93;</span>/tab<span class="br0">&#91;</span>i<span class="sy0">,</span>indiceVarEntrante<span class="br0">&#93;</span>
+        <span class="kw1">if</span> rapport<span class="sy0">&lt;</span>rapportMin <span class="kw1">and</span> rapport<span class="sy0">&gt;=</span><span class="nu0">0</span>:
+            indiceVarSortante<span class="sy0">=</span>i
+            rapportMin<span class="sy0">=</span>rapport
+<span class="kw1">if</span> indiceVarSortante<span class="sy0">==</span><span class="nu0">0</span>:
+    <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;Pas de variable sortante&quot;</span><span class="br0">&#41;</span>
+    exit<span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab"><span class="co1">%Recherche de la variable sortante</span>
+indiceVarSortante=<span class="nu0">1</span>
+rapportMin=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/inf.html"><span class="kw2">Inf</span></a>
+<span class="kw1">for</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>=<span class="nu0">2</span>:<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tab<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+    <span class="kw1">if</span> tab<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>,indiceVarEntrante<span class="br0">&#41;</span>&gt;<span class="nu0">0</span>
+        rapport=tab<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tab<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="br0">&#41;</span><span class="br0">&#41;</span>/tab<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>,indiceVarEntrante<span class="br0">&#41;</span>
+        <span class="kw1">if</span> rapport&lt;rapportMin &amp;&amp; rapport&gt;=<span class="nu0">0</span>
+            indiceVarSortante=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>
+            rapportMin=rapport
+        endif
+    endif
+endfor
+<span class="kw1">if</span> indiceVarSortante==<span class="nu0">1</span>
+    <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span>&quot;Pas de variable sortante&quot;<span class="br0">&#41;</span>
+    <span class="kw1">return</span>
+endif</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La recherche de la variable sortante&quot;,&quot;hid&quot;:&quot;la_recherche_de_la_variable_sortante&quot;,&quot;codeblockOffset&quot;:7,&quot;secid&quot;:12,&quot;range&quot;:&quot;7305-9758&quot;} -->
+<h3 class="sectionedit15" id="le_coefficient_principal">Le coefficient principal</h3>
+<div class="level3">
+
+<p>
+Maintenant, nous devons ramener le coefficient <strong><span style="color:#ff0000;">principal</span></strong> (l&#039;intersection de la ligne et de la colonne $x_2$) à 1.
+</p>
+
+<p>
+$L_1 \leftarrow \frac{1}{0.7}L_1$
+</p>
+<div class="table sectionedit16"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  142  </td><td class="col2 centeralign">  241  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  <span style="color:#ff0000;">$\frac{0.23}{0.7}$</span>  </td><td class="col2 centeralign">  <span style="color:#ff0000;">1</span>  </td><td class="col3 centeralign">  <span style="color:#ff0000;">$\frac{1}{0.7}$</span>  </td><td class="col4 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col5 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col6 centeralign">  <span style="color:#ff0000;">$\frac{20.21}{0.7}$</span>  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  0.015  </td><td class="col2 centeralign">  0.015  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0.705  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  1.8  </td><td class="col2 centeralign">  1.1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  75  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table6&quot;,&quot;secid&quot;:16,&quot;range&quot;:&quot;9957-10374&quot;} -->
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#Coefficient principal à 1</span>
+tab<span class="br0">&#91;</span>indiceVarSortante<span class="sy0">,</span>:<span class="br0">&#93;</span><span class="sy0">=</span><span class="nu0">1</span>/tab<span class="br0">&#91;</span>indiceVarSortante<span class="sy0">,</span>indiceVarEntrante<span class="br0">&#93;</span>*tab<span class="br0">&#91;</span>indiceVarSortante<span class="sy0">,</span>:<span class="br0">&#93;</span></pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab"><span class="co1">%Coefficient principal à 1</span>
+tab<span class="br0">&#40;</span>indiceVarSortante,:<span class="br0">&#41;</span>=<span class="nu0">1</span>/tab<span class="br0">&#40;</span>indiceVarSortante,indiceVarEntrante<span class="br0">&#41;</span>*tab<span class="br0">&#40;</span>indiceVarSortante,:<span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le coefficient principal&quot;,&quot;hid&quot;:&quot;le_coefficient_principal&quot;,&quot;codeblockOffset&quot;:9,&quot;secid&quot;:15,&quot;range&quot;:&quot;9759-10695&quot;} -->
+<h3 class="sectionedit17" id="les_coefficients_secondaires">Les coefficients secondaires</h3>
+<div class="level3">
+
+<p>
+Ensuite, nous allons ramener tous les <strong><span style="color:#ff0000;">autres</span></strong> coefficients de la colonne de notre variable entrante ($x_2$) à 0. À partir de maintenant, je ferai des <strong>arrondis</strong> pour éviter les résultats à rallonge.
+</p>
+
+<p>
+On commence par la ligne $f$ :
+</p>
+
+<p>
+$L_f \leftarrow L_f - 241L_1$
+</p>
+<div class="table sectionedit18"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  <span style="color:#ff0000;">62.8</span>  </td><td class="col2 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col3 centeralign">  <span style="color:#ff0000;">-344</span>  </td><td class="col4 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col5 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col6 centeralign">  <span style="color:#ff0000;">-6958</span>  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  0.329  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  1.43  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  28.9  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  0.015  </td><td class="col2 centeralign">  0.015  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0.705  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  1.8  </td><td class="col2 centeralign">  1.1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  75  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table7&quot;,&quot;secid&quot;:18,&quot;range&quot;:&quot;11016-11400&quot;} -->
+<p>
+On continue avec la seconde ligne :
+</p>
+
+<p>
+$L_2 \leftarrow L_2 - 0.015L_1$
+</p>
+<div class="table sectionedit19"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  62.8  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -344  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  -6958  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  0.329  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  1.43  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  28.9  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  <span style="color:#ff0000;">0.01</span>  </td><td class="col2 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col3 centeralign">  <span style="color:#ff0000;">-0.0214</span>  </td><td class="col4 centeralign">  <span style="color:#ff0000;">1</span>  </td><td class="col5 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col6 centeralign">  <span style="color:#ff0000;">0.27</span>  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  1.8  </td><td class="col2 centeralign">  1.1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  75  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table8&quot;,&quot;secid&quot;:19,&quot;range&quot;:&quot;11464-11848&quot;} -->
+<p>
+On termine avec la troisième ligne :
+</p>
+
+<p>
+$L_3 \leftarrow L_3 - 1.1L_1$
+</p>
+<div class="table sectionedit20"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  62.8  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -344  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  -6958  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  0.329  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  1.43  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  28.9  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  0.01  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -0.0214  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0.27  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  <span style="color:#ff0000;">1.44</span>  </td><td class="col2 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col3 centeralign">  <span style="color:#ff0000;">-1.57</span>  </td><td class="col4 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col5 centeralign">  <span style="color:#ff0000;">1</span>  </td><td class="col6 centeralign">  <span style="color:#ff0000;">43.2</span>  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table9&quot;,&quot;secid&quot;:20,&quot;range&quot;:&quot;11912-12301&quot;} -->
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#Coefficients secondaires à 0</span>
+<span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>tab.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>:
+    <span class="kw1">if</span> i<span class="sy0">!=</span>indiceVarSortante:
+        tab<span class="br0">&#91;</span>i<span class="sy0">,</span>:<span class="br0">&#93;</span>-<span class="sy0">=</span>tab<span class="br0">&#91;</span>i<span class="sy0">,</span>indiceVarEntrante<span class="br0">&#93;</span>*tab<span class="br0">&#91;</span>indiceVarSortante<span class="sy0">,</span>:<span class="br0">&#93;</span></pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab">    <span class="co1">%Coefficients secondaires à 0</span>
+    <span class="kw1">for</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>=<span class="nu0">1</span>:<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tab<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+        <span class="kw1">if</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>!=indiceVarSortante
+            tab<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>,:<span class="br0">&#41;</span>-=tab<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>,indiceVarEntrante<span class="br0">&#41;</span>*tab<span class="br0">&#40;</span>indiceVarSortante,:<span class="br0">&#41;</span>
+        endif
+    endfor
+endwhile</pre>
+
+<p>
+Et voilà ! Nous en avons fini pour la <strong><span style="color:#008000;">première</span></strong> itération. Si on le voulait, on pourrait s&#039;en tenir là,  garder un sommet non optimal en $(0,28.9)$ et générer un bénéfice de 6958 <strong><span style="color:#ffa500;">pièces d&#039;or</span></strong>. Mais nous n&#039;allons pas nous arrêter en si bon chemin !
+</p>
+
+<p>
+<div class='alert alert-info'>Vous pouvez bien sûr retrouver le point $(0,28.9)$ sur le graphe !</div>
+</p>
+<p class="divalign-center"><a href="/lib/exe/detail.php?id=cpp%3Asimplexe&amp;media=cpp:grapheopti4.png" class="media" title="cpp:grapheopti4.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=b45ffe&amp;media=cpp:grapheopti4.png" class="media" alt="" width="400" /></a></p><!--divalign-->
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les coefficients secondaires&quot;,&quot;hid&quot;:&quot;les_coefficients_secondaires&quot;,&quot;codeblockOffset&quot;:11,&quot;secid&quot;:17,&quot;range&quot;:&quot;10696-13164&quot;} -->
+<h3 class="sectionedit21" id="la_seconde_iteration">La seconde itération</h3>
+<div class="level3">
+
+<p>
+Allez, c&#039;est parti pour la <strong><span style="color:#008000;">seconde</span></strong> itération. Il n&#039;y a plus qu&#039;un coefficient <strong><span style="color:#008000;">positif</span></strong> à la ligne $f$ donc on n&#039;a pas vraiment le choix sur la variable d&#039;<strong><span style="color:#008000;">entrée</span></strong> :
+</p>
+<div class="table sectionedit22"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  <span style="color:#ff0000;">$x_1$</span>  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  <span style="color:#ff0000;">62.8</span>  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -344  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  -6958  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  0.329  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  1.43  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  28.9  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  0.01  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -0.0214  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0.27  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  1.44  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -1.57  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  43.2  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table10&quot;,&quot;secid&quot;:22,&quot;range&quot;:&quot;13425-13746&quot;} -->
+<p>
+On sélectionne la variable de <strong><span style="color:#008000;">sortie</span></strong>. $\frac{28.9}{0.329} \approx 87.8$, <span style="color:#ff0000;">$\frac{0.272}{0.01} = 27.2$</span> et $\frac{43.2}{1.44}=30$ donc $y_2$ est la variable de sortie.
+</p>
+<div class="table sectionedit23"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  62.8  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -344  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  -6958  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  0.329  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  1.43  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  28.9  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  <span style="color:#ff0000;">$x_1$</span>  </th><td class="col1 centeralign">  0.01  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -0.0214  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0.27  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  1.44  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -1.57  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  43.2  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table11&quot;,&quot;secid&quot;:23,&quot;range&quot;:&quot;13953-14257&quot;} -->
+<p>
+Ensuite, on ramène le coefficient <strong><span style="color:#008000;">principal</span></strong> à 1 :
+</p>
+
+<p>
+$L_2 \leftarrow \frac {1}{0.01}L_2$
+</p>
+<div class="table sectionedit24"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  62.8  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -344  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  -6958  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  0.329  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  1.43  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  28.9  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $x_1$  </th><td class="col1 centeralign">  <span style="color:#ff0000;">1</span>  </td><td class="col2 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col3 centeralign">  <span style="color:#ff0000;">-2,14</span>  </td><td class="col4 centeralign">  <span style="color:#ff0000;">100</span>  </td><td class="col5 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col6 centeralign">  <span style="color:#ff0000;">27</span>  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  1.44  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -1.57  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  43.2  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table12&quot;,&quot;secid&quot;:24,&quot;range&quot;:&quot;14362-14746&quot;} -->
+<p>
+On ramène les coefficients <strong><span style="color:#008000;">secondaires</span></strong> à 0 :
+</p>
+
+<p>
+$L_f \leftarrow L_f - 62.8L_2$
+</p>
+<div class="table sectionedit25"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col2 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col3 centeralign">  <span style="color:#ff0000;">-210</span>  </td><td class="col4 centeralign">  <span style="color:#ff0000;">-6280</span>  </td><td class="col5 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col6 centeralign">  <span style="color:#ff0000;">-8654</span>  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  0.329  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  1.43  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  28.9  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $x_1$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -2,14  </td><td class="col4 centeralign">  100  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  27  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  1.44  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -1.57  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  43.2  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table13&quot;,&quot;secid&quot;:25,&quot;range&quot;:&quot;14841-15226&quot;} -->
+<p>
+$L_1 \leftarrow L_1 - 0.329L_2$
+</p>
+<div class="table sectionedit26"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -210  </td><td class="col4 centeralign">  -6280  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  -8654  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col2 centeralign">  <span style="color:#ff0000;">1</span>  </td><td class="col3 centeralign">  <span style="color:#ff0000;">2.13</span>  </td><td class="col4 centeralign">  <span style="color:#ff0000;">-32.9</span>  </td><td class="col5 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col6 centeralign">  <span style="color:#ff0000;">20</span>  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $x_1$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -2,14  </td><td class="col4 centeralign">  100  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  27  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  1.44  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -1.57  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  43.2  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table14&quot;,&quot;secid&quot;:26,&quot;range&quot;:&quot;15253-15636&quot;} -->
+<p>
+$L_3 \leftarrow L_3 - 1.44L_2$
+</p>
+<div class="table sectionedit27"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -210  </td><td class="col4 centeralign">  -6280  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  -8654  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  2.13  </td><td class="col4 centeralign">  -32.9  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  20  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $x_1$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -2.14  </td><td class="col4 centeralign">  100  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  27  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col2 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col3 centeralign">  <span style="color:#ff0000;">1.51</span>  </td><td class="col4 centeralign">  <span style="color:#ff0000;">-144</span>  </td><td class="col5 centeralign">  <span style="color:#ff0000;">1</span>  </td><td class="col6 centeralign">  <span style="color:#ff0000;">4.32</span>  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table15&quot;,&quot;secid&quot;:27,&quot;range&quot;:&quot;15662-16044&quot;} -->
+<p>
+Cette fois, tous les coefficients de $L_f$ sont <strong><span style="color:#008000;">négatifs</span></strong>, ce qui signifie que nous sommes arrivés à un <strong><span style="color:#ffa500;">optimum</span></strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La seconde it\u00e9ration&quot;,&quot;hid&quot;:&quot;la_seconde_iteration&quot;,&quot;codeblockOffset&quot;:13,&quot;secid&quot;:21,&quot;range&quot;:&quot;13165-16203&quot;} -->
+<h3 class="sectionedit28" id="resultat">Résultat</h3>
+<div class="level3">
+
+<p>
+Nous lisons donc sur le tableau qu&#039;il y a un <strong><span style="color:#ffa500;">optimum</span></strong> en $(27,20)$ qui permet de générer 8654 <strong><span style="color:#ffa500;">pièces d&#039;or. </span></strong>Identique aux valeurs de la méthode <strong><span style="color:#008000;">géométrique</span></strong> (allez vérifier, vous verrez !) sauf que nous ne nous sommes pas basés sur des observations <em>“à la louche”</em> pour arriver à ce résultat comparé à la méthode géométrique :)
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">print</span><span class="br0">&#40;</span>tab<span class="br0">&#41;</span></pre>
+<p class="divalign-center"><a href="/lib/exe/detail.php?id=cpp%3Asimplexe&amp;media=cpp:simplexepython.png" class="media" title="cpp:simplexepython.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=9202c0&amp;media=cpp:simplexepython.png" class="media" alt="" width="400" /></a></p><!--divalign-->
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab"><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span>tab<span class="br0">&#41;</span></pre>
+<p class="divalign-center"><a href="/lib/exe/detail.php?id=cpp%3Asimplexe&amp;media=cpp:simplexematlab.png" class="media" title="cpp:simplexematlab.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=615f34&amp;media=cpp:simplexematlab.png" class="media" alt="" width="400" /></a></p><!--divalign-->
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;R\u00e9sultat&quot;,&quot;hid&quot;:&quot;resultat&quot;,&quot;codeblockOffset&quot;:13,&quot;secid&quot;:28,&quot;range&quot;:&quot;16204-16806&quot;} -->
+<h3 class="sectionedit29" id="code_complet">Code complet</h3>
+<div class="level3">
+
+<p>
+J&#039;ai placé la recherche des variables entrantes et sortantes ainsi que la normalisation du tableau (le coefficient principal à 1 et les coefficients secondaires à 0) dans des fonctions dédiées pour rendre le code plus propre.
+</p>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+<pre class="code">x 2 = 20
+x 1 = 27
+y 3 = 4.4
+Optimum de 8654</pre>
+
+<p>
+Vous trouverez le code complet <a href="https://github.com/LlamasPartan/Optimisation/tree/master/Simplexe/M%C3%A9thode%20classique" class="urlextern" title="https://github.com/LlamasPartan/Optimisation/tree/master/Simplexe/M%C3%A9thode%20classique" rel="nofollow"> ici</a>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Code complet&quot;,&quot;hid&quot;:&quot;code_complet&quot;,&quot;codeblockOffset&quot;:15,&quot;secid&quot;:29,&quot;range&quot;:&quot;16807-17269&quot;} -->
+<h2 class="sectionedit30" id="cas_non_standards">Cas non standards</h2>
+<div class="level2">
+
+<p>
+Avec l&#039;exemple que j&#039;ai pris, tout se passe bien dans le meilleur des mondes (c&#039;est pour ça que je l&#039;ai choisi d’ailleurs !) mais, il existe des situations dans lesquelles la méthode que je vous ai montrée ne suffit pas.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Cas non standards&quot;,&quot;hid&quot;:&quot;cas_non_standards&quot;,&quot;codeblockOffset&quot;:16,&quot;secid&quot;:30,&quot;range&quot;:&quot;17270-17525&quot;} -->
+<h3 class="sectionedit31" id="mise_sous_forme_canonique">Mise sous forme canonique</h3>
+<div class="level3">
+
+<p>
+Il est possible que votre problème d&#039;optimisation ne soit pas aussi <strong><span style="color:#008000;">simplement</span></strong> transformable sous forme canonique que le problème que j&#039;ai choisi.
+</p>
+
+<p>
+Il peut arriver que vous vouliez, dans votre problème, <strong><span style="color:#008000;">minimiser</span></strong> une quantité au lieu de la maximiser (je ne sais pas moi, imaginons que notre alchimiste veuille faire gagner le moins de <strong><span style="color:#ffa500;">pièces d&#039;or</span></strong> possible à son maître cruel). Dans ce cas, il faudra remplacer le $\underset{x}{min}(c|x)$ de votre problème par un $-\underset{x}{max}(-c|x)$
+</p>
+
+<p>
+De même, si vous avez des contraintes de <strong><span style="color:#008000;">stock minimum</span></strong> (notre alchimiste veut utiliser au moins une certaine quantité de <strong><span style="color:#008000;">matière première</span></strong>) vous utiliserez $-a_1x_1-\cdots-a_nx_n \le -b_1$ au lieu de $a_1x_1+\cdots+a_nx_n \ge b_1$
+</p>
+
+<p>
+Dans un cas d&#039;<strong><span style="color:#008000;">égalité</span></strong> de contrainte (l&#039;alchimiste veut utiliser <strong>TOUT</strong> son stock) $a_1x_1+\cdots+a_nx_n=b_1$ devient $\begin{cases} a_1x_1+\cdots+a_nx_n \le b_1 \\ -a_1x_1-\cdots-a_nx_n \le -b_1\end{cases}$
+</p>
+
+<p>
+Finalement, si une variable de décision n&#039;a pas de contrainte de <strong><span style="color:#008000;">signe</span></strong>, on la décomposera en $x_i=x_i^+-x_i^-$ avec $x_i^+=max(x_i,0)$ et $x_i^-=min(-x_i,0)$ et on ajoutera la contrainte $x_i^+,x_i^- \ge 0$ au système.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Mise sous forme canonique&quot;,&quot;hid&quot;:&quot;mise_sous_forme_canonique&quot;,&quot;codeblockOffset&quot;:16,&quot;secid&quot;:31,&quot;range&quot;:&quot;17526-18876&quot;} -->
+<h3 class="sectionedit32" id="domaine_des_contraintes_non_borne">Domaine des contraintes non borné</h3>
+<div class="level3">
+
+<p>
+Considérons le problème d&#039;optimisation suivant :
+</p>
+<p class="divalign-center">$\begin{cases} \underset{x}{max}(x_1+x_2) \\ -x_1+x_2 \le 5 \\ 2x_1-3x_2 \le 4 \\ x_1,x_2 \ge 0\end{cases}$</p><!--divalign-->
+<div class="table sectionedit33"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><td class="col5"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  -1  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  5  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  2  </td><td class="col2 centeralign">  -3  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  4  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table16&quot;,&quot;secid&quot;:33,&quot;range&quot;:&quot;19089-19260&quot;} -->
+<p>
+On itère une fois avec $x_1$ comme variable d&#039;entrée et $y_2$ comme variable de sortie :
+</p>
+<div class="table sectionedit34"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><td class="col5"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  2.5  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  -0.5  </td><td class="col5 centeralign">  -2  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  -0.5  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  0.5  </td><td class="col5 centeralign">  7  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $x_1$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  -1.5  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0.5  </td><td class="col5 centeralign">  2  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table17&quot;,&quot;secid&quot;:34,&quot;range&quot;:&quot;19352-19537&quot;} -->
+<p>
+Et là, problème : certes, on peut choisir sans difficulté la variable d&#039;entrée mais il n&#039;y a aucune variable de sortie éligible ! En effet, tous les rapports de coefficients sont négatifs.
+</p>
+
+<p>
+Jetons un coup d’œil au résultat via la méthode géométrique (la droite verte est $L_{10}$ et la droite violette est $L_{15}$) :
+</p>
+<p class="divalign-center"><a href="/lib/exe/detail.php?id=cpp%3Asimplexe&amp;media=cpp:grapheoptinonborne.png" class="media" title="cpp:grapheoptinonborne.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=4acf69&amp;media=cpp:grapheoptinonborne.png" class="mediacenter" alt="" width="400" /></a></p><!--divalign-->
+
+<p>
+Voilà la raison pour laquelle on ne pouvait pas trouver le point optimal : il n&#039;y en a pas !
+</p>
+
+<p>
+<div class='alert alert-info'>Si vous faites tourner ce problème dans votre programme il vous retournera “Pas de variable sortante”.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Domaine des contraintes non born\u00e9&quot;,&quot;hid&quot;:&quot;domaine_des_contraintes_non_borne&quot;,&quot;codeblockOffset&quot;:16,&quot;secid&quot;:32,&quot;range&quot;:&quot;18877-20136&quot;} -->
+<h3 class="sectionedit35" id="degenerescence_des_sommets">Dégénérescence des sommets</h3>
+<div class="level3">
+
+<p>
+Considérons le problème d&#039;optimisation suivant :
+</p>
+<p class="divalign-center">$\begin{cases} \underset{x}{max}(3x_1+2x_2) \\ 2x_1+3x_2 \le 14 \\ 2x_1+x_2 \le 10 \\ x_1+x_2 \le 6 \\ x_1,x_2 \ge 0\end{cases}$</p><!--divalign-->
+<div class="table sectionedit36"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  3  </td><td class="col2 centeralign">  2  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  2  </td><td class="col2 centeralign">  3  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  14  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  2  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  10  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  6  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table18&quot;,&quot;secid&quot;:36,&quot;range&quot;:&quot;20364-20611&quot;} -->
+<p>
+On itère avec $x_1$ en variable d&#039;entrée et $y_2$ en variable de sortie :
+</p>
+<div class="table sectionedit37"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0.5  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  -1.5  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  -15  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  2  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  -1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  4  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $x_1$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  0.5  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0.5  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  5  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0.5  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  -0.5  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  1  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table19&quot;,&quot;secid&quot;:37,&quot;range&quot;:&quot;20688-20950&quot;} -->
+<p>
+On itère avec $x_2$ en variable d&#039;entrée et $y_3$ en variable de sortie :
+</p>
+<div class="table sectionedit38"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  -1  </td><td class="col5 centeralign">  -1  </td><td class="col6 centeralign">  -16  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  -4  </td><td class="col6 centeralign">  0  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $x_1$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  -1  </td><td class="col6 centeralign">  4  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  -1  </td><td class="col5 centeralign">  2  </td><td class="col6 centeralign">  2  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table20&quot;,&quot;secid&quot;:38,&quot;range&quot;:&quot;21027-21279&quot;} -->
+<p>
+Comme vous pouvez le voir, nous avons un 0 dans la colonne de droite. Certes, nous avons déjà résolu notre problème, mais dans le cas où on pourrait toujours itérer, $y_1$ serait <strong>forcément</strong> la variable sortante. Dans de rare cas, cela peut même causer des boucles infinies c&#039;est pourquoi je vous conseille d&#039;ajouter un compteur que vous incrémenterez à chaque pas de boucle qui limitera le nombre d&#039;itérations maximal (50 devrait largement suffire).
+</p>
+
+<p>
+La dégénérescence des sommets correspond à un problème du type :
+</p>
+<p class="divalign-center"><a href="/lib/exe/detail.php?id=cpp%3Asimplexe&amp;media=cpp:grapheoptidegenere.png" class="media" title="cpp:grapheoptidegenere.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=2b5523&amp;media=cpp:grapheoptidegenere.png" class="media" alt="" width="400" /></a></p><!--divalign-->
+
+<p>
+<a href="/doku.php?id=cpp:simplexephase" class="wikilink1" title="cpp:simplexephase">Méthode des phases</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;D\u00e9g\u00e9n\u00e9rescence des sommets&quot;,&quot;hid&quot;:&quot;degenerescence_des_sommets&quot;,&quot;codeblockOffset&quot;:16,&quot;secid&quot;:35,&quot;range&quot;:&quot;20137-&quot;} -->

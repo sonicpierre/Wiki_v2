@@ -1,0 +1,4 @@
+<span class="kw1">import</span> <span class="kw3">os</span>
+<span class="kw1">import</span> <span class="kw3">tarfile</span>
+<span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+<span class="kw1">import</span> <span class="kw3">urllib</span>.<span class="me1">request</span>

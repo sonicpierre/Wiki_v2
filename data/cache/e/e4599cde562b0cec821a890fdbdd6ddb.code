@@ -1,0 +1,4 @@
+library<span class="br0">&#40;</span>ClusterR<span class="br0">&#41;</span>
+gmm <span class="sy0">=</span> GMM<span class="br0">&#40;</span>moons<span class="sy0">,</span> gaussian_comps <span class="sy0">=</span> <span class="nu0">4</span><span class="br0">&#41;</span>
+prediction <span class="sy0">=</span> predict_GMM<span class="br0">&#40;</span>moons<span class="sy0">,</span> gmm$centroids<span class="sy0">,</span> gmm$covariance_matrices<span class="sy0">,</span> gmm$weights<span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>moons<span class="sy0">,</span> col <span class="sy0">=</span> prediction$cluster_labels<span class="br0">&#41;</span>

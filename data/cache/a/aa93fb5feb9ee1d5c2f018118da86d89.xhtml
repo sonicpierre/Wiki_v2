@@ -1,0 +1,150 @@
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ainstallation_environnement_c_sfml&amp;media=cpp:c_pres.png" class="media" title="cpp:c_pres.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=38a2ef&amp;media=cpp:c_pres.png" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+Le C++ (1980) est un langage mis à jour régulièrement particulièrement <span style='color:#ed1c24; '><strong>puissant</strong></span>. Il croise plusieurs paradigmes de programmation (objet, procédural). Le langage est compatible avec le <span style='color:#ed1c24; '><strong>langage C</strong></span> et c&#039;est pourquoi il est très utilisé sur des outils où il est important d&#039;obtenir de <span style='color:#ed1c24; '><strong>bonnes performances</strong></span>.
+</p>
+
+<h2 class="sectionedit1" id="compilateur">Compilateur</h2>
+<div class="level2">
+
+<p>
+Le compilateur sert à convertir du code source lisible par l&#039;humain en code binaire exécutable par un ordinateur.
+<br/>
+
+<br/>
+
+<a href="/lib/exe/detail.php?id=cpp%3Ainstallation_environnement_c_sfml&amp;media=cpp:compil.png" class="media" title="cpp:compil.png"><img src="/lib/exe/fetch.php?w=850&amp;tok=f276e2&amp;media=cpp:compil.png" class="mediacenter" title=" " alt=" " width="850" /></a>
+<br/>
+
+En c++ il en existe plusieurs, qui changent  :
+</p>
+<ul>
+<li class="level1"><div class="li"> la plateforme visée</div>
+</li>
+<li class="level1"><div class="li"> la plateforme source</div>
+</li>
+<li class="level1"><div class="li"> les optimisations</div>
+</li>
+<li class="level1"><div class="li"> les paramètres de configurations possibles (optimisation, message d&#039;informations, …)</div>
+</li>
+<li class="level1"><div class="li"> les messages d&#039;erreurs</div>
+</li>
+</ul>
+<div class="table sectionedit2"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Plateforme  </th><th class="col1 centeralign">  Compilateur  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  Windows  </td><td class="col1 centeralign">  MSVC, MinGW, Cygwin  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  Linux  </td><td class="col1 centeralign">  Clang, g++/gcc  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:2,&quot;range&quot;:&quot;837-938&quot;} -->
+<p>
+On va utiliser <a href="http://www.mingw.org/" class="urlextern" title="http://www.mingw.org/" rel="nofollow"> MinGW</a> pour windows il améliore cygwin et évite d&#039;installer tout l&#039;environnement lourd de microsoft.
+Sous Linux on utilisera <a href="https://gcc.gnu.org/" class="urlextern" title="https://gcc.gnu.org/" rel="nofollow"> g++</a> qui est le compilateur développé par <a href="https://www.gnu.org/home.fr.html" class="urlextern" title="https://www.gnu.org/home.fr.html" rel="nofollow"> GNU </a>. 
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Compilateur&quot;,&quot;hid&quot;:&quot;compilateur&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;420-1227&quot;} -->
+<h3 class="sectionedit3" id="windows">Windows</h3>
+<div class="level3">
+
+<p>
+MinGW s&#039;installe d&#039;une manière assez particulière. Il faut d&#039;abord un <a href="https://osdn.net/projects/mingw/releases/" class="urlextern" title="https://osdn.net/projects/mingw/releases/" rel="nofollow"> gestionnaire de module </a>. Il est conseillé de laisser le répertoire d&#039;installation par défaut.
+Il faut ensuite sélectionner dans le bandeau de gauche “Basic Setup”. Dans la partie de droite sélectionnez alors “mingw32-base-bin” et “mingw32-gcc-g++-bin” comme sur l&#039;image. Il ne reste qu&#039;à appliquer les changements.
+<a href="/lib/exe/detail.php?id=cpp%3Ainstallation_environnement_c_sfml&amp;media=cpp:mingw.png" class="media" title="cpp:mingw.png"><img src="/lib/exe/fetch.php?w=850&amp;tok=64e40c&amp;media=cpp:mingw.png" class="mediacenter" alt="" width="850" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Windows&quot;,&quot;hid&quot;:&quot;windows&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;1228-1715&quot;} -->
+<h3 class="sectionedit4" id="linux">Linux</h3>
+<div class="level3">
+
+<p>
+Sur Ubuntu et Debian la commande suivante permettra d&#039;installer le compilateur :
+</p>
+<pre class="code bash"><span class="kw2">sudo</span> apt <span class="kw2">install</span> <span class="kw2">g++</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Linux&quot;,&quot;hid&quot;:&quot;linux&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;1716-1855&quot;} -->
+<h2 class="sectionedit5" id="environnement_de_developpement_integre">Environnement de développement intégré</h2>
+<div class="level2">
+
+<p>
+La philosophie de développement en C/C++ est très différente entre Windows et Linux :
+</p>
+<ul>
+<li class="level1"><div class="li"> Windows : Visual Studio est utilisé très majoritairement</div>
+</li>
+<li class="level1"><div class="li"> Linux : Majoritairement pas d&#039;IDE, seulement un éditeur de texte (VS Code/vim)</div>
+</li>
+</ul>
+
+<p>
+Avec Linux, l&#039;appel du compilateur se fait souvent grâce à des plugins pour des éditeurs de texte.
+</p>
+
+<p>
+On va utiliser <a href="http://www.codeblocks.org/" class="urlextern" title="http://www.codeblocks.org/" rel="nofollow"> Code::Blocks</a> car il est léger et fonctionne sur Linux et sur Windows.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Environnement de d\u00e9veloppement int\u00e9gr\u00e9&quot;,&quot;hid&quot;:&quot;environnement_de_developpement_integre&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:5,&quot;range&quot;:&quot;1856-2370&quot;} -->
+<h3 class="sectionedit6" id="windows1">Windows</h3>
+<div class="level3">
+
+<p>
+Il s&#039;installe simplement à partir d&#039;un <a href="https://sourceforge.net/projects/codeblocks/" class="urlextern" title="https://sourceforge.net/projects/codeblocks/" rel="nofollow"> exécutable </a>.
+Il devrait détecter le compilateur “GNU C Compiler”. Dans ce cas tout est bon, sinon il faudra redémarrer l&#039;ordinateur et recommencer l&#039;installation.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Windows&quot;,&quot;hid&quot;:&quot;windows1&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:6,&quot;range&quot;:&quot;2371-2648&quot;} -->
+<h3 class="sectionedit7" id="linux1">Linux</h3>
+<div class="level3">
+
+<p>
+Il suffit d&#039;utiliser les dépots de logiciels d&#039;Ubuntu :
+</p>
+<pre class="code bash"><span class="kw2">sudo</span> apt <span class="kw2">install</span> codeblocks</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Linux&quot;,&quot;hid&quot;:&quot;linux1&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:7,&quot;range&quot;:&quot;2649-2771&quot;} -->
+<h2 class="sectionedit8" id="installation_de_sfml">Installation de SFML</h2>
+<div class="level2">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ainstallation_environnement_c_sfml&amp;media=cpp:sfml.png" class="media" title="cpp:sfml.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=1d3c3e&amp;media=cpp:sfml.png" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+SFML est une bibliothèque permettant de faire des <strong><span style="color:#008000;">rendus graphiques</span></strong> en C++. Certains de ces modules permettent également de gérer <strong>l&#039;audio</strong> et <strong>le réseau</strong>. Tous ces éléments ne sont pas gérés nativement en multi-plateforme en C++.
+De plus comme c&#039;est une bibliothèque assez <strong><span style="color:#008000;">bas niveau</span></strong> (plus proche de la machine), vous aurez plus de travail à faire mais vous saurez plus précisémment ce que fera votre code (et vous pourrez <strong><span style="color:#008000;">optimiser</span></strong>).
+</p>
+
+<p>
+Ca ne sert à rien de réinventer la roue, je vous renvoie vers le <a href="https://www.sfml-dev.org/tutorials/2.0/start-cb-fr.php" class="urlextern" title="https://www.sfml-dev.org/tutorials/2.0/start-cb-fr.php" rel="nofollow"> tutoriel officiel </a>.
+</p>
+
+<p>
+Voila une petite vidéo qui montre également comment paramétrer Code::Blocks, on utilise ici la version linux 64 bits de SFML. L&#039;archive a été décompressé dans le dossier /mnt/tuto/wikic++.
+</p>
+
+<p>
+<video class="mediacenter" title=" Vidéo sur l&amp;#039;installation de SFML dans Code::Blocks" width="950" height="450" controls="controls">
+<source src="/lib/exe/fetch.php?media=cpp:installationcpp.webm" type="video/webm" />
+<a href="/lib/exe/fetch.php?cache=&amp;media=cpp:installationcpp.webm" class="media mediafile mf_webm" title="cpp:installationcpp.webm (22.3 MB)"> Vidéo sur l&amp;#039;installation de SFML dans Code::Blocks</a></video>
+
+<div class='alert alert-success'><strong>Approfondir :</strong> Un aspect important en C/C++ est la compilation, je vous conseille d&#039;approfondir le sujet avec <a href="/doku.php?id=cpp:cmake" class="wikilink1" title="cpp:cmake"> CMake</a>. C&#039;est l&#039;outil le plus puissant, il est même considéré comme nécessaire par de nombreux développeurs.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Installation de SFML&quot;,&quot;hid&quot;:&quot;installation_de_sfml&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:8,&quot;range&quot;:&quot;2772-&quot;} -->

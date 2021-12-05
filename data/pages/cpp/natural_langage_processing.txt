@@ -1,0 +1,24 @@
+=====Etude de données textuelles=====
+
+{{ :cpp:nlppres.jpg?300| }}
+
+  * **Sujet** : Nous allons voir ici comment analyser des données textuelles de leur récupération à leur classification. 
+  * **Outils** : L'ensemble de cette documentation sera écrite en R et en Python. La plus part des exemples se baseront sur des données extraites de commentaires. Nous vous invitons à tester les morceaux de code avec vos propres données. 
+  * **Prérequis** : Il est préfèrable d'avoir une connaissance du Machine Learning pour pouvoir mieux comprendre les enjeux.
+  * **Temps** : Environs 5h
+<alert warning>**<fs large>Indication :</fs>** Il est fortement conseillé d'utiliser RStudio sur Windows pour une meilleure installation des packages,  ce qui vous simplifiera grandement la tache.</alert>
+
+====Introduction et contexte====
+
+Avant tout problème de Machine Learning, il est nécessaire de bien préciser le contexte pour savoir dans quel cas de figure on se trouve. Le NLP a ses propres caractéristiques que nous allons développer ici.
+
+  * [[cpp:Qu'est-ce que le NLP ? | Qu'est-ce que le NLP ?]]
+====Récupérer et visualiser ses données====
+
+Une fois les données récupérées, il est est important de les nettoyer pour en faire ressortir les informations principales. Dans le cadre des données textuelles cette opération peut être très complexe. 
+
+  * [[cpp:Preprocessing avec nltk| Visualisation et nettoyage des données textuelles]]
+
+====Future page et page en construction====
+
+  * [[cpp:Future page NLP | Future page et page en construction]]

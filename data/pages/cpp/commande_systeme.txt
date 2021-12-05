@@ -1,0 +1,24 @@
+{{ :cpp:imageunixcommande.jpeg?500 |}}
+
+**Sujet** : Le but de cette partie est de se familiariser avec la console des différents systèmes d'exploitation Linux, Windows et Mac. Nous apprendrons à installer des programmes avec un gestionnaire de paquets, à modifier une arborescence de fichiers et à gérer les processus, tout ça en ligne de commande =)
+
+**Outil :** La version d'Ubuntu utilisée lors de la rédaction de certains passages de cette page était la 18.04 mais ceci n'infuencera pas sur les commandes traitées par rapport à la dernière version de Linux.
+Pour ce qui est de Windows, il s'agit de Windows 10 qui a été utilisé.
+
+**Prérequis** : Aucun
+
+====Qu'est-ce que la console et pourquoi l'utiliser ?====
+
+La <color #ed1c24>**console**</color> (ou terminal) est un outil pour communiquer avec l'ordinateur <color #ed1c24>**sans utiliser d'interface graphique avancée**</color>. De ce fait, l'utilisation du Terminal demande <color #ed1c24>**moins de CPU/RAM**</color> et est préférée dans les situations où les ressources sont limitées. On utilise uniquement des lignes de code, et on peut automatiser des opérations sans passer par des logiciels tiers. Tout ordinateur est équipé d'une console.
+
+Nous nous servirons du terminal dans cette page pour <color #ed1c24>**parcourir et gérer les fichiers et dossiers**</color> présents dans l'ordinateur, <color #ed1c24>**changer leurs permissions**</color> d'accès ou <color #ed1c24>**rechercher**</color> un dossier, un fichier ou même une ligne d'un fichier texte en particulier, ainsi que pour quelques autres opérations utiles.
+
+Le cours se découpera en quatre parties :
+
+  * [[cpp:DecouvrirLaConsole| Découvrir la console]]
+
+  * [[cpp:Les dossiers et fichiers| Les dossiers et fichiers]]
+
+  * [[cpp:Les flux et les processus| Les flux et les processus]]
+
+  * [[cpp:Le scripting| Introduction au scripting]]

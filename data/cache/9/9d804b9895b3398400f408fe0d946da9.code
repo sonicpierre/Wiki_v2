@@ -1,0 +1,13 @@
+<span class="co1">#Partie entrainement</span>
+&nbsp;
+inertia <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span><span class="co1">#Initialisation d'un tableau d'inertie</span>
+K_range <span class="sy0">=</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">20</span><span class="br0">&#41;</span><span class="co1">#Création d'une liste de nombre de cluster</span>
+<span class="kw1">for</span> k <span class="kw1">in</span> K_range:
+    model <span class="sy0">=</span> KMeans<span class="br0">&#40;</span>n_clusters <span class="sy0">=</span> k<span class="br0">&#41;</span>.<span class="me1">fit</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="co1">#Entrainement du modèle pour chaque nombre de clusters de la liste</span>
+    inertia.<span class="me1">append</span><span class="br0">&#40;</span>model.<span class="me1">inertia_</span><span class="br0">&#41;</span><span class="co1">#Ajout de l'inertie de chaque modèle</span>
+&nbsp;
+<span class="co1">#Partie visualisation</span>
+&nbsp;
+plt.<span class="me1">plot</span><span class="br0">&#40;</span>K_range<span class="sy0">,</span> inertia<span class="br0">&#41;</span><span class="co1">#Graphique d'inertie de chaque modèle en fonction du nombre de clusters associés</span>
+plt.<span class="me1">xlabel</span><span class="br0">&#40;</span><span class="st0">'Nombre de cluster'</span><span class="br0">&#41;</span>
+plt.<span class="me1">ylabel</span><span class="br0">&#40;</span><span class="st0">'Inertie expliquée'</span><span class="br0">&#41;</span>

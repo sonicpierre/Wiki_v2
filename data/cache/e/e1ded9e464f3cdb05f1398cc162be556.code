@@ -1,0 +1,10 @@
+<span class="co1"># load the package</span>
+library<span class="br0">&#40;</span><span class="st0">'RMySQL'</span><span class="br0">&#41;</span>
+library<span class="br0">&#40;</span><span class="st0">'DBI'</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># create a MySQL connection object</span>
+con <span class="sy0">&lt;</span>- dbConnect<span class="br0">&#40;</span>MySQL<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+                 <span class="kw3">user</span> <span class="sy0">=</span> <span class="st0">'pivirgaux'</span><span class="sy0">,</span>
+                 password <span class="sy0">=</span> <span class="st0">'pivirgaux'</span><span class="sy0">,</span>
+                 host <span class="sy0">=</span> <span class="st0">'localhost'</span><span class="sy0">,</span>
+                 dbname <span class="sy0">=</span> <span class="st0">'France'</span><span class="br0">&#41;</span>

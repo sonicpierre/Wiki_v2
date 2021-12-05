@@ -1,0 +1,33 @@
+<span class="kw1">function</span> <span class="br0">&#91;</span>x<span class="br0">&#93;</span> = grad<span class="br0">&#40;</span>A, b, x<span class="br0">&#41;</span>
+&nbsp;
+    #Variables:
+    #A : matrice definie positive
+    #b : membre droit de l'equation
+    #x : vecteur inconnu donnant la solution
+    #r : residu
+    #p : vecteur conjugué
+    #alpha : coefficient de descente du vecteur p
+&nbsp;
+&nbsp;
+    #Initialisation
+    r_old = A*x-b;
+    p_old = -r_old;
+&nbsp;
+    #Traitement boucle
+    <span class="kw1">while</span> <span class="br0">&#40;</span><span class="br0">&#40;</span>comp<span class="br0">&#40;</span>r_old, <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/zeros.html"><span class="kw2">zeros</span></a><span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/length.html"><span class="kw2">length</span></a><span class="br0">&#40;</span>b<span class="br0">&#41;</span>,<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>==<span class="nu0">0</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+        Apk = A*p_old;
+        alpha = -<span class="br0">&#40;</span>r_old'<span class="br0">&#41;</span>*p_old/<span class="br0">&#40;</span><span class="br0">&#40;</span>p_old'<span class="br0">&#41;</span>* Apk<span class="br0">&#41;</span>; #maj de alpha
+&nbsp;
+        x = x + alpha* p_old; #maj x
+        r_new = A*x - b; # maj r
+&nbsp;
+        <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/beta.html"><span class="kw2">beta</span></a> = <span class="br0">&#40;</span><span class="br0">&#40;</span>r_new'<span class="br0">&#41;</span>*Apk<span class="br0">&#41;</span> / <span class="br0">&#40;</span><span class="br0">&#40;</span>p_old'<span class="br0">&#41;</span>* Apk<span class="br0">&#41;</span>;
+&nbsp;
+        p_new = -r_new + <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/beta.html"><span class="kw2">beta</span></a>* p_old; #maj p
+&nbsp;
+        #k = k+ <span class="nu0">1</span>
+        r_old = r_new;
+        p_old = p_new;
+&nbsp;
+    endwhile
+endfunction

@@ -1,0 +1,673 @@
+
+<p>
+<a href="/doku.php?id=cpp:ia" class="wikilink1" title="cpp:ia"> Machine Learning</a>
+<a href="/lib/exe/detail.php?id=cpp%3Adata_exploration&amp;media=cpp:dataexplo.jpg" class="media" title="cpp:dataexplo.jpg"><img src="/lib/exe/fetch.php?w=500&amp;tok=3b4488&amp;media=cpp:dataexplo.jpg" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+Cette section va aborder les différentes façons d&#039;aborder un problème de Machine Learning et d&#039;exploiter les données associées. On parlera aussi du nettoyage de données, actions qui représente environ 80 % du travail de data scientist. 
+</p>
+
+<h2 class="sectionedit1" id="le_clustering">Le clustering</h2>
+<div class="level2">
+
+<p>
+Il s&#039;agit ici d&#039;apprentissage non supervisé. La machine va apprendre toute seule, à reconnaître les différents groupements de données. Il y a plusieurs algorithmes pour cela, mais parmi les plus connus on a les algorithmes KMeans et CAH.
+</p>
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong> Dans cette partie, on utilisera le dataset de mesures de gaz contenus dans l&#039;alcool, disponible <a href="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Exploration%20des%20donnees/Data%20gaz" class="urlextern" title="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Exploration%20des%20donnees/Data%20gaz" rel="nofollow">ici</a>. On considérera le premier relevé.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le clustering&quot;,&quot;hid&quot;:&quot;le_clustering&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;308-864&quot;} -->
+<h3 class="sectionedit2" id="les_k-means">Les K-means</h3>
+<div class="level3">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Adata_exploration&amp;media=cpp:k_means.png" class="media" title="cpp:k_means.png"><img src="/lib/exe/fetch.php?w=1000&amp;tok=31826a&amp;media=cpp:k_means.png" class="mediacenter" title="Segmentation du jeu de données" alt="Segmentation du jeu de données" width="1000" /></a>
+</p>
+
+<p>
+Le partitionnement s&#039;opère par le fait que l&#039;ordinateur cherche à trouver le centre de gravité de chaque paquet (cluster). A chaque itération, il affecte les points au cluster le plus proche puis recommence le processus jusqu&#039;à un état stable.
+</p>
+
+<p>
+Il est parfois nécessaire d&#039;adapter la distance pour calculer l&#039;éloignement aux centres de gravité. 
+</p>
+
+</div>
+
+<h5 id="normalisation_des_donnees">Normalisation des données</h5>
+<div class="level5">
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong> Il est judicieux de centrer les données avant d&#039;appliquer les algorithmes de clustering. Consultez la page <a href="/doku.php?id=cpp:preprocessing_et_encodage" class="wikilink1" title="cpp:preprocessing_et_encodage">pre-processing et encodage</a> pour plus d&#039;informations.</div>
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">preprocessing</span> <span class="kw1">import</span> StandardScaler
+&nbsp;
+scaler <span class="sy0">=</span> StandardScaler<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="co1">#Appel du transformeur</span>
+scaler.<span class="me1">fit_transform</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="co1">#Transformation des données</span>
+data <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>scaler.<span class="me1">fit_transform</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="sy0">,</span> index <span class="sy0">=</span> data.<span class="me1">index</span><span class="sy0">,</span> columns <span class="sy0">=</span> data.<span class="me1">columns</span><span class="br0">&#41;</span><span class="co1">#Construction du DataFrame</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">data <span class="sy0">&lt;</span>- scale<span class="br0">&#40;</span>data<span class="br0">&#41;</span></pre>
+
+</div>
+
+<h5 id="le_modele_de_clustering">Le modèle de clustering</h5>
+<div class="level5">
+
+<p>
+Construction du modèle de partitionnement
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">cluster</span> <span class="kw1">import</span> KMeans
+&nbsp;
+model <span class="sy0">=</span> KMeans<span class="br0">&#40;</span>n_clusters <span class="sy0">=</span> <span class="nu0">3</span><span class="sy0">,</span> max_iter<span class="sy0">=</span><span class="nu0">500</span><span class="sy0">,</span> init<span class="sy0">=</span><span class="st0">'k-means++'</span><span class="br0">&#41;</span><span class="co1">#Création du modèle, initialisation du nombre de clusters et d'itérations</span>
+<span class="co1">#Définition de la méthode d'initialisation des centres de gravité</span>
+model.<span class="me1">fit</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="co1">#Entrainement du modèle</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>cluster<span class="br0">&#41;</span>
+&nbsp;
+model <span class="sy0">=</span> kmeans<span class="br0">&#40;</span>data<span class="sy0">,</span> center<span class="sy0">=</span><span class="nu0">3</span><span class="br0">&#41;</span><span class="co1">#data étant le jeu de données et center le nombre de clusters</span></pre>
+
+</div>
+
+<h5 id="visualisation_des_predictions">Visualisation des prédictions</h5>
+<div class="level5">
+
+<p>
+On peut vérifier les résultats de prédiction : 
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">12</span><span class="sy0">,</span> <span class="nu0">6</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Définition de la taille du graphique</span>
+&nbsp;
+plt.<span class="me1">scatter</span><span class="br0">&#40;</span>data<span class="br0">&#91;</span><span class="st0">'0.799_0.201'</span><span class="br0">&#93;</span><span class="sy0">,</span> data<span class="br0">&#91;</span><span class="st0">'0.799_0.201.1'</span><span class="br0">&#93;</span><span class="sy0">,</span> c<span class="sy0">=</span>model.<span class="me1">predict</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Nuage de points des clusters </span>
+plt.<span class="me1">scatter</span><span class="br0">&#40;</span>model.<span class="me1">cluster_centers_</span><span class="br0">&#91;</span>:<span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span> model.<span class="me1">cluster_centers_</span><span class="br0">&#91;</span>:<span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">,</span> c<span class="sy0">=</span><span class="st0">'r'</span><span class="br0">&#41;</span><span class="co1">#Positionnement des centres des différent clusters</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">plot<span class="br0">&#40;</span>data<span class="sy0">,</span> col <span class="sy0">=</span> model$cluster<span class="br0">&#41;</span><span class="co1">#Nuage de points de points des clusters</span>
+points<span class="br0">&#40;</span>model$centers<span class="sy0">,</span> col <span class="sy0">=</span> <span class="nu0">1</span>:<span class="nu0">2</span><span class="sy0">,</span> pch <span class="sy0">=</span> <span class="nu0">8</span><span class="sy0">,</span> cex <span class="sy0">=</span> <span class="nu0">2</span><span class="br0">&#41;</span><span class="co1">#Positionnement des centres des clusters</span></pre>
+
+</div>
+
+<h5 id="resultat">Résultat</h5>
+<div class="level5">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Adata_exploration&amp;media=cpp:clustering_clus3.png" class="media" title="cpp:clustering_clus3.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=271d63&amp;media=cpp:clustering_clus3.png" class="mediacenter" title="Résultat du clustering avec 3 clusters" alt="Résultat du clustering avec 3 clusters" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 1 :</strong> Résultat du clustering avec 3 clusters</p><!--divalign-->
+
+<p>
+On remarque que, parmi les trois clusters défini initialement, seul l&#039;un d&#039;entre eux correspond à son centre de gravité. Cela veut donc dire que le nombre de clusters défini n&#039;est pas exact, vu qu&#039;il n&#039;y a pas de convergence des deux autres centres de gravité.
+</p>
+
+<p>
+De ce fait on utilisera une méthode appelée <strong>Elbow Method</strong>,  qui calcule la variance expliquée par chacun des clusters. On verra ainsi la courbe de variance expliquée et on déterminera le nombre de clusters optimaux, expliquant au maximum nos données.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="co1">#Partie entrainement</span>
+&nbsp;
+inertia <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span><span class="co1">#Initialisation d'un tableau d'inertie</span>
+K_range <span class="sy0">=</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">20</span><span class="br0">&#41;</span><span class="co1">#Création d'une liste de nombre de cluster</span>
+<span class="kw1">for</span> k <span class="kw1">in</span> K_range:
+    model <span class="sy0">=</span> KMeans<span class="br0">&#40;</span>n_clusters <span class="sy0">=</span> k<span class="br0">&#41;</span>.<span class="me1">fit</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="co1">#Entrainement du modèle pour chaque nombre de clusters de la liste</span>
+    inertia.<span class="me1">append</span><span class="br0">&#40;</span>model.<span class="me1">inertia_</span><span class="br0">&#41;</span><span class="co1">#Ajout de l'inertie de chaque modèle</span>
+&nbsp;
+<span class="co1">#Partie visualisation</span>
+&nbsp;
+plt.<span class="me1">plot</span><span class="br0">&#40;</span>K_range<span class="sy0">,</span> inertia<span class="br0">&#41;</span><span class="co1">#Graphique d'inertie de chaque modèle en fonction du nombre de clusters associés</span>
+plt.<span class="me1">xlabel</span><span class="br0">&#40;</span><span class="st0">'Nombre de cluster'</span><span class="br0">&#41;</span>
+plt.<span class="me1">ylabel</span><span class="br0">&#40;</span><span class="st0">'Inertie expliquée'</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">R2 <span class="sy0">=</span> vector <span class="br0">&#40;</span><span class="st0">&quot;numeric&quot;</span><span class="sy0">,</span> <span class="nu0">9</span><span class="br0">&#41;</span>
+<span class="kw1">for</span><span class="br0">&#40;</span>k <span class="kw1">in</span> <span class="nu0">2</span>:<span class="nu0">10</span><span class="br0">&#41;</span>           <span class="co1">#pour i allant de 2 à</span>
+<span class="br0">&#123;</span>
+  cl <span class="sy0">=</span> kmeans<span class="br0">&#40;</span>data<span class="sy0">,</span> centers<span class="sy0">=</span>k<span class="sy0">,</span> nstart<span class="sy0">=</span><span class="nu0">5</span><span class="br0">&#41;</span>
+  R2<span class="br0">&#91;</span>k-<span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">=</span>cl$betweenss/cl$totss
+<span class="br0">&#125;</span>
+plot<span class="br0">&#40;</span><span class="nu0">2</span>:<span class="nu0">10</span><span class="sy0">,</span>R2<span class="sy0">,</span><span class="kw2">type</span><span class="sy0">=</span><span class="st0">&quot;b&quot;</span><span class="br0">&#41;</span></pre>
+
+</div>
+
+<h5 id="resultat1">Résultat</h5>
+<div class="level5">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Adata_exploration&amp;media=cpp:elbow.png" class="media" title="cpp:elbow.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=b1ea73&amp;media=cpp:elbow.png" class="mediacenter" title="Inertie des modèles en fonction du nombre de clusters" alt="Inertie des modèles en fonction du nombre de clusters" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 2 :</strong> Inertie des modèles en fonction du nombre de clusters</p><!--divalign-->
+
+<p>
+Il en ressort que le jeu de données utilisé contient cinq clusters, qu&#039;on peut mieux visualiser après modification du paramètre. On remarque aussi que les centres de gravité sont mieux répartis.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Adata_exploration&amp;media=cpp:lustering_after_elbow.png" class="media" title="cpp:lustering_after_elbow.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=decd08&amp;media=cpp:lustering_after_elbow.png" class="mediacenter" title="Répartition des clusters après optimisation" alt="Répartition des clusters après optimisation" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 3 :</strong> Clusters optimaux du jeu de données</p><!--divalign-->
+
+</div>
+
+<h5 id="sources">Sources</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.youtube.com/watch?v=FTtzd31IAOw&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=28" class="urlextern" title="https://www.youtube.com/watch?v=FTtzd31IAOw&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=28" rel="nofollow"> Machine Learnia, par Guillaume Saint-Cirgue</a></div>
+</li>
+<li class="level1"><div class="li"> Cours de Data Mining : Clustering, par Astrid Jourdan, CY Tech</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les K-means&quot;,&quot;hid&quot;:&quot;les_k-means&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;865-5331&quot;} -->
+<h3 class="sectionedit3" id="la_classification_ascendante_hierarchique">La Classification Ascendante Hiérarchique</h3>
+<div class="level3">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Adata_exploration&amp;media=cpp:cah_.png" class="media" title="cpp:cah_.png"><img src="/lib/exe/fetch.php?w=450&amp;tok=d75f44&amp;media=cpp:cah_.png" class="mediacenter" title="CAH" alt="CAH" width="450" /></a>
+</p>
+
+<p>
+Au début de l&#039;algorithme chaque individu forme une classe. Puis, à chaque itération on regroupe les individus les plus proches et on regarde la perte d&#039;information sous la forme d&#039;un dendrogramme. A partir de ce graphique on choisit finalement combien de clusters on décide de garder.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> scipy.<span class="me1">cluster</span> <span class="kw1">import</span> hierarchy
+&nbsp;
+Z <span class="sy0">=</span> hierarchy.<span class="me1">linkage</span><span class="br0">&#40;</span>data<span class="sy0">,</span> method<span class="sy0">=</span><span class="st0">'ward'</span><span class="br0">&#41;</span><span class="co1">#Définition de la méthode de calcul des distances</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">distance <span class="sy0">=</span> dist<span class="br0">&#40;</span>x<span class="sy0">,</span> <span class="st0">&quot;euclidean&quot;</span><span class="br0">&#41;</span> <span class="co1">#crée une structure de distance entre les individus</span></pre>
+
+<p>
+On peut ensuite dessiner le dendrogramme pour mieux visualiser les clusters qui ressortent :
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">12</span><span class="sy0">,</span><span class="nu0">6</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Définition de la taille du graphique</span>
+&nbsp;
+dendrogramme <span class="sy0">=</span> hierarchy.<span class="me1">dendrogram</span><span class="br0">&#40;</span>Z<span class="br0">&#41;</span><span class="co1">#Contruction du dendrogramme selon les paramètres fournis</span>
+&nbsp;
+plt.<span class="me1">xlabel</span><span class="br0">&#40;</span><span class="st0">'Taille du cluster'</span><span class="br0">&#41;</span>
+plt.<span class="me1">ylabel</span><span class="br0">&#40;</span><span class="st0">'Distance'</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">h <span class="sy0">=</span> hclust<span class="br0">&#40;</span>distance<span class="sy0">,</span> <span class="st0">&quot;ward.D2&quot;</span><span class="br0">&#41;</span><span class="co1">#Création des paramètres du dendroramme</span>
+c <span class="sy0">=</span> cutree<span class="br0">&#40;</span>h<span class="sy0">,</span> k<span class="sy0">=</span><span class="nu0">5</span><span class="br0">&#41;</span><span class="co1">#Création des différentes classes</span>
+plot<span class="br0">&#40;</span>h<span class="br0">&#41;</span><span class="co1">#Création du dendrogramme</span></pre>
+
+</div>
+
+<h5 id="resultat2">Résultat</h5>
+<div class="level5">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Adata_exploration&amp;media=cpp:dendrogramme.png" class="media" title="cpp:dendrogramme.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=2ebf49&amp;media=cpp:dendrogramme.png" class="mediacenter" title="Dendrogramme" alt="Dendrogramme" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 4 :</strong> Dendrogramme du jeu de données</p><!--divalign-->
+
+</div>
+
+<h5 id="source">Source</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.youtube.com/watch?v=JcfIeaGzF8A" class="urlextern" title="https://www.youtube.com/watch?v=JcfIeaGzF8A" rel="nofollow">TheEngineeringWorld</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La Classification Ascendante Hi\u00e9rarchique&quot;,&quot;hid&quot;:&quot;la_classification_ascendante_hierarchique&quot;,&quot;codeblockOffset&quot;:8,&quot;secid&quot;:3,&quot;range&quot;:&quot;5332-6744&quot;} -->
+<h2 class="sectionedit4" id="l_analyse_des_composantes_principales">L&#039;Analyse des Composantes Principales</h2>
+<div class="level2">
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong> On utilisera de nouveau, le dataset de mesures de gaz contenus dans l&#039;alcool, disponible <a href="https://archive.ics.uci.edu/ml/datasets/Alcohol+QCM+Sensor+Dataset" class="urlextern" title="https://archive.ics.uci.edu/ml/datasets/Alcohol+QCM+Sensor+Dataset" rel="nofollow">ici</a>. On considérera le premier relevé.</div>
+</p>
+
+<p>
+Le fléau de la dimension est un problème qui complexifie inutilement un jeu de données. 
+</p>
+
+<p>
+L&#039;ACP permet de réduire le nombre de dimensions d&#039;un problème, en exprimant l&#039;ensemble des données selon des axes, qui sont des combinaisons linéaires de toutes les autres variables. Ainsi chaque variable exprime un pourcentage de l&#039;information totale ou variance totale (inertie), et l&#039;objectif est de maximiser cette inertie pour gagner de l&#039;information. 
+<br/>
+
+<br/>
+
+<a href="/lib/exe/detail.php?id=cpp%3Adata_exploration&amp;media=cpp:lamaface.jpg" class="media" title="cpp:lamaface.jpg"><img src="/lib/exe/fetch.php?w=290&amp;tok=aec5b5&amp;media=cpp:lamaface.jpg" class="media" alt="" width="290" /></a><a href="/lib/exe/detail.php?id=cpp%3Adata_exploration&amp;media=cpp:lamaprofil.jpg" class="media" title="cpp:lamaprofil.jpg"><img src="/lib/exe/fetch.php?w=400&amp;tok=8ecdd6&amp;media=cpp:lamaprofil.jpg" class="media" alt="" width="400" /></a>
+<br/>
+
+<br/>
+
+L&#039;idée est de trouver le bon point de vue ou la variance du dataset sera maximisée. Ainsi, il y a un gain d&#039;information et l&#039;entrainement du modèle n&#039;en sera que meilleur.
+</p>
+
+</div>
+
+<h4 id="construction_du_modele_de_reduction">Construction du modèle de réduction</h4>
+<div class="level4">
+
+<p>
+On commence tout d&#039;abord par regarder quelle part de l&#039;information est expliquée par chaque variable et combien de variables il nous faut pour expliquer 95 % de l&#039;information.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">decomposition</span> <span class="kw1">import</span> PCA
+&nbsp;
+model <span class="sy0">=</span> PCA<span class="br0">&#40;</span>n_components <span class="sy0">=</span> <span class="nu0">15</span><span class="br0">&#41;</span><span class="co1">#Création du modèle de réduction sur toutes les variables du dataset</span>
+X_reduced <span class="sy0">=</span> model.<span class="me1">fit_transform</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="co1">#Application de la réduction aux données d'entrainement</span>
+np.<span class="me1">argmax</span><span class="br0">&#40;</span>np.<span class="me1">cumsum</span><span class="br0">&#40;</span>model.<span class="me1">explained_variance_ratio_</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy0">&gt;</span> <span class="nu0">0.95</span><span class="co1">#Détermination des variables </span>
+&nbsp;
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">12</span><span class="sy0">,</span><span class="nu0">6</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Définition de la taille du graphique</span>
+plt.<span class="me1">plot</span><span class="br0">&#40;</span>np.<span class="me1">cumsum</span><span class="br0">&#40;</span>model.<span class="me1">explained_variance_ratio_</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Affichage des variances expliquées en fonction du nombre de variables</span>
+&nbsp;
+plt.<span class="me1">xlabel</span><span class="br0">&#40;</span><span class="st0">&quot;Nombres de variables&quot;</span><span class="br0">&#41;</span>
+plt.<span class="me1">ylabel</span><span class="br0">&#40;</span><span class="st0">&quot;Variance expliquée&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>explor<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>factoMineR<span class="br0">&#41;</span>
+&nbsp;
+res.<span class="me1">PCA</span> <span class="sy0">=</span> PCA<span class="br0">&#40;</span>scale<span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Création du modèle de réduction</span>
+explor<span class="br0">&#40;</span>res.<span class="me1">PCA</span><span class="br0">&#41;</span><span class="co1">#Ouverture d'une fenêtre permettant de visualiser les variables importantes</span></pre>
+
+</div>
+
+<h5 id="resultat3">Résultat</h5>
+<div class="level5">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Adata_exploration&amp;media=cpp:variance_expliquee.png" class="media" title="cpp:variance_expliquee.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=4bed15&amp;media=cpp:variance_expliquee.png" class="mediacenter" title="Variance expliquée en fonction du nombre de variables du jeu de données" alt="Variance expliquée en fonction du nombre de variables du jeu de données" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 5 :</strong> Variance expliquée en fonction du nombre de variables du jeu de données</p><!--divalign-->
+
+</div>
+
+<h5 id="source1">Source</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.youtube.com/watch?v=FTtzd31IAOw&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=28" class="urlextern" title="https://www.youtube.com/watch?v=FTtzd31IAOw&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=28" rel="nofollow"> Machine Learnia par Guillaume Saint-Cirgue</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;L&#039;Analyse des Composantes Principales&quot;,&quot;hid&quot;:&quot;l_analyse_des_composantes_principales&quot;,&quot;codeblockOffset&quot;:12,&quot;secid&quot;:4,&quot;range&quot;:&quot;6745-9195&quot;} -->
+<h2 class="sectionedit5" id="la_selection_de_variables">La sélection de variables</h2>
+<div class="level2">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Adata_exploration&amp;media=cpp:selection_var.png" class="media" title="cpp:selection_var.png"><img src="/lib/exe/fetch.php?w=700&amp;tok=f15529&amp;media=cpp:selection_var.png" class="mediacenter" title="Sélection de variables" alt="Sélection de variables" width="700" /></a>
+</p>
+
+<p>
+Il s&#039;agit d&#039;une étape importante dans le nettoyage des données. Après le travail d&#039;encodage, un nombre trop élevé de variables peut entrainer deux problèmes :
+</p>
+<ul>
+<li class="level1"><div class="li"> Un <strong>sur-apprentissage (over-fitting)</strong> de votre modèle de prédiction sur les données d&#039;entrainement et de validation. Ce qui dégrade considérablement les performances de vote modèle lors de la généralisation sur de nouvelles données. </div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li">  <strong>L&#039;augmentation du temps d&#039;apprentissage et de calibration des hyper-paramètres</strong> de vote modèle. Ce qui peut être un problème lors du déploiement du modèle pour un client. </div>
+</li>
+</ul>
+
+<p>
+Pour éviter ces problèmes il vous faudra donc utiliser des méthodes de sélection de variables, pour ne garder que celles qui apportent le plus d&#039;informations à votre modèle.
+</p>
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong> On utilisera de nouveau, le dataset de mesures de gaz contenus dans l&#039;alcool, disponible <a href="https://archive.ics.uci.edu/ml/datasets/Alcohol+QCM+Sensor+Dataset" class="urlextern" title="https://archive.ics.uci.edu/ml/datasets/Alcohol+QCM+Sensor+Dataset" rel="nofollow">ici</a>. On considérera le premier relevé.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La s\u00e9lection de variables&quot;,&quot;hid&quot;:&quot;la_selection_de_variables&quot;,&quot;codeblockOffset&quot;:14,&quot;secid&quot;:5,&quot;range&quot;:&quot;9196-10314&quot;} -->
+<h3 class="sectionedit6" id="les_tests_de_dependances">Les tests de dépendances</h3>
+<div class="level3">
+
+<p>
+Les tests statistiques sélectionnent les K variables explicatives, dont les scores de dépendance avec la variable cible sont les plus élevés.
+</p>
+
+</div>
+
+<h4 id="le_test_de_anova">Le test de ANOVA</h4>
+<div class="level4">
+
+<p>
+Visualisation des scores de dépendances selon le test de ANOVA. Le résultat de ce test retourne deux tableaux : les scores de dépendances et la probabilité de rejeter l&#039;hypothèse de dépendance alors qu&#039;elle est vraie (p-valeur).
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">feature_selection</span> <span class="kw1">import</span> SelectKBest<span class="sy0">,</span> f_regression
+&nbsp;
+X <span class="sy0">=</span> data.<span class="me1">drop</span><span class="br0">&#40;</span>columns<span class="sy0">=</span><span class="br0">&#91;</span><span class="st0">'1-Octanol'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="co1">#Définition des variables explicatives</span>
+y <span class="sy0">=</span> data<span class="br0">&#91;</span><span class="st0">'1-Octanol'</span><span class="br0">&#93;</span><span class="co1">#Définition de la variable cible</span>
+&nbsp;
+f_regression<span class="br0">&#40;</span>X<span class="sy0">,</span> y<span class="br0">&#41;</span><span class="co1">#Test de dépendance</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">y <span class="sy0">&lt;</span>- data$X1.<span class="me1">Octanol</span>
+X <span class="sy0">&lt;</span>- data<span class="br0">&#91;</span><span class="sy0">,</span> -c<span class="br0">&#40;</span><span class="nu0">11</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+&nbsp;
+aov<span class="br0">&#40;</span>y <span class="sy0">~</span>.<span class="sy0">,</span> data <span class="sy0">=</span> data<span class="br0">&#41;</span></pre>
+
+</div>
+
+<h5 id="variables_selectionnees">Variables sélectionnées</h5>
+<div class="level5">
+
+<p>
+On sélectionne alors les k=5 variables ayant les scores les plus élevés selon le test de ANOVA, on applique la sélection sur l&#039;ensemble des données puis on récupère les variables sélectionnées.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">selecteur <span class="sy0">=</span> SelectKBest<span class="br0">&#40;</span>f_regression<span class="sy0">,</span> k<span class="sy0">=</span><span class="nu0">5</span><span class="br0">&#41;</span><span class="co1">#Initialisation du selecteur</span>
+selecteur.<span class="me1">fit_transform</span><span class="br0">&#40;</span>X<span class="sy0">,</span> y<span class="br0">&#41;</span><span class="co1">#Application aux données </span>
+np.<span class="kw3">array</span><span class="br0">&#40;</span>X.<span class="me1">columns</span><span class="br0">&#41;</span><span class="br0">&#91;</span>selecteur.<span class="me1">get_support</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#93;</span><span class="co1">#Récupération des variables conservées</span></pre>
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong> Il existe une méthode selectKBest sous R, toutefois son implémentation avec la sélection par ANOVA impose des conditions particulières.</div>
+</p>
+
+<p>
+Vous pouvez néanmoins sélectionner les variables les plus importantes en observant les F-valeur associées à chaque variable explicative, par rapport à la variable cible.
+</p>
+<pre class="code python">summary.<span class="me1">aov</span><span class="br0">&#40;</span>aov<span class="br0">&#40;</span>y <span class="sy0">~</span>.<span class="sy0">,</span> data <span class="sy0">=</span> data<span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+</div>
+
+<h4 id="rappel">Rappel</h4>
+<div class="level4">
+<div class="table sectionedit7"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 leftalign"> Chi2    </th><th class="col2 leftalign"> ANOVA    </th><th class="col3"> Corrélation de Pearson</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 leftalign"> Caractéristiques      </th><td class="col1 leftalign"> Mesure la dépendance variable cible/explicatives et requiert <strong>obligatoirement</strong> des données positives.            </td><td class="col2 leftalign"> Vérifie s&#039;il y a une différence significative entre plusieurs sous-échantillons (modalités) d&#039;une même variable quantitative (le test compare des moyennes).          </td><td class="col3">Reflète la relation linéaire entre deux variables continues. </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 leftalign"> Evaluation ​    </th><td class="col1">Plus le score de dépendance sera élevé, plus la variable dépendra de la variable cible.</td><td class="col2 leftalign"> Idem que pour le test du chi2.          </td><td class="col3 leftalign"> Compris entre [-1;1] avec -1 corrélation négative (respectivement 1 pour positif) et 0 absence de corrélation.	</td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 leftalign"> Utilisation ​    </th><td class="col1">Classification</td><td class="col2 leftalign"> Classification et régression          </td><td class="col3">Régression </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:7,&quot;range&quot;:&quot;12049-12845&quot;} -->
+</div>
+
+<h5 id="sources1">Sources</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <a href="http://​math.univ-lyon1.fr/​~duheille/​MASS42_anova.pdf" class="urlextern" title="http://​math.univ-lyon1.fr/​~duheille/​MASS42_anova.pdf" rel="nofollow">Université de Lyon, département de mathématiques</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://​pagesped.cahuntsic.ca/​sc_sociales/​psy/​methosite/​consignes/​variance.htm#​quand" class="urlextern" title="http://​pagesped.cahuntsic.ca/​sc_sociales/​psy/​methosite/​consignes/​variance.htm#​quand" rel="nofollow">​pagesped</a> </div>
+</li>
+<li class="level1"><div class="li"> <a href="https://​www.statisticshowto.com/​probability-and-statistics/​f-statistic-value-test/​" class="urlextern" title="https://​www.statisticshowto.com/​probability-and-statistics/​f-statistic-value-test/​" rel="nofollow">statisticshowto</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.youtube.com/watch?v=T4nZDuakYlU&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=27" class="urlextern" title="https://www.youtube.com/watch?v=T4nZDuakYlU&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=27" rel="nofollow">Machine Learnia, par Guillaume Saint-Cirgue</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les tests de d\u00e9pendances&quot;,&quot;hid&quot;:&quot;les_tests_de_dependances&quot;,&quot;codeblockOffset&quot;:14,&quot;secid&quot;:6,&quot;range&quot;:&quot;10315-13374&quot;} -->
+<h3 class="sectionedit8" id="selection_via_estimateur">Sélection via estimateur</h3>
+<div class="level3">
+
+<p>
+Cette méthode permet de sélectionner les variables de façon récursive, pour un estimateur particulier. Cela passe par plusieurs entrainements de l&#039;estimateur, au cours desquels les variables les moins utiles sont à chaque fois éliminées.
+</p>
+
+<p>
+<div class='alert alert-info'> <strong>Remarque</strong> : Cette façon de faire nécessite la connaissance du principe de validation croisée, expliqué <a href="https://www.kaggle.com/alexisbcook/cross-validation" class="urlextern" title="https://www.kaggle.com/alexisbcook/cross-validation" rel="nofollow">ici</a>. On considérera le même dataset que les parties précédentes. </div>
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">feature_selection</span> <span class="kw1">import</span> RFECV
+<span class="kw1">from</span> sklearn.<span class="me1">ensemble</span> <span class="kw1">import</span> RandomForestRegressor
+&nbsp;
+selector <span class="sy0">=</span> RFECV<span class="br0">&#40;</span>RandomForestRegressor<span class="br0">&#40;</span>random_state<span class="sy0">=</span><span class="nu0">0</span><span class="br0">&#41;</span><span class="sy0">,</span> step <span class="sy0">=</span> <span class="nu0">2</span><span class="sy0">,</span> min_features_to_select <span class="sy0">=</span> <span class="nu0">5</span><span class="sy0">,</span> cv<span class="sy0">=</span><span class="nu0">5</span><span class="br0">&#41;</span><span class="co1">#On définit l'estimateur à tester, le nombre de variables à supprimer à chaque</span>
+<span class="co1">#itérations (step), le nombre minimal de variables à garder à la fin et enfin le nombre de validation croisées à effectuer.</span>
+selector.<span class="me1">fit</span><span class="br0">&#40;</span>X<span class="sy0">,</span> y<span class="br0">&#41;</span><span class="co1">#Entraienement de l'estimateur</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>caret<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>randomForest<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>e1071<span class="br0">&#41;</span>
+&nbsp;
+&nbsp;
+y <span class="sy0">&lt;</span>- data$X1.<span class="me1">Octanol</span><span class="co1">#Variable cible</span>
+y <span class="sy0">&lt;</span>- <span class="kw1">as</span>.<span class="me1">factor</span><span class="br0">&#40;</span>y<span class="br0">&#41;</span><span class="co1">#Transformation de la variable cible en facteur</span>
+X <span class="sy0">&lt;</span>- data<span class="br0">&#91;</span><span class="sy0">,</span> -c<span class="br0">&#40;</span><span class="nu0">11</span><span class="br0">&#41;</span><span class="br0">&#93;</span><span class="co1">#Variables explicatives</span>
+&nbsp;
+<span class="kw2">set</span>.<span class="me1">seed</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="br0">&#41;</span><span class="co1">#On initialise l'aléatoire pour la répétabilité </span>
+selector <span class="sy0">&lt;</span>- rfeControl<span class="br0">&#40;</span>functions <span class="sy0">=</span> rfFuncs<span class="sy0">,</span> method <span class="sy0">=</span> <span class="st0">'cv'</span><span class="sy0">,</span> repeats <span class="sy0">=</span> <span class="nu0">5</span><span class="br0">&#41;</span><span class="co1">#Définition des paramètres de controle de la sélection</span>
+<span class="kw3">select</span> <span class="sy0">&lt;</span>- rfe<span class="br0">&#40;</span>X<span class="sy0">,</span> y<span class="sy0">,</span> sizes <span class="sy0">=</span> c<span class="br0">&#40;</span><span class="nu0">5</span><span class="br0">&#41;</span><span class="sy0">,</span> rfeControl <span class="sy0">=</span> selector<span class="br0">&#41;</span><span class="co1">#Sélection des variables</span></pre>
+
+</div>
+
+<h5 id="variables_selectionnees1">Variables sélectionnées</h5>
+<div class="level5">
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">selector.<span class="me1">ranking_</span><span class="co1">#Classement final des variables par ordre d'importance</span>
+selector.<span class="me1">grid_scores_</span><span class="co1">#Score de l'estimateur à chaque itération de l'algorithme</span>
+np.<span class="kw3">array</span><span class="br0">&#40;</span>X.<span class="me1">columns</span><span class="br0">&#41;</span><span class="br0">&#91;</span>selector.<span class="me1">get_support</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#93;</span><span class="co1">#Affichage des variables conservées</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python"><span class="kw3">select</span>$optVariables<span class="co1">#Variables conservées</span></pre>
+
+</div>
+
+<h5 id="resultat4">Résultat</h5>
+<div class="level5">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Adata_exploration&amp;media=cpp:rfecv.png" class="media" title="cpp:rfecv.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=fcc580&amp;media=cpp:rfecv.png" class="mediacenter" title="Résultat de sélection" alt="Résultat de sélection" width="600" /></a>
+</p>
+
+<p>
+Pour cet estimateur, la première variable est 3e dans le classement d&#039;importance, tandis que les deuxième, troisième et quatrième variables sont parmi les premières plus importantes.
+</p>
+
+<p>
+On voit aussi qu&#039;à la première itération, le score de validation de 60 %, puis est passé à 80 % lorsqu&#039;on supprime les deux variables les plus inutiles. Le score ne change pas 
+après suppression de quatre autres variables, mais on voit une perte de qualité lorsqu&#039;on veut en supprimer huit. C&#039;est pourquoi finalement on a six variables en première position.
+</p>
+
+</div>
+
+<h5 id="sources2">Sources</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.kaggle.com/alexisbcook/cross-validation" class="urlextern" title="https://www.kaggle.com/alexisbcook/cross-validation" rel="nofollow">Kaggle</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.youtube.com/watch?v=T4nZDuakYlU&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=27" class="urlextern" title="https://www.youtube.com/watch?v=T4nZDuakYlU&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=27" rel="nofollow">Machine Learnia, par Guillaume Saint-Cirgue</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;S\u00e9lection via estimateur&quot;,&quot;hid&quot;:&quot;selection_via_estimateur&quot;,&quot;codeblockOffset&quot;:18,&quot;secid&quot;:8,&quot;range&quot;:&quot;13375-16146&quot;} -->
+<h2 class="sectionedit9" id="les_regles_d_association">Les règles d&#039;association</h2>
+<div class="level2">
+
+<p>
+Nous allons travailler avec un DataSet qui recense plusieurs tickets de caisse par pays. Nous avons un peu pré-traité le dataset pour qu&#039;il soit directement utilisable pour la construction de règle. Vous trouverez le dataset utilisé <a href="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Exploration%20des%20donnees/Data%20ticket%20caisse" class="urlextern" title="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Exploration%20des%20donnees/Data%20ticket%20caisse" rel="nofollow"> ici</a> ainsi que le code qui a permi de le pré-traité.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Adata_exploration&amp;media=cpp:association_rules.png" class="media" title="cpp:association_rules.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=ed8d8a&amp;media=cpp:association_rules.png" class="mediacenter" title="Règles d&#039;association" alt="Règles d&#039;association" width="800" /></a>
+</p>
+
+<p>
+On va voir comment faire des règles d&#039;association entre les éléments de tickets de caisse. Le but étant de faire ressortir les combinaisons de produits les plus courants, afin de proposer de possibles achats associés.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les r\u00e8gles d&#039;association&quot;,&quot;hid&quot;:&quot;les_regles_d_association&quot;,&quot;codeblockOffset&quot;:22,&quot;secid&quot;:9,&quot;range&quot;:&quot;16147-16886&quot;} -->
+<h3 class="sectionedit10" id="forme_des_donnees_et_specificite_python">Forme des données et spécificité Python</h3>
+<div class="level3">
+
+<p>
+Il faut avant tout que les données aient une forme particulière, par exemple que chacun des produits et des tickets de caisse soient reliés par un même ID. 
+</p>
+<div class="table sectionedit11"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0 leftalign">              </td><th class="col1 leftalign"> ID Ticket    </th><th class="col2 leftalign"> Produit    </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 leftalign"> 1      </th><td class="col1 leftalign"> 1            </td><td class="col2 leftalign"> Pêche            </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 leftalign"> 2      </th><td class="col1 leftalign"> 1            </td><td class="col2 leftalign"> Prune            </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 leftalign"> 3      </th><td class="col1 leftalign"> 2            </td><td class="col2 leftalign"> Abricot          </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:11,&quot;range&quot;:&quot;17101-17281&quot;} -->
+<p>
+Ensuite il est nécessaire de rendre le dataset binaire. Il y aura des 0 quand le produit n&#039;est pas présent dans le ticket et 1 s’il est présent.
+</p>
+<pre class="code python"><span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+dodo <span class="sy0">=</span> pd.<span class="me1">read_csv</span><span class="br0">&#40;</span><span class="br0">&#40;</span><span class="st0">&quot;produit.csv&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="co1">#tableau croisé 0/1</span>
+DataFrame <span class="sy0">=</span> pd.<span class="me1">crosstab</span><span class="br0">&#40;</span>dodo.<span class="me1">NumTicket</span><span class="sy0">,</span>dodo.<span class="me1">Produit</span><span class="br0">&#41;</span>
+DataFrame.<span class="me1">columns</span> <span class="co1">#Permet d'avoir les colonnes</span></pre>
+
+<p>
+On peut appliquer l&#039;algorithme qui calcule à chaque fois le support et élimine les combinaisons dont le support est trop bas.
+</p>
+<pre class="code python"><span class="co1">#importation de la fonction apriori</span>
+<span class="kw1">from</span> mlxtend.<span class="me1">frequent_patterns</span> <span class="kw1">import</span> apriori
+&nbsp;
+<span class="co1">#itemsets frequents</span>
+freq_itemsets <span class="sy0">=</span> apriori<span class="br0">&#40;</span>DataFrame<span class="sy0">,</span>min_support<span class="sy0">=</span><span class="nu0">0.025</span><span class="sy0">,</span>max_len<span class="sy0">=</span><span class="nu0">3</span><span class="sy0">,</span> use_colnames<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span>
+freq_itemsets.<span class="me1">iloc</span><span class="br0">&#91;</span><span class="nu0">60</span>:<span class="nu0">80</span><span class="sy0">,</span> :<span class="br0">&#93;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Adata_exploration&amp;media=cpp:resultatassociation.png" class="media" title="cpp:resultatassociation.png"><img src="/lib/exe/fetch.php?w=250&amp;tok=f1cd95&amp;media=cpp:resultatassociation.png" class="mediacenter" alt="" width="250" /></a>
+</p>
+
+<p>
+<strong>Remarque :</strong>
+</p>
+
+<p>
+Parfois, on obtient trop de règles et elles ne sont pas exploitables c&#039;est pourquoi il peut être intéressant de faire ressortir certaines règles. Pour cela, il existe une librairie particulière utilisée en Python :
+</p>
+<pre class="code python"><span class="co1">#fonction de calcul des règles</span>
+<span class="kw1">from</span> mlxtend.<span class="me1">frequent_patterns</span> <span class="kw1">import</span> association_rules
+&nbsp;
+<span class="co1">#génération des règles à partir des itemsets fréquents</span>
+regles <span class="sy0">=</span> association_rules<span class="br0">&#40;</span>freq_itemsets<span class="sy0">,</span>metric<span class="sy0">=</span><span class="st0">&quot;confidence&quot;</span><span class="sy0">,</span>min_threshold<span class="sy0">=</span><span class="nu0">0.75</span><span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Forme des donn\u00e9es et sp\u00e9cificit\u00e9 Python&quot;,&quot;hid&quot;:&quot;forme_des_donnees_et_specificite_python&quot;,&quot;codeblockOffset&quot;:22,&quot;secid&quot;:10,&quot;range&quot;:&quot;16887-18549&quot;} -->
+<h3 class="sectionedit12" id="forme_des_donnees_et_specificite_en_r">Forme des données et spécificité en R</h3>
+<div class="level3">
+
+<p>
+En R, il est possible de trouver les règles sur le dataFrame brut. Commençon par charger les données et les librairies qui vont nous permettre de le faire.
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>arules<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>arulesViz<span class="br0">&#41;</span>
+data <span class="sy0">=</span> read.<span class="kw3">csv</span><span class="br0">&#40;</span><span class="st0">&quot;produitPourR.csv&quot;</span><span class="br0">&#41;</span>
+data <span class="sy0">=</span> data<span class="br0">&#91;</span><span class="sy0">,</span>-<span class="nu0">1</span><span class="br0">&#93;</span></pre>
+
+<p>
+On peut ensuite lancer l&#039;algorithme et contrairement à Python visualiser les règles construites.
+</p>
+<pre class="code python">rules <span class="sy0">=</span> apriori<span class="br0">&#40;</span>data<span class="sy0">,</span> parameter <span class="sy0">=</span> <span class="kw2">list</span><span class="br0">&#40;</span>support<span class="sy0">=</span><span class="nu0">0.01</span><span class="sy0">,</span> confidence<span class="sy0">=</span><span class="nu0">0.5</span><span class="sy0">,</span> minlen<span class="sy0">=</span><span class="nu0">2</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="kw3">inspect</span><span class="br0">&#40;</span>sort<span class="br0">&#40;</span>rules<span class="sy0">,</span>by<span class="sy0">=</span><span class="st0">&quot;confidence&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+plot <span class="br0">&#40;</span>rules<span class="br0">&#91;</span><span class="nu0">1</span>:<span class="nu0">19</span><span class="br0">&#93;</span><span class="sy0">,</span>method<span class="sy0">=</span><span class="st0">&quot;graph&quot;</span><span class="sy0">,</span>shading<span class="sy0">=</span><span class="st0">&quot;confidence&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Adata_exploration&amp;media=cpp:association.png.png" class="media" title="cpp:association.png.png"><img src="/lib/exe/fetch.php?w=700&amp;tok=d83ec5&amp;media=cpp:association.png.png" class="mediacenter" alt="" width="700" /></a>
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Python_Association_Rules.pdf" class="urlextern" title="http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Python_Association_Rules.pdf" rel="nofollow">http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Python_Association_Rules.pdf</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://eric.univ-lyon2.fr/~ricco/cours/slides/regles_association.pdf" class="urlextern" title="http://eric.univ-lyon2.fr/~ricco/cours/slides/regles_association.pdf" rel="nofollow">http://eric.univ-lyon2.fr/~ricco/cours/slides/regles_association.pdf</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://freres.peyronnet.eu/trouver-la-bonne-association-a-laide-du-data-miningmachine-learning/" class="urlextern" title="https://freres.peyronnet.eu/trouver-la-bonne-association-a-laide-du-data-miningmachine-learning/" rel="nofollow">https://freres.peyronnet.eu/trouver-la-bonne-association-a-laide-du-data-miningmachine-learning/</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Forme des donn\u00e9es et sp\u00e9cificit\u00e9 en R&quot;,&quot;hid&quot;:&quot;forme_des_donnees_et_specificite_en_r&quot;,&quot;codeblockOffset&quot;:25,&quot;secid&quot;:12,&quot;range&quot;:&quot;18550-19515&quot;} -->
+<h2 class="sectionedit13" id="conclusion">Conclusion</h2>
+<div class="level2">
+
+<p>
+Avoir une idée claire de ses données, c&#039;est savoir quelles sont les variables à  ajuster ou à créer pour améliorer son apprentissage. Il s&#039;agit d&#039;une étape primordiale pour mieux appréhender le problème donné et y apporter une réponse plus adapter. Ainsi, avec toutes les techniques présentés vous avez les outils pour mieux aborder le problème.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Conclusion&quot;,&quot;hid&quot;:&quot;conclusion&quot;,&quot;codeblockOffset&quot;:27,&quot;secid&quot;:13,&quot;range&quot;:&quot;19516-&quot;} -->

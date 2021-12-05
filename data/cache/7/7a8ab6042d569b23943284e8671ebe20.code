@@ -1,0 +1,3 @@
+data.<span class="me1">price</span> <span class="co1">#Récupérer la colonne price qui peut être très intéressante si on veut prédire le prix des appartements</span>
+data.<span class="me1">price</span>.<span class="me1">sort_values</span><span class="br0">&#40;</span>ascending <span class="sy0">=</span> <span class="kw2">False</span><span class="br0">&#41;</span> <span class="co1">#Va permettre de trier la colonne de façon décroissante</span>
+data.<span class="me1">price</span>.<span class="me1">argsort</span> <span class="co1">#Va permettre d'obtenir les indices des éléments triés</span>

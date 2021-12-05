@@ -1,0 +1,410 @@
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Acmake&amp;media=cpp:cmake.png" class="media" title="cpp:cmake.png"><img src="/lib/exe/fetch.php?w=550&amp;tok=b79bbd&amp;media=cpp:cmake.png" class="media" alt="" width="550" /></a>
+</p>
+
+<p>
+On va voir sur cette page comment compiler un projet relativement simple avec CMake.
+Pour rappel, CMake est un outil fonctionnant avec son propre langage, permettant de configurer une compilation. En fonction de cette configuration, CMake génère un makefile qui s&#039;utilise avec make. CMake est compatible avec plusieurs langages, mais on l&#039;utilisera ici pour du C++ ou du C.
+</p>
+
+<h1 class="sectionedit1" id="installation_des_prerequis">Installation des prérequis</h1>
+<div class="level1">
+
+<p>
+CMake est un outil multiplateformes, on va voir comment l&#039;utiliser dans le cadre d&#039;un projet où les développeurs travaillent sur toutes les plateformes communes : Windows, MacOS et Linux.
+Sur chacune des plateformes il faut deux programmes :
+</p>
+<ul>
+<li class="level1"><div class="li"> CMake</div>
+</li>
+<li class="level1"><div class="li"> Un compilateur</div>
+</li>
+</ul>
+
+<p>
+Les compilateurs C++ n&#039;ont pas tous les mêmes fonctionnalités et ne sont pas tous disponnibles sur tous les systèmes d&#039;exploitation. Vous trouverez sur <a href="https://en.cppreference.com/w/cpp/compiler_support" class="urlextern" title="https://en.cppreference.com/w/cpp/compiler_support" rel="nofollow"> cppreference.com </a> les fonctionnalités supportées par chaque compilateur.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Installation des pr\u00e9requis&quot;,&quot;hid&quot;:&quot;installation_des_prerequis&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;403-1007&quot;} -->
+<h3 class="sectionedit2" id="windows">Windows</h3>
+<div class="level3">
+
+</div>
+
+<h4 id="compilateur">Compilateur</h4>
+<div class="level4">
+
+<p>
+La compilation sous Windows se fait avec deux outils principaux : MinGW ou MSVC. Le premier est un portage de GCC (compilateur Linux) et le second est le compilateur de Microsoft.
+</p>
+
+<p>
+Pour installer MSVC il suffit de télécharger Visual Studio qui permet en plus d&#039;ouvrir directement des projets CMake sans configuration supplémentaire. C&#039;est la manière recommandée.
+</p>
+
+<p>
+Pour la seconde possibilité il vous faudra installer MinGW, en laissant le dossier d&#039;installation par défaut.
+Il vous faudra également modifier les variables d&#039;environnements :
+</p>
+<ul>
+<li class="level1"><div class="li"> Chercher “Path” dans la barre de recherche windows et ouvrir la première proposition.</div>
+</li>
+<li class="level1"><div class="li"> Cliquer ensuite sur <strong>Variables d&#039;environnement…</strong>. </div>
+</li>
+<li class="level1"><div class="li"> Chercher dans la première liste la variable <strong>Path</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Modifier la en ajoutant une ligne contenant “C:\MinGW\bin”, puis valider. </div>
+</li>
+<li class="level1"><div class="li"> Vérifier également que la variable <strong>Path</strong> de la <strong>seconde</strong> liste, contienne le chemin vers CMake.</div>
+</li>
+<li class="level1"><div class="li"> Fermer les différents menus en cliquant sur “OK”.</div>
+</li>
+</ul>
+
+</div>
+
+<h4 id="cmake">CMake</h4>
+<div class="level4">
+
+<p>
+Pour installer CMake il suffit alors de télécharger l&#039;installateur depuis le site officiel.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Windows&quot;,&quot;hid&quot;:&quot;windows&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;1008-2154&quot;} -->
+<h3 class="sectionedit3" id="macos">MacOS</h3>
+<div class="level3">
+
+</div>
+
+<h4 id="compilateur1">Compilateur</h4>
+<div class="level4">
+
+<p>
+De la même manière que pour windows vous avez deux possibilités pour installer le compilateur, dans tous les cas le compilateur installé sera <strong>apple-clang</strong>, qui est souvent appelé <strong>clang</strong> (il existe également un compilateur <strong>clang</strong> pour linux).
+</p>
+
+<p>
+Vous pouvez installer XCode, qui est l&#039;IDE d&#039;Apple pour faire du C et du C++, ce qui installera directement clang. Sinon vous pouvez installer seulement clang avec  la commande :
+</p>
+<pre class="code bash"><span class="kw3">command</span> xcode-select <span class="re5">--install</span></pre>
+
+<p>
+Il faudra ensuite donner l&#039;autorisation d&#039;installer l&#039;outils en ligne de commande d&#039;XCode et l&#039;installation devrait se dérouler simplement.
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.ics.uci.edu/~pattis/common/handouts/macclion/clang.html" class="urlextern" title="https://www.ics.uci.edu/~pattis/common/handouts/macclion/clang.html" rel="nofollow">https://www.ics.uci.edu/~pattis/common/handouts/macclion/clang.html</a></div>
+</li>
+</ul>
+
+</div>
+
+<h4 id="cmake1">CMake</h4>
+<div class="level4">
+
+<p>
+L&#039;installation de CMake sous MacOS est moins facile, vous pouvez l&#039;installer depuis le site officiel grâce à un installateur qui vous permettra d&#039;avoir l&#039;application graphique de CMake. Or cela ne nous intéresse pas ici.
+On va donc juste installer la version ligne de commande de CMake.
+</p>
+
+<p>
+Pour cela on va d&#039;abord installer HomeBrew, qui est un gestionnaire de paquets très connu sur MacOS.
+</p>
+<pre class="code bash"><span class="sy0">/</span>bin<span class="sy0">/</span><span class="kw2">bash</span> <span class="re5">-c</span> <span class="st0">&quot;<span class="es4">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)</span>&quot;</span></pre>
+
+<p>
+Suivez ensuite les consignes d&#039;installation du logiciel.
+</p>
+
+<p>
+Une fois installer la commande suivante installera CMake :
+</p>
+<pre class="code bash">brew <span class="kw2">install</span> cmake</pre>
+
+<p>
+<strong>Source : </strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://brew.sh/index_fr" class="urlextern" title="https://brew.sh/index_fr" rel="nofollow">https://brew.sh/index_fr</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;MacOS&quot;,&quot;hid&quot;:&quot;macos&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;2155-3741&quot;} -->
+<h3 class="sectionedit4" id="linux">Linux</h3>
+<div class="level3">
+
+<p>
+Sous Linux, c&#039;est enfin une tâche simple.
+Il vous faudra utiliser votre gestionnaire de paquet préféré pour installer g++ et CMake.
+</p>
+
+<p>
+Sous <strong>Ubuntu</strong> on utilisera :
+</p>
+<pre class="code bash"><span class="kw2">sudo</span> apt <span class="kw2">install</span> <span class="kw2">g++</span> cmake </pre>
+
+<p>
+<span style='color:#ed1c24; '><strong>Et voilà vous êtes prêt pour l&#039;utilisation de CMake.</strong></span>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Linux&quot;,&quot;hid&quot;:&quot;linux&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:4,&quot;range&quot;:&quot;3742-4058&quot;} -->
+<h1 class="sectionedit5" id="utilisation_de_cmake">Utilisation de CMake</h1>
+<div class="level1">
+
+<p>
+La première fois que l&#039;on utilisera CMake il faudra manuellement utiliser la commande suivante :
+</p>
+<pre class="code bash">cmake <span class="sy0">&lt;</span>pathToFolder<span class="sy0">&gt;</span></pre>
+
+<p>
+Le Makefile sera généré dans le dossier courant. Le <strong>&lt;pathToFolder&gt;</strong> doit pointé sur le dossier contenant le premier CMakeLists.txt, qui est le fichier de configuration de CMake.
+Ensuite, il suffit d&#039;utiliser make, à chaque fois que l&#039;on désire compiler.
+</p>
+<pre class="code bash"><span class="kw2">make</span></pre>
+
+<p>
+Normallement le Makefile vérifie si le projet est à jour vis à vis de CMake. Si ce n&#039;est pas le cas, il relance CMake avant de faire la compilation du projet.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Utilisation de CMake&quot;,&quot;hid&quot;:&quot;utilisation_de_cmake&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:5,&quot;range&quot;:&quot;4059-4683&quot;} -->
+<h2 class="sectionedit6" id="bonne_pratique">Bonne pratique</h2>
+<div class="level2">
+
+<p>
+La convention dans le monde de cmake veut que l&#039;utilisateur créer un dossier <strong>build</strong> à la racine du projet. Puis exécute le CMake depuis ce dossier là, afin de rassembler tous les artefacts de build dans ce dossier.
+</p>
+<pre class="code bash"><span class="kw2">mkdir</span> build
+<span class="kw3">cd</span> build</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Bonne pratique&quot;,&quot;hid&quot;:&quot;bonne_pratique&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:6,&quot;range&quot;:&quot;4684-4977&quot;} -->
+<h2 class="sectionedit7" id="configuration_d_un_projet_simple">Configuration d&#039;un projet simple</h2>
+<div class="level2">
+
+<p>
+La configuration de CMake passe par un fichier CMakeLists.txt.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Configuration d&#039;un projet simple&quot;,&quot;hid&quot;:&quot;configuration_d_un_projet_simple&quot;,&quot;codeblockOffset&quot;:7,&quot;secid&quot;:7,&quot;range&quot;:&quot;4978-5085&quot;} -->
+<h3 class="sectionedit8" id="organisation_du_projet">Organisation du projet</h3>
+<div class="level3">
+
+<p>
+On va dans notre cas utiliser l&#039;arborescence suivante :
+</p>
+<pre class="code">CMakeTuto
+├── bin
+└── src
+    ├── CMakeLists.txt
+    ├── main.cpp
+    └── subfolder
+        ├── CMakeLists.txt
+        └── file1.cpp</pre>
+
+<p>
+Le dossier src contient le code source du programme ainsi que le fichier de configuration de CMake.
+</p>
+
+<p>
+On va se contenter de faire un Hello World pour le moment, le fichier <strong>main.cpp</strong> ne contient donc que celà :
+</p>
+<pre class="code cpp"><span class="co2">#include &lt;iostream&gt;</span>
+<span class="kw4">int</span> main<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  std<span class="sy4">::</span><span class="kw3">cout</span> <span class="sy1">&lt;&lt;</span> <span class="st0">&quot;Hello World&quot;</span> <span class="sy1">&lt;&lt;</span> std<span class="sy4">::</span><span class="me2">endl</span><span class="sy4">;</span>
+  <span class="kw1">return</span> <span class="nu0">0</span><span class="sy4">;</span>
+<span class="br0">&#125;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Organisation du projet&quot;,&quot;hid&quot;:&quot;organisation_du_projet&quot;,&quot;codeblockOffset&quot;:7,&quot;secid&quot;:8,&quot;range&quot;:&quot;5086-5686&quot;} -->
+<h3 class="sectionedit9" id="configuration_de_cmake">Configuration de CMake</h3>
+<div class="level3">
+
+<p>
+La première chose à faire dans la configuration de CMake est de définir la version de CMake minimum nécessaire pour ce projet. On va ici utiliser la version 3.15.
+</p>
+<pre class="code cmake"><a href="http://www.cmake.org/cmake/help/cmake2.6docs.html#command:cmake_minimum_required"><span class="kw1">cmake_minimum_required</span></a><span class="sy0">(</span><span class="kw3">VERSION</span> 3.15<span class="sy0">)</span></pre>
+
+<p>
+CMake fonctionne autour d&#039;un système de <strong>target</strong>. On appliquera alors notre configuration à cette target. Pour en créer une il suffit d&#039;utiliser la fonction suivante. On peut également préciser le ou les langages utilisés dans le projet. Ce n&#039;est cependant pas obligatoire.
+</p>
+<pre class="code cmake"><a href="http://www.cmake.org/cmake/help/cmake2.6docs.html#command:project"><span class="kw1">project</span></a><span class="sy0">(</span>cmaketuto C CXX<span class="sy0">)</span></pre>
+
+<p>
+Comme cette target est spéciale (c&#039;est la target principale du projet), on peut obtenir son nom dans la variable : <strong>CMAKE_PROJECT_NAME</strong>.
+</p>
+
+<p>
+Il faut maintenant indiqué quels fichiers sources vont être utilisés par la target. On en profite pour utiliser la variable vue plus haut.
+</p>
+<pre class="code cmake"><a href="http://www.cmake.org/cmake/help/cmake2.6docs.html#command:add_executable"><span class="kw1">add_executable</span></a><span class="sy0">(</span><span class="re0">${CMAKE_PROJECT_NAME}</span> main.cpp<span class="sy0">)</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Configuration de CMake&quot;,&quot;hid&quot;:&quot;configuration_de_cmake&quot;,&quot;codeblockOffset&quot;:9,&quot;secid&quot;:9,&quot;range&quot;:&quot;5687-6626&quot;} -->
+<h3 class="sectionedit10" id="compilation_et_lancement_du_programme">Compilation et lancement du programme</h3>
+<div class="level3">
+
+<p>
+Voila notre configuration basique de CMake est terminée. Il ne reste plus qu&#039;à générer le makefile, compiler le projet et lancer le programme.
+Pour celà on va reprendre ce qu&#039;on a vu au tout début. On se place dans le dossier racine du projet <strong>CMakeTuto</strong>.
+</p>
+<pre class="code bash">cmake ..<span class="sy0">/</span>src
+<span class="kw2">make</span>
+.<span class="sy0">/</span>cmaketuto</pre>
+
+<p>
+Le programme devrait afficher :
+</p>
+<pre class="code">Hello World</pre>
+
+<p>
+<strong>Attention sous windows</strong> :
+</p>
+<ul>
+<li class="level1"><div class="li"> avec MinGW il faut utiliser <strong>mingw32-make</strong> au lieu de <strong>make</strong></div>
+</li>
+<li class="level1"><div class="li"> avec MSVC il vous faudra ouvrir le fichier <strong>.sln</strong> créé par CMake dans le dossier build.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Compilation et lancement du programme&quot;,&quot;hid&quot;:&quot;compilation_et_lancement_du_programme&quot;,&quot;codeblockOffset&quot;:12,&quot;secid&quot;:10,&quot;range&quot;:&quot;6627-7245&quot;} -->
+<h3 class="sectionedit11" id="selectionner_le_type_de_compilation">Sélectionner le type de compilation</h3>
+<div class="level3">
+
+<p>
+Vous pouvez compiler votre programme en Release ou en Debug.
+</p>
+
+<p>
+Dans le premier cas le compilateur fera des optimisations dans le code. Dans le second il ajoutera dans l&#039;exécutable des informations (<strong>symboles</strong>) pour permettre de déboguer plus facilement. 
+Pour sélectionner le mode de compilation on utilisera l&#039;option : <strong>-DCMAKE_BUILD_TYPE=Debug</strong>.
+</p>
+<pre class="code bash">cmake -DCMAKE_BUILD_TYPE=Debug ..
+<span class="co0"># ou</span>
+cmake -DCMAKE_BUILD_TYPE=Release ..</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;S\u00e9lectionner le type de compilation&quot;,&quot;hid&quot;:&quot;selectionner_le_type_de_compilation&quot;,&quot;codeblockOffset&quot;:14,&quot;secid&quot;:11,&quot;range&quot;:&quot;7246-7741&quot;} -->
+<h1 class="sectionedit12" id="ajout_de_fonctionnalites">Ajout de fonctionnalités</h1>
+<div class="level1">
+
+<p>
+On va maintenant voir comment rendre notre CMake plus utile.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Ajout de fonctionnalit\u00e9s&quot;,&quot;hid&quot;:&quot;ajout_de_fonctionnalites&quot;,&quot;codeblockOffset&quot;:15,&quot;secid&quot;:12,&quot;range&quot;:&quot;7742-7843&quot;} -->
+<h2 class="sectionedit13" id="ajouter_des_sous-dossiers">Ajouter des sous-dossiers</h2>
+<div class="level2">
+
+<p>
+On doit tout d&#039;abord indiquer à CMake que le sous dossier doit être traité.
+</p>
+<pre class="code cmake"><a href="http://www.cmake.org/cmake/help/cmake2.6docs.html#command:add_subdirectory"><span class="kw1">add_subdirectory</span></a><span class="sy0">(</span><span class="st0">&quot;subfolder&quot;</span><span class="sy0">)</span></pre>
+
+<p>
+Ce dossier doit également contenir un CMakeLists.txt, dans lequel on va indiquer les fichiers faisant partie des sources du projet principale.
+</p>
+<pre class="code cmake"><a href="http://www.cmake.org/cmake/help/cmake2.6docs.html#command:file"><span class="kw1">file</span></a><span class="sy0">(</span>GLOB sources_files <span class="st0">&quot;*.cpp&quot;</span><span class="sy0">)</span>
+target_sources<span class="sy0">(</span><span class="re0">${CMAKE_PROJECT_NAME}</span> PRIVATE <span class="re0">${sources_files}</span><span class="sy0">)</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Ajouter des sous-dossiers&quot;,&quot;hid&quot;:&quot;ajouter_des_sous-dossiers&quot;,&quot;codeblockOffset&quot;:15,&quot;secid&quot;:13,&quot;range&quot;:&quot;7844-8277&quot;} -->
+<h2 class="sectionedit14" id="choisir_le_dossier_de_sortie">Choisir le dossier de sortie</h2>
+<div class="level2">
+
+<p>
+On va mettre l&#039;exécutable de sortie dans le dossier <strong>bin</strong> présent à la racine du projet.
+</p>
+<pre class="code cmake"><a href="http://www.cmake.org/cmake/help/cmake2.6docs.html#command:set"><span class="kw1">set</span></a><span class="sy0">(</span>EXECUTABLE_OUTPUT_PATH <span class="st0">&quot;./bin&quot;</span><span class="sy0">)</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Choisir le dossier de sortie&quot;,&quot;hid&quot;:&quot;choisir_le_dossier_de_sortie&quot;,&quot;codeblockOffset&quot;:17,&quot;secid&quot;:14,&quot;range&quot;:&quot;8278-8469&quot;} -->
+<h2 class="sectionedit15" id="ajout_d_options_de_compilation">Ajout d&#039;options de compilation</h2>
+<div class="level2">
+
+<p>
+Pour ajouter une option de compilation, il suffit d&#039;utiliser une fonction de CMake.
+Attention à vérifier que l&#039;option est compatible avec votre plateforme et votre compilateur.
+</p>
+
+<p>
+<em class="u">Pour MSVC :</em>
+</p>
+<pre class="code cmake">target_compile_options<span class="sy0">(</span><span class="re0">${CMAKE_PROJECT_NAME}</span> /Wall<span class="sy0">)</span></pre>
+
+<p>
+<em class="u">Pour les autres compilateurs:</em>
+</p>
+<pre class="code cmake">target_compile_options<span class="sy0">(</span><span class="re0">${CMAKE_PROJECT_NAME}</span> -Wall -Wextra<span class="sy0">)</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Ajout d&#039;options de compilation&quot;,&quot;hid&quot;:&quot;ajout_d_options_de_compilation&quot;,&quot;codeblockOffset&quot;:18,&quot;secid&quot;:15,&quot;range&quot;:&quot;8470-8897&quot;} -->
+<h3 class="sectionedit16" id="detection_automatique_du_compilateur">Détection automatique du compilateur</h3>
+<div class="level3">
+
+<p>
+Pour éviter de changer le CMake entre les plateformes, on va demande à CMake de générer le projet avec les options demandées directement grâce à des variables définies par les compilateurs.
+</p>
+<pre class="code cmake"><a href="http://www.cmake.org/cmake/help/cmake2.6docs.html#command:if"><span class="kw1">if</span></a> <span class="sy0">(</span>MSVC<span class="sy0">)</span>
+  target_compile_options<span class="sy0">(</span><span class="re0">${CMAKE_PROJECT_NAME}</span> /Wall<span class="sy0">)</span>
+<a href="http://www.cmake.org/cmake/help/cmake2.6docs.html#command:else"><span class="kw1">else</span></a><span class="sy0">()</span>
+  target_compile_options<span class="sy0">(</span><span class="re0">${CMAKE_PROJECT_NAME}</span> -Wall -Wextra<span class="sy0">)</span>
+<a href="http://www.cmake.org/cmake/help/cmake2.6docs.html#command:endif"><span class="kw1">endif</span></a><span class="sy0">()</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;D\u00e9tection automatique du compilateur&quot;,&quot;hid&quot;:&quot;detection_automatique_du_compilateur&quot;,&quot;codeblockOffset&quot;:20,&quot;secid&quot;:16,&quot;range&quot;:&quot;8898-9306&quot;} -->
+<h2 class="sectionedit17" id="choix_du_standard_c">Choix du standard C++</h2>
+<div class="level2">
+
+<p>
+On aurait pu sélectionner un standard grâce au <strong>target_compile_options</strong>. Mais CMake propose une meilleure manière de le faire à partir de la version 3.8.
+</p>
+<pre class="code cmake">target_compile_features<span class="sy0">(</span><span class="re0">${CMAKE_PROJECT_NAME}</span> PUBLIC cxx_std_17<span class="sy0">)</span> <span class="co1">#On passe ici à la version 17 du standard C++</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Choix du standard C++&quot;,&quot;hid&quot;:&quot;choix_du_standard_c&quot;,&quot;codeblockOffset&quot;:21,&quot;secid&quot;:17,&quot;range&quot;:&quot;9307-9633&quot;} -->
+<h2 class="sectionedit18" id="autres_sources_utiles">Autres sources utiles</h2>
+<div class="level2">
+
+<p>
+Vous pouvez approfondir CMake grâce aux sources ci-dessous :
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://pabloariasal.github.io/2018/02/19/its-time-to-do-cmake-right/" class="urlextern" title="https://pabloariasal.github.io/2018/02/19/its-time-to-do-cmake-right/" rel="nofollow">https://pabloariasal.github.io/2018/02/19/its-time-to-do-cmake-right/</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://cliutils.gitlab.io/modern-cmake/" class="urlextern" title="https://cliutils.gitlab.io/modern-cmake/" rel="nofollow">https://cliutils.gitlab.io/modern-cmake/</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.youtube.com/watch?v=y7ndUhdQuU8" class="urlextern" title="https://www.youtube.com/watch?v=y7ndUhdQuU8" rel="nofollow">https://www.youtube.com/watch?v=y7ndUhdQuU8</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.youtube.com/watch?v=y9kSr5enrSk" class="urlextern" title="https://www.youtube.com/watch?v=y9kSr5enrSk" rel="nofollow">https://www.youtube.com/watch?v=y9kSr5enrSk</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.youtube.com/watch?v=m0DwB4OvDXk" class="urlextern" title="https://www.youtube.com/watch?v=m0DwB4OvDXk" rel="nofollow">https://www.youtube.com/watch?v=m0DwB4OvDXk</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://cmake.org/cmake/help/v3.17/manual/cmake-buildsystem.7.html#transitive-usage-requirements" class="urlextern" title="https://cmake.org/cmake/help/v3.17/manual/cmake-buildsystem.7.html#transitive-usage-requirements" rel="nofollow">https://cmake.org/cmake/help/v3.17/manual/cmake-buildsystem.7.html#transitive-usage-requirements</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://codework-orange.io/2019/03/01/CMake-Compliant-Library.html" class="urlextern" title="http://codework-orange.io/2019/03/01/CMake-Compliant-Library.html" rel="nofollow">http://codework-orange.io/2019/03/01/CMake-Compliant-Library.html</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://github.com/onqtam/awesome-cmake" class="urlextern" title="https://github.com/onqtam/awesome-cmake" rel="nofollow">https://github.com/onqtam/awesome-cmake</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://github.com/cginternals/cmake-init/blob/master/CMakeLists.txt" class="urlextern" title="https://github.com/cginternals/cmake-init/blob/master/CMakeLists.txt" rel="nofollow">https://github.com/cginternals/cmake-init/blob/master/CMakeLists.txt</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://cliutils.gitlab.io/modern-cmake/chapters/install/installing.html" class="urlextern" title="https://cliutils.gitlab.io/modern-cmake/chapters/install/installing.html" rel="nofollow">https://cliutils.gitlab.io/modern-cmake/chapters/install/installing.html</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://cliutils.gitlab.io/modern-cmake/chapters/install/packaging.html" class="urlextern" title="https://cliutils.gitlab.io/modern-cmake/chapters/install/packaging.html" rel="nofollow">https://cliutils.gitlab.io/modern-cmake/chapters/install/packaging.html</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Autres sources utiles&quot;,&quot;hid&quot;:&quot;autres_sources_utiles&quot;,&quot;codeblockOffset&quot;:22,&quot;secid&quot;:18,&quot;range&quot;:&quot;9634-&quot;} -->

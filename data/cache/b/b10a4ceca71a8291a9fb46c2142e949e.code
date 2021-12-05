@@ -1,0 +1,3 @@
+moyenne_mobile <span class="sy0">=</span> data_sans_tendance.<span class="me1">rolling</span><span class="br0">&#40;</span><span class="nu0">12</span><span class="br0">&#41;</span>.<span class="me1">mean</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+soustraction <span class="sy0">=</span> data_sans_tendance - moyenne_mobile
+moyenne_mobile_corr <span class="sy0">=</span> moyenne_mobile / moyenne_mobile.<span class="me1">mean</span><span class="br0">&#40;</span><span class="br0">&#41;</span>

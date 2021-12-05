@@ -1,0 +1,4 @@
+control_model <span class="sy0">&lt;</span>- rpart.<span class="me1">control</span><span class="br0">&#40;</span>minsplit <span class="sy0">=</span> <span class="nu0">5</span><span class="sy0">,</span> cp <span class="sy0">=</span> <span class="nu0">0</span><span class="br0">&#41;</span>
+model <span class="sy0">&lt;</span>- rpart<span class="br0">&#40;</span>survived <span class="sy0">~</span>.<span class="sy0">,</span> data<span class="sy0">=</span>ptitanic<span class="sy0">,</span> control <span class="sy0">=</span> control_model<span class="br0">&#41;</span>
+&nbsp;
+plotcp<span class="br0">&#40;</span>model<span class="br0">&#41;</span>

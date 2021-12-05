@@ -1,0 +1,284 @@
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Acreation_et_operation_sur_dataframe&amp;media=cpp:donneesrecup.jpg" class="media" title="cpp:donneesrecup.jpg"><img src="/lib/exe/fetch.php?w=500&amp;tok=73b8d1&amp;media=cpp:donneesrecup.jpg" class="media" alt="" width="500" /></a>
+</p>
+
+<p>
+Il est bon de rappeler qu&#039;il n&#039;est pas nécessaire de faire un modèle de Machine Learning s’il n&#039;est pas entrainé avec des données de bonnes qualités. Il faut donc savoir comment et où récupérer les données.
+</p>
+
+<h2 class="sectionedit1" id="recuperation_classique_de_donnees_ordonnees">Récupération classique de données ordonnées</h2>
+<div class="level2">
+
+<p>
+Dans cette partie, nous supposerons que les données sont organisées et nous verrons  comment les récupérer pour les traiter. Il faut bien compter que la récupération des données à une place importante dans la suite de notre travail. 
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;R\u00e9cup\u00e9ration classique de donn\u00e9es ordonn\u00e9es&quot;,&quot;hid&quot;:&quot;recuperation_classique_de_donnees_ordonnees&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;253-554&quot;} -->
+<h3 class="sectionedit2" id="lecture_classique_de_fichier">Lecture classique de fichier</h3>
+<div class="level3">
+
+<p>
+Il est parfois nécessaire de ne pas passer par un <abbr title="Uniform Resource Locator">URL</abbr> pour récupérer les données mais plutôt par un fichier sauvegarder localement. Il est nécessaire de le lire en regardant le type du fichier pour avoir un dataFrame correctement découpé.
+</p>
+
+<p>
+<strong>Rappel :</strong>
+</p>
+
+<p>
+Un dataFrame est un objet différent d&#039;une liste à 2 dimensions. Il utilise des séries qui diffèrent des listes car elles sont indexées ce qui sera pratique pour sélectionner et traiter les données.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+dataFrame <span class="sy0">=</span> pd.<span class="me1">read_csv</span><span class="br0">&#40;</span><span class="st0">&quot;donnee.csv&quot;</span><span class="sy0">,</span> sep<span class="sy0">=</span><span class="st0">&quot;;&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">dataFrame <span class="sy0">=</span> read.<span class="kw3">csv</span><span class="br0">&#40;</span><span class="st0">&quot;donnee.csv&quot;</span><span class="sy0">,</span> sep <span class="sy0">=</span> <span class="st0">&quot;;&quot;</span><span class="sy0">,</span> header<span class="sy0">=</span>T<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+
+<p>
+Maintenant que votre dataFrame est chargé dans une variable vous pouvez le manipuler, le nettoyer et par la suite faire votre modèle.
+</p>
+
+<p>
+<div class='alert alert-info'><strong>Remarque :</strong> Il suffira de changer la methode associée au read pour lire d&#039;autre types de fichiers.</div>
+</p>
+<hr />
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Lecture classique de fichier&quot;,&quot;hid&quot;:&quot;lecture_classique_de_fichier&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;555-1524&quot;} -->
+<h2 class="sectionedit3" id="constituer_a_partir_d_une_bdd">Constituer à partir d&#039;une BDD</h2>
+<div class="level2">
+
+<p>
+Bien souvent, les données sont rangées dans une BDD pour des questions d&#039;ordre et de clarté. C&#039;est pourquoi, il est nécessaire de savoir se connecter et faire des opérations sur celle-ci pour créer, lire et modifier sa BDD.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Constituer \u00e0 partir d&#039;une BDD&quot;,&quot;hid&quot;:&quot;constituer_a_partir_d_une_bdd&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:3,&quot;range&quot;:&quot;1525-1798&quot;} -->
+<h3 class="sectionedit4" id="a_partir_de_mysql">A partir de MySQL</h3>
+<div class="level3">
+
+<p>
+Ici on partira du principe que la base de donnée est hébergée sur votre ordinateur en local et du fait que vous avez un login et un password. De même, nous partons du principe que <strong>vous connaissez la façon de faire les requêtes</strong>. Il faut tout d&#039;abord effectuer une connexion :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> pymysql.<span class="me1">cursors</span>  
+&nbsp;
+<span class="co1"># Connectez- vous à la base de données.</span>
+connection <span class="sy0">=</span> pymysql.<span class="me1">connect</span><span class="br0">&#40;</span>host<span class="sy0">=</span><span class="st0">'localhost'</span><span class="sy0">,</span> <span class="co1">#Endroit d'hébergement</span>
+                             <span class="kw3">user</span><span class="sy0">=</span><span class="st0">'pivirgaux'</span><span class="sy0">,</span> <span class="co1">#Nom d'utilisateur</span>
+                             password<span class="sy0">=</span><span class="st0">'pivirgaux'</span><span class="sy0">,</span> <span class="co1">#Mot de Passe                             </span>
+                             db<span class="sy0">=</span><span class="st0">'France'</span><span class="sy0">,</span> <span class="co1">#Nom de la base de donnée</span>
+                             charset<span class="sy0">=</span><span class="st0">'utf8mb4'</span><span class="sy0">,</span> <span class="co1">#Encodage</span>
+                             cursorclass<span class="sy0">=</span>pymysql.<span class="me1">cursors</span>.<span class="me1">DictCursor</span><span class="br0">&#41;</span> <span class="co1">#Lecteur qui nous permettra d'exécuter la requète</span>
+<span class="kw1">print</span> <span class="br0">&#40;</span><span class="st0">&quot;Connection effective !!&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+Si vous êtes sous Window et que vous avez du mal avec l&#039;installation de MySQL je vous invite à aller voir ce <a href="https://techexpert.tips/fr/windows-fr/installer-mysql-sur-windows/" class="urlextern" title="https://techexpert.tips/fr/windows-fr/installer-mysql-sur-windows/" rel="nofollow"> tuto</a>.
+</p>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python"><span class="co1"># load the package</span>
+library<span class="br0">&#40;</span><span class="st0">'RMySQL'</span><span class="br0">&#41;</span>
+library<span class="br0">&#40;</span><span class="st0">'DBI'</span><span class="br0">&#41;</span> <span class="co1">#Sinon vous risquez d'avoir l'erreur Plugin caching_sha2_password could not be loaded</span>
+&nbsp;
+<span class="co1"># create a MySQL connection object</span>
+con <span class="sy0">&lt;</span>- dbConnect<span class="br0">&#40;</span>MySQL<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+                 <span class="kw3">user</span> <span class="sy0">=</span> <span class="st0">'pivirgaux'</span><span class="sy0">,</span>
+                 password <span class="sy0">=</span> <span class="st0">'pivirgaux'</span><span class="sy0">,</span>
+                 host <span class="sy0">=</span> <span class="st0">'localhost'</span><span class="sy0">,</span>
+                 dbname <span class="sy0">=</span> <span class="st0">'France'</span><span class="br0">&#41;</span></pre>
+
+<p>
+Maintenant, voyons comment faire une requête, il est nécessaire de gérer toutes les possibilités d&#039;erreur c&#039;est pourquoi on fait un try en Python :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">try</span>:
+    <span class="co1">#On commence par récupérer le curseur pour pouvoir l'utiliser</span>
+    <span class="kw1">with</span> connection.<span class="me1">cursor</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="kw1">as</span> cursor:
+&nbsp;
+        <span class="co1"># On prépare notre requète</span>
+        sql <span class="sy0">=</span> <span class="st0">&quot;SELECT * from Region&quot;</span>
+&nbsp;
+        <span class="co1"># Exécutez la requête (Execute Query).</span>
+        cursor.<span class="me1">execute</span><span class="br0">&#40;</span>sql<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">region <span class="sy0">=</span> dbReadTable<span class="br0">&#40;</span>con<span class="sy0">,</span> <span class="st0">&quot;Region&quot;</span><span class="br0">&#41;</span>
+data.<span class="me1">frame</span><span class="br0">&#40;</span>region<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Attaque par injection de BDD :</strong>
+Il est bon de se rappeler si on fait rentrer des données à l&#039;utilisateur qu&#039;il n&#039;est pas forcément bien intentionné. Il pourrait par exemple rentrer du SQL dans le champ éditable que vous lui proposez. Il pourrait accéder à des données ou tout simplement supprimer toute votre BDD. C&#039;est pourquoi, il est bon de “préparer ses requêtes”.
+</p>
+
+<p>
+Faisons un exemple de requête qui utilise une entrée d&#039;utilisateur :
+</p>
+<pre class="code python"> cursor <span class="sy0">=</span> connection.<span class="me1">cursor</span><span class="br0">&#40;</span><span class="br0">&#41;</span>    
+ sql <span class="sy0">=</span> <span class="st0">&quot;Delete from Region where nom = %s&quot;</span>
+&nbsp;
+ <span class="co1"># Exécutez sql et passez un paramètre</span>
+ rowCount <span class="sy0">=</span> cursor.<span class="me1">execute</span><span class="br0">&#40;</span>sql<span class="sy0">,</span> <span class="br0">&#40;</span> <span class="st0">&quot;Guadeloupe&quot;</span> <span class="br0">&#41;</span> <span class="br0">&#41;</span>    
+ connection.<span class="me1">commit</span><span class="br0">&#40;</span><span class="br0">&#41;</span> </pre>
+
+<p>
+ Une fois la requête exécutée on récupère les colonnes voulues dans un DataFrame pour pouvoir les manipuler :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#On crée les listes qui contiendront les différents attributs</span>
+listeNom <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+listeDeSlug <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+<span class="co1">#On passe les différentes lignes venant de notre requète</span>
+<span class="kw1">for</span> row <span class="kw1">in</span> cursor:
+     listeNom.<span class="me1">append</span><span class="br0">&#40;</span>row.<span class="me1">get</span><span class="br0">&#40;</span><span class="st0">'nom'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+     listeDeSlug.<span class="me1">append</span><span class="br0">&#40;</span>row.<span class="me1">get</span><span class="br0">&#40;</span><span class="st0">'slug'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+     <span class="co1">#On construit le dataFrame</span>
+df <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span><span class="br0">&#123;</span><span class="st0">&quot;Région&quot;</span> : listeNom<span class="sy0">,</span> <span class="st0">&quot;Slug&quot;</span> : listeDeSlug<span class="br0">&#125;</span><span class="br0">&#41;</span>
+&nbsp;</pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">res <span class="sy0">&lt;</span>- dbSendQuery<span class="br0">&#40;</span>con<span class="sy0">,</span> <span class="st0">&quot;Select nom FROM Region&quot;</span><span class="br0">&#41;</span>
+data <span class="sy0">&lt;</span>- dbFetch<span class="br0">&#40;</span>res<span class="sy0">,</span> n<span class="sy0">=</span><span class="nu0">3</span><span class="br0">&#41;</span> <span class="co1">#n donne le nombre de données on veut récupérer</span></pre>
+
+<p>
+ Enfin, on referme la connexion, pour éviter (s’il y a trop de connexions en même temps) que le serveur soit sujet à la latence.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">finally</span>:
+    connection.<span class="me1">close</span><span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">dbDisconnect<span class="br0">&#40;</span>con<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Remarque :</strong>
+Il est nécessaire de garder en tête qu&#039;il s&#039;agira du même principe avec différentes BDD. Il faudra juste changer le connecteur et adapter la requête si elle n&#039;est pas en SQL mais en NoSQL. Voici quelques connecteur qui pourraient vous être utile :
+</p>
+<div class="table sectionedit5"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0"> Base de donnée </th><th class="col1 leftalign"> Connecteur    Python    </th><th class="col2"> Connecteur R </th><th class="col3"> Avantages </th><th class="col4 leftalign"> Inconvénients   </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0"> MySQL </td><td class="col1"> pymysql </td><td class="col2"> RMySQL </td><td class="col3">Il est multiplateforme, il est natif dans la majorité des Framework web. </td><td class="col4"> A du mal à gérer des grosses masses de données </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> Postgresql </td><td class="col1"> py-postgresql </td><td class="col2"> RPostgres </td><td class="col3">Son mode de licence, on comportement très stable est reconnu </td><td class="col4 leftalign"> Son déploiement.  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> mariadb                </td><td class="col1"> mariadb </td><td class="col2">RMariaDB </td><td class="col3"> Capacité de stocker dans une même table des types de données différents (Clés/Valeur) </td><td class="col4"> A tendance à devenir très volumineux rapidement ce qui ralentit les performances </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> Oracle Database              </td><td class="col1"> cx_Oracle </td><td class="col2"> ROracle </td><td class="col3"> Ce moteur est capable de supporter un grand nombre de bases de données par instance </td><td class="col4 leftalign"> Le coût des licences. Il est un grand consommateur de ressources.  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:5,&quot;range&quot;:&quot;5754-6565&quot;} -->
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.218labs.ma/comparaison-de-3-bases-de-donnees-open-source-postgresql-mariadb-et-sqlite/" class="urlextern" title="https://www.218labs.ma/comparaison-de-3-bases-de-donnees-open-source-postgresql-mariadb-et-sqlite/" rel="nofollow">https://www.218labs.ma/comparaison-de-3-bases-de-donnees-open-source-postgresql-mariadb-et-sqlite/</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.open-source-guide.com/Actualites/Mariadb-10-les-nouveautes-et-avantages" class="urlextern" title="http://www.open-source-guide.com/Actualites/Mariadb-10-les-nouveautes-et-avantages" rel="nofollow">http://www.open-source-guide.com/Actualites/Mariadb-10-les-nouveautes-et-avantages</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.editions-ellipses.fr/PDF/9782340016620_extrait.pdf" class="urlextern" title="https://www.editions-ellipses.fr/PDF/9782340016620_extrait.pdf" rel="nofollow">https://www.editions-ellipses.fr/PDF/9782340016620_extrait.pdf</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://gist.github.com/aravindhebbali/f2cc73794e9f9bfaa673" class="urlextern" title="https://gist.github.com/aravindhebbali/f2cc73794e9f9bfaa673" rel="nofollow">https://gist.github.com/aravindhebbali/f2cc73794e9f9bfaa673</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;A partir de MySQL&quot;,&quot;hid&quot;:&quot;a_partir_de_mysql&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:4,&quot;range&quot;:&quot;1799-6917&quot;} -->
+<h3 class="sectionedit6" id="a_partir_de_mongodb">A partir de MongoDB</h3>
+<div class="level3">
+
+<p>
+Si vous ne connaissais pas du tout le principe du NoSQL je vous propose d&#039;aller voir <a href="https://openclassrooms.com/fr/courses/4462426-maitrisez-les-bases-de-donnees-nosql" class="urlextern" title="https://openclassrooms.com/fr/courses/4462426-maitrisez-les-bases-de-donnees-nosql" rel="nofollow"> ici</a>. Parfois, le nombre de données est très important et les BDD utilisant le NoSQL sont plus efficaces. Ici, nous allons essayer de voir comment se connecter à ce type de BDD et interagir avec elle.
+</p>
+
+<p>
+Comme pour les base de données SQL, on commence par établir un lien :
+</p>
+<pre class="code python"><span class="kw1">from</span> pymongo <span class="kw1">import</span> MongoClient
+client <span class="sy0">=</span> MongoClient<span class="br0">&#40;</span><span class="br0">&#41;</span>
+db <span class="sy0">=</span> client<span class="br0">&#91;</span><span class="st0">'my_database'</span><span class="br0">&#93;</span></pre>
+
+<p>
+Ensuite, il faut préparer l&#039;élément qui sera inséré dans le futur :
+</p>
+<pre class="code python">post <span class="sy0">=</span> <span class="br0">&#123;</span><span class="st0">&quot;username&quot;</span>: <span class="st0">&quot;Martin&quot;</span><span class="sy0">,</span>
+             <span class="st0">&quot;password&quot;</span>: <span class="st0">&quot;OnPasseParPython&quot;</span><span class="br0">&#125;</span></pre>
+
+<p>
+Une fois la collection créée, il faut l&#039;insérer dans la bonne table de la base de donnée :
+</p>
+<pre class="code python"><span class="co1">#On indique clairement la table dans laquelle on veut insérer la base de donnée</span>
+posts <span class="sy0">=</span> db.<span class="me1">posts</span>
+<span class="co1">#On insert la collection dans cette table</span>
+post_id <span class="sy0">=</span> posts.<span class="me1">insert_one</span><span class="br0">&#40;</span>post<span class="br0">&#41;</span>.<span class="me1">inserted_id</span></pre>
+
+<p>
+<strong>Remarque :</strong> On peut observer que les collections dans une BDD NoSQL sont similaires à des objets et leur accès y est identique.
+</p>
+
+<p>
+Il existe d&#039;autre BDD utilisant le NoSQL, nous allons en citer quelques-unes.
+</p>
+<div class="table sectionedit7"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0"> Base de donnée </th><th class="col1 leftalign"> Connecteur   Python    </th><th class="col2 centeralign">      Avantage                  </th><th class="col3 centeralign">  Inconvénient                  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0"> MongoDB </td><td class="col1"> pymongo </td><td class="col2"> L&#039;installation est facile. La BDD  permet la conversion en JSon rapidement </td><td class="col3"> La BDD ne supporte pas les jointures . La taille des données est importante. </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> Cassandra </td><td class="col1"> cassandra-driver </td><td class="col2"> La BDD évolue régulièrement et n&#039;a aucun point de défaillance unique. </td><td class="col3"> Les performances restent imprévisibles et elle ne prend pas en compte les requêtes ad hoc. </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> HBase </td><td class="col1"> hbase-python </td><td class="col2"> Donne des résultats de recherche rapide sur des grandes tables, contient une <abbr title="Application Programming Interface">API</abbr> Java facilement manipulable. </td><td class="col3"> Il n&#039;y a pas de permission d&#039;authentification intégrée, la BDD ne supporte pas le SQL </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:7,&quot;range&quot;:&quot;8193-8915&quot;} -->
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://pymongo.readthedocs.io/en/stable/tutorial.html" class="urlextern" title="https://pymongo.readthedocs.io/en/stable/tutorial.html" rel="nofollow">https://pymongo.readthedocs.io/en/stable/tutorial.html</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.ambient-it.net/top-meilleures-db-nosql-2019/" class="urlextern" title="https://www.ambient-it.net/top-meilleures-db-nosql-2019/" rel="nofollow">https://www.ambient-it.net/top-meilleures-db-nosql-2019/</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;A partir de MongoDB&quot;,&quot;hid&quot;:&quot;a_partir_de_mongodb&quot;,&quot;codeblockOffset&quot;:11,&quot;secid&quot;:6,&quot;range&quot;:&quot;6918-&quot;} -->

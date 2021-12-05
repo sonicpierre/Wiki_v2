@@ -1,0 +1,6 @@
+<span class="kw1">from</span> nltk <span class="kw1">import</span> ngrams
+<span class="kw1">from</span> nltk <span class="kw1">import</span> word_tokenize
+tokens <span class="sy0">=</span> word_tokenise<span class="br0">&#40;</span>phrase<span class="br0">&#41;</span>
+bigrams <span class="sy0">=</span> ngrams<span class="br0">&#40;</span>tokens<span class="sy0">,</span> <span class="nu0">2</span><span class="br0">&#41;</span>
+<span class="kw1">for</span> words <span class="kw1">in</span> bigrams:
+    <span class="kw1">print</span><span class="br0">&#40;</span>words<span class="br0">&#41;</span>

@@ -1,0 +1,16 @@
+<span class="kw1">function</span> <span class="br0">&#91;</span>y<span class="br0">&#93;</span>= regu_rec<span class="br0">&#40;</span>a,b,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a><span class="br0">&#41;</span>
+&nbsp;
+  c =  <span class="nu0">0</span>;
+  <span class="kw1">if</span> <span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/abs.html"><span class="kw2">abs</span></a><span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="br0">&#41;</span>&lt;<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a><span class="br0">&#41;</span>
+    y = a - <span class="br0">&#40;</span><span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>.*<span class="br0">&#40;</span>b-a<span class="br0">&#41;</span><span class="br0">&#41;</span>./<span class="br0">&#40;</span>f<span class="br0">&#40;</span>b<span class="br0">&#41;</span> - f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="kw1">else</span>
+    c =  a - <span class="br0">&#40;</span><span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>.*<span class="br0">&#40;</span>b-a<span class="br0">&#41;</span><span class="br0">&#41;</span>./<span class="br0">&#40;</span>f<span class="br0">&#40;</span>b<span class="br0">&#41;</span> - f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;
+    <span class="kw1">if</span> <span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>.*f<span class="br0">&#40;</span>c<span class="br0">&#41;</span>&lt;=<span class="nu0">0</span><span class="br0">&#41;</span>
+      y = regu_rec<span class="br0">&#40;</span>a,c, <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a><span class="br0">&#41;</span>;
+    <span class="kw1">else</span> 
+      y = regu_rec<span class="br0">&#40;</span>c,b,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a><span class="br0">&#41;</span>;
+    endif
+  endif
+endfunction
+&nbsp;
+#Script

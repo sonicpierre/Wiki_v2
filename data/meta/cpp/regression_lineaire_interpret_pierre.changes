@@ -1,0 +1,188 @@
+1604333919	37.164.242.61	C	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	créée		38
+1604336820	37.164.242.61	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux			15
+1604337293	37.164.242.61	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[ACF] 		33
+1604346473	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[ACF] 		121
+1604348597	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[ACF] 		1111
+1604348655	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[ACF] 		104
+1604348888	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[ACF] 		43
+1604348978	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux			92
+1604349035	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[ACF] 		43
+1604349480	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[ACF] 		28
+1604349517	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[ACF] 		2
+1604349559	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test Durbin-Watson] 		74
+1604351019	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test Durbin-Watson] 		249
+1604351102	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test Durbin-Watson] 		58
+1604351121	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test Durbin-Watson] 		-2
+1604351133	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test Durbin-Watson] 		-1
+1604351507	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Les conditions à vérifier] 		241
+1604352583	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test Durbin-Watson] 		60
+1604352998	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test Durbin-Watson] 		122
+1604353409	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test Durbin-Watson] 		54
+1604426922	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test Durbin-Watson] 		756
+1604427515	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test Durbin-Watson] 		135
+1604427543	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test Durbin-Watson] 		-2
+1604427586	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test Durbin-Watson] 		35
+1604427618	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux			5
+1604427882	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test Durbin-Watson] 		264
+1604428015	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test Durbin-Watson] 		21
+1604428060	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test Durbin-Watson] 		17
+1604428268	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Les conditions à vérifier] 		18
+1604428322	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test Durbin-Watson] 		38
+1604429121	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Les conditions à vérifier sur les résidus] 		-13
+1604429205	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test Durbin-Watson] 		38
+1604429728	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[L'homogénité des résidus] 		86
+1604513933	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Breush-Pagan] 		1
+1604514800	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de White] 		35
+1604514905	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de White] 		66
+1604515151	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[L'homogénité des résidus] 		42
+1604515452	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de White] 		-122
+1604515469	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Breusch-Pagan] 		123
+1604516168	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[L'homogénité des résidus] 		299
+1604517224	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Breusch-Pagan] 		74
+1604517479	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de White] 		-34
+1604517494	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Goldfeld-Quandt] 		18
+1604517686	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[L'homogénité des résidus] 		59
+1604517714	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[La selection des variables] 		-36
+1604517764	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Goldfeld-Quandt] 		78
+1604517797	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de White] 		-37
+1604517837	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Breusch-Pagan] 		29
+1604518425	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[ACF] 		235
+1604524003	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Breusch-Pagan et de White] 		61
+1604524470	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Breusch-Pagan et de White] 		85
+1604524498	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Breusch-Pagan et de White] 		55
+1604525209	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Goldfeld-Quandt] 		24
+1604525241	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Goldfeld-Quandt] 		1
+1604526385	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[L'homogénité des résidus] 		73
+1604526748	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test Durbin-Watson] 		104
+1604526879	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Breusch-Pagan et de White] 		11
+1604527176	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de White] 		90
+1604528012	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Goldfeld-Quandt] 		146
+1604763290	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[ACF] 		147
+1604764104	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test Durbin-Watson] 		90
+1605014115	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[L'homogénité des résidus] 		-73
+1605014161	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux			49
+1605014262	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[La distribution normale des résidus] 		2545
+1605014697	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Breusch-Pagan] 		17
+1605016393	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Breusch-Pagan] 		151
+1605016726	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Breusch-Pagan] 		193
+1605110052	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[La distribution normale des résidus] 		611
+1605110940	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[La distribution normale des résidus] 		-37
+1605111027	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[La distribution normale des résidus] 		41
+1605111101	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[La distribution normale des résidus] 		32
+1605111230	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[La distribution normale des résidus] 		55
+1605111814	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[La distribution normale des résidus] 		115
+1605111981	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[La distribution normale des résidus] 		14
+1605112057	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Shapiro-Wilk] 		-264
+1605112069	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux			264
+1605112930	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux			132
+1605113061	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		20
+1605113385	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou			60
+1605113992	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		42
+1605114866	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[L'auto corrélation des résidus] 		38
+1605115195	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[ACF] 		18
+1605115717	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[L'auto corrélation des résidus] 		445
+1605115748	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[L'auto corrélation des résidus] 		1
+1605115771	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[L'auto corrélation des résidus] 		2
+1605116283	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		73
+1605116695	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		278
+1605117192	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou			1
+1605117586	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		156
+1605117989	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		125
+1605118049	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux			29
+1605118070	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux			0
+1605118863	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou			411
+1605118917	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		-120
+1605119089	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		122
+1605119498	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux			-27
+1605119567	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux			27
+1605121320	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Breusch-Pagan] 		272
+1605122902	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		106
+1605123645	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou			460
+1605123682	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou			-166
+1605124683	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou			1629
+1605124861	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou			186
+1605125301	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Goldfeld-Quandt] 		1406
+1605125396	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou			157
+1605125433	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou			2
+1605125584	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou			5
+1605125609	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou			6
+1605126210	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou			164
+1605126537	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		-2
+1605126612	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou			57
+1605126632	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[La distribution normale des résidus] 		1
+1605126693	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[La distribution normale des résidus] 		113
+1605126733	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		68
+1605126787	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[ACF] 		108
+1605126811	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Goldfeld-Quandt] 		11
+1605126927	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Breusch-Pagan] 		84
+1605127112	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test Durbin-Watson] 		63
+1605127142	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test Durbin-Watson] 		2
+1605127156	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test Durbin-Watson] 		0
+1605128600	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[ACF] 		112
+1605128833	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		176
+1605129231	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		90
+1605129361	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		112
+1605129391	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		30
+1605129445	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		0
+1605131396	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Récapitulatif du modèle] 		-1689
+1605131458	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Valider un modèle de régression linéaire] 		-53
+1605131490	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux			-1
+1605131536	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux			-1412
+1605132105	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux			-615
+1605132373	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de White] 		211
+1605169751	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Breusch-Pagan] 		69
+1605169962	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Breusch-Pagan] 		4
+1605170017	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou			29
+1605174605	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Shapiro-Wilk] 		-1
+1605292858	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Breusch-Pagan] 		159
+1605294421	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Breusch-Pagan] 		383
+1605294695	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Breusch-Pagan] 		-63
+1605294716	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de White] 		77
+1605294942	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Breusch-Pagan] 		143
+1605295368	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de White] 		-399
+1605295536	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Goldfeld-Quandt] 		-145
+1605295547	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[L'homogénité des résidus] 		144
+1605296759	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Goldfeld-Quandt] 		118
+1605303042	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[L'homogénité des résidus] 		542
+1605303227	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[L'homogénité des résidus] 		88
+1605303251	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[L'homogénité des résidus] 		1
+1605303363	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[L'homogénité des résidus] 		36
+1605303632	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[L'homogénité des résidus] 		66
+1605303686	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[L'homogénité des résidus] 		39
+1605312015	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Breusch-Pagan] 		1
+1605347557	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		-12
+1605347635	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		-7
+1605347719	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		7
+1605349287	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		572
+1605349376	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		2
+1605349579	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		44
+1605350026	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		83
+1605352006	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[La distribution normale des résidus] 		0
+1605352077	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[La distribution normale des résidus] 		74
+1605352135	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		-9
+1605352333	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[ACF] 		-2
+1605352458	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[L'homogénité des résidus] 		3
+1605525984	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Breusch-Pagan] 		167
+1605526054	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[La distribution normale des résidus] 		14
+1605538138	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Goldfeld-Quandt] 		174
+1605539617	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Goldfeld-Quandt] 		492
+1605539750	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Shapiro-Wilk] 		1
+1605541453	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Goldfeld-Quandt] 		538
+1605541626	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Breusch-Pagan] 		18
+1605541758	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Goldfeld-Quandt] 		1
+1605541834	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux			3
+1605541982	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Goldfeld-Quandt] 		19
+1605541998	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Goldfeld-Quandt] 		3
+1605543048	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Goldfeld-Quandt] 		219
+1605543217	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Goldfeld-Quandt] 		36
+1605543264	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Breusch-Pagan] 		38
+1605543333	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Goldfeld-Quandt] 		110
+1605561635	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	[Test de Shapiro-Wilk] 		-69
+1605569822	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		-1147
+1605570359	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		16
+1605571041	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		-142
+1605571355	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		71
+1605572021	91.69.217.178	E	cpp:regression_lineaire_interpret_pierre	danilouchouchou	[Test de Shapiro-Wilk] 		-94
+1605598856	88.124.10.73	R	cpp:regression_lineaire_interpret_pierre	pierrevirgaux	ancienne révision (2020/11/16 22:20) restaurée	1605561635	1296
+1609583955	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux			-62
+1609585295	88.124.10.73	E	cpp:regression_lineaire_interpret_pierre	pierrevirgaux			55

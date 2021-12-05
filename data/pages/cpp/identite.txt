@@ -1,0 +1,74 @@
+{{:cpp:colleguepres.jpg?550|}}
+
+Nous sommes, avant tout, un groupe d'amis passionnés par nos études et fiers de la formation proposée par nos écoles. Nos discussions sur l'évolution des méthodes de programmation ont débouché sur une constatation commune : la nécessité de compléter l'apport théorique et pratique de nos formations façon tuto. 
+=====Pourquoi et comment ?=====
+
+En école d'ingénieurs, nous bénéficions de cours théoriques très complets, néanmoins, les technologies utilisées pour les illustrer sont rarement abordées en profondeur par manque de temps.  Nous avons donc fait le choix d'écrire une documentation qui complète les enseignements qui nous sont donnés. L'éventail des profils étudiants nous donne à penser qu'un autre point de vue sur les matières sera toujours bénéfique à nos écoles  c'est pourquoi nous proposons : 
+
+  * Une documentation **<fc #ff0000>pour et par</fc>** les étudiants.
+  * Une documentation **<fc #ff0000>inter-écoles d'informatique</fc>**.
+  * Une documentation centrée sur le côté **<fc #ff0000>pratique</fc>** qui présentera les liens **<fc #ff0000>entre les langages</fc>**.
+  * Une documentation proposant un apprentissage de la  **<fc #ff0000>communication à distance</fc>** et de la **<fc #ff0000>vulgarisation scientifique</fc>**.
+
+
+=====Membres=====
+
+{{ :cpp:photoprfil.jpg?160|Responsable communication et contenu}}
+  * **Identité** : <fs medium>Pierre VIRGAUX</fs> est élève en Génie Mathématique à CYTech de Pau. 
+  * **Domaine de travail** : Il travaille principalement sur des sujets de Data Science et précisément sur le NLP.
+  * **Rôle dans l'association** : Il s'emploie à faire connaître le projet à des écoles potentiellement partenaires et à coordonner leurs différents responsables afin de garder un contenu de bonne qualité.
+  * **Loisirs** : Randonnée en montagne et sports de combats.
+\\
+\\
+\\
+\\
+\\
+
+{{ :cpp:jeremyphoto.jpg?190|Responsable ISIMA et technique}}
+
+  * **Identité** : <fs medium>Jérémy ZANGLA</fs> est élève en Génie logiciel à l'ISIMA à Clermont-Ferrand.
+  * **Domaine de travail** : Il travaille sur de nombreux sujets liés à la programmation mais se spécialise en C++ et en génie logiciel.
+  * **Rôle dans l'association** : Il représente  l'ISIMA. Il  s'occupe aussi de toute l'infrastructure du projet.
+  * **Loisirs** : Conception et réalisation de jeux vidéo.
+\\
+\\
+\\
+\\
+{{ :cpp:danielphoto.jpeg?200|}}
+
+  * **Identité** : <fs medium>Daniel ATANGANA</fs> est élève en Génie Mathématique à CYTech de Pau.
+  * **Domaine de travail**: Il travaille sur des sujets de Data Science et se spécialise en Machine Learning. 
+  * **Rôle dans l'association** : Il représente CyTech et travaille à améliorer les programmes de communication en école d'ingénieurs.
+  * **Loisirs** : Course à pied et lecture.
+
+\\
+\\
+\\
+\\
+
+{{ :cpp:matheo.jpg?200|}}
+
+  * **Identité** : <fs medium>Mathéo BOLLAND</fs> est élève en Génie Mathématique et Modélisation à Polytech Clermont-Ferrand. 
+  * **Domaine de travail** : Il travaille principalement sur des sujets liés aux mathématiques et leurs applications dans des domaines précis.
+  *  **Rôle dans l'association** : Il représente Polytech Clermont-Ferrand. Il s'intéresse au volet juridique du projet et à la protection légale du contenu.
+  * **Loisirs** : Passionné par les échecs et le sport en plein air.
+
+\\
+\\
+\\
+\\
+
+{{ :cpp:julien.jpg?200|}}
+
+  * **Identité** : <fs medium>Julien BUISSON-CHAVOT</fs> est élève en Génie Mathématique à CYTech de Pau. 
+  * **Domaine de travail** : Il travaille principalement sur des sujets liés à l'informatique usuel et sur les différences entre systèmes d'exploitation.
+  * **Rôle dans l'association** : Il travaille à rendre le projet finançable et s'occupe du recrutement des différentes personnes responsables de l'écriture.
+  * **Loisirs** : Lecture et analyse de jeux vidéo.
+\\
+\\
+=====Valeurs=====
+\\
+<alert danger> Partage : Savoir qu'on peut donner et recevoir de quiconque.</alert>
+<alert warning> Professionnalisme : S'entraîner pour mieux s'adapter au monde du travail.</alert>
+<alert info> Respect : Prendre le temps d'écouter et comprendre chacun.</alert>
+<alert success> Curiosité : Toujours s'intéresser aux nouvelles technologies pour se tenir à jour.</alert>

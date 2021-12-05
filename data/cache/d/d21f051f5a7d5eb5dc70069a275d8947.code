@@ -1,0 +1,14 @@
+<span class="kw1">def</span> dicho<span class="br0">&#40;</span>f<span class="sy0">,</span> a<span class="sy0">,</span> b<span class="sy0">,</span> epsilon<span class="br0">&#41;</span>:
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw1">not</span> TVI<span class="br0">&#40;</span>f<span class="sy0">,</span> a<span class="sy0">,</span> b<span class="br0">&#41;</span><span class="br0">&#41;</span>: <span class="co1">#TVI non applicable</span>
+        <span class="kw1">return</span> <span class="kw2">None</span>
+       <span class="kw1">else</span>:
+        u<span class="sy0">,</span> v <span class="sy0">=</span> <span class="kw2">float</span><span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw2">float</span><span class="br0">&#40;</span>b<span class="br0">&#41;</span> <span class="co1">#transforme a et b en réels</span>
+        <span class="kw1">while</span> <span class="kw2">abs</span><span class="br0">&#40;</span>v - u<span class="br0">&#41;</span> <span class="sy0">&gt;</span> <span class="nu0">2</span> * epsilon:
+            w <span class="sy0">=</span> <span class="br0">&#40;</span>u + v<span class="br0">&#41;</span> / <span class="nu0">2</span>
+            <span class="kw1">if</span> f<span class="br0">&#40;</span>u<span class="br0">&#41;</span> * f<span class="br0">&#40;</span>w<span class="br0">&#41;</span> <span class="sy0">&lt;=</span> <span class="nu0">0</span>:
+                v <span class="sy0">=</span> w
+            <span class="kw1">else</span>:
+                u <span class="sy0">=</span> w
+        <span class="kw1">return</span> <span class="br0">&#40;</span>u + v<span class="br0">&#41;</span> / <span class="nu0">2</span>
+    <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;La valeur du zéro de cette fonction sur (-10,10) à 1e-3 pret est:&quot;</span><span class="sy0">,</span>dicho<span class="br0">&#40;</span>f<span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">10</span><span class="sy0">,</span> <span class="nu0">1e-3</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;

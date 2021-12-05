@@ -1,0 +1,2 @@
+<span class="co1"># Supprimer votre propre liste de mots non désirés</span>
+docs <span class="sy0">&lt;</span>- tm_map<span class="br0">&#40;</span>docs<span class="sy0">,</span> removeWords<span class="sy0">,</span> c<span class="br0">&#40;</span><span class="st0">&quot;ma&quot;</span><span class="sy0">,</span> <span class="st0">&quot;poule&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> 

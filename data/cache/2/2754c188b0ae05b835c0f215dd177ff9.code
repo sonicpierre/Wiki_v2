@@ -1,0 +1,7 @@
+<span class="kw1">from</span> sklearn.<span class="me1">impute</span> <span class="kw1">import</span> SimpleImputer<span class="co1">#Importation du transformeur</span>
+&nbsp;
+imputer <span class="sy0">=</span> SimpleImputer<span class="br0">&#40;</span>missing_values <span class="sy0">=</span> np.<span class="me1">nan</span><span class="sy0">,</span> strategy <span class="sy0">=</span> <span class="st0">'mean'</span><span class="br0">&#41;</span><span class="co1">#Création d'un transformeur qui identifie la forme des valeurs manquantes </span>
+<span class="co1">#avec missing_values et définie une stratégie d'imputation (on a choisi la moyenne).</span>
+imputer.<span class="me1">fit_transform</span><span class="br0">&#40;</span>df<span class="br0">&#41;</span><span class="co1">#Application de la transformation sur l'ensemble des données</span>
+&nbsp;
+df <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>imputer.<span class="me1">fit_transform</span><span class="br0">&#40;</span>df<span class="br0">&#41;</span><span class="sy0">,</span> index<span class="sy0">=</span>df.<span class="me1">index</span><span class="sy0">,</span> columns<span class="sy0">=</span>df.<span class="me1">columns</span><span class="br0">&#41;</span><span class="co1">#Transformation du tableau numpy obtenu après transformation, en tableau pandas.</span>

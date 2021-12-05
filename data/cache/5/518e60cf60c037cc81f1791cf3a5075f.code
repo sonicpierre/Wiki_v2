@@ -1,0 +1,5 @@
+<a href="http://www.cmake.org/cmake/help/cmake2.6docs.html#command:if"><span class="kw1">if</span></a> <span class="sy0">(</span>MSVC<span class="sy0">)</span>
+  target_compile_options<span class="sy0">(</span><span class="re0">${CMAKE_PROJECT_NAME}</span> /Wall<span class="sy0">)</span>
+<a href="http://www.cmake.org/cmake/help/cmake2.6docs.html#command:else"><span class="kw1">else</span></a><span class="sy0">()</span>
+  target_compile_options<span class="sy0">(</span><span class="re0">${CMAKE_PROJECT_NAME}</span> -Wall -Wextra<span class="sy0">)</span>
+<a href="http://www.cmake.org/cmake/help/cmake2.6docs.html#command:endif"><span class="kw1">endif</span></a><span class="sy0">()</span>

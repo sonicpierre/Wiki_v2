@@ -1,0 +1,31 @@
+<span class="kw1">package</span> <span class="co2">fr.tuto</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">import</span> <span class="co2">javafx.application.Application</span><span class="sy0">;</span>
+<span class="kw1">import</span> <span class="co2">javafx.event.ActionEvent</span><span class="sy0">;</span>
+<span class="kw1">import</span> <span class="co2">javafx.event.EventHandler</span><span class="sy0">;</span>
+<span class="kw1">import</span> <span class="co2">javafx.scene.Scene</span><span class="sy0">;</span>
+<span class="kw1">import</span> <span class="co2">javafx.scene.control.Button</span><span class="sy0">;</span>
+<span class="kw1">import</span> <span class="co2">javafx.scene.layout.StackPane</span><span class="sy0">;</span>
+<span class="kw1">import</span> <span class="co2">javafx.stage.Stage</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">public</span> <span class="kw1">class</span> Main <span class="kw1">extends</span> Application <span class="br0">&#123;</span>
+    <span class="kw1">public</span> <span class="kw1">static</span> <span class="kw4">void</span> main<span class="br0">&#40;</span><a href="http://www.google.com/search?hl=en&amp;q=allinurl%3Adocs.oracle.com+javase+docs+api+string"><span class="kw3">String</span></a><span class="br0">&#91;</span><span class="br0">&#93;</span> args<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+        launch<span class="br0">&#40;</span>args<span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+    @Override
+    <span class="kw1">public</span> <span class="kw4">void</span> start<span class="br0">&#40;</span>Stage primaryStage<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+        primaryStage.<span class="me1">setTitle</span><span class="br0">&#40;</span><span class="st0">&quot;Hello World!&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        <a href="http://www.google.com/search?hl=en&amp;q=allinurl%3Adocs.oracle.com+javase+docs+api+button"><span class="kw3">Button</span></a> btn <span class="sy0">=</span> <span class="kw1">new</span> <a href="http://www.google.com/search?hl=en&amp;q=allinurl%3Adocs.oracle.com+javase+docs+api+button"><span class="kw3">Button</span></a><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        btn.<span class="me1">setText</span><span class="br0">&#40;</span><span class="st0">&quot;Say 'Hello World'&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        btn.<span class="me1">setOnAction</span><span class="br0">&#40;</span><span class="kw1">new</span> EventHandler<span class="sy0">&lt;</span>ActionEvent<span class="sy0">&gt;</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+            @Override
+            <span class="kw1">public</span> <span class="kw4">void</span> handle<span class="br0">&#40;</span><a href="http://www.google.com/search?hl=en&amp;q=allinurl%3Adocs.oracle.com+javase+docs+api+actionevent"><span class="kw3">ActionEvent</span></a> event<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+                <a href="http://www.google.com/search?hl=en&amp;q=allinurl%3Adocs.oracle.com+javase+docs+api+system"><span class="kw3">System</span></a>.<span class="me1">out</span>.<span class="me1">println</span><span class="br0">&#40;</span><span class="st0">&quot;Hello World!&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+            <span class="br0">&#125;</span>
+        <span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        StackPane root <span class="sy0">=</span> <span class="kw1">new</span> StackPane<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        root.<span class="me1">getChildren</span><span class="br0">&#40;</span><span class="br0">&#41;</span>.<span class="me1">add</span><span class="br0">&#40;</span>btn<span class="br0">&#41;</span><span class="sy0">;</span>
+        primaryStage.<span class="me1">setScene</span><span class="br0">&#40;</span><span class="kw1">new</span> Scene<span class="br0">&#40;</span>root, <span class="nu0">300</span>, <span class="nu0">250</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        primaryStage.<span class="me1">show</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+<span class="br0">&#125;</span>

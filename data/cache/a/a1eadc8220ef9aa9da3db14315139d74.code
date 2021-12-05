@@ -1,0 +1,5 @@
+texte <span class="sy0">=</span>  html_nodes<span class="br0">&#40;</span>soup<span class="sy0">,</span> <span class="st0">&quot;.mw-parser-output&quot;</span><span class="br0">&#41;</span> <span class="co1">#Premier traitement</span>
+ html_nodes<span class="br0">&#40;</span>selector<span class="sy0">,</span> <span class="st0">&quot;p&quot;</span><span class="br0">&#41;</span><span class="co1">#On refait une sélection derrière</span>
+<span class="co1">#Resultat : {xml_nodeset (26)}</span>
+<span class="co1">#[1] &lt;p&gt;Vous pouvez partager vos connaissances en l’amélior</span>
+ html_text<span class="br0">&#40;</span>html_nodes<span class="br0">&#40;</span>soup<span class="sy0">,</span> <span class="st0">&quot;p&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="co1">#Permet d'enlever le format html</span>

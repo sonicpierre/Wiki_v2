@@ -1,0 +1,1 @@
+F1 <span class="sy0">&lt;</span>- <span class="br0">&#40;</span><span class="nu0">2</span> * precision * recall<span class="br0">&#41;</span> / <span class="br0">&#40;</span>precision + recall<span class="br0">&#41;</span>

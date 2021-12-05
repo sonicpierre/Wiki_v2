@@ -1,0 +1,506 @@
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aorganiser_et_gerer_son_projet&amp;media=cpp:orga_projet_header.png" class="media" title="cpp:orga_projet_header.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=614600&amp;media=cpp:orga_projet_header.png" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+On va dans cette partie voir comment faire pour organiser correctement un projet via deux exemples. Afin de comparer la manière de procéder dans un cadre privé et dans un cadre professionnel.
+</p>
+<!-- EDIT{&quot;range&quot;:&quot;-262&quot;} --><table class="columns-plugin" style="width:100%">
+<tr><td class="columns-plugin first" style="width:50%;">
+
+<h5 id="cadre_prive_universitaire">Cadre privé (universitaire)</h5>
+<div class="level5">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aorganiser_et_gerer_son_projet&amp;media=cpp:projet.png" class="media" title="cpp:projet.png"><img src="/lib/exe/fetch.php?w=1000&amp;tok=3c304c&amp;media=cpp:projet.png" class="mediacenter" alt="" width="1000" /></a>
+<br/>
+
+Contraintes du projet :
+</p>
+<ul>
+<li class="level1"><div class="li"> Durée : 6 mois</div>
+</li>
+<li class="level1"><div class="li"> Participants : 3 développeurs sans expérience </div>
+</li>
+</ul>
+
+<p>
+Le client veut une application Android permettant de dessiner sur une carte une piste à suivre. Cette piste est partageable avec ses amis pour que plusieurs personnes puissent la faire. Il doit y avoir la possibilité de comparer les temps fais par chacun, avec la date, l&#039;heure et la météo du jour.
+</p>
+
+</div>
+<!-- EDIT{&quot;range&quot;:&quot;-747&quot;} --></td><td class="columns-plugin last">
+
+<h5 id="cadre_professionnel">Cadre professionnel</h5>
+<div class="level5">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aorganiser_et_gerer_son_projet&amp;media=cpp:projet_entreprise.png" class="media" title="cpp:projet_entreprise.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=8f77c2&amp;media=cpp:projet_entreprise.png" class="mediacenter" alt="" width="800" /></a>
+<br/>
+
+<br/>
+
+On va traiter le même sujet que dans le cadre privé, mais avec un temps beaucoup plus court comme l&#039;équipe de travail est plus grande.
+</p>
+
+<p>
+Le <strong>Product Owner (PO)</strong> est la personne responsable du projet, c&#039;est elle qui décide des tâches à faire.
+</p>
+
+<p>
+Le <strong>Scrum Master (SM)</strong> est la personne responsable de l&#039;équipe, elle prépare et préside les réunions.
+</p>
+
+<p>
+Le <strong>Développeur Qualité</strong> a pour rôle de vérifier que le travail des autres développeurs est fonctionnel, il peut également intervenir lors de phases de tests d&#039;un produit.
+</p>
+
+</div>
+<!-- EDIT{&quot;range&quot;:&quot;-1369&quot;} --></td></tr></table>
+
+<h1 class="sectionedit1" id="dangers_lors_d_un_travail_en_groupe">Dangers lors d&#039;un travail en groupe</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Dangers lors d&#039;un travail en groupe&quot;,&quot;hid&quot;:&quot;dangers_lors_d_un_travail_en_groupe&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1370-1419&quot;} -->
+<h2 class="sectionedit2" id="source_de_problemes">Source de problèmes</h2>
+<div class="level2">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aorganiser_et_gerer_son_projet&amp;media=cpp:danger.png" class="media" title="cpp:danger.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=f06aef&amp;media=cpp:danger.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Source de probl\u00e8mes&quot;,&quot;hid&quot;:&quot;source_de_problemes&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;1420-1480&quot;} -->
+<h2 class="sectionedit3" id="consequences">Conséquences</h2>
+<div class="level2">
+
+<p>
+Problèmes engendrés :
+</p>
+<ul>
+<li class="level1"><div class="li"> Le développeur chargé de l&#039;affichage du trajet sur la carte est bloqué par celui qui doit afficher la carte. <strong><span style="color:#ff0000;">(Désorganisation)</span></strong></div>
+</li>
+<li class="level1"><div class="li"> La livraison de l&#039;application a 2 semaines de retard. <strong><span style="color:#ff0000;">(Retard de livraison)</span></strong></div>
+</li>
+<li class="level1"><div class="li"> Un développeur ne travaille plus pendant 1 semaine. <strong><span style="color:#ff0000;">(Démotivation)</span></strong></div>
+</li>
+<li class="level1"><div class="li"> Il manque le partage via Twitter. <strong><span style="color:#ff0000;">(Fonctionnalité manquante)</span></strong></div>
+</li>
+<li class="level1"><div class="li"> La géolocalisation n&#039;est pas toujours fiable. <strong><span style="color:#ff0000;">(Fonctionnalité non aboutie)</span></strong></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Cons\u00e9quences&quot;,&quot;hid&quot;:&quot;consequences&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;1481-2072&quot;} -->
+<h1 class="sectionedit4" id="eviter_les_problemes">Eviter les problèmes</h1>
+<div class="level1">
+
+<p>
+La résolution de problèmes liés au management et à la technique sont de véritables défis en entreprise. C&#039;est pourquoi nous allons développer ces points ci-dessous.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Eviter les probl\u00e8mes&quot;,&quot;hid&quot;:&quot;eviter_les_problemes&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;2073-2280&quot;} -->
+<h2 class="sectionedit5" id="connaitre_le_client">Connaître le client</h2>
+<div class="level2">
+
+<p>
+L&#039;objectif est de contenter le client avant tout, cependant il ne sait pas toujours comment mener à bien son projet. Il faudra donc faire particulièrement attention à notre relation avec lui et garder une bonne communication pour aboutir à un résultat satisfaisant.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Conna\u00eetre le client&quot;,&quot;hid&quot;:&quot;connaitre_le_client&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;2281-2584&quot;} -->
+<h3 class="sectionedit6" id="qu_est-ce_qu_un_client">Qu&#039;est-ce qu&#039;un client ?</h3>
+<div class="level3">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aorganiser_et_gerer_son_projet&amp;media=cpp:client.png" class="media" title="cpp:client.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=cdccfb&amp;media=cpp:client.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<p>
+Le client peut être représenté par plusieurs types de personnes. Tous n&#039;ont pas la même capacité à prévoir un projet. Il faut donc répondre à plusieurs question avant de débuter le travail.
+</p>
+<div class="table sectionedit7"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0"> Questions à se poser </th><th class="col1"> Application avec l&#039;exemple </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0"> Les fonctionnalités sont-elles décrites très précisément ? </td><td class="col1"> Quelles plateformes vont permettre de partager les temps ? Facebook, Twitter, Mail, etc. </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> Suis-je libre du choix des technologies utilisées ? </td><td class="col1"> On peut utiliser Java et Kotlin, le client a-t-il une préférence ? </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> Comment impliquer le client dans l&#039;avancement ? </td><td class="col1"> Tous les mois on organise une présentation de l&#039;application devant le client </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0"> Quelles sont les disponibilités des participants et du clients ? </td><td class="col1"> Tous les mois on organise la présentation le mercredi après-midi </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:7,&quot;range&quot;:&quot;2849-3461&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Qu&#039;est-ce qu&#039;un client ?&quot;,&quot;hid&quot;:&quot;qu_est-ce_qu_un_client&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;2585-3462&quot;} -->
+<h2 class="sectionedit8" id="besoins_et_dangers_lies_au_leadership">Besoins et Dangers liés au Leadership</h2>
+<div class="level2">
+
+<p>
+Pour organiser le groupe il est plus simple d&#039;avoir un <strong>chef de projet</strong>. Son rôle va être d&#039;avoir une vision d&#039;ensemble et de trancher la prise de décision. Il faut cependant bien jauger son importance dans le projet.
+<br/>
+
+<a href="/lib/exe/detail.php?id=cpp%3Aorganiser_et_gerer_son_projet&amp;media=cpp:leadership.png" class="media" title="cpp:leadership.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=75c9ce&amp;media=cpp:leadership.png" class="mediacenter" alt="" width="400" /></a>
+<br/>
+
+</p>
+<div class="table sectionedit9"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0"> Manque d&#039;un chef de projet </th><th class="col1 leftalign"> Chef de projet trop présent    </th><th class="col2"> Avantage du chef de projet </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0"> Pas d&#039;organisation du travail </td><td class="col1"> Il ne travaille pas sur le coeur du projet </td><td class="col2"> Vision d&#039;ensemble du projet </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> Les participants ne savent pas ce qu&#039;il se passe autour d&#039;eux </td><td class="col1"> Démoralisation des autres participants </td><td class="col2"> Facilite les échanges entre les participants </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> Prise de décision inexistante, ou lente </td><td class="col1"> Augmentation des tensions </td><td class="col2"> Prises de décisions plus rapides </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:9,&quot;range&quot;:&quot;3775-4242&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Besoins et Dangers li\u00e9s au Leadership&quot;,&quot;hid&quot;:&quot;besoins_et_dangers_lies_au_leadership&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;3463-4243&quot;} -->
+<h2 class="sectionedit10" id="roles_du_chef_de_projet">Rôles du chef de projet</h2>
+<div class="level2">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aorganiser_et_gerer_son_projet&amp;media=cpp:roles.png" class="media" title="cpp:roles.png"><img src="/lib/exe/fetch.php?w=1000&amp;tok=772905&amp;media=cpp:roles.png" class="mediacenter" alt="" width="1000" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;R\u00f4les du chef de projet&quot;,&quot;hid&quot;:&quot;roles_du_chef_de_projet&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:10,&quot;range&quot;:&quot;4244-4307&quot;} -->
+<h3 class="sectionedit11" id="attribuer_une_difficulte_a_chaque_tache">Attribuer une difficulté à chaque tâche</h3>
+<div class="level3">
+
+<p>
+Pour représenter une difficulté on utilise ici la <strong>suite de Fibonacci</strong>, cela permet de mieux montrer la difficulté que de garder une échelle linéaire. On remarque aussi que la somme des difficultés des sous-tâches ne donne pas la difficulté de la tâche principale.
+</p>
+
+<p>
+Pour établir la difficulté d&#039;une tâche, on utilise une unité appelée <strong>Story Point</strong>, attention de ne pas confondre difficulté et temps de réalisation. Il faut aussi se rappeler que souvent dans le milieu professionnel, une tâche contient plusieurs étapes :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong><span style="color:#4682b4;">Raffinement</span></strong> : On décrit plus précisément la tâche,  ses critère de validation et ses story points.</div>
+</li>
+<li class="level1"><div class="li"> <strong><span style="color:#4682b4;">Développement</span></strong> : On réalise la tâche.</div>
+</li>
+<li class="level1"><div class="li"> <strong><span style="color:#4682b4;">Vérification</span></strong> : Un autre membre du groupe (un développeur), regarde le code et indique les modifications à faire pour passer à l&#039;étape suivante.</div>
+</li>
+<li class="level1"><div class="li"> <strong><span style="color:#4682b4;">Validation</span></strong> : Un autre membre du groupe (un développeur qualité), teste la modification d&#039;un point de vue fonctionnel manuellement ou avec des tests. </div>
+</li>
+<li class="level1"><div class="li"> <strong><span style="color:#4682b4;">Intégration</span></strong> : On intègre le travail à la base de code générale, la modification fait parti du produit.</div>
+</li>
+</ul>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aorganiser_et_gerer_son_projet&amp;media=cpp:steps.png" class="media" title="cpp:steps.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=68fabc&amp;media=cpp:steps.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+
+</div>
+
+<h5 id="source">Source</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.qualitystreet.fr/2016/11/09/sprint-planning/" class="urlextern" title="https://www.qualitystreet.fr/2016/11/09/sprint-planning/" rel="nofollow">https://www.qualitystreet.fr/2016/11/09/sprint-planning/</a></div>
+</li>
+</ul>
+
+<p>
+Pour trouver la difficulté d&#039;une tâche, c&#039;est l&#039;expérience qui sera utilisé dans un milieu professionnel. Dans les sociétés de services on pourra aussi trouver des <strong><span style="color:#9acd32;">abaques</span></strong>, ce sont des documents indiquant le temps de travail pour réaliser une tâche. Par exemple : <em>faire une page pour une application android</em> correspond à 2 jours/homme, c&#039;est à dire le travail effectué par un homme en 2 jours.
+</p>
+
+<p>
+Dans certains cas (tels que la recherche), on ne possède ni abaques ni expérience dans le domaine. On va alors utiliser des méthodes faisant une sorte de moyenne de l&#039;avis de chacun. Chacun décide d&#039;une difficulté grâce à <strong>la technique du doigt mouillé</strong>, c&#039;est à dire que l&#039;on essaie de deviner la difficulté.
+</p>
+
+<p>
+Ensuite on va rassembler les <strong><span style="color:#cd5c5c;">avis de chacun</span></strong>, on peut alors tout simplement faire la <strong><span style="color:#cd5c5c;">moyenne</span></strong> (puis la ramener sur la suite de Fibonacci). On peut aussi prendre la <strong><span style="color:#cd5c5c;">valeur majoritairement</span></strong> représentée. 
+Il y a aussi des techniques un peu plus développée telle que le <strong>poker planning</strong>. On va ici utiliser un jeu de carte pour noter la difficulté et montrer toutes les cartes au même moment. L&#039;avantage de cet méthode est surtout d&#039;avoir un côté ludique.
+</p>
+
+<p>
+De manière plus générale, c&#039;est important dans un projet de <strong><span style="color:#ff0000;">faire réfléchir individuellement</span></strong> avant de mettre en commun (on obtient souvent une plus grande diversité dans les réponses). 
+</p>
+
+</div>
+
+<h5 id="source1">Source</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <a href="https://blog-gestion-de-projet.com/quest-ce-que-le-planning-poker/" class="urlextern" title="https://blog-gestion-de-projet.com/quest-ce-que-le-planning-poker/" rel="nofollow">https://blog-gestion-de-projet.com/quest-ce-que-le-planning-poker/</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Attribuer une difficult\u00e9 \u00e0 chaque t\u00e2che&quot;,&quot;hid&quot;:&quot;attribuer_une_difficulte_a_chaque_tache&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:11,&quot;range&quot;:&quot;4308-7263&quot;} -->
+<h3 class="sectionedit12" id="decoupage_des_taches">Découpage des tâches</h3>
+<div class="level3">
+
+<p>
+On va découper la tâche <strong>affichage d&#039;une carte avec l&#039;emplacement de l&#039;utilisateur</strong>.
+</p>
+
+<p>
+Au départ, comme l&#039;on ne sait pas exactement quoi faire on va avoir besoin d&#039;une première tâche de recherche de solution, où l&#039;on va chercher des sources, des bibliothèques. Cette tâche peut prendre assez de temps, on va lui attribuer une difficulté de 5.
+</p>
+
+<p>
+Après recherche on se rend compte que la tâche complète représente une difficulté de 13.
+Pour faire une meilleure découpe, on s&#039;<span style="color:#ff0000;"><strong>interdit de dépasser 8 de difficulté</strong></span>.
+On peut donc redécouper la tâche :
+</p>
+<ul>
+<li class="level1"><div class="li"> Création d&#039;une activité : 2</div>
+</li>
+<li class="level1"><div class="li"> Insertion de la carte dans l&#039;activité : 3</div>
+</li>
+<li class="level1"><div class="li"> Récupération des coordonnées GPS de l&#039;utilisateur : 3</div>
+</li>
+<li class="level1"><div class="li"> Affichage d&#039;un point représentant l&#039;utilisateur : 3</div>
+</li>
+</ul>
+
+<p>
+En entreprise, on peut considérer qu&#039;une personne peut faire environ <strong><span style="color:#ff0000;">10 story points</span></strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;D\u00e9coupage des t\u00e2ches&quot;,&quot;hid&quot;:&quot;decoupage_des_taches&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:12,&quot;range&quot;:&quot;7264-8191&quot;} -->
+<h3 class="sectionedit13" id="outils">Outils</h3>
+<div class="level3">
+<div class="table sectionedit14"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0"> Outils </th><th class="col1"> Description </th><th class="col2"> Lien d&#039;accès </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0"> Google Agenda</td><td class="col1"> Agenda pouvant être mis en commun. Permet de faire des invitations par emails </td><td class="col2"> <a href="https://www.google.com/intl/fr/calendar/about/" class="urlextern" title="https://www.google.com/intl/fr/calendar/about/" rel="nofollow">https://www.google.com/intl/fr/calendar/about/</a> </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> Outlook</td><td class="col1"> Similaire à Google Agenda, mais fournit par Microsoft </td><td class="col2"> <a href="https://outlook.office.com/calendar/" class="urlextern" title="https://outlook.office.com/calendar/" rel="nofollow">https://outlook.office.com/calendar/</a> </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> Doodle</td><td class="col1"> Sondage pour trouver le meilleur créneau pour un évênement </td><td class="col2"> <a href="https://doodle.com/fr/" class="urlextern" title="https://doodle.com/fr/" rel="nofollow">https://doodle.com/fr/</a> </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0"> Trello</td><td class="col1"> Organisation des tâches (Kanban) </td><td class="col2"> <a href="https://trello.com/fr" class="urlextern" title="https://trello.com/fr" rel="nofollow">https://trello.com/fr</a> </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0"> Jira</td><td class="col1"> Solution pour les professionnels similaire à Trello (Kanban) </td><td class="col2"> <a href="https://www.atlassian.com/fr/software/jira" class="urlextern" title="https://www.atlassian.com/fr/software/jira" rel="nofollow">https://www.atlassian.com/fr/software/jira</a> </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0"> Slack</td><td class="col1"> Messagerie instantanée avec possibilité de conversation de groupes et de répondre dans un fils de discussion indépendant </td><td class="col2"> <a href="https://slack.com/intl/fr-fr/" class="urlextern" title="https://slack.com/intl/fr-fr/" rel="nofollow">https://slack.com/intl/fr-fr/</a> </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0"> Discord</td><td class="col1"> Messagerie instantanée, salon de discussion audio et vidéo, gestion des permissions individuelles et de groupes </td><td class="col2"> <a href="https://discord.com" class="urlextern" title="https://discord.com" rel="nofollow">https://discord.com</a> </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table2&quot;,&quot;secid&quot;:14,&quot;range&quot;:&quot;8210-9107&quot;} -->
+</div>
+
+<h4 id="diagramme_de_gantt">Diagramme de Gantt</h4>
+<div class="level4">
+
+<p>
+Un diagramme de Gantt est une représentation schématique des tâches au cours du temps. Il est souvent demandé dans un cadre scolaire où on aura un diagramme prévisionnel et un diagramme réel. En entreprise il est très peu utilisé.
+</p>
+
+<p>
+On préferera des <strong>roadmaps</strong>, qui sont tous simplement des frises chronologiques indiquant les objectifs à venir.
+En général le diagramme de Gantt est utilisé avec une unité de l&#039;ordre de la semaine, alors que la roadmap est plus souvent utilisé au mois voir au trimestre près.
+<a href="/lib/exe/detail.php?id=cpp%3Aorganiser_et_gerer_son_projet&amp;media=cpp:gantt.png" class="media" title="cpp:gantt.png"><img src="/lib/exe/fetch.php?w=1000&amp;tok=448e44&amp;media=cpp:gantt.png" class="mediacenter" alt="" width="1000" /></a>
+</p>
+
+</div>
+
+<h5 id="sources">Sources</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <a href="https://depictdatastudio.com/adjusting-bar-chart-spacing-microsoft-excel/" class="urlextern" title="https://depictdatastudio.com/adjusting-bar-chart-spacing-microsoft-excel/" rel="nofollow">https://depictdatastudio.com/adjusting-bar-chart-spacing-microsoft-excel/</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.officetimeline.com/make-gantt-chart/excel" class="urlextern" title="https://www.officetimeline.com/make-gantt-chart/excel" rel="nofollow">https://www.officetimeline.com/make-gantt-chart/excel</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://ww2.ac-poitiers.fr/biochimie/IMG/pdf/ganttproject_guide.pdf" class="urlextern" title="http://ww2.ac-poitiers.fr/biochimie/IMG/pdf/ganttproject_guide.pdf" rel="nofollow">http://ww2.ac-poitiers.fr/biochimie/IMG/pdf/ganttproject_guide.pdf</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://disciplines.ac-toulouse.fr/sii/sites/sii/files/ressources/didacticiels/gestion-projet/ganttproject.pdf" class="urlextern" title="https://disciplines.ac-toulouse.fr/sii/sites/sii/files/ressources/didacticiels/gestion-projet/ganttproject.pdf" rel="nofollow">https://disciplines.ac-toulouse.fr/sii/sites/sii/files/ressources/didacticiels/gestion-projet/ganttproject.pdf</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Outils&quot;,&quot;hid&quot;:&quot;outils&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:13,&quot;range&quot;:&quot;8192-10028&quot;} -->
+<h3 class="sectionedit15" id="garder_une_bonne_ambiance">Garder une bonne ambiance</h3>
+<div class="level3">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aorganiser_et_gerer_son_projet&amp;media=cpp:ambiance.png" class="media" title="cpp:ambiance.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=e81213&amp;media=cpp:ambiance.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<p>
+Récupérer des retours sur les réunions permet aussi de rendre les séances de travail plus agréable. On pourra utiliser ici le <strong>ROTI</strong> (<strong>R</strong>eturn <strong>O</strong>n <strong>T</strong>ime <strong>I</strong>nvest). L&#039;idée est de demander à tous les participants de noter de 1 à 5 l&#039;utilité de la réunion pour eux (avec un commentaire facultatif).
+<a href="/lib/exe/detail.php?id=cpp%3Aorganiser_et_gerer_son_projet&amp;media=cpp:roti.png" class="media" title="cpp:roti.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=9f8049&amp;media=cpp:roti.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+</div>
+
+<h5 id="sources1">Sources</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.excellence-operationnelle.tv/vous-prendrez-bien-un-roti.php/" class="urlextern" title="https://www.excellence-operationnelle.tv/vous-prendrez-bien-un-roti.php/" rel="nofollow">https://www.excellence-operationnelle.tv/vous-prendrez-bien-un-roti.php/</a></div>
+</li>
+</ul>
+
+<p>
+Et avec les deux liens suivant vous pouvez voir comment améliorer le résultat de ce ROTI :
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.chefdentreprise.com/Thematique/rh-management-1026/Breves/conseils-organiser-reunion-efficace-301601.htm" class="urlextern" title="https://www.chefdentreprise.com/Thematique/rh-management-1026/Breves/conseils-organiser-reunion-efficace-301601.htm" rel="nofollow">https://www.chefdentreprise.com/Thematique/rh-management-1026/Breves/conseils-organiser-reunion-efficace-301601.htm</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.leblogdudirigeant.com/animer-une-reunion" class="urlextern" title="https://www.leblogdudirigeant.com/animer-une-reunion" rel="nofollow">https://www.leblogdudirigeant.com/animer-une-reunion</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Garder une bonne ambiance&quot;,&quot;hid&quot;:&quot;garder_une_bonne_ambiance&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:15,&quot;range&quot;:&quot;10029-10801&quot;} -->
+<h1 class="sectionedit16" id="la_fameuse_methode_agile">La fameuse méthode AGILE</h1>
+<div class="level1">
+
+<p>
+Le terme de <strong><span style="color:#ff0000;">méthode agile</span></strong> est souvent employé en opposition au <strong><span style="color:#ff0000;">cycle en V</span></strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La fameuse m\u00e9thode AGILE&quot;,&quot;hid&quot;:&quot;la_fameuse_methode_agile&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:16,&quot;range&quot;:&quot;10802-10962&quot;} -->
+<h2 class="sectionedit17" id="avantages_et_inconvenients_de_la_methode_agile">Avantages et Inconvénients de la méthode agile</h2>
+<div class="level2">
+<div class="table sectionedit18"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0"> Avantage </th><th class="col1"> Inconvénient </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0"> Corrige plus vite les incompréhensions </td><td class="col1"> Plus de réunions </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> Permet d&#039;être plus efficace </td><td class="col1"> Lenteur d&#039;adaptation </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> Facilite l&#039;intégration continue </td><td class="col1"> </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table3&quot;,&quot;secid&quot;:18,&quot;range&quot;:&quot;11024-11211&quot;} -->
+<p>
+Globalement la méthode agile permet d&#039;avoir de <strong><span style="color:#008000;">meilleurs résultats</span></strong> avec un <strong><span style="color:#008000;">coût moins élevé</span></strong>. Mais attention il faut pour cela que <strong><span style="color:#cd5c5c;">chacun connaisse son rôle</span></strong>, il faut <strong><span style="color:#cd5c5c;">prendre du temps</span></strong> pour que l&#039;équipe prenne ses marques.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Avantages et Inconv\u00e9nients de la m\u00e9thode agile&quot;,&quot;hid&quot;:&quot;avantages_et_inconvenients_de_la_methode_agile&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:17,&quot;range&quot;:&quot;10963-11524&quot;} -->
+<h2 class="sectionedit19" id="les_methodes_agiles">LES méthodes agiles</h2>
+<div class="level2">
+
+<p>
+En réalité il n&#039;y a pas qu&#039;une méthode agile, mais plusieurs :
+</p>
+<ul>
+<li class="level1"><div class="li"> <span style="color:#4682b4;">Scrum</span></div>
+</li>
+<li class="level1"><div class="li"> <span style="color:#4682b4;">BDD</span></div>
+</li>
+<li class="level1"><div class="li"> <span style="color:#4682b4;">FDD</span></div>
+</li>
+<li class="level1"><div class="li"> <span style="color:#4682b4;">XP</span></div>
+</li>
+</ul>
+
+<p>
+Il y en a d&#039;autres avec chacune ses spécialitées. On va ici se concentrer sur <strong><span style="color:#ff0000;">SCRUM</span></strong>, qui est la plus répendue.
+</p>
+
+</div>
+
+<h5 id="source2">Source</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <a href="https://fr.wikipedia.org/wiki/M%C3%A9thode_agile" class="urlextern" title="https://fr.wikipedia.org/wiki/M%C3%A9thode_agile" rel="nofollow">https://fr.wikipedia.org/wiki/M%C3%A9thode_agile</a></div>
+</li>
+</ul>
+
+<p>
+Le <strong><span style="color:#ff0000;">point commun</span></strong> de toutes ces méthodes et la découpe du temps sous la forme de <strong><span style="color:#ff0000;">sprints</span></strong>. En général, un sprint a une durée de <strong>2 ou 3 semaines</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;LES m\u00e9thodes agiles&quot;,&quot;hid&quot;:&quot;les_methodes_agiles&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:19,&quot;range&quot;:&quot;11525-12121&quot;} -->
+<h2 class="sectionedit20" id="scrum">Scrum</h2>
+<div class="level2">
+
+<p>
+On va ici simplement introduire la méthode Scrum sans rentrer trop dans les détails, pour aller plus loin je vous renvoie sur wikipédia : <a href="https://fr.wikipedia.org/wiki/Scrum_(d%C3%A9veloppement)" class="urlextern" title="https://fr.wikipedia.org/wiki/Scrum_(d%C3%A9veloppement)" rel="nofollow">https://fr.wikipedia.org/wiki/Scrum_(d%C3%A9veloppement)</a>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Scrum&quot;,&quot;hid&quot;:&quot;scrum&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:20,&quot;range&quot;:&quot;12122-12344&quot;} -->
+<h3 class="sectionedit21" id="ceremonies">Cérémonies</h3>
+<div class="level3">
+
+<p>
+Les cérémonies sont le nom données aux réunions liés à la méthode. On aura dans l&#039;ordre d&#039;apparition :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong><span style="color:#4682b4;">Planning</span></strong> : On décrit les tâches à faire pour le sprint.</div>
+</li>
+<li class="level1"><div class="li"> <strong><span style="color:#4682b4;">Review</span></strong> : On fait le point sur ce qui a été fait pendant le sprint.</div>
+</li>
+<li class="level1"><div class="li"> <strong><span style="color:#4682b4;">Rétrospective</span></strong> : On parle de ce qui s&#039;est bien et mal passé pendant le sprint, on peut aborder des sujets plus personnels et des ressentis (tant que ça impacte le travail).</div>
+</li>
+</ul>
+
+<p>
+On ajoutera à cette liste les <strong><span style="color:#4682b4;">dailys</span></strong>, au cours des quels on raconte ce qu&#039;on a fait la veille et ce qui est prévu pour la suite de la journée.
+</p>
+
+<p>
+Voilà ce que ça donne avec un sprint d&#039;une semaine :
+<a href="/lib/exe/detail.php?id=cpp%3Aorganiser_et_gerer_son_projet&amp;media=cpp:sprint.png" class="media" title="cpp:sprint.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=4d2c5f&amp;media=cpp:sprint.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+
+<p>
+En général on ne met pas les changements de sprints en fin de semaine, pour éviter de faire des changements avec un impact négatif juste avant le weekend. De là même manière, on évite en début de semaine pour pouvoir se garder du temps en fin de sprint pour corriger d&#039;éventuels problèmes.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;C\u00e9r\u00e9monies&quot;,&quot;hid&quot;:&quot;ceremonies&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:21,&quot;range&quot;:&quot;12345-13408&quot;} -->
+<h3 class="sectionedit22" id="kanban">Kanban</h3>
+<div class="level3">
+
+<p>
+Une des dernières choses à savoir de la méthode Scrum est la manière dont sont organisés les tâches.
+Pour cela on utilise un <strong><span style="color:#ff0000;">Kanban</span></strong>, c&#039;est un tableau permettant d&#039;afficher dans quel état est la tâche. Un tâche est alors représenté par une carte.
+</p>
+
+<p>
+On a vu plus haut des outils pour faire des kanbans (Trello et Jira), mais c&#039;est très simple à mettre en place manuellement avec un tableau ou des post-its.
+Il est important que <strong><span style="color:#cd5c5c;">tous les membres de l&#039;équipe y ai accès</span></strong>, ça favorise les <strong><span style="color:#008000;">échanges</span></strong> et <strong><span style="color:#008000;">l&#039;implication</span></strong> des participants.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aorganiser_et_gerer_son_projet&amp;media=cpp:kanban.png" class="media" title="cpp:kanban.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=ac841c&amp;media=cpp:kanban.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Kanban&quot;,&quot;hid&quot;:&quot;kanban&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:22,&quot;range&quot;:&quot;13409-&quot;} -->

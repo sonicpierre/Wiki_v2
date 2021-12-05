@@ -1,0 +1,9 @@
+x <span class="sy0">=</span> data_train<span class="br0">&#91;</span><span class="sy0">,</span><span class="nu0">1</span>:<span class="nu0">60</span><span class="br0">&#93;</span>
+y <span class="sy0">=</span> <span class="kw1">as</span>.<span class="me1">numeric</span><span class="br0">&#40;</span>data_train<span class="br0">&#91;</span><span class="sy0">,</span><span class="nu0">61</span><span class="br0">&#93;</span><span class="br0">&#41;</span>-<span class="nu0">1</span>
+&nbsp;
+vote <span class="sy0">&lt;</span>- CV.<span class="me1">SuperLearner</span><span class="br0">&#40;</span>y<span class="sy0">,</span>
+                        x<span class="sy0">,</span>
+                        V<span class="sy0">=</span><span class="nu0">5</span><span class="sy0">,</span>
+                        SL.<span class="me1">library</span><span class="sy0">=</span><span class="kw2">list</span><span class="br0">&#40;</span><span class="st0">&quot;SL.rpart&quot;</span><span class="sy0">,</span>
+                                        <span class="st0">&quot;SL.svm&quot;</span><span class="sy0">,</span>
+                                        <span class="st0">&quot;SL.glmnet&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>

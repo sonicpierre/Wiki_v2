@@ -1,0 +1,1 @@
+data_train.<span class="me1">groupby</span><span class="br0">&#40;</span><span class="st0">&quot;propertyType&quot;</span><span class="br0">&#41;</span>.<span class="me1">count</span><span class="br0">&#40;</span><span class="br0">&#41;</span>

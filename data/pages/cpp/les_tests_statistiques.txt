@@ -1,0 +1,140 @@
+{{:cpp:selection_var.png?580|}}
+
+Il s'agit d'une étape importante dans le nettoyage des données. Après le travail d'encodage, un nombre trop élevé de variables peut entrainer deux problèmes :
+
+  * Un **sur-apprentissage (over-fitting)** de votre modèle de prédiction sur les données d'entrainement et de validation. Ce qui dégrade considérablement les performances de vote modèle lors de la généralisation sur de nouvelles données. 
+
+  *  **L'augmentation du temps d'apprentissage et de calibration des hyper-paramètres** de vote modèle. Ce qui peut être un problème lors du déploiement du modèle pour un client. 
+
+Pour éviter ces problèmes il vous faudra donc utiliser des méthodes de sélection de variables, pour ne garder que celles qui apportent le plus d'informations à votre modèle.
+
+<alert info> **Remarque :** On utilisera de nouveau, le dataset de mesures de gaz contenus dans l'alcool, disponible [[https://archive.ics.uci.edu/ml/datasets/Alcohol+QCM+Sensor+Dataset|ici]]. On considérera le premier relevé.</alert>
+
+
+=====Les tests de dépendances=====
+
+Les tests statistiques sélectionnent les K variables explicatives, dont les scores de dépendance avec la variable cible sont les plus élevés.
+
+====Le test de ANOVA====
+
+Visualisation des scores de dépendances selon le test de ANOVA. Le résultat de ce test retourne deux tableaux : les scores de dépendances et la probabilité de rejeter l'hypothèse de dépendance alors qu'elle est vraie (p-valeur).
+
+__Code Python__
+
+<code python>
+from sklearn.feature_selection import SelectKBest, f_regression
+ 
+X = data.drop(columns=['1-Octanol'])#Définition des variables explicatives
+y = data['1-Octanol']#Définition de la variable cible
+ 
+f_regression(X, y)#Test de dépendance
+</code>
+
+__Code R__
+
+<code python>
+y <- data$X1.Octanol
+X <- data[, -c(11)]
+
+aov(y ~., data = data)
+</code>
+
+==Variables sélectionnées==
+
+On sélectionne alors les k=5 variables ayant les scores les plus élevés selon le test de ANOVA, on applique la sélection sur l'ensemble des données puis on récupère les variables sélectionnées.
+
+__Code Python__
+
+<code python>
+selecteur = SelectKBest(f_regression, k=5)#Initialisation du selecteur
+selecteur.fit_transform(X, y)#Application aux données 
+np.array(X.columns)[selecteur.get_support()]#Récupération des variables conservées
+</code>
+
+<alert info> **Remarque :** Il existe une méthode selectKBest sous R, toutefois son implémentation avec la sélection par ANOVA impose des conditions particulières.</alert>
+
+Vous pouvez néanmoins sélectionner les variables les plus importantes en observant les F-valeur associées à chaque variable explicative, par rapport à la variable cible.
+
+<code python>
+summary.aov(aov(y ~., data = data))
+</code>
+
+====Comparaison ANOVA et Pearson====
+
+| ^ Chi2    ^ ANOVA    ^ Corrélation de Pearson^
+^ Caractéristiques      | Mesure la dépendance variable cible/explicatives et requiert **obligatoirement** des données positives.            | Vérifie s'il y a une différence significative entre plusieurs sous-échantillons (modalités) d'une même variable quantitative (le test compare des moyennes).          |Reflète la relation linéaire entre deux variables continues. |
+^ Evaluation ​    |Plus le score de dépendance sera élevé, plus la variable dépendra de la variable cible.| Idem que pour le test du chi2.          | Compris entre [-1;1] avec -1 corrélation négative (respectivement 1 pour positif) et 0 absence de corrélation.	|
+^ Utilisation ​    |Classification| Classification et régression          |Régression |
+
+
+**Sources**	
+
+  * [[http://​math.univ-lyon1.fr/​~duheille/​MASS42_anova.pdf|Université de Lyon, département de mathématiques]]
+  * [[http://​pagesped.cahuntsic.ca/​sc_sociales/​psy/​methosite/​consignes/​variance.htm#​quand|​pagesped]] 
+  * [[https://​www.statisticshowto.com/​probability-and-statistics/​f-statistic-value-test/​|statisticshowto]]
+  * [[https://www.youtube.com/watch?v=T4nZDuakYlU&list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&index=27|Machine Learnia, par Guillaume Saint-Cirgue]]
+
+=====Sélection via estimateur=====
+
+Cette méthode permet de sélectionner les variables de façon récursive, pour un estimateur particulier. Cela passe par plusieurs entrainements de l'estimateur, au cours desquels les variables les moins utiles sont à chaque fois éliminées.
+
+<alert info> **Remarque** : Cette façon de faire nécessite la connaissance du principe de validation croisée, expliqué [[https://www.kaggle.com/alexisbcook/cross-validation|ici]]. On considérera le même dataset que les parties précédentes. </alert>
+
+__Code Python__
+
+<code python>
+from sklearn.feature_selection import RFECV
+from sklearn.ensemble import RandomForestRegressor
+
+selector = RFECV(RandomForestRegressor(random_state=0), step = 2, min_features_to_select = 5, cv=5)#On définit l'estimateur à tester, le nombre de variables à supprimer à chaque
+#itérations (step), le nombre minimal de variables à garder à la fin et enfin le nombre de validation croisées à effectuer.
+selector.fit(X, y)#Entraienement de l'estimateur
+</code>
+
+__Code R__
+
+<code python>
+library(caret)
+library(randomForest)
+library(e1071)
+
+
+y <- data$X1.Octanol#Variable cible
+y <- as.factor(y)#Transformation de la variable cible en facteur
+X <- data[, -c(11)]#Variables explicatives
+
+set.seed(0)#On initialise l'aléatoire pour la répétabilité 
+selector <- rfeControl(functions = rfFuncs, method = 'cv', repeats = 5)#Définition des paramètres de controle de la sélection
+select <- rfe(X, y, sizes = c(5), rfeControl = selector)#Sélection des variables
+</code>
+
+====Variables sélectionnées====
+
+__Code Python__
+
+<code python>
+selector.ranking_#Classement final des variables par ordre d'importance
+selector.grid_scores_#Score de l'estimateur à chaque itération de l'algorithme
+np.array(X.columns)[selector.get_support()]#Affichage des variables conservées
+</code>
+
+__Code R__
+
+<code python>
+select$optVariables#Variables conservées
+</code>
+
+**Résultat**
+
+{{ :cpp:rfecv.png?600 |Résultat de sélection}}
+
+Pour cet estimateur, la première variable est 3e dans le classement d'importance, tandis que les deuxième, troisième et quatrième variables sont parmi les premières plus importantes.
+
+On voit aussi qu'à la première itération, le score de validation de 60 %, puis est passé à 80 % lorsqu'on supprime les deux variables les plus inutiles. Le score ne change pas 
+après suppression de quatre autres variables, mais on voit une perte de qualité lorsqu'on veut en supprimer huit. C'est pourquoi finalement on a six variables en première position.
+
+**Sources**
+
+  * [[https://www.kaggle.com/alexisbcook/cross-validation|Kaggle]]
+  * [[https://www.youtube.com/watch?v=T4nZDuakYlU&list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&index=27|Machine Learnia, par Guillaume Saint-Cirgue]]
+

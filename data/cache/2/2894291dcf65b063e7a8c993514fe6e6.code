@@ -1,0 +1,4 @@
+plt.<span class="me1">hist2d</span><span class="br0">&#40;</span>X<span class="br0">&#91;</span>:<span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span> X<span class="br0">&#91;</span>:<span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+plt.<span class="me1">xlabel</span><span class="br0">&#40;</span><span class="st0">&quot;Longueur sépale&quot;</span><span class="br0">&#41;</span>
+plt.<span class="me1">ylabel</span><span class="br0">&#40;</span><span class="st0">&quot;Largueur sépale&quot;</span><span class="br0">&#41;</span>
+plt.<span class="me1">colorbar</span><span class="br0">&#40;</span><span class="br0">&#41;</span> 

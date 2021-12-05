@@ -1,0 +1,12 @@
+library<span class="br0">&#40;</span>zoo<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>dplyr<span class="br0">&#41;</span>
+&nbsp;
+setClass<span class="br0">&#40;</span><span class="st0">&quot;myDate&quot;</span><span class="br0">&#41;</span>
+setAs<span class="br0">&#40;</span><span class="st0">&quot;character&quot;</span><span class="sy0">,</span> <span class="st0">&quot;myDate&quot;</span><span class="sy0">,</span> function<span class="br0">&#40;</span><span class="kw1">from</span><span class="br0">&#41;</span> <span class="kw1">as</span>.<span class="me1">POSIXct</span><span class="br0">&#40;</span>strptime<span class="br0">&#40;</span><span class="kw1">from</span><span class="sy0">,</span><span class="st0">&quot;%Y-%m-%d&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+data_original <span class="sy0">=</span> read.<span class="kw3">csv</span><span class="br0">&#40;</span><span class="st0">&quot;BTC-EUR.csv&quot;</span><span class="sy0">,</span> na.<span class="me1">strings</span><span class="sy0">=</span><span class="st0">'null'</span><span class="sy0">,</span>
+         colClasses <span class="sy0">=</span> c<span class="br0">&#40;</span><span class="st0">&quot;myDate&quot;</span><span class="sy0">,</span><span class="st0">&quot;numeric&quot;</span><span class="sy0">,</span><span class="st0">&quot;numeric&quot;</span><span class="sy0">,</span><span class="st0">&quot;numeric&quot;</span><span class="sy0">,</span><span class="st0">&quot;numeric&quot;</span><span class="sy0">,</span><span class="st0">&quot;numeric&quot;</span><span class="sy0">,</span><span class="st0">&quot;numeric&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+data_empute <span class="sy0">=</span> data_original %<span class="sy0">&gt;</span>%
+  <span class="kw3">select</span><span class="br0">&#40;</span><span class="st0">&quot;Date&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Volume&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+time_serie <span class="sy0">=</span> zoo<span class="br0">&#40;</span>data_empute$Volume<span class="sy0">,</span> order.<span class="me1">by</span> <span class="sy0">=</span> data_empute$Date<span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>time_serie<span class="br0">&#41;</span>

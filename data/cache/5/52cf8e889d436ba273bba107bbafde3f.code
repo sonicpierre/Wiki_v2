@@ -1,0 +1,2 @@
+data_original <span class="sy0">=</span> read.<span class="kw3">csv</span><span class="br0">&#40;</span><span class="st0">&quot;BTC-EUR.csv&quot;</span><span class="br0">&#41;</span>
+data_empute <span class="sy0">=</span> data.<span class="me1">frame</span><span class="br0">&#40;</span>data_original<span class="br0">&#91;</span><span class="st0">&quot;Date&quot;</span><span class="br0">&#93;</span><span class="sy0">,</span> data_original<span class="br0">&#91;</span><span class="st0">&quot;Volume&quot;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>

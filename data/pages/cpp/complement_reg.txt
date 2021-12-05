@@ -1,0 +1,14 @@
+=====L'algorithme de MARS=====
+
+L'algorithme MARS (Multivariate Adaptive Regression Splines) est un modèle qui est le plus souvent utilisé dans des tâches de régression.
+
+====Principe de l'algorithme====
+
+
+<code python>
+pip install sklearn-contrib-py-earth
+</code>
+
+**Source :**
+  * [[https://www.statsoft.fr/concepts-statistiques/multivariate-adaptive-regression-splines/MARSplines.php]]
+  * [[https://bradleyboehmke.github.io/HOML/regularized-regression.html]]

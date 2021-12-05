@@ -1,0 +1,376 @@
+[[cpp:IA| Machine Learning]]
+
+{{ :cpp:methode_ensemble.jpg?450 |}}
+
+L'un des plus gros problèmes des arbres de décision est leur instabilité. Une petite variation des données entraîne une grande variation au niveau du modèle. Il existe plusieurs algorithmes pour entraîner des modèles et combiner les résultats. Il s'agit d'algorithmes efficaces qui reviennent souvent dans les concours de Data Science comme meilleur modèles.
+
+<alert info>**DataSet :** Nous allons utiliser un dataset qui est fait à partir de sonar pour savoir si les données reçues correspondes à un rocher ou une mine. Vous le trouverez [[https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Ensemble| ici]] on nommera la variable le contenant data.</alert>
+
+=====Classificateur par vote=====
+
+Avez-vous déjà regardé "Qui veut gagner des millions ?" ? Vous remarquerez rapidement que le jocker "Vote du public" est souvent très efficace. En effet, beaucoup d'idiots sont souvent plus intelligent en moyenne qu'un expert et ce proverbe un peu tordu se confirme grâce à la loi des grands nombres en mathématiques.
+
+{{ :cpp:forets_principe.png?800 |}}
+
+Il y a deux possibilités pour appliquer cette méthode :
+
+  * Il faut que chacun des modèles est une précision supérieur à 50%. En d'autre terme, il faut qu'il ne décide pas au hazard...
+
+  * Il faut que les modèles soient le plus indépendants possible. Pour cela, il y a deux possibilités, on peut faire varier les algorithmes pour que les erreurs ne soient pas corrélées. On peut aussi entraîner le même algorithme sur des ensembles différents.
+
+<alert warning>**Remarque :** Ce principe existe autant pour la classification que pour la régression. Il suffit de prendre la moyenne des prédictions.</alert>
+
+====Faire varier l'algorithme====
+
+On commence tout d'abord par déclarer les différents modèles. Il faut essayer de prendre des algorithmes qui se ressemblent le moins possible. On aura ainsi des résultats indépendants et par la suite un vote plus efficace.
+
+__En Python :__
+
+<code python>
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import VotingClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+
+#On déclare les différents modèles
+log_clf = LogisticRegression()
+rnd_clf = RandomForestClassifier()
+svm_clf = SVC(probability = True)
+</code>
+
+__En R :__
+
+Pensez à déclarer les étiquettes comme des classes en écrivant **as.factor(data$Class)**.
+
+<code python>
+library(e1071)
+library(randomForest)
+library(glmnet)
+
+svm = svm(V61~., data = data, kernel = "radial")
+foret_alea = randomForest(V61~., data = data)
+reg_log = glm(V61~., family = binomial(logit), data = data, control = list(maxit = 50))
+</code>
+
+<alert warning>**Remarque :** Vous remarquerez en R que la déclaration et l'entrainement du modèle ceux font au même moment alors que Python l'entrainement se fera dans un second temps.</alert>
+
+On déclare ensuite une façon de faire le vote. Il est possible de faire le vote en prenant ou non en compte la probabilité de la classe prédite.
+
+__En Python :__
+
+<code python>
+#On déclare les participants au vote et la façon de voter
+voting_clf = VotingClassifier(
+    estimators=[('lr', log_clf), ('rf', rnd_clf), ('svc', svm_clf)],
+    voting = 'soft'
+)
+
+#On entraîne le modèle
+voting_clf.fit(data_train, data_res)
+</code>
+
+__En R :__
+
+<code python>
+library(SuperLearner)
+
+x = data_train[,1:60]
+y = as.numeric(data_train[,61])-1
+
+vote <- CV.SuperLearner(y,
+                        x,
+                        V=5,
+                        SL.library=list("SL.rpart",
+                                        "SL.svm",
+                                        "SL.glmnet"))
+</code>
+
+Si vous voulez tuner vos modèles en R il sera nécessaire de redéfinir la fonction qu'utilisera le modèle pour cela on utilise la syntaxe suivante :
+
+<code python>
+SL.rpart.tune <- function(...){
+  SL.rpart(...,maxdepth = 2)
+}
+</code>
+
+On appellera bien entendu dans le modèle la fonction **SL.rpart.tune** à la place de **SL.rpart**.
+
+<alert info>**Info :** Il est important de préciser qu'au moment de préduire il faudra retranscrire les prédictions qui seront des probabilités à la classe 0 ou 1.</alert>
+
+**Résultat :**
+
+|              ^  SVM  ^  Forêt aléatoire  ^  Régression logistique  ^  Vote  ^
+^  Précision  |  0.60  |  0.76  |  0.79  |  0.86  |
+
+On voit clairement ici la puissance de cette méthode. On augmente concidérablement la précision tout en évitant un sur-apprentissage. 
+
+**Source :**
+  * [[https://www.analyticsvidhya.com/blog/2017/02/introduction-to-ensembling-along-with-implementation-in-r/]]
+====Le bagging et le pasting====
+
+Il s'agit d'entraîner plusieurs arbres sur plusieurs ensembles différents. On tire avec remise (bagging) différents échantillons d'un ensemble d'entraînement. Ensuite, on entraîne le modèle et on recommence. Si le tirage est sans remise on appelle ce principe le pasting.
+
+__En Python :__
+
+<code python>
+from sklearn.ensemble import BaggingClassifier
+from sklearn.tree import DecisionTreeClassifier
+
+bagging_model = BaggingClassifier(DecisionTreeClassifier(), #type d'arbre utilisé pour l'entrainement
+                                  bootstrap=True, #Tirage avec remise donc bagging
+                                  n_estimators= 300, #Nombre d'arbres entraîné
+                                  n_jobs=-1, #Nombre de coeur CPU utilisé
+                                  oob_score=True) #Possibilité de prédir la probabilité pour chaque prédiction
+</code>
+
+__En R :__
+
+<code python>
+library(ipred)
+library(rpart)
+data$V61 = as.factor(data$V61)
+bag <- bagging(
+            formula = data$V61 ~ .,
+            data = data,
+            nbagg = 300,  
+            coob = TRUE,
+            control = rpart.control(minsplit = 2, cp = 0)
+)
+</code>
+
+Quand on utilise du bagging un des avantages est la possibilité de mettre de récupérer un jeux de donnée qui n'a pas encore été pioché pour la construction d'élément du modèle. Il possible de tester son modèle sur cet ensemble ce qui nous évite par la même occasion de découper notre jeux de données au démarrage et se priver d'une partie des données.
+
+__En Python :__
+
+<code python>
+bagging_model.oob_score_
+</code>
+
+__En R :__
+
+<code python>
+#Pour le bagging 
+bag$err
+
+#Pour la random forest
+err <- foret_alea$err.rate
+oob_err <- err[nrow(err), "OOB"]
+print(oob_err)
+</code>
+
+**Résultat :**
+
+On arrive avec ce modèle à une précision de **0.88**.
+
+**Source :**
+  * [[https://perso.univ-rennes2.fr/system/files/users/rouviere_l/poly_apprentissage.pdf]]
+
+====Les forêts aléatoires====
+
+Les forêts aléatoires sont des modèles très performant qui améliorent les modèles du type bagging. En effet, au lien d'entraîner les arbres sur toutes les variables explicatives les forêts aléatoires n'en prennent qu'un certain nombre tiré aléatoirement à chacun des nœuds de l'arbre construit. A la fin comme pour le bagging un vote est effectué.
+
+__En Python :__
+
+<code python>
+from sklearn.ensemble import RandomForestClassifier
+foret_mod = RandomForestClassifier(n_estimators= 500,max_depth= 4, n_jobs=-1, oob_score=True)
+foret_mod.fit(data_train, data_res)
+</code>
+
+__En R :__
+
+<code python>
+library(randomForest)
+foret_alea = randomForest(V61~., data = data_train, ntree = 500, maxnodes = 2)
+</code>
+
+**Résultat :**
+
+On trouve pour ce modèle une précision de **0.83**.
+====Le stacking====
+{{ :cpp:blender.jpg?300 |}}
+Pour le moment nous avons toujours utilisé des façons de combiner les modèles "simples", pour la classification nous utilisions le vote majoritaire et pour la régression la moyenne. Cependant, il ne s'agit pas forcément de la meilleur solution. Il est préférable dans certains cas d'entraîner un modèle sur les prédictions de différents modèles sur les mêmes étiquettes pour faire cette agrégation.
+
+__En Python :__
+
+<code python>
+from sklearn.ensemble import StackingClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import SVC
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+from sklearn.linear_model import LogisticRegression
+
+estimators = [('rf', RandomForestClassifier(n_estimators=10, random_state=42)),
+     ('svc', make_pipeline(StandardScaler(), SVC(random_state=42)))]
+     
+clf = StackingClassifier(estimators=estimators, final_estimator=LogisticRegression())
+clf.fit(data_train,data_res)
+</code>
+
+__En R :__
+
+<code python>
+library(caretEnsemble)
+
+arbre <- caretEnsemble::caretModelSpec(method="rpart",tuneGrid=data.frame(cp=0))
+adl <- caretEnsemble::caretModelSpec(method="lda")
+svmRbf <- caretEnsemble::caretModelSpec(method="svmRadial",tuneGrid=data.frame(C=1,sigma=0.1))
+
+control_stacking <- trainControl(method="repeatedcv", number=5, repeats=2, savePredictions="all", classProbs=TRUE)
+stakking <- caretEnsemble::caretList(V61 ~ ., data = data_train, trControl = control_stacking, tuneList = list(arbre,adl,svmRbf))
+mStack <- caretEnsemble::caretStack(modeles,method="glm",trControl=trainControl(method="none"))
+</code>
+
+**Résultat :**
+
+On obtient ici un score de **0.80**.
+
+**Source :**
+  * [[http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Stacking_avec_R.pdf]]
+  * [[https://www.pluralsight.com/guides/ensemble-modeling-with-r]]
+  * [[https://www.datacamp.com/community/tutorials/ensemble-r-machine-learning]]
+=====Booster son modèle=====
+
+Le boosting est une méthode d'ensemble qui vise à entraîner des modèles successifs chacun prenant en compte les mauvaises prédictions du modèle précédent. Il existe beaucoup de modèles mais les deux plus utilisés restent Adaboost et le Gradient Boost.
+====Adaboost====
+
+Essayons de donner une idée globale du fonctionnement en développant un Adaboost utilisé pour la classification.
+
+{{ :cpp:boostersonarbre.png?900 |}}
+
+L'adaboost entraîne un premier modèle sur l'ensemble des observations, il en résulte des bonnes et mauvaises classifications. On assigne ensuite aux observations qui ont été mal classées un poids plus important. Ensuite, on réitère le processus autant de fois que voulu en changeant à chaque fois le poids des observations males classée.
+
+Enfin, on pondère chacun des modèles par leur précision globale et on procède comme pour un les modèles d'ensemble vu précédemment.
+
+**Théorie :**
+
+Au démarrage chacune des observations a une probabilité de $\frac{1}{m}$ où m est le nombre d'observations. On va ensuite assigner à chacun des modèles j un taux d'erreur :
+
+$$\tau_{j} = \frac{Somme \, des \, poids \, des \, observations \, males \, prédites}{Somme \, des \, poids \, des \, observations \, bien \, prédites}$$
+
+On donne ensuite un poids au modèle :
+
+$$\alpha_{j} = \eta \, log(\frac{1 - \tau_{j}}{\tau_{j}})$$
+
+Dans l'algorithme original, il n'y avait pas de $\eta$. Il s'agit du taux d'apprentissage qui part desfaut sera fixé à 1. Il faut ensuite fixer les poids des observations qui étaient males classées.
+
+$$w_{i} = w_{i} \, exp(\alpha_{i})$$
+
+Pour trouver la prédiction d'une nouvelle observation on fera la somme des $\alpha_i$ ayant la même prédiction et on prendra la prédiction qui a le résultat le plus élevé.
+
+__En Python :__
+
+<code python>
+from sklearn.ensemble import AdaBoostClassifier
+ada_clf = AdaBoostClassifier(DecisionTreeClassifier(max_depth=1),n_estimators=200, algorithm="SAMME.R", learning_rate=0.5)
+ada_clf.fit(data_train, data_res)
+</code>
+
+__En R :__
+
+<code python>
+library(adabag)
+m.boosting <- boosting(V61 ~ ., data = data, boos = TRUE, mfinal = 100)
+</code>
+
+<alert warning>**Remarque :** On prend ici des arbres de faible profondeur pour entraîner le modèle afin d'éviter l'overfiting.</alert>
+
+**Résultat :**
+
+La précision mesurée pour ce modèle est de **0.88**. 
+
+**Source :**
+  * [[http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Gradient_Boosting.pdf]]
+====Gradient boost====
+
+Le Gradient Boost Model (GBM) est une autre variante de l'adaboost qui est extrémement puissante et a donné naissance aux célèbres algorithmes XGBoost et MBoost (algorithmes vainqueurs de nombreux hackathons). 
+
+Le GBM (Gradient Boosting Model) utilise comme le nom l'indique une descente de gradient pour ajuster les modèles au mieux. Vous ne l'avez peut-être pas remarqué mais l'adaboost aussi fait une descente de gradient sur la fonction exponentiel. Le GBM est donc une généralisation à plusieurs fonctions coûts de l'adaboost.
+
+**Théorie :**
+
+Essayons de développer un peu le principe de cet algorithme pour mieux comprendre son fonctionnement et ainsi pouvoir mieux le paramétrer. On commence par créer des indicatrices pour chacune des modalités :
+
+$$
+y^k_i = \left\{
+    \begin{array}{ll}
+        1 & \mbox{si } Y_{i} = k \\
+        0 & \mbox{sinon.}
+    \end{array}
+\right.
+$$
+
+Grâce à ces fonctions indicatrices on peut ensuite  construire une fonction coût qu'on cherchera à minimiser grâce à la descente de gradient :
+
+$$ j(y_{i}, f(x_{i})) = - \sum^K_{k=1} y_i^k * log \, \pi^k(x_i)$$
+
+On peut calculer à partir de cette fonction un gradient qui nous sert pour appliquer l'algorithme de la descente de gradient 
+
+$$\nabla j(y_i, f(x_i)) = y_i^k - \pi^k(x_i)$$
+
+On construit ensuite un arbre de régression $M^k_b$ sur chacun des $-\nabla j(y_i, f(x_i))$. On les combine ensuite en les pondérant par leur précision et on obtient notre modèle.
+
+**Synthèse :**
+
+A partir de Y est généré K variables indicatrices $y^k$
+
+Créer les K modèles initiaux $f^k_0()$ pour chaque indicatrice
+
+**REPETER JUSQU'A CONVERGENCE :**
+  * Calculer les K gradients négatifs $-\nabla j(y^k, f^k)$
+  * Construire un arbre de régression $M^k_b$ sur chaque $-\nabla j(y^k, f^k)$
+  * $f^k_b = f^k_{b-1} + \lambda_b * M^k_b$
+
+^  Théorie  ^  Explication  ^
+|  $\pi^k$  |   La probabilité conditionnelle d’appartenance à la classe 'k'  |
+|  $f$  |  Le modèle additif issu de la somme des arbres de régression $M^k_b$  |
+|  $\lambda_b$  |  Pondération par rapport à la précision du modèle  |
+
+__En Python :__
+
+Il faudra encoder la variable cible avant de lancer cette algorithme.
+
+<code python>
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.metrics import accuracy_score
+
+gradient_mod = GradientBoostingClassifier(max_depth=2, warm_start=True)
+gradient_mod.fit(data_train, data_res)
+</code>
+
+__En R :__
+
+<code python>
+library(gbm)
+#Notez qu'il est nécessaire d'encoder la sortie pour appliquer cette algorithme sous R pour certaines distribution comme binomiale
+#data$V61 <- ifelse(data$V61 == "R", 1, 0)
+
+gbm_mod <- gbm(formula = V61 ~ .,
+                  distribution="multinomial",
+                  data = data,
+                  n.trees = 3,
+                  interaction.depth = 2)
+</code>
+
+Développons un peu la façon d'effectuer des prédiction avec cet algorithme en R.  On va observer ainsi la probabilité pour les deux différentes classes et on choisira en conséquense.
+
+<code python>
+prediction <- predict.gbm(gbm_mod, newdata = data[,0:60], n.trees = 3, type = "response")
+print(head(prediction[,,1],6))
+
+factor(levels(data$V61)[apply(prediction[,,1],1,which.max)])
+</code>
+
+<alert warning>**Remarque :** On remarque encore une fois qu'il est préférable de ne pas mettre des arbres de profondeur trop importante sous peine d'avoir de l'overfiting et baisser concidérablement la précision du modèle.</alert>
+
+**Résultat :**
+
+On obtiendra pour ce modèle une précision de **0.88**.
+
+**Source :**
+
+  * [[https://towardsdatascience.com/understanding-gradient-boosting-machines-9be756fe76ab]]
+  * [[http://eric.univ-lyon2.fr/~ricco/cours/slides/gradient_boosting.pdf]]
+
+<alert success>**Approfondir :** Il est intéressant d'approfondir le concept en cherchant des éléments sur [[https://www.datacamp.com/community/tutorials/xgboost-in-python|  XGBoost  ]] qui est un des algorithmes les plus performant en compétition.</alert>

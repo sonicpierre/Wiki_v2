@@ -1,0 +1,9 @@
+<span class="kw1">from</span> patsy <span class="kw1">import</span> dmatrices
+<span class="kw1">from</span> statsmodels.<span class="me1">stats</span>.<span class="me1">outliers_influence</span> <span class="kw1">import</span> variance_inflation_factor
+&nbsp;
+<span class="co1">#Permet de bien séparer X et les étiquettes</span>
+y<span class="sy0">,</span> X <span class="sy0">=</span> dmatrices<span class="br0">&#40;</span><span class="st0">'Sales ~ TV+Radio+Newspaper'</span><span class="sy0">,</span> data<span class="sy0">=</span>data_original<span class="sy0">,</span> return_type<span class="sy0">=</span><span class="st0">'dataframe'</span><span class="br0">&#41;</span>
+&nbsp;
+vif <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+vif<span class="br0">&#91;</span><span class="st0">'VIF'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="br0">&#91;</span>variance_inflation_factor<span class="br0">&#40;</span>X.<span class="me1">values</span><span class="sy0">,</span> i<span class="br0">&#41;</span> <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>X.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+vif<span class="br0">&#91;</span><span class="st0">'variable'</span><span class="br0">&#93;</span> <span class="sy0">=</span> X.<span class="me1">columns</span>

@@ -1,0 +1,5 @@
+<span class="kw1">import</span> statsmodels.<span class="me1">stats</span>.<span class="me1">api</span> <span class="kw1">as</span> sms
+&nbsp;
+name <span class="sy0">=</span> <span class="br0">&#91;</span><span class="st0">'F statistic'</span><span class="sy0">,</span> <span class="st0">'p-value'</span><span class="br0">&#93;</span>
+<span class="kw3">test</span> <span class="sy0">=</span> sms.<span class="me1">het_goldfeldquandt</span><span class="br0">&#40;</span>Regression_Lin.<span class="me1">resid</span><span class="sy0">,</span> Regression_Lin.<span class="me1">model</span>.<span class="me1">exog</span><span class="br0">&#41;</span>
+lzip<span class="br0">&#40;</span>name<span class="sy0">,</span> <span class="kw3">test</span><span class="br0">&#41;</span>

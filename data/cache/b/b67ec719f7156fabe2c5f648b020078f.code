@@ -1,0 +1,4 @@
+  <span class="kw2">tee</span> <span class="sy0">/</span>etc<span class="sy0">/</span>profile.d<span class="sy0">/</span>jdk14.sh <span class="sy0">&lt;&lt;</span>EOF
+  <span class="kw3">export</span> <span class="re2">JAVA_HOME</span>=<span class="sy0">/</span>opt<span class="sy0">/</span>jdk-14.0.2
+  <span class="kw3">export</span> <span class="re2">PATH</span>=\<span class="re1">$PATH</span>:\<span class="re1">$JAVA_HOME</span><span class="sy0">/</span>bin
+  EOF

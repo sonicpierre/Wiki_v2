@@ -1,0 +1,137 @@
+
+<p>
+Avec l&#039;exemple que j&#039;avais pris, tout se passait bien dans le meilleur des mondes (c&#039;est pour ça que je l&#039;avais choisi d’ailleurs) mais il existe des situations devant lesquelles la méthode que je vous ai montré ne suffit pas.
+</p>
+
+<h3 class="sectionedit1" id="domaine_des_contraintes_non_borne">Domaine des contraintes non borné</h3>
+<div class="level3">
+
+<p>
+Considérons le problème d&#039;optimisation suivant :
+</p>
+<p class="divalign-center">$\begin{cases} \underset{x}{max}(x_1+x_2) \\ -x_1+x_2 \le 5 \\ 2x_1-3x_2 \le 4 \\ x_1,x_2 \ge 0\end{cases}$</p><!--divalign-->
+<div class="table sectionedit2"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><td class="col5"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  -1  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  5  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  2  </td><td class="col2 centeralign">  -3  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  4  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:2,&quot;range&quot;:&quot;446-617&quot;} -->
+<p>
+On itère une fois avec $x_1$ comme variable d&#039;entrée et $y_2$ comme variable de sortie :
+</p>
+<div class="table sectionedit3"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><td class="col5"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  2.5  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  -0.5  </td><td class="col5 centeralign">  -2  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  -0.5  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  0.5  </td><td class="col5 centeralign">  7  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $x_1$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  -1.5  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0.5  </td><td class="col5 centeralign">  2  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:3,&quot;range&quot;:&quot;709-894&quot;} -->
+<p>
+Et là, problème : certes, on peut choisir sans problème la variable d&#039;entrée mais il n&#039;y a aucune variable de sortie éligible ! En effet, tous les rapports de coefficients sont négatifs.
+</p>
+
+<p>
+Jetons un coup d’œil au résultat via la méthode géométrique (la droite verte est $L_{10}$ et la droite violette est $L_{15}$) :
+</p>
+<p class="divalign-center"><a href="/lib/exe/detail.php?id=cpp%3Asimplexens&amp;media=cpp:grapheoptinonborne.png" class="media" title="cpp:grapheoptinonborne.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=4acf69&amp;media=cpp:grapheoptinonborne.png" class="mediacenter" alt="" width="400" /></a></p><!--divalign-->
+
+<p>
+Voilà la raison pour laquelle on ne pouvait pas trouver le point optimal : il n&#039;y en a pas !
+</p>
+
+<p>
+<div class='alert alert-info'>Si vous faites tourner ce problème dans votre programme il vous retournera “Pas de variable sortante”</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Domaine des contraintes non born\u00e9&quot;,&quot;hid&quot;:&quot;domaine_des_contraintes_non_borne&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;234-1490&quot;} -->
+<h3 class="sectionedit4" id="degenerescence_des_sommets">Dégénérescence des sommets</h3>
+<div class="level3">
+
+<p>
+Considérons le problème d&#039;optimisation suivant :
+</p>
+<p class="divalign-center">$\begin{cases} \underset{x}{max}(3x_1+2x_2) \\ 2x_1+3x_2 \le 14 \\ 2x_1+x_2 \le 10 \\ x_1+x_2 \le 6 \\ x_1,x_2 \ge 0\end{cases}$</p><!--divalign-->
+<div class="table sectionedit5"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  3  </td><td class="col2 centeralign">  2  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  2  </td><td class="col2 centeralign">  3  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  14  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  2  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  10  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  6  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table2&quot;,&quot;secid&quot;:5,&quot;range&quot;:&quot;1718-1965&quot;} -->
+<p>
+On itère avec $x_1$ en variable d&#039;entrée et $y_2$ en variable de sortie :
+</p>
+<div class="table sectionedit6"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0.5  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  -1.5  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  -15  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  2  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  -1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  4  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $x_1$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  0.5  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0.5  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  5  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0.5  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  -0.5  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  1  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table3&quot;,&quot;secid&quot;:6,&quot;range&quot;:&quot;2042-2304&quot;} -->
+<p>
+On itère avec $x_2$ en variable d&#039;entrée et $y_3$ en variable de sortie :
+</p>
+<div class="table sectionedit7"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  -1  </td><td class="col5 centeralign">  -1  </td><td class="col6 centeralign">  -16  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  -4  </td><td class="col6 centeralign">  0  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $x_1$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  -1  </td><td class="col6 centeralign">  4  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  -1  </td><td class="col5 centeralign">  2  </td><td class="col6 centeralign">  2  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table4&quot;,&quot;secid&quot;:7,&quot;range&quot;:&quot;2381-2633&quot;} -->
+<p>
+Comme vous pouvez le voir, nous avons un 0 dans la colonne de droite. Certes, nous avons déjà résolu notre problème, mais dans un cas où on pourrait toujours itérer, $y_1$ serait <strong>forcément</strong> la variable sortante. Dans de rares cas, cela peut même causer des boucles infinies ! C&#039;est pourquoi je vous conseille d&#039;ajouter un compteur que vous incrémentez à chaque pas de boucle qui limite le nombre d&#039;itérations maximal (50 devrait largement suffire).
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;D\u00e9g\u00e9n\u00e9rescence des sommets&quot;,&quot;hid&quot;:&quot;degenerescence_des_sommets&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;1491-&quot;} -->

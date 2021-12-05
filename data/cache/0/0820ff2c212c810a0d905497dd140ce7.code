@@ -1,0 +1,2 @@
+stemmer <span class="sy0">=</span> FrenchStemmer<span class="br0">&#40;</span><span class="br0">&#41;</span>
+dataFrame<span class="br0">&#91;</span><span class="st0">'Commentaires'</span><span class="br0">&#93;</span><span class="br0">&#91;</span>i<span class="br0">&#93;</span> <span class="sy0">=</span> stemmer.<span class="me1">stem</span><span class="br0">&#40;</span>dataFrame<span class="br0">&#91;</span><span class="st0">'Commentaires'</span><span class="br0">&#93;</span><span class="br0">&#91;</span>i<span class="br0">&#93;</span><span class="br0">&#41;</span>

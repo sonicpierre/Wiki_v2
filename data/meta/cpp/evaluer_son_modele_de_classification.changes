@@ -1,0 +1,61 @@
+1596640999	86.216.219.72	C	cpp:evaluer_son_modele_de_classification	pierrevirgaux	créée		3473
+1596642232	86.216.219.72	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[Construction de la courbe ROC] 		50
+1596643843	86.216.219.72	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[Les matrices de confusion] 		24
+1596643928	86.216.219.72	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[La précision et le rappel] 		192
+1596644039	86.216.219.72	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[Construction de la courbe ROC] 		0
+1596711915	91.69.217.178	E	cpp:evaluer_son_modele_de_classification	danilouchouchou	[Score F1] 		10
+1603101336	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[Évaluer son modèle] 		-2
+1603101366	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux			0
+1603101614	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux			59
+1603101793	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[Précision et  importance validation croisée] 		-26
+1603102853	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux			299
+1603102879	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[Construction de la courbe ROC] 		114
+1603103052	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[Score F1] 		44
+1603103209	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[L'erreur d'ajustement] 		111
+1603107441	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[L'erreur de prédiction] 		179
+1603108067	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[L'erreur de prédiction] 		40
+1603108092	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[Alternative au score F1 le Caveats] 		-24
+1603108218	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[Construction du score F1] 		5
+1603108437	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[Construction de la courbe ROC] 		4
+1603108558	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[Les différentes précisions] 		-4
+1603116827	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[L'erreur d'ajustement] 		299
+1603116859	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[L'erreur d'ajustement] 		0
+1603117314	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux			170
+1603117418	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[L'erreur d'ajustement] 		0
+1603117491	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[Les erreurs de régression] 		-37
+1603117590	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[Les différentes erreurs] 		45
+1603117683	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[L'erreur d'ajustement] 		-36
+1603117799	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[L'erreur de prédiction] 		-18
+1603293123	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[La validation croisée] 		38
+1603368903	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[Les différentes erreurs] 		-45
+1603369181	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[L'erreur d'ajustement/prédiction] 		238
+1603369346	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux			143
+1603370678	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[L'erreur d'ajustement/prédiction] 		863
+1603370782	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[L'erreur d'ajustement/prédiction] 		111
+1603370807	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[L'erreur d'ajustement/prédiction] 		-1
+1603371972	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[L'erreur d'ajustement/prédiction] 		168
+1603372191	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[L'erreur d'ajustement/prédiction] 		175
+1603374010	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[L'erreur d'ajustement/prédiction] 		47
+1603374982	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[L'erreur d'ajustement/prédiction] 		102
+1603375010	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[L'erreur d'ajustement/prédiction] 		-2
+1603379139	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[L'erreur d'ajustement/prédiction] 		177
+1603379154	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[L'erreur d'ajustement/prédiction] 		1
+1603379230	217.119.181.222	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[L'erreur d'ajustement/prédiction] 		386
+1603545835	88.124.10.73	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux			30
+1603552984	88.124.10.73	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[L'erreur d'ajustement/prédiction] 		36
+1603554110	88.124.10.73	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[La validation croisée] 		264
+1603554522	88.124.10.73	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[La validation croisée] 		49
+1603555221	88.124.10.73	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[La validation croisée] 		-38
+1603555347	88.124.10.73	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[La validation croisée] 		72
+1603555365	88.124.10.73	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[La validation croisée] 		0
+1603555784	88.124.10.73	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[La validation croisée] 		370
+1603558009	88.124.10.73	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[La validation croisée] 		734
+1603558487	88.124.10.73	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[La validation croisée] 		17
+1603707629	88.124.10.73	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[La validation croisée] 		318
+1603707737	88.124.10.73	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[La validation croisée] 		23
+1603708357	88.124.10.73	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[La validation croisée] 		55
+1603708493	88.124.10.73	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[La validation croisée] 		0
+1603709624	88.124.10.73	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[La validation croisée] 		72
+1603710589	88.124.10.73	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[La validation croisée] 		231
+1603710701	88.124.10.73	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux	[La validation croisée] 		3
+1603712149	88.124.10.73	E	cpp:evaluer_son_modele_de_classification	pierrevirgaux			65

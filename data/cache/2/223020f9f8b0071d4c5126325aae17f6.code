@@ -1,0 +1,8 @@
+<span class="co1">#On ajoute 10 jours après mon anniversaire</span>
+date_ajout <span class="sy0">=</span> date + <span class="nu0">10</span>
+&nbsp;
+<span class="co1">#Nom du jour</span>
+weekdays<span class="br0">&#40;</span>date_ajout<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Permet de savoir combien de temps me sépare de la mort d'Einstein</span>
+date - <span class="kw1">as</span>.<span class="me1">Date</span><span class="br0">&#40;</span><span class="st0">&quot;1955-04-18&quot;</span><span class="br0">&#41;</span>

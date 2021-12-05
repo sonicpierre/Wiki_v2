@@ -1,0 +1,6 @@
+library<span class="br0">&#40;</span>pracma<span class="br0">&#41;</span>
+&nbsp;
+m <span class="sy0">=</span> <span class="nu0">100</span>
+X <span class="sy0">=</span> linspace<span class="br0">&#40;</span>-<span class="nu0">15</span><span class="sy0">,</span> <span class="nu0">15</span><span class="sy0">,</span> m<span class="br0">&#41;</span>
+y <span class="sy0">=</span> <span class="nu0">0.11</span> * X**<span class="nu0">3</span> + X + <span class="nu0">2</span> + <span class="nu0">25</span> * rnorm<span class="br0">&#40;</span>m<span class="br0">&#41;</span>
+data <span class="sy0">=</span> data.<span class="me1">frame</span><span class="br0">&#40;</span>X<span class="sy0">,</span>y<span class="br0">&#41;</span>

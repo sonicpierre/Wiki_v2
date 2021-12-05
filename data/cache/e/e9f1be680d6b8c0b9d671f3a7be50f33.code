@@ -1,0 +1,5 @@
+library<span class="br0">&#40;</span>explor<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Vous pouvez aussi utiliser la commande suivante, offrant plus de possibilités d'observations.</span>
+&nbsp;
+explor<span class="br0">&#40;</span>model<span class="br0">&#41;</span><span class="co1">#Ouverture d'une fenêtre permettant de visualiser les variables importantes</span>

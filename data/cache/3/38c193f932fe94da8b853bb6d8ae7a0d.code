@@ -1,0 +1,19 @@
+<span class="co1">%Recherche de la variable sortante</span>
+indiceVariableSortante=<span class="nu0">2</span>
+rapportMin=tab<span class="br0">&#40;</span>indiceVariableSortante,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tab<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="br0">&#41;</span><span class="br0">&#41;</span>/tab<span class="br0">&#40;</span>indiceVariableSortante,indiceVariableEntrante<span class="br0">&#41;</span>
+<span class="kw1">while</span> rapportMin&lt;<span class="nu0">0</span>
+    indiceVariableSortante+=<span class="nu0">1</span>
+    <span class="kw1">if</span> indiceVariableSortante&lt;<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tab<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>-<span class="nu0">1</span>
+        rapportMin=tab<span class="br0">&#40;</span>indiceVariableSortante,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tab<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="br0">&#41;</span><span class="br0">&#41;</span>/tab<span class="br0">&#40;</span>indiceVariableSortante,indiceVariableEntrante<span class="br0">&#41;</span>
+    <span class="kw1">else</span>
+        <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span>&quot;Pas de variable sortante&quot;<span class="br0">&#41;</span>
+        <span class="kw1">return</span>
+    endif
+<span class="kw1">end</span>
+<span class="kw1">for</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>=<span class="nu0">3</span>:<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tab<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+    rapport=tab<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tab<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="br0">&#41;</span><span class="br0">&#41;</span>/tab<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>,indiceVariableEntrante<span class="br0">&#41;</span>
+    <span class="kw1">if</span> rapport&lt;rapportMin &amp;&amp; rapport&gt;=<span class="nu0">0</span>
+        indiceVariableSortante=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>
+        rapportMin=rapport
+    endif
+endfor

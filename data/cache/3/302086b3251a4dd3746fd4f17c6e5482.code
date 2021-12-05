@@ -1,0 +1,1 @@
+<a href="http://www.cmake.org/cmake/help/cmake2.6docs.html#command:add_executable"><span class="kw1">add_executable</span></a><span class="sy0">(</span><span class="re0">${CMAKE_PROJECT_NAME}</span> main.cpp<span class="sy0">)</span>

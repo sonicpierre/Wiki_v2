@@ -1,0 +1,2 @@
+library<span class="br0">&#40;</span>gradDescent<span class="br0">&#41;</span>
+donneeTotales <span class="sy0">&lt;</span>- matrix<span class="br0">&#40;</span>c<span class="br0">&#40;</span>X_b<span class="sy0">,</span> y<span class="br0">&#41;</span><span class="sy0">,</span> nrow <span class="sy0">=</span> <span class="nu0">100</span><span class="sy0">,</span> ncol <span class="sy0">=</span> <span class="nu0">3</span><span class="br0">&#41;</span>

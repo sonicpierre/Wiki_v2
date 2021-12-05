@@ -1,0 +1,6 @@
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">12</span><span class="sy0">,</span><span class="nu0">6</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Définition de la taille du graphique</span>
+&nbsp;
+dendrogramme <span class="sy0">=</span> hierarchy.<span class="me1">dendrogram</span><span class="br0">&#40;</span>Z<span class="br0">&#41;</span><span class="co1">#Contruction du dendrogramme selon les paramètres fournis</span>
+&nbsp;
+plt.<span class="me1">xlabel</span><span class="br0">&#40;</span><span class="st0">'Taille du cluster'</span><span class="br0">&#41;</span>
+plt.<span class="me1">ylabel</span><span class="br0">&#40;</span><span class="st0">'Distance'</span><span class="br0">&#41;</span>

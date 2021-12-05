@@ -1,0 +1,4 @@
+<span class="co1">#Coefficients secondaires à 0</span>
+<span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>tab.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>:
+    <span class="kw1">if</span> i<span class="sy0">!=</span>indiceVarSortante:
+        tab<span class="br0">&#91;</span>i<span class="sy0">,</span>:<span class="br0">&#93;</span>-<span class="sy0">=</span>tab<span class="br0">&#91;</span>i<span class="sy0">,</span>indiceVarEntrante<span class="br0">&#93;</span>*tab<span class="br0">&#91;</span>indiceVarSortante<span class="sy0">,</span>:<span class="br0">&#93;</span>

@@ -1,0 +1,184 @@
+
+<p>
+L&#039;Analyse des Correspondances Multiples est une méthode  qui permet d&#039;étudier les corrélations entre au moins <strong>trois variables exclusivement qualitatives</strong> (pour deux variables qualitatives, on utilise une méthode appelée AFC). 
+</p>
+
+<p>
+De la même manière que <a href="https://llamaspartan.fr/doku.php?id=cpp:acp" class="urlextern" title="https://llamaspartan.fr/doku.php?id=cpp:acp" rel="nofollow">l&#039;Analyse en Composantes Principales</a>, elle permet :
+</p>
+<ul>
+<li class="level1"><div class="li"> Une représentation des similitudes entre les observations et chacune des modalités prises par les variables (<span style="color:#00ff00;">Ex :</span> La variable taille peut prendre les modalités : petit, moyen, grand).</div>
+</li>
+<li class="level1"><div class="li"> La transformation des données, précédant une tâche de classification.</div>
+</li>
+</ul>
+
+<p>
+Cette méthode est généralement utilisée pour analyser les données issues d&#039;une enquête ou d&#039;un sondage.
+</p>
+
+<h3 class="sectionedit1" id="traitement_des_donnees_pour_une_acm">Traitement des données pour une ACM</h3>
+<div class="level3">
+
+<p>
+<div class='alert alert-info'> <strong>Dataset :</strong> On va utiliser l&#039;enquête réalisée dans des crèches slovène durant les années 80. Elle est disponible sur la plateforme <a href="https://archive.ics.uci.edu/ml/datasets/Nursery" class="urlextern" title="https://archive.ics.uci.edu/ml/datasets/Nursery" rel="nofollow">Machine Learning Repository</a>. Le dataset présente une variable quantitative que nous avons pris soin de supprimer.</div>
+</p>
+
+<p>
+Comme mentionné précédemment, cette méthode est utilisée dans un contexte d&#039;enquête ou de sondage. Ainsi, les jeux de données qu&#039;on aura à notre disposition seront semblables à celui-ci :
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aacm&amp;media=cpp:donnees_qualitatives.png" class="media" title="cpp:donnees_qualitatives.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=379b5a&amp;media=cpp:donnees_qualitatives.png" class="mediacenter" title="Jeu de données à variables qualitatives" alt="Jeu de données à variables qualitatives" width="500" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 1 :</strong> Jeu de données à variables qualitatives</p><!--divalign-->
+
+<p>
+Une fois les données mises en forme, on construit un tableau appelé <strong>Tableau Disjonctif Complet</strong>. Cette transformation repose sur le <a href="https://llamaspartan.fr/doku.php?id=cpp:preprocessing_et_encodage#encodage_one-hot" class="urlextern" title="https://llamaspartan.fr/doku.php?id=cpp:preprocessing_et_encodage#encodage_one-hot" rel="nofollow">principe de l&#039;encodage One-Hot</a>.
+</p>
+
+<p>
+Le but est de créer, pour chaque variable à $n$ modalités,  $n$ nouvelles variables binaires correspondant à chaque modalité.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aacm&amp;media=cpp:tableau_disjonctif_complet.png" class="media" title="cpp:tableau_disjonctif_complet.png"><img src="/lib/exe/fetch.php?w=900&amp;tok=a680a5&amp;media=cpp:tableau_disjonctif_complet.png" class="mediacenter" title="Exemple de tableau disjonctif complet" alt="Exemple de tableau disjonctif complet" width="900" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 2 :</strong> Transformation en tableau disjonctif complet</p><!--divalign-->
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong> Avant toute ACM, il est nécessaire de faire une étude de chaque variable afin de vérifier si toutes les modalités sont bien représentées. En effet cette méthode est sensible aux classes déséquilibrées, c&#039;est pourquoi il  vaut mieux regrouper  les modalités peu représentées.</div>
+</p>
+
+<p>
+L&#039;ACM permettra de réunir les individus selon la distance de leurs modalités. Ainsi deux observations seront définies comme proches si elles ont les mêmes modalités (inversement pour deux individus éloignés).  Le but de cette analyse sera donc d&#039;étudier la <strong>variabilité des individus</strong>.
+</p>
+
+<p>
+<span style="color:#ff0000;">Mais alors par quel moyen mesure-t-on si deux individus sont proches ou non ?</span>
+</p>
+
+<p>
+<strong>Mesure de distance</strong>
+</p>
+
+<p>
+En ACM, on utilise le test du <span style="color:#ff0000;">Chi-deux</span> pour comparer deux individus ou deux modalités.  On va travailler avec :
+</p>
+<ul>
+<li class="level1"><div class="li"> Un risque $\alpha = 5%$</div>
+</li>
+<li class="level2"><div class="li"> H0 les individus/modalités sont indépendantes</div>
+</li>
+<li class="level2"><div class="li"> H1 les individus/modalités ne sont pas indépendantes</div>
+</li>
+</ul>
+
+<p>
+<div class='alert alert-warning'> <strong>Remarque :</strong> Le test du Chi-deux est un test de dépendance entre deux variables qualitatives. En terme d&#039;acceptation, plus le score de dépendance sera élevé, plus les variables seront indépendantes.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Traitement des donn\u00e9es pour une ACM&quot;,&quot;hid&quot;:&quot;traitement_des_donnees_pour_une_acm&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;761-3270&quot;} -->
+<h3 class="sectionedit2" id="distance_entre_deux_individus">Distance entre deux individus</h3>
+<div class="level3">
+
+<p>
+Soit M un tableau disjonctif complet de dimension $n \times p$. Si on considère <strong>i et i* deux individus</strong>, alors la distance entre les deux est donnée par : 
+</p>
+
+<p>
+$$d^{2}(i,i^{*}) = \sum_{j = 1}^{n}  \frac{1}{\frac{n_{j}}{n \times p}} (\frac{M_{i,j} }{p}- \frac{M_{i^{*},j}}{p})^{2} $$
+</p>
+<div class="table sectionedit3"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">      Paramètre        </th><th class="col1"> Signification</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  $n$  </td><td class="col1"> Nombre de lignes </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">   $p$     </td><td class="col1"> Valeur de la somme des composantes unitaires de chaque ligne </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">    $n_{j}$     </td><td class="col1"> Nombre d&#039;individus possédant la modalité $j$ </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">    $M_{i,j}$     </td><td class="col1"> Valeur de la j-ième colonne pour l&#039;individu i </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:3,&quot;range&quot;:&quot;3596-3881&quot;} -->
+<p>
+Pour vous donner un exemple, calculons la distance entre Sophie et Romain.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aacm&amp;media=cpp:sophie_ro.png" class="media" title="cpp:sophie_ro.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=922d34&amp;media=cpp:sophie_ro.png" class="mediacenter" title="Exemple avec calcul des paramètres" alt="Exemple avec calcul des paramètres" width="600" /></a>
+</p>
+
+<p>
+Le carré de la distance entre les deux est donné par : 
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aacm&amp;media=cpp:distanceso.png" class="media" title="cpp:distanceso.png"><img src="/lib/exe/fetch.php?w=700&amp;tok=80aa07&amp;media=cpp:distanceso.png" class="mediacenter" title="Carré de la distance entre Sophie et Romain" alt="Carré de la distance entre Sophie et Romain" width="700" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Distance entre deux individus&quot;,&quot;hid&quot;:&quot;distance_entre_deux_individus&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;3271-4158&quot;} -->
+<h3 class="sectionedit4" id="distance_entre_deux_modalites">Distance entre deux modalités</h3>
+<div class="level3">
+
+<p>
+Soit M un tableau disjonctif complet de dimension $n \times p$. Si on considère <strong>i et i* deux modalités</strong>, alors la distance entre les deux est donnée par : 
+</p>
+
+<p>
+$$d^{2}(i,i^{*}) = \sum_{j = 1}^{n}  \frac{1}{\frac{1}{n}} (\frac{M_{i,j}}{n_{j}} - \frac{M_{i^{*},j}}{n_{j^{*}}})^{2} $$
+</p>
+<div class="table sectionedit5"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">      Paramètre        </th><th class="col1"> Signification</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  $n$  </td><td class="col1"> Nombre de lignes </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">   $p$     </td><td class="col1"> Nombre de colonnes</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">    $n_{j{*}}$     </td><td class="col1"> Nombre d&#039;individus possédant la modalité $j^{*}$ </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">    $M_{i,j}$     </td><td class="col1"> Valeur de la j-ième colonne pour l&#039;individu i </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:5,&quot;range&quot;:&quot;4485-4734&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Distance entre deux modalit\u00e9s&quot;,&quot;hid&quot;:&quot;distance_entre_deux_modalites&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;4159-4735&quot;} -->
+<h3 class="sectionedit6" id="inertie_totale">Inertie totale</h3>
+<div class="level3">
+
+<p>
+Cette mesure permet d&#039;identifier la dispersion totale des individus dans l&#039;ACM. 
+</p>
+
+</div>
+
+<h5 id="sources">Sources</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <a href="https://fr.wikipedia.org/wiki/Test_du_%CF%87%C2%B2#:~:text=X%20en%20pr%C3%A9sence.-,Test%20du%20%CF%872%20d'ind%C3%A9pendance,deux%20variables%20X%20et%20Y.&amp;text=En%20termes%20de%20valeur%20p%2C%20l'hypoth%C3%A8se%20nulle%20est%20g%C3%A9n%C3%A9ralement,lorsque%20p%20%E2%89%A4%200%2C05." class="urlextern" title="https://fr.wikipedia.org/wiki/Test_du_%CF%87%C2%B2#:~:text=X%20en%20pr%C3%A9sence.-,Test%20du%20%CF%872%20d&#039;ind%C3%A9pendance,deux%20variables%20X%20et%20Y.&amp;text=En%20termes%20de%20valeur%20p%2C%20l&#039;hypoth%C3%A8se%20nulle%20est%20g%C3%A9n%C3%A9ralement,lorsque%20p%20%E2%89%A4%200%2C05." rel="nofollow"> Wikipédia, Test du χ²</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.math.u-bordeaux.fr/~mchave100p/wordpress/wp-content/uploads/2013/10/ACM.pdf" class="urlextern" title="http://www.math.u-bordeaux.fr/~mchave100p/wordpress/wp-content/uploads/2013/10/ACM.pdf" rel="nofollow"> Marie Chavent, Université de Bordeaux</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://eric.univ-lyon2.fr/~ricco/cours/slides/ACM.pdf" class="urlextern" title="https://eric.univ-lyon2.fr/~ricco/cours/slides/ACM.pdf" rel="nofollow">Ricco RAKOTOMALALA, Université de Lyon 2</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Inertie totale&quot;,&quot;hid&quot;:&quot;inertie_totale&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;4736-&quot;} -->

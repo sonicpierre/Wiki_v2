@@ -1,0 +1,1 @@
+Scaled.<span class="me1">Data2</span><span class="sy0">=</span>scale<span class="br0">&#40;</span>res.<span class="me1">PCA</span>$ind$coord<span class="br0">&#91;</span><span class="sy0">,</span><span class="nu0">1</span>:<span class="nu0">2</span><span class="br0">&#93;</span><span class="br0">&#41;</span> <span class="co1"># si on ne retient que 2 axes </span>

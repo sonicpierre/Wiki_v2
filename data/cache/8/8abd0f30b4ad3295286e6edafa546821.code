@@ -1,0 +1,7 @@
+inventory_sets <span class="sy0">&lt;</span>- read.<span class="kw3">csv</span><span class="br0">&#40;</span><span class="st0">&quot;inventory_sets.csv&quot;</span><span class="br0">&#41;</span>
+<span class="kw3">sets</span> <span class="sy0">&lt;</span>- read.<span class="kw3">csv</span><span class="br0">&#40;</span><span class="st0">'sets.csv'</span><span class="br0">&#41;</span>
+themes <span class="sy0">&lt;</span>- read_csv<span class="br0">&#40;</span><span class="st0">&quot;themes.csv&quot;</span><span class="br0">&#41;</span>
+dataInter <span class="sy0">&lt;</span>- data %<span class="sy0">&gt;</span>%
+    inner_join<span class="br0">&#40;</span><span class="kw3">sets</span><span class="sy0">,</span> by <span class="sy0">=</span> c<span class="br0">&#40;</span><span class="st0">&quot;set_num&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+dataFinal <span class="sy0">&lt;</span>- dataInter %<span class="sy0">&gt;</span>%
+    inner_join<span class="br0">&#40;</span>themes<span class="sy0">,</span> by <span class="sy0">=</span> c<span class="br0">&#40;</span><span class="st0">&quot;theme_id&quot;</span> <span class="sy0">=</span> <span class="st0">&quot;id&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>

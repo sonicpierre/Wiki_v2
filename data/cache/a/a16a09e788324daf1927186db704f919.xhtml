@@ -1,0 +1,87 @@
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Agradient&amp;media=cpp:carte3.png" class="media" title="cpp:carte3.png"><img src="/lib/exe/fetch.php?w=300&amp;tok=4913b0&amp;media=cpp:carte3.png" class="mediacenter" alt="" width="300" /></a>
+</p>
+
+<p>
+Vous avez passé un moment agréable au lac Pavin dans le Puy de Dome (1 197 m d&#039;altitude) et vous souhaitez boire une bonne bière à Clermont-Ferrand (321 m d&#039;altitude). Malheureusement vous ne savez pas dans quelle direction se trouve Clermont.
+</p>
+
+<p>
+Supposons que Clermont-Ferrand est la ville la plus basse en altitude du département, vous avez juste à suivre les pentes successives (vecteurs conjugués) parmi tous les chemins que nous avons à disposition, en choisissant arbitrairement une durée durant laquelle vous suivrez chaque sentier (pas $h$ de la méthode). 
+</p>
+
+<p>
+<span style='color:#ed1c24; '><strong>Trouvons la combinaison de sentiers qui nous amènera le plus vite vers notre destination (le minimum de la fonction altitude).</strong></span>
+</p>
+
+<p>
+<div class='alert alert-warning'><strong>Attention :</strong> Les notions de gradient, de produit scalaire et de fonctions de $R^n$ sont nécessaires pour comprendre ce chapitre. Les notions de conjugués, de base et de matrice définies positives sont laissées à la curiosité du lecteur  </div>
+</p>
+
+<h3 class="sectionedit1" id="point_theorique">Point théorique</h3>
+<div class="level3">
+
+<p>
+Dans ce cours, nous traitons l&#039;algorithme du gradient conjugué. Une page existe déjà sur la méthode du gradient sur la méthode du gradient dans le cadre de la régression linéaire <a href="/doku.php?id=cpp:regression_supervisee" class="wikilink1" title="cpp:regression_supervisee"> ici</a>.
+</p>
+
+<p>
+Cet algorithme itératif permet de trouver le minimum d&#039;une fonction de $R^{n}$. 
+Nous utiliserons cette méthode pour résoudre les équations de la forme Ax= b, avec A une matrice carrée <a href="https://fr.wikipedia.org/wiki/Matrice_d%C3%A9finie_positive#Matrice_sym%C3%A9trique_r%C3%A9elle_d%C3%A9finie_positive" class="urlextern" title="https://fr.wikipedia.org/wiki/Matrice_d%C3%A9finie_positive#Matrice_sym%C3%A9trique_r%C3%A9elle_d%C3%A9finie_positive" rel="nofollow">symétrique définie positive</a> de taille $n$, $x$ vecteur inconnu de taille $n$, et $b$ vecteur connu de taille $n$. 
+En effet, chercher une solution du problème reviens à chercher le minimum de la fonction $f(x) = \frac{1}{2}*&lt;Ax,x&gt; -&lt;b,x&gt;$.
+</p>
+
+<p>
+Cet algorithme est dit “à direction de descente”, c&#039;est à dire qu&#039;à chaque itération, on se “déplace” dans la direction opposée au <a href="https://fr.wikipedia.org/wiki/Gradient" class="urlextern" title="https://fr.wikipedia.org/wiki/Gradient" rel="nofollow">gradient</a>.
+La particularité de ce dernier est d&#039;utiliser le principe des  <a href="http://www.les-mathematiques.net/phorum/read.php?3,1486950,1486950" class="urlextern" title="http://www.les-mathematiques.net/phorum/read.php?3,1486950,1486950" rel="nofollow">vecteurs conjugués</a> pour descendre. 
+Soient {$p_k$} une famille de n vecteurs conjugués deux a deux (directions), alors cette famille forment une base de $R^n$. On cherche donc une combinaison linéaire x de ces n vecteurs tel que $Ax = b$.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Point th\u00e9orique&quot;,&quot;hid&quot;:&quot;point_theorique&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1031-2408&quot;} -->
+<h3 class="sectionedit2" id="algorithme">Algorithme</h3>
+<div class="level3">
+<pre class="code">  Variables
+      ri //residu à l itération i
+      xi // ième terme de la suite convergent
+      pi // vecteurs conjugués
+      αi // coefficient de descente du vecteur pi
+      βk // coefficient de mise a jour pi
+      A // matrice du systeme d equation
+  
+  Début
+      r0 ← Ax0 − b //initialisation residu
+      p0 ← −r0 //initialisation de la direction de descente
+      k ← 0 //initialisation nombre itérations
+  
+      Tant que rk != 0
+  
+          αk ← −(trans(rk)*pk)/(trans(pk)*A*pk)
+  
+          xk+1 ← xk + αkpk //nouvel iteration de xk
+          rk+1 ← A*xk+1 − bc// mise a jour residu
+  
+          βk+1 ← −(trans(rk+1)*A*pk)/(trans(pk)*A*pk)
+  
+          pk+1 ← −rk+1 + βk+1*pk //mise a jour vecteur conjugué
+          k ← k + 1 //incrementation de k
+  
+      Fin tant que
+  Fin</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Algorithme&quot;,&quot;hid&quot;:&quot;algorithme&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;2409-3318&quot;} -->
+<h3 class="sectionedit3" id="implementation">Implémentation</h3>
+<div class="level3">
+
+<p>
+<em class="u">En Python:</em>
+</p>
+
+<p>
+<em class="u">Sous Octave:</em>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Impl\u00e9mentation&quot;,&quot;hid&quot;:&quot;implementation&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;3319-&quot;} -->

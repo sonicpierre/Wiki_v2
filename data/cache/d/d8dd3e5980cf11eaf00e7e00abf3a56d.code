@@ -1,0 +1,11 @@
+<span class="co1">%Choix de la variable entrante</span>
+rapportMin=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/inf.html"><span class="kw2">Inf</span></a>
+<span class="kw1">for</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>=<span class="nu0">1</span>:<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tabCoupe<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="br0">&#41;</span>-<span class="nu0">1</span>
+    <span class="kw1">if</span> tabCoupe<span class="br0">&#40;</span>indiceVarSortante,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a><span class="br0">&#41;</span>*tabCoupe<span class="br0">&#40;</span><span class="nu0">1</span>,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a><span class="br0">&#41;</span>!=<span class="nu0">0</span>
+        rapport=tabCoupe<span class="br0">&#40;</span><span class="nu0">1</span>,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a><span class="br0">&#41;</span>/tabCoupe<span class="br0">&#40;</span>indiceVarSortante,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a><span class="br0">&#41;</span>
+        <span class="kw1">if</span> rapport&lt;rapportMin
+            indiceVarEntrante=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>
+            rapportMin=rapport
+        endif
+    endif
+endfor

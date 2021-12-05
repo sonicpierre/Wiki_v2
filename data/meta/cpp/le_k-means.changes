@@ -1,0 +1,259 @@
+1597845729	88.124.10.73	C	cpp:le_k-means	pierrevirgaux	créée		4536
+1597845743	88.124.10.73	E	cpp:le_k-means	pierrevirgaux			-23
+1597847275	88.124.10.73	e	cpp:le_k-means	pierrevirgaux	[Visualisation et optimiser des prédictions] 		-24
+1597848184	88.124.10.73	E	cpp:le_k-means	pierrevirgaux			44
+1597945139	88.124.10.73	E	cpp:le_k-means	pierrevirgaux			135
+1597945155	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le modèle de clustering] 		2
+1597945293	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Manhattan] 		130
+1597945308	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Manhattan] 		1
+1597945542	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Manhattan] 		185
+1597945561	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Quelques distances utilisées en clustering] 		0
+1597945669	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Manhattan] 		29
+1597945868	88.124.10.73	E	cpp:le_k-means	pierrevirgaux			42
+1597945933	88.124.10.73	E	cpp:le_k-means	pierrevirgaux			18
+1597945957	88.124.10.73	e	cpp:le_k-means	pierrevirgaux	[Quelques distances utilisées en clustering] 		1
+1597946046	88.124.10.73	E	cpp:le_k-means	pierrevirgaux			68
+1597946150	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Euclidienne] 		-5
+1597946173	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Cosine] 		24
+1597946830	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Cosine] 		71
+1597947146	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Quelques distances utilisées en clustering] 		155
+1597947206	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Quelques distances utilisées en clustering] 		-117
+1597947273	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Cosine] 		177
+1597947285	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Euclidienne] 		-28
+1597947305	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Quelques distances utilisées en clustering] 		30
+1597948633	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Cosine] 		358
+1597949042	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Haversine] 		44
+1597952793	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Haversine] 		347
+1597952971	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Haversine] 		135
+1597952995	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Haversine] 		0
+1597953159	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Haversine] 		82
+1597953178	88.124.10.73	e	cpp:le_k-means	pierrevirgaux	[Distance Haversine] 		1
+1597953568	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Manhattan] 		73
+1597992907	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Euclidienne] 		178
+1597993045	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Haversine] 		8
+1597993236	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Manhattan] 		-11
+1597993510	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Euclidienne] 		72
+1597993599	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Euclidienne] 		122
+1597994066	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Manhattan] 		459
+1597994276	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Quelques distances utilisées en clustering] 		6
+1597994406	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance de Ward] 		-24
+1597995729	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Cosine] 		234
+1597995993	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Cosine] 		125
+1597996909	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Manhattan] 		174
+1597997665	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Minkowski et Tchebychev] 		289
+1597998719	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Minkowski et Tchebychev] 		539
+1597998909	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Minkowski, Tchebychev et fractionnaire] 		135
+1597999256	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Distance Minkowski, Tchebychev et fractionnaire] 		327
+1597999448	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Préparation rapide des données] 		91
+1597999602	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Préparation rapide des données] 		37
+1597999614	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le modèle de clustering] 		-2
+1597999628	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualisation et optimiser des prédictions] 		-2
+1597999641	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualisation et optimiser des prédictions] 		-49
+1597999654	88.124.10.73	E	cpp:le_k-means	pierrevirgaux			49
+1597999910	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Mise en place de l'lgorithme] 		322
+1598000702	88.124.10.73	E	cpp:le_k-means	pierrevirgaux			185
+1598002216	88.124.10.73	E	cpp:le_k-means	pierrevirgaux			365
+1598004902	88.124.10.73	E	cpp:le_k-means	pierrevirgaux			-12
+1598005616	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Principe de l'algorithme] 		416
+1598005727	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Mise en place de l'lgorithme] 		1
+1598006026	88.124.10.73	E	cpp:le_k-means	pierrevirgaux			292
+1598006111	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualisation et optimiser des prédictions] 		23
+1598006375	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Principe de l'algorithme] 		65
+1598006586	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualisation et optimiser des prédictions] 		-38
+1598006605	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualisation des prédictions] 		0
+1598006858	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualisation les prédictions] 		99
+1598006985	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Principe de l'algorithme] 		91
+1598007023	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Préparation rapide des données] 		-505
+1598007204	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Principe de l'algorithme] 		536
+1598007231	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Précondition] 		-40
+1598007265	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Préparation rapide des données] 		-221
+1598007282	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le modèle de clustering] 		-549
+1598007291	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Entraîner l'algorithme] 		472
+1598007347	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Évaluation les prédictions] 		-1153
+1598007358	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Évaluer les résultats de son modèle] 		1116
+1598007406	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Évaluer les résultats de son modèle] 		2
+1598007508	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualiser les résultats de son modèle] 		21
+1598007520	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualiser les résultats de son modèle] 		1
+1598007594	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualiser les résultats de son modèle] 		28
+1598007621	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Optimiser les résultats de son modèle] 		-1798
+1598007631	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Optimiser son modèle] 		1751
+1598007665	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Mise en place de l'algorithme] 		-362
+1598007674	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Principe de l'algorithme] 		321
+1598007787	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Quelques distances utilisées en Machine Learning] 		-4
+1598007915	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Limites de l'algorithme K-means] 		82
+1598007982	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualiser les résultats de son modèle] 		30
+1598008180	88.124.10.73	E	cpp:le_k-means	pierrevirgaux			-4692
+1598008595	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Précondition] 		66
+1598008665	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Précondition] 		74
+1598008723	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Limites de l'algorithme K-means] 		-48
+1598008737	88.124.10.73	E	cpp:le_k-means	pierrevirgaux			49
+1598009144	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Évaluer son modèle] 		-29
+1598009170	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Entraîner l'algorithme] 		33
+1598009214	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualiser les résultats de son modèle] 		-8
+1598009279	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Limites de l'algorithme K-means] 		-612
+1598009319	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Optimiser son modèle] 		660
+1598009377	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Limites de l'algorithme K-means] 		-63
+1598009404	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Astuce pour contourner le problème] 		65
+1598009448	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualiser la forme des clusters] 		193
+1598045590	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Astuce pour contourner le problème] 		-101
+1598045698	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Elbow Method] 		575
+1598045802	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		-187
+1598045928	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		58
+1598113423	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Elbow Method] 		562
+1598113520	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Optimiser son modèle] 		-231
+1598114158	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Elbow Method] 		88
+1598114927	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Précondition] 		-6
+1598115375	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		49
+1598115534	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Évaluer son modèle] 		-31
+1598115555	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualiser la forme des clusters] 		2
+1598115704	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		144
+1598116198	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		325
+1598116319	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		149
+1598116496	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		0
+1598116812	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		18
+1598117200	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		29
+1598117951	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualiser la forme des clusters] 		2
+1598128974	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualiser la forme des clusters] 		418
+1598131412	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualiser la forme des clusters] 		670
+1598131574	88.124.10.73	E	cpp:le_k-means	pierrevirgaux			60
+1598131729	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		115
+1598133346	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualiser la forme des clusters] 		126
+1598133699	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Diagramme de Voronoi] 		613
+1598133992	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Diagramme de Voronoi] 		51
+1598180649	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		-65
+1598180694	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Diagramme de Voronoi] 		43
+1598180755	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualiser les clusters sous plusieurs points de vue] 		82
+1598180780	88.124.10.73	e	cpp:le_k-means	pierrevirgaux	[Elbow Method] 		0
+1598180815	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		0
+1598180918	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Diagramme de Voronoi] 		35
+1598180974	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualiser les clusters sous plusieurs points de vue] 		-289
+1598181039	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualisation classique] 		357
+1598181266	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualiser les clusters sous plusieurs points de vue] 		140
+1598181609	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualiser la forme des clusters] 		135
+1598181918	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Diagramme de Voronoi] 		207
+1598182008	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Optimiser son modèle] 		12
+1598182108	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Diagramme de Voronoï] 		90
+1598182845	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Limites des K-means] 		467
+1598183005	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Entraîner l'algorithme] 		-145
+1598184144	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		92
+1598184550	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Diagramme de Voronoï] 		108
+1598184903	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		109
+1598186039	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		417
+1598186141	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		108
+1598191751	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		418
+1598192573	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		35
+1598193749	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		89
+1598195968	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		316
+1598196779	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Diagramme de Voronoï] 		29
+1598196831	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Diagramme de Voronoï] 		2
+1598196883	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Diagramme de Voronoï] 		67
+1598200555	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		96
+1598205589	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Diagramme de Voronoï] 		194
+1598212403	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Diagramme de Voronoï] 		21
+1598212557	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Diagramme de Voronoï] 		20
+1598212756	88.124.10.73	e	cpp:le_k-means	pierrevirgaux	[Diagramme de Voronoï] 		36
+1598213080	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Diagramme de Voronoï] 		178
+1598213651	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualisation classique] 		44
+1598261623	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[L'index de Davies-Bouldin] 		40
+1598262104	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[L'index de Davies-Bouldin] 		689
+1598262129	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[L'index de Davies-Bouldin] 		15
+1598262544	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[L'index de Davies-Bouldin] 		266
+1598263538	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[L'index de Davies-Bouldin] 		36
+1598263719	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[L'index de Davies-Bouldin] 		237
+1598263952	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[L'index de Davies-Bouldin] 		-34
+1598264022	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[L'index de Davies-Bouldin] 		41
+1598264334	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualiser la forme des clusters] 		1
+1598264380	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[L'index de Davies-Bouldin] 		17
+1598269503	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[L'index de Davies-Bouldin] 		299
+1598270410	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[L'index de Davies-Bouldin] 		381
+1598271773	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[L'index de Davies-Bouldin] 		405
+1598271867	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[L'index de Davies-Bouldin] 		6
+1598272792	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		17
+1598273284	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[L'index de Davies-Bouldin] 		261
+1598273368	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[L'index de Davies-Bouldin] 		20
+1598274607	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Entraîner l'algorithme] 		306
+1598279147	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualiser les clusters sous plusieurs points de vue] 		76
+1598279203	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Visualiser les clusters sous plusieurs points de vue] 		125
+1598279459	93.31.126.40	E	cpp:le_k-means	julien	[Précondition] 		1
+1598279482	93.31.126.40	E	cpp:le_k-means	julien	[Préconditions] 		2
+1598279897	93.31.126.40	E	cpp:le_k-means	julien	[Visualiser la forme des clusters] 		-1
+1598279980	93.31.126.40	E	cpp:le_k-means	julien	[Diagramme de Voronoï] 		-1
+1598280067	93.31.126.40	E	cpp:le_k-means	julien	[Choisir le bon nombre de clusters] 		1
+1598280118	93.31.126.40	E	cpp:le_k-means	julien	[Elbow Method] 		1
+1598280217	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Choisir le bon nombre de clusters] 		2
+1598280305	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Elbow Method] 		2
+1598280381	93.31.126.40	E	cpp:le_k-means	julien	[Le score de silhouette] 		-1
+1598280412	93.31.126.40	E	cpp:le_k-means	julien	[Le score de silhouette] 		2
+1598280475	93.31.126.40	E	cpp:le_k-means	julien	[Le score de silhouette] 		1
+1598280532	93.31.126.40	E	cpp:le_k-means	julien	[Le score de silhouette] 		2
+1598280554	93.31.126.40	E	cpp:le_k-means	julien	[Le score de silhouette] 		-1
+1598280604	93.31.126.40	E	cpp:le_k-means	julien	[L'index de Davies-Bouldin] 		1
+1598280705	93.31.126.40	E	cpp:le_k-means	julien	[L'indice de Davies-Bouldin] 		-58
+1598282241	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Entraîner l'algorithme] 		127
+1598290384	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Préconditions] 		-127
+1598290487	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Principe de l'algorithme] 		-1
+1598290605	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Entraîner l'algorithme] 		322
+1598290766	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Entraîner l'algorithme] 		36
+1598350070	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Elbow Method] 		50
+1599140675	89.88.75.36	E	cpp:le_k-means	pierrevirgaux	[Limites des K-means] 		108
+1599140721	89.88.75.36	E	cpp:le_k-means	pierrevirgaux			-6
+1599307967	93.31.126.40	E	cpp:le_k-means	julien	[Entraîner l'algorithme] 		1
+1599308039	93.31.126.40	E	cpp:le_k-means	julien	[Entraîner l'algorithme] 		-1
+1599308564	93.31.126.40	E	cpp:le_k-means	julien	[Diagramme de Voronoï] 		0
+1602332100	89.88.75.36	E	cpp:le_k-means	pierrevirgaux	[Elbow Method] 		-50
+1613130343	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[L'indice de Davies-Bouldin] 		50
+1613130921	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[L'indice de Davies-Bouldin] 		-8
+1613130940	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		-8
+1614104994	193.248.237.26	E	cpp:le_k-means	malama			20
+1614105085	193.248.237.26	E	cpp:le_k-means	malama			-10
+1614105145	193.248.237.26	E	cpp:le_k-means	malama	[Principe de l'algorithme] 		0
+1614105240	193.248.237.26	E	cpp:le_k-means	malama	[Préconditions] 		3
+1614105281	193.248.237.26	E	cpp:le_k-means	malama	[Préconditions] 		0
+1614105400	193.248.237.26	E	cpp:le_k-means	malama	[Entraîner l'algorithme] 		3
+1614105616	193.248.237.26	E	cpp:le_k-means	malama	[Entraîner l'algorithme] 		2
+1614105684	193.248.237.26	E	cpp:le_k-means	malama	[Entraîner l'algorithme] 		0
+1614105788	193.248.237.26	E	cpp:le_k-means	malama	[Entraîner l'algorithme] 		9
+1614105948	193.248.237.26	E	cpp:le_k-means	malama	[Entraîner l'algorithme] 		25
+1614106114	193.248.237.26	E	cpp:le_k-means	malama	[Visualiser la forme des clusters] 		4
+1614106267	193.248.237.26	E	cpp:le_k-means	malama	[Visualisation classique] 		1
+1614106306	193.248.237.26	E	cpp:le_k-means	malama	[Visualisation classique] 		-1
+1614106440	193.248.237.26	E	cpp:le_k-means	malama	[Diagramme de Voronoï] 		1
+1614106562	193.248.237.26	E	cpp:le_k-means	malama	[Diagramme de Voronoï] 		2
+1614106723	193.248.237.26	E	cpp:le_k-means	malama	[Visualiser les clusters sous plusieurs points de vue] 		-2
+1614106783	193.248.237.26	E	cpp:le_k-means	malama	[Visualiser les clusters de plusieurs points de vue] 		3
+1614106857	193.248.237.26	E	cpp:le_k-means	malama	[Visualiser les clusters de plusieurs points de vue] 		-1
+1614106888	193.248.237.26	E	cpp:le_k-means	malama	[Visualiser les clusters de plusieurs points de vue] 		0
+1614106982	193.248.237.26	E	cpp:le_k-means	malama	[Choisir le bon nombre de clusters] 		2
+1614107215	193.248.237.26	E	cpp:le_k-means	malama	[Elbow Method] 		1
+1614107384	193.248.237.26	E	cpp:le_k-means	malama	[Elbow Method] 		-9
+1614107445	193.248.237.26	E	cpp:le_k-means	malama	[Elbow Method] 		2
+1614107611	193.248.237.26	E	cpp:le_k-means	malama	[Le score de silhouette] 		0
+1614107765	193.248.237.26	E	cpp:le_k-means	malama	[Le score de silhouette] 		22
+1614108386	193.248.237.26	E	cpp:le_k-means	malama	[Le score de silhouette] 		0
+1614108556	193.248.237.26	E	cpp:le_k-means	malama	[Le score de silhouette] 		16
+1614108632	193.248.237.26	E	cpp:le_k-means	malama	[Le score de silhouette] 		1
+1614108797	193.248.237.26	E	cpp:le_k-means	malama	[L'indice de Davies-Bouldin] 		0
+1614108924	193.248.237.26	E	cpp:le_k-means	malama	[L'indice de Davies-Bouldin] 		-2
+1614108980	193.248.237.26	E	cpp:le_k-means	malama	[L'indice de Davies-Bouldin] 		2
+1614109102	193.248.237.26	E	cpp:le_k-means	malama	[L'indice de Davies-Bouldin] 		2
+1614109508	193.248.237.26	E	cpp:le_k-means	malama	[L'indice de Davies-Bouldin] 		2
+1614109551	193.248.237.26	E	cpp:le_k-means	malama	[L'indice de Davies-Bouldin] 		0
+1614109582	193.248.237.26	E	cpp:le_k-means	malama	[L'indice de Davies-Bouldin] 		1
+1614109647	193.248.237.26	E	cpp:le_k-means	malama	[L'indice de Davies-Bouldin] 		1
+1614109679	193.248.237.26	E	cpp:le_k-means	malama	[L'indice de Davies-Bouldin] 		-1
+1614109785	193.248.237.26	E	cpp:le_k-means	malama	[L'indice de Davies-Bouldin] 		0
+1614109876	193.248.237.26	E	cpp:le_k-means	malama	[Limites des K-means] 		7
+1614110074	193.248.237.26	E	cpp:le_k-means	malama	[Limites des K-means] 		0
+1614110180	193.248.237.26	E	cpp:le_k-means	malama	[Limites des K-means] 		9
+1614110240	193.248.237.26	E	cpp:le_k-means	malama	[Limites des K-means] 		11
+1616682211	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Entraîner l'algorithme] 		23
+1616682412	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Entraîner l'algorithme] 		56
+1616682442	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Entraîner l'algorithme] 		-38
+1616682752	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Diagramme de Voronoï] 		-1
+1616682816	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Diagramme de Voronoï] 		-2
+1616683013	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Elbow Method] 		-2
+1616683216	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		-4
+1616683275	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[Le score de silhouette] 		0
+1616683508	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[L'indice de Davies-Bouldin] 		-3
+1616683675	88.124.10.73	E	cpp:le_k-means	pierrevirgaux	[L'indice de Davies-Bouldin] 		1
+1620635231	80.214.71.171	E	cpp:le_k-means	pierrevirgaux	[Entraîner l'algorithme] 		14

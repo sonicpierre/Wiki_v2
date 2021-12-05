@@ -1,0 +1,184 @@
+
+<p>
+<a href="/lib/exe/fetch.php?media=cpp:game_engine.jpg" class="media" title="cpp:game_engine.jpg"><img src="/lib/exe/fetch.php?w=550&amp;tok=dae0ff&amp;media=cpp:game_engine.jpg" class="media" alt="" width="550" /></a>
+</p>
+
+<p>
+<br/>
+
+</p>
+
+<h3 class="sectionedit1" id="qu_est-ce_qu_un_game_engine">Qu&#039;est-ce qu&#039;un Game Engine ?</h3>
+<div class="level3">
+
+<p>
+Un Game Engine ou moteur de jeu est un logiciel <span style="color:#800000;"><strong>regroupant différents composants logiciels</strong></span> permettant d&#039;effectuer plusieurs <span style="color:#800000;"><strong>tâches complexes</strong></span> :
+</p>
+<ul>
+<li class="level1"><div class="li"> Affichage de modèles 3D (un personnage par exemple) ⇒ <strong><span style="color:#ff0000;">Rendu Graphique</span></strong></div>
+</li>
+<li class="level1"><div class="li"> Appliquer de la gravité (à un personnage par exemple) ⇒ <strong><span style="color:#ff0000;">Calcul de la Physique</span></strong></div>
+</li>
+<li class="level1"><div class="li"> Déplacement ⇒ <strong><span style="color:#ff0000;">Récupération des entrées</span></strong> (manettes, claviers, souris …)</div>
+</li>
+<li class="level1"><div class="li"> Mettre un bruitage ⇒ <strong><span style="color:#ff0000;">Gestion de l&#039;audio</span></strong></div>
+</li>
+</ul>
+
+<p>
+Un moteur de jeu permet évidemment de créer des jeux, mais on peut aussi l&#039;utiliser pour d&#039;autres tâches (simulation de crash test pour une voiture,  essai d&#039;une intelligence artificielle avant de l&#039;utiliser dans la vraie vie …) 
+</p>
+
+<p>
+Le tout est fait en <strong>temps réel</strong> et permet de simuler le monde que l&#039;on souhaite créer. Ils ont été conçus dans le but de faciliter le développement d&#039;un jeu. Cela permet de <strong><span style="color:#008000;">se concentrer sur le contenu</span></strong>, comme la réflexion sur le game design ou la création de ressources (textures, sons …) pour le jeu.
+</p>
+
+<p>
+<br/>
+
+<a href="/lib/exe/detail.php?id=cpp%3Aunitygodotintrogameengine&amp;media=cpp:moteurgrapheres.png" class="media" title="cpp:moteurgrapheres.png"><img src="/lib/exe/fetch.php?w=700&amp;tok=eed332&amp;media=cpp:moteurgrapheres.png" class="mediacenter" alt="" width="700" /></a>
+</p>
+
+<p>
+Ce shéma résume rapidement comment fonctionne un moteur de jeux. En réalité, plus de composants rentres en compte.
+</p>
+
+<p>
+<strong>Approfondir :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/fetch.php?media=cpp:game_engine_calls.png" class="media" title="cpp:game_engine_calls.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=c0dce0&amp;media=cpp:game_engine_calls.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+<p class="divalign-center">Image 1  (<a href="https://fr.wikipedia.org/wiki/Moteur_de_jeu#/media/Fichier:Linux_kernel_and_OpenGL_video_games.svg" class="urlextern" title="https://fr.wikipedia.org/wiki/Moteur_de_jeu#/media/Fichier:Linux_kernel_and_OpenGL_video_games.svg" rel="nofollow">Wikipedia</a>)</p><!--divalign-->
+
+<p>
+<br/>
+
+</p>
+
+<p>
+Ceci n&#039;est qu&#039;un exemple, car dans la réalité un moteur de jeu va lui même <strong><span style="color:#ff0000;"><em class="u">faire appel à d&#039;autres moteurs</em></span></strong>. <br/>
+
+Par exemple, Unity utilise un moteur physique PhysX réalisé par Nvidia. Godot lui utilise un moteur physique créé par leurs propres équipes pour la 2D et utilise le Bullet Engine pour la 3D. <br/>
+
+De ce fait, <span style="color:#800000;"><strong>certains moteurs de jeu vont être plus orientés pour un type de jeu</strong></span> tel que Godot qui est très performant pour les jeux 2D, du fait qu&#039;ils ont créés leur propre moteur pour la 2D.
+</p>
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Qu&#039;est-ce qu&#039;un Game Engine ?&quot;,&quot;hid&quot;:&quot;qu_est-ce_qu_un_game_engine&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;43-2142&quot;} -->
+<h3 class="sectionedit2" id="comment_est_cree_un_moteur_de_jeu">Comment est créé un moteur de jeu ?</h3>
+<div class="level3">
+
+<p>
+Un moteur de jeu n&#039;est pas qu&#039;un assemblage de différent moteurs. En effet il faut un “socle” pour tous les réunir. Pour cela <strong>la plupart des moteurs sont écrits avec les langages de programmation C et C++</strong>. Ils permettent d&#039;avoir une bonne proximité avec la mémoire de l&#039;ordinateur et d&#039;offrir ce qu&#039;il faut pour la gérer. <br/>
+
+Cependant, <strong><span style="color:#800000;">d&#039;autres technologies sont utilisables</span></strong>,  comme des technologies web (JavaScript) pour exécuter des jeux dans un navigateur internet. <br/>
+
+</p>
+
+<p>
+<div class='alert alert-warning'><strong>Attention</strong> : Il est aussi possible de trouver des moteurs de jeu en Java. Cependant ils sont moins présents car le C et le C++ permettent d&#039;être sûr du fonctionnement de notre programme au niveau de la mémoire et de la contrôler parfaitement. Avec du Java, cela fonctionnerait aussi, mais nous ne pouvons pas être sûr à 100% de comment est géré la mémoire.</div>
+</p>
+
+<p>
+<em class="u">Google a créé un moteur de jeu pour la pédagogie</em> que l&#039;on peut retrouver sur cette  <a href="https://code.google.com/archive/p/gqe/" class="urlextern" title="https://code.google.com/archive/p/gqe/" rel="nofollow"> page</a>. Il n&#039;est plus mis à jour depuis 2014 mais il peut vous offrir une bonne vision et compréhension des moteurs de jeu “from scratch”.
+</p>
+
+<p>
+<br/>
+
+</p>
+
+<p>
+<a href="/lib/exe/fetch.php?media=cpp:socle_game_engine.png" class="media" title="cpp:socle_game_engine.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=63ed6f&amp;media=cpp:socle_game_engine.png" class="mediacenter" title=" Les différents composants d&#039;un moteur de jeu" alt=" Les différents composants d&#039;un moteur de jeu" width="400" /></a>
+</p>
+<p class="divalign-center">Schéma des composants d&#039;un moteur de jeu</p><!--divalign-->
+
+<p>
+<br/>
+
+</p>
+
+<p>
+La communication entre le cœur et les autres moteurs se fera par une <abbr title="Application Programming Interface">API</abbr> (<strong><span style="color:#ff0000;">interface de programmation permettant d&#039;utiliser les fonctionnalités du moteur</span></strong>) fournie par les créateurs du moteur. Si l&#039;<abbr title="Application Programming Interface">API</abbr> fournie ne convient pas aux besoins, il faudra créer votre propre interface avec le moteur.
+</p>
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Comment est cr\u00e9\u00e9 un moteur de jeu ?&quot;,&quot;hid&quot;:&quot;comment_est_cree_un_moteur_de_jeu&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;2143-3841&quot;} -->
+<h3 class="sectionedit3" id="moteur_public_vs_moteur_proprietaire">Moteur public VS moteur propriétaire</h3>
+<div class="level3">
+
+<p>
+Unity est un moteur propriétaire, à la différence de Godot qui est un moteur public. Cela signifie que pour Godot, <strong><span style="color:#800000;">le code est disponible </span></strong> sur <a href="https://github.com/godotengine/godot" class="urlextern" title="https://github.com/godotengine/godot" rel="nofollow"> Github</a>  et il est possible de proposer des modifications.  <br/>
+
+</p>
+
+<p>
+Pour Unity,  <strong><span style="color:#800000;">on ne peut pas voir le code source</span></strong> à part une petite partie disponible sur <a href="https://github.com/Unity-Technologies/UnityCsReference" class="urlextern" title="https://github.com/Unity-Technologies/UnityCsReference" rel="nofollow"> Github</a>, où l&#039;on peut seulement voir la partie en C# et on ne peut pas proposer de modifications. <br/>
+
+<strong>L&#039;avantage d&#039;un moteur public</strong> est que l&#039;on peut voir comment il est réalisé et <strong><span style="color:#008000;">la communauté peut le faire avancer</span></strong> et corriger des problèmes sans attendre que les développeurs du moteur le fassent. <br/>
+
+<strong>Pour un moteur propriétaire</strong>, la ligne directrice est claire, les améliorations sont planifiées à l&#039;avance. 
+</p>
+
+<p>
+<div class='alert alert-warning'><strong>Attention licences</strong> :  Chaque moteur de jeu gère ses licences au cas par cas, si vous souhaitez vendre votre création, il faut regarder sur leur site  (<a href="https://support.unity3d.com/hc/en-us/categories/201268913-Licenses" class="urlextern" title="https://support.unity3d.com/hc/en-us/categories/201268913-Licenses" rel="nofollow">Unity</a> | <a href="https://godotengine.org/license" class="urlextern" title="https://godotengine.org/license" rel="nofollow">Godot</a> ). Certains moteurs vont demander une rémunération lors de la vente de votre jeu.</div>
+</p>
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Moteur public VS moteur propri\u00e9taire&quot;,&quot;hid&quot;:&quot;moteur_public_vs_moteur_proprietaire&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;3842-5173&quot;} -->
+<h3 class="sectionedit4" id="les_moteurs_de_jeu_les_plus_connus">Les moteurs de jeu les plus connus</h3>
+<div class="level3">
+
+<p>
+Nous allons voir certains moteurs de jeu et vers quoi il s&#039;oriente (plutôt 2D, 3D etc …), mais aussi des jeux réalisés avec pour vous donnez une idée de ce qui est réalisable. Un comparatif plus poussé est disponible <a href="http://wiki.gagoi.fr/doku.php?id=cpp:unitygodotintrocomparatif" class="urlextern" title="http://wiki.gagoi.fr/doku.php?id=cpp:unitygodotintrocomparatif" rel="nofollow"> sur cette page du wiki</a>
+</p>
+
+<p>
+<span><strong>Attention :</strong> Utilisations principales ne signifie pas que dans un autre domaine non cité le moteur de jeu n&#039;est pas du tout bon ! Il peut aussi être très performant. Il faut regarder la documentation du moteur de jeu pour voir s&#039;il est adapté à votre besoin.</span>
+</p>
+<div class="table sectionedit5"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0"> Moteurs </th><th class="col1"> Utilisations principales </th><th class="col2"> Jeux </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0"> Unity </td><td class="col1"> 3D, XR* </td><td class="col2"> Hearthstone, Pokemon GO </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> Godot </td><td class="col1"> 2D </td><td class="col2"> Ultimo Carnaval, The mystery team </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> Unreal Engine </td><td class="col1"> 3D, XR* </td><td class="col2"> Fortnite, Dragon Quest XI </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0"> CryEngine </td><td class="col1"> 3D </td><td class="col2"> Crysis, Wolcen </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0"> RpgMaker </td><td class="col1"> 2D RPG </td><td class="col2"> To the Moon, Eternal Eden </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:5,&quot;range&quot;:&quot;5815-6099&quot;} -->
+<p>
+* Le terme XR signifie tous les termes suivant : Augmented / Virtual / Mixed Reality
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les moteurs de jeu les plus connus&quot;,&quot;hid&quot;:&quot;les_moteurs_de_jeu_les_plus_connus&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;5174-&quot;} -->

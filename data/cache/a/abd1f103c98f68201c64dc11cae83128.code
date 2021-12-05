@@ -1,0 +1,2 @@
+<span class="kw1">with</span> urlopen<span class="br0">&#40;</span><span class="st0">'https://raw.githubusercontent.com/python-visualization/folium/master/examples/data/search_states.json'</span><span class="br0">&#41;</span> <span class="kw1">as</span> response:
+    etat <span class="sy0">=</span> json.<span class="me1">load</span><span class="br0">&#40;</span>response<span class="br0">&#41;</span>

@@ -1,0 +1,566 @@
+
+<p>
+<a href="/doku.php?id=cpp:ia" class="wikilink1" title="cpp:ia"> Machine Learning</a>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ales_foret_de_classification_et_de_regression&amp;media=cpp:methode_ensemble.jpg" class="media" title="cpp:methode_ensemble.jpg"><img src="/lib/exe/fetch.php?w=450&amp;tok=1a0eb2&amp;media=cpp:methode_ensemble.jpg" class="mediacenter" alt="" width="450" /></a>
+</p>
+
+<p>
+L&#039;un des plus gros problèmes des arbres de décision est leur instabilité. Une petite variation des données entraîne une grande variation au niveau du modèle. Il existe plusieurs algorithmes pour entraîner des modèles et combiner les résultats. Il s&#039;agit d&#039;algorithmes efficaces qui reviennent souvent dans les concours de Data Science comme meilleur modèles.
+</p>
+
+<p>
+<div class='alert alert-info'><strong>DataSet :</strong> Nous allons utiliser un dataset qui est fait à partir de sonar pour savoir si les données reçues correspondes à un rocher ou une mine. Vous le trouverez <a href="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Ensemble" class="urlextern" title="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Ensemble" rel="nofollow"> ici</a> on nommera la variable le contenant data.</div>
+</p>
+
+<h2 class="sectionedit1" id="classificateur_par_vote">Classificateur par vote</h2>
+<div class="level2">
+
+<p>
+Avez-vous déjà regardé “Qui veut gagner des millions ?” ? Vous remarquerez rapidement que le jocker “Vote du public” est souvent très efficace. En effet, beaucoup d&#039;idiots sont souvent plus intelligent en moyenne qu&#039;un expert et ce proverbe un peu tordu se confirme grâce à la loi des grands nombres en mathématiques.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ales_foret_de_classification_et_de_regression&amp;media=cpp:forets_principe.png" class="media" title="cpp:forets_principe.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=174e85&amp;media=cpp:forets_principe.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+
+<p>
+Il y a deux possibilités pour appliquer cette méthode :
+</p>
+<ul>
+<li class="level1"><div class="li"> Il faut que chacun des modèles est une précision supérieur à 50%. En d&#039;autre terme, il faut qu&#039;il ne décide pas au hazard…</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Il faut que les modèles soient le plus indépendants possible. Pour cela, il y a deux possibilités, on peut faire varier les algorithmes pour que les erreurs ne soient pas corrélées. On peut aussi entraîner le même algorithme sur des ensembles différents.</div>
+</li>
+</ul>
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> Ce principe existe autant pour la classification que pour la régression. Il suffit de prendre la moyenne des prédictions.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Classificateur par vote&quot;,&quot;hid&quot;:&quot;classificateur_par_vote&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;762-1784&quot;} -->
+<h3 class="sectionedit2" id="faire_varier_l_algorithme">Faire varier l&#039;algorithme</h3>
+<div class="level3">
+
+<p>
+On commence tout d&#039;abord par déclarer les différents modèles. Il faut essayer de prendre des algorithmes qui se ressemblent le moins possible. On aura ainsi des résultats indépendants et par la suite un vote plus efficace.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">ensemble</span> <span class="kw1">import</span> RandomForestClassifier
+<span class="kw1">from</span> sklearn.<span class="me1">ensemble</span> <span class="kw1">import</span> VotingClassifier
+<span class="kw1">from</span> sklearn.<span class="me1">linear_model</span> <span class="kw1">import</span> LogisticRegression
+<span class="kw1">from</span> sklearn.<span class="me1">svm</span> <span class="kw1">import</span> SVC
+&nbsp;
+<span class="co1">#On déclare les différents modèles</span>
+log_clf <span class="sy0">=</span> LogisticRegression<span class="br0">&#40;</span><span class="br0">&#41;</span>
+rnd_clf <span class="sy0">=</span> RandomForestClassifier<span class="br0">&#40;</span><span class="br0">&#41;</span>
+svm_clf <span class="sy0">=</span> SVC<span class="br0">&#40;</span>probability <span class="sy0">=</span> <span class="kw2">True</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+
+<p>
+Pensez à déclarer les étiquettes comme des classes en écrivant <strong>as.factor(data$Class)</strong>.
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>e1071<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>randomForest<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>glmnet<span class="br0">&#41;</span>
+&nbsp;
+svm <span class="sy0">=</span> svm<span class="br0">&#40;</span>V61<span class="sy0">~</span>.<span class="sy0">,</span> data <span class="sy0">=</span> data<span class="sy0">,</span> kernel <span class="sy0">=</span> <span class="st0">&quot;radial&quot;</span><span class="br0">&#41;</span>
+foret_alea <span class="sy0">=</span> randomForest<span class="br0">&#40;</span>V61<span class="sy0">~</span>.<span class="sy0">,</span> data <span class="sy0">=</span> data<span class="br0">&#41;</span>
+reg_log <span class="sy0">=</span> glm<span class="br0">&#40;</span>V61<span class="sy0">~</span>.<span class="sy0">,</span> family <span class="sy0">=</span> binomial<span class="br0">&#40;</span>logit<span class="br0">&#41;</span><span class="sy0">,</span> data <span class="sy0">=</span> data<span class="sy0">,</span> control <span class="sy0">=</span> <span class="kw2">list</span><span class="br0">&#40;</span>maxit <span class="sy0">=</span> <span class="nu0">50</span><span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> Vous remarquerez en R que la déclaration et l&#039;entrainement du modèle ceux font au même moment alors que Python l&#039;entrainement se fera dans un second temps.</div>
+</p>
+
+<p>
+On déclare ensuite une façon de faire le vote. Il est possible de faire le vote en prenant ou non en compte la probabilité de la classe prédite.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#On déclare les participants au vote et la façon de voter</span>
+voting_clf <span class="sy0">=</span> VotingClassifier<span class="br0">&#40;</span>
+    estimators<span class="sy0">=</span><span class="br0">&#91;</span><span class="br0">&#40;</span><span class="st0">'lr'</span><span class="sy0">,</span> log_clf<span class="br0">&#41;</span><span class="sy0">,</span> <span class="br0">&#40;</span><span class="st0">'rf'</span><span class="sy0">,</span> rnd_clf<span class="br0">&#41;</span><span class="sy0">,</span> <span class="br0">&#40;</span><span class="st0">'svc'</span><span class="sy0">,</span> svm_clf<span class="br0">&#41;</span><span class="br0">&#93;</span><span class="sy0">,</span>
+    voting <span class="sy0">=</span> <span class="st0">'soft'</span>
+<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#On entraîne le modèle</span>
+voting_clf.<span class="me1">fit</span><span class="br0">&#40;</span>data_train<span class="sy0">,</span> data_res<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>SuperLearner<span class="br0">&#41;</span>
+&nbsp;
+x <span class="sy0">=</span> data_train<span class="br0">&#91;</span><span class="sy0">,</span><span class="nu0">1</span>:<span class="nu0">60</span><span class="br0">&#93;</span>
+y <span class="sy0">=</span> <span class="kw1">as</span>.<span class="me1">numeric</span><span class="br0">&#40;</span>data_train<span class="br0">&#91;</span><span class="sy0">,</span><span class="nu0">61</span><span class="br0">&#93;</span><span class="br0">&#41;</span>-<span class="nu0">1</span>
+&nbsp;
+vote <span class="sy0">&lt;</span>- CV.<span class="me1">SuperLearner</span><span class="br0">&#40;</span>y<span class="sy0">,</span>
+                        x<span class="sy0">,</span>
+                        V<span class="sy0">=</span><span class="nu0">5</span><span class="sy0">,</span>
+                        SL.<span class="me1">library</span><span class="sy0">=</span><span class="kw2">list</span><span class="br0">&#40;</span><span class="st0">&quot;SL.rpart&quot;</span><span class="sy0">,</span>
+                                        <span class="st0">&quot;SL.svm&quot;</span><span class="sy0">,</span>
+                                        <span class="st0">&quot;SL.glmnet&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+<p>
+Si vous voulez tuner vos modèles en R il sera nécessaire de redéfinir la fonction qu&#039;utilisera le modèle pour cela on utilise la syntaxe suivante :
+</p>
+<pre class="code python">SL.<span class="me1">rpart</span>.<span class="me1">tune</span> <span class="sy0">&lt;</span>- function<span class="br0">&#40;</span>...<span class="br0">&#41;</span><span class="br0">&#123;</span>
+  SL.<span class="me1">rpart</span><span class="br0">&#40;</span>...<span class="sy0">,</span>maxdepth <span class="sy0">=</span> <span class="nu0">2</span><span class="br0">&#41;</span>
+<span class="br0">&#125;</span></pre>
+
+<p>
+On appellera bien entendu dans le modèle la fonction <strong>SL.rpart.tune</strong> à la place de <strong>SL.rpart</strong>.
+</p>
+
+<p>
+<div class='alert alert-info'><strong>Info :</strong> Il est important de préciser qu&#039;au moment de préduire il faudra retranscrire les prédictions qui seront des probabilités à la classe 0 ou 1.</div>
+</p>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+<div class="table sectionedit3"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0 leftalign">              </td><th class="col1 centeralign">  SVM  </th><th class="col2 centeralign">  Forêt aléatoire  </th><th class="col3 centeralign">  Régression logistique  </th><th class="col4 centeralign">  Vote  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 centeralign">  Précision  </th><td class="col1 centeralign">  0.60  </td><td class="col2 centeralign">  0.76  </td><td class="col3 centeralign">  0.79  </td><td class="col4 centeralign">  0.86  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:3,&quot;range&quot;:&quot;4296-4431&quot;} -->
+<p>
+On voit clairement ici la puissance de cette méthode. On augmente concidérablement la précision tout en évitant un sur-apprentissage. 
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.analyticsvidhya.com/blog/2017/02/introduction-to-ensembling-along-with-implementation-in-r/" class="urlextern" title="https://www.analyticsvidhya.com/blog/2017/02/introduction-to-ensembling-along-with-implementation-in-r/" rel="nofollow">https://www.analyticsvidhya.com/blog/2017/02/introduction-to-ensembling-along-with-implementation-in-r/</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Faire varier l&#039;algorithme&quot;,&quot;hid&quot;:&quot;faire_varier_l_algorithme&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;1785-4697&quot;} -->
+<h3 class="sectionedit4" id="le_bagging_et_le_pasting">Le bagging et le pasting</h3>
+<div class="level3">
+
+<p>
+Il s&#039;agit d&#039;entraîner plusieurs arbres sur plusieurs ensembles différents. On tire avec remise (bagging) différents échantillons d&#039;un ensemble d&#039;entraînement. Ensuite, on entraîne le modèle et on recommence. Si le tirage est sans remise on appelle ce principe le pasting.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">ensemble</span> <span class="kw1">import</span> BaggingClassifier
+<span class="kw1">from</span> sklearn.<span class="me1">tree</span> <span class="kw1">import</span> DecisionTreeClassifier
+&nbsp;
+bagging_model <span class="sy0">=</span> BaggingClassifier<span class="br0">&#40;</span>DecisionTreeClassifier<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="co1">#type d'arbre utilisé pour l'entrainement</span>
+                                  bootstrap<span class="sy0">=</span><span class="kw2">True</span><span class="sy0">,</span> <span class="co1">#Tirage avec remise donc bagging</span>
+                                  n_estimators<span class="sy0">=</span> <span class="nu0">300</span><span class="sy0">,</span> <span class="co1">#Nombre d'arbres entraîné</span>
+                                  n_jobs<span class="sy0">=</span>-<span class="nu0">1</span><span class="sy0">,</span> <span class="co1">#Nombre de coeur CPU utilisé</span>
+                                  oob_score<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span> <span class="co1">#Possibilité de prédir la probabilité pour chaque prédiction</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>ipred<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>rpart<span class="br0">&#41;</span>
+data$V61 <span class="sy0">=</span> <span class="kw1">as</span>.<span class="me1">factor</span><span class="br0">&#40;</span>data$V61<span class="br0">&#41;</span>
+bag <span class="sy0">&lt;</span>- bagging<span class="br0">&#40;</span>
+            formula <span class="sy0">=</span> data$V61 <span class="sy0">~</span> .<span class="sy0">,</span>
+            data <span class="sy0">=</span> data<span class="sy0">,</span>
+            nbagg <span class="sy0">=</span> <span class="nu0">300</span><span class="sy0">,</span>  
+            coob <span class="sy0">=</span> TRUE<span class="sy0">,</span>
+            control <span class="sy0">=</span> rpart.<span class="me1">control</span><span class="br0">&#40;</span>minsplit <span class="sy0">=</span> <span class="nu0">2</span><span class="sy0">,</span> cp <span class="sy0">=</span> <span class="nu0">0</span><span class="br0">&#41;</span>
+<span class="br0">&#41;</span></pre>
+
+<p>
+Quand on utilise du bagging un des avantages est la possibilité de mettre de récupérer un jeux de donnée qui n&#039;a pas encore été pioché pour la construction d&#039;élément du modèle. Il possible de tester son modèle sur cet ensemble ce qui nous évite par la même occasion de découper notre jeux de données au démarrage et se priver d&#039;une partie des données.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">bagging_model.<span class="me1">oob_score_</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python"><span class="co1">#Pour le bagging </span>
+bag$err
+&nbsp;
+<span class="co1">#Pour la random forest</span>
+err <span class="sy0">&lt;</span>- foret_alea$err.<span class="me1">rate</span>
+oob_err <span class="sy0">&lt;</span>- err<span class="br0">&#91;</span>nrow<span class="br0">&#40;</span>err<span class="br0">&#41;</span><span class="sy0">,</span> <span class="st0">&quot;OOB&quot;</span><span class="br0">&#93;</span>
+<span class="kw1">print</span><span class="br0">&#40;</span>oob_err<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+On arrive avec ce modèle à une précision de <strong>0.88</strong>.
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://perso.univ-rennes2.fr/system/files/users/rouviere_l/poly_apprentissage.pdf" class="urlextern" title="https://perso.univ-rennes2.fr/system/files/users/rouviere_l/poly_apprentissage.pdf" rel="nofollow">https://perso.univ-rennes2.fr/system/files/users/rouviere_l/poly_apprentissage.pdf</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le bagging et le pasting&quot;,&quot;hid&quot;:&quot;le_bagging_et_le_pasting&quot;,&quot;codeblockOffset&quot;:5,&quot;secid&quot;:4,&quot;range&quot;:&quot;4698-6664&quot;} -->
+<h3 class="sectionedit5" id="les_forets_aleatoires">Les forêts aléatoires</h3>
+<div class="level3">
+
+<p>
+Les forêts aléatoires sont des modèles très performant qui améliorent les modèles du type bagging. En effet, au lien d&#039;entraîner les arbres sur toutes les variables explicatives les forêts aléatoires n&#039;en prennent qu&#039;un certain nombre tiré aléatoirement à chacun des nœuds de l&#039;arbre construit. A la fin comme pour le bagging un vote est effectué.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">ensemble</span> <span class="kw1">import</span> RandomForestClassifier
+foret_mod <span class="sy0">=</span> RandomForestClassifier<span class="br0">&#40;</span>n_estimators<span class="sy0">=</span> <span class="nu0">500</span><span class="sy0">,</span>max_depth<span class="sy0">=</span> <span class="nu0">4</span><span class="sy0">,</span> n_jobs<span class="sy0">=</span>-<span class="nu0">1</span><span class="sy0">,</span> oob_score<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span>
+foret_mod.<span class="me1">fit</span><span class="br0">&#40;</span>data_train<span class="sy0">,</span> data_res<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>randomForest<span class="br0">&#41;</span>
+foret_alea <span class="sy0">=</span> randomForest<span class="br0">&#40;</span>V61<span class="sy0">~</span>.<span class="sy0">,</span> data <span class="sy0">=</span> data_train<span class="sy0">,</span> ntree <span class="sy0">=</span> <span class="nu0">500</span><span class="sy0">,</span> maxnodes <span class="sy0">=</span> <span class="nu0">2</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+On trouve pour ce modèle une précision de <strong>0.83</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les for\u00eats al\u00e9atoires&quot;,&quot;hid&quot;:&quot;les_forets_aleatoires&quot;,&quot;codeblockOffset&quot;:9,&quot;secid&quot;:5,&quot;range&quot;:&quot;6665-7489&quot;} -->
+<h3 class="sectionedit6" id="le_stacking">Le stacking</h3>
+<div class="level3">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ales_foret_de_classification_et_de_regression&amp;media=cpp:blender.jpg" class="media" title="cpp:blender.jpg"><img src="/lib/exe/fetch.php?w=300&amp;tok=caad45&amp;media=cpp:blender.jpg" class="mediacenter" alt="" width="300" /></a>
+Pour le moment nous avons toujours utilisé des façons de combiner les modèles “simples”, pour la classification nous utilisions le vote majoritaire et pour la régression la moyenne. Cependant, il ne s&#039;agit pas forcément de la meilleur solution. Il est préférable dans certains cas d&#039;entraîner un modèle sur les prédictions de différents modèles sur les mêmes étiquettes pour faire cette agrégation.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">ensemble</span> <span class="kw1">import</span> StackingClassifier
+<span class="kw1">from</span> sklearn.<span class="me1">ensemble</span> <span class="kw1">import</span> RandomForestClassifier
+<span class="kw1">from</span> sklearn.<span class="me1">svm</span> <span class="kw1">import</span> SVC
+<span class="kw1">from</span> sklearn.<span class="me1">preprocessing</span> <span class="kw1">import</span> StandardScaler
+<span class="kw1">from</span> sklearn.<span class="me1">pipeline</span> <span class="kw1">import</span> make_pipeline
+<span class="kw1">from</span> sklearn.<span class="me1">linear_model</span> <span class="kw1">import</span> LogisticRegression
+&nbsp;
+estimators <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#40;</span><span class="st0">'rf'</span><span class="sy0">,</span> RandomForestClassifier<span class="br0">&#40;</span>n_estimators<span class="sy0">=</span><span class="nu0">10</span><span class="sy0">,</span> random_state<span class="sy0">=</span><span class="nu0">42</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+     <span class="br0">&#40;</span><span class="st0">'svc'</span><span class="sy0">,</span> make_pipeline<span class="br0">&#40;</span>StandardScaler<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> SVC<span class="br0">&#40;</span>random_state<span class="sy0">=</span><span class="nu0">42</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+&nbsp;
+clf <span class="sy0">=</span> StackingClassifier<span class="br0">&#40;</span>estimators<span class="sy0">=</span>estimators<span class="sy0">,</span> final_estimator<span class="sy0">=</span>LogisticRegression<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+clf.<span class="me1">fit</span><span class="br0">&#40;</span>data_train<span class="sy0">,</span>data_res<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>caretEnsemble<span class="br0">&#41;</span>
+&nbsp;
+arbre <span class="sy0">&lt;</span>- caretEnsemble::caretModelSpec<span class="br0">&#40;</span>method<span class="sy0">=</span><span class="st0">&quot;rpart&quot;</span><span class="sy0">,</span>tuneGrid<span class="sy0">=</span>data.<span class="me1">frame</span><span class="br0">&#40;</span>cp<span class="sy0">=</span><span class="nu0">0</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+adl <span class="sy0">&lt;</span>- caretEnsemble::caretModelSpec<span class="br0">&#40;</span>method<span class="sy0">=</span><span class="st0">&quot;lda&quot;</span><span class="br0">&#41;</span>
+svmRbf <span class="sy0">&lt;</span>- caretEnsemble::caretModelSpec<span class="br0">&#40;</span>method<span class="sy0">=</span><span class="st0">&quot;svmRadial&quot;</span><span class="sy0">,</span>tuneGrid<span class="sy0">=</span>data.<span class="me1">frame</span><span class="br0">&#40;</span>C<span class="sy0">=</span><span class="nu0">1</span><span class="sy0">,</span>sigma<span class="sy0">=</span><span class="nu0">0.1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+control_stacking <span class="sy0">&lt;</span>- trainControl<span class="br0">&#40;</span>method<span class="sy0">=</span><span class="st0">&quot;repeatedcv&quot;</span><span class="sy0">,</span> number<span class="sy0">=</span><span class="nu0">5</span><span class="sy0">,</span> repeats<span class="sy0">=</span><span class="nu0">2</span><span class="sy0">,</span> savePredictions<span class="sy0">=</span><span class="st0">&quot;all&quot;</span><span class="sy0">,</span> classProbs<span class="sy0">=</span>TRUE<span class="br0">&#41;</span>
+stakking <span class="sy0">&lt;</span>- caretEnsemble::caretList<span class="br0">&#40;</span>V61 <span class="sy0">~</span> .<span class="sy0">,</span> data <span class="sy0">=</span> data_train<span class="sy0">,</span> trControl <span class="sy0">=</span> control_stacking<span class="sy0">,</span> tuneList <span class="sy0">=</span> <span class="kw2">list</span><span class="br0">&#40;</span>arbre<span class="sy0">,</span>adl<span class="sy0">,</span>svmRbf<span class="br0">&#41;</span><span class="br0">&#41;</span>
+mStack <span class="sy0">&lt;</span>- caretEnsemble::caretStack<span class="br0">&#40;</span>modeles<span class="sy0">,</span>method<span class="sy0">=</span><span class="st0">&quot;glm&quot;</span><span class="sy0">,</span>trControl<span class="sy0">=</span>trainControl<span class="br0">&#40;</span>method<span class="sy0">=</span><span class="st0">&quot;none&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+On obtient ici un score de <strong>0.80</strong>.
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Stacking_avec_R.pdf" class="urlextern" title="http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Stacking_avec_R.pdf" rel="nofollow">http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Stacking_avec_R.pdf</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.pluralsight.com/guides/ensemble-modeling-with-r" class="urlextern" title="https://www.pluralsight.com/guides/ensemble-modeling-with-r" rel="nofollow">https://www.pluralsight.com/guides/ensemble-modeling-with-r</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.datacamp.com/community/tutorials/ensemble-r-machine-learning" class="urlextern" title="https://www.datacamp.com/community/tutorials/ensemble-r-machine-learning" rel="nofollow">https://www.datacamp.com/community/tutorials/ensemble-r-machine-learning</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le stacking&quot;,&quot;hid&quot;:&quot;le_stacking&quot;,&quot;codeblockOffset&quot;:11,&quot;secid&quot;:6,&quot;range&quot;:&quot;7490-9469&quot;} -->
+<h2 class="sectionedit7" id="booster_son_modele">Booster son modèle</h2>
+<div class="level2">
+
+<p>
+Le boosting est une méthode d&#039;ensemble qui vise à entraîner des modèles successifs chacun prenant en compte les mauvaises prédictions du modèle précédent. Il existe beaucoup de modèles mais les deux plus utilisés restent Adaboost et le Gradient Boost.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Booster son mod\u00e8le&quot;,&quot;hid&quot;:&quot;booster_son_modele&quot;,&quot;codeblockOffset&quot;:13,&quot;secid&quot;:7,&quot;range&quot;:&quot;9470-9762&quot;} -->
+<h3 class="sectionedit8" id="adaboost">Adaboost</h3>
+<div class="level3">
+
+<p>
+Essayons de donner une idée globale du fonctionnement en développant un Adaboost utilisé pour la classification.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ales_foret_de_classification_et_de_regression&amp;media=cpp:boostersonarbre.png" class="media" title="cpp:boostersonarbre.png"><img src="/lib/exe/fetch.php?w=900&amp;tok=f58fe0&amp;media=cpp:boostersonarbre.png" class="mediacenter" alt="" width="900" /></a>
+</p>
+
+<p>
+L&#039;adaboost entraîne un premier modèle sur l&#039;ensemble des observations, il en résulte des bonnes et mauvaises classifications. On assigne ensuite aux observations qui ont été mal classées un poids plus important. Ensuite, on réitère le processus autant de fois que voulu en changeant à chaque fois le poids des observations males classée.
+</p>
+
+<p>
+Enfin, on pondère chacun des modèles par leur précision globale et on procède comme pour un les modèles d&#039;ensemble vu précédemment.
+</p>
+
+<p>
+<strong>Théorie :</strong>
+</p>
+
+<p>
+Au démarrage chacune des observations a une probabilité de $\frac{1}{m}$ où m est le nombre d&#039;observations. On va ensuite assigner à chacun des modèles j un taux d&#039;erreur :
+</p>
+
+<p>
+$$\tau_{j} = \frac{Somme \, des \, poids \, des \, observations \, males \, prédites}{Somme \, des \, poids \, des \, observations \, bien \, prédites}$$
+</p>
+
+<p>
+On donne ensuite un poids au modèle :
+</p>
+
+<p>
+$$\alpha_{j} = \eta \, log(\frac{1 - \tau_{j}}{\tau_{j}})$$
+</p>
+
+<p>
+Dans l&#039;algorithme original, il n&#039;y avait pas de $\eta$. Il s&#039;agit du taux d&#039;apprentissage qui part desfaut sera fixé à 1. Il faut ensuite fixer les poids des observations qui étaient males classées.
+</p>
+
+<p>
+$$w_{i} = w_{i} \, exp(\alpha_{i})$$
+</p>
+
+<p>
+Pour trouver la prédiction d&#039;une nouvelle observation on fera la somme des $\alpha_i$ ayant la même prédiction et on prendra la prédiction qui a le résultat le plus élevé.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">ensemble</span> <span class="kw1">import</span> AdaBoostClassifier
+ada_clf <span class="sy0">=</span> AdaBoostClassifier<span class="br0">&#40;</span>DecisionTreeClassifier<span class="br0">&#40;</span>max_depth<span class="sy0">=</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="sy0">,</span>n_estimators<span class="sy0">=</span><span class="nu0">200</span><span class="sy0">,</span> algorithm<span class="sy0">=</span><span class="st0">&quot;SAMME.R&quot;</span><span class="sy0">,</span> learning_rate<span class="sy0">=</span><span class="nu0">0.5</span><span class="br0">&#41;</span>
+ada_clf.<span class="me1">fit</span><span class="br0">&#40;</span>data_train<span class="sy0">,</span> data_res<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>adabag<span class="br0">&#41;</span>
+m.<span class="me1">boosting</span> <span class="sy0">&lt;</span>- boosting<span class="br0">&#40;</span>V61 <span class="sy0">~</span> .<span class="sy0">,</span> data <span class="sy0">=</span> data<span class="sy0">,</span> boos <span class="sy0">=</span> TRUE<span class="sy0">,</span> mfinal <span class="sy0">=</span> <span class="nu0">100</span><span class="br0">&#41;</span></pre>
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> On prend ici des arbres de faible profondeur pour entraîner le modèle afin d&#039;éviter l&#039;overfiting.</div>
+</p>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+La précision mesurée pour ce modèle est de <strong>0.88</strong>. 
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Gradient_Boosting.pdf" class="urlextern" title="http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Gradient_Boosting.pdf" rel="nofollow">http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Gradient_Boosting.pdf</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Adaboost&quot;,&quot;hid&quot;:&quot;adaboost&quot;,&quot;codeblockOffset&quot;:13,&quot;secid&quot;:8,&quot;range&quot;:&quot;9763-11985&quot;} -->
+<h3 class="sectionedit9" id="gradient_boost">Gradient boost</h3>
+<div class="level3">
+
+<p>
+Le Gradient Boost Model (GBM) est une autre variante de l&#039;adaboost qui est extrémement puissante et a donné naissance aux célèbres algorithmes XGBoost et MBoost (algorithmes vainqueurs de nombreux hackathons). 
+</p>
+
+<p>
+Le GBM (Gradient Boosting Model) utilise comme le nom l&#039;indique une descente de gradient pour ajuster les modèles au mieux. Vous ne l&#039;avez peut-être pas remarqué mais l&#039;adaboost aussi fait une descente de gradient sur la fonction exponentiel. Le GBM est donc une généralisation à plusieurs fonctions coûts de l&#039;adaboost.
+</p>
+
+<p>
+<strong>Théorie :</strong>
+</p>
+
+<p>
+Essayons de développer un peu le principe de cet algorithme pour mieux comprendre son fonctionnement et ainsi pouvoir mieux le paramétrer. On commence par créer des indicatrices pour chacune des modalités :
+</p>
+
+<p>
+$$
+y^k_i = \left\{
+    \begin{array}{ll}
+        1 &amp; \mbox{si } Y_{i} = k \\
+        0 &amp; \mbox{sinon.}
+    \end{array}
+\right.
+$$
+</p>
+
+<p>
+Grâce à ces fonctions indicatrices on peut ensuite  construire une fonction coût qu&#039;on cherchera à minimiser grâce à la descente de gradient :
+</p>
+
+<p>
+$$ j(y_{i}, f(x_{i})) = - \sum^K_{k=1} y_i^k * log \, \pi^k(x_i)$$
+</p>
+
+<p>
+On peut calculer à partir de cette fonction un gradient qui nous sert pour appliquer l&#039;algorithme de la descente de gradient 
+</p>
+
+<p>
+$$\nabla j(y_i, f(x_i)) = y_i^k - \pi^k(x_i)$$
+</p>
+
+<p>
+On construit ensuite un arbre de régression $M^k_b$ sur chacun des $-\nabla j(y_i, f(x_i))$. On les combine ensuite en les pondérant par leur précision et on obtient notre modèle.
+</p>
+
+<p>
+<strong>Synthèse :</strong>
+</p>
+
+<p>
+A partir de Y est généré K variables indicatrices $y^k$
+</p>
+
+<p>
+Créer les K modèles initiaux $f^k_0()$ pour chaque indicatrice
+</p>
+
+<p>
+<strong>REPETER JUSQU&#039;A CONVERGENCE :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> Calculer les K gradients négatifs $-\nabla j(y^k, f^k)$</div>
+</li>
+<li class="level1"><div class="li"> Construire un arbre de régression $M^k_b$ sur chaque $-\nabla j(y^k, f^k)$</div>
+</li>
+<li class="level1"><div class="li"> $f^k_b = f^k_{b-1} + \lambda_b * M^k_b$</div>
+</li>
+</ul>
+<div class="table sectionedit10"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Théorie  </th><th class="col1 centeralign">  Explication  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  $\pi^k$  </td><td class="col1 centeralign">   La probabilité conditionnelle d’appartenance à la classe &#039;k&#039;  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  $f$  </td><td class="col1 centeralign">  Le modèle additif issu de la somme des arbres de régression $M^k_b$  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  $\lambda_b$  </td><td class="col1 centeralign">  Pondération par rapport à la précision du modèle  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:10,&quot;range&quot;:&quot;13856-14129&quot;} -->
+<p>
+<em class="u">En Python :</em>
+</p>
+
+<p>
+Il faudra encoder la variable cible avant de lancer cette algorithme.
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">ensemble</span> <span class="kw1">import</span> GradientBoostingClassifier
+<span class="kw1">from</span> sklearn.<span class="me1">metrics</span> <span class="kw1">import</span> accuracy_score
+&nbsp;
+gradient_mod <span class="sy0">=</span> GradientBoostingClassifier<span class="br0">&#40;</span>max_depth<span class="sy0">=</span><span class="nu0">2</span><span class="sy0">,</span> warm_start<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span>
+gradient_mod.<span class="me1">fit</span><span class="br0">&#40;</span>data_train<span class="sy0">,</span> data_res<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>gbm<span class="br0">&#41;</span>
+<span class="co1">#Notez qu'il est nécessaire d'encoder la sortie pour appliquer cette algorithme sous R pour certaines distribution comme binomiale</span>
+<span class="co1">#data$V61 &lt;- ifelse(data$V61 == &quot;R&quot;, 1, 0)</span>
+&nbsp;
+gbm_mod <span class="sy0">&lt;</span>- gbm<span class="br0">&#40;</span>formula <span class="sy0">=</span> V61 <span class="sy0">~</span> .<span class="sy0">,</span>
+                  distribution<span class="sy0">=</span><span class="st0">&quot;multinomial&quot;</span><span class="sy0">,</span>
+                  data <span class="sy0">=</span> data<span class="sy0">,</span>
+                  n.<span class="me1">trees</span> <span class="sy0">=</span> <span class="nu0">3</span><span class="sy0">,</span>
+                  interaction.<span class="me1">depth</span> <span class="sy0">=</span> <span class="nu0">2</span><span class="br0">&#41;</span></pre>
+
+<p>
+Développons un peu la façon d&#039;effectuer des prédiction avec cet algorithme en R.  On va observer ainsi la probabilité pour les deux différentes classes et on choisira en conséquense.
+</p>
+<pre class="code python">prediction <span class="sy0">&lt;</span>- predict.<span class="me1">gbm</span><span class="br0">&#40;</span>gbm_mod<span class="sy0">,</span> newdata <span class="sy0">=</span> data<span class="br0">&#91;</span><span class="sy0">,</span><span class="nu0">0</span>:<span class="nu0">60</span><span class="br0">&#93;</span><span class="sy0">,</span> n.<span class="me1">trees</span> <span class="sy0">=</span> <span class="nu0">3</span><span class="sy0">,</span> <span class="kw2">type</span> <span class="sy0">=</span> <span class="st0">&quot;response&quot;</span><span class="br0">&#41;</span>
+<span class="kw1">print</span><span class="br0">&#40;</span>head<span class="br0">&#40;</span>prediction<span class="br0">&#91;</span><span class="sy0">,,</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">,</span><span class="nu0">6</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+factor<span class="br0">&#40;</span>levels<span class="br0">&#40;</span>data$V61<span class="br0">&#41;</span><span class="br0">&#91;</span>apply<span class="br0">&#40;</span>prediction<span class="br0">&#91;</span><span class="sy0">,,</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">,</span><span class="nu0">1</span><span class="sy0">,</span>which.<span class="kw2">max</span><span class="br0">&#41;</span><span class="br0">&#93;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> On remarque encore une fois qu&#039;il est préférable de ne pas mettre des arbres de profondeur trop importante sous peine d&#039;avoir de l&#039;overfiting et baisser concidérablement la précision du modèle.</div>
+</p>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+On obtiendra pour ce modèle une précision de <strong>0.88</strong>.
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://towardsdatascience.com/understanding-gradient-boosting-machines-9be756fe76ab" class="urlextern" title="https://towardsdatascience.com/understanding-gradient-boosting-machines-9be756fe76ab" rel="nofollow">https://towardsdatascience.com/understanding-gradient-boosting-machines-9be756fe76ab</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://eric.univ-lyon2.fr/~ricco/cours/slides/gradient_boosting.pdf" class="urlextern" title="http://eric.univ-lyon2.fr/~ricco/cours/slides/gradient_boosting.pdf" rel="nofollow">http://eric.univ-lyon2.fr/~ricco/cours/slides/gradient_boosting.pdf</a></div>
+</li>
+</ul>
+
+<p>
+<div class='alert alert-success'><strong>Approfondir :</strong> Il est intéressant d&#039;approfondir le concept en cherchant des éléments sur <a href="https://www.datacamp.com/community/tutorials/xgboost-in-python" class="urlextern" title="https://www.datacamp.com/community/tutorials/xgboost-in-python" rel="nofollow">  XGBoost  </a> qui est un des algorithmes les plus performant en compétition.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Gradient boost&quot;,&quot;hid&quot;:&quot;gradient_boost&quot;,&quot;codeblockOffset&quot;:15,&quot;secid&quot;:9,&quot;range&quot;:&quot;11986-&quot;} -->

@@ -1,0 +1,6 @@
+<span class="kw1">from</span> sklearn.<span class="me1">datasets</span> <span class="kw1">import</span> load_iris
+<span class="kw1">from</span> sklearn.<span class="me1">feature_selection</span> <span class="kw1">import</span> VarianceThreshold
+&nbsp;
+iris <span class="sy0">=</span> load_iris<span class="br0">&#40;</span><span class="br0">&#41;</span>
+X <span class="sy0">=</span> iris.<span class="me1">data</span>
+y <span class="sy0">=</span> iris.<span class="me1">target</span>

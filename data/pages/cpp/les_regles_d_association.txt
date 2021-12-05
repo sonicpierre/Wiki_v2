@@ -1,0 +1,83 @@
+
+=====Les règles d'association=====
+
+Nous allons travailler avec un DataSet qui recense plusieurs tickets de caisse par pays. Nous avons un peu pré-traité le dataset pour qu'il soit directement utilisable pour la construction de règle. Vous trouverez le dataset utilisé [[https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Exploration%20des%20donnees/Data%20ticket%20caisse| ici]] ainsi que le code qui a permi de le pré-traité.
+
+{{ :cpp:association_rules.png?800 |Règles d'association}}
+
+On va voir comment faire des règles d'association entre les éléments de tickets de caisse. Le but étant de faire ressortir les combinaisons de produits les plus courants, afin de proposer de possibles achats associés.
+
+====Forme des données et spécificité Python====
+
+Il faut avant tout que les données aient une forme particulière, par exemple que chacun des produits et des tickets de caisse soient reliés par un même ID. 
+
+|              ^ ID Ticket    ^ Produit    ^
+^ 1      | 1            | Pêche            |
+^ 2      | 1            | Prune            |
+^ 3      | 2            | Abricot          |
+
+Ensuite il est nécessaire de rendre le dataset binaire. Il y aura des 0 quand le produit n'est pas présent dans le ticket et 1 s’il est présent.
+
+<code python>
+import pandas as pd
+dodo = pd.read_csv(("produit.csv"))
+#tableau croisé 0/1
+DataFrame = pd.crosstab(dodo.NumTicket,dodo.Produit)
+DataFrame.columns #Permet d'avoir les colonnes
+</code>
+
+On peut appliquer l'algorithme qui calcule à chaque fois le support et élimine les combinaisons dont le support est trop bas.
+
+<code python>
+#importation de la fonction apriori
+from mlxtend.frequent_patterns import apriori
+ 
+#itemsets frequents
+freq_itemsets = apriori(DataFrame,min_support=0.025,max_len=3, use_colnames=True)
+freq_itemsets.iloc[60:80, :]
+</code>
+
+**Résultat :**
+
+{{ :cpp:resultatassociation.png?250 |}}
+
+**Remarque :** 
+
+Parfois, on obtient trop de règles et elles ne sont pas exploitables c'est pourquoi il peut être intéressant de faire ressortir certaines règles. Pour cela, il existe une librairie particulière utilisée en Python :
+
+<code python>
+#fonction de calcul des règles
+from mlxtend.frequent_patterns import association_rules
+
+#génération des règles à partir des itemsets fréquents
+regles = association_rules(freq_itemsets,metric="confidence",min_threshold=0.75)
+</code>
+====Forme des données et spécificité en R====
+
+En R, il est possible de trouver les règles sur le dataFrame brut. Commençon par charger les données et les librairies qui vont nous permettre de le faire.
+
+<code python>
+library(arules)
+library(arulesViz)
+data = read.csv("produitPourR.csv")
+data = data[,-1]
+</code>
+
+On peut ensuite lancer l'algorithme et contrairement à Python visualiser les règles construites.
+
+<code python>
+rules = apriori(data, parameter = list(support=0.01, confidence=0.5, minlen=2))
+inspect(sort(rules,by="confidence"))
+plot (rules[1:19],method="graph",shading="confidence")
+</code>
+
+**Résultat :**
+
+{{ :cpp:association.png.png?700 |}}
+
+
+**Source :**
+
+  * [[http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Python_Association_Rules.pdf]]
+  * [[http://eric.univ-lyon2.fr/~ricco/cours/slides/regles_association.pdf]]
+  * [[https://freres.peyronnet.eu/trouver-la-bonne-association-a-laide-du-data-miningmachine-learning/]]

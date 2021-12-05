@@ -1,0 +1,3 @@
+h<span class="sy0">=</span>hclust<span class="br0">&#40;</span>distance<span class="sy0">,</span> <span class="st0">&quot;ward.D2&quot;</span><span class="br0">&#41;</span> <span class="co1"># crée l’arbre</span>
+c<span class="sy0">=</span>cutree<span class="br0">&#40;</span>h<span class="sy0">,</span>k<span class="sy0">=</span><span class="nu0">2</span><span class="br0">&#41;</span> <span class="co1"># crée les classes</span>
+plot<span class="br0">&#40;</span>h<span class="br0">&#41;</span> <span class="co1"># affiche le dendrogramme</span>

@@ -1,0 +1,608 @@
+[[cpp:IA| Machine Learning]]
+{{:cpp:visualisationdata.jpg?580|}}
+\\
+\\
+Cette partie présente les différents types de graphiques qui permettent de réaliser des analyses de données pertinentes.
+Pour appliquer notre code, nous utiliserons le plus souvent le dataset des fleurs d'iris qui fait partie des jeux de données de classification les plus connus.
+
+==Importation du dataset ==
+
+__Code Python__
+
+<code python>
+from sklearn.datasets import load_iris
+
+iris = load_iris()
+X = iris.data
+y = iris.target
+</code>
+
+__Code R__
+
+<code python>
+library(datasets)
+library(dplyr)
+
+data(iris)
+X <- select(iris, "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width")
+y <- as.numeric(iris$Species)
+</code>
+
+=====Graphiques basiques=====
+
+====Le nuage de points====
+
+Il s'agit d'une des meilleures façons de visualiser notre dataset : chaque point va représenter un individu. Le nuage de points permet de représenter les données en fonction de plusieurs variables et d'observer le degré de corrélation entre elles.
+Cependant, il ne sera possible de représenter que deux variables en même temps.
+
+__Code Python__
+
+<code python>
+
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(12,6))
+plt.scatter(X[:, 0], X[:, 1], c=y, alpha=1, s=X[:,2]*100)# c définit la couleur selon le type de fleur, # alpha gère la transparence des points, # s controle la taille des points
+# On exprime s de cette façon pour controler la taille en fonction de la troisième variable du dataset (plus le point est gros, plus le petal de la fleur est long).
+plt.xlabel("Longueur sépale")
+plt.ylabel("Largeur sépale")
+formatter = plt.FuncFormatter(lambda i, *args: iris.target_names[int(i)])
+plt.colorbar(ticks=[0, 1, 2], format=formatter)
+</code>
+
+__Code R__
+
+<code python>
+plot(iris$Sepal.Length, iris$Sepal.Width, col=y)
+</code>
+
+==Résultat==
+
+{{ :cpp:iriss.png?600 |Nuage de points}}
+
+;#;**Figure 1 :** nuage de points 
+;#;
+
+
+<alert info>**Remarque** : on voit ici qu'il y a une corrélation positive entre la longueur et la largeur du sépale pour les fleurs setosa.</alert>
+====Les courbes====
+
+Les courbes peuvent être intéressantes pour visualiser l'entrainement du modèle et repérer ce qui pourrait être problématique comme l'overfitting. Nous les utiliserons aussi pour visualiser les descentes de gradient et d'autres algorithmes très utilisés.
+
+__Code Python__ :
+
+<code python>
+import numpy as np
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(10,8))
+x = np.linspace(-5, 5, 1000)
+y = x**3
+plt.plot(x,y)
+</code>
+
+__Code R :__
+
+<code python>
+library(pracma)
+
+x <- linspace(-5, 5, 1000)
+y <- x**3
+plot(x,y, type = "l")
+</code>
+
+**Résultat :**
+
+{{ :cpp:courbexcube.png?400 |}}
+
+;#;**Figure 2 :** Courbe d'évolution de la fonction $X^{3}$
+;#;
+====Les histogrammes====
+
+Permettant de visualiser la distribution des variables, ce graphique sera d'une grande aide lorsqu'on voudra vérifier que nos données sont distribuées selon une loi particulière. 
+
+__Code Python__
+
+<code python>
+import matplotlib.pyplot as plt
+
+plt.hist(X[:,0])# A l'intérieur de la fonction d'histogramme on peut choisir de modifier le paramètre bins, qui 
+#détermine le nombre de section qu'on veut dans l'histogramme.
+plt.xlabel("Longueur sépale")
+plt.ylabel("Nombre d\'apparition")
+</code>
+
+**NB :** il est possible de cumuler la distribution de deux variables sur un même graphique. Il suffit (par exemple) d'ajouter au code précédent, la commande de dessin pour la variable voulue. Prenons la variable 1 avec //plt.hist(X[:,1])//.
+
+
+__Code R__
+
+<code python>
+hist(X$Sepal.Length)
+</code>
+
+==Résultat==
+
+{{ :cpp:his.png?600 |Histogramme}}
+
+;#;**Figure 3 :** Distribution de la longueur du sépale pour toutes les fleurs d'iris.
+;#;
+
+En abscisse, on observe les différentes tailles de sépales, il en ressort que le sépale le plus petit mesure environ 4.5 cm et le plus long environ 8 cm. En ordonnée,
+on observe la fréquence des différents sépales :  par exemple, il y a (environ) 10 fois un sépale faisant 4.5 cm.
+
+====Les diagrammes en barre====
+
+Ces diagrammes sont particulièrement intéressants pour visualiser des lois discrètes en probabilité comme une loi de Poisson définie comme suit :
+
+__Code Python__
+
+<code python>
+def loiPoisson(parametre):
+    n, proba = 0, np.exp(-parametre)
+    F = proba
+    U = np.random.uniform()
+    while U>F:
+        proba = (parametre / (n + 1)) * proba
+        F = F + proba
+        n = n + 1
+    return n
+</code>
+
+
+
+On peut alors la représenter en utilisant un barplot qui permettra un rendu beaucoup plus propre qu'un histogramme :
+
+__Code Python__
+
+<code python>
+
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(10,4))
+#La fonction table Poisson itère les simulations de Poisson et les place dans un tableau.
+A = tabDeLoiPoisson(0.8, 10000)
+plt.title("Loi de poisson")
+label, nb = np.unique(A, return_counts=True)
+plt.bar(label,nb, width=0.3)
+</code>
+
+__Code R__
+
+<code python>
+lambda <- .8#Lambda
+n <- 10000#DTaille de l'échantillon
+
+ech <- rpois(n, lambda)#Loi de Poisson
+
+barplot(table(ech))#Représentation graphique
+</code>
+
+==Résultat==
+
+{{ :cpp:barplotpython.png?600 | Barre Plot}}
+
+;#;**Figure 4 :** Diagramme bâtons de la loi de Poisson
+;#;
+
+==Source==
+  * [[http://www.sthda.com/french/wiki/ggplot2-barplots-guide-de-demarrage-rapide-logiciel-r-et-visualisation-de-donnees|STHDA]]
+
+====Les camemberts====
+
+Ce type de graphique est très utile lorsqu'il s'agit de représenter des données en pourcentage.
+
+__Code Python__
+
+<code python>
+
+import matplotlib.pyplot as plt
+
+labels = 'Oui', 'Non', 'Peut-être' # Titre des données
+sizes = [250, 780, 1051] # Effectif de chaque données
+colors = ['gold', 'lightcoral', 'lightskyblue'] # Définition d'une couleur
+plt.pie(sizes, labels=labels, colors=colors,autopct='%1.1f%%', startangle=150) # Génération du graphique avec # autopct permettant l'affichage des pourcentages correspondants,# startangle Réglage de la position des labels par rapport au graphique 
+plt.axis('equal') # Permet d'avoir un cercle arrondi
+plt.title(u'Répartition des avis', size = 'x-large')
+plt.show()
+</code>
+
+__Code R__
+
+<code Python>
+sizes<- c(250, 780, 1051)
+labels <- c("Oui", "Non", "Peut-être")
+colors <- c("gold", "lightcoral", "lightskyblue")
+pie(sizes, col = colors, labels = paste0(labels, " ", round(sizes / sum(sizes) * 100, 1), "%"), main="Répartition des avis")
+</code>
+
+==Résultat==
+
+{{ :cpp:cam.png?400 |}}
+
+;#;**Figure 5 :** Diagramme camembert
+;#;
+
+=====Graphiques avancés=====
+
+====Graphique 3D====
+
+Observation en trois dimensions du nuage de points généré précédemment.
+
+__Code Python__
+
+<code python>
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(12,6))
+ax = plt.axes(projection='3d')
+ax.scatter(X[:, 0], X[:, 1], X[:, 2], c=y,  alpha=.65, s=X[:,2]*100)
+
+plt.xlabel("Longueur sépale")
+plt.ylabel("Largeur sépale")
+ax.set_zlabel('Longueur pétale')
+</code>
+
+Pour pouvoir visualiser le graphique dans une fenêtre et pouvoir zoomer et/ou changer de point de vue,
+ajoutez la commande suivante lors de l'importation de Axes3D :
+
+<code python>
+%matplotlib
+</code>
+
+__Code R__
+
+<code python>
+library(scatterplot3d)
+
+colors <- c("#999999", "#E69F00", "#56B4E9")# Définition des couleurs
+colors <- colors[as.numeric(iris$Species)]# Attribution de chaque couleur à un type de fleur
+scatterplot3d(iris[,1:3], pch = 1, color=colors)# Construction du grahique, #pch = 1 étant la forme arondie des points
+legend("right", legend = levels(iris$Species),
+       col =  c("#999999", "#E69F00", "#56B4E9"), pch = 1)# Affichage de la légende et correspondance des couleurs des fleurs
+</code>
+
+==Résultat==
+
+{{ :cpp:3dd.png?600 |}}
+
+;#;**Figure 6 :** Représentation 3D des fleurs d'iris
+;#;
+
+====Histogramme 2D====
+
+Il est possible d'avoir des histogrammes 2D  pour visualiser la répartition des données selon deux variables.
+
+__Code Python__
+
+<code python>
+import matplotlib.pyplot as plt
+
+plt.hist2d(X[:,0], X[:,1])
+plt.xlabel("Longueur sépale")
+plt.ylabel("Largeur sépale")
+plt.colorbar() 
+</code>
+
+Pour avoir une meilleure vision des combinaisons les plus présentes, on peut obtenir des couleurs plus claires avec la commande //cmap='Blues'// dans la fonction d'histogramme 2D.
+
+__Code R__
+
+<code python>
+library(ggplot2)
+
+histo <- ggplot(iris, aes(X$Sepal.Length, X$Sepal.Width))
+histo <- histo + stat_bin2d(bins = 20)
+histo
+</code>
+
+==Résultat==
+
+{{ :cpp:2d.png?600 |Répartition des iris en fonction de la longueur et largeur du sépale}}
+
+;#;**Figure 7 :**  Répartition des iris en fonction de la longueur et de la largeur du sépale
+;#;
+
+Il en ressort, par exemple, qu'il y a dix fleurs d'iris qui ont une longueur de sépale d'environ 6.5 cm et une largeur d'environ 3 cm.
+
+==Source==  
+
+  * [[https://www.youtube.com/watch?v=MILtbfrMGL4&list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&index=15|Machine Learnia]]
+
+
+====Visualiser les valeurs manquantes====
+
+
+Lors de l'exploration des données, il est nécessaire de savoir où se situent les variables manquantes dans notre dataset. Cela dans le but de savoir
+de quel type de variable il s'agit, de connaitre la proportion de valeurs manquantes par rapport à l'ensemble des données et ainsi prévoir les traitements à effectuer.
+
+<alert info> **Remarque :**  nous utiliserons les données d'entrainement du Titanic disponibles [[https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Exploration%20des%20donnees/Dataset%20Titanic|ici]]. </alert>
+
+__Code Python__
+
+<code python>
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+plt.figure(figsize=(12,6))
+sns.heatmap(data.isna(), cbar=False)# data étant le nom donnée au jeu de données
+plt.title(u'Répartition des valeurs manquantes', size = 'x-large')
+</code>
+
+__Code R__
+
+Une légende est fournie lors de l'exécution de la fonction pour identifier les valeurs manquantes et leur importance dans le jeu de données.
+
+<code python>
+library(visdat)
+
+vis_miss(data)
+</code>
+
+==Résultat==
+
+{{ :cpp:titanic_missing_values.png?600 |Répartition des valeurs manquantes}}
+
+;#;**Figure 8 :** Répartition des valeurs manquantes
+;#;
+
+Les traits beiges indiquent la présence de valeurs manquantes pour la variable correspondante.
+
+**Source**
+
+  *  [[https://thinkr.fr/donnees-manquantes-causes-identification-et-imputation/l|Think R]]
+
+====Visualiser les corrélations entre variables====
+
+Ce graphique permet d'avoir un visuel direct des corrélations entre les variables du dataset. Cela aide dans le choix des variables à conserver en 
+gardant celles qui sont les plus liées entre elles.
+
+==Représentation des corrélations==
+
+<alert info> **Remarque :**  on reprend dans cette partie le dataset des fleurs d'iris. </alert>
+
+Sous Python, les variables sont contenues dans des vecteurs. On  les transforme d'abord en DataFrame ce qui facile leur traitement.
+
+<code python>
+import pandas as pd
+
+X = pd.DataFrame(X, columns=iris.feature_names)
+</code>
+
+Vient alors la représentation graphique des corrélations entre variables.
+
+__Code Python__
+
+<code python>
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+plt.figure(figsize=(10,5))# Défini la taille du graphique
+sns.heatmap(X.corr())# Création du graphique
+</code>
+
+__Code R__
+
+<code python>
+library(reshape2)
+
+data <- iris[, c(1,2,3,4)] # Sélection des variables à analyser
+
+matrice_cor <- round(cor(data))# Calcul de la matrice de corrélation en arrondissant les valeurs
+melt_data <- melt(matrice_cor)# Transformation des données pour correspondre au format de représentation
+ggplot(data = melt_data, aes(x=Var1, y=Var2, fill=value)) + # Création du graphique
+  geom_tile()
+</code>
+
+**Résultat**
+
+{{:cpp:heat.png?800|Carte de corrélations}}
+
+;#;**Figure 9 :** Carte de corrélations entre les variables
+;#;
+
+**Source :**
+
+  * [[http://www.sthda.com/french/wiki/ggplot2-heatmap-d-une-matrice-de-corr-lation-logiciel-r-et-visualisation-de-donn-es|STHDA]]
+====Carte====
+
+Travailler avec des cartes peut être un véritable atout lorsqu'il est nécessaire de visualiser des répartitions (ou des densités) à l'échelle d'un pays ou du monde.
+La librairie **folium** de Python est un outil indispensable pour ce genre de travaux. La géographie de chaque pays est disponible via des fichiers GEOJSON qui permettent de faire correspondre les données d'une région à son homologue dans la carte folium.
+Cela ne serait pas possible sans les fichiers opensource disponibles, aussi est-il important de mentionner les auteurs à chaque utilisation.
+
+<alert info> Remarque : on va représenter le taux de chômage par état aux États-Unis dont les données sont disponibles [[https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Exploration%20des%20donnees/Data%20pour%20carte
+|ici]].</alert>
+
+__Code Python__
+
+Commençons par importer les librairies nécessaires. 
+
+<code python>
+from urllib.request import urlopen # Permet l'importation de fichier via lien internet
+import json # Permet le traitement de fichier GEOJSON
+import folium # Librairie de carte
+</code>
+
+Importation du fichier GEOJSON
+
+<code python>
+with urlopen('https://raw.githubusercontent.com/python-visualization/folium/master/examples/data/search_states.json') as response:
+    etat = json.load(response)
+</code>
+
+Importons ensuite le fichier de données et créons notre carte.
+
+<code python>
+donne_pauvrete = pd.read_csv("pauvrete.csv",sep=",")
+carte = folium.Map(location=[37, -102], zoom_start=4) # location represente la géolocalisation des États-Unis (longitude, latitude), # zoom_start permet d'avoir un zoom sur cette partie du monde
+</code>
+
+A cet instant, si vous lancez la variable carte, vous obtiendrez une carte vierge. Il est alors nécessaire d'ajouter nos données grâce au fichier GEOJSON et d'utiliser le type de carte adapté au problème.
+Ici, nous utiliserons une carte choroplèthe.
+
+<code python>
+ folium.Choropleth(
+ geo_data=etat, # Correspondance des coordonnées géographiques grâce au fichier GEOJSON
+ name='Pauvrete',
+ data=donne_pauvrete,# Utilisation des données sur la carte
+ columns=['state_National', 'Pauvreté'],# Correspondance des colonnes à utiliser : la première étant la colonne des états et l'autre des données de pauvréte correspondants.
+ # Il est nécessaire de connaitre ce par quoi sont identifier les régions dans le fichier GEOJSON et ainsi les faire correspondre (dans le même ordre) dans le fichier de données. 
+ # Par exemple ici, le GEOJSON identifie les états par leur nom, donc dans nos données les états sont connus par leur nom. Cela aurait pu être le code postal ou une aute mesure d'identification. 
+ key_on='feature.properties.name',# Correspondance des noms d'états dans le fichier GEOJSON
+ fill_opacity=0.7,
+ line_opacity=0.2,
+ fill_color='YlOrRd', # Définition de couleurs de données
+ legend_name='Taux de pauvrete', # Création d'une légende
+).add_to(carte) # Permet d'ajouter toutes ces informations à la carte
+
+carte # Lancement de la carte
+</code>
+
+==Résultat==
+
+{{ :cpp:us.png?600 |Taux de chômage aux États-Unis}}
+
+;#;**Figure 7 :** Taux de chômage aux États-Unis
+;#;
+
+==Source==
+
+Nous remercions la communauté [[https://github.com/python-visualization/folium| GitHub ]] pour leur travail.
+
+ __Code R__
+
+Créer une carte sous R suit le même processus qu'en Python, toutefois il existe des spécificités R qui seront expliquées ci-dessous.
+
+Importation des données de pauvreté et des coordonnées géographiques.
+
+<code python>
+data <- read.csv("pauvrete.csv", sep = ",", stringsAsFactors=F)
+
+states <- states(cb=T, year=2016)#Pour des raisons de cohérence, les données de 2016 étaient les plus adaptées, en effet les noms des états sont rangés dans l'ordre croissant et correspondent donc au rangement de nos données.
+</code>
+
+**Explication des paramètres**
+
+|              ^ Explication                  ^ 
+^ stringsAsFactors      | Permet que les caractères ne soient pas définis comme des facteurs d'où le stringsAsFactors = False. Cela empêcherait la lecture des états lors de la jonction des données de pauvreté et des coordonnées.           |
+^ cb      | Téléchargement du fichier général des états |
+^ year    | Année de mise à jour des données |
+
+
+On regroupe les états, renommons la colonne state_National par "etat" et faisons la jonction entre les états et les coordonnées géographiques correspondantes.
+
+<code python>
+data <- data %>%
+  group_by(state_National) %>%
+  rename(etat=state_National)
+View(data)
+
+
+etats <- geo_join(states, data, "NAME", "etat")# "NAME" étant le nom des états dans le fichier de coordonnées et "state" leur nom dans les données.
+</code>
+
+On définit ensuite les couleurs à utiliser dans la carte et on élimine les états manquants dans nos données. Ces états correspondent aux îles pour lesquelles nous n'avons pas de données.
+
+<code python>
+mypalette <- colorNumeric(palette="YlOrRd", domain=data$Pauvrete, na.color="transparent")
+etats_join <- subset(etats, !is.na(Pauvrete))
+</code>
+
+==Explication des paramètres==
+
+|              ^ Explication                  ^ 
+^ palette      | Type de couleurs utilisé          |
+^ domain     | Données à représenter |
+^ na.color    | Gestion de la couleur des données manquantes |
+
+Commence alors la création de la carte.
+
+<code python>
+  
+leaflet() %>%
+   addProviderTiles("CartoDB.Positron") %>% # Plugin permettant d'ajouter les couleurs correspondant à l'état concerné.
+   setView(-98.483330, 38.712046, zoom = 4) %>% # longitude, latitude et définition du zoom.
+   addPolygons(data = etats_join , # Variable d'états et de leurs coordonnées
+               fillColor = ~mypalette(etats_join$Pauvrete), 
+               fillOpacity = 0.7, 
+               weight = 0.2, 
+               smoothFactor = 0.2)%>% 
+   addLegend(pal = mypalette, # Utilisation de la palette de couleurs
+             values = etats_join$Pauvrete, # Données representées
+             position = "bottomright", # Positionnement de la légende
+             title = "Taux de pauvreté") # Titre de la légende
+  
+</code>
+
+==Résultat==
+
+{{ :cpp:map.png?600 |Taux de chômage aux Etats-Unis}}
+
+;#;**Figure 8 :** Taux de chômage aux États-Unis
+;#;
+
+
+==Source==
+
+  *  [[https://learn.r-journalism.com/en/mapping/census_maps/census-maps/|R-journalism]]
+=====Bonus=====
+
+Ici, nous allons décrire toutes les petites astuces pour améliorer les graphiques et les rendre plus jolis et compréhensibles.
+====Astuces matplotlib====
+
+===Taille de la figure===
+
+Pour redéfinir la taille de la figure :
+
+<code python>
+plt.figure(figsize=(15,5))
+</code>
+
+===Les subplots===
+
+Les subplots sont particulièrement utiles quand on veut afficher plusieurs graphiques dans un même graphique.
+
+<code python>
+plt.figure(figsize=(15,5))
+plt.subplot(1,3,1)
+#On met ici les lignes qui définissent le premier graphique
+plt.subplot(1,3,2)
+#On met ici les lignes qui définissent le deuxième graphique
+plt.subplot(1,3,3)
+#On met ici les lignes qui définissent le troisième graphique
+</code>
+
+==Résultat==
+
+{{ :cpp:imagesubplot.png?600 |}}
+
+
+===Écrire sur le graphique===
+
+Il est possible de rajouter du texte sur le graphique.
+
+<code python>
+plt.figure(figsize=(10,8))
+plt.scatter(X,y)
+#positionX,positionY, Titre, Taille, Couleur, Transparence, Style
+plt.text(2.2, 8, 'Ici vous avez une description \n de votre graphique.', style = 'italic',
+            fontweight = 'bold', fontsize = 20, family = 'serif')
+plt.figtext(0.15, 0.8, 'Texte sur toute la figure',
+               fontsize = 25, color = 'orange', alpha = 0.5, fontweight = 'bold')
+#shrink définit l'éloignement du texte par rapport à la flèche
+#xy coord de la flèche par rapport à l'échelle du graphe
+#xytext coordonnées du texte.
+plt.annotate('Remarque', xy = (1, 6), xytext = (1.3, 2.4),
+                arrowprops = {'facecolor': 'cyan', 'edgecolor': 'cyan',
+                              'width': 15, 'headwidth': 30, 'shrink': 0.1})
+</code>
+
+==Résultat==
+
+{{ :cpp:optionmatplotlib.png?600 |}}
+
+==Source==
+
+  * [[http://www.python-simple.com/python-matplotlib/matplotlib-intro.php|Python-simple]]

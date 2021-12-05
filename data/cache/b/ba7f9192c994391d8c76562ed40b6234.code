@@ -1,0 +1,2 @@
+res <span class="sy0">&lt;</span>- dbSendQuery<span class="br0">&#40;</span>con<span class="sy0">,</span> <span class="st0">&quot;Select nom FROM Region&quot;</span><span class="br0">&#41;</span>
+data <span class="sy0">&lt;</span>- dbFetch<span class="br0">&#40;</span>res<span class="sy0">,</span> n<span class="sy0">=</span><span class="nu0">3</span><span class="br0">&#41;</span> <span class="co1">#n donne le nombre de données on veut récupérer</span>

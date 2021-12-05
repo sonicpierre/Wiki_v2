@@ -1,0 +1,4 @@
+data.<span class="me1">head</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="co1">#Correspond aux premières lignes du dataset </span>
+data.<span class="me1">tail</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="co1">#Correspond aux dernières lignes du dataset</span>
+data.<span class="me1">shape</span> <span class="co1">#Donne le nombre de ligne et du colonnes du dataset</span>
+data.<span class="me1">describe</span><span class="br0">&#40;</span>include <span class="sy0">=</span> <span class="st0">'all'</span><span class="br0">&#41;</span> <span class="co1">#Voir résultat</span>

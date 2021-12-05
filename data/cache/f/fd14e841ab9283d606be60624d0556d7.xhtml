@@ -1,0 +1,72 @@
+
+<p>
+<a href="/doku.php?id=cpp:data_exploration" class="wikilink1" title="cpp:data_exploration"> Data exploration</a>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_cah&amp;media=cpp:cah.gif" class="media" title="cpp:cah.gif"><img src="/lib/exe/fetch.php?w=700&amp;tok=fa153c&amp;media=cpp:cah.gif" class="mediacenter" alt="" width="700" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 1 :</strong>  Algorithme CAH en fonctionnement</p><!--divalign-->
+
+<p>
+Au début de l&#039;algorithme chaque individu forme une classe. Puis, à chaque itération on regroupe les individus les plus proches et on regarde la perte d&#039;information sous la forme d&#039;un dendrogramme. A partir de ce graphique on choisit finalement combien de clusters on décide de garder.
+</p>
+
+<h3 class="sectionedit1" id="application_dans_le_code">Application dans le code</h3>
+<div class="level3">
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> scipy.<span class="me1">cluster</span> <span class="kw1">import</span> hierarchy
+&nbsp;
+Z <span class="sy0">=</span> hierarchy.<span class="me1">linkage</span><span class="br0">&#40;</span>data<span class="sy0">,</span> method<span class="sy0">=</span><span class="st0">'ward'</span><span class="br0">&#41;</span><span class="co1">#Définition de la méthode de calcul des distances</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">distance <span class="sy0">=</span> dist<span class="br0">&#40;</span>x<span class="sy0">,</span> <span class="st0">&quot;euclidean&quot;</span><span class="br0">&#41;</span> <span class="co1">#crée une structure de distance entre les individus</span></pre>
+
+<p>
+On peut ensuite dessiner le dendrogramme pour mieux visualiser les clusters qui ressortent :
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">12</span><span class="sy0">,</span><span class="nu0">6</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Définition de la taille du graphique</span>
+&nbsp;
+dendrogramme <span class="sy0">=</span> hierarchy.<span class="me1">dendrogram</span><span class="br0">&#40;</span>Z<span class="br0">&#41;</span><span class="co1">#Contruction du dendrogramme selon les paramètres fournis</span>
+&nbsp;
+plt.<span class="me1">xlabel</span><span class="br0">&#40;</span><span class="st0">'Taille du cluster'</span><span class="br0">&#41;</span>
+plt.<span class="me1">ylabel</span><span class="br0">&#40;</span><span class="st0">'Distance'</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">h <span class="sy0">=</span> hclust<span class="br0">&#40;</span>distance<span class="sy0">,</span> <span class="st0">&quot;ward.D2&quot;</span><span class="br0">&#41;</span><span class="co1">#Création des paramètres du dendroramme</span>
+c <span class="sy0">=</span> cutree<span class="br0">&#40;</span>h<span class="sy0">,</span> k<span class="sy0">=</span><span class="nu0">5</span><span class="br0">&#41;</span><span class="co1">#Création des différentes classes</span>
+plot<span class="br0">&#40;</span>h<span class="br0">&#41;</span><span class="co1">#Création du dendrogramme</span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_cah&amp;media=cpp:dendrogramme.png" class="media" title="cpp:dendrogramme.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=2ebf49&amp;media=cpp:dendrogramme.png" class="mediacenter" title="Dendrogramme" alt="Dendrogramme" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 2 :</strong> Dendrogramme du jeu de données</p><!--divalign-->
+
+<p>
+<strong>Source</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.youtube.com/watch?v=JcfIeaGzF8A" class="urlextern" title="https://www.youtube.com/watch?v=JcfIeaGzF8A" rel="nofollow">TheEngineeringWorld</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://larevueia.fr/clustering-les-3-methodes-a-connaitre/" class="urlextern" title="https://larevueia.fr/clustering-les-3-methodes-a-connaitre/" rel="nofollow"> La revue IA</a></div>
+</li>
+</ul>
+
+<p>
+<strong>Animation :</strong> <a href="/doku.php?id=cpp:dashee87.github.io" class="wikilink2" title="cpp:dashee87.github.io" rel="nofollow">dashee87.github.io</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Application dans le code&quot;,&quot;hid&quot;:&quot;application_dans_le_code&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;417-&quot;} -->

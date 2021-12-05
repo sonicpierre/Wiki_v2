@@ -1,0 +1,8 @@
+html_nodes<span class="br0">&#40;</span>soup<span class="sy0">,</span> <span class="st0">&quot;p&quot;</span><span class="br0">&#41;</span> <span class="co1">#Récupére de toutes les balises p sous forme de liste</span>
+<span class="co1"># Résultat : {xml_nodeset (26)}</span>
+<span class="co1"># [1] &lt;p&gt;Vous pouvez partager vos connaissances en l’améliorant ...</span>
+html_text<span class="br0">&#40;</span>html_nodes<span class="br0">&#40;</span>soup<span class="sy0">,</span> <span class="st0">&quot;p&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="co1">#Permet de mettre en forme ce texte</span>
+<span class="co1">#Résultat : Vous pouvez partager vos connaissances en l’améliorant (comment\xa0?) selon les recommandations du projet ornithologie.\n'</span>
+soup.<span class="me1">find</span><span class="br0">&#40;</span><span class="st0">&quot;div&quot;</span><span class="sy0">,</span> <span class="br0">&#123;</span><span class="st0">&quot;class&quot;</span>: <span class="st0">&quot;mw-parser-output&quot;</span><span class="br0">&#125;</span><span class="br0">&#41;</span> <span class="co1">#Récupérer le contenu de la balise div avec une certaine classe</span>
+<span class="co1">#Résultat : &lt;div class=&quot;mw-parser-output&quot;&gt;&lt;div class=&quot;bandeau-container bandeau-article bandeau-niveau-.....</span>
+soup.<span class="me1">find</span><span class="br0">&#40;</span><span class="kw2">id</span><span class="sy0">=</span><span class="st0">&quot;toc&quot;</span><span class="br0">&#41;</span> <span class="co1">#Récupérer le contenu avec un certain id</span>

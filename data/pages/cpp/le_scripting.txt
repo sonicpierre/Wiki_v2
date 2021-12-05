@@ -1,0 +1,370 @@
+[[cpp:Commande système| Commandes système]]
+
+Dans cette partie nous allons faire une introduction aux scripts en décrivant 2 exemples :
+  * Nous commencerons par nous familiariser aux **variables** et aux **conditions** en réalisant des opérations simples sur le prénom et l'âge de l'utilisateur 
+  * Nous créerons un **<fc #ff0000>script</fc>** qui trie automatiquement les photos d'un répertoire dans des dossiers en fonction de la date.
+
+=====Créer un script shell=====
+
+Un **<fc #ff0000>script</fc>** contient en fait les **<fc #008000>commandes système</fc>** des parties précédentes en rajoutant des fonctionnalités en plus comme les conditions ou bien les boucles. Le nom du langage est le **Bash** sur <fc #008080>**Linux/Mac**</fc> et le **Batch** sur **<fc #008080>Windows</fc>**. Je rappelle que les commandes sur **<fc #008080>Mac</fc>** sont les mêmes que sur **<fc #008080>Linux</fc>**.
+
+Pour créer un **<fc #ff0000>script</fc>**, il nous faudra créer un fichier du nom de votre choix suivi de l'**<fc #008000>extension</fc>** adaptée. Normalement, vous savez faire ;)
+^Linux^Windows^^
+|touch script.sh|echo.>script.bat||
+Pour **<fc #008000>tester</fc>** tout ça, je propose d'écrire
+<code>echo Coucou</code>
+dans le fichier à l'aide de votre éditeur de texte favori (vim, nano, emacs, Bloc-notes...). Pour exécuter un script, il faut faire
+^Linux^Windows^^
+|./script.sh|script.bat||
+
+<alert warning>Il est possible que vous **ne puissiez pas** exécuter votre programme à cause de **permissions**. Je vous invite à aller **relire** les [[cpp:Les dossiers et fichiers|pages précédentes]] pour vous rafraichir la mémoire si vous avez oublié la commande :)</alert>
+
+Sur **<fc #008080>Linux</fc>**, pour éviter des problèmes d'interprétation de langage par l'ordinateur, nous rajouterons en haut de **<fc #ff0000>tous</fc>** nos scripts la ligne
+<code>#!/bin/bash</code>
+En effet, il existe **<fc #008000>plusieurs</fc>** shell différents sur **<fc #008080>Linux</fc>**, avec différentes syntaxes et différentes spécificités comme le **ksh, csh, tcsh** ou **zch**. Certains sont des améliorations ou des alternatives à d'autres shells mais tous ont leurs points forts.
+
+Sur **<fc #008080>Windows</fc>** vous aurez remarqué que la ligne
+<code>echo Coucou</code> 
+était affichée dans la console. Pour la **masquer**, vous pouvez rajouter **<fc #ffa500>@echo off</fc>** au début de votre script.
+
+=====Les commentaires=====
+
+Il est possible de **<fc #ff0000>commenter</fc>** des lignes de code, c'est à dire que le script **<fc #ff0000>ignorera</fc>** ces lignes lorsque vous l'exécuterez. C'est particulièrement utile pour **<fc #008000>expliquer</fc>** son code ou pour garder des lignes de code **<fc #008000>"sous le coude"</fc>** lorsqu'on ne veut tester que quelques lignes de notre script ;)
+^Linux^Windows^^
+|#ligne_a_commenter|REM ligne_a_commenter||
+=====Les variables=====
+Si vous avez déjà codé quoi que ce soit dans votre vie, vous devriez déjà être familiers au concept de **<fc #ff0000>variables</fc>**. Pour les autres, disons qu'une **<fc #ff0000>variable</fc>** sert à **<fc #008000>stocker</fc>** une information (texte, nombre) pour l'**<fc #008000>utiliser</fc>** plus tard dans un programme.
+====Les chaînes de caractères====
+
+Créons par exemple la variable **<fc #ffa500>prenom</fc>** :
+
+^Linux^Windows^^
+|prenom='Brunhilde'|set prenom=Brunhilde||
+Vous pouvez ensuite enchaîner avec un
+^Linux^Windows^^
+|echo Mon prenom est <nowiki>$</nowiki>prenom|echo Mon prenom est %prenom%||
+pour afficher notre chère variable dans la console !
+
+<alert danger>Soyez **TRÈS** respectueux de la syntaxe (les espaces surtout) parce que ces langages sont assez capricieux à ce propos... </alert>
+
+Vous êtes peut-être en train de vous dire : "Je ne m'appelle pas **Brunhilde** moi ? Ou alors peut être que si ? Ma vie est-elle donc un mensonge ?...". Nous allons donc voir comment **<fc #008000>demander</fc>** son nom à l'utilisateur pour le stocker dans la variable **<fc #ffa500>prenom</fc>**. Remplacez la ligne de déclaration de la variable **<fc #ffa500>prenom</fc>** par :
+^Linux^Windows^^
+|read -p 'Entrez votre prenom : ' prenom|set /p prenom="Entrez votre prenom : "||
+
+====Les entiers====
+
+Nous pouvons stocker des **<fc #008000>nombres entiers</fc>** dans des **variables**. Intéressons nous à l’âge de l'utilisateur par exemple :
+^Linux^Windows^^
+|let "age = 21"|set age=21||
+
+Avec les variables nombres nous pouvons bien sûr effectuer des **<fc #ff0000>calculs</fc>** : somme **+**, soustraction **-**, produit *****, division entière **/** et modulo **%**
+
+^Linux^Windows^^
+|let "age2 = age + 2"|set /a age2=%age%+2||
+
+====Les paramètres du script====
+
+Parfois, lorsqu'on utilise une commande, on lui donne des **paramètres** comme un nom de dossier par exemple. 
+<code>cd Valhalla</code>
+Sachez que c'est aussi possible de donner des **<fc #ff0000>paramètres</fc>** à votre <fc #008000>**script**</fc> à son lancement !
+^Linux^Windows^^
+|./script.sh param1 param2|script.bat param1 param2||
+Vous pouvez accéder aux paramètres ainsi qu'au nom de votre script grâce aux variables :
+^Linux^Windows^Contenu^^
+|<nowiki>$</nowiki>0|%0|Le nom du script||
+|<nowiki>$</nowiki>*|%*|Tous les paramètres||
+|<nowiki>$</nowiki>1|%1|Le premier paramètre||
+|...|...|...||
+|<nowiki>$</nowiki>9|%9|Le neuvième paramètre||
+
+Par exemple pour afficher le nom du script :
+^Linux^Windows^^
+|echo Nom du script : <nowiki>$</nowiki>0|echo Nom du script : %0||
+
+<alert info>**Note :** Sur **Linux** vous pouvez utiliser **<nowiki>$</nowiki>#** pour connaître le nombre de paramètres.</alert>
+
+=====Les conditions=====
+
+====SI...ALORS...SINON...====
+
+Les conditions sont une structure qui permettent d'effectuer une action si, comme leur nom l'indique, certaines conditions sont remplies.
+;#;
+{{:cpp:age.png?200|}}
+;#;
+Pour se familiariser avec les **<fc #ff0000>conditions</fc>**, nous allons réaliser un petit programme demandant son âge à l'utilisateur et lui répondant ensuite si il est mineur ou majeur. Nous aurons donc un script de type :
+<code>
+Demander l'âge de l'utilisateur
+Si l'âge est inférieur à 18
+    Ecrire que l'utilisateur est mineur
+Sinon
+    Ecrire que l'utilisateur est majeur
+</code>
+
+Nous allons commencer par lui **<fc #008000>demander</fc>** son âge, normalement vous savez faire :
+^Linux^Windows^^
+|read -p 'Quel est votre nombre d'annees d'existence ? ' age|set /p age="Quel est votre nombre d'annees d'existence ? "||
+
+<alert info>**Note :** Vous pouvez aussi récupérer l'âge de l'utilisateur en paramètre de votre script et utiliser la variable **<nowiki>$</nowiki>1** ou **<nowiki>%</nowiki>1** en fonction de votre système. Cependant, vous ne pourrez pas afficher de message demandant à l'utilisateur d'entrer son âge !</alert>
+
+Maintenant, on va **<fc #008000>comparer</fc>** la valeur de age à l'entier 18 pour savoir si la personne est mineure :
+^Linux^Windows^^
+|if [ <nowiki>$</nowiki>age -lt 18 ]; then|if %age% lss 18 (||
+
+<alert danger>J'insiste sur le fait qu'il faut faire **TRES** attention aux espaces pour que le code puisse fonctionner :)</alert>
+
+Ensuite, on affiche que l'utilisateur est mineur (**<fc #ffa500>echo</fc>** marche sur tous les systèmes je vous rappelle) :
+<code>echo Vous etes mineur ! Retournez chercher du charbon !</code>
+
+On enchaîne sur le sinon qui est tout simplement :
+^Linux^Windows^^
+|else|) else (||
+
+Bon, pour afficher que l'utilisateur est majeur vous devrez savoir :
+<code>echo Vous etes majeur !</code>
+
+Finalement, nous devons donner une instruction signifiant la **<fc #008000>fin</fc>** du bloc de condition :
+^Linux^Windows^^
+|fi|)||
+
+<alert warning>Pensez bien à **indenter** (décaler les lignes à l'intérieur d'un bloc) votre code comme je l'ai fait sur l'exemple au début de la partie. Ce n'est pas obligatoire pour que le script marche mais c'est obligatoire pour que vous y **compreniez** quelque chose quand vous le rouvrirez dans deux semaines ! Blague à part, prenez l'habitude d'**indenter** votre code. Cela vous servira dans **n'importe quel langage** !</alert>
+
+Un petit **<fc #ff0000>récapitulatif</fc>** du script de cette partie :
+
+//Sur Linux//
+<code>
+#!/bin/bash
+read -p "Quel est votre nombre d'annees d'existence ?" age
+if [ $age -lt 18 ]; then
+    echo Vous etes mineur ! Retournez chercher du charbon !
+else
+    echo Vous etes majeur !
+fi
+</code>
+
+//Sur Windows//
+<code>
+@echo off
+set /p age="Quel est votre nombre d'annees d'existence ?"
+if %age% lss 18 (
+    echo Vous etes mineur ! Retournez chercher du charbon !
+) else (
+    echo Vous etes majeur !
+)
+</code>
+
+====...SINON SI...====
+
+Essayons maintenant de **<fc #008000>rajouter</fc>** une condition, par exemple si age est supérieur à 150 on traite l'utilisateur de menteur. On pourrait rajouter un **<fc #ffa500>if</fc>** mais la ligne "Vous etes majeur" s'afficherait quand même. Nous allons donc avoir recours à un **<fc #ff0000>sinon si</fc>** glissé entre le **<fc #ffa500>if</fc>** et le **<fc #ffa500>else</fc>**. Le script ressemble alors à :
+
+//Sur Linux//
+<code>
+#!/bin/bash
+read -p "Quel est votre nombre d'annees d'existence ?" age
+if [ $age -lt 18 ]; then
+    echo Vous etes mineur ! Retournez chercher du charbon !
+elif [ $age -ge 150 ]; then
+    echo Je sens de la menthe dans l'air... Menteur !
+else
+    echo Vous etes majeur !
+fi
+</code>
+
+//Sur Windows//
+<code>
+@echo off
+set /p age="Quel est votre nombre d'annees d'existence ?"
+if %age% lss 18 (
+    echo Vous etes mineur ! Retournez chercher du charbon !
+) else if %age% geq 150 (
+    echo Je sens de la menthe dans l'air... Menteur !
+) else (
+    echo Vous etes majeur !
+)
+</code>
+
+====Les comparateurs====
+
+J'imagine que vous n'avez pas bien compris cette histoire de **lss, geq, -lt** ou **-ge** alors voici des petits **tableaux récapitulatifs** des comparateurs :)
+
+//Nombres//
+^Linux^Windows^Opérateur^^
+|-eq|equ|=||
+|-neq|neq|≠||
+|-lt|lss|<||
+|-le|leq|≤||
+|-gt|gtr|>||
+|-ge|geq|≥||
+
+//Chaines de caractères//
+^Linux^Windows^Opérateur^^
+|=|equ|=||
+|!=|neq|≠||
+
+Il est aussi possible d'effectuer des tests sur les **<fc #008000>fichiers</fc>**
+^Linux^Windows^Utilité^^
+|-e|exist|Vérifie que le fichier existe||
+
+====ET et OU logique====
+
+Sur **Linux** vous pouvez utiliser le ET logique **&&** et le OU logique **||** pour effectuer une action que si deux ou plus de conditions sont remplies alors que sur **Windows** il faut **ruser** :
+<code>
+#ET logique
+if [ $age -ge 18 ] && [ $age -lt 150 ]; then
+    echo Vous etes majeur !
+fi
+#OU logique
+if [ $age -lt 18 ] || [ $age -ge 150 ]; then
+    echo Vous etes mineur ou menteur !
+fi
+</code>
+<code>
+REM ET logique
+if %age% geq 18 (
+    if %age% lss 150 (
+        echo Vous etes majeur !
+    )
+)
+REM OU logique
+if %age% lss 18 (
+    echo Vous etes mineur ou menteur !
+)
+if %age% geq 150
+    echo Vous etes mineur ou menteur !
+)
+</code>
+
+====La négation====
+
+Finalement pour faire la **<fc #ff0000>négation</fc>** d'une condition, c'est-à-dire vérifier que la condition n'est pas vérifiée, on utilise :
+^Linux^Windows^^
+|!|not||
+Par exemple pour vérifier si l'utilisateur n'a **PAS** moins de 18 ans :
+^Linux^Windows^^
+|if [ ! age -lt 18 ]; then|if not %age% lss 18(||
+
+=====Trier ses images=====
+
+Dans cette partie nous écrirons un script permettant de classer les photos du répertoire courant dans des dossiers en fonction de leur date.
+====Connaître la date de création d'une image====
+
+Nous allons pour cela utiliser l'outil [[https://exiftool.org/|Exiftool]] disponible pour tous les systèmes. Vous pouvez utiliser le lien que je vous ai fourni ou passer par un **<fc #008000>gestionnaire de paquets</fc>** comme on a vu au début de cet article :)
+
+Cette application permet de réaliser une **<fc #ff0000>multitude</fc>** d'opérations sur des images mais nous nous contenterons de récupérer les dates de création. Essayons le sur une image quelconque de votre ordinateur (je prends **unknown.png** pour l'exemple) :
+<code>exiftool unknown.png</code>
+
+//Sur Windows//
+{{:cpp:exiftool_unknown.png?1000|}}
+
+Voilà voilà, il y a <fc #008000>**pas mal d'informations**</fc> mais on va garder que celle qui nous intéresse, à savoir la <fc #ff0000>**date de création/modification**</fc> de l'image (on prendra la date de modification car la date de création n'est pas disponible sur **<fc #008080>Linux</fc>** pour une raison obscure), et on va <fc #ff0000>**mettre en forme**</fc> un peu le résultat.
+Nous cherchons donc une commande qui nous retourne la date sous le format **AAAA/MM** (A pour année et M pour mois) :
+<code>exiftool -s -s -s  unknown.png -d %Y/%m -FileModifyDate</code>
+;#;
+{{:cpp:exiftool_unknown.png_blabla.png?500|}}
+;#;
+nous donne <fc #ff0000>**tout de suite**</fc> le résultat dont nous avons besoin !
+Puisque la commande est assez **<fc #008000>complexe</fc>**, je vais l'expliquer petit à petit ;)
+<code>-s -s -s</code>
+signifie que l'on veut le résultat sans la première colonne qui indique à quoi correspondent les valeurs.
+<code>-d %Y/%m</code>
+sert à **<fc #008000>formater</fc>** les dates de la sortie de la commande sous la forme désirée.
+<code>-FileModifyDate</code>
+pour ne récupérer que la ligne qui nous intéresse.
+
+====Les boucles====
+
+Bon. Maintenant qu'on peut récupérer l'**<fc #ff0000>information</fc>** dont on a besoin sur une image, il faut le faire sur **<fc #008000>toutes</fc>** les images du répertoire ! C'est à ça que sert une **<fc #ff0000>boucle</fc>** : répéter une même action plusieurs fois. Nous allons donc utiliser les blocs **<fc #ffa500>for</fc>** et, comme quand nous avons fait des **<fc #008000>conditions</fc>**, je vais vous recommander très fortement d'**<fc #ff0000>indenter</fc>** votre code pour que vous puissiez vous y retrouver.
+
+Nous allons donc faire une **<fc #008000>boucle</fc>** permettant d'effectuer une action sur chaque image, c'est à dire chaque fichier ***.png** ou ***.jpg** (vous pouvez ajouter d'autres extensions si ça vous chante)
+^Linux^Windows^^
+|for image in `ls *.png *.jpg`; do|for <nowiki>%%</nowiki>i (*.jpg *.png) do (||
+Maintenant, il faut entrer la **<fc #ff0000>commande</fc>** à effectuer sur chaque fichier (on modifie légèrement la commande d'avant) et stocker le résultat dans une variable (je l'ai appelée **<fc #ffa500>creation</fc>**) :
+^Linux^Windows^^
+|<nowiki>creation=`exiftool -s -s -s  "$image" -d %Y/%m -FileModifyDate`</nowiki>|<nowiki>for /f "tokens=*" %%a in (' exiftool -s -s -s "%%i" -d %%Y/%%m -FileModifyDate ') do set creation=%%a</nowiki>||
+
+<alert info>**Note :** Vous pouvez voir que nous avons mis le nom de l'image entre **guillemets**. C'est pour le cas où le nom de l'image contient un **espace** et pour que la commande **exiftool** considère bien le fichier **Belle Valkyrie.png** comme une image et non deux.</alert>
+
+Si vous êtes sur **<fc #008080>Windows</fc>**, vous vous posez sûrement la question : "pourquoi je dois utiliser une boucle **<fc #ffa500>for</fc>** pour stocker le résultat d'une commande dans une variable ?". Sachez que moi aussi, je me la pose, mais bon c'est comme ça qu'il faut faire. D'ailleurs, si vous avez essayé d'afficher le contenu de la variable création avec un **<fc #ffa500>echo</fc>**, vous avez eu une **<fc #ff0000>erreur</fc>** de type
+<code>Commande ECHO désactivée</code>
+C'est tout à fait **<fc #008000>normal</fc>** car, voyez vous, pour créer des variables à l'intérieur d'une boucle en **Batch**, il faut ajouter
+<code>setlocal enabledelayedexpansion</code>
+au début de votre programme (à côté du **<fc #ffa500>@echo off</fc>**) et quand vous faites référence à votre variable, vous devez l'appeler par
+<code>!variable!</code>
+au lieu d'utiliser les **%**. Je sais, ça fait beaucoup de choses pour une simple attribution de variable :)
+
+====Les sous-chaînes====
+
+Pour avoir un code plus clair, nous allons maintenant stocker dans une variable **<fc #ffa500>annee</fc>** et une **<fc #ffa500>mois</fc>** vous l'aurez deviné, l'année et le mois de la création (ou modification c'est la même chose) de l'image. Cela va me permettre de vous montrer comment créer des **<fc #ff0000>sous-chaînes</fc>** dans un script :
+^Linux^Windows^^
+|<nowiki>annee=${creation:0:4}</nowiki>|<nowiki>set annee=!creation:~0,4!</nowiki>||
+|<nowiki>mois=${creation:5}</nowiki>|<nowiki>set annee=!creation:~5!</nowiki>||
+Le **<fc #008000>premier</fc>** chiffre fait référence à l'**<fc #ff0000>indice</fc>** du début de la sous-chaîne (0 signifie la première lettre) et le **<fc #008000>second</fc>** chiffre indique la **<fc #ff0000>longueur</fc>** de la sous-chaîne (si il n'est pas donné la sous-chaîne ira jusqu'à la fin du mot d'origine). **<fc #ffa500>annee</fc>** contient donc les quatre premiers caractères de **<fc #ffa500>creation</fc>** et **<fc #ffa500>mois</fc>** contient tous les caractères de **<fc #ffa500>creation</fc>** à partir du cinquième.
+
+====Le déplacement des images====
+
+Tout d'abord il faut **<fc #ff0000>créer</fc>** le bon dossier d'**<fc #008000>année</fc>** s'il n'existe pas encore :
+
+//Sur Linux//
+<code>
+if [ ! -e $annee ]; then
+    mkdir $annee
+fi
+</code>
+//Sur Windows//
+<code>
+if not exist !annee! (
+    mkdir !annee!
+)
+</code>
+
+Pareil pour le dossier de **<fc #008000>mois</fc>** :
+
+//Sur Linux//
+<code>
+if [ ! -e $annee/$mois ]; then
+    mkdir $annee/$mois
+fi
+</code>
+//Sur Windows//
+<code>
+if not exist !annee!\!mois! (
+    mkdir !annee!\!mois!
+)
+</code>
+Puis on **<fc #ff0000>déplace</fc>** finalement l'image au bon endroit :
+^Linux^Windows^^
+|mv "%%$%%image" %%$%%annee/%%$%%mois|move "%%i" !annee!\!mois!||
+
+
+**<fc #ff00ff>mais qu'est ce que c'est que ce merdier</fc>**
+
+
+On termine par rajouter les derniers détails :
+^Linux^Windows^^
+|)|done||
+Et voilà ! Toutes nos images ont été **<fc #008000>classées</fc>** par date ! Sachez que sur **<fc #008080>Windows</fc>**, on préfèrera utiliser une structure avec des étiquettes **<fc #ffa500>GOTO</fc>**, mais puisque c'est spécifique à ce système j'ai préféré ne pas aborder ce point, mais voici la [[https://docs.microsoft.com/fr-fr/windows-server/administration/windows-commands/goto|documentation Microsoft]] à ce sujet.
+=====Le path=====
+
+Cette partie n'a pas forcément de rapport avec les autres, c'est une sorte de **<fc #fa8072>bonus</fc>**. 
+
+Pour **<fc #ff0000>exécuter</fc>** votre script, vous avez sans doute remarqué qu'il fallait être dans le bon répertoire ou, dans le cas échéant, indiquer le **<fc #008000>chemin</fc>** vers le script. Mais il ne vous aura pas non plus échappé que les commandes comme **<fc #ffa500>cd</fc>** ou **<fc #ffa500>mkdir</fc>** sont accessibles peu importe le répertoire... Pour que votre **script.bat** soit accessible <fc #ff0000>**à tout endroit**</fc>, il va falloir que vous indiquez son chemin dans la variable système **<fc #ffa500>PATH</fc>**. Vous pouvez d'ores et déjà afficher le contenu de cette variable :
+^Linux^Windows^^
+|echo <nowiki>$</nowiki>PATH|echo <nowiki>%PATH%</nowiki>||
+La variable **<fc #ffa500>PATH</fc>** est ce que l'on appelle une <fc #ff0000>**variable d'environnement**</fc> : une sorte de variable système. Il y en a beaucoup d'autres indiquant par exemple le chemin vers le **répertoire par défaut** quand vous ouvrez votre console ou alors contenant votre **nom d'utilisateur**. Vous pouvez consulter la liste des variables d'environnement avec :
+^Linux^Windows^^
+|printenv|set||
+
+//Sur Linux//
+
+Vous devrez aller modifier cette variable directement dans un **<fc #ff0000>fichier</fc>** placé dans votre répertoire utilisateur (le /home/nom_d_utilisateur) nommé **.bashrc** ou **.profile** en fonction de votre distribution (pour certaines d'entre elles il faudra aller dans /etc/environment).
+
+<code>echo 'export PATH=$PATH:chemin_a_ajouter' >> ~/.bashrc</code>
+
+//Sur Windows//
+
+La meilleure façon de modifier le **<fc #ffa500>PATH</fc>** est de faire comme quand vous avez installé **vim**. Je rappelle la procédure :
+
+**Panneau de configuration>Système et Sécurité>Système>Modifier les paramètres>Paramètres système avancés>Variables d'environnement>Path>Modifier>Nouveau>//chemin vers le dossier où est votre script//**
+
+Et voilà ! Une fois un dossier enregistré dans le **<fc #ffa500>PATH</fc>** vous avez accès à son contenu <fc #008000>**peu importe le répertoire où vous êtes actuellement**</fc> !
+
+Notre page touche à sa fin, j'espère que vous aurez pu apprendre les rudiments de l'utilisation de la console, ceci peu importe votre système d'exploitation !

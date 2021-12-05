@@ -1,0 +1,5 @@
+library<span class="br0">&#40;</span>ggplot2<span class="br0">&#41;</span>
+&nbsp;
+histo <span class="sy0">&lt;</span>- ggplot<span class="br0">&#40;</span>iris<span class="sy0">,</span> aes<span class="br0">&#40;</span>X$Sepal.<span class="me1">Length</span><span class="sy0">,</span> X$Sepal.<span class="me1">Width</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+histo <span class="sy0">&lt;</span>- histo + stat_bin2d<span class="br0">&#40;</span>bins <span class="sy0">=</span> <span class="nu0">20</span><span class="br0">&#41;</span>
+histo

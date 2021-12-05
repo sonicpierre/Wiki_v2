@@ -1,0 +1,502 @@
+
+<p>
+<a href="/doku.php?id=cpp:simplexephase" class="wikilink1" title="cpp:simplexephase">Méthode des phases</a>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Asimplexecoupes&amp;media=cpp:coupes.jpg" class="media" title="cpp:coupes.jpg"><img src="/lib/exe/fetch.php?w=500&amp;tok=d479e5&amp;media=cpp:coupes.jpg" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+Supposons que j&#039;aie en ma possession 69 <strong>diamants</strong> et 19 g d&#039;<strong>or</strong> que je peux transformer en deux types de <strong><span style="color:#ff0000;">bijoux</span></strong> :
+</p>
+<ul>
+<li class="level1"><div class="li"> une <span style="color:#008000;"><strong>paire de boucles d&#039;oreilles</strong></span> nécessitant 6 <strong>diamants</strong> et 2 g d&#039;<strong>or</strong> et se vendant à 150 <strong><span style="color:#ffa500;">pièces d&#039;or</span></strong></div>
+</li>
+<li class="level1"><div class="li"> un <strong><span style="color:#008000;">collier</span></strong> utilisant 20 <strong>diamants</strong> et 4 g d&#039;<strong>or</strong> d&#039;une valeur de 600 <strong><span style="color:#ffa500;">pièces d&#039;or</span></strong></div>
+</li>
+</ul>
+
+<p>
+Soit, en langage mathématique :
+</p>
+<p class="divalign-center">$\begin{cases} \underset{x}{max}(150x_1+600x_2) \\ 6x_1+20x_2 \le 69 \\ 2x_1+4x_2 \le 19 \\ x_1,x_2 \ge 0\end{cases}$</p><!--divalign-->
+
+<p>
+Si nous résolvons ce problème par la méthode <strong>standard</strong> nous arrivons sur le tableau suivant :
+</p>
+<div class="table sectionedit1"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><td class="col5"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  -30  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -30  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  -2070  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  $\frac{3}{10}$  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  $\frac{1}{20}$  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  $\frac{69}{20}$  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  $\frac{4}{5}$  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -$\frac{1}{5}$  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  $\frac{26}{5}$  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:1,&quot;range&quot;:&quot;763-1018&quot;} -->
+<p>
+La solution est donc de fabriquer 0 <strong><span style="color:#008000;">boucles d&#039;oreilles</span></strong> et $\frac{69}{20}$ <strong><span style="color:#008000;">colliers</span></strong>… J&#039;imagine que vous voyez le problème. Il est possible que nous voulions, dans certains cas, avoir uniquement des résultats <strong><span style="color:#ff0000;">entiers</span></strong> même si cela <strong>réduit</strong> indéniablement l&#039;optimum avec des nombres réels. Nous devons donc changer le problème par :
+</p>
+<p class="divalign-center">$\begin{cases} \underset{x}{max}(150x_1+600x_2) \\ 6x_1+20x_2 \le 69 \\ 2x_1+4x_2 \le 19 \\ x_1,x_2 \in\mathbb{N}\end{cases}$</p><!--divalign-->
+
+<p>
+<div class='alert alert-info'>La méthode des coupes consiste à <strong>appliquer</strong> un algorithme sur un tableau <strong>résolu</strong> pour arriver à des résultats entiers</div>
+</p>
+
+<h2 class="sectionedit2" id="resolution_du_tableau_sans_nombres_entiers">Résolution du tableau sans nombres entiers</h2>
+<div class="level2">
+
+<p>
+On commence par appliquer notre code élaboré dans les parties <strong>précédentes</strong> pour arriver à un <strong>optimum</strong> pour des variables <strong><span style="color:#ff0000;">non entières</span></strong> :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">tab3<span class="sy0">=</span>np.<span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#91;</span>
+<span class="br0">&#91;</span><span class="nu0">150</span>.<span class="sy0">,</span><span class="nu0">600</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span>
+<span class="br0">&#91;</span><span class="nu0">6</span><span class="sy0">,</span><span class="nu0">20</span><span class="sy0">,</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">69</span><span class="br0">&#93;</span><span class="sy0">,</span>
+<span class="br0">&#91;</span><span class="nu0">2</span><span class="sy0">,</span><span class="nu0">4</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">19</span><span class="br0">&#93;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+<span class="co1">#On résout le tableau par la méthode standard</span>
+tabCoupe<span class="sy0">,</span>x<span class="sy0">=</span>simplexeStandard<span class="br0">&#40;</span>tab<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab">tab3=<span class="br0">&#91;</span>
+<span class="nu0">150</span>,<span class="nu0">600</span>,<span class="nu0">0</span>,<span class="nu0">0</span>,<span class="nu0">0</span>;
+<span class="nu0">6</span>,<span class="nu0">20</span>,<span class="nu0">1</span>,<span class="nu0">0</span>,<span class="nu0">69</span>;
+<span class="nu0">2</span>,<span class="nu0">4</span>,<span class="nu0">0</span>,<span class="nu0">1</span>,<span class="nu0">19</span><span class="br0">&#93;</span>
+<span class="co1">%On résout le tableau par la méthode standard</span>
+<span class="br0">&#91;</span>tabCoupe,x<span class="br0">&#93;</span>=simplexeStandard<span class="br0">&#40;</span>tab<span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;R\u00e9solution du tableau sans nombres entiers&quot;,&quot;hid&quot;:&quot;resolution_du_tableau_sans_nombres_entiers&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;1706-2283&quot;} -->
+<h2 class="sectionedit3" id="la_boucle_principale">La boucle principale</h2>
+<div class="level2">
+
+<p>
+Tant qu&#039;il y a des coefficients <strong><span style="color:#008000;">non entiers</span></strong> dans la dernière colonne on continue d&#039;itérer :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#On repère les coefficients non entiers de la dernière colonne</span>
+indiceCoefsFrac<span class="sy0">=</span><span class="br0">&#91;</span><span class="br0">&#93;</span>
+<span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span>tabCoupe.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>:
+    <span class="kw1">if</span> np.<span class="me1">around</span><span class="br0">&#40;</span>tabCoupe<span class="br0">&#91;</span>i<span class="sy0">,</span>-<span class="nu0">1</span><span class="br0">&#93;</span>%<span class="nu0">1</span><span class="sy0">,</span><span class="nu0">5</span><span class="br0">&#41;</span><span class="sy0">!=</span><span class="nu0">0</span> <span class="kw1">and</span> np.<span class="me1">around</span><span class="br0">&#40;</span>tabCoupe<span class="br0">&#91;</span>i<span class="sy0">,</span>-<span class="nu0">1</span><span class="br0">&#93;</span>%<span class="nu0">1</span><span class="sy0">,</span><span class="nu0">5</span><span class="br0">&#41;</span><span class="sy0">!=</span><span class="nu0">1</span>:
+        indiceCoefsFrac.<span class="me1">append</span><span class="br0">&#40;</span>i<span class="br0">&#41;</span>
+<span class="co1">#Tant qu'il y a des coefficients non entiers sur la dernière colonne on continue</span>
+<span class="kw1">while</span> <span class="kw2">len</span><span class="br0">&#40;</span>indiceCoefsFrac<span class="br0">&#41;</span><span class="sy0">&gt;</span><span class="nu0">0</span>:</pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab"><span class="co1">%On repère les coefficients non entiers de la dernière colonne</span>
+indiceCoefsFrac=<span class="br0">&#91;</span><span class="br0">&#93;</span>
+<span class="kw1">for</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>=<span class="nu0">2</span>:<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tabCoupe<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+    <span class="kw1">if</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/round.html"><span class="kw2">round</span></a><span class="br0">&#40;</span><span class="nu0">100000</span>*<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/mod.html"><span class="kw2">mod</span></a><span class="br0">&#40;</span>tabCoupe<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>,<span class="kw1">end</span><span class="br0">&#41;</span>,<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>/<span class="nu0">100000</span>!=<span class="nu0">0</span> &amp;&amp; <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/round.html"><span class="kw2">round</span></a><span class="br0">&#40;</span><span class="nu0">100000</span>*<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/mod.html"><span class="kw2">mod</span></a><span class="br0">&#40;</span>tabCoupe<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>,<span class="kw1">end</span><span class="br0">&#41;</span>,<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>/<span class="nu0">100000</span>!=<span class="nu0">1</span>
+        indiceCoefsFrac<span class="br0">&#40;</span><span class="kw1">end</span>+<span class="nu0">1</span><span class="br0">&#41;</span>=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>
+    endif
+endfor
+<span class="co1">%Tant qu'il y a des coefficients non entiers sur la dernière colonne on continue</span>
+<span class="kw1">while</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>indiceCoefsFrac<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>&gt;<span class="nu0">0</span></pre>
+
+<p>
+<div class='alert alert-info'> La façon dont les nombres réels sont codés implique l&#039;utilisation d&#039;arrondis afin d&#039;éviter la survenue de quelques <strong>problèmes </strong> après plusieurs itérations de notre algorithme.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La boucle principale&quot;,&quot;hid&quot;:&quot;la_boucle_principale&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:3,&quot;range&quot;:&quot;2284-3439&quot;} -->
+<h2 class="sectionedit4" id="la_coupe">La coupe</h2>
+<div class="level2">
+
+<p>
+On va chercher la ligne dont la valeur de la <strong><span style="color:#008000;">partie fractionnaire</span></strong> du coefficient de la dernière colonne est la plus <strong><span style="color:#ff0000;">élevée</span></strong>. La meilleure façon de vous expliquer ce qu&#039;est la partie fractionnaire est d&#039;utiliser quelques exemples :
+</p>
+<div class="table sectionedit5"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Nombre  </th><th class="col1 centeralign">  Partie entière  </th><th class="col2 centeralign">  Partie fractionnaire  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  10.4  </td><td class="col1 centeralign">  10  </td><td class="col2 centeralign">  0.4  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  $\frac{13}{9}$  </td><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  $\frac{4}{9}$  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  -2.4  </td><td class="col1 centeralign">  -3  </td><td class="col2 centeralign">  0.6  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">  -$\frac{1}{5}$  </td><td class="col1 centeralign">  -1  </td><td class="col2 centeralign">  $\frac{4}{5}$  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:5,&quot;range&quot;:&quot;3736-3936&quot;} -->
+<p>
+Comme vous l&#039;aurez remarqué, un nombre est la <strong>somme</strong> de sa partie entière et de sa partie fractionnaire, la partie fractionnaire étant comprise <strong>entre 0 et 1</strong>.
+</p>
+
+<p>
+Dans notre cas, la partie fractionnaire de la première ligne  du tableau est <strong><span style="color:#008000;">$\frac{9}{20}$</span></strong> et celle de la seconde ligne est $\frac{1}{5}$ donc nous allons ajouter une <strong><span style="color:#ff0000;">coupe</span></strong> de la première ligne.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#Recherche de la plus grande partie fractionnaire</span>
+indiceFracMax<span class="sy0">=</span>indiceCoefsFrac<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+fracMax<span class="sy0">=</span>tabCoupe<span class="br0">&#91;</span>indiceCoefsFrac<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span>-<span class="nu0">1</span><span class="br0">&#93;</span>%<span class="nu0">1</span>
+<span class="kw1">for</span> i <span class="kw1">in</span> indiceCoefsFrac:
+    frac<span class="sy0">=</span>tabCoupe<span class="br0">&#91;</span>i<span class="sy0">,</span>-<span class="nu0">1</span><span class="br0">&#93;</span>%<span class="nu0">1</span>
+    <span class="kw1">if</span> frac<span class="sy0">&gt;</span>fracMax:
+        indiceFracMax<span class="sy0">=</span>i
+        fracMax<span class="sy0">=</span>frac</pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab"><span class="co1">%Recherche de la plus grande partie fractionnaire</span>
+indiceFracMax=indiceCoefsFrac<span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+fracMax=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/mod.html"><span class="kw2">mod</span></a><span class="br0">&#40;</span>tabCoupe<span class="br0">&#40;</span>indiceCoefsFrac<span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>,<span class="kw1">end</span><span class="br0">&#41;</span>,<span class="nu0">1</span><span class="br0">&#41;</span>
+<span class="kw1">for</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>=indiceCoefsFrac
+    frac=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/mod.html"><span class="kw2">mod</span></a><span class="br0">&#40;</span>tabCoupe<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>,<span class="kw1">end</span><span class="br0">&#41;</span>,<span class="nu0">1</span><span class="br0">&#41;</span>
+    <span class="kw1">if</span> frac&gt;fracMax
+        indiceFracMax=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>
+        fracMax=frac
+    endif
+endfor</pre>
+
+<p>
+Ajouter une <strong><span style="color:#ff0000;">coupe</span></strong> consiste à rajouter une <strong><span style="color:#008000;">contrainte</span></strong> constituée de <strong><span style="color:#ff0000;">l&#039;opposée</span></strong> des parties <strong>fractionnaires</strong> de la ligne que l&#039;on a choisie de couper. On va donc rajouter à notre tableau la colonne $z_1$ et la ligne coupe :
+</p>
+<div class="table sectionedit6"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  <span style="color:#ff0000;">$z_1$</span>  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  -30  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -30  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col6 centeralign">  -2070  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  $\frac{3}{10}$  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  $\frac{1}{20}$  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col6 centeralign">  $\frac{69}{20}$  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  $\frac{4}{5}$  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -$\frac{1}{5}$  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col6 centeralign">  $\frac{26}{5}$  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  <span style="color:#ff0000;">$z_1$</span>  </th><td class="col1 centeralign">  <span style="color:#ff0000;">-$\frac{3}{10}$</span>  </td><td class="col2 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col3 centeralign">  <span style="color:#ff0000;">-$\frac{1}{20}$</span>  </td><td class="col4 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col5 centeralign">  <span style="color:#ff0000;">1</span>  </td><td class="col6 centeralign">  <span style="color:#ff0000;">-$\frac{9}{20}$</span>  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table2&quot;,&quot;secid&quot;:6,&quot;range&quot;:&quot;5226-5786&quot;} -->
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#Insertion de la ligne coupe</span>
+ligneCoupe<span class="sy0">=</span>-<span class="br0">&#40;</span>tabCoupe<span class="br0">&#91;</span><span class="br0">&#91;</span>indiceFracMax<span class="br0">&#93;</span><span class="sy0">,</span>:<span class="br0">&#93;</span>%<span class="nu0">1</span><span class="br0">&#41;</span>
+tabCoupe<span class="sy0">=</span>np.<span class="me1">concatenate</span><span class="br0">&#40;</span><span class="br0">&#40;</span>tabCoupe<span class="sy0">,</span>ligneCoupe<span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="co1">#Insertion de la colonne de la nouvelle variable z</span>
+tabGauche<span class="sy0">=</span>tabCoupe<span class="br0">&#91;</span>:<span class="sy0">,</span>:-<span class="nu0">1</span><span class="br0">&#93;</span>
+tabMilieu<span class="sy0">=</span>np.<span class="me1">zeros</span><span class="br0">&#40;</span><span class="br0">&#40;</span>tabCoupe.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+tabMilieu<span class="br0">&#91;</span>-<span class="nu0">1</span><span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">=</span><span class="nu0">1</span>
+tabDroite<span class="sy0">=</span>tabCoupe<span class="br0">&#91;</span>:<span class="sy0">,</span>-<span class="nu0">1</span>:<span class="br0">&#93;</span>
+tabCoupe<span class="sy0">=</span>np.<span class="me1">concatenate</span><span class="br0">&#40;</span><span class="br0">&#40;</span>tabGauche<span class="sy0">,</span>tabMilieu<span class="sy0">,</span>tabDroite<span class="br0">&#41;</span><span class="sy0">,</span>axis<span class="sy0">=</span><span class="nu0">1</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab"><span class="co1">%Insertion de la ligne coupe</span>
+ligneCoupe=-<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/mod.html"><span class="kw2">mod</span></a><span class="br0">&#40;</span>tabCoupe<span class="br0">&#40;</span>indiceFracMax,:<span class="br0">&#41;</span>,<span class="nu0">1</span><span class="br0">&#41;</span>
+tabCoupe=<span class="br0">&#91;</span>tabCoupe;ligneCoupe<span class="br0">&#93;</span>
+<span class="co1">%Insertion de la colonne de la nouvelle variable z</span>
+tabGauche=tabCoupe<span class="br0">&#40;</span>:,<span class="nu0">1</span>:end-<span class="nu0">1</span><span class="br0">&#41;</span>
+tabMilieu=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/zeros.html"><span class="kw2">zeros</span></a><span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tabCoupe<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>,<span class="nu0">1</span><span class="br0">&#41;</span>
+tabMilieu<span class="br0">&#40;</span><span class="kw1">end</span>,<span class="nu0">1</span><span class="br0">&#41;</span>=<span class="nu0">1</span>
+tabDroite=tabCoupe<span class="br0">&#40;</span>:,<span class="kw1">end</span><span class="br0">&#41;</span>
+tabCoupe=<span class="br0">&#91;</span>tabGauche,tabMilieu,tabDroite<span class="br0">&#93;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La coupe&quot;,&quot;hid&quot;:&quot;la_coupe&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:4,&quot;range&quot;:&quot;3440-6520&quot;} -->
+<h2 class="sectionedit7" id="choix_de_la_variable_sortante">Choix de la variable sortante</h2>
+<div class="level2">
+
+<p>
+$z_1$ est choisie <strong><span style="color:#ff0000;">systématiquement</span></strong> en tant que variable <strong>sortante</strong> :
+</p>
+<div class="table sectionedit8"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $z_1$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  -30  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -30  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  -2070  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  $\frac{3}{10}$  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  $\frac{1}{20}$  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  $\frac{69}{20}$  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  $\frac{4}{5}$  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -$\frac{1}{5}$  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  $\frac{26}{5}$  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  <span style="color:#ff0000;">$z_1$</span>  </th><td class="col1 centeralign">  -$\frac{3}{10}$  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -$\frac{1}{20}$  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  -$\frac{9}{20}$  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table3&quot;,&quot;secid&quot;:8,&quot;range&quot;:&quot;6656-7046&quot;} -->
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#Choix de la variable sortante</span>
+indiceVarSortante<span class="sy0">=</span>tabCoupe.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>-<span class="nu0">1</span></pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab"><span class="co1">%Choix de la variable sortante</span>
+indiceVarSortante=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tabCoupe<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Choix de la variable sortante&quot;,&quot;hid&quot;:&quot;choix_de_la_variable_sortante&quot;,&quot;codeblockOffset&quot;:8,&quot;secid&quot;:7,&quot;range&quot;:&quot;6521-7260&quot;} -->
+<h2 class="sectionedit9" id="choix_de_la_variable_entrante">Choix de la variable entrante</h2>
+<div class="level2">
+
+<p>
+Au lieu de comparer les rapports des coefficients sur les lignes comme on en a l&#039;habitude, on va comparer les <strong>rapports</strong> des coefficients des <strong><span style="color:#008000;">colonnes</span></strong> et prendre le plus <strong><span style="color:#ff0000;">faible</span></strong> :
+</p>
+<div class="table sectionedit10"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  <span style="color:#ff0000;">$x_1$</span>  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $z_1$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  <span style="color:#008000;">-30</span>  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  <span style="color:#008000;">-30</span>  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  -2070  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  $\frac{3}{10}$  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  $\frac{1}{20}$  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  $\frac{69}{20}$  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  $\frac{4}{5}$  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -$\frac{1}{5}$  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  $\frac{26}{5}$  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  <span style="color:#ff0000;">$x_1$</span>  </th><td class="col1 centeralign">  <span style="color:#008000;">-$\frac{3}{10}$</span>  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  <span style="color:#008000;">-$\frac{1}{20}$</span>  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  -$\frac{9}{20}$  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table4&quot;,&quot;secid&quot;:10,&quot;range&quot;:&quot;7525-8000&quot;} -->
+<p>
+$\frac{-30}{-\frac{3}{10}}=$ <span style="color:#ff0000;">100</span> et $\frac{-30}{-\frac{1}{20}}=600$ donc la variable entrante est $x_1$.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#Choix de la variable entrante</span>
+rapportMin<span class="sy0">=</span>np.<span class="me1">inf</span>
+<span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>tabCoupe.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>-<span class="nu0">1</span><span class="br0">&#41;</span>:
+    <span class="kw1">if</span> tabCoupe<span class="br0">&#91;</span>indiceVarSortante<span class="sy0">,</span>i<span class="br0">&#93;</span>*tabCoupe<span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span>i<span class="br0">&#93;</span><span class="sy0">!=</span><span class="nu0">0</span>:
+        rapport<span class="sy0">=</span>tabCoupe<span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span>i<span class="br0">&#93;</span>/tabCoupe<span class="br0">&#91;</span>indiceVarSortante<span class="sy0">,</span>i<span class="br0">&#93;</span>
+        <span class="kw1">if</span> rapport<span class="sy0">&lt;</span>rapportMin:
+            indiceVarEntrante<span class="sy0">=</span>i
+            rapportMin<span class="sy0">=</span>rapport</pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab"><span class="co1">%Choix de la variable entrante</span>
+rapportMin=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/inf.html"><span class="kw2">Inf</span></a>
+<span class="kw1">for</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>=<span class="nu0">1</span>:<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tabCoupe<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="br0">&#41;</span>-<span class="nu0">1</span>
+    <span class="kw1">if</span> tabCoupe<span class="br0">&#40;</span>indiceVarSortante,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a><span class="br0">&#41;</span>*tabCoupe<span class="br0">&#40;</span><span class="nu0">1</span>,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a><span class="br0">&#41;</span>!=<span class="nu0">0</span>
+        rapport=tabCoupe<span class="br0">&#40;</span><span class="nu0">1</span>,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a><span class="br0">&#41;</span>/tabCoupe<span class="br0">&#40;</span>indiceVarSortante,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a><span class="br0">&#41;</span>
+        <span class="kw1">if</span> rapport&lt;rapportMin
+            indiceVarEntrante=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>
+            rapportMin=rapport
+        endif
+    endif
+endfor</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Choix de la variable entrante&quot;,&quot;hid&quot;:&quot;choix_de_la_variable_entrante&quot;,&quot;codeblockOffset&quot;:10,&quot;secid&quot;:9,&quot;range&quot;:&quot;7261-8807&quot;} -->
+<h2 class="sectionedit11" id="normalisation_du_tableau">Normalisation du tableau</h2>
+<div class="level2">
+<div class="table sectionedit12"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $z_1$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -25  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  -100  </td><td class="col6 centeralign">  -2025  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  3  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -$\frac{1}{3}$  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">   $\frac{8}{3}$  </td><td class="col6 centeralign">  4  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $x_1$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  $\frac{1}{6}$  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  -$\frac{10}{3}$  </td><td class="col6 centeralign">  $\frac{3}{2}$  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table5&quot;,&quot;secid&quot;:12,&quot;range&quot;:&quot;8844-9162&quot;} -->
+<p>
+On remarque qu&#039;on a <strong><span style="color:#ff0000;">réduit</span></strong> la valeur de l&#039;optimum mais que $x_2$ est maintenant <strong><span style="color:#008000;">entier</span></strong> ! On est sur la bonne voie !
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#Coefficient principal à 1 et coefficients secondaires à 0</span>
+tabCoupe<span class="sy0">=</span>normalisation<span class="br0">&#40;</span>tabCoupe<span class="sy0">,</span>indiceVarEntrante<span class="sy0">,</span>indiceVarSortante<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab"><span class="co1">%Coefficient principal à 1 et coefficients secondaires à 0</span>
+tabCoupe=normalisation<span class="br0">&#40;</span>tabCoupe,indiceVarEntrante,indiceVarSortante<span class="br0">&#41;</span></pre>
+
+<p>
+On termine alors l&#039;itération avec le <strong>stockage</strong> de la position des variables de la dernière colonne et on repart à la <strong>recherche</strong> de coefficients <strong>non entiers</strong> dans la dernière colonne :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#Stockage de la position des différentes variables</span>
+x<span class="sy0">=</span>np.<span class="me1">concatenate</span><span class="br0">&#40;</span><span class="br0">&#40;</span>x<span class="sy0">,</span>np.<span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#91;</span>indiceVarEntrante<span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="co1">#On repère les coefficients non entiers de la dernière colonne</span>
+indiceCoefsFrac<span class="sy0">=</span><span class="br0">&#91;</span><span class="br0">&#93;</span>
+<span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span>tabCoupe.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>:
+    <span class="kw1">if</span> np.<span class="me1">around</span><span class="br0">&#40;</span>tabCoupe<span class="br0">&#91;</span>i<span class="sy0">,</span>-<span class="nu0">1</span><span class="br0">&#93;</span>%<span class="nu0">1</span><span class="sy0">,</span><span class="nu0">5</span><span class="br0">&#41;</span><span class="sy0">!=</span><span class="nu0">0</span> <span class="kw1">and</span> np.<span class="me1">around</span><span class="br0">&#40;</span>tabCoupe<span class="br0">&#91;</span>i<span class="sy0">,</span>-<span class="nu0">1</span><span class="br0">&#93;</span>%<span class="nu0">1</span><span class="sy0">,</span><span class="nu0">5</span><span class="br0">&#41;</span><span class="sy0">!=</span><span class="nu0">1</span>:
+        indiceCoefsFrac.<span class="me1">append</span><span class="br0">&#40;</span>i<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab">    <span class="co1">%Stockage de la position des différentes variables</span>
+    x<span class="br0">&#40;</span><span class="kw1">end</span>+<span class="nu0">1</span><span class="br0">&#41;</span>=indiceVarEntrante
+    <span class="co1">%On vérifie s'il y a des coefficients non entiers sur la dernière colonne</span>
+    indiceCoefsFrac=<span class="br0">&#91;</span><span class="br0">&#93;</span>
+    <span class="kw1">for</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>=<span class="nu0">2</span>:<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tabCoupe<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+        <span class="kw1">if</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/round.html"><span class="kw2">round</span></a><span class="br0">&#40;</span><span class="nu0">100000</span>*<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/mod.html"><span class="kw2">mod</span></a><span class="br0">&#40;</span>tabCoupe<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>,<span class="kw1">end</span><span class="br0">&#41;</span>,<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>/<span class="nu0">100000</span>!=<span class="nu0">0</span> &amp;&amp; <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/round.html"><span class="kw2">round</span></a><span class="br0">&#40;</span><span class="nu0">100000</span>*<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/mod.html"><span class="kw2">mod</span></a><span class="br0">&#40;</span>tabCoupe<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>,<span class="kw1">end</span><span class="br0">&#41;</span>,<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>/<span class="nu0">100000</span>!=<span class="nu0">1</span>
+            indiceCoefsFrac<span class="br0">&#40;</span><span class="kw1">end</span>+<span class="nu0">1</span><span class="br0">&#41;</span>=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>
+        endif
+    endfor
+endwhile</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Normalisation du tableau&quot;,&quot;hid&quot;:&quot;normalisation_du_tableau&quot;,&quot;codeblockOffset&quot;:12,&quot;secid&quot;:11,&quot;range&quot;:&quot;8808-10671&quot;} -->
+<h2 class="sectionedit13" id="seconde_iteration">Seconde itération</h2>
+<div class="level2">
+
+<p>
+La seule ligne <strong>éligible</strong> est la troisième (les coefficients en dernière colonne des autres lignes sont entiers). On rajoute la colonne $z_2$ et la ligne coupe :
+</p>
+<div class="table sectionedit14"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $z_1$  </th><th class="col6 centeralign">  $z_2$  </th><td class="col7"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -25  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  -100  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  -2025  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  3  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -$\frac{1}{3}$  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">   $\frac{8}{3}$  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  4  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $x_1$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  $\frac{1}{6}$  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  -$\frac{10}{3}$  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  $\frac{3}{2}$  </td>
+	</tr>
+	<tr class="row5">
+		<th class="col0 centeralign">  $z_2$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -$\frac{1}{6}$  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  -$\frac{2}{3}$  </td><td class="col6 centeralign">  1  </td><td class="col7 centeralign">  -$\frac{1}{2}$  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table6&quot;,&quot;secid&quot;:14,&quot;range&quot;:&quot;10869-11314&quot;} -->
+<p>
+La variable sortante est <strong>automatiquement</strong> $z_2$.
+</p>
+<div class="table sectionedit15"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $z_1$  </th><th class="col6 centeralign">  $z_2$  </th><td class="col7"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -25  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  -100  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  -2025  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  3  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -$\frac{1}{3}$  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">   $\frac{8}{3}$  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  4  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $x_1$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  $\frac{1}{6}$  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  -$\frac{10}{3}$  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  $\frac{3}{2}$  </td>
+	</tr>
+	<tr class="row5">
+		<th class="col0 centeralign">  <span style="color:#ff0000;">$z_2$</span>  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -$\frac{1}{6}$  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  -$\frac{2}{3}$  </td><td class="col6 centeralign">  1  </td><td class="col7 centeralign">  -$\frac{1}{2}$  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table7&quot;,&quot;secid&quot;:15,&quot;range&quot;:&quot;11368-11830&quot;} -->
+<p>
+$\frac{-25}{-\frac{1}{6}}=$ <span style="color:#ff0000;">150</span> et $\frac{-100}{-\frac{2}{3}}=150$ donc la variable entrante est $y_1$ (l&#039;autre aurait aussi été correcte mais par convention on choisit la colonne de plus faible indice) :
+</p>
+<div class="table sectionedit16"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  <span style="color:#ff0000;">$y_1$</span>  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $z_1$  </th><th class="col6 centeralign">  $z_2$  </th><td class="col7"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -25  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  -100  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  -2025  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  3  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -$\frac{1}{3}$  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">   $\frac{8}{3}$  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  4  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $x_1$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  $\frac{1}{6}$  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  -$\frac{10}{3}$  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  $\frac{3}{2}$  </td>
+	</tr>
+	<tr class="row5">
+		<th class="col0 centeralign">  <span style="color:#ff0000;">$y_1$</span>  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -$\frac{1}{6}$  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  -$\frac{2}{3}$  </td><td class="col6 centeralign">  1  </td><td class="col7 centeralign">  -$\frac{1}{2}$  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table8&quot;,&quot;secid&quot;:16,&quot;range&quot;:&quot;12056-12535&quot;} -->
+<p>
+On <strong>normalise</strong> le tableau :
+</p>
+<div class="table sectionedit17"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $z_1$  </th><th class="col6 centeralign">  $z_2$  </th><td class="col7"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  -150  </td><td class="col7 centeralign">  -1950  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  3  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">   4  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  5  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $x_1$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  -4  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  1  </td>
+	</tr>
+	<tr class="row5">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  4  </td><td class="col6 centeralign">  -6  </td><td class="col7 centeralign">  3  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table9&quot;,&quot;secid&quot;:17,&quot;range&quot;:&quot;12567-12910&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Seconde it\u00e9ration&quot;,&quot;hid&quot;:&quot;seconde_iteration&quot;,&quot;codeblockOffset&quot;:16,&quot;secid&quot;:13,&quot;range&quot;:&quot;10672-12911&quot;} -->
+<h2 class="sectionedit18" id="resultat_final_et_code_complet">Résultat final et code complet</h2>
+<div class="level2">
+
+<p>
+On trouve donc un revenu optimum de 1950 <strong><span style="color:#ffa500;">pièces d&#039;or</span></strong> en fabriquant 1 <strong><span style="color:#008000;">paire de boucles</span></strong> d&#039;oreilles et 3 <strong><span style="color:#008000;">colliers</span></strong>. Il s&#039;agit, bien sûr, d&#039;un optimum <strong><span style="color:#ff0000;">inférieur</span></strong> à celui obtenu avec des nombres non entiers car on a rajouté une contrainte à chaque coupe.
+</p>
+
+<p>
+<div class='alert alert-info'><strong>Info :</strong> vous trouverez le code complet <a href="https://github.com/LlamasPartan/Optimisation/tree/master/Simplexe/M%C3%A9thode%20des%20coupes" class="urlextern" title="https://github.com/LlamasPartan/Optimisation/tree/master/Simplexe/M%C3%A9thode%20des%20coupes" rel="nofollow"> ici</a>.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;R\u00e9sultat final et code complet&quot;,&quot;hid&quot;:&quot;resultat_final_et_code_complet&quot;,&quot;codeblockOffset&quot;:16,&quot;secid&quot;:18,&quot;range&quot;:&quot;12912-&quot;} -->

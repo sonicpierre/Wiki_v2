@@ -1,0 +1,6 @@
+<span class="kw1">import</span> numpy <span class="kw1">as</span> np
+<span class="kw1">from</span> sklearn.<span class="me1">preprocessing</span> <span class="kw1">import</span> LabelBinarizer
+&nbsp;
+y <span class="sy0">=</span> np.<span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="st0">'rural'</span><span class="sy0">,</span> <span class="st0">'urbain'</span><span class="sy0">,</span><span class="st0">'montagne'</span><span class="sy0">,</span><span class="st0">'plage'</span><span class="sy0">,</span><span class="st0">'marais'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="co1">#On ajoute de nouveaux attributs pour mieux observer les résultats d'encodage.</span>
+encoder <span class="sy0">=</span> LabelBinarizer<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="co1">#Appel du transformeur</span>
+encoder.<span class="me1">fit_transform</span><span class="br0">&#40;</span>y<span class="br0">&#41;</span><span class="co1">#Application de la transformation au dataset</span>

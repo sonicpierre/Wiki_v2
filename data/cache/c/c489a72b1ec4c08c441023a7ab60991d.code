@@ -1,0 +1,2 @@
+<a href="http://www.cmake.org/cmake/help/cmake2.6docs.html#command:file"><span class="kw1">file</span></a><span class="sy0">(</span>GLOB sources_files <span class="st0">&quot;*.cpp&quot;</span><span class="sy0">)</span>
+target_sources<span class="sy0">(</span><span class="re0">${CMAKE_PROJECT_NAME}</span> PRIVATE <span class="re0">${sources_files}</span><span class="sy0">)</span>

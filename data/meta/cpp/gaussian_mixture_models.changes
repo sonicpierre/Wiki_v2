@@ -1,0 +1,82 @@
+1599992894	188.141.243.39	C	cpp:gaussian_mixture_models	pierrevirgaux	créée		101
+1599993253	188.141.243.39	E	cpp:gaussian_mixture_models	pierrevirgaux			182
+1599994073	188.141.243.39	E	cpp:gaussian_mixture_models	pierrevirgaux			296
+1599994406	188.141.243.39	E	cpp:gaussian_mixture_models	pierrevirgaux	[Utilisation] 		31
+1599994448	188.141.243.39	E	cpp:gaussian_mixture_models	pierrevirgaux			2
+1599994924	188.141.243.39	E	cpp:gaussian_mixture_models	pierrevirgaux	[Principe de l'algorithme] 		2
+1599994932	188.141.243.39	E	cpp:gaussian_mixture_models	pierrevirgaux	[Evaluation du modèle] 		2
+1599994941	188.141.243.39	E	cpp:gaussian_mixture_models	pierrevirgaux	[Utilisation] 		2
+1599995047	188.141.243.39	E	cpp:gaussian_mixture_models	pierrevirgaux	[Principe de l'algorithme] 		67
+1599995147	188.141.243.39	E	cpp:gaussian_mixture_models	pierrevirgaux	[Evaluation du modèle] 		77
+1599995188	188.141.243.39	E	cpp:gaussian_mixture_models	pierrevirgaux	[Utilisation] 		35
+1600000444	188.141.243.39	E	cpp:gaussian_mixture_models	pierrevirgaux	[Constitution d'un dataset] 		0
+1600005391	188.141.243.39	E	cpp:gaussian_mixture_models	pierrevirgaux	[L'algorithme et son paramétrage] 		-1
+1600006148	188.141.243.39	E	cpp:gaussian_mixture_models	pierrevirgaux	[L'algorithme] 		97
+1600008049	188.141.243.39	E	cpp:gaussian_mixture_models	pierrevirgaux	[L'algorithme] 		283
+1600168191	217.119.181.222	E	cpp:gaussian_mixture_models	pierrevirgaux	[L'algorithme] 		148
+1600168302	217.119.181.222	E	cpp:gaussian_mixture_models	pierrevirgaux			-14
+1600168651	217.119.181.222	E	cpp:gaussian_mixture_models	pierrevirgaux			81
+1600168808	217.119.181.222	E	cpp:gaussian_mixture_models	pierrevirgaux			-20
+1600169100	217.119.181.222	E	cpp:gaussian_mixture_models	pierrevirgaux	[Choisir la bonne covariance] 		1
+1600169112	217.119.181.222	E	cpp:gaussian_mixture_models	pierrevirgaux	[Evaluation du modèle] 		247
+1600169182	217.119.181.222	E	cpp:gaussian_mixture_models	pierrevirgaux	[Akaike information criterion] 		6
+1600179754	217.119.181.222	E	cpp:gaussian_mixture_models	pierrevirgaux			39
+1600180974	217.119.181.222	E	cpp:gaussian_mixture_models	pierrevirgaux	[Le critère d'information d'Akaike] 		249
+1600184569	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[Le critère d'information d'Akaike] 		94
+1600184855	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[L'algorithme] 		27
+1600185273	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[L'algorithme] 		171
+1600186180	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[Choisir la bonne covariance] 		462
+1600186239	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[Choisir la bonne covariance] 		-8
+1600186310	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[Evaluation du modèle] 		33
+1600186374	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[L'algorithme] 		-2
+1600188980	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[Choisir la bonne covariance] 		219
+1600191781	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[Choisir la bonne covariance] 		393
+1600191797	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[Choisir la bonne covariance] 		2
+1600191849	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[Le critère d'information d'Akaike] 		-4
+1600192223	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[Choisir la bonne covariance] 		70
+1600192396	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[Evaluation du modèle] 		80
+1600193095	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[L'algorithme] 		12
+1600193583	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[Bayesian information criterion] 		35
+1600195271	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[L'algorithme] 		441
+1600200987	188.141.243.39	E	cpp:gaussian_mixture_models	pierrevirgaux	[L'algorithme] 		259
+1600201127	188.141.243.39	E	cpp:gaussian_mixture_models	pierrevirgaux	[L'algorithme] 		47
+1600245727	217.119.181.222	E	cpp:gaussian_mixture_models	pierrevirgaux	[L'algorithme] 		89
+1600245747	217.119.181.222	E	cpp:gaussian_mixture_models	pierrevirgaux	[Bayesian information criterion] 		-40
+1600245954	217.119.181.222	E	cpp:gaussian_mixture_models	pierrevirgaux	[Le critère d'information d'Akaike] 		84
+1600246019	217.119.181.222	E	cpp:gaussian_mixture_models	pierrevirgaux	[Les différents critères de choix] 		43
+1600248634	217.119.181.222	E	cpp:gaussian_mixture_models	pierrevirgaux	[Les différents critères de choix] 		209
+1600249184	217.119.181.222	E	cpp:gaussian_mixture_models	pierrevirgaux	[Les différents critères de choix] 		181
+1600250928	217.119.181.222	E	cpp:gaussian_mixture_models	pierrevirgaux	[Les différents critères de choix] 		531
+1600256854	217.119.181.222	E	cpp:gaussian_mixture_models	pierrevirgaux	[Les différents critères de choix] 		147
+1600260092	217.119.181.222	E	cpp:gaussian_mixture_models	pierrevirgaux	[Les différents critères de choix] 		241
+1600272920	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[L'algorithme et son paramétrage] 		46
+1600281387	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[L'algorithme] 		41
+1600282193	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[L'algorithme et son paramétrage] 		177
+1600282532	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[L'algorithme et son paramétrage] 		205
+1600283286	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[L'algorithme] 		339
+1600283688	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[L'algorithme] 		32
+1600284038	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[L'algorithme] 		75
+1600284056	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[L'algorithme] 		1
+1600285369	89.88.75.36	E	cpp:gaussian_mixture_models	pierrevirgaux	[Modèle mélange gaussien baysien] 		-41
+1600549363	188.141.243.39	E	cpp:gaussian_mixture_models	pierrevirgaux	[L'algorithme Mean-shift] 		-35
+1600549454	188.141.243.39	E	cpp:gaussian_mixture_models	pierrevirgaux	[Les différents critères de choix] 		87
+1600893945	188.141.243.39	E	cpp:gaussian_mixture_models	pierrevirgaux	[L'algorithme] 		-533
+1617044879	90.4.156.105	E	cpp:gaussian_mixture_models	malama			0
+1617044966	90.4.156.105	E	cpp:gaussian_mixture_models	malama	[L'algorithme et son paramétrage] 		1
+1617045207	90.4.156.105	E	cpp:gaussian_mixture_models	malama	[L'algorithme et son paramétrage] 		-1
+1617045274	90.4.156.105	E	cpp:gaussian_mixture_models	malama	[L'algorithme] 		2
+1617045471	90.4.156.105	E	cpp:gaussian_mixture_models	malama	[L'algorithme] 		5
+1617045628	90.4.156.105	E	cpp:gaussian_mixture_models	malama	[L'algorithme] 		5
+1617045812	90.4.156.105	E	cpp:gaussian_mixture_models	malama	[L'algorithme] 		29
+1617045967	90.4.156.105	E	cpp:gaussian_mixture_models	malama	[Choisir la bonne covariance] 		6
+1617048201	90.4.156.105	E	cpp:gaussian_mixture_models	malama	[Choisir la bonne covariance] 		25
+1617048296	90.4.156.105	E	cpp:gaussian_mixture_models	malama	[Choisir la bonne covariance] 		1
+1617048366	90.4.156.105	E	cpp:gaussian_mixture_models	malama	[Choisir la bonne covariance] 		12
+1617048389	90.4.156.105	E	cpp:gaussian_mixture_models	malama	[Choisir la bonne covariance] 		2
+1617048668	90.4.156.105	E	cpp:gaussian_mixture_models	malama	[Evaluation du modèle] 		-3
+1617048957	90.4.156.105	E	cpp:gaussian_mixture_models	malama	[Les différents critères de choix] 		2
+1617049007	90.4.156.105	E	cpp:gaussian_mixture_models	malama	[Les différents critères de choix] 		6
+1617049038	90.4.156.105	E	cpp:gaussian_mixture_models	malama	[Les différents critères de choix] 		1
+1617049106	90.4.156.105	E	cpp:gaussian_mixture_models	malama	[Les différents critères de choix] 		1
+1617049169	90.4.156.105	E	cpp:gaussian_mixture_models	malama	[Les différents critères de choix] 		6
+1617049233	90.4.156.105	E	cpp:gaussian_mixture_models	malama	[Les différents critères de choix] 		0

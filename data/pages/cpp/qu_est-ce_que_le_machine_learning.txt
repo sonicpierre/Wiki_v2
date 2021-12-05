@@ -1,0 +1,88 @@
+[[cpp:IA| Machine Learning]]
+
+{{:cpp:machine-learning-definition.jpg?550|}}
+
+Connu aussi sous le nom d'apprentissage automatique, le Machine Learning est un domaine de recherche en  intelligence artificielle basé sur des méthodes mathématiques et 
+statistiques. Il est utilisé pour donner aux ordinateurs la capacité "d'apprendre" à partir de données, dans le but de prédire la valeur de nouvelles données.
+
+====Dans quels domaines retrouve-t-on le Machine Learning ?====
+
+Le Machine Learning est présent partout et touche tous les domaines générant des données. 
+
+|           ^ Problématique                 ^Type de problème^ Sources^
+^Santé      | Détection de cancers grâce à l'analyse d'images radiographiques.    |Classification| [[https://www.lepoint.fr/sciences-nature/l-ia-de-google-detecte-desormais-mieux-les-cancers-du-sein-que-les-medecins-02-01-2020-2355943_1924.php#|Le point sciences]] |
+^ Sport     | Prédiction de performances et du retentissement physique lié à une pratique sportive. |Régression        |[[https://scient.fr/big-data-machine-learning-et-sport/|Scient]]          |
+^ Informatique      | Traduction d'un langage de programmation dans d'autres langages. | Traitement du langage naturel (NLP) (*) |[[https://towardsdatascience.com/facebooks-transcoder-an-ai-source-to-source-compiler-23ea77f3234b|Toward data science]]|
+^Finance      | Détection de fraudes lors de transactions financières en ligne. |Classification    |[[https://www.datasciencecentral.com/profiles/blogs/top-7-data-science-use-cases-in-finance?fbclid=IwAR0LHCjgR-b-X9ElpJqG-smIKrf_1xLutZC_vg23eBYWaLO1tqHKYEYedRc|Data science central]] |
+(*) pour plus de détails sur cette méthode consultez la page [[Qu'est-ce que le NLP ?]].
+
+<alert warning> **Attention :** parfois les choses sont plus compliquées, certains algorithmes de régression sont utilisés pour de la classification (régression logistique) et inversement. </alert>
+
+====Quel algorithme choisir ?====
+
+Il est important, dès le départ, de connaitre le type d'apprentissage nécessaire au problème auquel on est confronté. Les algorithmes de Machine
+Learning se comptent par dizaines et chacun aborde l'apprentissage de manière différente. 
+
+Pour débuter dans le Machine Learning, nous vous conseillons la procédure suivante :
+
+{{ :cpp:ca.png?1000 |}}
+====Workflow en Machine Learning====
+
+Le travail de Machine Learning se fait selon une succession logique des activités (workflow).  Nous choisissons comme contexte d'application  une agence immobilière désirant prévoir le prix d'un appartement. Détaillons maintenant chacune des étapes.
+
+{{ :cpp:wff.png?600|}}
+
+  - **Identifier et comprendre le besoin métier : ** on va chercher à connaître le degré de précision attendu et le taux d'erreur qui lui est associé, on va chercher à savoir si les agents immobiliers disposeront plus tard des données qui ont servi à créer le modèle, on s'intéressera au profil d'évolution du secteur immobilier dans la ville ou encore  aux zones où la ville effectue des travaux.
+  - **[[scrapper_les_donnees|Localiser et récupérer les données ]] :**  est-ce que l'agence dispose des données nécessaires pour créer le modèle ? Le cas échéant, où pourront-elles être récupérées et sont-elles libres d'accès ?     
+  - **[[preprocessing_et_encodage|Explorer et préparer les données]]  :** on va chercher pour quels appartements il manque des données, s'il existe d'autres sources pour croiser les données et améliorer la prédiction.
+  - **Construire le modèle :** construction et calibration d'un arbre de décision pour estimer le prix d'un appartement. Par la suite, on utilise des algorithmes plus poussés sur la base du premier pour trouver le modèle final.  
+  - **Evaluer et valider le modèle :** on évalue l'erreur quadratique moyenne entre les valeurs prédites et les valeurs réelles puis on utilise des algorithmes d'optimisation pour chercher le meilleur paramétrage et valider le modèle. 
+  - **[[exporter_importer_le_modele|Déployer le modèle]]  :** sauvegarde et mise en service du modèle dans une application destinée aux agents immobiliers.
+
+
+
+
+**Source :** "Big Data et Machine Learning, P. Limberger, M. Batty; M. Morel, J-L. Raffaelli"
+
+**Image : ** [[https://www.eurodecision.com/algorithmes/data-science|eurodecision]]
+====Machine Learning/Deep Learning quelle est la limite ?====
+
+Le Deep Learning est une branche particulière du Machine Learning dont le but est de permettre à l'ordinateur d'apprendre, de façon autonome, à partir d'un volume de données très important.
+
+
+|              ^Définition                  ^ Types de données          ^Sélection de variables^Contrainte de données^Fonctionnement^
+^ Machine Learning      |Branche de l'intelligence artificielle | Structurées (nombre, mot, date)   |Nécessaire (le data scientist sélectionne les variables les plus informatives pour le modèle.) |Nécessite de vastes jeux de données, néanmoins certains algorithmes peuvent fonctionner avec peu de données.  | Itératif|
+^ Deep Learning      |Méthode de Machine Learning |Non structurées (son, image, texte) |Non nécessaire (l'algorithme va lui-même extraire les variables qui apportent le plus d'informations à la prédiction.) |Nécessite obligatoirement d'importants jeux de données identifiées et une puissance de calcul considérable. |Architecture de réseaux de neurones. | 
+
+**Sitographie : **
+  * [[https://fr.mathworks.com/discovery/deep-learning.html|MathWorks MatLab]]
+  * [[https://penseeartificielle.fr/difference-intelligence-artificielle-machine-learning-deep-learning/|Pensée Artificielle]]
+  * [[https://jedha.co/blog/2020/01/01/la-vraie-difference-entre-machine-learning-deep-learning/|jedha]]
+====Machine Learning et éthique====
+
+L'arrivée dans notre quotidien de l'intelligence artificielle fait l'objet de nombreuses controverses. En effet, on se demande comment une machine saura appliquer les principes d'égalité, comment seront protégées nos informations ou encore quelle importance sera accordée à leur surveillance.
+
+Le Machine Learning et l'intelligence artificielle soulèvent des problématiques parmi lesquelles : 
+
+  * **Biais et discriminations : **  le plus souvent involontaires et difficilement repérables, les biais amènent à prendre des décisions altérées ou conduisent à des inégalités vis-à-vis de certains individus.  
+  * **Enjeu des données fournies à la machine :** entrainer un modèle de Machine Learning nécessite des données. Celles-ci doivent être choisies en fonction de leur importance suivant l'objectif, leur utilisation et la durée de leur stockage doivent être encadrées.
+  * **Responsabilités face à l'autonomie des machines :** si une voiture autonome est impliquée dans un accident, qui sera responsable ? La responsabilité des actions d'une intelligence artificielle est un point qui fait encore débat.
+
+Afin de répondre à ces questionnements et permettre une bonne utilisation de ces outils, certaines règles ont été mises en place, des fondations de recherches ont été créées :
+
+|              ^ Caractéristiques                 ^ Type d'utilisation          ^Plus d'informations^
+^RGPD     |Règlement européen qui modère l'utilisation des informations personnelles par des entreprises publiques ou privées. | Protection des données   |[[https://www.cnil.fr/fr/reglement-europeen-protection-donnees|CNIL]] |
+^Fondation Abeona |Recherche de solutions pour améliorer les algorithmes et les rendre plus justes et équitables. | Détection et correction des biais des algorithmes|[[https://www.fondation-abeona.org/projects|Fondation Abeona]] | 
+
+**Sitographie : **
+  * [[https://www.cnil.fr/fr/comment-permettre-lhomme-de-garder-la-main-rapport-sur-les-enjeux-ethiques-des-algorithmes-et-de|CNIL (Problématiques IA)]]
+  * [[https://www.fondation-abeona.org/projects|Fondation Abeona]]
+  * [[https://www.cnil.fr/fr/reglement-europeen-protection-donnees|CNIL (RGPD)]]
+
+====Conclusion====
+
+Il est bon de garder en tête un schéma qui résume assez bien les différents types de Data Scientists.
+
+{{ :cpp:garderentete.png?950 |}}
+
+Il s'agit d'un métier passionnant mais qui reste technique. Être data scientist ne voudra jamais dire être visionnaire.

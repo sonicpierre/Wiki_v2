@@ -1,0 +1,14 @@
+bind_tf_idf<span class="br0">&#40;</span>word<span class="sy0">,</span> book<span class="sy0">,</span> n<span class="br0">&#41;</span>
+book_words %<span class="sy0">&gt;</span>%
+  <span class="kw3">select</span><span class="br0">&#40;</span>-total<span class="br0">&#41;</span> %<span class="sy0">&gt;</span>%
+&nbsp;
+  arrange<span class="br0">&#40;</span>desc<span class="br0">&#40;</span>tf_idf<span class="br0">&#41;</span><span class="br0">&#41;</span> %<span class="sy0">&gt;</span>%
+  mutate<span class="br0">&#40;</span>word <span class="sy0">=</span> factor<span class="br0">&#40;</span>word<span class="sy0">,</span> levels <span class="sy0">=</span> rev<span class="br0">&#40;</span>unique<span class="br0">&#40;</span>word<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> %<span class="sy0">&gt;</span>% 
+  group_by<span class="br0">&#40;</span>book<span class="br0">&#41;</span> %<span class="sy0">&gt;</span>% 
+  top_n<span class="br0">&#40;</span><span class="nu0">15</span><span class="br0">&#41;</span> %<span class="sy0">&gt;</span>% 
+  ungroup<span class="br0">&#40;</span><span class="br0">&#41;</span> %<span class="sy0">&gt;</span>%
+  ggplot<span class="br0">&#40;</span>aes<span class="br0">&#40;</span>word<span class="sy0">,</span> tf_idf<span class="sy0">,</span> fill <span class="sy0">=</span> book<span class="br0">&#41;</span><span class="br0">&#41;</span> +
+  geom_col<span class="br0">&#40;</span>show.<span class="me1">legend</span> <span class="sy0">=</span> FALSE<span class="br0">&#41;</span> +
+  labs<span class="br0">&#40;</span>x <span class="sy0">=</span> NULL<span class="sy0">,</span> y <span class="sy0">=</span> <span class="st0">&quot;tf-idf&quot;</span><span class="br0">&#41;</span> +
+  facet_wrap<span class="br0">&#40;</span><span class="sy0">~</span>book<span class="sy0">,</span> ncol <span class="sy0">=</span> <span class="nu0">2</span><span class="sy0">,</span> scales <span class="sy0">=</span> <span class="st0">&quot;free&quot;</span><span class="br0">&#41;</span> +
+  coord_flip<span class="br0">&#40;</span><span class="br0">&#41;</span>

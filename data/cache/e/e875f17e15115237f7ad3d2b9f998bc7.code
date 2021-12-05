@@ -1,0 +1,1 @@
+pd.<span class="me1">crosstab</span><span class="br0">&#40;</span>data_train<span class="br0">&#91;</span><span class="st0">&quot;CodePostal&quot;</span><span class="br0">&#93;</span><span class="sy0">,</span> data_train<span class="br0">&#91;</span><span class="st0">&quot;propertyType&quot;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>

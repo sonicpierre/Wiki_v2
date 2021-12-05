@@ -1,0 +1,94 @@
+
+<h1 class="sectionedit1" id="ubuntu_2004">Ubuntu 20.04</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Ubuntu 20.04&quot;,&quot;hid&quot;:&quot;ubuntu_2004&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-27&quot;} -->
+<h2 class="sectionedit2" id="installation_java">Installation Java</h2>
+<div class="level2">
+<pre class="code bash"><span class="kw2">sudo</span> apt <span class="kw2">install</span> openjdk-<span class="nu0">14</span>-jdk</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Installation Java&quot;,&quot;hid&quot;:&quot;installation_java&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;28-109&quot;} -->
+<h2 class="sectionedit3" id="installation_javafx">Installation JavaFx</h2>
+<div class="level2">
+
+<p>
+Télécharger la version 14 de java fx pour linux depuis : <a href="https://gluonhq.com/products/javafx/" class="urlextern" title="https://gluonhq.com/products/javafx/" rel="nofollow">https://gluonhq.com/products/javafx/</a>
+Décompressez l&#039;archive.
+</p>
+<pre class="code bash"><span class="kw2">sudo</span> apt <span class="kw2">install</span> <span class="kw2">unzip</span> <span class="co0"># Si pas déjà installé</span>
+<span class="kw2">unzip</span> openjfx-14.0.1_linux-x64_bin-sdk.zip</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Installation JavaFx&quot;,&quot;hid&quot;:&quot;installation_javafx&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:3,&quot;range&quot;:&quot;110-374&quot;} -->
+<h2 class="sectionedit4" id="installation_ide">Installation IDE</h2>
+<div class="level2">
+
+<p>
+On va utiliser <strong>Eclipse</strong>. Le télécharger depuis le site officiel.
+Décompressez l&#039;archive, et lancer le programme eclipse-inst présent à l&#039;intérieur.
+</p>
+<pre class="code bash"><span class="kw2">tar</span> <span class="re5">-xvf</span> eclipse-inst-linux64.tar.gz
+<span class="kw3">cd</span> eclipse-installer
+.<span class="sy0">/</span>eclipse-inst</pre>
+
+<p>
+Sélectionner Eclipse IDE for java Developers
+Suivant
+Sélectionner la jvm /usr/lib/jvm/java-14-openjdk-amd64
+Possibilité de changer le dossier d&#039;installation de l&#039;IDE.
+Puis install, et accepter les licenses.
+Ignorer le message indiquant que l&#039;installation est plus longue que normalement (c&#039;est faux).
+Faire launch pour lancer le programme.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Installation IDE&quot;,&quot;hid&quot;:&quot;installation_ide&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:4,&quot;range&quot;:&quot;375-997&quot;} -->
+<h2 class="sectionedit5" id="configuration_de_l_espace_de_travail">Configuration de l&#039;espace de travail</h2>
+<div class="level2">
+
+<p>
+Au lancement d&#039;eclipse, vous devez choisir le dossier qui contiendra vos projets.
+Une fois ceci fait, l&#039;IDE s&#039;ouvre avec une page d&#039;acceuil.
+On peut alors fermer l&#039;onglet, sans oublier de cocher la case pour ne plus que cette page s&#039;ouvre au lancement.
+</p>
+
+<p>
+Dans le bandeau de gauche, créer un nouveau projet java.
+Sélectionner le JRE 14.
+Faire suivant.
+Dans l&#039;onglet Librairies, faire add External JARs et ajouter un par un les fichiers <strong>jar</strong> présent dans le dossier <strong>lib</strong> de openjfx (décompressé plus tôt).
+Dans l&#039;onglet Modules, faire add System Module… et sélectionner <strong>java.base</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Configuration de l&#039;espace de travail&quot;,&quot;hid&quot;:&quot;configuration_de_l_espace_de_travail&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:5,&quot;range&quot;:&quot;998-1644&quot;} -->
+<h2 class="sectionedit6" id="verifier_l_installation_de_java">Vérifier l&#039;installation de java</h2>
+<div class="level2">
+
+<p>
+On peut désormais créer un package, en faisant clic droit sur le projet. 
+On va l&#039;appeller <strong>fr.tuto</strong>.
+Dans ce package on va créer une nouvelle classe : <strong>Main</strong>.
+On va y ajouter le code d&#039;une fonction main, soit manuellement soit dans la fenêtre de création de classe. 
+</p>
+<pre class="code java"><span class="kw1">public</span> <span class="kw1">static</span> <span class="kw4">void</span> main<span class="br0">&#40;</span><a href="http://www.google.com/search?hl=en&amp;q=allinurl%3Adocs.oracle.com+javase+docs+api+string"><span class="kw3">String</span></a><span class="br0">&#91;</span><span class="br0">&#93;</span> args<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <a href="http://www.google.com/search?hl=en&amp;q=allinurl%3Adocs.oracle.com+javase+docs+api+system"><span class="kw3">System</span></a>.<span class="me1">out</span>.<span class="me1">println</span><span class="br0">&#40;</span><span class="st0">&quot;Hello World&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+
+<p>
+Lancer le programme avec l&#039;icône de flèche blanche dans un rond vert (aka Run Main) en haut de l&#039;interface de l&#039;IDE.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;V\u00e9rifier l&#039;installation de java&quot;,&quot;hid&quot;:&quot;verifier_l_installation_de_java&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:6,&quot;range&quot;:&quot;1645-2187&quot;} -->
+<h3 class="sectionedit7" id="resultat">Résultat</h3>
+<div class="level3">
+
+<p>
+Dans la console intégrée à l&#039;IDE vous devriez voir apparaître “Hello World”.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;R\u00e9sultat&quot;,&quot;hid&quot;:&quot;resultat&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:7,&quot;range&quot;:&quot;2188-&quot;} -->

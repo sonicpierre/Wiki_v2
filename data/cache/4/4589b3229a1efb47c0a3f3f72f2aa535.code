@@ -1,0 +1,13 @@
+arbreFirst <span class="sy0">=</span> DecisionTreeClassifier<span class="br0">&#40;</span>min_samples_split<span class="sy0">=</span><span class="nu0">150</span><span class="sy0">,</span>min_samples_leaf<span class="sy0">=</span><span class="nu0">50</span><span class="br0">&#41;</span>
+arbreFirst.<span class="me1">fit</span><span class="br0">&#40;</span>train_Var<span class="sy0">,</span> etiquet_Train<span class="br0">&#41;</span>
+<span class="sy0">&lt;</span>code<span class="sy0">&gt;</span>
+&nbsp;
+On peut ensuite afficher l<span class="st0">'arbre :
+&nbsp;
+__En Python :__
+&nbsp;
+&lt;code python&gt;
+from sklearn.tree import plot_tree
+import matplotlib.pyplot as plt
+plt.figure(figsize=(15,15))
+plot_tree(arbreFirst,feature_names = list(data.columns[:-1]),filled=True)</span>

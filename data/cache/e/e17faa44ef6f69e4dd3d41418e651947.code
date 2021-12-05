@@ -1,0 +1,3 @@
+<span class="kw1">from</span> sklearn.<span class="me1">cluster</span> <span class="kw1">import</span> AgglomerativeClustering
+&nbsp;
+model <span class="sy0">=</span> AgglomerativeClustering<span class="br0">&#40;</span>n_clusters<span class="sy0">=</span><span class="nu0">5</span><span class="br0">&#41;</span>.<span class="me1">fit</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span>

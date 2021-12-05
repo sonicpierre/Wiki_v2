@@ -1,0 +1,4 @@
+<span class="kw4">int</span> main<span class="br0">&#40;</span><span class="kw4">int</span> argc, <span class="kw4">char</span><span class="sy2">**</span> argv<span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+<span class="co1">//Votre futur code</span>
+<span class="br0">&#125;</span>

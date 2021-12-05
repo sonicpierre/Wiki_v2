@@ -1,0 +1,226 @@
+{{  :cpp:ingredients.jpg?500  | }}
+
+Pour produire de la bière, Il nous faut trois ingrédients différents: eau,  houblon et malt. Cependant, vous avez confondu les étiquettes de vos produits et vous ne vous souvenez plus des masses volumiques de vos ingrédients (en  $g/cm^3$). 
+
+Supposons qu’un volume de 2 $cm^3$ d'eau, mélangé à un seau contenant  1 $cm^3$ de malt et 1 $cm^3$ de houblon donne 4 g de bière. Si les proportions des ingrédients sont changées à 1, 2, et 1 $cm^3$, alors on a 3 g de bière produite. Finalement, si les proportions sont changées à 1, 1, et 2 $cm^3$,  alors 3 g de bière sont produits. 
+
+<color #ed1c24>**Quels sont les volumes massiques des trois ingrédients  ?**</color>
+
+=====Mathématiser le problème=====
+
+<alert info> **Info :** Une page existe déjà sur la méthode du gradient classique dans le cadre de la régression linéaire [[cpp:Régression supervisée | ici]]. </alert>
+
+La descente de gradient conjuguée est un  algorithme itératif permet de trouver le minimum d'une fonction de $R^{n}$. 
+Nous utiliserons cette méthode pour résoudre les équations de la forme :
+
+$$Ax= b$$ 
+
+D'après l'exemple précédent, on a: $A = \begin{pmatrix} 2 & 1 & 1\\ 1 & 2 & 1\\1 & 1 & 2\end{pmatrix}$, $b = \begin{pmatrix} 2 \\ 3\\3\end{pmatrix}$,
+et on obtient: $x^* =  \begin{pmatrix} 1.5 \\ 0.5\\0.5\end{pmatrix}$
+
+En effet, chercher une solution du problème reviens à chercher le minimum de la fonction utilisant le <color #b5e61d>**produit scalaire**</color>:
+$$f(x) = \frac{1}{2}*<Ax,x> -<b,x>$$
+
+Nous utilisons donc le gradient conjugué de manière détournée pour résoudre notre système linéaire.
+
+<fc #87ceeb>__Matrice symétrique définie positive :__</fc>
+
+A est une matrice symétrique définie positive si et seulement si elle respecte:
+
+  * $A\,^t = A$ : symétrique: on peut observer une symétrie des valeurs selon la diagonale de $A$.
+  * $x\,^tAx >0  \forall x \in R^n$ non nul : définie positive: la matrice est positive et inversible.
+
+<color #b5e61d>__Produit scalaire :__</color>
+
+Soient $u$ et $v$ deux vecteurs dans $R^n$, tels que $u = (u_1, u_2, ...., u_n)$ et  $u = (v_1, v_2, ...., v_n)$. Alors le produit scalaire entre $u$ et $v$, noté $(u, v)$ ou $<u | v>$ vaut :$\sum_{i=1}^{n} (u_{i}*v_{i})$
+=====Algorithme et son application=====
+
+Cet algorithme est dit "à direction de descente", c'est à dire qu'à chaque itération, on se "déplace" dans la direction opposée au <fc #6495ed>gradient</fc>.
+La particularité de ce dernier est d'utiliser le principe des <color #22b14c>**vecteurs conjugués**</color> pour descendre. 
+Soient {$p_k$} une famille de n vecteurs conjugués deux a deux (directions), alors cette famille forment une base de $R^n$. On cherche donc une **combinaison linéaire** ($x^* = \sum_{i=1}^{n} (\alpha_{i}*p_{i})$) de ces n vecteurs (en calculant les $\alpha_i$) tel que $Ax^*= b$.
+
+<fc #6495ed>__Gradient:__</fc>
+
+Le Gradient d'une fonction en un point $a$ est un vecteur qui évalue la variabilité de la fonction au voisinage de $a$. 
+On peut le voir comme la définition de la dérivée pour les fonctions de $R^n$ dans $R$. 
+
+Soit $B = (e_i)_{i \in [1;n]}$ une base de $R^n$. 
+Soit $a$ un vecteur de $R^n$ tel que $f:R^n \to R$ est différentiable en $a$. 
+
+Alors le gradient de $f$ en $a$ dans la base $B$ est :
+
+\begin{equation}\sum_{i=1}^{n} \frac{\partial f}{\partial x_i}(a)e_i\end{equation}
+
+<color #22b14c>__Vecteurs conjugués selon A:__</color>
+
+Deux vecteurs $u$ et $v$ sont conjugués selon la matrice A symétrique définie positive 	
+
+$\Leftrightarrow$ $u\,^tAv = v\,^tAu = 0$ 
+
+$\Leftrightarrow$ u et v sont orthogonaux selon la métrique $A$.
+
+$\Leftrightarrow$  le produit scalaire de u par Av est nul.
+
+$\Leftrightarrow$  le produit scalaire de v par Au est nul.
+====Le Pseudo-code====
+
+    Variables
+        ri //residu à l itération i
+        xi // ième terme de la suite convergent
+        pi // vecteurs conjugués
+        αi // coefficient de descente du vecteur pi
+        βk // coefficient de mise a jour pi
+        A // matrice du systeme d equation
+    
+    Début
+        r0 ← Ax0 − b //initialisation residu
+        p0 ← −r0 //initialisation de la direction de descente
+        k ← 0 //initialisation nombre itérations
+    
+        Tant que rk != 0
+    
+            αk ← −(trans(rk)*pk)/(trans(pk)*A*pk)
+    
+            xk+1 ← xk + αkpk //nouvel iteration de xk
+            rk+1 ← A*xk+1 − b// mise a jour residu
+    
+            βk+1 ← −(trans(rk+1)*A*pk)/(trans(pk)*A*pk)
+    
+            pk+1 ← −rk+1 + βk+1*pk //mise a jour vecteur conjugué
+            k ← k + 1 //incrementation de k
+    
+        Fin tant que
+    Fin
+====Initialisation variables et fonctions====
+
+Nous allons ici décomposer la fonction **conjgrad(A, b, x)** en Python et **grad(A, b, x)** en Octave. Elles contiennent bien entendu l'initialisation et la boucle principale. Vous pouvez trouver l'ensemble du code [[https://github.com/LlamasPartan/Optimisation/tree/master/Grandes%20m%C3%A9thode%20d'optimisation/Gradient%20Conjugu%C3%A9| ici]].
+
+__En Octave:__
+
+Il est tout d'abord nécessaire de coder une petite fonction permettant de comparer rapidement 2 vecteurs :
+
+<code matlab>
+function [ok] = comp (x, y)
+  #Postcondition:renvoi 1 si x == y, 0 sinon
+  z = (x!=y); #z[i] =  1 si x[i] != y[i] et 0 si x[i]==y[i]
+  ok = (sum(z)==0); #on fait la somme des éléments = nombre de cases différentes en x et y
+endfunction
+</code>
+
+On peut ensuite initialiser les variables nécessaires au corps de l'algorithme :
+
+<code matlab>
+%u' *v <=> produit scalaire ente u et v
+    
+r_old = A*x-b;
+p_old = -r_old;
+</code>
+
+__En Python :__
+
+<code python>
+#np.dot <=> produit matrice-vecteur ou produit scalaire
+
+r_old = np.dot(A, x)-b
+p_old = -r_old
+</code>
+
+<alert warning>**Remarque :** Pour des raisons syntaxiques vous retrouverez en Python et sous Octave les correspondances r_old = r_k et r_new = r_k+1 de même pour p_old.</alert>
+====Boucle principale====
+
+__En Python :__
+
+<code python>
+while ((r_old != np.zeros(len(b))).all()):
+
+    Apk = np.dot(A, p_old)
+    alpha = -np.dot(np.transpose(r_old),p_old)/np.dot(np.transpose(p_old), Apk) 
+
+    x = x + np.dot(alpha, p_old)
+    r_new = np.dot(A, x) - b 
+
+    beta = np.dot(np.transpose(r_new),Apk) / np.dot(np.transpose(p_old), Apk)
+
+    p_new = -r_new + np.dot(beta, p_old)
+
+    #k = k+ 1
+    r_old = r_new
+    p_old = p_new
+</code>
+
+__En Octave :__
+
+<code matlab>
+while ((comp(r_old, zeros(length(b),1))==0))
+    Apk = A*p_old;
+    alpha = -(r_old')*p_old/((p_old')* Apk); 
+
+    x = x + alpha* p_old; 
+    r_new = A*x - b; # maj r
+
+    beta = ((r_new')*Apk) / ((p_old')* Apk);
+
+    p_new = -r_new + beta* p_old; 
+        
+    %k = k+ 1
+    r_old = r_new;
+    p_old = p_new;
+        
+endwhile
+</code>
+
+**Résultats**
+
+__En Octave :__
+<code matlab>
+x =[0; 0; 0];
+b = [5; -3; 1];
+A = [2 -1 0; -1 2 -1; 0 -1 2];
+
+disp("La solution dy systeme Ax=b est:"), disp(grad(A, b, x));
+</code>
+
+**Précodé :**
+
+Nous avons codé l'ensemble de l'algorithme à la main, il existe néanmoins des librairies où vous pouvez trouver le code pré-codé. 
+
+__En Octave__
+
+<code matlab>
+disp("La solution dy systeme Ax=b est:"), disp(cgs (A, b)); #Sans package
+</code>
+
+|              ^  Temps d'exécution  ^  Convergence  ^  Nombre d'itérations  ^
+^  Gradient conjugué  codé (Octave)  |   5,42092 ms   |  superlinéaire    |   5 (avec nos données )   |
+^  Précodé  |  4,18687 ms  |  ???  |  ???  |
+
+__En Python :__
+
+<code python>
+#Données
+A = np.array([[2,-1,0],[-1,2,-1],[0,-1,2]])
+b = np.array([5,-3,1])
+x = np.array([0,0,0])
+
+#Résultat
+print("La solution du systeme Ax =b est:",conjgrad(A,b,x))
+</code>
+
+|              ^ Temps d'exécution                  ^ Complexité          ^ Nombre d'itérations ^
+^ Gradient conjugué  codé (Python) |           1,2295  ms     |              superlinéaire               |           5 (avec nos données )                    |
+
+<alert>Vous avez compris l'algorithme et l'exemple sur la bière ? Vous pouvez alors retrouver la valeur de $x^*$ du problème initiale !</alert>
+====Bilan comparatif====
+
+|              ^  Gradient conjugué  ^  Descente du gradient   ^ 
+^  Type de problèmes  |  $A*x =b$  ou $min(f(x))$  |  $min(f(x))$    |
+^  Conditions préalables  |  A symétrique définie positive  |  f différentiable  | 
+^  Convergence  |   Superlinéaire  |  Linéaire  | 
+^  Choix d'un pas  |   NON  |  OUI  | 
+^   Approximation nécessaire de $x_0$  |  OUI  |  OUI  |
+
+=====La méthode du gradient bi-conjugué=====
+
+Une variante du Gradient conjugué existe pour les matrices non symétriques: [[https://fr.wikipedia.org/wiki/M%C3%A9thode_du_gradient_biconjugu%C3%A9|la méthode du gradient biconjugué]].
+
+<alert>Attention: L'approximation initiale $x_0$ est complexe et demande elle même une théorie et des calculs fastidieux.</alert>

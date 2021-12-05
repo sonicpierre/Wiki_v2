@@ -1,0 +1,9 @@
+<span class="co1">%Insertion de la ligne coupe</span>
+ligneCoupe=-<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/mod.html"><span class="kw2">mod</span></a><span class="br0">&#40;</span>tabCoupe<span class="br0">&#40;</span>indiceFracMax,:<span class="br0">&#41;</span>,<span class="nu0">1</span><span class="br0">&#41;</span>
+tabCoupe=<span class="br0">&#91;</span>tabCoupe;ligneCoupe<span class="br0">&#93;</span>
+<span class="co1">%Insertion de la colonne de la nouvelle variable z</span>
+tabGauche=tabCoupe<span class="br0">&#40;</span>:,<span class="nu0">1</span>:end-<span class="nu0">1</span><span class="br0">&#41;</span>
+tabMilieu=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/zeros.html"><span class="kw2">zeros</span></a><span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tabCoupe<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>,<span class="nu0">1</span><span class="br0">&#41;</span>
+tabMilieu<span class="br0">&#40;</span><span class="kw1">end</span>,<span class="nu0">1</span><span class="br0">&#41;</span>=<span class="nu0">1</span>
+tabDroite=tabCoupe<span class="br0">&#40;</span>:,<span class="kw1">end</span><span class="br0">&#41;</span>
+tabCoupe=<span class="br0">&#91;</span>tabGauche,tabMilieu,tabDroite<span class="br0">&#93;</span>

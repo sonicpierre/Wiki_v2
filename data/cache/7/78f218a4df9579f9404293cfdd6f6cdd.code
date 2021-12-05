@@ -1,0 +1,4 @@
+library<span class="br0">&#40;</span>explor<span class="br0">&#41;</span>
+&nbsp;
+barplot<span class="br0">&#40;</span>model$eig<span class="br0">&#91;</span><span class="sy0">,</span><span class="nu0">3</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="co1">#Variance expliquée en fonction du nombre de variables</span>
+explor<span class="br0">&#40;</span>model<span class="br0">&#41;</span><span class="co1">#Ouverture d'une fenêtre permettant de visualiser les variables importantes</span>

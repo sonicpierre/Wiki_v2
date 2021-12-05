@@ -1,0 +1,12 @@
+library<span class="br0">&#40;</span>caret<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>randomForest<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>e1071<span class="br0">&#41;</span>
+&nbsp;
+&nbsp;
+y <span class="sy0">&lt;</span>- data$X1.<span class="me1">Octanol</span><span class="co1">#Variable cible</span>
+y <span class="sy0">&lt;</span>- <span class="kw1">as</span>.<span class="me1">factor</span><span class="br0">&#40;</span>y<span class="br0">&#41;</span><span class="co1">#Transformation de la variable cible en facteur</span>
+X <span class="sy0">&lt;</span>- data<span class="br0">&#91;</span><span class="sy0">,</span> -c<span class="br0">&#40;</span><span class="nu0">11</span><span class="br0">&#41;</span><span class="br0">&#93;</span><span class="co1">#Variables explicatives</span>
+&nbsp;
+<span class="kw2">set</span>.<span class="me1">seed</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="br0">&#41;</span><span class="co1">#On initialise l'aléatoire pour la répétabilité </span>
+selector <span class="sy0">&lt;</span>- rfeControl<span class="br0">&#40;</span>functions <span class="sy0">=</span> rfFuncs<span class="sy0">,</span> method <span class="sy0">=</span> <span class="st0">'cv'</span><span class="sy0">,</span> repeats <span class="sy0">=</span> <span class="nu0">5</span><span class="br0">&#41;</span><span class="co1">#Définition des paramètres de controle de la sélection</span>
+<span class="kw3">select</span> <span class="sy0">&lt;</span>- rfe<span class="br0">&#40;</span>X<span class="sy0">,</span> y<span class="sy0">,</span> sizes <span class="sy0">=</span> c<span class="br0">&#40;</span><span class="nu0">5</span><span class="br0">&#41;</span><span class="sy0">,</span> rfeControl <span class="sy0">=</span> selector<span class="br0">&#41;</span><span class="co1">#Sélection des variables</span>

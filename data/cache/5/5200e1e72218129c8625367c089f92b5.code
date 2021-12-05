@@ -1,0 +1,4 @@
+feature_names <span class="sy0">=</span> tfidf.<span class="me1">get_feature_names</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+corpus_index <span class="sy0">=</span> <span class="br0">&#91;</span>n <span class="kw1">for</span> n <span class="kw1">in</span> <span class="kw2">list</span><span class="br0">&#40;</span>tfidf.<span class="me1">vocabulary_</span>.<span class="me1">keys</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+<span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+df <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>tfs.<span class="me1">todense</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> columns<span class="sy0">=</span>feature_names<span class="br0">&#41;</span>

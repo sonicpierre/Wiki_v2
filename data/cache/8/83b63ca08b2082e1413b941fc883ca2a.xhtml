@@ -1,0 +1,792 @@
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ahello_world_graphique&amp;media=cpp:helloworld.png" class="media" title="cpp:helloworld.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=8e24ed&amp;media=cpp:helloworld.png" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+Nous allons dans cette page introduire le langage Java et C++. Pour obtenir le résultat ci-dessous grace aux librairies installées préalablement. Vous trouverez le code complet concernant cette page <a href="https://github.com/LlamasPartan/Programmation_Objet_Jeux2D/tree/Cours_1_Hello_World_Graphique" class="urlextern" title="https://github.com/LlamasPartan/Programmation_Objet_Jeux2D/tree/Cours_1_Hello_World_Graphique" rel="nofollow">ici</a>.
+</p>
+<div class="table sectionedit1"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  C++  </th><th class="col1 centeralign">  Java  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  <a href="/lib/exe/detail.php?id=cpp%3Ahello_world_graphique&amp;media=cpp:sfmlresultat.png" class="media" title="cpp:sfmlresultat.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=007547&amp;media=cpp:sfmlresultat.png" class="mediacenter" alt="" width="400" /></a>   </td><td class="col1 centeralign">  <a href="/lib/exe/detail.php?id=cpp%3Ahello_world_graphique&amp;media=cpp:screenshot_resultat_hello_world.png" class="media" title="cpp:screenshot_resultat_hello_world.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=7d0d5b&amp;media=cpp:screenshot_resultat_hello_world.png" class="mediacenter" alt="" width="400" /></a>  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:1,&quot;range&quot;:&quot;339-453&quot;} -->
+<p>
+<div class='alert alert-warning'><strong>Attention :</strong> Nous allons utiliser certains concepts objets comme la notion d&#039;héritage sans les expliquer directement. Ne soyez pas trop frustré, nous les développerons dans les pages qui suiveront. Cette page présentera des premiers résultats tout en attisant votre curiosité.</div>
+</p>
+
+<h2 class="sectionedit2" id="environnement_de_travail_et_elements_syntaxiques">Environnement de travail et éléments syntaxiques</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Environnement de travail et \u00e9l\u00e9ments syntaxiques&quot;,&quot;hid&quot;:&quot;environnement_de_travail_et_elements_syntaxiques&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;765-826&quot;} -->
+<h3 class="sectionedit3" id="environnement_de_travail">Environnement de travail</h3>
+<div class="level3">
+
+<p>
+Pour suivre ce tuto vous devriez avoir l&#039;environnement de travail suivant qu&#039;il est nécessaire de mettre en place si vous n&#039;avez pas suivie cette <a href="/doku.php?id=cpp:installation_environnement_java_javafx" class="wikilink1" title="cpp:installation_environnement_java_javafx"> page</a> concernant le Java ou cette <a href="/doku.php?id=cpp:installation_environnement_c_sfml" class="wikilink1" title="cpp:installation_environnement_c_sfml"> page</a> concernant le C++.
+</p>
+
+<p>
+<em class="u">En Java :</em>
+</p>
+<div class="table sectionedit4"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Arborescence fichier  </th><th class="col1 centeralign">  module-info.java  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0"> <pre class="code bash">Game
+├── bin
+└── src
+    ├── fr
+    │   └── game
+    │       └── Main.java
+    └── module-info.java</pre>
+</td><td class="col1"> <pre class="code java">module GameModule <span class="br0">&#123;</span>
+	requires javafx.<span class="me1">base</span><span class="sy0">;</span>
+	requires javafx.<span class="me1">controls</span><span class="sy0">;</span>
+	requires javafx.<span class="me1">graphics</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:4,&quot;range&quot;:&quot;1182-1518&quot;} -->
+<p>
+<em class="u">En C++ :</em>
+</p>
+<pre class="code bash">Game
+├── bin
+├── Game.cbp
+├── Game.depend
+├── Game.layout
+├── main.cpp
+└── obj</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Environnement de travail&quot;,&quot;hid&quot;:&quot;environnement_de_travail&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;827-1669&quot;} -->
+<h3 class="sectionedit5" id="elements_syntaxiques_communs">Eléments syntaxiques communs</h3>
+<div class="level3">
+
+<p>
+On va commencer par voir quelques points de syntaxe communs aux deux langages.
+</p>
+
+</div>
+
+<h4 id="instructions">Instructions</h4>
+<div class="level4">
+
+<p>
+<strong><span style='color:#ed1c24; '>Chaque instruction se termine par un <strong>;</strong>.</span></strong> On évitera de mettre plus d&#039;une instruction par ligne pour garder une bonne lisibilité.
+</p>
+
+</div>
+
+<h4 id="nomenclature">Nomenclature</h4>
+<div class="level4">
+<div class="table sectionedit6"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Elément </th><th class="col1"> Manière d&#039;écrire </th><th class="col2"> Description </th><th class="col3"> Exemple </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0"> variable et fonctions </td><td class="col1"> Camel Case </td><td class="col2"> Commence par une minuscule et sépare les mots par une majuscule </td><td class="col3"> maVariable </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> classe </td><td class="col1"> Pascal Case </td><td class="col2"> Commence par une majuscule et sépare les mots par une majuscule </td><td class="col3"> MaClasse </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table2&quot;,&quot;secid&quot;:6,&quot;range&quot;:&quot;1994-2272&quot;} -->
+</div>
+
+<h4 id="commentaires">Commentaires</h4>
+<div class="level4">
+
+<p>
+Les commentaires sont des informations écrites dans le code source. Il ne faut pas en abuser car ils réduisent la lisibilité du code. Mais ils permettent d&#039;expliquer globalement une fonction ou une classe.
+</p>
+
+<p>
+Il y a deux manières de faire des commentaires :
+</p>
+<div class="table sectionedit7"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> <pre class="code java"><span class="co1">// Seul la fin de la ligne </span>
+<span class="co1">// est en commentaire</span></pre>
+</td><td class="col1"> <pre class="code java"><span class="coMULTI">/* Le commentaire ne s'arrete 
+que lorsqu'on atteint
+les caractères suivants */</span></pre>
+</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table3&quot;,&quot;secid&quot;:7,&quot;range&quot;:&quot;2555-2731&quot;} -->
+<p>
+Certains outils permettent de créer de la documentation à partir des commentaires, si l&#039;on respecte une certaine syntaxe en les écrivant.
+</p>
+<ul>
+<li class="level1"><div class="li"> Je vous renvoie sur un tutoriel pour comprendre la <a href="https://openclassrooms.com/fr/courses/1115306-presentation-de-la-javadoc" class="urlextern" title="https://openclassrooms.com/fr/courses/1115306-presentation-de-la-javadoc" rel="nofollow"> Javadoc </a> utilisée évidemment en Java.</div>
+</li>
+<li class="level1"><div class="li"> Pour le C++, <a href="https://franckh.developpez.com/tutoriels/outils/doxygen/" class="urlextern" title="https://franckh.developpez.com/tutoriels/outils/doxygen/" rel="nofollow"> doxygen </a> est très utilisé.</div>
+</li>
+</ul>
+
+</div>
+
+<h4 id="conditions">Conditions</h4>
+<div class="level4">
+
+<p>
+Une condition se fait avec un bloc <strong>if</strong>, qu&#039;on lirait <strong>si</strong> &lt;condition&gt; <strong>alors</strong> &lt;instructions&gt;.
+</p>
+<pre class="code java"><span class="kw1">if</span> <span class="br0">&#40;</span><span class="coMULTI">/*condition*/</span><span class="br0">&#41;</span>  <span class="br0">&#123;</span> 
+  <span class="coMULTI">/*instructions*/</span>
+<span class="br0">&#125;</span></pre>
+
+<p>
+On peut le compléter en ajoutant un <strong>else</strong>, qu&#039;on lirait <strong>si</strong> &lt;condition&gt; <strong>alors</strong> &lt;instructions&gt; <strong>sinon</strong> &lt;autres instructions&gt;.
+</p>
+<pre class="code java"><span class="kw1">if</span> <span class="br0">&#40;</span><span class="coMULTI">/*condition*/</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="coMULTI">/*instructions*/</span>
+<span class="br0">&#125;</span> <span class="kw1">else</span> <span class="br0">&#123;</span>
+  <span class="coMULTI">/*autres instructions*/</span>
+<span class="br0">&#125;</span></pre>
+
+<p>
+On peut enfin chaîner les conditions grâce à des <strong>sinon si</strong>.
+Les deux codes suivants sont donc équivalents.
+</p>
+<div class="table sectionedit8"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> <pre class="code java"><span class="kw1">if</span> <span class="br0">&#40;</span><span class="coMULTI">/*condition*/</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="coMULTI">/*instructions A*/</span>
+<span class="br0">&#125;</span> <span class="kw1">else</span> <span class="br0">&#123;</span>
+  <span class="kw1">if</span> <span class="br0">&#40;</span><span class="coMULTI">/*condition 2*/</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="coMULTI">/*instructions B*/</span>
+  <span class="br0">&#125;</span> <span class="kw1">else</span> <span class="br0">&#123;</span>
+    <span class="coMULTI">/*instructions C*/</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+</td><td class="col1"> <pre class="code java"><span class="kw1">if</span> <span class="br0">&#40;</span><span class="coMULTI">/*condition*/</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="coMULTI">/*instructions A*/</span>
+<span class="br0">&#125;</span> <span class="kw1">else</span> <span class="kw1">if</span> <span class="br0">&#40;</span><span class="coMULTI">/*condition 2*/</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="coMULTI">/*instructions B*/</span>
+<span class="br0">&#125;</span> <span class="kw1">else</span> <span class="br0">&#123;</span>
+    <span class="coMULTI">/*instructions C*/</span>
+<span class="br0">&#125;</span></pre>
+</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table4&quot;,&quot;secid&quot;:8,&quot;range&quot;:&quot;3696-4007&quot;} -->
+<p>
+Cela est dû au fait que si on ne met pas d&#039;accolades après un <strong>else</strong> ou après <strong>la condition d&#039;un if</strong>, seule l&#039;instruction suivante est prise en compte.
+Pour illustrer cela voici deux codes équivalents.
+</p>
+<div class="table sectionedit9"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> <pre class="code java"><span class="kw1">if</span> <span class="br0">&#40;</span><span class="coMULTI">/*condition*/</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="coMULTI">/*instructions A*/</span>
+<span class="br0">&#125;</span> </pre>
+</td><td class="col1"> <pre class="code java"><span class="kw1">if</span> <span class="br0">&#40;</span><span class="coMULTI">/*condition*/</span><span class="br0">&#41;</span>
+  <span class="coMULTI">/*instructions A*/</span></pre>
+</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table5&quot;,&quot;secid&quot;:9,&quot;range&quot;:&quot;4220-4350&quot;} -->
+<p>
+Le retour à la ligne dans ce cas là est parfois éviter pour réduire la taille du code. On obtient donc :
+</p>
+<pre class="code java"><span class="kw1">if</span> <span class="br0">&#40;</span><span class="coMULTI">/*condition*/</span><span class="br0">&#41;</span> <span class="coMULTI">/*instructions A*/</span></pre>
+
+</div>
+
+<h4 id="boucles">Boucles</h4>
+<div class="level4">
+
+<p>
+Les boucles permettent de répéter des instructions selon certaines conditions.
+De la même manière que pour les blocs conditionnels, si on veut répéter seulement une instruction alors les accolades sont facultatives.
+</p>
+<div class="table sectionedit10"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Tant que  </th><th class="col1 centeralign">  Faire tant que  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 leftalign"><pre class="code java"><span class="kw1">while</span> <span class="br0">&#40;</span><span class="coMULTI">/*condition*/</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="coMULTI">/*instructions*/</span>
+<span class="br0">&#125;</span></pre>
+</td><td class="col1 leftalign"><pre class="code java"><span class="kw1">do</span> <span class="br0">&#123;</span>
+  <span class="coMULTI">/*instructions*/</span>
+<span class="br0">&#125;</span> <span class="kw1">while</span> <span class="br0">&#40;</span><span class="coMULTI">/*condition*/</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table6&quot;,&quot;secid&quot;:10,&quot;range&quot;:&quot;4760-4933&quot;} -->
+<p>
+<div class='alert alert-danger'><strong>Attention :</strong> ne pas oublier le <strong>;</strong> après la condition. </div>
+</p>
+
+</div>
+
+<h5 id="pour">Pour</h5>
+<div class="level5">
+
+<p>
+Cette boucle est principalement utilisée pour faire un certain nombre de fois une instructions. 
+L&#039;ensemble des éléments de la première ligne ne sont pas obligatoires. Si rien n&#039;est mis la boucle sera infinie.
+</p>
+<pre class="code java"><span class="kw1">for</span> <span class="br0">&#40;</span><span class="coMULTI">/*initialisation*/</span><span class="sy0">;</span> <span class="coMULTI">/*condition*/</span><span class="sy0">;</span> <span class="coMULTI">/*instruction*/</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="coMULTI">/*instructions*/</span>
+<span class="br0">&#125;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;El\u00e9ments syntaxiques communs&quot;,&quot;hid&quot;:&quot;elements_syntaxiques_communs&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:5,&quot;range&quot;:&quot;1670-5346&quot;} -->
+<h3 class="sectionedit11" id="elements_syntaxiques_differents">Eléments syntaxiques différents</h3>
+<div class="level3">
+
+<p>
+Le placement des accolades délimitant un bloc d&#039;instructions est un des plus grands débats de l&#039;informatique moderne. On le montre ici avec un if, mais c&#039;est valable pour les boucles et la création de classes.
+</p>
+<div class="table sectionedit12"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0"> Java </th><th class="col1"> C++ </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0"> <pre class="code java"><span class="kw1">if</span> <span class="br0">&#40;</span><span class="coMULTI">/*condition*/</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="co1">// Instructions</span>
+<span class="br0">&#125;</span> </pre>
+</td><td class="col1"> <pre class="code cpp"><span class="kw1">if</span> <span class="br0">&#40;</span><span class="coMULTI">/*condition*/</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="co1">// Instructions</span>
+<span class="br0">&#125;</span> </pre>
+</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table7&quot;,&quot;secid&quot;:12,&quot;range&quot;:&quot;5606-5749&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;El\u00e9ments syntaxiques diff\u00e9rents&quot;,&quot;hid&quot;:&quot;elements_syntaxiques_differents&quot;,&quot;codeblockOffset&quot;:15,&quot;secid&quot;:11,&quot;range&quot;:&quot;5347-5750&quot;} -->
+<h2 class="sectionedit13" id="preparation_du_premier_fichier">Préparation du premier fichier</h2>
+<div class="level2">
+
+<p>
+<em class="u">En Java :</em>
+</p>
+
+<p>
+Les dossiers contenant les sources en java sont appellés “<strong>packages</strong>”.
+</p>
+
+<p>
+Un fichier source a besoin de <span style='color:#ed1c24; '><strong>connaître dans quel package il se trouve</strong></span>. On lui indique donc grace au <span style='color:#ed1c24; '><strong>mot clef package</strong></span>, suivi de l&#039;arborescence complète depuis la racine du projet (le dossier src dans eclipse). On utilisera des <span style='color:#ed1c24; '><strong>points</strong></span> pour <span style='color:#ed1c24; '><strong>séparer les dossiers</strong></span>.
+</p>
+
+<p>
+Dans notre exemple le fichier Main.java se trouve dans le dossier fr/game, on aura donc :
+</p>
+<pre class="code java"><span class="kw1">package</span> <span class="co2">fr.game</span><span class="sy0">;</span></pre>
+
+<p>
+Tout le code fais en Java doit être fait au sein de <strong>class</strong>. On va donc créer une classe, il faut qu&#039;elle est le nom du fichier.
+</p>
+<pre class="code java"><span class="kw1">class</span> Main <span class="br0">&#123;</span>
+<span class="br0">&#125;</span></pre>
+
+<p>
+<em class="u">En C++ :</em>
+</p>
+
+<p>
+<span style='color:#ed1c24; '><strong>Contrairement à Java</strong></span> tout le code C++ n&#039;a pas besoin d&#039;être inscrit dans une classe. Il n&#039;y a pas non plus besoin dire dans quel dossier se trouve le fichier car la manière dont les fichiers sont gérés à la <span style='color:#ed1c24; '><strong>compilation est différentes</strong></span>. 
+</p>
+
+<p>
+Le C++ rassemble <span style='color:#ed1c24; '><strong>tout dans un seul fichier binaire</strong></span> alors que le Java crée une archive (.jar) contenant tous les fichiers compilés.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Pr\u00e9paration du premier fichier&quot;,&quot;hid&quot;:&quot;preparation_du_premier_fichier&quot;,&quot;codeblockOffset&quot;:17,&quot;secid&quot;:13,&quot;range&quot;:&quot;5751-7029&quot;} -->
+<h1 class="sectionedit14" id="debut_du_programme">Début du programme</h1>
+<div class="level1">
+
+<p>
+L&#039;ordinateur a besoin de savoir par où commence le programme. La même méthode est utilisée en Java et en c++ : la fonction <strong>main</strong>.
+Elle est donc unique et obligatoire, sinon l&#039;ordinateur ne peut pas démarrer le programme.
+</p>
+
+<p>
+<em class="u">En Java :</em>
+</p>
+<pre class="code java"><span class="kw1">public</span> <span class="kw1">static</span> <span class="kw4">void</span> main<span class="br0">&#40;</span><a href="http://www.google.com/search?hl=en&amp;q=allinurl%3Adocs.oracle.com+javase+docs+api+string"><span class="kw3">String</span></a><span class="br0">&#91;</span><span class="br0">&#93;</span> args<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+<span class="co1">//Votre future code</span>
+<span class="br0">&#125;</span></pre>
+
+<p>
+<em class="u">En C++ :</em>
+</p>
+<pre class="code cpp"><span class="kw4">int</span> main<span class="br0">&#40;</span><span class="kw4">int</span> argc, <span class="kw4">char</span><span class="sy2">**</span> argv<span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+<span class="co1">//Votre futur code</span>
+<span class="br0">&#125;</span></pre>
+
+<p>
+<strong>Décomposition du code :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> En Java, c&#039;est un tableau de chaîne de caractères</div>
+</li>
+<li class="level1"><div class="li"> En C++ c&#039;est un entier <span style='color:#ed1c24; '><strong>et</strong></span> un tableau de chaîne de caractères.</div>
+</li>
+</ul>
+
+<p>
+Dans les deux cas, l&#039;objectif est de pouvoir parcourir des chaînes de caractères contenant les arguments de lancement du programme.
+</p>
+<pre class="code bash">game <span class="re5">-easy</span></pre>
+
+<p>
+Si on lance notre jeu avec cette ligne de commande, on aura :
+</p>
+<div class="table sectionedit15"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0"> Element </th><th class="col1"> Valeur </th><th class="col2"> Accès en Java </th><th class="col3"> Accès en C++ </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0"> Nombre d&#039;arguments de lancement </td><td class="col1"> 3 </td><td class="col2"> args.length() </td><td class="col3"> argc </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> Premier argument </td><td class="col1"> game </td><td class="col2"> args[0] </td><td class="col3"> argv[0] </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> Deuxième argument </td><td class="col1"> -easy </td><td class="col2"> args[1] </td><td class="col3"> argv[1] </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table8&quot;,&quot;secid&quot;:15,&quot;range&quot;:&quot;7891-8106&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;D\u00e9but du programme&quot;,&quot;hid&quot;:&quot;debut_du_programme&quot;,&quot;codeblockOffset&quot;:19,&quot;secid&quot;:14,&quot;range&quot;:&quot;7030-8106&quot;} -->
+<h3 class="sectionedit16" id="valeur_de_retour">Valeur de retour</h3>
+<div class="level3">
+
+<p>
+La valeur de retour d&#039;un programme permet de savoir si il a réussi ou si il a rencontré un problème.
+Cette valeur est toujours représentée par <span style='color:#ed1c24; '>un entier (<strong>int</strong>)</span> en Java et en C++.
+</p>
+
+<p>
+<em class="u">En C++ :</em>
+</p>
+
+<p>
+Pour renvoyer cette valeur il suffit d&#039;ajouter dans la fonction main :
+</p>
+<pre class="code cpp"> <span class="kw1">return</span> <span class="nu0">15</span><span class="sy4">;</span></pre>
+
+<p>
+<em class="u">En Java :</em>
+</p>
+
+<p>
+La fonction main <span style='color:#ed1c24; '>ne renvoie pas de valeur <strong>(void)</strong></span>. On utilise une autre fonction pour renvoyer ce code d&#039;erreur. Elle est présente dans la classe <strong>System</strong>, on peut donc l&#039;appeller comme cela :
+</p>
+<pre class="code java"> <a href="http://www.google.com/search?hl=en&amp;q=allinurl%3Adocs.oracle.com+javase+docs+api+system"><span class="kw3">System</span></a>.<span class="me1">exit</span><span class="br0">&#40;</span><span class="nu0">15</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+
+<p>
+La version Java est plus simple car elle permet de quitter le programme depuis n&#039;importe où en cas d&#039;erreur sans avoir besoin de faire remonter le code d&#039;erreur jusqu&#039;à la fonction main.
+</p>
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> Il y a une fonction similaire en C++ pour simplifier le renvoie de code d&#039;erreur : <a href="https://en.cppreference.com/w/cpp/utility/program/exit" class="urlextern" title="https://en.cppreference.com/w/cpp/utility/program/exit" rel="nofollow"> std::exit </a></div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Valeur de retour&quot;,&quot;hid&quot;:&quot;valeur_de_retour&quot;,&quot;codeblockOffset&quot;:22,&quot;secid&quot;:16,&quot;range&quot;:&quot;8107-9119&quot;} -->
+<h1 class="sectionedit17" id="creation_d_une_fenetre">Création d&#039;une fenêtre</h1>
+<div class="level1">
+
+<p>
+Utilisons les librairies JavaFx et SFML que nous avons installé. Elles vont nous permettre de faire afficher la fenêtre graphique et dessiner dedans.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Cr\u00e9ation d&#039;une fen\u00eatre&quot;,&quot;hid&quot;:&quot;creation_d_une_fenetre&quot;,&quot;codeblockOffset&quot;:24,&quot;secid&quot;:17,&quot;range&quot;:&quot;9120-9312&quot;} -->
+<h3 class="sectionedit18" id="en_java">En Java :</h3>
+<div class="level3">
+
+<p>
+Pour créer la fenêtre en Java, on va devoir modifier la classe qu&#039;on a déjà créée et faire appel à la librairie JavaFX.
+</p>
+<pre class="code java"><span class="kw1">public</span> <span class="kw1">class</span> Main <span class="kw1">extends</span> Application <span class="br0">&#123;</span>
+&nbsp;
+    <span class="kw1">public</span> <span class="kw1">static</span> <span class="kw4">void</span> main<span class="br0">&#40;</span><a href="http://www.google.com/search?hl=en&amp;q=allinurl%3Adocs.oracle.com+javase+docs+api+string"><span class="kw3">String</span></a><span class="br0">&#91;</span><span class="br0">&#93;</span> args<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="br0">&#125;</span>
+ <span class="br0">&#125;</span></pre>
+
+<p>
+<strong>Décomposons ce code :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>extends Application</strong></span> On va ajouter un héritage depuis la classe Application cela nous permet d&#039;utiliser ses fonctionnalités. Cette notion est au cœur de la programmation orientée objet (POO) et nous la développerons tout au long de ce tutoriel.</div>
+</li>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>public</strong></span> : Il existe différents niveaux de visibilité pour tout les éléments que l&#039;on crée en POO. Encore une fois, il s&#039;agit d&#039;un concept important de la POO et nous le développeront ultérieurement.</div>
+</li>
+</ul>
+
+<p>
+<span style='color:#00a2e8; '><strong>Erreur :</strong></span> Elle vous indique qu&#039;eclipse ne sait pas trouver la classe Application. Vous pouvez donc ajouter entre la déclaration du package et la classe une ligne pour faire l&#039;importation de la bonne classe :
+</p>
+<pre class="code java"> <span class="kw1">import</span> <span class="co2">javafx.application.Application</span><span class="sy0">;</span> </pre>
+
+<p>
+L&#039;erreur suivante va apparaître. La classe application dont on a décidé d&#039;hériter nous oblige à définir la fonction <strong>start</strong>. Il nous propose même de l&#039;ajouter automatiquement.
+</p>
+
+<p>
+On aura donc la fonction suivante, écrite dans la classe Main :
+</p>
+<pre class="code java">@Override
+<span class="kw1">public</span> <span class="kw4">void</span> start<span class="br0">&#40;</span>Stage primaryStage<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+<span class="br0">&#125;</span></pre>
+
+<p>
+<strong>@Override</strong> signifie que Application avait déjà sa propre fonction start et que vous voulez la changer. On reviendra là-dessus plus tard.
+</p>
+
+<p>
+Il manquera alors un import vers la classe Stage. Vous pouvez l&#039;ajouter manuellement comme précédemment (javafx.stage.Stage).
+</p>
+
+<p>
+<div class='alert alert-info'><strong>Info :</strong> Ctrl+Shift+O sous Eclipse ajoutera tous les imports nécessaires et retirera ceux qui ne le sont pas</div>
+</p>
+
+<p>
+Si à l&#039;ajout il y a une ambiguïté sur quelle classe importer, une interface vous laissera choisir.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ahello_world_graphique&amp;media=cpp:auto_import_eclipse.png" class="media" title="cpp:auto_import_eclipse.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=a1eee1&amp;media=cpp:auto_import_eclipse.png" class="mediacenter" title=" Importation automatique dans eclipse" alt=" Importation automatique dans eclipse" width="400" /></a>
+</p>
+
+<p>
+C&#039;est le primaryStage du paramêtre qui va nous permettre de configurer notre fenêtre.
+On peut donc ajouter la configuration suivante dans la fonction <strong>start</strong>. Dans l&#039;ordre on choisit le titre, la hauteur (en pixel) et la largeur (en pixel) de la fenêtre.
+</p>
+<pre class="code java">primaryStage.<span class="me1">setTitle</span><span class="br0">&#40;</span><span class="st0">&quot;Tuto&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+primaryStage.<span class="me1">setHeight</span><span class="br0">&#40;</span><span class="nu0">720</span><span class="br0">&#41;</span><span class="sy0">;</span>
+primaryStage.<span class="me1">setWidth</span><span class="br0">&#40;</span><span class="nu0">1280</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+
+<p>
+Il ne reste alors plus qu&#039;à afficher la fenêtre. On ajoute donc à la fin de la fonction <strong>start</strong> :
+</p>
+<pre class="code java">primaryStage.<span class="me1">show</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;En Java :&quot;,&quot;hid&quot;:&quot;en_java&quot;,&quot;codeblockOffset&quot;:24,&quot;secid&quot;:18,&quot;range&quot;:&quot;9313-11841&quot;} -->
+<h3 class="sectionedit19" id="en_c">En C++ :</h3>
+<div class="level3">
+
+<p>
+Le C++ est moins verbeux encore une fois, il ne va donc pas nous demander de créer de classe pour faire une fenêtre.
+</p>
+
+<p>
+Ceci ne va pas nous empêcher d&#039;utiliser SFML pour créer la fenêtre. On commence par ajouter <span style='color:#ed1c24; '>dans la fonction main</span> la création de la fenêtre. La largeur, la hauteur (en pixel) et le titre se déclarent directement au moment de la création.
+</p>
+<pre class="code cpp">sf<span class="sy4">::</span><span class="me2">RenderWindow</span> window<span class="br0">&#40;</span>sf<span class="sy4">::</span><span class="me2">VideoMode</span><span class="br0">&#40;</span><span class="nu0">1280</span>, <span class="nu0">720</span><span class="br0">&#41;</span>, <span class="st0">&quot;Tuto&quot;</span><span class="br0">&#41;</span><span class="sy4">;</span></pre>
+
+<p>
+<strong>Décomposons ce code :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>sf::</strong></span> indique un <strong>namespace</strong>, c&#039;est une sorte de catégorie définie par les créateurs d&#039;SFML qui vont contenir des classes, fonctions, etc.</div>
+</li>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>VideoMode</strong></span> permet de configurer l&#039;affichage du programme (comme la résolution de la fenêtre par exemple) voici la  <a href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1VideoMode.php" class="urlextern" title="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1VideoMode.php" rel="nofollow"> documentation </a> pour en savoir plus.</div>
+</li>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>RenderWindow</strong></span> est ce qui va nous permettre d&#039;ajouter des éléments à dessiner.</div>
+</li>
+</ul>
+
+<p>
+<span style='color:#ff7f27; '><strong>Erreur :</strong></span> Comme <strong>sf::RenderWindow</strong> appartient à SFML, il faut indiquer au compilateur qu&#039;on a besoin d&#039;une partie d&#039;SFML dans ce fichier.
+ Cette ligne va inclure ce dont on a besoin.
+</p>
+<pre class="code cpp"><span class="co2">#include &lt;SFML/Graphics.hpp&gt;</span></pre>
+
+<p>
+Il y a 2 façons d&#039;importer des fichiers en C++ :
+</p>
+<ul>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>Des chevrons  &lt; &gt;</strong></span> pour encadrer le nom du fichier lorsqu&#039;il fait parti des dossiers d&#039;installations de bibliothèques. On<span style='color:#ed1c24; '> <strong>précisera</strong></span> dans ce cas l&#039;<span style='color:#ed1c24; '><strong>extension</strong></span>.</div>
+</li>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>Des guillemets “ “</strong></span> pour encadrer le nom du fichier lorsqu&#039;il se trouve dans l&#039;arborescence du projet.</div>
+</li>
+</ul>
+
+<p>
+Dans notre cas, le fichier <span style='color:#ed1c24; '><strong>ne se trouve pas dans l&#039;arborescence du programme</strong></span>, on a simplement indiqué dans les paramètres de code::blocks où trouver <span style='color:#ed1c24; '><strong>le dossier SFML</strong></span>. On utilise donc la notation avec les chevrons et on précise l&#039;extension.
+</p>
+
+<p>
+<div class='alert alert-info'><strong>Remarque :</strong> Si le fichier demandé fait parti de la bibliothèque standard du C++ ou du C, il n&#039;y aura pas besoin de préciser l&#039;extension.</div>
+</p>
+
+<p>
+Pour afficher la fenêtre, SMFL nous oblige à faire une boucle. On ajoute donc dans la fonction <strong>main</strong> :
+</p>
+<pre class="code cpp"><span class="kw1">while</span> <span class="br0">&#40;</span>window.<span class="me1">isOpen</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    window.<span class="me1">display</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy4">;</span>
+<span class="br0">&#125;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;En C++ :&quot;,&quot;hid&quot;:&quot;en_c&quot;,&quot;codeblockOffset&quot;:29,&quot;secid&quot;:19,&quot;range&quot;:&quot;11842-14231&quot;} -->
+<h2 class="sectionedit20" id="ajout_de_formes_a_l_ecran">Ajout de formes à l&#039;écran</h2>
+<div class="level2">
+
+<p>
+On utilise souvent des rectangles lorsque l&#039;on fait des jeux ou des simulations pour rapidement afficher un objet et avoir <span style='color:#ed1c24; '><strong>un premier aperçu du rendu final</strong></span> et des proportions même si le résultat n&#039;est pas excessivement beau.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Ajout de formes \u00e0 l&#039;\u00e9cran&quot;,&quot;hid&quot;:&quot;ajout_de_formes_a_l_ecran&quot;,&quot;codeblockOffset&quot;:32,&quot;secid&quot;:20,&quot;range&quot;:&quot;14232-14524&quot;} -->
+<h3 class="sectionedit21" id="creation_des_formes">Création des formes</h3>
+<div class="level3">
+
+<p>
+Avant d&#039;afficher une forme, il faut tout d&#039;abord la créer.
+</p>
+
+<p>
+<em class="u">En C++ :</em>
+</p>
+
+<p>
+La création et la configuration des éléments se fait en dehors de la boucle qui va les afficher :
+</p>
+<pre class="code cpp">sf<span class="sy4">::</span><span class="me2">RectangleShape</span> rectangle<span class="br0">&#40;</span>sf<span class="sy4">::</span><span class="me2">Vector2f</span><span class="br0">&#40;</span><span class="nu0">50</span>, <span class="nu0">150</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy4">;</span>
+sf<span class="sy4">::</span><span class="me2">CircleShape</span> cercle<span class="br0">&#40;</span><span class="nu0">50</span><span class="br0">&#41;</span><span class="sy4">;</span></pre>
+
+<p>
+<strong>Décomposition du code :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>sf::Vector2f</strong></span> : On définit un vecteur à 2 dimensions contenant des nombres décimaux (float en anglais) qui est la largeur et la longueur en pixel</div>
+</li>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>sf::CircleShape</strong></span> : Permet de créer un cercle en précisant le rayon du cercle</div>
+</li>
+</ul>
+
+<p>
+<em class="u">En Java :</em>
+</p>
+<pre class="code java">  <a href="http://www.google.com/search?hl=en&amp;q=allinurl%3Adocs.oracle.com+javase+docs+api+rectangle"><span class="kw3">Rectangle</span></a> rectangle <span class="sy0">=</span> <span class="kw1">new</span> <a href="http://www.google.com/search?hl=en&amp;q=allinurl%3Adocs.oracle.com+javase+docs+api+rectangle"><span class="kw3">Rectangle</span></a><span class="br0">&#40;</span><span class="nu0">50</span>, <span class="nu0">150</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  Circle cercle <span class="sy0">=</span> <span class="kw1">new</span> Circle<span class="br0">&#40;</span><span class="nu0">50</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Cr\u00e9ation des formes&quot;,&quot;hid&quot;:&quot;creation_des_formes&quot;,&quot;codeblockOffset&quot;:32,&quot;secid&quot;:21,&quot;range&quot;:&quot;14525-15271&quot;} -->
+<h3 class="sectionedit22" id="configuration_des_formes">Configuration des formes</h3>
+<div class="level3">
+
+<p>
+On va maintenant positionner les formes dans la fenêtre et choisir leur couleur. On définir les positions en utilisant des vecteurs comme lorsque l&#039;on avait définit les tailles précédemment.
+</p>
+<ul>
+<li class="level1"><div class="li"> Pour le rectangle, le positionnement se fait toujours par rapport à l&#039;origine de la forme, qui se trouve sur <span style='color:#ed1c24; '><strong>le coin en haut à gauche</strong></span>.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Pour le cercle, on change le <span style='color:#ed1c24; '><strong>placement de l&#039;origine</strong></span> pour le mettre au centre du cercle, c&#039;est plus intuitif pour travailler.</div>
+</li>
+</ul>
+
+<p>
+<em class="u">En C++ :</em>
+</p>
+<pre class="code cpp">rectangle.<span class="me1">setPosition</span><span class="br0">&#40;</span>sf<span class="sy4">::</span><span class="me2">Vector2f</span><span class="br0">&#40;</span><span class="nu0">100</span>, <span class="nu0">100</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy4">;</span>
+circle.<span class="me1">setOrigin</span><span class="br0">&#40;</span><span class="nu0">50</span>, <span class="nu0">50</span><span class="br0">&#41;</span><span class="sy4">;</span>
+circle.<span class="me1">setPosition</span><span class="br0">&#40;</span>sf<span class="sy4">::</span><span class="me2">Vector2f</span><span class="br0">&#40;</span><span class="nu0">30</span>, <span class="nu0">30</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy4">;</span>
+&nbsp;
+rectangle.<span class="me1">setFillColor</span><span class="br0">&#40;</span>sf<span class="sy4">::</span><span class="me2">Color</span><span class="sy4">::</span><span class="me2">Green</span><span class="br0">&#41;</span><span class="sy4">;</span>
+circle.<span class="me1">setFillColor</span><span class="br0">&#40;</span>sf<span class="sy4">::</span><span class="me2">Color</span><span class="sy4">::</span><span class="me2">Blue</span><span class="br0">&#41;</span><span class="sy4">;</span></pre>
+
+<p>
+<em class="u">En Java :</em>
+</p>
+
+<p>
+L&#039;origine des formes est également sur le coin en haut à gauche en Java, cependant le cercle change cela pour utiliser une origine en son centre.
+</p>
+<pre class="code java">rectangle.<span class="me1">setX</span><span class="br0">&#40;</span><span class="nu0">100</span><span class="br0">&#41;</span><span class="sy0">;</span>
+rectangle.<span class="me1">setY</span><span class="br0">&#40;</span><span class="nu0">100</span><span class="br0">&#41;</span><span class="sy0">;</span>
+circle.<span class="me1">setCenterX</span><span class="br0">&#40;</span><span class="nu0">30</span><span class="br0">&#41;</span><span class="sy0">;</span>
+circle.<span class="me1">setCenterY</span><span class="br0">&#40;</span><span class="nu0">30</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+rectangle.<span class="me1">setFill</span><span class="br0">&#40;</span><a href="http://www.google.com/search?hl=en&amp;q=allinurl%3Adocs.oracle.com+javase+docs+api+color"><span class="kw3">Color</span></a>.<span class="me1">GREEN</span><span class="br0">&#41;</span><span class="sy0">;</span>
+circle.<span class="me1">setFill</span><span class="br0">&#40;</span><a href="http://www.google.com/search?hl=en&amp;q=allinurl%3Adocs.oracle.com+javase+docs+api+color"><span class="kw3">Color</span></a>.<span class="me1">BLUE</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Configuration des formes&quot;,&quot;hid&quot;:&quot;configuration_des_formes&quot;,&quot;codeblockOffset&quot;:34,&quot;secid&quot;:22,&quot;range&quot;:&quot;15272-16404&quot;} -->
+<h3 class="sectionedit23" id="affichage_des_formes">Affichage des formes</h3>
+<div class="level3">
+
+<p>
+On va maintenant demander aux fenêtres de dessiner les formes que l&#039;on vient de créer.
+</p>
+
+<p>
+<em class="u">En C++ :</em>
+</p>
+
+<p>
+Dans la boucle d&#039;affichage, on va ajouter avant le <strong>window.display()</strong> :
+</p>
+<pre class="code cpp">window.<span class="me1">clear</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy4">;</span> <span class="co1">// On efface l'image précédente</span>
+window.<span class="me1">draw</span><span class="br0">&#40;</span>rectangle<span class="br0">&#41;</span><span class="sy4">;</span> <span class="co1">// Affichage du rectangle</span>
+window.<span class="me1">draw</span><span class="br0">&#40;</span>circle<span class="br0">&#41;</span><span class="sy4">;</span> <span class="co1">// Affichage du cercle</span></pre>
+
+<p>
+<em class="u">En Java :</em>
+</p>
+
+<p>
+On a besoin d&#039;ajouter un panneau pour contenir nos éléments.
+</p>
+<pre class="code java">Pane root <span class="sy0">=</span> <span class="kw1">new</span> Pane<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="co1">// Création du panneau</span>
+root.<span class="me1">getChildren</span><span class="br0">&#40;</span><span class="br0">&#41;</span>.<span class="me1">add</span><span class="br0">&#40;</span>rectangle<span class="br0">&#41;</span><span class="sy0">;</span> <span class="co1">// Ajout du rectangle au panneau</span>
+root.<span class="me1">getChildren</span><span class="br0">&#40;</span><span class="br0">&#41;</span>.<span class="me1">add</span><span class="br0">&#40;</span>circle<span class="br0">&#41;</span><span class="sy0">;</span> <span class="co1">// Ajout du cercle au panneau</span></pre>
+
+<p>
+Il reste à demander à la fenêtre d&#039;afficher ce panneau, pour cela on passe par une scène.
+</p>
+<pre class="code java">primaryStage.<span class="me1">setScene</span><span class="br0">&#40;</span><span class="kw1">new</span> Scene<span class="br0">&#40;</span>root, <span class="nu0">1280</span>, <span class="nu0">720</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Affichage des formes&quot;,&quot;hid&quot;:&quot;affichage_des_formes&quot;,&quot;codeblockOffset&quot;:36,&quot;secid&quot;:23,&quot;range&quot;:&quot;16405-17224&quot;} -->
+<h2 class="sectionedit24" id="fermeture_de_la_fenetre">Fermeture de la fenêtre</h2>
+<div class="level2">
+
+<p>
+Savoir ouvrir une fenêtre, c&#039;est bien, savoir la refermer c&#039;est bien aussi…
+</p>
+
+<p>
+<em class="u">En C++ :</em>
+</p>
+
+<p>
+Pour cela SFML utilise des événements. Si un événement se produit, il est ajouté à une liste. On peut ensuite parcourir cette liste et les traiter en fonction de leur type.
+</p>
+<pre class="code cpp">sf<span class="sy4">::</span><span class="me2">Event</span> event<span class="sy4">;</span>
+<span class="kw1">while</span> <span class="br0">&#40;</span>window.<span class="me1">pollEvent</span><span class="br0">&#40;</span>event<span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span>event.<span class="me1">type</span> <span class="sy1">==</span> sf<span class="sy4">::</span><span class="me2">Event</span><span class="sy4">::</span><span class="me2">Closed</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        window.<span class="me1">close</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy4">;</span>
+    <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+
+<p>
+Il faut faire cette<span style='color:#ed1c24; '> <strong>gestion des événements</strong></span> dans la boucle d&#039;affichage, pour qu&#039;à chaque fois que la fenêtre est redessinée, on vérifie si il y a un événement à traiter. 
+Ici on vérifie seulement si l&#039;utilisateur a <span style='color:#ed1c24; '><strong>voulu fermer le programme</strong></span>.
+</p>
+
+<p>
+<em class="u">En Java :</em>
+</p>
+
+<p>
+La fermeture de la fenêtre est gérée directement par JavaFX. On peut tout de même redéfinir le comportement lorsque la fenêtre se ferme, mais ceci sera vu ultérieurement lors de la gestion des events.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Fermeture de la fen\u00eatre&quot;,&quot;hid&quot;:&quot;fermeture_de_la_fenetre&quot;,&quot;codeblockOffset&quot;:39,&quot;secid&quot;:24,&quot;range&quot;:&quot;17225-18214&quot;} -->
+<h2 class="sectionedit25" id="amelioration_du_code">Amélioration du code</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Am\u00e9lioration du code&quot;,&quot;hid&quot;:&quot;amelioration_du_code&quot;,&quot;codeblockOffset&quot;:40,&quot;secid&quot;:25,&quot;range&quot;:&quot;18215-18248&quot;} -->
+<h3 class="sectionedit26" id="correction_en_java">Correction en Java</h3>
+<div class="level3">
+
+<p>
+La taille de la fenêtre en Java est différente de celle en C++. C&#039;est dû au fait que JavaFX utilise la taille passée en paramètre pour l&#039;ensemble de la fenêtre, alors que SFML l&#039;utilise pour seulement la partie utilisable de la fenêtre.
+</p>
+
+<p>
+Pour corriger ça on modifie le code Java en retirant :
+</p>
+<pre class="code java">primaryStage.<span class="me1">setWidth</span><span class="br0">&#40;</span><span class="nu0">1280</span><span class="br0">&#41;</span><span class="sy0">;</span>
+primaryStage.<span class="me1">setHeight</span><span class="br0">&#40;</span><span class="nu0">720</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+
+<p>
+Et en ajoutant juste après la création du panneau (<strong>Pane root = new Pane()</strong>):
+</p>
+<pre class="code java">root.<span class="me1">setPrefSize</span><span class="br0">&#40;</span><span class="nu0">1280</span>, <span class="nu0">720</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Correction en Java&quot;,&quot;hid&quot;:&quot;correction_en_java&quot;,&quot;codeblockOffset&quot;:40,&quot;secid&quot;:26,&quot;range&quot;:&quot;18249-18789&quot;} -->
+<h3 class="sectionedit27" id="suppressions_des_constantes">Suppressions des constantes</h3>
+<div class="level3">
+
+<p>
+Beaucoup de constantes ont été utilisées pour réaliser le code de cette page. C&#039;est une mauvaise pratique pour deux raisons :
+</p>
+<ul>
+<li class="level1"><div class="li"> Si une constante est utilisée plusieurs fois, il faut modifier partout (sans rien oublier)</div>
+</li>
+<li class="level1"><div class="li"> Il n&#039;est pas facile de relire le code en le comprenant (on oublie leur utilité)</div>
+</li>
+</ul>
+
+<p>
+On va donc remplacer les constantes définissant la taille de la fenêtre par <strong>WIDTH</strong> et <strong>HEIGHT</strong> qui seront des variables constantes.
+</p>
+
+<p>
+Par convention, on nomme les constantes toujours en majuscule dans les deux langages.
+</p>
+
+<p>
+<em class="u">En C++ :</em>
+</p>
+
+<p>
+On crée les variables constantes avant la fonction <strong>main</strong>:
+</p>
+<pre class="code cpp"><span class="kw2">constexpr</span> <span class="kw4">int</span> WIDTH <span class="sy1">=</span> <span class="nu0">1280</span><span class="sy4">;</span>
+<span class="kw2">constexpr</span> <span class="kw4">int</span> HEIGHT <span class="sy1">=</span> <span class="nu0">720</span><span class="sy4">;</span></pre>
+
+<p>
+<strong>constexpr</strong> est un mot clé permettant de préciser que la variable ne sera jamais modifié et que le compilateur peut la  remplacer par sa valeur là où elle est utilisée.
+La variable n&#039;aura donc pas d&#039;existence lors de l&#039;exécution du programme.
+</p>
+
+<p>
+Le mot <strong>constexpr</strong> n&#039;est valable<span style='color:#ed1c24; '> <strong>que pour des types simples</strong></span> (appelés “primitifs”), comme : int, char, float, …
+</p>
+
+<p>
+<em class="u">En Java :</em>
+</p>
+
+<p>
+On crée les variables au début de la classe <strong>Main</strong>:
+</p>
+<pre class="code java"><span class="kw1">public</span> <span class="kw1">static</span> <span class="kw1">final</span> <span class="kw4">int</span> WIDTH <span class="sy0">=</span> <span class="nu0">1280</span><span class="sy0">;</span>
+<span class="kw1">public</span> <span class="kw1">static</span> <span class="kw1">final</span> <span class="kw4">int</span> HEIGHT <span class="sy0">=</span> <span class="nu0">720</span><span class="sy0">;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Suppressions des constantes&quot;,&quot;hid&quot;:&quot;suppressions_des_constantes&quot;,&quot;codeblockOffset&quot;:42,&quot;secid&quot;:27,&quot;range&quot;:&quot;18790-&quot;} -->

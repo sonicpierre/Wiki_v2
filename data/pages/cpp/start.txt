@@ -1,0 +1,9 @@
+====== Affichage dans le terminal en C++======
+
+Cette section va traiter uniquement des flux de sorties en c++.
+On y utilisera donc plusieurs bibliothèques :
+  * https://en.cppreference.com/w/cpp/header/iostream
+  * https://en.cppreference.com/w/cpp/header/iomanip
+
+Une partie des informations provient des sources suivantes :
+  * http://faculty.cs.niu.edu/~mcmahon/CS241/c241man/node83.html

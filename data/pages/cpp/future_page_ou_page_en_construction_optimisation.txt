@@ -1,0 +1,18 @@
+======Page en construction======
+
+{{ :cpp:pageconstruction.png?400 |}}
+
+=====Méthode de type Descente du Gradient=====
+
+  * [[cpp:Gradient |Méthode de la Descente du Gradient Conjugué]]
+
+
+
+=======Future page======
+
+{{ :cpp:futurepage.jpg?500 |}}
+
+
+=====La méthode BFGS=====
+
+  * [[cpp:Introduction et exemple |Introduction et Exemple d'application]]

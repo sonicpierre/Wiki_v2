@@ -1,0 +1,179 @@
+{{ :cpp:temps_illustration.jpg?350 |}}
+
+Les données suivant un ordre chronologique ne se manipulent aussi facilement que les données classiques. En effet, le temps ne peut être traité ni comme un entier ni comme une chaine de caractère. C'est pourquoi il a un type unique, lui permettant d'être manipulé facilement, afin d'obtenir les informations voulues. Vous allez devenir le maitre du temps et apprendre à le manipuler.
+
+=====Le format temps=====
+
+Et si nous commencions par travailler avec votre date d'anniversaire. Commençons par la rentrer dans notre environnement pour mieux la manipuler et obtenir des informations dessus.
+
+__En Python :__
+
+<code python>
+import pandas as pd
+import time
+
+#Date sous la forme d'une chaine de caractère comme on pourrait le lire dans un fichier
+mon_annive = "24-10-1998"
+mon_annive_melange = "10/24/1998"
+
+#Date transformée
+date_mon_annive = pd.to_datetime(mon_annive, dayfirst=True)
+date_mon_annive = pd.to_datetime(mon_annive_melange, format="%m/%d/%Y")
+
+#Permet d'obtenir la date en secondes
+second = time.mktime(date_mon_annive.timetuple())
+</code> 
+
+__En R :__
+
+<code python>
+#Date sous la forme d'une chaine de caractère comme on pourrait le lire dans un fichier
+mon_annive_melange = "10/24/1998"
+
+#Date transformée
+date = as.Date(x = mon_annive_melange, format = "%m/%d/%Y")
+
+#Permet d'obtenir la date en secondes
+format(date, "%s")
+</code>
+
+Maintenant que nous sommes passés de la chaîne de caractères au format date nous pouvons en obtenir des informations et effectuer des opérations. 
+
+__En Python :__
+
+<code python>
+#On ajoute 10 jours après mon anniversaire
+date_ajout = date_mon_annive + datetime.timedelta(days=10)
+
+#Nom du jour
+date_ajout.day_name()
+
+#Permet de savoir combien de temps me sépare de la mort d'Einstein (en jours)
+date_mon_annive - pd.to_datetime("1955-04-18")
+</code>
+
+__En R :__
+
+<code python>
+#On ajoute 10 jours après mon anniversaire
+date_ajout = date + 10
+
+#Nom du jour
+weekdays(date_ajout)
+
+#Permet de savoir combien de temps me sépare de la mort d'Einstein (en jours)
+date - as.Date("1955-04-18")
+</code>
+=====Construire les séries temporelles=====
+
+Vous savez maintenant manipuler une date et en tirez des informations mais quand est-il si vous aviez un ensemble de date à trier, manipuler, représenter ? On fait alors appelle aux séries temporelles qui permettent toutes ces opérations.
+
+{{ :cpp:bitcoin.jpg?400 |}}
+
+Les données financières se prêtes particulièrement bien à ces études. N'avez vous jamais voulu devenir un génis du bitcoin ? Alors allons-y... Vous pouvez trouver les données directement sur le site [[https://fr.finance.yahoo.com/quote/BTC-EUR/history?period1=1453593600&period2=1611446400&interval=1d&filter=history&frequency=1d&includeAdjustedClose=true| ici]] ou sur nos répertoires ici.
+====Quelle est l'évolution du bitcoin anuellement ?====
+
+On commence par lire les données et garder pour simplifier que 2 colonnes, les dates et le volume associé. Ici les dates se trouvent directement dans le fichier, on va donc lire directement le fichier comme une série temporelle.
+
+__En Python :__
+
+<code python>
+import pandas as pd
+data_original = pd.read_csv("BTC-EUR.csv", index_col= "Date", parse_dates=True)
+data_empute = data_original["Volume"]
+data_empute.plot()
+</code>
+
+<alert info>**Info :** La librairie pandas même si on l'utilise souvent pour créer et manipuler des DataFrame a été conçu à la base pour gérer les séries temporelles.</alert>
+
+__En R :__
+
+En R le parsing de la date est moins automatique, il faut au préalable indiquer le format de la date puis dans un second temps indique le format de chacune des colonnes. Enfin, il faut indiquer comment sont reconnues les valeurs manquantes.
+
+<code python>
+library(zoo)
+library(dplyr)
+
+setClass("myDate")
+setAs("character", "myDate", function(from) as.POSIXct(strptime(from,"%Y-%m-%d")))
+data_original = read.csv("BTC-EUR.csv", na.strings='null',
+         colClasses = c("myDate","numeric","numeric","numeric","numeric","numeric","numeric"))
+data_empute = data_original %>%
+  select("Date", "Volume")
+   
+time_serie = zoo(data_empute$Volume, order.by = data_empute$Date)
+plot(time_serie)
+</code>
+
+**Résultat :**
+
+{{ :cpp:evolution_anuelle_bitcoin.png?400 |}}
+
+On remarque à première vue qu'il n'y a pas de tendance anuelle qui se dégage. On observe que la volatilité de la monnaie a augmenté concidérablement durant les 3 dernières années. Nous reviendrons plus tard sur la visualisation de la série temporelle.
+
+**Source :**
+  * [[https://www.imo.universite-paris-saclay.fr/~goude/Materials/time_series/cours1_R_serie_temp.pdf]]
+
+====Créer la série temporelle====
+
+Il arrive parfois que nous ayons en notre possession les données mais pas les dates correspondantes. Dans ce cas, il va donc falloir créer nous même l'index avec les dates. Nous allons travailler avec un dataset qui comptabilise le nombre de fois que le mot macron a été recherché sur Google malheureusement les mesures de temps ont été supprmées et il faut les ajouter. On sait seulement que les mesures sont hebdomadaires et ont commencé le 2020-02-16.
+
+__En Python :__
+
+<code python>
+data = pd.read_csv("multiTimeline.csv")
+
+#On récupère la taille du tableau lu pour connaître la longueur de l'index à créer
+nb_element = data.shape[0]
+
+#On génère l'index
+index = pd.date_range(start ='2020-02-16', periods= nb_element, freq = "W")
+
+#On crée le dataFrame
+data.index = index
+</code>
+
+<alert info> **Info :** Si vous avez besoin d'aller chercher une autre fréquence vous pouvez vous référez au tableau [[https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#timeseries-offset-aliases| ici]]. </alert>
+
+Il est possible que cet index ne vous convienne pas. C'est pourquoi il peut être intéressant de l'adapter pour que vous puissiez observer ce que vous souhaitez. Dans le cas où on rajouterait des observations il faut indiquer la technique utilisée.
+
+{{ :cpp:resampling_positif.png?800 |}}
+
+<alert warning>**Remarque :** Cette technique est ré-utiliser plus généralement pour combler les valeurs manquantes dans les jeux de données incomplets. </alert> 
+
+<code python>
+#Re-index avec une mesure toutes les 2 semaines
+weekly_dates = pd.date_range(start = '2020-02-16', periods = 26, freq = '2W')
+data.reindex(weekly_dates)
+
+#Re-index avec une mesure tout les 4 jours
+index = pd.date_range(start ='2020-02-16', periods= 91, freq = "4D")
+data.reindex(index, method = 'nearest')
+</code>
+
+__En R :__
+
+Le resampling n'est pas facilement mis en place en R malheureusement. 
+
+<code python>
+library(zoo)
+data = read.csv("multiTimeline.csv")
+nb_element = longudim(data)[1]
+index_col = seq(from = as.Date("16/02/20", "%d/%m/%y"), by = "week", length.out = 52)
+time_serie =zoo(data, order.by = index_col)
+</code>
+
+On peut maintenant facilement observer la série avec la fonction **plot** présente dans les deux langages.
+====Visualiser la série temporelle====
+
+Lire le dataframe comme une série temporelle nous permet de mieux représenter le représenter et ainsi aide à la prise de décision.  Nous allons essayé ici de décrire d'autres façon de représenter les données tout aussi intéressante.
+
+<code python>
+#Python
+data.plot()
+
+#R
+plot(time_serie)
+</code>
+
+{{ :cpp:macron_temps.png?450 |}}

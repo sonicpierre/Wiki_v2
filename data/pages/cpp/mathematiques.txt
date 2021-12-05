@@ -1,0 +1,5 @@
+====Article 1 : What do mathematicians mean by good math and bad math ?====
+
+Les mathématiques font partie des matières les plus abstraites du monde scientifique. Le vocabulaire y est assez spécialisé et le style d'écriture peut parfois impacter beaucoup à la compréhension du lecteur. Clairement, si on change le style d'écriture, on enlève certaines démonstrations ou encore on  vulgarise le sujet, on ne peut être publié dans aucun journal scientifique. Certes il s'agirait de "mauvaises maths" mais elles sont plus accessibles. On se demande alors à quel prix faisons-nous des "bonnes maths" incompréhensibles du grand publique.
+
+[[https://www.datasciencecentral.com/profiles/blogs/what-do-mathematicians-mean-by-good-math-and-bad-math?fbclid=IwAR0dQpM-LHVJuNamsLLxPGVKPUzOAOw2cj7RadoJY6sejr-gnOdfsimzkTE]] 

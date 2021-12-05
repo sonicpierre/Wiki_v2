@@ -1,0 +1,168 @@
+ [[cpp:Natural Langage Processing | Natural Langage Processing]]
+
+{{:cpp:stylometrie_illu.png?585|}}
+
+Comme vous vous en êtes sûrement rendu compte, il y a plusieurs façons de dire la même chose. Certains auteurs comme Queneau qui a écrit la même histoire (à deux paragraphes prés) de 100 façons différentes. Cette richesse a donné naissance à un domaine du NLP, la stylométrie.  
+
+======La stylométrie et ses possibilités======
+
+Il est évident que les chercheurs de stylométrie n'ont pas attendu l'apparition des ordinateurs et du Machine Learning pour commencer à étudier le domaine. Cependant, il faut bien avouer que l'apparition de moyens informatiques a considérablement accéléré les découvertes. La stylométrie a d'abord été voué à développer des techniques permettant d'attribuer à chacun des textes un auteur quand il était inconnu. Ces mêmes techniques ont permis d'éviter les problèmes de plagiat qui sont de plus en plus fréquent dans le monde universitaire. Un corpus connu et extrêmement étudié dans la discipline, les [[https://en.wikipedia.org/wiki/The_Federalist_Papers| Federalist Papers]] ont été au centre des pré-occupations durant plusieurs années. L'auteur de certains textes était inconnu (Alexander Hamilton, James Madison, ou John Jay) et l'étude de la stylométrie a pu apporter une solution.
+
+{{  :cpp:federalist.jpg?200  |}}
+
+Il faut bien comprendre que même si l'attribution d'auteur est l'un des problèmes majeur de la stylométrie, il a été possible d'aller plus loin en déterminant le genre, le profil psychologique de l'écrivain ou encore si il avait des syndromes de maladie neuro-dégénératrice. Ces approches restent encore controversées mais elles pourraient bien avoir un impact sociétal considérable. Enfin, l'étude de la complexité du texte donne l'espoir de pouvoir modifier certains textes automatiquement pour les rendre accessibles à un plus grand nombre.
+======Les fréquences de mots======
+
+Il est important de savoir transformer son texte de manière à le rendre interprétable qu'on veuille le décrire ou qu'on veuille appliquer des algorithmes de Machine Learning dessus. Certains algorithmes comme les réseaux de neuronne récurrents sont capables de prendre en entrée le texte brut mais c'est un cas particulier. Bien souvent, il est nécessaire de passer par une phase d'embedding. 
+
+<alert info>**Définition :** L'embedding est le fait de trouver un moyen de transformer son texte en chiffre le rendant ainsi exploitable par l'ordinateur. Les modèle permettant sont appelés des transformers (word2vect, Bert, Text Vectorisation).</alert>
+
+Avant de transformer nos données commençons par les charger et se les approprier sur notre environnement :
+
+__En Python :__
+
+<code python>
+import pandas as pd
+import requests
+
+#On lit les données
+url = "http://ptrckprry.com/course/ssd/data/federalist.json"
+s=requests.get(url).content
+pd.read_json(s, lines=True)
+
+#On répartit les données en fonction des auteurs
+data_JAY = data[data["author"] == "JAY"]
+data_HAMILTON = data[data["author"] == "HAMILTON"]
+data_MADISON = data[data["author"] == "MADISON"]
+</code>
+
+Nous allons maintenant voir les différentes utilisations de la fréquence pour faire de la description mais aussi pour faire de l'embedding. 
+=====Les fréquences pour la description=====
+
+La notion de vocabulaire et l'étude de sa richesse est au centre des travaux de stylométrie. Nous allons décrire les différentes mesures grâce en prenant comme texte : "Les partisants de la république et de la dictature ont mangé le repas de Noel à la même table." Avant de faire une étude de fréquence il est nécessaire de regrouper les textes d'un même auteur et appliquer une tokennisation. Sur notre texte on obtient donc ["Les", "partisants", "de", "la", "république", "et", "de", "la", "dictature", "ont", "mangé", "le", "repas", "de", "Noel", "à", "la", "même", "table"].
+
+__Code Python correspondant :__
+
+<code python>
+from nltk.tokenize import RegexpTokenizer
+tokenizer = RegexpTokenizer(r'\w+')
+
+texte_JAY = " ".join(list(data_JAY["text"]))
+texte_HAMILTON = " ".join(list(data_HAMILTON["text"]))
+texte_MADISON = " ".join(list(data_MADISON["text"]))
+
+token_JAY = tokenizer.tokenize(texte_JAY)
+token_HAMILTON = tokenizer.tokenize(texte_HAMILTON)
+token_MADISON = tokenizer.tokenize(texte_MADISON)
+</code>
+
+====Mesure de vocabulaire classique====
+
+Commençons par la manière classique de décrire le vocabulaire, il s'agit du nombre de mots dans le texte en interdisant les doublons. Les mots correspondant à cette mesure sont les suivants : ["Les", "partisants", "de", "la", "république", "et", "dictature", "ont", "mangé", "le", "repas", "Noel", "à", "même", "table"] nous noterons cette liste $Voc_t$ et $n_t$ son effectif. On utilise alors la formule suivante ,avec $n$ l'effectif total, pour calculer notre metric :
+
+$$Voc(x) = \frac{n_t}{n}$$
+
+Pour notre texte on arrive donc à 0.789, il existe plusieurs variantes où on peut diviser par $\sqrt{n}$ ou encore $\log{(n)}$.
+
+__Code Python correspondant :__
+
+<code python>
+
+</code>
+
+====Les hapaxes====
+
+Quand on cherche à connaître la diversité du vocabulaire d'un auteur il est aussi possible de chercher à quantifier le nombre de mots uniques qu'il utilise. Il s'agit des mots qui apparaissent une seule fois dans le texte. Sur notre exemple les hapaxes seraient ["Les", "partisants", "république", "et", "dictature", "ont", "mangé", "le", "repas",  "Noel", "à" ,"même", "table"].
+
+<alert warning>**Remarque :** Il est important de préciser que nous avons appliqué ici sur une seule phrase, sur un texte complet les mots comme "Les", "à" ou encore "et" ont beaucoup moins de chances d'être des hapaxes.</alert>
+
+__Code Python correspondant__
+
+<code python> </code>
+====Content words====
+
+Une autre metric plus coûteuse mais aussi plus efficace se base sur les **<color #ed1c24>contents words</color>**. On appelle "content words" les mots qui sont soit des noms, des verbes ou encore des adjectifs (certaines variantes ajoutent les adverbes). Sur notre exemple on arrive à la liste suivante ["partisants", "république", "dictature", "ont", "mangé", "repas", "Noel", "table"]. Notons $CW(x)$ ces mots, la formule s'adapte ainsi :
+
+$$Voc(x) = \frac{CW}{n}$$
+
+Avec cette méthode on obtient 0.42. L'un problème de cette méthode est qu'elle nécessite un POS tagger qui est un modèle permettant de labelliser chacun des mots dans la phrase par sa place grammaticale. Ce modèle comme tout modèle de Machine Learning a une précision qu'il faut contrôler pour ne pas biaiser l'étude. Il faut aussi être sûr que le corpus a une qualité qui permet ce traitement car si les phrases sont trop males formées les prédictions sont faussées.
+
+__Code Python correspondant :__
+
+Pour permettre le calcul de cette metric nous utilisons la librairie Spacy et son modèle "fr_core_news_sm" qui a une précision de 96% sur les tâches de POS Tagging.
+
+<code python>
+
+</code>
+
+====Longueur des mots====
+
+Il existe une dernière catégorie de mesure permettant de quantifier la richesse du vocabulaire en regardant la longueur des mots utilisés. Ce type de mesure est plus stable mais est plus difficile à calculer. Voici la formule à appliquer :
+
+$$Voc(x) = c . \left [ -\frac{1}{n} + \sum_{r=1} \frac{r}{n} * \frac{r}{n} * |Voc_r(x)| \right ]$$
+
+^  Variable  ^  Signification  ^
+|  $c$  |  Constante de valeur $10^4$  |
+|  $n$  |  Taille du vocabulaire total  |
+|  $Voc_r$  |  Nombre de mots dans le texte ayant une taille r  |
+
+Appliquons la formule à notre exemple ["Les", "partisants", "de", "la", "république", "et", "de", "la", "dictature", "ont", "mangé", "le", "repas", "de", "Noel", "à", "la", "même", "table"] :
+
+  * Mot de taille 1, $\left (\frac{1}{19} \right )^2 * 1 = 0.003$
+  * Mot de taille 2, $\left (\frac{2}{19} \right )^2 * 8 = 0.088$
+  * ...
+  * Mot de taille 10, $\left (\frac{10}{19} \right )^2 * 2 = 0.554$
+
+On termine en faisant la somme et on multiplie par $c$.
+
+__Code Python correspondant__
+
+<code python>
+
+</code>
+
+**Résultats :**
+
+On peut ensuite recenser les différentes mesures pour les interpréter ou permettre une attribution d'auteur sur un texte inconnu.
+
+|              ^  Standard  ^  Hapaxes  ^  Content Words  ^  Longueur de mots  ^
+^ Hamilton |    |   |    |
+^ Jay |    |    |
+^ Madison |    |     |
+
+<alert warning>**Remarque :** Un vocabulaire pauvre n'est pas toujours synonyme d'un niveau d'écriture faible. Le romancier américain Ernest Hemingway, par exemple, était célèbre pour employer un nombre étonnamment faible de mots différents, cependant il a gagné le prix Nobel de littérature en 1954.</alert>
+=====Les fréquences pour les modèles=====
+
+Pour utiliser la fréquence comme embedding, on récupère les $n$ mots les plus fréquents pour chacun des auteurs. Ces mots et leurs fréquences caractérisent l'ensemble des textes d'un auteur. Dans cette technique et dans beaucoup d'autres, la question des stopwords (mot sans information) se pose. Faut-il les garder ou les exclure de l'étude ? Cependant, la véritable question à se poser est : Est-ce que la fréquence des stopwords est dénué d'information dans notre étude. Ici, j'ai choisi qu'il était judicieux de les garder mais il s'agit d'un choix subjectif. Calculons les mots les plus fréquents et de calculer leur fréquences :
+
+<code python>
+from collections import Counter
+
+counter_JAY = Counter(token_JAY)
+counter_HAMILTON = Counter(token_HAMILTON)
+counter_MADISON = Counter(token_MADISON)
+
+JAY_freq_word = [word[0] for word in counter_JAY.most_common(150)]
+HAMILTON_freq_word = [word[0] for word in counter_HAMILTON.most_common(150)]
+MADISON_freq_word = [word[0] for word in counter_MADISON.most_common(150)]
+
+#Calcule de la fréquence relative JAY
+liste_freq_JAY = []
+for a in liste_commun:
+    compteur = 0
+    for i in token_JAY:
+        if (i == a):
+            compteur+=1
+    liste_freq_JAY.append(compteur/len(token_JAY))
+    
+ #Faire de même avec MADISON et HAMILTON
+</code>
+
+**Résultat :**
+
+{{  :cpp:freq_federalist.png?700  |}}
+
+======Visualiser les variables de stylométrie======
+
+[[https://computationalstylistics.github.io/projects/bootstrap-networks/]]
+

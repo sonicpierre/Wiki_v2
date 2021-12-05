@@ -1,0 +1,8 @@
+<span class="co1">#fonction de calcul des règles</span>
+<span class="kw1">from</span> mlxtend.<span class="me1">frequent_patterns</span> <span class="kw1">import</span> association_rules
+&nbsp;
+<span class="co1">#génération des règles à partir des itemsets fréquents</span>
+regles <span class="sy0">=</span> association_rules<span class="br0">&#40;</span>freq_itemsets<span class="sy0">,</span>metric<span class="sy0">=</span><span class="st0">&quot;confidence&quot;</span><span class="sy0">,</span>min_threshold<span class="sy0">=</span><span class="nu0">0.75</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Afficher les 5 premières règles</span>
+<span class="kw1">print</span><span class="br0">&#40;</span>regles.<span class="me1">iloc</span><span class="br0">&#91;</span>:<span class="nu0">5</span><span class="sy0">,</span>:<span class="br0">&#93;</span><span class="br0">&#41;</span>

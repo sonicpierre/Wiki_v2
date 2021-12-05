@@ -1,0 +1,171 @@
+
+<p>
+<a href="/lib/exe/fetch.php?media=cpp:biere.gif" class="media" title="cpp:biere.gif"><img src="/lib/exe/fetch.php?w=500&amp;tok=faaced&amp;media=cpp:biere.gif" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+Pour illustrer ce cours, nous prendrons comme exemple la bière. A travers sa fabrication , son stockage ou sa vente, ce produit est soumis à de multitudes problèmes d&#039;optimisation afin d&#039;économiser des ressources et donc faire plus de profits.
+Le cours se déroulera selon le plan suivant :
+</p>
+<ul>
+<li class="level1 node"><div class="li"> <a href="/doku.php?id=cpp:dichotomie" class="wikilink1" title="cpp:dichotomie"> Méthode en une dimension </a>: recherche du zéro de la fonction gestion du stock de fûts:</div>
+<ol>
+<li class="level6"><div class="li"> Dichotomie</div>
+</li>
+<li class="level6"><div class="li"> Regula Falsi</div>
+</li>
+<li class="level6"><div class="li"> Newton</div>
+</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li class="level1 node"><div class="li"> <a href="/doku.php?id=cpp:gradient" class="wikilink1" title="cpp:gradient">Méthode de la Descente du gradient</a>: recherche des conditions de pression et température pour une usure minimum de la cuve lors du houblonnage:</div>
+<ol>
+<li class="level6"><div class="li"> Méthode du gradient</div>
+</li>
+<li class="level6"><div class="li"> Méthode du gradient conjugué</div>
+</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> <a href="/doku.php?id=cpp:bfgs" class="wikilink2" title="cpp:bfgs" rel="nofollow"> Méthode de Broyden-Fletcher-Goldfarb-Shanno</a>: recherche du minimum de stockage nécessaire en fonction du nombre d&#039;acheteurs les n mois précèdents.</div>
+</li>
+</ul>
+
+<h3 class="sectionedit1" id="quels_types_de_problemes_resolvons_nous">Quels types de problèmes résolvons nous ?</h3>
+<div class="level3">
+
+<p>
+Dans cette section, nous étudions deux types de problèmes permettant de résoudre à l&#039;aide d&#039;algorithmes : des problèmes <em class="u">d’optimisation</em> et des problèmes de <em class="u">résolution</em>. 
+</p>
+<ul>
+<li class="level1"><div class="li">  Les problèmes d’optimisation sont des problèmes de recherche de minimum (ou maximum) locaux, c’est-à-dire :</div>
+</li>
+</ul>
+<p class="divalign-center">$ x^{∗} = argmin (F(x), x ∈ \mathbb{R})$ où $F$ est une fonction de $\mathbb{R}^{d}$ dans $\mathbb{R}$. </p><!--divalign-->
+<ul>
+<li class="level1"><div class="li"> Les problèmes de résolution sont de la forme :</div>
+</li>
+</ul>
+<p class="divalign-center">Trouver $x$ dans $\mathbb{R}^{d}$ solution de $f(x) = 0$ où $f$ est une fonction  de $\mathbb{R}^{d}$ dans $\mathbb{R}$.</p><!--divalign-->
+
+<p>
+<em class="u"><strong>Sources:</strong></em>
+</p>
+<ul>
+<li class="level1"><div class="li">   <a href="https://www.ceremade.dauphine.fr/~gontier/Publications/methodesNumeriques.pdf" class="urlextern" title="https://www.ceremade.dauphine.fr/~gontier/Publications/methodesNumeriques.pdf" rel="nofollow">https://www.ceremade.dauphine.fr/~gontier/Publications/methodesNumeriques.pdf</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Quels types de probl\u00e8mes r\u00e9solvons nous ?&quot;,&quot;hid&quot;:&quot;quels_types_de_problemes_resolvons_nous&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;937-1706&quot;} -->
+<h3 class="sectionedit2" id="methode_analytique_methode_numerique">Méthode analytique, méthode numérique</h3>
+<div class="level3">
+
+<p>
+Nous utiliserons des méthodes numériques, qui donneront donc des résultats sous forme numérique, et non sous forme analytique. 
+Un résultat analytique est par exemple $ln(2)+exp(3*sin(4))$, c&#039;est à dire la forme exacte de la solution. Un résultat numérique pour ce même problème est( à $10^{-4}$) près 0.7964. 
+</p>
+
+<p>
+<a href="/lib/exe/fetch.php?media=cpp:analytique.png" class="media" title="cpp:analytique.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=282349&amp;media=cpp:analytique.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<p>
+Tous les algorithmes présentés ici sont itératifs, il est donc nécessaire de comprendre le principe d&#039;une boucle (informatique). La méthode globale consiste à partir d&#039;un $x(0)$ quelconque et de calculer à chaque itération le terme suivant de la suite $x(n)$ qui converge vers $x^{*}$.
+</p>
+
+<p>
+Il peut être intéressant de comparer les vitesses de convergence de chaque algorithme.  
+</p>
+
+<p>
+<em class="u"><strong>Source:</strong></em>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://maths.cnam.fr/IMG/pdf/Chapitre_III.pdf" class="urlextern" title="http://maths.cnam.fr/IMG/pdf/Chapitre_III.pdf" rel="nofollow">http://maths.cnam.fr/IMG/pdf/Chapitre_III.pdf</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;M\u00e9thode analytique, m\u00e9thode num\u00e9rique&quot;,&quot;hid&quot;:&quot;methode_analytique_methode_numerique&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;1707-2576&quot;} -->
+<h3 class="sectionedit3" id="les_langages">Les langages</h3>
+<div class="level3">
+
+<p>
+Nous mettrons en parallèle dans ce cours deux langages.
+Tout d&#039;abord nous verrons comment implémenter les algorithmes sous Python 3.6, qui est un langage facile à apprendre pour les débutants en informatique mais aussi utilisé dans la plupart des entreprises. 
+</p>
+
+<p>
+<a href="/lib/exe/fetch.php?media=cpp:python.png" class="media" title="cpp:python.png"><img src="/lib/exe/fetch.php?w=200&amp;tok=c4d3df&amp;media=cpp:python.png" class="mediaright" alt="" width="200" /></a>
+<a href="/lib/exe/fetch.php?media=cpp:octave.png" class="media" title="cpp:octave.png"><img src="/lib/exe/fetch.php?w=200&amp;tok=feaf3b&amp;media=cpp:octave.png" class="medialeft" alt="" width="200" /></a>
+</p>
+
+<p>
+Le deuxième langage utilisé pour ce cours sera Octave car il est compaptible à 98% avec Scilab et  Matlab (langage le plus communément utilisé pour les mathématiques, avec beaucoup de packages et une facilité d&#039;écriture pour les matrices). Contrairement à Matlab, Octave est gratuit, ce qui le rend accessible à tous ceux voulant apprendre la programmation pour les sciences. 
+<br/>
+
+<br/>
+
+<br/>
+
+<em class="u"><strong>Source:</strong></em>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.yourthesisadvisor.com/matlab-vs-octave-vs-scilab-vs-freemat/#:~:text=Octave%20is%2099%25%20compatible%20with%20MATLAB%2C%20and%20it%20is%20free.&amp;text=While%20MATLAB's%20Window%20version%20is,or%20Octave's%20in%20most%20situations." class="urlextern" title="https://www.yourthesisadvisor.com/matlab-vs-octave-vs-scilab-vs-freemat/#:~:text=Octave%20is%2099%25%20compatible%20with%20MATLAB%2C%20and%20it%20is%20free.&amp;text=While%20MATLAB&#039;s%20Window%20version%20is,or%20Octave&#039;s%20in%20most%20situations." rel="nofollow">https://www.yourthesisadvisor.com/matlab-vs-octave-vs-scilab-vs-freemat/#:~:text=Octave%20is%2099%25%20compatible%20with%20MATLAB%2C%20and%20it%20is%20free.&amp;text=While%20MATLAB&#039;s%20Window%20version%20is,or%20Octave&#039;s%20in%20most%20situations.</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les langages&quot;,&quot;hid&quot;:&quot;les_langages&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;2577-3596&quot;} -->
+<h3 class="sectionedit4" id="limites">Limites</h3>
+<div class="level3">
+
+<p>
+Il est important de noter que ces algorithmes ont tous des limites, soit car ils convergent lentement dans certains cas, soit car ils convergent lorsque certains critères sont respectés (l&#039;algorithme de descente du gradient ne marche que sur les fonctions convexes). 
+</p>
+
+<p>
+Notons que les algorithmes en une dimension présentés ici sont simples, et non optimisés. Il existe donc des algorithmes plus efficaces mais bien trop complexe pour une introduction à l&#039;optimisation, comme par exemple la Méthode de Muller ou de Brent.
+</p>
+
+<p>
+Voici les vitesses de conergence des algorithmes présentés ici:
+<br/>
+
+L: limite de ($x_n$)
+<br/>
+
+$\mu$: vitesse de convergence 
+</p>
+<div class="table sectionedit5"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0 leftalign">                            </td><th class="col1 centeralign">  Complexité  </th><th class="col2 centeralign">  Expression mathématique de la complexité  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 centeralign">  Dichotomie  </th><td class="col1 centeralign">  Linéaire        </td><td class="col2 centeralign">  $\lim\limits_{n \to \infty}\frac{\lvert x_{n+1} - L \rvert}{\lvert x_n - L \rvert}=\mu   \ (\mu &gt;0) $  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  Newton  </th><td class="col1 centeralign">  Quadratique  </td><td class="col2 centeralign">  $\lim\limits_{n \to \infty}\frac{\lvert x_{n+1} - L \rvert}{\lvert x_n - L \rvert^2}=\mu   \  (\mu &gt;0) $  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  Regula Falsi  </th><td class="col1 centeralign">  Superlinéaire  </td><td class="col2 centeralign">  $\lim\limits_{n \to \infty}\frac{\lvert x_{n+1} - L \rvert}{\lvert x_n - L \rvert}=\mu   \  (\mu =0) $  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  Gradient  </th><td class="col1 centeralign">  Linéaire  </td><td class="col2 centeralign">  $\lim\limits_{n \to \infty}\frac{\lvert x_{n+1} - L \rvert}{\lvert x_n - L \rvert}=\mu   \ (\mu &gt;0) $  </td>
+	</tr>
+	<tr class="row5">
+		<th class="col0 centeralign">  Gradient conjugué  </th><td class="col1 centeralign">  Superlinéaire  </td><td class="col2 centeralign">  $\lim\limits_{n \to \infty}\frac{\lvert x_{n+1} - L \rvert}{\lvert x_n - L \rvert}=\mu   \  (\mu =0) $  </td>
+	</tr>
+	<tr class="row6">
+		<th class="col0 centeralign">  BFGS  </th><td class="col1 centeralign">  Inconnu pour les fonctions non convexes  </td><td class="col2 centeralign">  ???  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:5,&quot;range&quot;:&quot;4268-5136&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Limites&quot;,&quot;hid&quot;:&quot;limites&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;3597-&quot;} -->

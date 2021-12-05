@@ -1,0 +1,193 @@
+
+<p>
+<a href="/doku.php?id=cpp:data_exploration" class="wikilink1" title="cpp:data_exploration"> Data exploration</a>
+</p>
+
+<h3 class="sectionedit1" id="complements_de_l_algorithme_acp">Compléments de l&#039;algorithme ACP</h3>
+<div class="level3">
+
+<p>
+L&#039;Analyse en Composantes Principales admet d&#039;autres types de traitement de données. Cela permet de gérer le flux d&#039;arrivée des données mais aussi de traiter des données à formes particulières.
+</p>
+
+<p>
+Ces méthodes ne sont pas utilisées comme une ACP classique mais ont plutôt une vocation d&#039;adaptation à la forme des données ainsi qu&#039;à leur fond.
+</p>
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong> les notions présentées ici nécessitent des prérequis, disponibles sur la page <a href="https://llamaspartan.fr/doku.php?id=cpp:acp" class="urlextern" title="https://llamaspartan.fr/doku.php?id=cpp:acp" rel="nofollow">ACP</a>. </div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Compl\u00e9ments de l&#039;algorithme ACP&quot;,&quot;hid&quot;:&quot;complements_de_l_algorithme_acp&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;46-616&quot;} -->
+<h2 class="sectionedit2" id="acp_incrementale">ACP incrémentale</h2>
+<div class="level2">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Acomplement_acp&amp;media=cpp:principe_acp_incr.png" class="media" title="cpp:principe_acp_incr.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=660b99&amp;media=cpp:principe_acp_incr.png" class="mediacenter" title="Principe ACP incrémentale" alt="Principe ACP incrémentale" width="500" /></a>
+</p>
+
+<p>
+La particularité de cet algorithme est qu&#039;il permet de fournir progressivement, des données de même “taille” à l&#039;algorithme. Cela peut être utile lorsqu&#039;on a énormément de données, dont le stockage entier n&#039;est pas possible, ou encore lorsque les données arrivent en continu.
+</p>
+
+<p>
+<div class='alert alert-info'> <strong>Dataset :</strong> Pour ce cas on va utiliser le jeu de données digits, dont l&#039;importation est disponible dans les fichiers de codes.</div>
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">decomposition</span> <span class="kw1">import</span> IncrementalPCA
+&nbsp;
+nombre_lot <span class="sy0">=</span> <span class="nu0">100</span><span class="co1">#Initialisation des lots à fournir à l'algorithme</span>
+model <span class="sy0">=</span> IncrementalPCA<span class="br0">&#40;</span>n_components<span class="sy0">=</span><span class="nu0">150</span><span class="br0">&#41;</span><span class="co1">#Création du modèle de réduction incrémental</span>
+<span class="kw1">for</span> lot_X <span class="kw1">in</span> np.<span class="me1">array_split</span><span class="br0">&#40;</span>X_train<span class="sy0">,</span> nombre_lot<span class="br0">&#41;</span>:<span class="co1">#Boucle d'entrainement des données par lots de 100</span>
+    model.<span class="me1">partial_fit</span><span class="br0">&#40;</span>lot_X<span class="br0">&#41;</span>
+X_reduced <span class="sy0">=</span> model.<span class="me1">transform</span><span class="br0">&#40;</span>X_train<span class="br0">&#41;</span><span class="co1">#Données réduitent à 150 dimensions</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>onlinePCA<span class="br0">&#41;</span>
+&nbsp;
+model <span class="sy0">&lt;</span>- incRpca.<span class="me1">block</span><span class="br0">&#40;</span>digit<span class="sy0">,</span> B <span class="sy0">=</span> <span class="nu0">10</span><span class="sy0">,</span> q <span class="sy0">=</span> <span class="nu0">150</span><span class="br0">&#41;</span><span class="co1">#Création du modèle de réduction en initialisant 10 lots et un nombre de composantes principales égal à 150.</span></pre>
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong> Sous R, la commande retourne deux résultats : les <strong>q</strong> premières valeurs propres et les <strong>q</strong> premières composantes principales.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;ACP incr\u00e9mentale&quot;,&quot;hid&quot;:&quot;acp_incrementale&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;617-1984&quot;} -->
+<h2 class="sectionedit3" id="acp_a_noyaux">ACP à noyaux</h2>
+<div class="level2">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Acomplement_acp&amp;media=cpp:methode_du_noyau.png" class="media" title="cpp:methode_du_noyau.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=89158c&amp;media=cpp:methode_du_noyau.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+<p>
+Cette méthode est utilisée lorsqu&#039;on veut réduire la dimension d&#039;un dataset à données non linéaires. La démarche est de transformer l&#039;espace où sont représentées les données d&#039;entrées, en un espace de plus grande dimension (espace de redescription). 
+</p>
+
+<p>
+Cela est permis puisque la frontière de décision linéaire dans un espace de grande dimension correspond à la frontière de décision non linéaire dans l&#039;espace d&#039;origine.
+</p>
+
+<p>
+<strong>Théorie</strong>
+</p>
+
+<p>
+Considérons $X_{n}$ un ensemble de vecteurs non linéaires, à valeurs dans $\mathbb{R^{n}}$. La méthode du noyau introduit une application non linéaire $\phi$, qui transforme les observations $X_{0}$,  $X_{1}$,…, $X_{n}$ de $\mathbb{R^{n}}$ en de nouvelles observations $\phi(X_{0})$, $\phi(X_{1})$,…, $\phi(X_{n})$ de $\mathbb{R^{m}}$, avec $n &lt;&lt; m$. Les nouvelles observations étant maintenant linéaires, elles sont donc plus faciles à séparer, ce qui permet de mieux prédire les classes.
+</p>
+
+<p>
+Vous devez vous demander comment est défini l&#039;application $\phi$ ? En fait il n&#039;est pas nécessaire d&#039;avoir son expression car celle-ci est implicite au type de noyau qu&#039;on choisira. On a qu&#039;à connaitre la fonction $K$ telle que $K(X,Y) = \phi(X)^{T}.\phi(Y)$
+</p>
+
+<p>
+Le choix du noyau approprié est conditionné par la forme des données. Aussi il sera nécessaire de choisir le noyau qui rend compte des mêmes propriétés que le produit scalaire entre les nouvelles données  $\phi(X_{0})$, $\phi(X_{1})$,…, $\phi(X_{n})$.
+</p>
+
+<p>
+<strong>Les types de noyaux</strong>
+</p>
+<div class="table sectionedit4"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">      Type de noyau        </th><th class="col1"> Description</th><th class="col2"> Forme de la fonction</th><th class="col3"> Remarques</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  <strong>Noyau Gaussien radial</strong>  </td><td class="col1"> Permet de se ramener à des données non linéaires en passant les observations à la fonction K. Il s&#039;agit du noyau le plus couramment utilisé. </td><td class="col2"> $K(x,y) = e^{-\gamma \|x - y\|^{2}}$ </td><td class="col3"> Le réglage de <strong>gamma</strong> est important.  Il peut être utilisé comme hyper paramètre de régularisation :  Si le modèle sur ajuste on doit réduire sa valeur (inversement lorsqu&#039;il sous-ajuste).</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">   <strong>Noyau polynomial</strong>      </td><td class="col1"> Permet de représenter les données polynomiales dans un espace de plus haut degré que celui de l&#039;espace d&#039;origine.</td><td class="col2"> $K(x,y) = (x^{T} y + 1)^{d}$</td><td class="col3 leftalign"> d est le degré de l&#039;espace de redescription.  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">    <strong>Noyau sigmoïde</strong>     </td><td class="col1"> Permet de se ramener à une dimension plus grande en passant les données à la fonction $K$. </td><td class="col2"> $K(x,y) = tanh(\gamma x^{T} y + r)$ </td><td class="col3"> Aucune</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:4,&quot;range&quot;:&quot;3560-4456&quot;} -->
+</div>
+
+<h4 id="modele_de_reduction_avec_acp_a_noyaux">Modèle de réduction avec ACP à noyaux</h4>
+<div class="level4">
+
+<p>
+<div class='alert alert-info'><strong>Dataset :</strong>  Dans la suite, on va générer des données du dataset <strong>make_circles</strong>, qui permettront d&#039;étudier l&#039;impact de cette méthode.</div>
+</p>
+
+<p>
+On commence par importer le jeu de données.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">datasets</span> <span class="kw1">import</span> make_circles
+&nbsp;
+X<span class="sy0">,</span> y <span class="sy0">=</span> make_circles<span class="br0">&#40;</span>n_samples <span class="sy0">=</span> <span class="nu0">1000</span><span class="sy0">,</span> factor <span class="sy0">=</span> <span class="nu0">.3</span><span class="sy0">,</span> noise <span class="sy0">=</span> <span class="nu0">.05</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Acomplement_acp&amp;media=cpp:make_circles_py.png" class="media" title="cpp:make_circles_py.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=56a19e&amp;media=cpp:make_circles_py.png" class="mediacenter" title="Données générées" alt="Données générées" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 1 :</strong> Données circulaires générées</p><!--divalign-->
+
+<p>
+Nous pouvons maintenant appliquer l&#039;algorithme d&#039;ACP à noyau, en choisissant ici un noyau radial gaussien et en réglant l&#039;hyper paramètre gamma à 10.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">decomposition</span> <span class="kw1">import</span> KernelPCA
+&nbsp;
+KernelACP <span class="sy0">=</span> KernelPCA<span class="br0">&#40;</span>n_components <span class="sy0">=</span> <span class="nu0">24</span><span class="sy0">,</span> kernel <span class="sy0">=</span> <span class="st0">&quot;rbf&quot;</span><span class="sy0">,</span> gamma <span class="sy0">=</span> <span class="nu0">10</span><span class="sy0">,</span> random_state <span class="sy0">=</span> <span class="nu0">2</span><span class="br0">&#41;</span>
+X <span class="sy0">=</span> KernelACP.<span class="me1">fit_transform</span><span class="br0">&#40;</span>X<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>kernlab<span class="br0">&#41;</span>
+&nbsp;
+KernelACP <span class="sy0">&lt;</span>- kpca<span class="br0">&#40;</span>data<span class="sy0">,</span> kernel<span class="sy0">=</span><span class="st0">&quot;rbfdot&quot;</span><span class="sy0">,</span> features <span class="sy0">=</span> <span class="nu0">24</span><span class="sy0">,</span> kpar <span class="sy0">=</span> <span class="kw2">list</span><span class="br0">&#40;</span>sigma <span class="sy0">=</span> <span class="nu0">10</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Application de la réduction à noyau aux données</span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Acomplement_acp&amp;media=cpp:make_circles_kernel.png" class="media" title="cpp:make_circles_kernel.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=3721a6&amp;media=cpp:make_circles_kernel.png" class="mediacenter" title="Résultat du noyau gaussien sur les données générées" alt="Résultat du noyau gaussien sur les données générées" width="600" /></a>
+</p>
+
+<p>
+<div class='alert alert-info'><strong>Remarque :</strong>  En pratique, l&#039;ACP à noyaux n&#039;est pas très utilisée car il n&#039;est pas toujours évident de trouver le noyau adapté aux données. C&#039;est pourquoi le plus souvent, la recherche des bons hyper-paramètres se fait avec un <strong>GridSearchCV</strong>.</div>
+</p>
+
+</div>
+
+<h4 id="sources">Sources</h4>
+<div class="level4">
+<ul>
+<li class="level1"><div class="li"> Machine Learning avec Scikit-Learn, Aurélien Géron</div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.researchgate.net/post/Does_anyone_know_what_is_the_Gamma_parameter_about_RBF_kernel_function" class="urlextern" title="https://www.researchgate.net/post/Does_anyone_know_what_is_the_Gamma_parameter_about_RBF_kernel_function" rel="nofollow">researchgate</a></div>
+</li>
+<li class="level1"><div class="li"> Data science : fondamentaux et études de cas, Eric Biernat et Michel Lutz</div>
+</li>
+<li class="level1"><div class="li"> Big Data et Machine Learning, Pirmin Lemberger, Marc Batty, Médéric Morel et Jean-Luc Raffaelli</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;ACP \u00e0 noyaux&quot;,&quot;hid&quot;:&quot;acp_a_noyaux&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:3,&quot;range&quot;:&quot;1985-&quot;} -->

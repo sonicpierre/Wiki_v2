@@ -1,0 +1,3 @@
+library<span class="br0">&#40;</span>onlinePCA<span class="br0">&#41;</span>
+&nbsp;
+model <span class="sy0">&lt;</span>- incRpca.<span class="me1">block</span><span class="br0">&#40;</span>digit<span class="sy0">,</span> B <span class="sy0">=</span> <span class="nu0">10</span><span class="sy0">,</span> q <span class="sy0">=</span> <span class="nu0">150</span><span class="br0">&#41;</span><span class="co1">#Création du modèle de réduction en initialisant 10 lots et un nombre de composantes principales égal à 150.</span>

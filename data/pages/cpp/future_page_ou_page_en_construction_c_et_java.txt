@@ -1,0 +1,30 @@
+{{ :cpp:pageconstruction.png?400 |}}
+
+===== Gérer les actions =====
+
+  * [[cpp: Contrôler le joueur | Contrôler le joueur]]
+
+
+======Futures Pages======
+
+{{ :cpp:futurepage.jpg?500 |}}
+
+===== Générer une carte =====
+
+  * [[cpp: Lire et interpréter un fichier | Lire et interpréter un fichier]]
+===== Animation graphique =====
+  * [[cpp: Animer les textures | Animer les textures]]
+  * [[cpp: Animer les déplacement | Animer les déplacement]]
+
+===== Les ennemis =====
+
+  * [[cpp: Générer les ennemis | Générer les ennemis]]
+  * [[cpp: Les actions des ennemis | Les actions des ennemis]]
+  * [[cpp: Décrire le déplacement | Décrire le déplacement]]
+
+
+===== Ajouter des joueurs =====
+
+  * [[cpp: Faire jouer 2 joueurs en local | Faire jouer 2 joueurs en local]]
+
+

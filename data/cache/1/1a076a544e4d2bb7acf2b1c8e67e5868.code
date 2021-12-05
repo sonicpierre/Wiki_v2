@@ -1,0 +1,2 @@
+<span class="co1">#Coefficient principal à 1 et coefficients secondaires à 0</span>
+tabCoupe<span class="sy0">=</span>normalisation<span class="br0">&#40;</span>tabCoupe<span class="sy0">,</span>indiceVarEntrante<span class="sy0">,</span>indiceVarSortante<span class="br0">&#41;</span>

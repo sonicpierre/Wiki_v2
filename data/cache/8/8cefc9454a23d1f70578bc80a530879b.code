@@ -1,0 +1,3 @@
+<span class="co1">%Première phase</span>
+<span class="co1">%Choix de la variable entrante (delta)</span>
+indiceVarEntrante=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tabDelta<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="br0">&#41;</span>-<span class="nu0">1</span>

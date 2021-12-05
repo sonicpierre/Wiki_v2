@@ -1,0 +1,438 @@
+
+<p>
+<a href="/doku.php?id=cpp:ia" class="wikilink1" title="cpp:ia"> Machine Learning</a>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_lineaire_interpret_daniel&amp;media=cpp:statistique.jpeg" class="media" title="cpp:statistique.jpeg"><img src="/lib/exe/fetch.php?w=460&amp;tok=c72c71&amp;media=cpp:statistique.jpeg" class="mediacenter" alt="" width="460" /></a>
+</p>
+
+<p>
+La régression linéaire n&#039;est pas forcément utilisée pour faire des modèles de prédiction et on peut même dire que c&#039;est rarement le cas.  En revanche elle est souvent prise pour faire une étude statistique et répondre à une question primordiale : 
+</p>
+
+<p>
+<strong>Mes données sont-elles distribuées linéairement ?</strong>
+</p>
+
+<p>
+La réponse sera bien entendu bien plus complexe que Oui/Non. Il sera nécessaire de bien comprendre et construire les conditions nécessaires pour appuyer nos conclusions sur la forme de la distribution de nos données.
+</p>
+
+<p>
+<span style='color:#ed1c24; '>Pourquoi voudrait-on savoir comment sont distribuées nos données ?</span>
+</p>
+
+<p>
+Des méthodes de Machine Learning et de réduction de dimensions comme l&#039;ACP partent du principe que les données sont distribuées linéairement et donc cette étude permet de justifier son choix de méthode pour la suite de son étude.
+</p>
+
+<h2 class="sectionedit1" id="rappels_sur_les_tests_statistiques">Rappels sur les tests statistiques</h2>
+<div class="level2">
+
+<p>
+Le but de cette partie n&#039;est pas d&#039;apprendre à construire un test statistique mais plutôt comprendre ce qu&#039;il signifie et comment prendre une décision à partir des résultats de ce dernier. Par la suite nous utiliserons des tests déjà établis comme celui de Student, Ficher…
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_lineaire_interpret_daniel&amp;media=cpp:test_state.png" class="media" title="cpp:test_state.png"><img src="/lib/exe/fetch.php?w=790&amp;tok=4bf384&amp;media=cpp:test_state.png" class="mediacenter" alt="" width="790" /></a>
+</p>
+
+<p>
+Quelques précisions sur le fonctionnement :
+</p>
+<ul>
+<li class="level1"><div class="li"> $H_0$ est l&#039;hypothèse qu&#039;on cherche vérifier (hypothèse nulle).</div>
+</li>
+<li class="level1"><div class="li"> Le résultat du test se fait souvent en regardant des documents recensant  les différentes valeurs liées pour des risques différents.</div>
+</li>
+<li class="level1"><div class="li"> En général on prend un risque égale à 5% mais cela varie en fonction des exigences du client</div>
+</li>
+<li class="level1"><div class="li"> Il s&#039;agit ici d&#039;un test bivarié car il n&#039;y a que 2 issues <strong>Oui</strong> ou <strong>Non</strong>.</div>
+</li>
+</ul>
+
+<p>
+Nous allons expliquer comment décrire une régression linéaire puis comment évaluer ses résultats. On utilisera plusieurs tests statistiques permettant de mieux comprendre les résultats.
+</p>
+
+<p>
+<div class='alert alert-info'> <strong>Dataset :</strong> On utilisera des données reliant le nombre de ventes et l’investissement dans différents médias. Vous les trouverez <a href="https://github.com/LlamasPartan/Machine_Learning_Ressource/blob/master/R%C3%A9gression/R%C3%A9gression%20Lin%C3%A9aire/Advertising.csv" class="urlextern" title="https://github.com/LlamasPartan/Machine_Learning_Ressource/blob/master/R%C3%A9gression/R%C3%A9gression%20Lin%C3%A9aire/Advertising.csv" rel="nofollow"> ici</a>.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Rappels sur les tests statistiques&quot;,&quot;hid&quot;:&quot;rappels_sur_les_tests_statistiques&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;936-2235&quot;} -->
+<h2 class="sectionedit2" id="construire_son_modele">Construire son modèle</h2>
+<div class="level2">
+
+<p>
+On commence par tracer notre régression linéaire en utilisant la Méthode des Moindres Carré (MCO). Par la suite on essaiera d&#039;observer la répartition des ventes en fonction des informations sur les  différents moyens mis en œuvre pour le marketing.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+
+<p>
+Sous python il est d&#039;abord nécessaire de découper le dataset afin de distinguer variables explicatives <strong>X</strong> et variable cible <strong>y</strong>.
+</p>
+<pre class="code python"><span class="kw1">import</span> statsmodels.<span class="me1">api</span> <span class="kw1">as</span> sm
+&nbsp;
+X <span class="sy0">=</span> sm.<span class="me1">add_constant</span><span class="br0">&#40;</span>X<span class="br0">&#41;</span><span class="co1">#Ajout de la constante aux données</span>
+Regression_Lin <span class="sy0">=</span> sm.<span class="me1">OLS</span><span class="br0">&#40;</span>y<span class="sy0">,</span>X<span class="br0">&#41;</span>.<span class="me1">fit</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="co1">#Ajustement des données</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">Regression_Lin <span class="sy0">=</span> lm<span class="br0">&#40;</span>Sales<span class="sy0">~</span>.<span class="sy0">,</span> data <span class="sy0">=</span> data_original<span class="br0">&#41;</span></pre>
+
+<p>
+<div class='alert alert-warning'><strong>Attention :</strong> Une fois le modèle entraîné, il est important de vérifier les hypothèses sur les résidus qui ont une importance fondamentale afin de construire un regard critique sur le modèle. Vous pouvez consulter cette  <a href="/doku.php?id=cpp:regression_lineaire_interpret_pierre" class="wikilink1" title="cpp:regression_lineaire_interpret_pierre"> page </a> pour bien assimiler ce principe. </div>
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> Cours de Nisrine Fortin enseignante en Mathématiques à CY Tech </div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Construire son mod\u00e8le&quot;,&quot;hid&quot;:&quot;construire_son_modele&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;2236-3362&quot;} -->
+<h2 class="sectionedit3" id="decrire_son_modele">Décrire son modèle</h2>
+<div class="level2">
+
+<p>
+Pour avoir des informations sur notre modèle, de nombreux outils statistiques sont nécessaires. C&#039;est pourquoi les différentes librairies en R comme en Python nous offrent un résumé permettant de mieux les analyser.
+</p>
+
+<p>
+<em class="u">Code Python :</em>
+</p>
+<pre class="code python">Regression_Lin.<span class="me1">summary</span><span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R :</em>
+</p>
+<pre class="code python">summary<span class="br0">&#40;</span>Regression_Lin<span class="br0">&#41;</span></pre>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_lineaire_interpret_daniel&amp;media=cpp:formule_utilisee.jpg" class="media" title="cpp:formule_utilisee.jpg"><img src="/lib/exe/fetch.php?w=600&amp;tok=d95ff6&amp;media=cpp:formule_utilisee.jpg" class="mediacenter" alt="" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 1 :</strong> Résultat d&#039;ajustement du modèle</p><!--divalign-->
+
+<p>
+Les deux premiers blocs nous donnent des informations sur la formule utilisée et sur les résidus obtenus. Nous allons donc développer deux parties concernant la description du modèle. 
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;D\u00e9crire son mod\u00e8le&quot;,&quot;hid&quot;:&quot;decrire_son_modele&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:3,&quot;range&quot;:&quot;3363-4029&quot;} -->
+<h3 class="sectionedit4" id="les_coefficients">Les coefficients</h3>
+<div class="level3">
+
+<p>
+<strong>(1) Les estimations :</strong> Il s&#039;agit ici d&#039;une estimation des différents coefficients composant la régression linéaire. On peut ainsi estimer à la main si on le souhaite les différentes valeurs de vente grâce à la formule :
+</p>
+
+<p>
+$$Vente = 3.005 - 0.0005 \times X + 0.0457  \times  TV + 0.1885  \times  Radio - 0.0012  \times  Newspaper$$
+</p>
+
+<p>
+<strong>(2) Pr(&gt;|t|) :</strong> Permet de vérifier la pertinence de <span style="color:#ff0000;">l&#039;Intercept</span> et des <span style="color:#ff0000;">coefficients estimés</span>. En effet, plus elle sera petite pour un paramètre (et avec plusieurs étoiles), plus ce dernier sera important et significatif. Il s&#039;agit du test de Student avec les hypothèses :
+</p>
+<ul>
+<li class="level1"><div class="li"> $H_0$ le coefficient est nul</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> $H_1$ le coefficient est non nul</div>
+</li>
+</ul>
+
+<p>
+Si la p-valeur est inférieure à un risque $\alpha$ alors on rejette $H_0$.  Ici on remarque que les variables X et Newspaper peuvent être mises de côté  avec un risque de 5% car elles ne sont pas utiles à la construction du modèle.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les coefficients&quot;,&quot;hid&quot;:&quot;les_coefficients&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:4,&quot;range&quot;:&quot;4030-5021&quot;} -->
+<h3 class="sectionedit5" id="les_performances_du_modele">Les performances du modèle</h3>
+<div class="level3">
+
+<p>
+<strong>(3) Degrés de liberté :</strong> On peut utiliser le degré de liberté (DDL) pour retrouver le nombre d&#039;observations utilisées à la construction du modèle. Pour cela on reprend la définition :
+</p>
+
+<p>
+$$DDL = n - p - 1$$
+</p>
+
+<p>
+On obtient donc dans notre cas $195 + 4 + 1 = 200$ observations.
+</p>
+
+<p>
+<strong>(4) $R^2$ :</strong> Cette valeur permet de dire que 89% de la variance du prix de vente (<strong>Sales</strong>) est expliqué par les variables explicatives. <span style='color:#ed1c24; '><strong>Ce pourcentage ne permet pas de juger à lui seul de la qualité d&#039;ajustement du modèle !</strong></span> Les données d&#039;anscombe nous permettent de mettre en avant ce point.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_lineaire_interpret_daniel&amp;media=cpp:r_2_limites.png" class="media" title="cpp:r_2_limites.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=090760&amp;media=cpp:r_2_limites.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+<p>
+On comprend qu&#039;il est important de prendre cette statistique avec des pincettes et dans le doute de l&#039;ignorer. Il est plus intéressant de se baser sur le MSE pour comparer les modèles et les performances.
+</p>
+
+<p>
+<strong>(5) p-value :</strong> On cherche à savoir s’il y a une relation linéaire entre les différentes variables. Pour cela on va faire un test de Fischer avec les 2 hypothèses suivantes :
+</p>
+<ul>
+<li class="level1"><div class="li"> $H_0$ tous les coefficients sont égaux à 0 (pas de relation)</div>
+</li>
+<li class="level1"><div class="li"> $H_1$ tous les coefficients ne sont pas égaux à 0</div>
+</li>
+</ul>
+
+<p>
+Avec un risque de 5% on obtient une p-value très petite (2.2e-16 &lt; 0.05) qui confirme que le modèle construit confirme une relation pertinente entre le prix de vente et les variables explicatives.
+</p>
+
+<p>
+<div class='alert alert-info'><strong>Information :</strong> On retrouvera en Python les mêmes indicateurs même s’ils sont disposés assez différemment.</div>
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://delladata.fr/regression-lineaire-simple-le-r%C2%B2-info-ou-intox/" class="urlextern" title="https://delladata.fr/regression-lineaire-simple-le-r%C2%B2-info-ou-intox/" rel="nofollow">delladate.fr</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les performances du mod\u00e8le&quot;,&quot;hid&quot;:&quot;les_performances_du_modele&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:5,&quot;range&quot;:&quot;5022-6667&quot;} -->
+<h2 class="sectionedit6" id="le_probleme_des_variables_correlees">Le problème des variables corrélées</h2>
+<div class="level2">
+
+<p>
+Maintenant que nous avons pu critiquer notre régression nous allons essayer de l&#039;améliorer. Pour cela, on peut voir comment simplifier le modèle et le rendre plus efficace. Mais tout d&#039;abord qu&#039;est-ce que la corrélation ?
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_lineaire_interpret_daniel&amp;media=cpp:bateau_correlation.png" class="media" title="cpp:bateau_correlation.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=1077fa&amp;media=cpp:bateau_correlation.png" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+Nous avons 4 bateaux A,B,C et D. Les bateaux C et D ne sont pas corrélés, ils n&#039;ont rien à voir, l&#039;un a un gouvernail et l&#039;autre a des bouées. On peut dire par contre que les bateaux A et B sont corrélés car ils sont similaires à un coefficient multiplicatif prés. En effet si le bateau A grandit il va falloir que le bateau B aussi grandisse pour rester à l&#039;équilibre.
+</p>
+
+<p>
+<span style='color:#ed1c24; '>Pourquoi doit-on supprimer les variables corrélées ?</span>
+</p>
+
+<p>
+Si une variable est corrélée avec une autre, elle est inutile dans la construction du modèle puisqu&#039;elle le complexifie.
+</p>
+
+<p>
+<div class='alert alert-danger'><strong>Danger :</strong> Des variables colinéaires sont corrélées mais des variables corrélées ne sont pas forcément colinéaires. La colinéarité n&#039;est qu&#039;en quelque sorte la forme linéaire de la corrélation.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le probl\u00e8me des variables corr\u00e9l\u00e9es&quot;,&quot;hid&quot;:&quot;le_probleme_des_variables_correlees&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:6,&quot;range&quot;:&quot;6668-7798&quot;} -->
+<h3 class="sectionedit7" id="le_vif">Le VIF</h3>
+<div class="level3">
+
+<p>
+Le VIF (Variance Inflation Factor) est un des indicateurs les plus utilisées pour détecter des variables colinéaires. On utilise la formule :
+</p>
+
+<p>
+$$v_j = \frac{1}{1-R^2_j}$$
+</p>
+
+<p>
+Le coefficient $R^2_j$ correspond au $R^2$ sur $p-1$ variables. Une autre façon plus pratique de calculer le VIF est de calculer la matrice de corrélation et de l&#039;inverser. On obtiendra les coefficients VIF sur la diagonale. 
+</p>
+
+<p>
+<em class="u">Code Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> patsy <span class="kw1">import</span> dmatrices
+<span class="kw1">from</span> statsmodels.<span class="me1">stats</span>.<span class="me1">outliers_influence</span> <span class="kw1">import</span> variance_inflation_factor
+&nbsp;
+<span class="co1">#Permet de bien séparer X et les étiquettes</span>
+y<span class="sy0">,</span> X <span class="sy0">=</span> dmatrices<span class="br0">&#40;</span><span class="st0">'Sales ~ TV+Radio+Newspaper'</span><span class="sy0">,</span> data<span class="sy0">=</span>data_original<span class="sy0">,</span> return_type<span class="sy0">=</span><span class="st0">'dataframe'</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Calcule du VIF</span>
+vif <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+vif<span class="br0">&#91;</span><span class="st0">'VIF'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="br0">&#91;</span>variance_inflation_factor<span class="br0">&#40;</span>X.<span class="me1">values</span><span class="sy0">,</span> i<span class="br0">&#41;</span> <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>X.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+vif<span class="br0">&#91;</span><span class="st0">'variable'</span><span class="br0">&#93;</span> <span class="sy0">=</span> X.<span class="me1">columns</span></pre>
+
+<p>
+<em class="u">Code R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span><span class="st0">&quot;car&quot;</span><span class="br0">&#41;</span>
+vif<span class="br0">&#40;</span>Regression_Lin<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+On obtient alors le tableau suivant :
+</p>
+<div class="table sectionedit8"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  VIF  </th><th class="col1 centeralign">  Variables  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  6.85  </td><td class="col1 centeralign">  Intercept  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  1.00  </td><td class="col1 centeralign">  TV  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  1.14  </td><td class="col1 centeralign">  Radio  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">  1.14  </td><td class="col1 centeralign">  Newspaper  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:8,&quot;range&quot;:&quot;8778-8890&quot;} -->
+<p>
+Une des particularités de ce test et peut-être une de ses faiblesses et le manque de règle de décision claire. Certains prennent comme seuil 4 mais d&#039;autre 6 ou 10. L&#039;idée est de repérer une variable ou un groupe avec un VIF particulièrement élevé. À partir de là on peut reconstruire le modèle en enlevant les variables détectées.
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://larmarange.github.io/analyse-R/multicolinearite.html" class="urlextern" title="http://larmarange.github.io/analyse-R/multicolinearite.html" rel="nofollow">http://larmarange.github.io/analyse-R/multicolinearite.html</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://eric.univ-lyon2.fr/~ricco/cours/slides/Reg_Multiple_Colinearite_Selection_Variables.pdf" class="urlextern" title="https://eric.univ-lyon2.fr/~ricco/cours/slides/Reg_Multiple_Colinearite_Selection_Variables.pdf" rel="nofollow">https://eric.univ-lyon2.fr/~ricco/cours/slides/Reg_Multiple_Colinearite_Selection_Variables.pdf</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.statology.org/how-to-calculate-vif-in-python/" class="urlextern" title="https://www.statology.org/how-to-calculate-vif-in-python/" rel="nofollow">https://www.statology.org/how-to-calculate-vif-in-python/</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le VIF&quot;,&quot;hid&quot;:&quot;le_vif&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:7,&quot;range&quot;:&quot;7799-9491&quot;} -->
+<h3 class="sectionedit9" id="regle_de_klein_et_regle_des_signes">Règle de Klein et règle des signes</h3>
+<div class="level3">
+
+<p>
+Ces deux règles sont basées entièrement sur la matrice de corrélation. Elles permettent aussi de détecter les variables corrélées et par conséquent confirmer la première analyse faite avec le VIF. On prend la matrice de corrélation et les coefficients correspondant aux variables TV, Radio, Newspaper. 
+<br/>
+
+<br/>
+
+$$
+CorrMatrice = \begin{pmatrix} 1.00 &amp; 0.05 &amp; 0.05 &amp; 0.78 \\ 0.05 &amp; 1.00 &amp; 0.35 &amp; 0.58 \\ 0.06 &amp; 0.35 &amp; 1.00 &amp; 0.23 \\ 0.78 &amp; 0.58 &amp; 0.23 &amp; 1.00 \end{pmatrix}
+
+Coeff = \begin{pmatrix}
+0.0457 \\
+0.1883 \\
+-0.0012
+\end{pmatrix}
+$$
+</p>
+
+<p>
+<strong>Règle du signe</strong>
+</p>
+
+<p>
+$$sgn(r_{Y,X_j}) = sgn(â_j)$$
+</p>
+
+<p>
+Dans notre cas précis ici on a bien le signe de 0.78 égale à celui de 0.58 comme celui de 0.58 et 0.18 mais le signe de 0.23 est différent de celui de -0.0012. On peut avoir un doute sur la variable Newspaper. 
+</p>
+
+<p>
+<strong>Règle de Klein</strong>
+</p>
+
+<p>
+$$r^2_{j_1, j_2} &gt; R^2$$
+</p>
+
+<p>
+Dans notre exemple, on a $R^2 = 0.89$ donc on a aucune variable corrélée qui ressort clairement. Ce qui confirme notre première conclusion obtenue avec le VIF.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;R\u00e8gle de Klein et r\u00e8gle des signes&quot;,&quot;hid&quot;:&quot;regle_de_klein_et_regle_des_signes&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:9,&quot;range&quot;:&quot;9492-10567&quot;} -->
+<h2 class="sectionedit10" id="l_entrainement_pas_a_pas">L&#039;entrainement pas à pas</h2>
+<div class="level2">
+
+<p>
+Il est aussi possible de faire une sélection des variables en utilisant le critère AIC ou BIC. Ce sont des valeurs à minimiser pour avoir le meilleur modèle qui permettent une comparaison avec d&#039;autres régressions. 
+</p>
+
+<p>
+<strong>Théorie :</strong>
+</p>
+
+<p>
+Pour calculer les critères AIC et BIC on a besoin de calculer les SCR avec la formule suivante où ŷ représente les prédictions du modèle de régression linéaire :
+</p>
+
+<p>
+$$SCR = \sum^n_{i=1} (ŷ_i - y)$$
+</p>
+
+<p>
+On obtient ensuite le critère AIC et BIC de la manière suivante :
+</p>
+
+<p>
+$$AIC = n * ln(\frac{SCR}{n}) + 2 * (p +1)$$
+</p>
+
+<p>
+$$BIC = n * ln(\frac{SCR}{n}) + ln(n) * (p +1)$$
+</p>
+
+<p>
+On sait que le BIC a tendance à plus pénaliser les régressions utilisant beaucoup de variables. Maintenant que l&#039;on sait calculer ces critères on peut appliquer l&#039;algorithme de sélection de variables.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_lineaire_interpret_daniel&amp;media=cpp:algo_pas.png" class="media" title="cpp:algo_pas.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=dcb4ac&amp;media=cpp:algo_pas.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+
+<p>
+Il permet ainsi d&#039;améliorer le modèle pas à pas, variable par variables jusqu&#039;à ce que la suppression de variable n&#039;améliore plus le modèle.
+</p>
+
+<p>
+<em class="u">Code Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">feature_selection</span> <span class="kw1">import</span> RFE
+<span class="kw1">from</span> sklearn.<span class="me1">linear_model</span> <span class="kw1">import</span> LinearRegression
+&nbsp;
+reg_lin <span class="sy0">=</span> LinearRegression<span class="br0">&#40;</span><span class="br0">&#41;</span>
+modele_step <span class="sy0">=</span> RFE<span class="br0">&#40;</span>reg_lin<span class="sy0">,</span>n_features_to_select<span class="sy0">=</span><span class="nu0">2</span><span class="sy0">,</span> step<span class="sy0">=</span><span class="nu0">1</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Permet d'entraîner le modèle</span>
+modele_step.<span class="me1">fit</span><span class="br0">&#40;</span>X<span class="sy0">,</span>y<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Permet de savoir quelles sont les variables qui ont été gardé</span>
+modele_step.<span class="me1">support_</span></pre>
+
+<p>
+<em class="u">Code R :</em>
+</p>
+<pre class="code python">step<span class="br0">&#40;</span>lm<span class="br0">&#40;</span>Sales<span class="sy0">~</span>.<span class="sy0">,</span> data <span class="sy0">=</span> data_original<span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+<p>
+On arrive ainsi à avoir une régression linéaire qui c&#039;est construite en écartant les variables de moindre importance. Cette sélection peut être accompagnée d&#039;une ACP et des tests de Student qui une fois encore pourront confirmer ou infirmer ce choix.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;L&#039;entrainement pas \u00e0 pas&quot;,&quot;hid&quot;:&quot;l_entrainement_pas_a_pas&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:10,&quot;range&quot;:&quot;10568-&quot;} -->

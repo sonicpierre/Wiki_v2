@@ -1,0 +1,123 @@
+
+<h2 class="sectionedit1" id="les_regles_d_association">Les règles d&#039;association</h2>
+<div class="level2">
+
+<p>
+Nous allons travailler avec un DataSet qui recense plusieurs tickets de caisse par pays. Nous avons un peu pré-traité le dataset pour qu&#039;il soit directement utilisable pour la construction de règle. Vous trouverez le dataset utilisé <a href="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Exploration%20des%20donnees/Data%20ticket%20caisse" class="urlextern" title="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Exploration%20des%20donnees/Data%20ticket%20caisse" rel="nofollow"> ici</a> ainsi que le code qui a permi de le pré-traité.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ales_regles_d_association&amp;media=cpp:association_rules.png" class="media" title="cpp:association_rules.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=ed8d8a&amp;media=cpp:association_rules.png" class="mediacenter" title="Règles d&#039;association" alt="Règles d&#039;association" width="800" /></a>
+</p>
+
+<p>
+On va voir comment faire des règles d&#039;association entre les éléments de tickets de caisse. Le but étant de faire ressortir les combinaisons de produits les plus courants, afin de proposer de possibles achats associés.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les r\u00e8gles d&#039;association&quot;,&quot;hid&quot;:&quot;les_regles_d_association&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;2-741&quot;} -->
+<h3 class="sectionedit2" id="forme_des_donnees_et_specificite_python">Forme des données et spécificité Python</h3>
+<div class="level3">
+
+<p>
+Il faut avant tout que les données aient une forme particulière, par exemple que chacun des produits et des tickets de caisse soient reliés par un même ID. 
+</p>
+<div class="table sectionedit3"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0 leftalign">              </td><th class="col1 leftalign"> ID Ticket    </th><th class="col2 leftalign"> Produit    </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 leftalign"> 1      </th><td class="col1 leftalign"> 1            </td><td class="col2 leftalign"> Pêche            </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 leftalign"> 2      </th><td class="col1 leftalign"> 1            </td><td class="col2 leftalign"> Prune            </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 leftalign"> 3      </th><td class="col1 leftalign"> 2            </td><td class="col2 leftalign"> Abricot          </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:3,&quot;range&quot;:&quot;956-1136&quot;} -->
+<p>
+Ensuite il est nécessaire de rendre le dataset binaire. Il y aura des 0 quand le produit n&#039;est pas présent dans le ticket et 1 s’il est présent.
+</p>
+<pre class="code python"><span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+dodo <span class="sy0">=</span> pd.<span class="me1">read_csv</span><span class="br0">&#40;</span><span class="br0">&#40;</span><span class="st0">&quot;produit.csv&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="co1">#tableau croisé 0/1</span>
+DataFrame <span class="sy0">=</span> pd.<span class="me1">crosstab</span><span class="br0">&#40;</span>dodo.<span class="me1">NumTicket</span><span class="sy0">,</span>dodo.<span class="me1">Produit</span><span class="br0">&#41;</span>
+DataFrame.<span class="me1">columns</span> <span class="co1">#Permet d'avoir les colonnes</span></pre>
+
+<p>
+On peut appliquer l&#039;algorithme qui calcule à chaque fois le support et élimine les combinaisons dont le support est trop bas.
+</p>
+<pre class="code python"><span class="co1">#importation de la fonction apriori</span>
+<span class="kw1">from</span> mlxtend.<span class="me1">frequent_patterns</span> <span class="kw1">import</span> apriori
+&nbsp;
+<span class="co1">#itemsets frequents</span>
+freq_itemsets <span class="sy0">=</span> apriori<span class="br0">&#40;</span>DataFrame<span class="sy0">,</span>min_support<span class="sy0">=</span><span class="nu0">0.025</span><span class="sy0">,</span>max_len<span class="sy0">=</span><span class="nu0">3</span><span class="sy0">,</span> use_colnames<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span>
+freq_itemsets.<span class="me1">iloc</span><span class="br0">&#91;</span><span class="nu0">60</span>:<span class="nu0">80</span><span class="sy0">,</span> :<span class="br0">&#93;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ales_regles_d_association&amp;media=cpp:resultatassociation.png" class="media" title="cpp:resultatassociation.png"><img src="/lib/exe/fetch.php?w=250&amp;tok=f1cd95&amp;media=cpp:resultatassociation.png" class="mediacenter" alt="" width="250" /></a>
+</p>
+
+<p>
+<strong>Remarque :</strong>
+</p>
+
+<p>
+Parfois, on obtient trop de règles et elles ne sont pas exploitables c&#039;est pourquoi il peut être intéressant de faire ressortir certaines règles. Pour cela, il existe une librairie particulière utilisée en Python :
+</p>
+<pre class="code python"><span class="co1">#fonction de calcul des règles</span>
+<span class="kw1">from</span> mlxtend.<span class="me1">frequent_patterns</span> <span class="kw1">import</span> association_rules
+&nbsp;
+<span class="co1">#génération des règles à partir des itemsets fréquents</span>
+regles <span class="sy0">=</span> association_rules<span class="br0">&#40;</span>freq_itemsets<span class="sy0">,</span>metric<span class="sy0">=</span><span class="st0">&quot;confidence&quot;</span><span class="sy0">,</span>min_threshold<span class="sy0">=</span><span class="nu0">0.75</span><span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Forme des donn\u00e9es et sp\u00e9cificit\u00e9 Python&quot;,&quot;hid&quot;:&quot;forme_des_donnees_et_specificite_python&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;742-2404&quot;} -->
+<h3 class="sectionedit4" id="forme_des_donnees_et_specificite_en_r">Forme des données et spécificité en R</h3>
+<div class="level3">
+
+<p>
+En R, il est possible de trouver les règles sur le dataFrame brut. Commençon par charger les données et les librairies qui vont nous permettre de le faire.
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>arules<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>arulesViz<span class="br0">&#41;</span>
+data <span class="sy0">=</span> read.<span class="kw3">csv</span><span class="br0">&#40;</span><span class="st0">&quot;produitPourR.csv&quot;</span><span class="br0">&#41;</span>
+data <span class="sy0">=</span> data<span class="br0">&#91;</span><span class="sy0">,</span>-<span class="nu0">1</span><span class="br0">&#93;</span></pre>
+
+<p>
+On peut ensuite lancer l&#039;algorithme et contrairement à Python visualiser les règles construites.
+</p>
+<pre class="code python">rules <span class="sy0">=</span> apriori<span class="br0">&#40;</span>data<span class="sy0">,</span> parameter <span class="sy0">=</span> <span class="kw2">list</span><span class="br0">&#40;</span>support<span class="sy0">=</span><span class="nu0">0.01</span><span class="sy0">,</span> confidence<span class="sy0">=</span><span class="nu0">0.5</span><span class="sy0">,</span> minlen<span class="sy0">=</span><span class="nu0">2</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="kw3">inspect</span><span class="br0">&#40;</span>sort<span class="br0">&#40;</span>rules<span class="sy0">,</span>by<span class="sy0">=</span><span class="st0">&quot;confidence&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+plot <span class="br0">&#40;</span>rules<span class="br0">&#91;</span><span class="nu0">1</span>:<span class="nu0">19</span><span class="br0">&#93;</span><span class="sy0">,</span>method<span class="sy0">=</span><span class="st0">&quot;graph&quot;</span><span class="sy0">,</span>shading<span class="sy0">=</span><span class="st0">&quot;confidence&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ales_regles_d_association&amp;media=cpp:association.png.png" class="media" title="cpp:association.png.png"><img src="/lib/exe/fetch.php?w=700&amp;tok=d83ec5&amp;media=cpp:association.png.png" class="mediacenter" alt="" width="700" /></a>
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Python_Association_Rules.pdf" class="urlextern" title="http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Python_Association_Rules.pdf" rel="nofollow">http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Python_Association_Rules.pdf</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://eric.univ-lyon2.fr/~ricco/cours/slides/regles_association.pdf" class="urlextern" title="http://eric.univ-lyon2.fr/~ricco/cours/slides/regles_association.pdf" rel="nofollow">http://eric.univ-lyon2.fr/~ricco/cours/slides/regles_association.pdf</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://freres.peyronnet.eu/trouver-la-bonne-association-a-laide-du-data-miningmachine-learning/" class="urlextern" title="https://freres.peyronnet.eu/trouver-la-bonne-association-a-laide-du-data-miningmachine-learning/" rel="nofollow">https://freres.peyronnet.eu/trouver-la-bonne-association-a-laide-du-data-miningmachine-learning/</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Forme des donn\u00e9es et sp\u00e9cificit\u00e9 en R&quot;,&quot;hid&quot;:&quot;forme_des_donnees_et_specificite_en_r&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:4,&quot;range&quot;:&quot;2405-&quot;} -->

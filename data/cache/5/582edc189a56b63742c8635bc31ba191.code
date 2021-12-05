@@ -1,0 +1,4 @@
+DOWNLOAD_ROOT <span class="sy0">=</span> <span class="st0">&quot;https://raw.githubusercontent.com/ageron/handson-ml/master/&quot;</span>
+HOUSING_PATH <span class="sy0">=</span> <span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">join</span><span class="br0">&#40;</span><span class="st0">&quot;datasets&quot;</span><span class="sy0">,</span> <span class="st0">&quot;housing&quot;</span><span class="br0">&#41;</span> 
+<span class="co1">#Correspond à : 'datasets/housing'</span>
+HOUSING_URL <span class="sy0">=</span> DOWNLOAD_ROOT + <span class="st0">&quot;datasets/housing/housing.tgz&quot;</span>

@@ -1,0 +1,7 @@
+library<span class="br0">&#40;</span>e1071<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>randomForest<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>glmnet<span class="br0">&#41;</span>
+&nbsp;
+svm <span class="sy0">=</span> svm<span class="br0">&#40;</span>V61<span class="sy0">~</span>.<span class="sy0">,</span> data <span class="sy0">=</span> data<span class="sy0">,</span> kernel <span class="sy0">=</span> <span class="st0">&quot;radial&quot;</span><span class="br0">&#41;</span>
+foret_alea <span class="sy0">=</span> randomForest<span class="br0">&#40;</span>V61<span class="sy0">~</span>.<span class="sy0">,</span> data <span class="sy0">=</span> data<span class="br0">&#41;</span>
+reg_log <span class="sy0">=</span> glm<span class="br0">&#40;</span>V61<span class="sy0">~</span>.<span class="sy0">,</span> family <span class="sy0">=</span> binomial<span class="br0">&#40;</span>logit<span class="br0">&#41;</span><span class="sy0">,</span> data <span class="sy0">=</span> data<span class="sy0">,</span> control <span class="sy0">=</span> <span class="kw2">list</span><span class="br0">&#40;</span>maxit <span class="sy0">=</span> <span class="nu0">50</span><span class="br0">&#41;</span><span class="br0">&#41;</span>

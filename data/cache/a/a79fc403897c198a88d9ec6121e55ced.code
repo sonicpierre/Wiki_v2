@@ -1,0 +1,6 @@
+<span class="kw1">from</span> sklearn.<span class="me1">feature_selection</span> <span class="kw1">import</span> RFECV
+<span class="kw1">from</span> sklearn.<span class="me1">ensemble</span> <span class="kw1">import</span> RandomForestRegressor
+&nbsp;
+selector <span class="sy0">=</span> RFECV<span class="br0">&#40;</span>RandomForestRegressor<span class="br0">&#40;</span>random_state<span class="sy0">=</span><span class="nu0">0</span><span class="br0">&#41;</span><span class="sy0">,</span> step <span class="sy0">=</span> <span class="nu0">2</span><span class="sy0">,</span> min_features_to_select <span class="sy0">=</span> <span class="nu0">5</span><span class="sy0">,</span> cv<span class="sy0">=</span><span class="nu0">5</span><span class="br0">&#41;</span><span class="co1">#On définit l'estimateur à tester, le nombre de variables à supprimer à chaque</span>
+<span class="co1">#itérations (step), le nombre minimal de variables à garder à la fin et enfin le nombre de validation croisées à effectuer.</span>
+selector.<span class="me1">fit</span><span class="br0">&#40;</span>X<span class="sy0">,</span> y<span class="br0">&#41;</span><span class="co1">#Entraienement de l'estimateur</span>

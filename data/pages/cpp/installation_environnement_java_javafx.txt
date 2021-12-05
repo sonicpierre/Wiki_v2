@@ -1,0 +1,199 @@
+{{ :cpp:java.jpg?400 |}}
+
+====== Introduction sur l'environnement de développement de Java ======
+Java est un langage qui fonctionne dans une **<fc #cd5c5c>machine virtuelle</fc>**, comme le [[https://fr.wikipedia.org/wiki/C_sharp|C#]].
+
+{{ :cpp:java_schema.png?800 | Fonctionnement de l'environnement Java}}
+
+Le  **<fc #cd5c5c>JDK (Java Development Kit)</fc>** que l'on peut compiler des programmes compatibles avec la  **<fc #cd5c5c>JVM (Java Virtual Machine)</fc>**. 
+Le choix du JDK définit les optimisations qui vont être faites sur le code ainsi que les [[https://en.wikipedia.org/wiki/List_of_JVM_languages|langages sources]] supportés.
+
+La  JVM  est l'environnement dans lequel s'exécute le [[https://dzone.com/articles/introduction-to-java-bytecode|bytecode]] (code compilé). Il en existe plusieurs telles que :
+  * [[http://openjdk.java.net/groups/hotspot/docs/RuntimeOverview.html|HotSpot VM]] : C'est la JVM de référence dans l'écosytème Java.  <fc #ff0000>C'est elle qui sera utilisé ici.</fc>
+   * [[https://www.graalvm.org/docs/why-graal/|GraalVM]] : La majorité du programme fonctionnera en dehors de la  VM (Machine Virtuelle), le programme sera mieux optimisé. On pourra utiliser des langages supplémentaires (C++, Javascript, etc.).
+   * [[https://visualvm.github.io/index.html|VisualVM]] : Permet la visualisation de l'utilisation des ressources à l'intérieur de la VM.
+
+Une VM est créée à chaque fois qu'un programme en Java est lancé. Dans certains cas précis certaines ressources peuvent être partagées, mais ça ne seras pas le cas ici.
+
+Le **<fc #cd5c5c>JRE (Java Runtime Environment)</fc>** permet de  [[https://docs.oracle.com/javase/7/docs/technotes/tools/windows/java.html|configurer]] les caractéristiques de la VM telles que la mémoire vive maximum que la VM pourra utiliser.
+
+====== Installation Java ======
+Il faut télécharger l'archive d'un JDK. On va travailler ici avec **<fc #cd5c5c>OpenJDK</fc>** car il suis au plus proche la version de Java développée par Oracle tout en restant open source (tout le monde peut regarder son code).
+
+Rendez-vous directement sur le [[https://jdk.java.net/14/|site officiel]] et téléchargez la version Linux/x64 (au moment d'écrire cette page la version la plus récente est la  14.0.2 ([[https://download.java.net/java/GA/jdk14.0.2/205943a0976c4ed48cb16f1043c5c647/12/GPL/openjdk-14.0.2_linux-x64_bin.tar.gz|linux]], [[https://download.java.net/java/GA/jdk14.0.2/205943a0976c4ed48cb16f1043c5c647/12/GPL/openjdk-14.0.2_windows-x64_bin.zip|windows]]).
+
+Les commandes qui vont suivre vont donc installer cette version.
+
+Déplacez le contenu de l'archive pour le mettre dans :
+  * Linux : **<fc #cd5c5c>/opt/</fc>**
+  * Windows : **<fc #cd5c5c>C:\Program Files\Java</fc>**
+
+Pour Linux la commande suivante fera le travail pour vous :
+<code bash>
+  tar xvf openjdk-14.0.2_linux-x64_bin.tar.gz # Décompression de l'archive
+  mv ./jdk-14.0.2 /opt/ # Mise du JDK dans le dossier système recommandé
+</code>
+Et voila son équivalent Windows :
+<code powershell>
+  mkdir 'C:\Program Files\Java'
+  Expand-Archive -Path '.\openjdk-14.0.2_windows-x64_bin.zip' -DestinationPath 'C:\Program Files\Java\'
+</code>
+
+Il ne reste plus qu'à indiquer où Java est installé au système. Pour celà il faut modifier deux variables d'environnement.
+=== Pour Linux ===
+Si votre shell est un **<fc #cd5c5c>bash</fc>**, on va utiliser le dossier **/etc/profil.d**.
+Si vous n'avez pas compris cette dernière phrase, vous utilisez certainement un **<fc #cd5c5c>Ubuntu</fc>** ou un **<fc #cd5c5c>Debian</fc>**. C'est donc la méthode que vous devez suivre.
+
+Il faut utiliser la commande suivante avec les droits super utilisateur (sudo avec ubuntu).
+<code bash>
+  tee /etc/profile.d/jdk14.sh <<EOF
+  export JAVA_HOME=/opt/jdk-14.0.2
+  export PATH=\$PATH:\$JAVA_HOME/bin
+  EOF
+</code>
+Le fichier créé (jdk14.sh) sera lancé automatiquement au démarrage, cependant pour éviter un redémarrage on va l'utiliser manuellement une première fois.
+
+<code bash>
+  source /etc/profile.d/jdk14.sh
+</code>
+
+=== Pour Windows 10 ===
+Il suffit de saisir **<fc #cd5c5c>"Modifier les variables d’environnement système"</fc>** dans la barre de recherche.
+Dans la fenêtre qui apparaît utiliser le bouton **<fc #cd5c5c>"Variables d’environnement..."</fc>** :
+{{ :cpp:java_install_win-1.png?300 | Fenêtre de propriétés système de Windows}}
+
+Sur la fenêtre qui s'ouvre on cherche la variable **<fc #cd5c5c>"Path"</fc>** dans le tableau du bas. Puis on clique sur modifier. {{ :cpp:java_install_win-2.png?500 | Fenêtre de variables d'environnement de Windows}}.
+
+On ajoute ensuite l'élément **<fc #cd5c5c>"C:\Program Files\Java\jdk-14.0.2\bin"</fc>**.
+On peut valider la modification et fermer cette fenêtre.
+
+Avant de quitte le second menu, on va ajouter une nouvelle variable d'environnement **<fc #cd5c5c>JAVA_HOME</fc>** qui contiendra :  **<fc #cd5c5c>"C:\Program Files\Java\jdk-14.0.2"</fc>**.
+===== Installation IDE =====
+L'**<fc #cd5c5c>IDE (Integrated Development Environment)</fc>** est un programme permettant de regrouper la majorité des besoins d'un développeur au sein d'une unique interface :
+  * un éditeur de texte
+  * un compilateur
+  * une gestion simplifié des bibliothèques
+  * un débogueur
+==== Choix de l'IDE ====
+Il y a 3 IDEs principaux utilisés pour le développement en Java :
+  * **<fc #cd5c5c>Eclipse</fc>** : Il est assez vieux et est donc présents dans beaucoup d'entreprises, malgré de petites instabilités.
+  * **<fc #cd5c5c>Netbeans</fc>** : Très moderne, il se veut très simpliste en offrant une interface épurée. Il est souvent coûteux en performance.
+  * **<fc #cd5c5c>IntelliJ</fc>** : Très en vogue dans les entreprises, il est apprécié des développeurs car il est très complet et stable avec une interface moderne. Cependant la version "complète" est payante.
+
+On va ici utiliser **<fc #cd5c5c>Eclipse</fc>**, comme c'est l'IDE que vous aurez le plus de chances de croiser lors de vos études ou de votre vie professionnelle.
+
+== Source ==
+https://www.easypartner.fr/blog/les-meilleurs-ide-pour-developpeur-java/
+
+==== Installation d'Eclispe ====
+On va utiliser **<fc #cd5c5c>Eclipse</fc>**.
+Le télécharger depuis le [[https://www.eclipse.org/downloads/|site officiel]].
+Décompressez l'archive, et lancer le programme eclipse-inst présent à l'intérieur.
+
+Sélectionnez **<fc #cd5c5c>Eclipse IDE for java Developers</fc>**. Vous pouvez changer le dossier d'installation sur la page suivante. Il ne reste qu'à **lancer l'installation** et **accepter les licences d'utilisation**.
+Ignorez le message indiquant que l'installation est plus longue que normalement (c'est faux).
+
+===== Configuration de l'espace de travail =====
+Au lancement d'eclipse, vous devez choisir le dossier qui contiendra vos projets : le **<fc #cd5c5c>workspace</fc>**.
+Une fois ceci fait, l'IDE s'ouvre avec une page d’accueil.
+On peut alors fermer l'onglet, sans oublier de cocher la case pour ne plus que cette page s'ouvre au lancement.
+
+{{ :cpp:installationjava_part1.webm?800x450  |}}
+Dans le bandeau de gauche, créer un nouveau projet java.
+Sélectionner le JRE 14.
+Nommez le projet : Game (si vous ne le faite pas, il faudra penser à changer le nom du module)
+Faire suivant.
+Dans l'onglet Modules, faire add System Module... et sélectionner **java.base**.
+
+{{ :cpp:installationjava_part2.webm?800x450  |}}
+===== Vérifier l'installation de java =====
+On peut désormais créer un package, en faisant clic droit sur le projet. 
+On va l'appeller **fr.tuto**.
+Dans ce package on va créer une nouvelle classe : **Main**.
+On va y ajouter le code d'une fonction main, soit manuellement soit dans la fenêtre de création de classe. 
+<code java>
+public static void main(String[] args) {
+  System.out.println("Hello World");
+}
+</code>
+
+Lancer le programme avec l'icône de flèche blanche dans un rond vert (aka Run Main) en haut de l'interface de l'IDE.
+
+=== Résultat ===
+Dans la console intégrée à l'IDE vous devriez voir apparaître "Hello World".
+{{ :cpp:installationjava_part3.webm?800x450  |}}
+
+====== Ajout de JavaFX ======
+
+JavaFX est une bibliothèque graphique **récente** dans l'écosystème Java. Elle a pour objectif de remplacer **Swing** qui est déprécié depuis quelques versions. Cette bibliothèque n'est pas idéal pour faire du rendu graphique, mais elle permet tout de même de faire du dessin, en plus elle nous fournit de quoi faire des **interfaces** facilement.
+===== Installation JavaFx =====
+Télécharger la version 14 de java fx pour linux depuis : https://gluonhq.com/products/javafx/
+Décompressez l'archive.
+
+Dans eclipse, faire clic droit sur le projet, puis Properties, Java Build Path. Dans la partie de droite sélectionnez Libraries puis Modulepath.
+
+Avec le bouton "Add External JARs..." à droite, ajoutez les .jar que vous venez de dézipper. Tous ne seront pas obligatoires pour ce tutoriel.
+
+{{ :cpp:installationjava_part4.webm?800x450  |}}
+Maintenant il reste à permettre à votre projet d'utiliser les bons modules (c'est une spécificité de java à partir de java 9).
+
+Pour cela : clic droit sur le projet, "Run As" > "Run Configuration".
+
+Dans l'onglet Arguments, indiquez dans les VM Arguments :
+Il faudra modifier la première ligne pour correspondre avec l'endroit où vous avez mis les fichiers
+<code>
+--module-path /opt/javafx-sdk-14.0.1/lib
+--add-modules java.prefs,java.datatransfer,java.desktop,jdk.unsupported,java.xml,javafx.base,javafx.graphics,javafx.controls
+--add-exports GameModule/fr.game=javafx.graphics
+</code>
+
+{{ :cpp:installationjava_part5.webm?800x450  |}}
+==== Vérification de l'installation ====
+Remplacez tous le code du fichier Main.java.
+On expliquera son contenu au début du cours sur le développement d'un jeu en Java.
+<code java>
+package fr.tuto;
+
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+
+public class Main extends Application {
+    public static void main(String[] args) {
+        launch(args);
+    }
+    
+    @Override
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle("Hello World!");
+        Button btn = new Button();
+        btn.setText("Say 'Hello World'");
+        btn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Hello World!");
+            }
+        });
+        StackPane root = new StackPane();
+        root.getChildren().add(btn);
+        primaryStage.setScene(new Scene(root, 300, 250));
+        primaryStage.show();
+    }
+}
+</code>
+
+Et dans le fichier module-info.java :
+<code java>
+module game {
+	requires javafx.base;
+	requires javafx.controls;
+	requires javafx.graphics;
+}
+</code>
+=== Résultat ===
+
+{{ :cpp:installationjava_part6.webm?800x450  |}}

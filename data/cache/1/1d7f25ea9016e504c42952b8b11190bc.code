@@ -1,0 +1,3 @@
+library<span class="br0">&#40;</span>pracma<span class="br0">&#41;</span>
+<span class="co1">#Intégration utilisant la méthode de Simpson</span>
+integral<span class="br0">&#40;</span>f<span class="sy0">,</span> -<span class="nu0">10</span><span class="sy0">,</span> <span class="nu0">10</span><span class="sy0">,</span> method<span class="sy0">=</span> <span class="st0">&quot;Simpson&quot;</span><span class="br0">&#41;</span>

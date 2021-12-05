@@ -1,0 +1,2 @@
+RecupertionDesDonnees<span class="br0">&#40;</span>CHEMIN_DE_TELECHARGEMENT_COMPLET<span class="sy0">,</span> CHEMIN_DE_DEPOT<span class="br0">&#41;</span>
+data <span class="sy0">=</span> read.<span class="kw3">csv</span><span class="br0">&#40;</span><span class="kw2">file</span>.<span class="me1">path</span><span class="br0">&#40;</span>CHEMIN_DE_DEPOT<span class="sy0">,</span> <span class="st0">&quot;housing.csv&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>

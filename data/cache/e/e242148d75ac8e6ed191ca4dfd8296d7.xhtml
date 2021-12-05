@@ -1,0 +1,350 @@
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Agradient&amp;media=cpp:ingredients.jpg" class="media" title="cpp:ingredients.jpg"><img src="/lib/exe/fetch.php?w=500&amp;tok=5791f0&amp;media=cpp:ingredients.jpg" class="mediacenter" title=" " alt=" " width="500" /></a>
+</p>
+
+<p>
+Pour produire de la bière, Il nous faut trois ingrédients différents: eau,  houblon et malt. Cependant, vous avez confondu les étiquettes de vos produits et vous ne vous souvenez plus des masses volumiques de vos ingrédients (en  $g/cm^3$). 
+</p>
+
+<p>
+Supposons qu’un volume de 2 $cm^3$ d&#039;eau, mélangé à un seau contenant  1 $cm^3$ de malt et 1 $cm^3$ de houblon donne 4 g de bière. Si les proportions des ingrédients sont changées à 1, 2, et 1 $cm^3$, alors on a 3 g de bière produite. Finalement, si les proportions sont changées à 1, 1, et 2 $cm^3$,  alors 3 g de bière sont produits. 
+</p>
+
+<p>
+<span style='color:#ed1c24; '><strong>Quels sont les volumes massiques des trois ingrédients  ?</strong></span>
+</p>
+
+<h2 class="sectionedit1" id="mathematiser_le_probleme">Mathématiser le problème</h2>
+<div class="level2">
+
+<p>
+<div class='alert alert-info'> <strong>Info :</strong> Une page existe déjà sur la méthode du gradient classique dans le cadre de la régression linéaire <a href="/doku.php?id=cpp:regression_supervisee" class="wikilink1" title="cpp:regression_supervisee"> ici</a>. </div>
+</p>
+
+<p>
+La descente de gradient conjuguée est un  algorithme itératif permet de trouver le minimum d&#039;une fonction de $R^{n}$. 
+Nous utiliserons cette méthode pour résoudre les équations de la forme :
+</p>
+
+<p>
+$$Ax= b$$
+</p>
+
+<p>
+D&#039;après l&#039;exemple précédent, on a: $A = \begin{pmatrix} 2 &amp; 1 &amp; 1\\ 1 &amp; 2 &amp; 1\\1 &amp; 1 &amp; 2\end{pmatrix}$, $b = \begin{pmatrix} 2 \\ 3\\3\end{pmatrix}$,
+et on obtient: $x^* =  \begin{pmatrix} 1.5 \\ 0.5\\0.5\end{pmatrix}$
+</p>
+
+<p>
+En effet, chercher une solution du problème reviens à chercher le minimum de la fonction utilisant le <span style='color:#b5e61d; '><strong>produit scalaire</strong></span>:
+$$f(x) = \frac{1}{2}*&lt;Ax,x&gt; -&lt;b,x&gt;$$
+</p>
+
+<p>
+Nous utilisons donc le gradient conjugué de manière détournée pour résoudre notre système linéaire.
+</p>
+
+<p>
+<span style="color:#87ceeb;"><em class="u">Matrice symétrique définie positive :</em></span>
+</p>
+
+<p>
+A est une matrice symétrique définie positive si et seulement si elle respecte:
+</p>
+<ul>
+<li class="level1"><div class="li"> $A\,^t = A$ : symétrique: on peut observer une symétrie des valeurs selon la diagonale de $A$.</div>
+</li>
+<li class="level1"><div class="li"> $x\,^tAx &gt;0  \forall x \in R^n$ non nul : définie positive: la matrice est positive et inversible.</div>
+</li>
+</ul>
+
+<p>
+<span style='color:#b5e61d; '><em class="u">Produit scalaire :</em></span>
+</p>
+
+<p>
+Soient $u$ et $v$ deux vecteurs dans $R^n$, tels que $u = (u_1, u_2, \ldots., u_n)$ et  $u = (v_1, v_2, \ldots., v_n)$. Alors le produit scalaire entre $u$ et $v$, noté $(u, v)$ ou $&lt;u | v&gt;$ vaut :$\sum_{i=1}^{n} (u_{i}*v_{i})$
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Math\u00e9matiser le probl\u00e8me&quot;,&quot;hid&quot;:&quot;mathematiser_le_probleme&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;723-2285&quot;} -->
+<h2 class="sectionedit2" id="algorithme_et_son_application">Algorithme et son application</h2>
+<div class="level2">
+
+<p>
+Cet algorithme est dit “à direction de descente”, c&#039;est à dire qu&#039;à chaque itération, on se “déplace” dans la direction opposée au <span style="color:#6495ed;">gradient</span>.
+La particularité de ce dernier est d&#039;utiliser le principe des <span style='color:#22b14c; '><strong>vecteurs conjugués</strong></span> pour descendre. 
+Soient {$p_k$} une famille de n vecteurs conjugués deux a deux (directions), alors cette famille forment une base de $R^n$. On cherche donc une <strong>combinaison linéaire</strong> ($x^* = \sum_{i=1}^{n} (\alpha_{i}*p_{i})$) de ces n vecteurs (en calculant les $\alpha_i$) tel que $Ax^*= b$.
+</p>
+
+<p>
+<span style="color:#6495ed;"><em class="u">Gradient:</em></span>
+</p>
+
+<p>
+Le Gradient d&#039;une fonction en un point $a$ est un vecteur qui évalue la variabilité de la fonction au voisinage de $a$. 
+On peut le voir comme la définition de la dérivée pour les fonctions de $R^n$ dans $R$. 
+</p>
+
+<p>
+Soit $B = (e_i)_{i \in [1;n]}$ une base de $R^n$. 
+Soit $a$ un vecteur de $R^n$ tel que $f:R^n \to R$ est différentiable en $a$. 
+</p>
+
+<p>
+Alors le gradient de $f$ en $a$ dans la base $B$ est :
+</p>
+
+<p>
+\begin{equation}\sum_{i=1}^{n} \frac{\partial f}{\partial x_i}(a)e_i\end{equation}
+</p>
+
+<p>
+<span style='color:#22b14c; '><em class="u">Vecteurs conjugués selon A:</em></span>
+</p>
+
+<p>
+Deux vecteurs $u$ et $v$ sont conjugués selon la matrice A symétrique définie positive 	
+</p>
+
+<p>
+$\Leftrightarrow$ $u\,^tAv = v\,^tAu = 0$
+</p>
+
+<p>
+$\Leftrightarrow$ u et v sont orthogonaux selon la métrique $A$.
+</p>
+
+<p>
+$\Leftrightarrow$  le produit scalaire de u par Av est nul.
+</p>
+
+<p>
+$\Leftrightarrow$  le produit scalaire de v par Au est nul.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Algorithme et son application&quot;,&quot;hid&quot;:&quot;algorithme_et_son_application&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;2286-3802&quot;} -->
+<h3 class="sectionedit3" id="le_pseudo-code">Le Pseudo-code</h3>
+<div class="level3">
+<pre class="code">  Variables
+      ri //residu à l itération i
+      xi // ième terme de la suite convergent
+      pi // vecteurs conjugués
+      αi // coefficient de descente du vecteur pi
+      βk // coefficient de mise a jour pi
+      A // matrice du systeme d equation
+  
+  Début
+      r0 ← Ax0 − b //initialisation residu
+      p0 ← −r0 //initialisation de la direction de descente
+      k ← 0 //initialisation nombre itérations
+  
+      Tant que rk != 0
+  
+          αk ← −(trans(rk)*pk)/(trans(pk)*A*pk)
+  
+          xk+1 ← xk + αkpk //nouvel iteration de xk
+          rk+1 ← A*xk+1 − b// mise a jour residu
+  
+          βk+1 ← −(trans(rk+1)*A*pk)/(trans(pk)*A*pk)
+  
+          pk+1 ← −rk+1 + βk+1*pk //mise a jour vecteur conjugué
+          k ← k + 1 //incrementation de k
+  
+      Fin tant que
+  Fin</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le Pseudo-code&quot;,&quot;hid&quot;:&quot;le_pseudo-code&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;3803-4715&quot;} -->
+<h3 class="sectionedit4" id="initialisation_variables_et_fonctions">Initialisation variables et fonctions</h3>
+<div class="level3">
+
+<p>
+Nous allons ici décomposer la fonction <strong>conjgrad(A, b, x)</strong> en Python et <strong>grad(A, b, x)</strong> en Octave. Elles contiennent bien entendu l&#039;initialisation et la boucle principale. Vous pouvez trouver l&#039;ensemble du code <a href="https://github.com/LlamasPartan/Optimisation/tree/master/Grandes%20m%C3%A9thode%20d'optimisation/Gradient%20Conjugu%C3%A9" class="urlextern" title="https://github.com/LlamasPartan/Optimisation/tree/master/Grandes%20m%C3%A9thode%20d&#039;optimisation/Gradient%20Conjugu%C3%A9" rel="nofollow"> ici</a>.
+</p>
+
+<p>
+<em class="u">En Octave:</em>
+</p>
+
+<p>
+Il est tout d&#039;abord nécessaire de coder une petite fonction permettant de comparer rapidement 2 vecteurs :
+</p>
+<pre class="code matlab"><span class="kw1">function</span> <span class="br0">&#91;</span>ok<span class="br0">&#93;</span> = comp <span class="br0">&#40;</span>x, y<span class="br0">&#41;</span>
+  #Postcondition:renvoi <span class="nu0">1</span> si x == y, <span class="nu0">0</span> sinon
+  z = <span class="br0">&#40;</span>x!=y<span class="br0">&#41;</span>; #z<span class="br0">&#91;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a><span class="br0">&#93;</span> =  <span class="nu0">1</span> si x<span class="br0">&#91;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a><span class="br0">&#93;</span> != y<span class="br0">&#91;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a><span class="br0">&#93;</span> et <span class="nu0">0</span> si x<span class="br0">&#91;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a><span class="br0">&#93;</span>==y<span class="br0">&#91;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a><span class="br0">&#93;</span>
+  ok = <span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/sum.html"><span class="kw2">sum</span></a><span class="br0">&#40;</span>z<span class="br0">&#41;</span>==<span class="nu0">0</span><span class="br0">&#41;</span>; #on fait la somme des éléments = nombre de cases <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/diff.html"><span class="kw2">diff</span></a>érentes en x et y
+endfunction</pre>
+
+<p>
+On peut ensuite initialiser les variables nécessaires au corps de l&#039;algorithme :
+</p>
+<pre class="code matlab"><span class="co1">%u' *v &lt;=&gt; produit scalaire ente u et v</span>
+&nbsp;
+r_old = A*x-b;
+p_old = -r_old;</pre>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#np.dot &lt;=&gt; produit matrice-vecteur ou produit scalaire</span>
+&nbsp;
+r_old <span class="sy0">=</span> np.<span class="me1">dot</span><span class="br0">&#40;</span>A<span class="sy0">,</span> x<span class="br0">&#41;</span>-b
+p_old <span class="sy0">=</span> -r_old</pre>
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> Pour des raisons syntaxiques vous retrouverez en Python et sous Octave les correspondances r_old = r_k et r_new = r_k+1 de même pour p_old.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Initialisation variables et fonctions&quot;,&quot;hid&quot;:&quot;initialisation_variables_et_fonctions&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;4716-5994&quot;} -->
+<h3 class="sectionedit5" id="boucle_principale">Boucle principale</h3>
+<div class="level3">
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">while</span> <span class="br0">&#40;</span><span class="br0">&#40;</span>r_old <span class="sy0">!=</span> np.<span class="me1">zeros</span><span class="br0">&#40;</span><span class="kw2">len</span><span class="br0">&#40;</span>b<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>.<span class="kw2">all</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>:
+&nbsp;
+    Apk <span class="sy0">=</span> np.<span class="me1">dot</span><span class="br0">&#40;</span>A<span class="sy0">,</span> p_old<span class="br0">&#41;</span>
+    alpha <span class="sy0">=</span> -np.<span class="me1">dot</span><span class="br0">&#40;</span>np.<span class="me1">transpose</span><span class="br0">&#40;</span>r_old<span class="br0">&#41;</span><span class="sy0">,</span>p_old<span class="br0">&#41;</span>/np.<span class="me1">dot</span><span class="br0">&#40;</span>np.<span class="me1">transpose</span><span class="br0">&#40;</span>p_old<span class="br0">&#41;</span><span class="sy0">,</span> Apk<span class="br0">&#41;</span> 
+&nbsp;
+    x <span class="sy0">=</span> x + np.<span class="me1">dot</span><span class="br0">&#40;</span>alpha<span class="sy0">,</span> p_old<span class="br0">&#41;</span>
+    r_new <span class="sy0">=</span> np.<span class="me1">dot</span><span class="br0">&#40;</span>A<span class="sy0">,</span> x<span class="br0">&#41;</span> - b 
+&nbsp;
+    beta <span class="sy0">=</span> np.<span class="me1">dot</span><span class="br0">&#40;</span>np.<span class="me1">transpose</span><span class="br0">&#40;</span>r_new<span class="br0">&#41;</span><span class="sy0">,</span>Apk<span class="br0">&#41;</span> / np.<span class="me1">dot</span><span class="br0">&#40;</span>np.<span class="me1">transpose</span><span class="br0">&#40;</span>p_old<span class="br0">&#41;</span><span class="sy0">,</span> Apk<span class="br0">&#41;</span>
+&nbsp;
+    p_new <span class="sy0">=</span> -r_new + np.<span class="me1">dot</span><span class="br0">&#40;</span>beta<span class="sy0">,</span> p_old<span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1">#k = k+ 1</span>
+    r_old <span class="sy0">=</span> r_new
+    p_old <span class="sy0">=</span> p_new</pre>
+
+<p>
+<em class="u">En Octave :</em>
+</p>
+<pre class="code matlab"><span class="kw1">while</span> <span class="br0">&#40;</span><span class="br0">&#40;</span>comp<span class="br0">&#40;</span>r_old, <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/zeros.html"><span class="kw2">zeros</span></a><span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/length.html"><span class="kw2">length</span></a><span class="br0">&#40;</span>b<span class="br0">&#41;</span>,<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>==<span class="nu0">0</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    Apk = A*p_old;
+    alpha = -<span class="br0">&#40;</span>r_old'<span class="br0">&#41;</span>*p_old/<span class="br0">&#40;</span><span class="br0">&#40;</span>p_old'<span class="br0">&#41;</span>* Apk<span class="br0">&#41;</span>; 
+&nbsp;
+    x = x + alpha* p_old; 
+    r_new = A*x - b; # maj r
+&nbsp;
+    <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/beta.html"><span class="kw2">beta</span></a> = <span class="br0">&#40;</span><span class="br0">&#40;</span>r_new'<span class="br0">&#41;</span>*Apk<span class="br0">&#41;</span> / <span class="br0">&#40;</span><span class="br0">&#40;</span>p_old'<span class="br0">&#41;</span>* Apk<span class="br0">&#41;</span>;
+&nbsp;
+    p_new = -r_new + <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/beta.html"><span class="kw2">beta</span></a>* p_old; 
+&nbsp;
+    <span class="co1">%k = k+ 1</span>
+    r_old = r_new;
+    p_old = p_new;
+&nbsp;
+endwhile</pre>
+
+<p>
+<strong>Résultats</strong>
+</p>
+
+<p>
+<em class="u">En Octave :</em>
+</p>
+<pre class="code matlab">x =<span class="br0">&#91;</span><span class="nu0">0</span>; <span class="nu0">0</span>; <span class="nu0">0</span><span class="br0">&#93;</span>;
+b = <span class="br0">&#91;</span><span class="nu0">5</span>; -<span class="nu0">3</span>; <span class="nu0">1</span><span class="br0">&#93;</span>;
+A = <span class="br0">&#91;</span><span class="nu0">2</span> -<span class="nu0">1</span> <span class="nu0">0</span>; -<span class="nu0">1</span> <span class="nu0">2</span> -<span class="nu0">1</span>; <span class="nu0">0</span> -<span class="nu0">1</span> <span class="nu0">2</span><span class="br0">&#93;</span>;
+&nbsp;
+<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span>&quot;La solution dy systeme Ax=b est:&quot;<span class="br0">&#41;</span>, <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span>grad<span class="br0">&#40;</span>A, b, x<span class="br0">&#41;</span><span class="br0">&#41;</span>;</pre>
+
+<p>
+<strong>Précodé :</strong>
+</p>
+
+<p>
+Nous avons codé l&#039;ensemble de l&#039;algorithme à la main, il existe néanmoins des librairies où vous pouvez trouver le code pré-codé. 
+</p>
+
+<p>
+<em class="u">En Octave</em>
+</p>
+<pre class="code matlab"><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span>&quot;La solution dy systeme Ax=b est:&quot;<span class="br0">&#41;</span>, <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/cgs.html"><span class="kw2">cgs</span></a> <span class="br0">&#40;</span>A, b<span class="br0">&#41;</span><span class="br0">&#41;</span>; #Sans package</pre>
+<div class="table sectionedit6"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0 leftalign">              </td><th class="col1 centeralign">  Temps d&#039;exécution  </th><th class="col2 centeralign">  Convergence  </th><th class="col3 centeralign">  Nombre d&#039;itérations  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 centeralign">  Gradient conjugué  codé (Octave)  </th><td class="col1 centeralign">   5,42092 ms   </td><td class="col2 centeralign">  superlinéaire    </td><td class="col3 centeralign">   5 (avec nos données )   </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  Précodé  </th><td class="col1 centeralign">  4,18687 ms  </td><td class="col2 centeralign">  ???  </td><td class="col3 centeralign">  ???  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:6,&quot;range&quot;:&quot;7265-7500&quot;} -->
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#Données</span>
+A <span class="sy0">=</span> np.<span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="br0">&#91;</span><span class="nu0">2</span><span class="sy0">,</span>-<span class="nu0">1</span><span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span><span class="br0">&#91;</span>-<span class="nu0">1</span><span class="sy0">,</span><span class="nu0">2</span><span class="sy0">,</span>-<span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">,</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span>-<span class="nu0">1</span><span class="sy0">,</span><span class="nu0">2</span><span class="br0">&#93;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+b <span class="sy0">=</span> np.<span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="nu0">5</span><span class="sy0">,</span>-<span class="nu0">3</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+x <span class="sy0">=</span> np.<span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Résultat</span>
+<span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;La solution du systeme Ax =b est:&quot;</span><span class="sy0">,</span>conjgrad<span class="br0">&#40;</span>A<span class="sy0">,</span>b<span class="sy0">,</span>x<span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+<div class="table sectionedit7"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0 leftalign">              </td><th class="col1 leftalign"> Temps d&#039;exécution                  </th><th class="col2 leftalign"> Complexité          </th><th class="col3"> Nombre d&#039;itérations </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0"> Gradient conjugué  codé (Python) </th><td class="col1 centeralign">           1,2295  ms     </td><td class="col2 centeralign">              superlinéaire               </td><td class="col3 centeralign">           5 (avec nos données )                    </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:7,&quot;range&quot;:&quot;7712-7976&quot;} -->
+<p>
+<div class='alert alert-info'>Vous avez compris l&#039;algorithme et l&#039;exemple sur la bière ? Vous pouvez alors retrouver la valeur de $x^*$ du problème initiale !</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Boucle principale&quot;,&quot;hid&quot;:&quot;boucle_principale&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:5,&quot;range&quot;:&quot;5995-8123&quot;} -->
+<h3 class="sectionedit8" id="bilan_comparatif">Bilan comparatif</h3>
+<div class="level3">
+<div class="table sectionedit9"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0 leftalign">              </td><th class="col1 centeralign">  Gradient conjugué  </th><th class="col2 centeralign">  Descente du gradient   </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 centeralign">  Type de problèmes  </th><td class="col1 centeralign">  $A*x =b$  ou $min(f(x))$  </td><td class="col2 centeralign">  $min(f(x))$    </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  Conditions préalables  </th><td class="col1 centeralign">  A symétrique définie positive  </td><td class="col2 centeralign">  f différentiable  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  Convergence  </th><td class="col1 centeralign">   Superlinéaire  </td><td class="col2 centeralign">  Linéaire  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  Choix d&#039;un pas  </th><td class="col1 centeralign">   NON  </td><td class="col2 centeralign">  OUI  </td>
+	</tr>
+	<tr class="row5">
+		<th class="col0 centeralign">   Approximation nécessaire de $x_0$  </th><td class="col1 centeralign">  OUI  </td><td class="col2 centeralign">  OUI  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table2&quot;,&quot;secid&quot;:9,&quot;range&quot;:&quot;8150-8526&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Bilan comparatif&quot;,&quot;hid&quot;:&quot;bilan_comparatif&quot;,&quot;codeblockOffset&quot;:8,&quot;secid&quot;:8,&quot;range&quot;:&quot;8124-8527&quot;} -->
+<h2 class="sectionedit10" id="la_methode_du_gradient_bi-conjugue">La méthode du gradient bi-conjugué</h2>
+<div class="level2">
+
+<p>
+Une variante du Gradient conjugué existe pour les matrices non symétriques: <a href="https://fr.wikipedia.org/wiki/M%C3%A9thode_du_gradient_biconjugu%C3%A9" class="urlextern" title="https://fr.wikipedia.org/wiki/M%C3%A9thode_du_gradient_biconjugu%C3%A9" rel="nofollow">la méthode du gradient biconjugué</a>.
+</p>
+
+<p>
+<div class='alert alert-info'>Attention: L&#039;approximation initiale $x_0$ est complexe et demande elle même une théorie et des calculs fastidieux.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La m\u00e9thode du gradient bi-conjugu\u00e9&quot;,&quot;hid&quot;:&quot;la_methode_du_gradient_bi-conjugue&quot;,&quot;codeblockOffset&quot;:8,&quot;secid&quot;:10,&quot;range&quot;:&quot;8528-&quot;} -->

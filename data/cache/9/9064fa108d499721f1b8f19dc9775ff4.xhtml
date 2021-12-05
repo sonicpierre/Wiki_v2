@@ -1,0 +1,628 @@
+
+<p>
+<a href="/doku.php?id=cpp:le_clustering" class="wikilink1" title="cpp:le_clustering"> Le Clustering</a>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_k-means&amp;media=cpp:k-mean.gif" class="media" title="cpp:k-mean.gif"><img src="/lib/exe/fetch.php?w=500&amp;tok=61d622&amp;media=cpp:k-mean.gif" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+L&#039;algorithme des K-Means est l&#039;un des plus connus et utilisés. Il est assez simple ce qui lui permet d&#039;être exécuté facilement sans nuire à son niveau de performance.
+</p>
+
+<p>
+<strong>Animation :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="/doku.php?id=cpp:www.analyticsvidhya.com" class="wikilink2" title="cpp:www.analyticsvidhya.com" rel="nofollow">www.analyticsvidhya.com</a></div>
+</li>
+</ul>
+
+<h2 class="sectionedit1" id="principe_de_l_algorithme">Principe de l&#039;algorithme</h2>
+<div class="level2">
+
+<p>
+<div class='alert alert-info'> <strong>Rappel :</strong> dans cette partie, on utilisera le dataset de mesures de gaz contenus dans l&#039;alcool, disponible <a href="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Exploration%20des%20donnees/Data%20gaz" class="urlextern" title="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Exploration%20des%20donnees/Data%20gaz" rel="nofollow">ici</a>. On considérera le premier relevé que l&#039;on nommera dans le code data.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Principe de l&#039;algorithme&quot;,&quot;hid&quot;:&quot;principe_de_l_algorithme&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;289-644&quot;} -->
+<h3 class="sectionedit2" id="preconditions">Préconditions</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Avoir une idée du nombre de clusters à trouver. (Nous donnerons des techniques pour aborder ce problème ci-dessous.)</div>
+</li>
+<li class="level1"><div class="li"> Normaliser ses données pour que l&#039;algorithme soit plus performant.</div>
+</li>
+</ul>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">preprocessing</span> <span class="kw1">import</span> StandardScaler
+&nbsp;
+scaler <span class="sy0">=</span> StandardScaler<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="co1">#Appel du transformeur</span>
+scaler.<span class="me1">fit_transform</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="co1">#Transformation des données</span>
+data <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>scaler.<span class="me1">fit_transform</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="sy0">,</span> index <span class="sy0">=</span> data.<span class="me1">index</span><span class="sy0">,</span> columns <span class="sy0">=</span> data.<span class="me1">columns</span><span class="br0">&#41;</span><span class="co1">#Construction du DataFrame</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">data <span class="sy0">&lt;</span>- scale<span class="br0">&#40;</span>data<span class="br0">&#41;</span></pre>
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong> consultez la page <a href="/doku.php?id=cpp:preprocessing_et_encodage" class="wikilink1" title="cpp:preprocessing_et_encodage">pre-processing et encodage</a> pour plus d&#039;informations.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Pr\u00e9conditions&quot;,&quot;hid&quot;:&quot;preconditions&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;645-1370&quot;} -->
+<h3 class="sectionedit3" id="entrainer_l_algorithme">Entraîner l&#039;algorithme</h3>
+<div class="level3">
+
+<p>
+Nous allons découper chaque itération de l&#039;algorithme en plusieurs étapes :
+</p>
+<ul>
+<li class="level1"><div class="li"> On <span style='color:#ed1c24; '><strong>calcule la distance</strong></span> entre un centre de gravité et chacune des données.</div>
+</li>
+<li class="level1"><div class="li"> On recommence pour <span style='color:#ed1c24; '><strong>chacun des centres de gravité</strong></span>.</div>
+</li>
+<li class="level1"><div class="li"> On <span style='color:#ed1c24; '><strong>sélectionne</strong></span>,  pour chaque centre,  les <span style='color:#ed1c24; '><strong>données</strong></span> dont il est le <span style='color:#ed1c24; '><strong>plus proche</strong></span>.</div>
+</li>
+<li class="level1"><div class="li"> On <span style='color:#ed1c24; '><strong>déplace</strong></span> les centres pour les positionner au <span style='color:#ed1c24; '><strong>centre de l&#039;ensemble sélectionné</strong></span> en appliquant la formule ci-dessous qui est une simple moyenne des coordonnées :</div>
+</li>
+</ul>
+
+<p>
+$$\mu_{k} = \frac{1}{n_k} \sum_{x_{i} \in C_{k}} x_{i}$$
+</p>
+
+<p>
+<div class='alert alert-warning'> <strong>Attention :</strong> il est important de préciser que l&#039;algorithme de K-means a été conçu en utilisant la distance euclidienne. Ainsi, cette distance permet une meilleure convergence lors du replacement des centres calculés grâce à  la moyenne. Changer la distance utilisée signifie changer la méthode permettant d&#039;avoir les nouveaux centres de clusters.</div>
+</p>
+
+<p>
+<strong>Condition d&#039;arrêt :</strong> si les centres des clusters ne varient pas d&#039;une itération à l&#039;autre on arrête d&#039;itérer
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">cluster</span> <span class="kw1">import</span> KMeans
+&nbsp;
+model <span class="sy0">=</span> KMeans<span class="br0">&#40;</span>n_clusters <span class="sy0">=</span> <span class="nu0">3</span><span class="sy0">,</span> max_iter<span class="sy0">=</span><span class="nu0">500</span><span class="sy0">,</span> init<span class="sy0">=</span><span class="st0">'k-means++'</span><span class="br0">&#41;</span>
+model.<span class="me1">fit</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="co1">#Entrainement du modèle</span></pre>
+
+<p>
+ L&#039;argument &#039;k-means++&#039; définit la méthode d&#039;initialisation des centres de clusters. Cette dernière permet, entre autres, d&#039;avoir des clusters les plus éloignés possible les uns des autres tout en faisant partie des groupes d&#039;observation. Vous pouvez comparer avec la méthode d&#039;origine &#039;random&#039; pour évaluer leurs performances respectives. 
+</p>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>cluster<span class="br0">&#41;</span>
+&nbsp;
+model <span class="sy0">=</span> kmeans<span class="br0">&#40;</span>data<span class="sy0">,</span> center<span class="sy0">=</span><span class="nu0">3</span><span class="br0">&#41;</span><span class="co1">#data étant le jeu de données et center le nombre de clusters</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Entra\u00eener l&#039;algorithme&quot;,&quot;hid&quot;:&quot;entrainer_l_algorithme&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:3,&quot;range&quot;:&quot;1371-3299&quot;} -->
+<h2 class="sectionedit4" id="visualiser_la_forme_des_clusters">Visualiser la forme des clusters</h2>
+<div class="level2">
+
+<p>
+Un bon moyen rapide de savoir si son modèle a fonctionné est de regarder si les prédictions sont conformes aux observations graphiques que l&#039;on a pu faire. Cette vérification nécessite de connaître un peu les variables qui composent le dataset et de bien comprendre la problématique.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Visualiser la forme des clusters&quot;,&quot;hid&quot;:&quot;visualiser_la_forme_des_clusters&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:4,&quot;range&quot;:&quot;3300-3635&quot;} -->
+<h3 class="sectionedit5" id="visualisation_classique">Visualisation classique</h3>
+<div class="level3">
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">12</span><span class="sy0">,</span> <span class="nu0">6</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Définition de la taille du graphique</span>
+&nbsp;
+plt.<span class="me1">scatter</span><span class="br0">&#40;</span>data<span class="br0">&#91;</span><span class="st0">'0.799_0.201'</span><span class="br0">&#93;</span><span class="sy0">,</span> data<span class="br0">&#91;</span><span class="st0">'0.799_0.201.1'</span><span class="br0">&#93;</span><span class="sy0">,</span> c<span class="sy0">=</span>model.<span class="me1">predict</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Nuage de points des clusters </span>
+plt.<span class="me1">scatter</span><span class="br0">&#40;</span>model.<span class="me1">cluster_centers_</span><span class="br0">&#91;</span>:<span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span> model.<span class="me1">cluster_centers_</span><span class="br0">&#91;</span>:<span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">,</span> c<span class="sy0">=</span><span class="st0">'r'</span><span class="br0">&#41;</span><span class="co1">#Positionnement des centres des différent clusters</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">data2Premier <span class="sy0">=</span> <span class="kw2">slice</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span> %<span class="sy0">&gt;</span>%
+    <span class="kw3">select</span><span class="br0">&#40;</span><span class="st0">&quot;X0.799_0.201&quot;</span><span class="sy0">,</span> <span class="st0">&quot;X0.799_0.201.1&quot;</span><span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>data2Premier<span class="sy0">,</span> col <span class="sy0">=</span>model$cluster<span class="br0">&#41;</span>
+points<span class="br0">&#40;</span>model$centers<span class="sy0">,</span> col <span class="sy0">=</span> <span class="nu0">1</span>:<span class="nu0">2</span><span class="sy0">,</span> pch <span class="sy0">=</span> <span class="nu0">8</span><span class="sy0">,</span> cex <span class="sy0">=</span> <span class="nu0">2</span><span class="br0">&#41;</span><span class="co1">#Positionnement des centres des clusters</span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_k-means&amp;media=cpp:clustering_clus3.png" class="media" title="cpp:clustering_clus3.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=271d63&amp;media=cpp:clustering_clus3.png" class="mediacenter" title="Résultat du clustering avec 3 clusters" alt="Résultat du clustering avec 3 clusters" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 1 :</strong> Résultat du clustering avec 3 clusters</p><!--divalign-->
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> parmi les trois clusters définis initialement, seul l&#039;un d&#039;entre eux correspond à son centre de gravité. Cela veut donc dire que le nombre de clusters définis n&#039;est pas exact vu qu&#039;il n&#039;y a pas de convergence des deux autres centres de gravité. Prenons 5 clusters, nous expliquerons en détail ce choix plus tard.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Visualisation classique&quot;,&quot;hid&quot;:&quot;visualisation_classique&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:5,&quot;range&quot;:&quot;3636-4765&quot;} -->
+<h3 class="sectionedit6" id="diagramme_de_voronoi">Diagramme de Voronoï</h3>
+<div class="level3">
+
+<p>
+Cette découpe a été découverte par le mathématicien russe Gueorgui Voronoï. Elle permet de <span style='color:#ed1c24; '><strong>découper l&#039;espace</strong></span> en différentes <span style='color:#ed1c24; '><strong>zones contenant chacune un seul point</strong></span>. Ici, nos centres de cluster. 
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_k-means&amp;media=cpp:voronoi.gif" class="media" title="cpp:voronoi.gif"><img src="/lib/exe/fetch.php?w=400&amp;tok=76032f&amp;media=cpp:voronoi.gif" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<p>
+On commence donc par <span style='color:#ed1c24; '><strong>récupérer</strong></span> les coordonnées des <span style='color:#ed1c24; '><strong>centres nécessaires</strong></span> à la construction du graphique:
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">CoorCentreVoulu <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+<span class="kw1">for</span> i <span class="kw1">in</span> model.<span class="me1">cluster_centers_</span>:
+    tampon <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+    tampon.<span class="me1">append</span><span class="br0">&#40;</span>i<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+    tampon.<span class="me1">append</span><span class="br0">&#40;</span>i<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+    CoorCentreVoulu.<span class="me1">append</span><span class="br0">&#40;</span>tampon<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">X_data <span class="sy0">=</span> data$X0.799_0.201
+Y_data <span class="sy0">=</span> data$X0.799_0.201.1
+data_plot <span class="sy0">=</span> data.<span class="me1">frame</span><span class="br0">&#40;</span>X_data<span class="sy0">,</span> Y_data<span class="br0">&#41;</span>
+X <span class="sy0">=</span> model$centers<span class="br0">&#91;</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#93;</span>
+Y <span class="sy0">=</span> model$centers<span class="br0">&#91;</span><span class="sy0">,</span><span class="nu0">2</span><span class="br0">&#93;</span>
+data_plot2 <span class="sy0">=</span> data.<span class="me1">frame</span><span class="br0">&#40;</span>X_data<span class="sy0">,</span> Y_data<span class="br0">&#41;</span></pre>
+
+<p>
+Une fois les centres récupérés, on peut lancer le calcul de chacun des polygones puis les représenter sur le graphique :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> scipy.<span class="me1">spatial</span> <span class="kw1">import</span> Voronoi<span class="sy0">,</span> voronoi_plot_2d
+y_kmeans <span class="sy0">=</span> model.<span class="me1">predict</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span>
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">10</span><span class="sy0">,</span> <span class="nu0">10</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+ax <span class="sy0">=</span> plt.<span class="me1">gca</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+vor <span class="sy0">=</span> Voronoi<span class="br0">&#40;</span>CoorCentreVoulu<span class="br0">&#41;</span>
+voronoi_plot_2d<span class="br0">&#40;</span>vor<span class="sy0">,</span> ax<span class="sy0">,</span> point_size <span class="sy0">=</span> <span class="nu0">1</span><span class="br0">&#41;</span>
+plt.<span class="me1">scatter</span><span class="br0">&#40;</span>data<span class="br0">&#91;</span><span class="st0">'0.799_0.201'</span><span class="br0">&#93;</span><span class="sy0">,</span> data<span class="br0">&#91;</span><span class="st0">'0.799_0.201.1'</span><span class="br0">&#93;</span><span class="sy0">,</span> c<span class="sy0">=</span>y_kmeans<span class="sy0">,</span> s<span class="sy0">=</span><span class="nu0">15</span><span class="sy0">,</span> cmap<span class="sy0">=</span><span class="st0">'summer'</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>ggvoronoi<span class="br0">&#41;</span>
+&nbsp;
+ggplot<span class="br0">&#40;</span>data_plot2<span class="sy0">,</span>aes<span class="br0">&#40;</span>X<span class="sy0">,</span>Y<span class="br0">&#41;</span><span class="br0">&#41;</span> +
+     stat_voronoi<span class="br0">&#40;</span>geom<span class="sy0">=</span><span class="st0">&quot;path&quot;</span><span class="br0">&#41;</span> +
+     plot<span class="br0">&#40;</span>data_plot<span class="br0">&#41;</span>+
+     geom_point<span class="br0">&#40;</span><span class="br0">&#41;</span>+
+     geom_point<span class="br0">&#40;</span>data <span class="sy0">=</span> data_plot<span class="sy0">,</span> aes<span class="br0">&#40;</span>X_data<span class="sy0">,</span> Y_data<span class="br0">&#41;</span><span class="sy0">,</span> col <span class="sy0">=</span> model$cluster<span class="br0">&#41;</span></pre>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_k-means&amp;media=cpp:diagramme_voronoi.png" class="media" title="cpp:diagramme_voronoi.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=c730e4&amp;media=cpp:diagramme_voronoi.png" class="mediacenter" alt="" width="500" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 2 :</strong> Diagramme de Voronoï</p><!--divalign-->
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://freakonometrics.hypotheses.org/19156" class="urlextern" title="https://freakonometrics.hypotheses.org/19156" rel="nofollow">https://freakonometrics.hypotheses.org/19156</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Diagramme de Vorono\u00ef&quot;,&quot;hid&quot;:&quot;diagramme_de_voronoi&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:6,&quot;range&quot;:&quot;4766-6489&quot;} -->
+<h3 class="sectionedit7" id="visualiser_les_clusters_de_plusieurs_points_de_vue">Visualiser les clusters de plusieurs points de vue</h3>
+<div class="level3">
+
+<p>
+Le <span style='color:#ed1c24; '><strong>problème majeur</strong></span> de cette représentation est qu&#039;elle <span style='color:#ed1c24; '><strong>ne compare que 2 variables</strong></span> alors que le set de données en compte beaucoup plus. On retrouve souvent ce problème dans les représentations graphiques, elles <span style='color:#ed1c24; '><strong>imposent</strong></span> une représentation en <span style='color:#ed1c24; '><strong>2D ou en 3D</strong></span> ce qui limite grandement notre <span style='color:#ed1c24; '><strong>visualisation des clusters</strong></span>. 
+</p>
+
+<p>
+On peut essayer de minimiser le problème avec un graphique représentant lui-même plusieurs graphiques :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> seaborn <span class="kw1">as</span> sns
+&nbsp;
+<span class="co1">#Définition de nouvelles colonnes utiles à la construction du graphique</span>
+cols <span class="sy0">=</span> <span class="br0">&#91;</span><span class="st0">&quot;0.799_0.201&quot;</span><span class="sy0">,</span> <span class="st0">&quot;0.799_0.201.1&quot;</span><span class="sy0">,</span> <span class="st0">&quot;0.700_0.300&quot;</span><span class="sy0">,</span><span class="st0">&quot;0.700_0.300.1&quot;</span><span class="sy0">,</span><span class="st0">&quot;0.600_0.400&quot;</span><span class="br0">&#93;</span> 
+data<span class="br0">&#91;</span><span class="st0">&quot;k-means_5&quot;</span><span class="br0">&#93;</span> <span class="sy0">=</span> model.<span class="me1">predict</span><span class="br0">&#40;</span>data<span class="br0">&#91;</span>cols<span class="br0">&#93;</span><span class="br0">&#41;</span> 
+data<span class="br0">&#91;</span><span class="st0">&quot;k-means5clusters&quot;</span><span class="br0">&#93;</span> <span class="sy0">=</span> data<span class="br0">&#91;</span><span class="st0">&quot;k-means_5&quot;</span><span class="br0">&#93;</span>.<span class="kw2">map</span><span class="br0">&#40;</span><span class="kw1">lambda</span> i: <span class="st0">&quot;cluster &quot;</span>+<span class="kw2">str</span><span class="br0">&#40;</span>i<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Traçage du graphique</span>
+cols <span class="sy0">=</span> <span class="br0">&#91;</span><span class="st0">&quot;0.799_0.201&quot;</span><span class="sy0">,</span> <span class="st0">&quot;0.799_0.201.1&quot;</span><span class="sy0">,</span> <span class="st0">&quot;0.700_0.300&quot;</span><span class="sy0">,</span><span class="st0">&quot;0.700_0.300.1&quot;</span><span class="sy0">,</span><span class="st0">&quot;0.600_0.400&quot;</span><span class="sy0">,</span> <span class="st0">&quot;k-means5clusters&quot;</span><span class="br0">&#93;</span> 
+g1 <span class="sy0">=</span> sns.<span class="me1">pairplot</span><span class="br0">&#40;</span>data<span class="br0">&#91;</span>cols<span class="br0">&#93;</span><span class="sy0">,</span> palette<span class="sy0">=</span><span class="st0">&quot;husl&quot;</span><span class="sy0">,</span> hue<span class="sy0">=</span><span class="st0">&quot;k-means5clusters&quot;</span><span class="sy0">,</span> diag_kind<span class="sy0">=</span><span class="st0">'kde'</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">data5Premier <span class="sy0">=</span> <span class="kw2">slice</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span> %<span class="sy0">&gt;</span>%
+    <span class="kw3">select</span><span class="br0">&#40;</span><span class="st0">&quot;X0.799_0.201&quot;</span><span class="sy0">,</span> <span class="st0">&quot;X0.799_0.201.1&quot;</span><span class="sy0">,</span> <span class="st0">&quot;X0.700_0.300&quot;</span><span class="sy0">,</span> <span class="st0">&quot;X0.700_0.300.1&quot;</span><span class="sy0">,</span> <span class="st0">&quot;X0.600_0.400&quot;</span><span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>data5Premier<span class="sy0">,</span> col <span class="sy0">=</span> model$cluster<span class="br0">&#41;</span></pre>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_k-means&amp;media=cpp:kmeans_graph.png" class="media" title="cpp:kmeans_graph.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=88e633&amp;media=cpp:kmeans_graph.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 3 :</strong> Représentation des combinaisons des 5 premières variables</p><!--divalign-->
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://openclassrooms.com/fr/courses/4379436-explorez-vos-donnees-avec-des-algorithmes-non-supervises/4379556-definissez-les-criteres-que-doit-satisfaire-votre-clustering" class="urlextern" title="https://openclassrooms.com/fr/courses/4379436-explorez-vos-donnees-avec-des-algorithmes-non-supervises/4379556-definissez-les-criteres-que-doit-satisfaire-votre-clustering" rel="nofollow">https://openclassrooms.com/fr/courses/4379436-explorez-vos-donnees-avec-des-algorithmes-non-supervises/4379556-definissez-les-criteres-que-doit-satisfaire-votre-clustering</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.polymorphe.org/index.php/k-means-clustering-part-1" class="urlextern" title="https://www.polymorphe.org/index.php/k-means-clustering-part-1" rel="nofollow">https://www.polymorphe.org/index.php/k-means-clustering-part-1</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Visualiser les clusters de plusieurs points de vue&quot;,&quot;hid&quot;:&quot;visualiser_les_clusters_de_plusieurs_points_de_vue&quot;,&quot;codeblockOffset&quot;:10,&quot;secid&quot;:7,&quot;range&quot;:&quot;6490-8258&quot;} -->
+<h2 class="sectionedit8" id="choisir_le_bon_nombre_de_clusters">Choisir le bon nombre de clusters</h2>
+<div class="level2">
+
+<p>
+L&#039;algorithme des K-means comporte une <span style='color:#ed1c24; '><strong>faiblesse majeure</strong></span>. Il est nécessaire de <span style='color:#ed1c24; '><strong>préciser le nombre de clusters</strong></span> que l&#039;on souhaite avant de lancer l&#039;algorithme ce qui peut être problématique quand on n&#039;a <span style='color:#ed1c24; '><strong>aucune idée de la forme des données</strong></span>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Choisir le bon nombre de clusters&quot;,&quot;hid&quot;:&quot;choisir_le_bon_nombre_de_clusters&quot;,&quot;codeblockOffset&quot;:12,&quot;secid&quot;:8,&quot;range&quot;:&quot;8259-8628&quot;} -->
+<h3 class="sectionedit9" id="elbow_method">Elbow Method</h3>
+<div class="level3">
+
+<p>
+On calcule l&#039;<span style='color:#ed1c24; '><strong>inertie</strong></span> pour chacun des modèles entraînés. On déterminera le nombre de clusters optimaux expliquant au mieux nos données. Il faut bien compter que plus le nombre de clusters va augmenter plus l&#039;inertie diminuera. 
+</p>
+
+<p>
+<div class='alert alert-danger'><strong>Attention :</strong> il faut veiller à ne pas couper en deux un très bon cluster et dégrader le partitionnement.</div>
+</p>
+
+<p>
+<strong>Théorie :</strong>
+</p>
+
+<p>
+On appelle <strong>inertie</strong> la somme des carrés des distances entre les observations et leur centre de cluster associé.
+</p>
+
+<p>
+$$Inertie(X) = \sum_{k=1}^{n} \sum_{i=1}^{m} d(C_{k}, x_{i})^2$$
+</p>
+<div class="table sectionedit10"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Théorie  </th><th class="col1 centeralign">  Signification  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  n  </td><td class="col1 centeralign">  Nombre de clusers  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  m  </td><td class="col1 centeralign">  Nombre d&#039;observations du cluster k  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  $C_{k}$  </td><td class="col1 centeralign">  Centre du cluster k  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">  $d()$  </td><td class="col1 centeralign">  Distance choisie  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:10,&quot;range&quot;:&quot;9245-9425&quot;} -->
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">inertia <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span><span class="co1">#Initialisation d'un tableau d'inertie</span>
+K_range <span class="sy0">=</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">20</span><span class="br0">&#41;</span><span class="co1">#Création d'une liste de nombre de cluster</span>
+<span class="kw1">for</span> k <span class="kw1">in</span> K_range:
+    model <span class="sy0">=</span> KMeans<span class="br0">&#40;</span>n_clusters <span class="sy0">=</span> k<span class="br0">&#41;</span>.<span class="me1">fit</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="co1">#Entrainement du modèle pour chaque nombre de clusters de la liste</span>
+    inertia.<span class="me1">append</span><span class="br0">&#40;</span>model.<span class="me1">inertia_</span><span class="br0">&#41;</span><span class="co1">#Ajout de l'inertie de chaque modèle</span>
+&nbsp;
+<span class="co1">#Partie visualisation</span>
+&nbsp;
+plt.<span class="me1">plot</span><span class="br0">&#40;</span>K_range<span class="sy0">,</span> inertia<span class="br0">&#41;</span><span class="co1">#Graphique d'inertie de chaque modèle en fonction du nombre de clusters associés</span>
+plt.<span class="me1">xlabel</span><span class="br0">&#40;</span><span class="st0">'Nombre de cluster'</span><span class="br0">&#41;</span>
+plt.<span class="me1">ylabel</span><span class="br0">&#40;</span><span class="st0">'Inertie expliquée'</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">R2 <span class="sy0">=</span> vector <span class="br0">&#40;</span><span class="st0">&quot;numeric&quot;</span><span class="sy0">,</span> <span class="nu0">9</span><span class="br0">&#41;</span>
+<span class="kw1">for</span><span class="br0">&#40;</span>k <span class="kw1">in</span> <span class="nu0">2</span>:<span class="nu0">10</span><span class="br0">&#41;</span>           <span class="co1">#pour i allant de 2 à</span>
+<span class="br0">&#123;</span>
+  cl <span class="sy0">=</span> kmeans<span class="br0">&#40;</span>data<span class="sy0">,</span> centers<span class="sy0">=</span>k<span class="sy0">,</span> nstart<span class="sy0">=</span><span class="nu0">5</span><span class="br0">&#41;</span>
+  R2<span class="br0">&#91;</span>k-<span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">=</span>cl$betweenss/cl$totss
+<span class="br0">&#125;</span>
+plot<span class="br0">&#40;</span><span class="nu0">2</span>:<span class="nu0">10</span><span class="sy0">,</span>R2<span class="sy0">,</span><span class="kw2">type</span><span class="sy0">=</span><span class="st0">&quot;b&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_k-means&amp;media=cpp:elbow.png" class="media" title="cpp:elbow.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=b1ea73&amp;media=cpp:elbow.png" class="mediacenter" title="Inertie des modèles en fonction du nombre de clusters" alt="Inertie des modèles en fonction du nombre de clusters" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 4 :</strong> Inertie des modèles en fonction du nombre de clusters</p><!--divalign-->
+
+<p>
+On lit la donnée au creux du coude, il en ressort que le jeu de données utilisé contient <span style='color:#ed1c24; '><strong>cinq clusters</strong></span>.
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.jybaudot.fr/Stats/inertie.html" class="urlextern" title="http://www.jybaudot.fr/Stats/inertie.html" rel="nofollow">http://www.jybaudot.fr/Stats/inertie.html</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Elbow Method&quot;,&quot;hid&quot;:&quot;elbow_method&quot;,&quot;codeblockOffset&quot;:12,&quot;secid&quot;:9,&quot;range&quot;:&quot;8629-10566&quot;} -->
+<h3 class="sectionedit11" id="le_score_de_silhouette">Le score de silhouette</h3>
+<div class="level3">
+
+<p>
+On remarque rapidement que le calcul de l&#039;<span style='color:#ed1c24; '><strong>inertie est peu coûteux</strong></span> en ressources mais donne une information qui n&#039;est <span style='color:#ed1c24; '><strong>pas d&#039;une grande clarté</strong></span>. Nous n&#039;avons que peu d&#039;informations sur les modèles à 6 clusters ou plus. Le <span style='color:#ed1c24; '><strong>score de silhouette</strong></span> est plus <span style='color:#ed1c24; '><strong>coûteux</strong></span> à calculer mais permet de détecter le cas de la <strong>Figure 5</strong>.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_k-means&amp;media=cpp:silhouette.png" class="media" title="cpp:silhouette.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=5b65f9&amp;media=cpp:silhouette.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 5 :</strong> Problème de dissociation de clusters</p><!--divalign-->
+
+<p>
+<strong>Théorie :</strong>
+</p>
+
+<p>
+Pour obtenir le score de silhouette, il est tout d&#039;abord nécessaire de calculer la <span style='color:#ed1c24; '><strong>cohésion</strong></span>. Il s&#039;agit de la distance entre une observation particulière et les autres observations du même cluster divisée par le nombre total d&#039;observations dans le cluster :
+</p>
+
+<p>
+$$a(x) = \frac{1}{n_{k} -1} \sum_{u \in C_{k}, u\ne x} d(x, u)$$
+</p>
+
+<p>
+Il est ensuite nécessaire de calculer la <span style='color:#ed1c24; '><strong>séparation</strong></span>. Il s&#039;agit de la distance minimum entre une observation particulière et les observations des autres clusters divisée par le nombre d&#039;observations hors cluster :
+</p>
+
+<p>
+$$b(x) = \min_{l \ne k} \frac{1}{n_{l} - 1} \sum_{u \in C_{l}} d(x, u)$$
+</p>
+
+<p>
+On peut enfin calculer le score de <span style='color:#ed1c24; '><strong>silhouette</strong></span> qui sera compris dans [-1,1] :
+</p>
+
+<p>
+$$s(x) = \frac{b(x) - a(x)}{\max(a(x), b(x))} $$
+</p>
+
+<p>
+<strong>Interprétation :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> Si l&#039;observation est proche de 1, elle se trouve au centre du bon cluster.</div>
+</li>
+<li class="level1"><div class="li"> Si l&#039;observation est proche de 0, elle est sur la frontière entre deux clusters.</div>
+</li>
+<li class="level1"><div class="li"> Si l&#039;observation est proche de -1, elle est dans le mauvais cluster.</div>
+</li>
+</ul>
+
+<p>
+Enfin, on fait la moyenne des scores pour avoir une idée globale de la performance du modèle.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">metrics</span> <span class="kw1">import</span> silhouette_score
+silhouette <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+K_range <span class="sy0">=</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="sy0">,</span><span class="nu0">10</span><span class="br0">&#41;</span><span class="co1">#Création d'une liste de nombre de cluster</span>
+<span class="kw1">for</span> k <span class="kw1">in</span> K_range:
+    model <span class="sy0">=</span> KMeans<span class="br0">&#40;</span>n_clusters <span class="sy0">=</span> k<span class="sy0">,</span> max_iter<span class="sy0">=</span><span class="nu0">500</span><span class="sy0">,</span> init<span class="sy0">=</span><span class="st0">'k-means++'</span><span class="br0">&#41;</span>.<span class="me1">fit</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span>
+    silhouette.<span class="me1">append</span><span class="br0">&#40;</span>silhouette_score<span class="br0">&#40;</span>data<span class="sy0">,</span> model.<span class="me1">labels_</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Visualisation idem que pour Elbow Method</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>cluster<span class="br0">&#41;</span>
+silhouette_score <span class="sy0">&lt;</span>- function<span class="br0">&#40;</span>k<span class="br0">&#41;</span><span class="br0">&#123;</span>
+    km <span class="sy0">&lt;</span>- kmeans<span class="br0">&#40;</span>data<span class="sy0">,</span> center<span class="sy0">=</span>k<span class="br0">&#41;</span>
+    ss <span class="sy0">&lt;</span>- silhouette<span class="br0">&#40;</span>km$cluster<span class="sy0">,</span> dist<span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="br0">&#41;</span>
+    mean<span class="br0">&#40;</span>ss<span class="br0">&#91;</span><span class="sy0">,</span> <span class="nu0">3</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+<span class="br0">&#125;</span>
+k <span class="sy0">&lt;</span>- <span class="nu0">2</span>:<span class="nu0">10</span>
+avg_sil <span class="sy0">&lt;</span>- sapply<span class="br0">&#40;</span>k<span class="sy0">,</span> silhouette_score<span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>k<span class="sy0">,</span> <span class="kw2">type</span><span class="sy0">=</span><span class="st0">'b'</span><span class="sy0">,</span> avg_sil<span class="sy0">,</span> xlab<span class="sy0">=</span><span class="st0">'Number of clusters'</span><span class="sy0">,</span> ylab<span class="sy0">=</span><span class="st0">'Average Silhouette Scores'</span><span class="sy0">,</span> frame<span class="sy0">=</span>FALSE<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_k-means&amp;media=cpp:score_de_silhouette.png" class="media" title="cpp:score_de_silhouette.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=58a90f&amp;media=cpp:score_de_silhouette.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 6 :</strong> Évolution du score de silhouette en fonction du nombre de cluster</p><!--divalign-->
+
+<p>
+On confirme ainsi que le <span style='color:#ed1c24; '><strong>nombre optimal de clusters</strong></span> est encore de<span style='color:#ed1c24; '><strong> 5</strong></span>. On peut donc modifier les <span style='color:#ed1c24; '><strong>hyperparamètres</strong></span> pour avoir son <span style='color:#ed1c24; '><strong>modèle optimisé</strong></span>. 
+</p>
+
+<p>
+<strong>Sources :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.youtube.com/watch?v=FTtzd31IAOw&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=28" class="urlextern" title="https://www.youtube.com/watch?v=FTtzd31IAOw&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=28" rel="nofollow"> Machine Learnia, par Guillaume Saint-Cirgue</a></div>
+</li>
+<li class="level1"><div class="li"> Cours de Data Mining : Clustering, par Astrid Jourdan, CY Tech</div>
+</li>
+<li class="level1"><div class="li"> <a href="https://lovelyanalytics.com/2017/11/18/cah-methode-mixte/" class="urlextern" title="https://lovelyanalytics.com/2017/11/18/cah-methode-mixte/" rel="nofollow">https://lovelyanalytics.com/2017/11/18/cah-methode-mixte/</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.youtube.com/watch?v=N7sx9_nX8Ng&amp;list=PLPN-43XehstOjGY6vM6nBpSggHoAv9hkR" class="urlextern" title="https://www.youtube.com/watch?v=N7sx9_nX8Ng&amp;list=PLPN-43XehstOjGY6vM6nBpSggHoAv9hkR" rel="nofollow">https://www.youtube.com/watch?v=N7sx9_nX8Ng&amp;list=PLPN-43XehstOjGY6vM6nBpSggHoAv9hkR</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://medium.com/codesmart/r-series-k-means-clustering-silhouette-794774b46586" class="urlextern" title="https://medium.com/codesmart/r-series-k-means-clustering-silhouette-794774b46586" rel="nofollow">https://medium.com/codesmart/r-series-k-means-clustering-silhouette-794774b46586</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le score de silhouette&quot;,&quot;hid&quot;:&quot;le_score_de_silhouette&quot;,&quot;codeblockOffset&quot;:14,&quot;secid&quot;:11,&quot;range&quot;:&quot;10567-13906&quot;} -->
+<h3 class="sectionedit12" id="l_indice_de_davies-bouldin">L&#039;indice de Davies-Bouldin</h3>
+<div class="level3">
+
+<p>
+L&#039;indice de Davies-Bouldin est encore plus complexe à calculer mais reste la mesure la <span style='color:#ed1c24; '><strong>plus utilisée</strong></span> pour connaître la <span style='color:#ed1c24; '><strong>qualité</strong></span> d&#039;un algorithme de <span style='color:#ed1c24; '><strong>clustering</strong></span>. Pour obtenir cet indice on a besoin des deux indices de la <strong>figure 7</strong>.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_k-means&amp;media=cpp:indice-davies-bouldin.png" class="media" title="cpp:indice-davies-bouldin.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=1993d1&amp;media=cpp:indice-davies-bouldin.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 7 :</strong> Mesures pour l&#039;indice de Davies- Bouldin</p><!--divalign-->
+
+<p>
+<strong>Théorie :</strong>
+</p>
+
+<p>
+On commence par calculer l&#039;<span style='color:#ed1c24; '><strong>homogénéité</strong></span> pour chacun des clusters :
+</p>
+
+<p>
+$$T_{k} = \frac{1}{n_{k}} \sum_{x \in C_{k}} d(x, \mu_{k})$$
+</p>
+<div class="table sectionedit13"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Théorie  </th><th class="col1 centeralign">  Signification  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  d(x)  </td><td class="col1 centeralign">  Mesure de distance  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  $n_{k}$  </td><td class="col1 centeralign">  Effectif du cluster $k$  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  $\mu_{k}$  </td><td class="col1 centeralign">  Centre du cluster $k$  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:13,&quot;range&quot;:&quot;14542-14692&quot;} -->
+<p>
+On calcule ensuite la <span style='color:#ed1c24; '><strong>distance inter- clusters</strong></span> :
+</p>
+
+<p>
+$$S = \frac{2}{K(K-1)} \sum_{k = 1}^{K} \sum_{l = k+1}^{K} S_{kl}$$
+</p>
+<div class="table sectionedit14"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Théorie  </th><th class="col1 centeralign">  Signification  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  $K$  </td><td class="col1 centeralign">  Nombre total de clusters définis  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  $S_{kl}$  </td><td class="col1 centeralign">  Distance entre le centroïde $k$ et le centroïde $l$ ( $d(\mu_{k}, \mu{l})$)  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table2&quot;,&quot;secid&quot;:14,&quot;range&quot;:&quot;14841-15018&quot;} -->
+<p>
+On peut calculer l&#039;indice de <span style='color:#ed1c24; '><strong>Davies-Bouldin</strong></span> pour les <span style='color:#ed1c24; '><strong>clusters 2 à 2</strong></span> en combinant ces deux mesures :
+</p>
+
+<p>
+$$D_{k} = \frac{T_{k} + T_{l}}{S_{kl}} \, avec \, k \ne l$$
+</p>
+
+<p>
+Enfin, on calcule l&#039;<span style='color:#ed1c24; '><strong>indice global de Davies-Bouldin</strong></span> :
+</p>
+
+<p>
+$$DB = \frac{1}{K} \sum_{k = 1}^{K} D_{k}$$
+</p>
+
+<p>
+Plus l&#039;indice est proche de 0 et meilleur est le modèle.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">metrics</span> <span class="kw1">import</span> davies_bouldin_score
+&nbsp;
+davidBouldin <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+K_range <span class="sy0">=</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">3</span><span class="sy0">,</span><span class="nu0">10</span><span class="br0">&#41;</span><span class="co1">#Création d'une liste de nombre de cluster</span>
+<span class="kw1">for</span> k <span class="kw1">in</span> K_range:
+    model <span class="sy0">=</span> KMeans<span class="br0">&#40;</span>n_clusters <span class="sy0">=</span> k<span class="sy0">,</span> max_iter<span class="sy0">=</span><span class="nu0">500</span><span class="sy0">,</span> init<span class="sy0">=</span><span class="st0">'k-means++'</span><span class="br0">&#41;</span>.<span class="me1">fit</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span>
+    davidBouldin.<span class="me1">append</span><span class="br0">&#40;</span>davies_bouldin_score<span class="br0">&#40;</span>data<span class="sy0">,</span> model.<span class="me1">labels_</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Partie visualisation identique à celle du calcule d'inertie et de silhouette</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>clusterSim<span class="br0">&#41;</span>
+DB_score <span class="sy0">&lt;</span>- function<span class="br0">&#40;</span>k<span class="br0">&#41;</span><span class="br0">&#123;</span>
+    km <span class="sy0">&lt;</span>- kmeans<span class="br0">&#40;</span>data<span class="sy0">,</span> center<span class="sy0">=</span>k<span class="br0">&#41;</span>
+    index.<span class="me1">DB</span><span class="br0">&#40;</span>data<span class="sy0">,</span> km$cluster<span class="br0">&#41;</span>$DB
+<span class="br0">&#125;</span>
+k <span class="sy0">&lt;</span>- <span class="nu0">3</span>:<span class="nu0">10</span>
+DB <span class="sy0">&lt;</span>- sapply<span class="br0">&#40;</span>k<span class="sy0">,</span> DB_score<span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>k<span class="sy0">,</span> <span class="kw2">type</span><span class="sy0">=</span><span class="st0">'b'</span><span class="sy0">,</span> DB<span class="sy0">,</span> xlab<span class="sy0">=</span><span class="st0">'Number of clusters'</span><span class="sy0">,</span> ylab<span class="sy0">=</span><span class="st0">'Average Silhouette Scores'</span><span class="sy0">,</span> frame<span class="sy0">=</span>FALSE<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_k-means&amp;media=cpp:david_bouldin.png.png" class="media" title="cpp:david_bouldin.png.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=178c4a&amp;media=cpp:david_bouldin.png.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 8 :</strong> Évolution de l&#039;indice de Davies-Bouldin en fonction du nombre de clusters</p><!--divalign-->
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://fr.wikipedia.org/wiki/Indice_de_Davies-Bouldin#:~:text=L'indice%20de%20Davies%2DBouldin,entre%20deux%20centres%20de%20groupes." class="urlextern" title="https://fr.wikipedia.org/wiki/Indice_de_Davies-Bouldin#:~:text=L&#039;indice%20de%20Davies%2DBouldin,entre%20deux%20centres%20de%20groupes." rel="nofollow">https://fr.wikipedia.org/wiki/Indice_de_Davies-Bouldin#:~:text=L&#039;indice%20de%20Davies%2DBouldin,entre%20deux%20centres%20de%20groupes.</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://openclassrooms.com/fr/courses/4379436-explorez-vos-donnees-avec-des-algorithmes-non-supervises/4379556-definissez-les-criteres-que-doit-satisfaire-votre-clustering" class="urlextern" title="https://openclassrooms.com/fr/courses/4379436-explorez-vos-donnees-avec-des-algorithmes-non-supervises/4379556-definissez-les-criteres-que-doit-satisfaire-votre-clustering" rel="nofollow">https://openclassrooms.com/fr/courses/4379436-explorez-vos-donnees-avec-des-algorithmes-non-supervises/4379556-definissez-les-criteres-que-doit-satisfaire-votre-clustering</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;L&#039;indice de Davies-Bouldin&quot;,&quot;hid&quot;:&quot;l_indice_de_davies-bouldin&quot;,&quot;codeblockOffset&quot;:16,&quot;secid&quot;:12,&quot;range&quot;:&quot;13907-16608&quot;} -->
+<h2 class="sectionedit15" id="limites_des_k-means">Limites des K-means</h2>
+<div class="level2">
+
+<p>
+Pourvu de nombreuses qualités, cet algorithme présente néanmoins 2 grandes faiblesses :
+</p>
+<ul>
+<li class="level1"><div class="li"> Comme vu précédemment, il nécessite d&#039;être <span style='color:#ed1c24; '><strong>entrainé plusieurs fois</strong></span> avant d&#039;obtenir les paramètres optimaux. L&#039;entrainement est certes rapide mais utilise de <span style='color:#ed1c24; '><strong>grands jeux de données</strong></span> ce qui peut amener une baisse <span style='color:#ed1c24; '><strong> de performance</strong></span> importante.</div>
+</li>
+<li class="level1"><div class="li"> Il gère très <span style='color:#ed1c24; '><strong>mal les clusters ovales</strong></span> c&#039;est pourquoi, dans ce cas précis, il est préférable d&#039;utiliser un algorithme de clustering à densité.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Limites des K-means&quot;,&quot;hid&quot;:&quot;limites_des_k-means&quot;,&quot;codeblockOffset&quot;:18,&quot;secid&quot;:15,&quot;range&quot;:&quot;16609-&quot;} -->

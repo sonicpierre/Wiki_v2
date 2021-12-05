@@ -1,0 +1,258 @@
+{{ :cpp:schemamaths.png?450 |}}
+\\
+  * **Sujet :** les mathématiques sont aujourd'hui de plus en plus présentes dans nos vies. Les comprendre de façon théorique est essentiel pour mieux les utiliser dans les matières scientifiques. Cette page est destinée à donner une première approche didactique de notions mathématiques apprises souvent, dans un premier temps, de façon purement théorique.
+  * **Prérequis :** il est nécessaire d'avoir une idée des algorithmes utilisés pour les utiliser correctement. Prendre le temps de comprendre la théorie est indispensable pour ne pas obtenir de résultats aberrants.
+  * **Outils :** l'ensemble des opérations sera traité en Python, Scilab et R. Ces langages sont couramment utilisés dans le traitement des problématiques purement mathématiques.
+
+<alert warning> **Attention :** il est fortement conseillé d'utiliser R sous Windows pour ne pas avoir de problèmes d'installation de package. </alert>
+
+=====Définir un objet mathématique=====
+
+Ici sont exposées des variables utiles en mathématiques. Nous utiliserons la librairie **numpy** pour le code Python.
+
+====Les variables====
+
+|                    ^   Python  ^  R  ^  Scilab  ^
+^  Variable  |  <code python>A = 5</code>  |  <code python>A<-5</code>  |  <code scilab> A = 5 </code>  |
+^  Vecteur  |  <code python> A=np.array([1,2,3]) </code>  |  <code python>A<-c(1,2,3)</code>  |  <code scilab> A = [1,2,3] </code>  |
+
+====Définir une matrice====
+
+__Code Python :__
+
+ <code python>np.array([[1,2,1],[4,5,6],[7,8,9]])</code>
+
+__Code R :__
+
+<code python>
+Pierre <- c(1,2,3)
+Nathalie <- c(4,5,6)
+Jacques <- c(7,8,9)
+matrix(c(Pierre, Nathalie, Jacques), nrow=3, ncol=3, byrow=T)
+</code>
+
+__Code Scilab :__
+
+<code scilab>A = [1,2,1;4,5,6;7,8,9]</code>
+
+====Déclarer sa fonction====
+
+Il est possible d'utiliser la méthode vue au-dessus pour déclarer la fonction $f$. Cependant, quand il s'agit de fonctions purement mathématiques, il existe des raccourcis syntaxiques.
+
+__Code Python :__
+
+<code python>
+f = lambda x: x**4 - 5* x**2 + 4
+</code>
+
+__Code R :__
+
+<code python>
+f <- {function(x) x^4 -  5*x^2 + 4}
+</code>
+
+__Code Scilab :__
+
+<code matlab>
+function y=P(x)
+y=(x^4 - 5*x^2 + 4)
+endfunction
+</code>
+
+<alert info>**Info :** pour les fonctions plus conséquentes, un code plus adapté est abordé dans la suite de la page.</alert>
+
+=====Opérations matricielles=====
+
+Pour cette partie, nous prendrons les matrices A, B et C définies ci-dessous :
+
+$$A = \begin{pmatrix} 1 & 3 & 1 \\ 5 & 6 & 4 \\ 7 & 3 & 1\end{pmatrix}  B = \begin{pmatrix} 4 & 5 & 7 \\ 1 & 9 & 3 \\ 6 & 2 & 2\end{pmatrix} C = \begin{pmatrix} 4 & 5 & 7 \\ 1 & 9 & 3 \end{pmatrix}$$ 
+
+Il est nécessaire d'installer certaines librairies :
+
+__Code Python :__
+
+<code python>
+import numpy as np
+from scipy.linalg import lu
+</code>
+
+__Code R :__
+
+<code python>
+library(corpcor)
+library(matrixcalc)
+</code>
+
+|                    ^   Python  ^  R  ^  Scilab  ^
+^  Multiplication  |  <code python>  A.dot(B)  </code>  |  <code python>A%*%B</code>  |  <code scilab> A*B </code>  |
+^  Inverse  |  <code python>np.linalg.inv(A)</code>  |  <code python>solve(A)</code>  |  <code scilab>inv(A)</code>  |
+^  Transposée  |   <code python> np.transpose(A) </code>  |  <code python>aperm(A)</code>  |  <code scilab> A' </code>  |
+^  Trace  |   <code python> np.trace(A) </code>  |  <code python>sum(diag(A))</code>  |  <code scilab> trace(A) </code>  |
+^  Déterminant  |   <code python> np.linalg.det(A) </code>  |  <code python>det(A)</code>  |  <code scilab> det(A) </code>  |
+^  Factorisation [[https://fr.wikipedia.org/wiki/D%C3%A9composition_LU| LU]]  |   <code python>P, L, U = lu(A)</code>  |  <code python>lu.decomposition(A)</code>  |  <code scilab>[L, U] = lu (A)</code>  |
+^  Décomposition [[https://fr.wikipedia.org/wiki/D%C3%A9composition_en_valeurs_singuli%C3%A8res| SVD]]  |   <code python> np.linalg.svd(C) </code>  |  <code python>svd(C)</code>  |  <code scilab> [U, S, V] = svd(C) </code>  |
+^  Pseudo-inverse  |   <code python> np.linalg.pinv(C) </code>  |  <code python>pseudoinverse(C)</code>  |  <code scilab> pinv(C) </code>  |
+^  Valeurs propres  |   <code python>np.linalg.eigh(A)</code>  |  <code python>eigen(A)</code>  |  <code scilab>[VectPro, ValPro] = spec(A)</code>  |
+
+=====Conditions et boucles dans une fonction=====
+ Dans les algorithmes, il est courant d'avoir des conditions, des boucles et des fonctions à définir en amont c'est pourquoi nous allons traduire l'algorithme ci- dessous dans les 3 langages.
+
+
+__Code Python :__
+
+<code python>
+#Déclaration de la fonction
+def maFonction(x,y):
+    #Utilisation fréquente du for pour les boucles
+    for i in range(y):
+        #On écrit une condition
+        if(i!=3):
+            print("Vive l'Auvergne !")
+        else:
+            return(x+5) #return va mettre un terme à la boucle et renvoyer une valeur
+#Appel de la fonction
+Resultat = maFonction(10,20)
+# Resultat aura la valeur 5 dans ce cas
+</code>
+
+__Code R :__
+
+<code python>
+ maFonction <- function(x, y) {
+     for (i in 1:y) {
+         if(i!=3){
+             print("Vive l'AuveRgne !!")
+         } else {
+             return(x +5)
+         }
+     }
+ }
+Resultat = maFonction(10,20)
+</code>
+
+__Code Scilab :__
+
+<code matlab>
+function [Resultat] = maFonction(x,y)
+  Resultat = x + 5
+  for i = 1:y
+  if(i~=3)
+  disp("Auvergne")
+  else
+  return Resultat
+  end
+  end
+  endfunction
+</code>
+
+
+
+=====Opérations numériques sur les fonctions=====
+
+Il est important de préciser qu'il existe plusieurs algorithmes d'intégration. On ne va présenter, ici, qu'une application rapide à utiliser seulement dans le cas où le calcul n'est pas le centre de la problématique traitée. Cependant, rappelons qu'il est toujours bon d'aller voir les **<color #ed1c24>préconditions</color>** avant d'appliquer le code ci-dessous.
+
+$$f : x \mapsto x^{4} - 5 x^{2} + 4$$
+$$g : (x,y) \mapsto x^{4} - 5 y^{2} + 4$$
+
+====Intégration====
+
+Nous allons ici décrire 3 méthodes utilisées pour calculer des intégrales dans des problématiques scientifiques.
+
+**Intégration utilisant la méthode de Simpson**
+
+__Code Python :__
+
+<code python>
+from scipy import integrate
+x = np.linspace(-10,10,10000)
+integrate.simps(f(x), x)
+</code>
+
+__Code R :__
+
+<code python>
+library(pracma)
+integral(f, -10, 10, method= "Simpson")
+</code>
+
+__Code Scilab :__
+
+<code matlab>
+function S = Simpson(f,a,b,N)
+  h = (b-a)/N
+  pivots_ext = a + h*[1:N-1]
+  pivots_mil = a + 0.5*h*(2*[1:N]-1)
+  S = (h/6)*(f(a)+f(b)+2*sum(feval(pivots_ext,f))+4*sum(feval(pivots_mil,f)))
+endfunction
+</code>
+
+**Intégration utilisant la [[https://en.wikipedia.org/wiki/QUADPACK | librairie QUADRAPACK de FORTRAN]]**
+
+__En Python :__
+
+<code python>
+from scipy.integrate import quad
+Val, err = quad(f, -10, 10) #Calcule l'intégrale sur l'intervalle [-10,10]
+</code>
+
+__En R :__
+
+<code python>
+library(pracma)
+quad(f, -10, 10, 1e-4)
+</code>
+
+__En Scilab :__
+
+<code matlab>
+[v, err] = intg(-10, 10, P)
+</code>
+
+** Intégration multiple**
+
+__Code Python :__
+
+<code python>
+from scipy.integrate import nquad
+Val, err = nquad(g, [[-10, 10], [-5,5]])
+</code>
+
+__Code R :__
+
+<code python>
+integral2(g,-10,10,-5,5)
+</code>
+
+====Dérivation====
+
+<alert warning> **Attention :** avant de calculer une dérivée, il est nécessaire de vérifier qu'elle existe !!</alert>
+
+__Code Python :__
+
+<code python>
+from scipy.misc import derivative
+derivative(f, 2, 0.01) #derivative(Fonction, Abscisse demandé, Erreur)
+</code>
+
+__Code R :__
+
+<code python>
+library(Deriv)
+fDeriv <- Deriv(f)
+fDeriv(3)
+</code>
+
+__Code Scilab :__
+
+<code matlab>
+numderivative(f,3)
+</code>
+
+<alert success>
+**Approfondir** : vous trouverez, [[cpp: Optimisation Linéaire |ici]], des pages sur les algorithmes d'optimisation mettant en application les méthodes mathématiques permettant la recherche de 0.
+</alert>
+
+**Source :**
+  * [[https://www.it-swarm.dev/fr/r/fonctions-de-type-lambda-dans-r/941551321/]]
+  * [[https://www.rdocumentation.org/packages/pracma/versions/1.9.9/topics/integral]]
+  * [[http://informathix.tuxfamily.org/?q=node/53]]

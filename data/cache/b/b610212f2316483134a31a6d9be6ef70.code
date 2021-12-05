@@ -1,0 +1,9 @@
+library<span class="br0">&#40;</span>cluster<span class="br0">&#41;</span>
+silhouette_score <span class="sy0">&lt;</span>- function<span class="br0">&#40;</span>k<span class="br0">&#41;</span><span class="br0">&#123;</span>
+    km <span class="sy0">&lt;</span>- kmeans<span class="br0">&#40;</span>data<span class="sy0">,</span> center<span class="sy0">=</span>k<span class="br0">&#41;</span>
+    ss <span class="sy0">&lt;</span>- silhouette<span class="br0">&#40;</span>km$cluster<span class="sy0">,</span> dist<span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="br0">&#41;</span>
+    mean<span class="br0">&#40;</span>ss<span class="br0">&#91;</span><span class="sy0">,</span> <span class="nu0">3</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+<span class="br0">&#125;</span>
+k <span class="sy0">&lt;</span>- <span class="nu0">2</span>:<span class="nu0">10</span>
+avg_sil <span class="sy0">&lt;</span>- sapply<span class="br0">&#40;</span>k<span class="sy0">,</span> silhouette_score<span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>k<span class="sy0">,</span> <span class="kw2">type</span><span class="sy0">=</span><span class="st0">'b'</span><span class="sy0">,</span> avg_sil<span class="sy0">,</span> xlab<span class="sy0">=</span><span class="st0">'Number of clusters'</span><span class="sy0">,</span> ylab<span class="sy0">=</span><span class="st0">'Average Silhouette Scores'</span><span class="sy0">,</span> frame<span class="sy0">=</span>FALSE<span class="br0">&#41;</span>

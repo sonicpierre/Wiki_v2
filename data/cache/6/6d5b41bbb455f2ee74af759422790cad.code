@@ -1,0 +1,1 @@
+pd.<span class="me1">date_range</span><span class="br0">&#40;</span>start <span class="sy0">=</span><span class="st0">'10-02-2021'</span><span class="sy0">,</span> end <span class="sy0">=</span><span class="st0">'20-10-2021'</span><span class="sy0">,</span> freq <span class="sy0">=</span><span class="st0">'5H'</span><span class="br0">&#41;</span>

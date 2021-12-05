@@ -1,0 +1,10 @@
+library<span class="br0">&#40;</span>ipred<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>rpart<span class="br0">&#41;</span>
+data$V61 <span class="sy0">=</span> <span class="kw1">as</span>.<span class="me1">factor</span><span class="br0">&#40;</span>data$V61<span class="br0">&#41;</span>
+bag <span class="sy0">&lt;</span>- bagging<span class="br0">&#40;</span>
+            formula <span class="sy0">=</span> data$V61 <span class="sy0">~</span> .<span class="sy0">,</span>
+            data <span class="sy0">=</span> data<span class="sy0">,</span>
+            nbagg <span class="sy0">=</span> <span class="nu0">300</span><span class="sy0">,</span>  
+            coob <span class="sy0">=</span> TRUE<span class="sy0">,</span>
+            control <span class="sy0">=</span> rpart.<span class="me1">control</span><span class="br0">&#40;</span>minsplit <span class="sy0">=</span> <span class="nu0">2</span><span class="sy0">,</span> cp <span class="sy0">=</span> <span class="nu0">0</span><span class="br0">&#41;</span>
+<span class="br0">&#41;</span>

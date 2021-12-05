@@ -1,0 +1,653 @@
+
+<p>
+<a href="/doku.php?id=cpp:ia" class="wikilink1" title="cpp:ia"> Machine Learning</a>
+<a href="/lib/exe/detail.php?id=cpp%3Apreprocessing_et_encodage&amp;media=cpp:process.png" class="media" title="cpp:process.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=343c39&amp;media=cpp:process.png" class="mediacenter" title="Pré-traitement " alt="Pré-traitement " width="400" /></a>
+</p>
+
+<p>
+Le pré-traitement des données nécessite de la patience et peut représenter jusqu&#039;à 80 % du travail d&#039;un data scientist.  Il se fait à tâton, parallèlement à la phase de création du modèle, selon les hypothèses émises.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Apreprocessing_et_encodage&amp;media=cpp:data_prepro.png" class="media" title="cpp:data_prepro.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=eb3aed&amp;media=cpp:data_prepro.png" class="mediacenter" title="Objectifs du pré-traitement des données" alt="Objectifs du pré-traitement des données" width="800" /></a>
+</p>
+
+<p>
+<div class='alert alert-info'><strong><span style="font-size:large;">Remarque :</span></strong>  les méthodes d&#039;extraction d&#039;informations et de sélection de variables sont disponibles <a href="/doku.php?id=cpp:data_exploration" class="wikilink1" title="cpp:data_exploration">ici</a>.</div>
+</p>
+
+<h2 class="sectionedit1" id="les_valeurs_manquantes">Les valeurs manquantes</h2>
+<div class="level2">
+
+<p>
+<div class='alert alert-info'><strong>Remarque :</strong>  traiter les valeurs manquantes nécessite d&#039;abord de les visualiser. Vous pouvez vous référer au graphique disponible sur <a href="/doku.php?id=cpp:visualiser_le_dataset" class="wikilink1" title="cpp:visualiser_le_dataset">visualiser les valeurs manquantes</a>.<br/>
+
+<br/>
+
+ Consultez aussi la page <a href="/doku.php?id=cpp:scrapper_les_donnees" class="wikilink1" title="cpp:scrapper_les_donnees">constituer le dataset</a> pour savoir comment récupérer les données depuis une page web.</div>
+</p>
+
+<p>
+Considérons le dataset sur le Covid19 disponible sur <a href="https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports_us/07-09-2020.csv" class="urlextern" title="https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports_us/07-09-2020.csv" rel="nofollow">GitHub</a>. La collecte des données étant difficile et réglementée, il est quasi impossible de regrouper certaines informations
+ce qui implique d&#039;avoir un dataset sale sur lequel il faut traiter les valeurs manquantes.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Apreprocessing_et_encodage&amp;media=cpp:dirry_data.png" class="media" title="cpp:dirry_data.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=6d8c7b&amp;media=cpp:dirry_data.png" class="mediacenter" title="Dataset avec des données manquantes" alt="Dataset avec des données manquantes" width="600" /></a>
+</p>
+
+<p>
+Pour ce type de problème, il existe deux solutions : 
+</p>
+<div class="table sectionedit2"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0 leftalign">              </td><th class="col1 leftalign"> Fonctionnement                  </th><th class="col2 leftalign"> Quand utiliser         </th><th class="col3">Inconvénients </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 leftalign"> Suppression       </th><td class="col1 leftalign"> Supprime les lignes comportant des valeurs manquantes.            </td><td class="col2 leftalign">Lorsque les valeurs manquantes ne sont pas nombreuses ou pour un premier test afin d&#039;évaluer les résultats d&#039;un modèle.    </td><td class="col3">Possible suppression d&#039;un grand nombre d&#039;observations, perte d&#039;informations. </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 leftalign"> Imputation    </th><td class="col1"> Remplace les valeurs manquantes par une valeur statistique (moyenne, médiane etc.). </td><td class="col2 leftalign">Pour explorer d&#039;autres possibilités après la suppression.                 </td><td class="col3">La valeur statistique dépend du problème et des données. Peut corrompre les données si elles sont mal imputées. </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:2,&quot;range&quot;:&quot;1485-2171&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les valeurs manquantes&quot;,&quot;hid&quot;:&quot;les_valeurs_manquantes&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;553-2172&quot;} -->
+<h3 class="sectionedit3" id="suppression_des_valeurs_manquantes">Suppression des valeurs manquantes</h3>
+<div class="level3">
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">data <span class="sy0">=</span> data.<span class="me1">dropna</span><span class="br0">&#40;</span>axis<span class="sy0">=</span><span class="nu0">0</span><span class="br0">&#41;</span><span class="co1">#On utilise la fonction dropna() en précisant l'axe des lignes (axis=0).</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>tidyr<span class="br0">&#41;</span>
+&nbsp;
+data <span class="sy0">&lt;</span>- drop_na<span class="br0">&#40;</span>data<span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Suppression des valeurs manquantes&quot;,&quot;hid&quot;:&quot;suppression_des_valeurs_manquantes&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;2173-2429&quot;} -->
+<h3 class="sectionedit4" id="imputation_des_valeurs_manquantes">Imputation des valeurs manquantes</h3>
+<div class="level3">
+
+<p>
+L&#039;imputation des données manquantes par une valeur statistique se fait selon leur répartition :
+</p>
+<ul>
+<li class="level1"><div class="li"> Lorsque les données suivent une distribution normale, on impute par la moyenne.</div>
+</li>
+<li class="level1"><div class="li"> Lorsqu&#039;elles suivent une distribution asymétrique, on impute par la médiane.</div>
+</li>
+</ul>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Apreprocessing_et_encodage&amp;media=cpp:distr.jpg" class="media" title="cpp:distr.jpg"><img src="/lib/exe/fetch.php?w=600&amp;tok=14d06d&amp;media=cpp:distr.jpg" class="mediacenter" title="Répartition des données" alt="Répartition des données" width="600" /></a>
+</p>
+<p class="divalign-center">Légende :  asymétrie à gauche, distribution normale au centre, asymétrie à droite</p><!--divalign-->
+
+<p>
+Pour effectuer la même opération d&#039;imputation sur l&#039;ensemble des variables <strong>quantitatives</strong> : 
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">impute</span> <span class="kw1">import</span> SimpleImputer<span class="co1">#Importation du transformeur</span>
+&nbsp;
+imputer <span class="sy0">=</span> SimpleImputer<span class="br0">&#40;</span>missing_values <span class="sy0">=</span> np.<span class="me1">nan</span><span class="sy0">,</span> strategy <span class="sy0">=</span> <span class="st0">'median'</span><span class="br0">&#41;</span><span class="co1">#Création d'un transformeur qui identifie la forme des valeurs manquantes avec missing_values et définie une stratégie d'imputation (on a choisi la médiane).</span>
+imputer.<span class="me1">fit_transform</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="co1">#Application de la transformation sur l'ensemble des données</span>
+&nbsp;
+data <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>imputer.<span class="me1">fit_transform</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="sy0">,</span> index<span class="sy0">=</span>df.<span class="me1">index</span><span class="sy0">,</span> columns<span class="sy0">=</span>data.<span class="me1">columns</span><span class="br0">&#41;</span><span class="co1">#Transformation du tableau numpy obtenu après transformation, en tableau pandas.</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>useful<span class="br0">&#41;</span>
+&nbsp;
+simple.<span class="me1">impute</span><span class="br0">&#40;</span>data <span class="sy0">,</span>  fun <span class="sy0">=</span> median<span class="br0">&#41;</span></pre>
+
+<p>
+Pour appliquer la transformation sur une variable particulière :
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">data<span class="br0">&#91;</span><span class="st0">'Recovered'</span><span class="br0">&#93;</span> <span class="sy0">=</span> data<span class="br0">&#91;</span><span class="st0">'Recovered'</span><span class="br0">&#93;</span>.<span class="me1">fillna</span><span class="br0">&#40;</span>data<span class="br0">&#91;</span><span class="st0">'Recovered'</span><span class="br0">&#93;</span>.<span class="me1">median</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Application de l'imputation par la moyenne sur la variable &quot;Recovered&quot;.</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;zoo&quot;</span><span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>zoo<span class="br0">&#41;</span>
+data$Recovered <span class="sy0">&lt;</span>- na.<span class="me1">aggregate</span><span class="br0">&#40;</span>data$Recovered<span class="sy0">,</span> FUN <span class="sy0">=</span> median<span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Imputation des valeurs manquantes&quot;,&quot;hid&quot;:&quot;imputation_des_valeurs_manquantes&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:4,&quot;range&quot;:&quot;2430-4057&quot;} -->
+<h3 class="sectionedit5" id="astuces">Astuces</h3>
+<div class="level3">
+
+<p>
+Une autre méthode d&#039;imputation efficace consiste à utiliser l&#039;algorithme KNN (K-nearest neighbors) qui remplace toutes les valeurs manquantes par les valeurs des plus proches voisins.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">imputer <span class="sy0">=</span> KNNImputer<span class="br0">&#40;</span>n_neighbors<span class="sy0">=</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="co1">#Utilisation de l'algorithme KNN en prenant en compte la similarité d'un voisin semblable pour l'imputation.</span>
+imputer.<span class="me1">fit_transform</span><span class="br0">&#40;</span>df<span class="br0">&#41;</span><span class="co1">#Application de la transformation à toutes les données</span>
+&nbsp;
+df <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>imputer.<span class="me1">fit_transform</span><span class="br0">&#40;</span>df<span class="br0">&#41;</span><span class="sy0">,</span> index<span class="sy0">=</span>df.<span class="me1">index</span><span class="sy0">,</span> columns<span class="sy0">=</span>df.<span class="me1">columns</span><span class="br0">&#41;</span><span class="co1">#Conversion du tableau numpy obtenu en DataFrame pandas.</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;VIM&quot;</span><span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>VIM<span class="br0">&#41;</span>
+data <span class="sy0">&lt;</span>- kNN<span class="br0">&#40;</span>data<span class="sy0">,</span> k<span class="sy0">=</span><span class="nu0">1</span><span class="sy0">,</span> imp_var<span class="sy0">=</span>FALSE<span class="br0">&#41;</span><span class="co1">#L'argument imp_var indique si on affiche ou non l'état d'imputation.</span></pre>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://support.zendesk.com/hc/fr/articles/228989407-Moyenne-par-rapport-%C3%A0-M%C3%A9diane" class="urlextern" title="https://support.zendesk.com/hc/fr/articles/228989407-Moyenne-par-rapport-%C3%A0-M%C3%A9diane" rel="nofollow">Zendesk</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.youtube.com/watch?v=QVEJJNsz-eM&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=26" class="urlextern" title="https://www.youtube.com/watch?v=QVEJJNsz-eM&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=26" rel="nofollow">Machine Learnia</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.educatim.fr/tq/co/Module_TQ_web/co/asymetrie.html" class="urlextern" title="http://www.educatim.fr/tq/co/Module_TQ_web/co/asymetrie.html" rel="nofollow">educatim</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Astuces&quot;,&quot;hid&quot;:&quot;astuces&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:5,&quot;range&quot;:&quot;4058-5165&quot;} -->
+<h2 class="sectionedit6" id="l_encodage_des_donnees">L&#039;encodage des données</h2>
+<div class="level2">
+
+<p>
+La plupart des algorithmes de Machine Learning prenant des valeurs numériques en entrée, il est nécessaire de remplacer chaque valeur qualitative par une valeur numérique qui lui sera propre : c&#039;est l&#039;encodage. 
+</p>
+
+<p>
+De plus, la manière dont l&#039;encodage est effectué a son importance. En effet, il peut créer des distances qui n&#039;ont pas lieu d&#039;être ce qui a pour conséquence de tromper certains algorithmes et conduire à des prédictions erronées. 
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Apreprocessing_et_encodage&amp;media=cpp:distance.png" class="media" title="cpp:distance.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=f88e60&amp;media=cpp:distance.png" class="mediacenter" title="Notion de distance dans l&#039;encodage de données" alt="Notion de distance dans l&#039;encodage de données" width="600" /></a>
+</p>
+
+<p>
+Pour pallier cette difficulté,  il existe l&#039;encodage ordinal et l&#039;encodage One-Hot, selon qu&#039;il y a un ordre dans les données ou non.
+</p>
+
+<p>
+Considérons le dataset suivant :
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+&nbsp;
+data <span class="sy0">=</span> <span class="br0">&#123;</span><span class="st0">'Etudiant'</span>:<span class="br0">&#91;</span><span class="st0">'Romain'</span><span class="sy0">,</span> <span class="st0">'Adèle'</span><span class="sy0">,</span> <span class="st0">'Johan'</span><span class="sy0">,</span> <span class="st0">'Xavier'</span><span class="sy0">,</span> <span class="st0">'Cassandra'</span><span class="sy0">,</span> <span class="st0">'Elise'</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="st0">'Appreciation'</span>:<span class="br0">&#91;</span><span class="st0">'B'</span><span class="sy0">,</span> <span class="st0">'TB'</span><span class="sy0">,</span> <span class="st0">'AB'</span><span class="sy0">,</span> <span class="st0">'B'</span><span class="sy0">,</span> <span class="st0">'AB'</span><span class="sy0">,</span> <span class="st0">'TB'</span><span class="br0">&#93;</span><span class="br0">&#125;</span><span class="co1">#Création des colonnes du dataset de leurs attributs</span>
+&nbsp;
+df <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>data<span class="sy0">,</span> index <span class="sy0">=</span><span class="br0">&#91;</span><span class="st0">'1'</span><span class="sy0">,</span> <span class="st0">'2'</span><span class="sy0">,</span> <span class="st0">'3'</span><span class="sy0">,</span> <span class="st0">'4'</span><span class="sy0">,</span> <span class="st0">'5'</span><span class="sy0">,</span> <span class="st0">'6'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="co1">#Numérotation des index</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">Etudiant <span class="sy0">&lt;</span>- c<span class="br0">&#40;</span><span class="st0">'Romain'</span><span class="sy0">,</span><span class="st0">'Adèle'</span><span class="sy0">,</span><span class="st0">'Johan'</span><span class="sy0">,</span><span class="st0">'Xavier'</span><span class="sy0">,</span><span class="st0">'Cassandra'</span><span class="sy0">,</span><span class="st0">'Elise'</span><span class="br0">&#41;</span><span class="co1">#Création de la colonne des noms d'étudiants et ses valeurs</span>
+Appreciation <span class="sy0">&lt;</span>- c<span class="br0">&#40;</span><span class="st0">'B'</span><span class="sy0">,</span><span class="st0">'TB'</span><span class="sy0">,</span><span class="st0">'AB'</span><span class="sy0">,</span><span class="st0">'B'</span><span class="sy0">,</span><span class="st0">'AB'</span><span class="sy0">,</span><span class="st0">'TB'</span><span class="br0">&#41;</span><span class="co1">#Création de la colonne d'appréciations et ses valeurs</span>
+&nbsp;
+df <span class="sy0">&lt;</span>- data.<span class="me1">frame</span><span class="br0">&#40;</span>Etudiant<span class="sy0">,</span> Appreciation<span class="br0">&#41;</span><span class="co1">#Jointure pour créer le dataframe</span></pre>
+
+<p>
+<div class='alert alert-info'><strong><span style="font-size:large;">Remarque :</span></strong>  pour chaque type d&#039;encodage, il existe des algorithmes permettant de traiter une variable en particulier (données y) ou plusieurs variables en même temps (données X).</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;L&#039;encodage des donn\u00e9es&quot;,&quot;hid&quot;:&quot;l_encodage_des_donnees&quot;,&quot;codeblockOffset&quot;:8,&quot;secid&quot;:6,&quot;range&quot;:&quot;5166-6806&quot;} -->
+<h3 class="sectionedit7" id="encodage_ordinal">Encodage ordinal</h3>
+<div class="level3">
+
+<p>
+<span style='color:#ed1c24; '>Traitement d&#039;une variable particulière : </span>
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> numpy <span class="kw1">as</span> np
+<span class="kw1">from</span> sklearn.<span class="me1">preprocessing</span> <span class="kw1">import</span> LabelEncoder
+&nbsp;
+y <span class="sy0">=</span> df<span class="br0">&#91;</span><span class="st0">'Appreciation'</span><span class="br0">&#93;</span><span class="co1">#Déclaration de la colonne à traiter</span>
+encoder <span class="sy0">=</span> LabelEncoder<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="co1">#Appel du transformateur</span>
+encoder.<span class="me1">fit_transform</span><span class="br0">&#40;</span>y<span class="br0">&#41;</span><span class="co1">#Application de la transformation à l'ensemble des attributs de y</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;superml&quot;</span><span class="br0">&#41;</span>
+install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;CatEncoders&quot;</span><span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>CatEncoders<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>superml<span class="br0">&#41;</span>
+&nbsp;
+y <span class="sy0">&lt;</span>- factor<span class="br0">&#40;</span>df$Appreciation<span class="br0">&#41;</span><span class="co1">#Déclaration des attributs à encoder. Il est nécessaire de convertir la variable en facteur.</span>
+encoder <span class="sy0">&lt;</span>- LabelEncoder.<span class="me1">fit</span><span class="br0">&#40;</span>y<span class="br0">&#41;</span><span class="co1">#Application de l'encodage aux données</span>
+val <span class="sy0">&lt;</span>- transform<span class="br0">&#40;</span>encoder<span class="sy0">,</span> y<span class="br0">&#41;</span><span class="co1">#Transformation des données, qu'on récupère dans une variable pour pouvoir les décoder</span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Apreprocessing_et_encodage&amp;media=cpp:avant_apres.png" class="media" title="cpp:avant_apres.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=c0da8d&amp;media=cpp:avant_apres.png" class="mediacenter" title="Avant et après traitement" alt="Avant et après traitement" width="400" /></a>
+</p>
+
+<p>
+Il est possible de décoder les valeurs numériques obtenues.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">encoder.<span class="me1">inverse_transform</span><span class="br0">&#40;</span>np.<span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">2</span><span class="sy0">,</span> <span class="nu0">2</span><span class="sy0">,</span> <span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Définition des valeurs à décoder</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+
+<p>
+Sous R, le processus est différent : il est nécessaire de récupérer les valeurs encodées dans une variable. Puis, de passer cette dernière dans la fonction de décodage contrairement au Python où on donne les valeurs dont on veut le décodage.
+</p>
+<pre class="code python">inverse.<span class="me1">transform</span><span class="br0">&#40;</span>encoder<span class="sy0">,</span> val<span class="br0">&#41;</span><span class="co1">#On réintroduit les valeurs encodées dans une fonction de décodage</span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Apreprocessing_et_encodage&amp;media=cpp:sac.png" class="media" title="cpp:sac.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=469787&amp;media=cpp:sac.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Encodage ordinal&quot;,&quot;hid&quot;:&quot;encodage_ordinal&quot;,&quot;codeblockOffset&quot;:10,&quot;secid&quot;:7,&quot;range&quot;:&quot;6807-8350&quot;} -->
+<h3 class="sectionedit8" id="encodage_one-hot">Encodage One-Hot</h3>
+<div class="level3">
+
+<p>
+<div class='alert alert-info'><strong><span style="font-size:large;">Remarque :</span></strong>  ce type d&#039;encodage ne fonctionne généralement pas bien si la variable prend plus de 15 valeurs différentes. En effet, l&#039;encodage OneHot crée une variable pour chacune des valeurs encodées ce qui réduit, à terme, les performances de la machine. Les data scientists créent donc eux-mêmes leurs propres fonctions d&#039;encodage afin de pallier ce genre de problème.</div>
+</p>
+
+<p>
+<span style='color:#ed1c24; '>Traitement d&#039;une variable particulière : </span>
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> numpy <span class="kw1">as</span> np
+<span class="kw1">from</span> sklearn.<span class="me1">preprocessing</span> <span class="kw1">import</span> LabelBinarizer
+&nbsp;
+y <span class="sy0">=</span> df<span class="br0">&#91;</span><span class="st0">'Etudiant'</span><span class="br0">&#93;</span><span class="co1">#Colonne à traiter</span>
+encoder <span class="sy0">=</span> LabelBinarizer<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="co1">#Appel du transformeur</span>
+encoder.<span class="me1">fit_transform</span><span class="br0">&#40;</span>y<span class="br0">&#41;</span><span class="co1">#Application de la transformation au dataset</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+
+<p>
+Il n&#039;existe pas, à proprement parlé, de fonction LabelBinarizer sous R. Toutefois, l&#039;encodage reste possible grâce à dummyVars(). Cette fonction permet de traiter à la fois les données y et X.
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>caret<span class="br0">&#41;</span>
+&nbsp;
+encode_data <span class="sy0">&lt;</span>- dummyVars<span class="br0">&#40;</span><span class="st0">&quot; ~ Etudiant&quot;</span><span class="sy0">,</span> data <span class="sy0">=</span> df<span class="br0">&#41;</span><span class="co1">#On définit la variable à encoder.</span>
+encoder <span class="sy0">&lt;</span>- data.<span class="me1">frame</span><span class="br0">&#40;</span>predict<span class="br0">&#40;</span>encode_data<span class="sy0">,</span> newdata  <span class="sy0">=</span> df<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Application de l'encodage</span>
+&nbsp;
+<span class="co1">###Astuce données X###</span>
+&nbsp;
+encode_data <span class="sy0">&lt;</span>- dummyVars<span class="br0">&#40;</span><span class="st0">&quot; ~ Etudiant + Appreciation&quot;</span><span class="sy0">,</span> data <span class="sy0">=</span> df<span class="br0">&#41;</span><span class="co1">#Encodage de certaines variables en même temps.</span>
+encode_data <span class="sy0">&lt;</span>- dummyVars<span class="br0">&#40;</span><span class="st0">&quot; ~ .&quot;</span><span class="sy0">,</span> data <span class="sy0">=</span> df<span class="br0">&#41;</span><span class="co1">#Encodage de toutes les variables qualitatives ⇔ OneHotEncoder().</span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Apreprocessing_et_encodage&amp;media=cpp:labelbinarizer.png" class="media" title="cpp:labelbinarizer.png"><img src="/lib/exe/fetch.php?w=200&amp;tok=38c4dd&amp;media=cpp:labelbinarizer.png" class="mediacenter" title="Encodage OneHot" alt="Encodage OneHot" width="200" /></a>
+</p>
+
+<p>
+<span style='color:#ed1c24; '>Synthèse : </span>
+</p>
+<div class="table sectionedit9"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0 leftalign">              </td><th class="col1 leftalign"> Encodage Ordinal                </th><th class="col2 leftalign"> Encodage One-Hot          </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 leftalign">Données y (une colonne à la fois)     </th><td class="col1">LabelEncoder </td><td class="col2"> LabelBinarizer</td>
+	</tr>
+	<tr class="row2">
+		<th class="col0">Données X (plusieurs colonnes en même temps) </th><td class="col1">OrdinalEncoder </td><td class="col2">OneHotEncoder</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:9,&quot;range&quot;:&quot;9913-10144&quot;} -->
+<p>
+<strong>Sources :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.kaggle.com/alexisbcook/categorical-variables" class="urlextern" title="https://www.kaggle.com/alexisbcook/categorical-variables" rel="nofollow">Kaggle</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.youtube.com/watch?v=OGWwzm304Xs&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=24" class="urlextern" title="https://www.youtube.com/watch?v=OGWwzm304Xs&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=24" rel="nofollow">Machine Learnia</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://amunategui.github.io/dummyVar-Walkthrough/" class="urlextern" title="https://amunategui.github.io/dummyVar-Walkthrough/" rel="nofollow">amunategui</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Encodage One-Hot&quot;,&quot;hid&quot;:&quot;encodage_one-hot&quot;,&quot;codeblockOffset&quot;:14,&quot;secid&quot;:8,&quot;range&quot;:&quot;8351-10421&quot;} -->
+<h2 class="sectionedit10" id="normalisation_des_donnees">Normalisation des données</h2>
+<div class="level2">
+
+<p>
+Les opérations de normalisation permettent de mettre les données quantitatives à la même échelle et sont importantes car il est plus facile pour la machine de traiter des valeurs entre 0 et 1 que celles entre 10.000 et 100.000 par exemple.
+</p>
+
+<p>
+Cet exemple utilise le dataset des fleurs <a href="/doku.php?id=cpp:visualiser_le_dataset" class="wikilink1" title="cpp:visualiser_le_dataset">d&#039;iris</a>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Normalisation des donn\u00e9es&quot;,&quot;hid&quot;:&quot;normalisation_des_donnees&quot;,&quot;codeblockOffset&quot;:16,&quot;secid&quot;:10,&quot;range&quot;:&quot;10422-10782&quot;} -->
+<h3 class="sectionedit11" id="la_standardisation">La standardisation</h3>
+<div class="level3">
+
+<p>
+La standardisation transforme chaque variable X pour qu&#039;elle soit de moyenne nulle et d&#039;écart-type un. Cette méthode est sensible aux valeurs aberrantes. 
+</p>
+
+<p>
+<strong>Théorie</strong>
+</p>
+
+<p>
+$$
+X_{standardisé} = \frac{X - \mu_{X}}{\sigma_{X}}
+$$
+</p>
+<div class="table sectionedit12"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">      Paramètres        </th><th class="col1"> Signification</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0"> $\mu_{X}$</td><td class="col1"> Moyenne initiale </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> $X$     </td><td class="col1"> Vecteur initial </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> $\sigma_{X} $    </td><td class="col1"> Écart-type initial </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table2&quot;,&quot;secid&quot;:12,&quot;range&quot;:&quot;11040-11187&quot;} -->
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">preprocessing</span> <span class="kw1">import</span> StandardScaler
+<span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+&nbsp;
+scaler <span class="sy0">=</span> StandardScaler<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="co1">#Appel du transformeur</span>
+X <span class="sy0">=</span> scaler.<span class="me1">fit_transform</span><span class="br0">&#40;</span>X<span class="br0">&#41;</span><span class="co1">#Application à l'ensemble des données</span>
+pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>X<span class="sy0">,</span> columns<span class="sy0">=</span>iris.<span class="me1">feature_names</span><span class="br0">&#41;</span><span class="co1">#Affichage du dataset normalisé</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">X <span class="sy0">&lt;</span>- scale<span class="br0">&#40;</span>X<span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La standardisation&quot;,&quot;hid&quot;:&quot;la_standardisation&quot;,&quot;codeblockOffset&quot;:16,&quot;secid&quot;:11,&quot;range&quot;:&quot;10783-11538&quot;} -->
+<h3 class="sectionedit13" id="normalisation_robuste">Normalisation robuste</h3>
+<div class="level3">
+
+<p>
+La normalisation dite robuste transforme le vecteur en soustrayant à chaque valeur la médiane et en divisant par l&#039;écart  interquartile. Cette méthode est moins sensible aux valeurs aberrantes puisqu&#039;elle soustrait la médiane. 
+</p>
+
+</div>
+
+<h5 id="theorie">Théorie</h5>
+<div class="level5">
+
+<p>
+$$
+X_{normalisé} = \frac{X - m}{Q_{3} - Q_{1}}
+$$
+</p>
+<div class="table sectionedit14"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">      Paramètres        </th><th class="col1"> Signification</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0"> $Q_{3} - Q_{1}$</td><td class="col1"> Écart interquartile </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> $X$     </td><td class="col1"> Vecteur initial </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> m     </td><td class="col1"> Médiane initiale </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table3&quot;,&quot;secid&quot;:14,&quot;range&quot;:&quot;11870-12014&quot;} -->
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">preprocessing</span> <span class="kw1">import</span> RobustScaler
+<span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+&nbsp;
+scaler <span class="sy0">=</span> RobustScaler<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="co1">#Appel du transformeur</span>
+X <span class="sy0">=</span> scaler.<span class="me1">fit_transform</span><span class="br0">&#40;</span>X<span class="br0">&#41;</span><span class="co1">#Application à l'ensemble du dataset</span>
+pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>X<span class="sy0">,</span> columns<span class="sy0">=</span>iris.<span class="me1">feature_names</span><span class="br0">&#41;</span> <span class="co1">#Affichage du dataset normalisé</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>quantable<span class="br0">&#41;</span>
+&nbsp;
+X <span class="sy0">&lt;</span>- robustscale<span class="br0">&#40;</span>X<span class="br0">&#41;</span><span class="co1">#Normalisation des données</span>
+X <span class="sy0">&lt;</span>- X$data<span class="co1">#Récupère les données normalisées</span></pre>
+
+<p>
+<strong>Observations</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Apreprocessing_et_encodage&amp;media=cpp:normalisation.png" class="media" title="cpp:normalisation.png"><img src="/lib/exe/fetch.php?w=900&amp;tok=3c4550&amp;media=cpp:normalisation.png" class="mediacenter" title="Représentation des valeurs originales et normalisées" alt="Représentation des valeurs originales et normalisées" width="900" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Normalisation robuste&quot;,&quot;hid&quot;:&quot;normalisation_robuste&quot;,&quot;codeblockOffset&quot;:18,&quot;secid&quot;:13,&quot;range&quot;:&quot;11539-12569&quot;} -->
+<h3 class="sectionedit15" id="les_valeurs_aberrantes">Les valeurs aberrantes</h3>
+<div class="level3">
+
+<p>
+Elles correspondent aux données très atypiques par rapport à l&#039;ensemble du dataset et leur suppression dépend de l&#039;objectif. En détection de fraude par exemple, le data scientist va surtout s&#039;intéresser aux données atypiques.
+</p>
+
+<p>
+Pour l&#039;exemple, on va introduire des valeurs aberrantes dans le dataset des <a href="/doku.php?id=cpp:visualiser_le_dataset" class="wikilink1" title="cpp:visualiser_le_dataset">fleurs d&#039;iris</a>.
+</p>
+
+</div>
+
+<h5 id="introduction_des_valeurs_aberrantes">Introduction des valeurs aberrantes</h5>
+<div class="level5">
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">outliers <span class="sy0">=</span> np.<span class="me1">full</span><span class="br0">&#40;</span><span class="br0">&#40;</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">4</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="nu0">100</span><span class="br0">&#41;</span> + np.<span class="kw3">random</span>.<span class="me1">randn</span><span class="br0">&#40;</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">4</span><span class="br0">&#41;</span><span class="co1">#Introduction de valeurs aberrantes </span>
+X <span class="sy0">=</span> np.<span class="me1">vstack</span><span class="br0">&#40;</span><span class="br0">&#40;</span>X<span class="sy0">,</span> outliers<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Fait les jointures verticale des tableaux de données</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">outliers <span class="sy0">&lt;</span>- data.<span class="me1">frame</span><span class="br0">&#40;</span>matrix<span class="br0">&#40;</span>c<span class="br0">&#40;</span>rep<span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">10</span><span class="br0">&#41;</span><span class="br0">&#41;</span> + rnorm<span class="br0">&#40;</span><span class="nu0">10</span><span class="sy0">,</span> <span class="nu0">100</span><span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="nu0">10</span><span class="sy0">,</span> <span class="nu0">4</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Génération d'une matrice d'outliers ayant 10 lignes, 4 colonnes et dont les valeurs suivent une loi normale de moyenne 100.</span>
+names<span class="br0">&#40;</span>outliers<span class="br0">&#41;</span> <span class="sy0">&lt;</span>- names<span class="br0">&#40;</span>X<span class="br0">&#41;</span><span class="co1">#Attribution du nom des colonnes de X aux colonnes du tableau des outliers, car il est nécessaire que les colonnes aient le même nom pour les fusionner.</span>
+X <span class="sy0">&lt;</span>- rbind<span class="br0">&#40;</span>X<span class="sy0">,</span> outliers<span class="br0">&#41;</span><span class="co1">#Ajout des outliers au dataset de base</span></pre>
+
+</div>
+
+<h5 id="detection_des_valeurs_aberrantes">Détection des valeurs aberrantes</h5>
+<div class="level5">
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">ensemble</span> <span class="kw1">import</span> IsolationForest
+&nbsp;
+model <span class="sy0">=</span> IsolationForest<span class="br0">&#40;</span>contamination<span class="sy0">=</span><span class="nu0">0.06</span><span class="br0">&#41;</span><span class="co1">#Contamination étant le taux supposé de contamination du dataset.</span>
+model.<span class="me1">fit</span><span class="br0">&#40;</span>X<span class="br0">&#41;</span><span class="co1">#Entrainement du modele de détection</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;isotree&quot;</span><span class="br0">&#41;</span>
+install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;solitude&quot;</span><span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>solitude<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>isotree<span class="br0">&#41;</span>
+&nbsp;
+&nbsp;
+model <span class="sy0">&lt;</span>- isolationForest$new<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="co1">#Appel du modèle de détection</span>
+model$fit<span class="br0">&#40;</span>X<span class="br0">&#41;</span><span class="co1">#Ajustement sur les données</span>
+outliers_pred <span class="sy0">&lt;</span>- model$predict<span class="br0">&#40;</span>X<span class="br0">&#41;</span><span class="co1">#Prédiction des outliers : Retourne un tableau récapitulatif qui donne le score d'anomalie. Celui-ci défini si une valeur est aberrante si elle est proche de 1 et non aberrante si autour de 0.5</span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Apreprocessing_et_encodage&amp;media=cpp:outliers_data.png" class="media" title="cpp:outliers_data.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=92a2e5&amp;media=cpp:outliers_data.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+</div>
+
+<h5 id="suppression_des_valeurs_aberrantes">Suppression des valeurs aberrantes</h5>
+<div class="level5">
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">outliers <span class="sy0">=</span>  model.<span class="me1">predict</span><span class="br0">&#40;</span>X<span class="br0">&#41;</span> <span class="sy0">==</span> -<span class="nu0">1</span> <span class="co1">#Retourne un tableau numpy contenant des 1 (données sans anomalies) et des -1 (donnes aberrantes).</span>
+normal <span class="sy0">=</span> model.<span class="me1">predict</span><span class="br0">&#40;</span>X<span class="br0">&#41;</span> <span class="sy0">!=</span> -<span class="nu0">1</span><span class="co1">#On récupère les données non aberrantes</span>
+X <span class="sy0">=</span> X<span class="br0">&#91;</span>normal<span class="br0">&#93;</span><span class="co1">#Boolean indexing pour avoir un tableau avec uniquement les données non aberrantes</span>
+X <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>X<span class="sy0">,</span> columns<span class="sy0">=</span>iris.<span class="me1">feature_names</span><span class="br0">&#41;</span><span class="co1">#Création d'un DataFrame pandas </span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">X_final <span class="sy0">&lt;</span>- data.<span class="me1">frame</span><span class="br0">&#40;</span>outliers_pred<span class="br0">&#41;</span><span class="co1">#On récupère les données prédites sous forme de data frame</span>
+X_final <span class="sy0">&lt;</span>- X_final<span class="br0">&#91;</span><span class="kw1">with</span><span class="br0">&#40;</span>X_final<span class="sy0">,</span> order<span class="br0">&#40;</span><span class="kw2">id</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span><span class="br0">&#93;</span><span class="co1">#Puis on le tri en fonction de leur id, de façon à avoir la correspondance avec les données de X</span>
+X <span class="sy0">&lt;</span>- cbind<span class="br0">&#40;</span>X<span class="sy0">,</span> X_final$anomaly_score<span class="br0">&#41;</span><span class="co1">#Jointure du dataframe original avec la colonne d'anomalie</span>
+X <span class="sy0">&lt;</span>- subset<span class="br0">&#40;</span>X<span class="sy0">,</span> X_final$anomaly_score <span class="sy0">&lt;=</span> <span class="nu0">0.57</span><span class="br0">&#41;</span><span class="co1">#On ne conserve que les éléments ayant moins de 0.57 de score d'anomalie</span>
+X <span class="sy0">&lt;</span>- <span class="kw3">select</span><span class="br0">&#40;</span>X<span class="sy0">,</span> -`X_final$anomaly_score`<span class="br0">&#41;</span><span class="co1">#On supprime la colonne des scores d'anomalie qui est inutile</span></pre>
+
+<p>
+<strong>Sources :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://abcdr.thinkr.fr/comment-rajouter-des-lignes-ou-des-colonnes-dans-jeux-de-donnees-sous-r-cbind-rbind/" class="urlextern" title="https://abcdr.thinkr.fr/comment-rajouter-des-lignes-ou-des-colonnes-dans-jeux-de-donnees-sous-r-cbind-rbind/" rel="nofollow">ABCD&#039;R</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://en.wikipedia.org/wiki/Isolation_forest#:~:text=Anomaly%20score,-The%20algorithm%20for&amp;text=if%20s%20is%20close%20to,doesn't%20have%20any%20anomaly" class="urlextern" title="https://en.wikipedia.org/wiki/Isolation_forest#:~:text=Anomaly%20score,-The%20algorithm%20for&amp;text=if%20s%20is%20close%20to,doesn&#039;t%20have%20any%20anomaly" rel="nofollow">Wikipedia</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les valeurs aberrantes&quot;,&quot;hid&quot;:&quot;les_valeurs_aberrantes&quot;,&quot;codeblockOffset&quot;:20,&quot;secid&quot;:15,&quot;range&quot;:&quot;12570-15844&quot;} -->
+<h2 class="sectionedit16" id="les_pipelines">Les pipelines</h2>
+<div class="level2">
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong>  il est nécessaire de connaitre entièrement le processus de conception d&#039;un modèle.</div>
+</p>
+
+<p>
+Les pipelines constituent un moyen d&#039;organiser les étapes de pré-traitement et de modélisation ce qui permet de combiner ces phases comme s&#039;il ne s&#039;agissait que d&#039;une seule.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Apreprocessing_et_encodage&amp;media=cpp:pipeline_.png" class="media" title="cpp:pipeline_.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=91e87e&amp;media=cpp:pipeline_.png" class="media" alt="" width="800" /></a>
+</p>
+
+<p>
+Il devient plus simple d&#039;appliquer l&#039;ensemble des opérations faites sur les données d&#039;entraînement aux données de test/validation. Les pipelines permettent aussi de :
+</p>
+<ul>
+<li class="level1"><div class="li"> rendre le code plus propre.</div>
+</li>
+<li class="level1"><div class="li"> réduire les erreurs de traitement entre les datasets d&#039;entraînement, de test et de validation.</div>
+</li>
+<li class="level1"><div class="li"> faciliter le déploiement du modèle.</div>
+</li>
+</ul>
+
+<p>
+Prédiction de la classe des <a href="/doku.php?id=cpp:visualiser_le_dataset" class="wikilink1" title="cpp:visualiser_le_dataset">fleurs d&#039;iris</a>, en utilisant un pipeline dans le processus.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+
+<p>
+Ici le pipeline va normaliser et classifier.
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">linear_model</span> <span class="kw1">import</span> SGDClassifier
+<span class="kw1">from</span> sklearn.<span class="me1">pipeline</span> <span class="kw1">import</span> make_pipeline
+<span class="kw1">from</span> sklearn.<span class="me1">preprocessing</span> <span class="kw1">import</span> StandardScaler
+&nbsp;
+modele <span class="sy0">=</span> make_pipeline<span class="br0">&#40;</span>StandardScaler<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span><span class="co1">#Constitution de la pipeline où on défini un transformeur et l'estimateur à utiliser.</span>
+                         SGDClassifier<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+modele.<span class="me1">fit</span><span class="br0">&#40;</span>X_train<span class="sy0">,</span> X_test<span class="br0">&#41;</span><span class="co1">#Entrainement du modèle</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+
+<p>
+Ici le pipeline va encoder les données.
+</p>
+<pre class="code python"><span class="co1">#Librairies nécessaires pour faire une pipeline</span>
+library<span class="br0">&#40;</span>magrittr<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>dplyr<span class="br0">&#41;</span>
+&nbsp;
+encoder <span class="sy0">&lt;</span>- . %<span class="sy0">&gt;</span>% factor %<span class="sy0">&gt;</span>%
+            LabelEncoder.<span class="me1">fit</span> %<span class="sy0">&gt;</span>%
+            transform<span class="br0">&#40;</span>.<span class="sy0">,</span> data$Species<span class="br0">&#41;</span>
+&nbsp;
+data$Species <span class="sy0">=</span> encoder<span class="br0">&#40;</span>data$Species<span class="br0">&#41;</span></pre>
+
+<p>
+<div class='alert alert-info'><strong>Info :</strong> on remarque clairement que les pipelines utilisent le principe de la programmation fonctionnelle en composant les fonctions. </div>
+</p>
+
+<p>
+<strong>Sources </strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> Image : <a href="https://www.xylos.com/fr/learning/blog/astuce-1-traitement-donnees-excel-vba-copier-cellules" class="urlextern" title="https://www.xylos.com/fr/learning/blog/astuce-1-traitement-donnees-excel-vba-copier-cellules" rel="nofollow">xylos</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.datacamp.com/community/tutorials/pipe-r-tutorial" class="urlextern" title="https://www.datacamp.com/community/tutorials/pipe-r-tutorial" rel="nofollow">DataCamp</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les pipelines&quot;,&quot;hid&quot;:&quot;les_pipelines&quot;,&quot;codeblockOffset&quot;:26,&quot;secid&quot;:16,&quot;range&quot;:&quot;15845-&quot;} -->

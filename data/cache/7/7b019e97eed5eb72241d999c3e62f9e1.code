@@ -1,0 +1,3 @@
+<span class="kw1">from</span> sklearn.<span class="me1">tree</span> <span class="kw1">import</span> DecisionTreeRegressor
+tree_reg <span class="sy0">=</span> DecisionTreeRegressor<span class="br0">&#40;</span>max_depth<span class="sy0">=</span> <span class="nu0">3</span><span class="br0">&#41;</span>
+tree_reg.<span class="me1">fit</span><span class="br0">&#40;</span>X<span class="sy0">,</span>y<span class="br0">&#41;</span>

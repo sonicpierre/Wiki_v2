@@ -1,0 +1,6 @@
+<span class="sy0">&lt;</span>/python<span class="sy0">&gt;</span>
+&nbsp;
+__En R :__
+&nbsp;
+<span class="sy0">&lt;</span><span class="kw3">code</span> python<span class="sy0">&gt;</span>
+rename<span class="br0">&#40;</span>CodePostal <span class="sy0">=</span> postcode<span class="br0">&#41;</span>

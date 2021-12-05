@@ -1,0 +1,1229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generator="FeedCreator 1.8" -->
+<?xml-stylesheet href="https://llamaspartan.fr/lib/exe/css.php?s=feed" type="text/css"?>
+<rdf:RDF
+    xmlns="http://purl.org/rss/1.0/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel rdf:about="https://llamaspartan.fr/feed.php">
+        <title>Llamas'Partan cpp</title>
+        <description></description>
+        <link>https://llamaspartan.fr/</link>
+        <image rdf:resource="https://llamaspartan.fr/lib/tpl/flat/images/favicon.ico" />
+       <dc:date>2021-05-01T01:14:13+0200</dc:date>
+        <items>
+            <rdf:Seq>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:acm&amp;rev=1611969904&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:acp&amp;rev=1606837628&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:analyse_factorielle_avec_donnees_mixtes&amp;rev=1603896010&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:arbres_de_classification&amp;rev=1597535198&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:autre_algorithme_classification&amp;rev=1598029412&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:charte_d_ecriture&amp;rev=1599760901&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:cmake&amp;rev=1602008617&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:commande_systeme&amp;rev=1597487843&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:complement_acp&amp;rev=1606588302&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:complement_reg&amp;rev=1597774204&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:controler_le_joueur&amp;rev=1606812380&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:creation_et_operation_sur_dataframe&amp;rev=1612260429&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:data_exploration&amp;rev=1606588053&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:decouvrirlaconsole&amp;rev=1596909879&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:dichotomie&amp;rev=1604829984&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:evaluer_son_modele_de_classification&amp;rev=1603712149&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:evenements_mensuels&amp;rev=1614100974&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:expention_de_donnees&amp;rev=1602866371&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:future_page_ou_page_en_construction_c_et_java&amp;rev=1598887596&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:future_page_ou_page_en_construction_ia&amp;rev=1613403324&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:future_page_ou_page_en_construction_optimisation&amp;rev=1599305436&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:future_page_ou_page_en_construction_traitement_3d&amp;rev=1599859702&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:gaussian_mixture_models&amp;rev=1617049233&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:geometrique&amp;rev=1601487754&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:godot&amp;rev=1592130881&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:gradient&amp;rev=1599261123&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:hello_world_graphique&amp;rev=1597511345&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:ia&amp;rev=1611695436&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:identite&amp;rev=1597485382&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:installation_environnement_c_sfml&amp;rev=1596292220&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:installation_environnement_java_javafx&amp;rev=1596383174&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:jouer_et_coder&amp;rev=1597511748&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:la_methode_a_densite&amp;rev=1616685248&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:la_monetisation_des_donnees&amp;rev=1593383581&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:la_reduction_de_dimension&amp;rev=1597842226&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:le_cah&amp;rev=1617044397&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:le_clustering&amp;rev=1616681886&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:le_k-means&amp;rev=1616683675&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:le_scripting&amp;rev=1597487740&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:les_algorithmes_a_grille&amp;rev=1599143433&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:les_crypto_monnais&amp;rev=1592514315&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:les_distances&amp;rev=1598886453&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:les_dossiers_et_fichiers&amp;rev=1596972302&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:les_flux_et_les_processus&amp;rev=1596381430&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:les_foret_de_classification_et_de_regression&amp;rev=1603714498&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:les_regles_d_association&amp;rev=1597842345&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:les_tests_statistiques&amp;rev=1597847867&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:machine_learning_et_finance&amp;rev=1593383483&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:manipuler_les_series_temporelles&amp;rev=1613403382&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:manipuler_son_dataset&amp;rev=1598213499&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:mathematiques&amp;rev=1593383605&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:natural_langage_processing&amp;rev=1593523391&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:newton_et_regula_falsi&amp;rev=1604830746&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:operationmatricielle&amp;rev=1604939624&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:optimisation_lineaire&amp;rev=1600683009&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:organiser_et_gerer_son_projet&amp;rev=1594590300&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:preprocessing_avec_nltk&amp;rev=1606837079&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:preprocessing_et_encodage&amp;rev=1614111050&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:printing&amp;rev=1591096327&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:projet_personnelle_professionnel&amp;rev=1594818331&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:qu_est-ce_que_l_optimisation&amp;rev=1604828834&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:qu_est-ce_que_le_machine_learning&amp;rev=1612258231&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:qu_est-ce_que_le_nlp&amp;rev=1606833922&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:regression_lineaire_interpret_daniel&amp;rev=1619096056&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:regression_lineaire_interpret_pierre&amp;rev=1609585295&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:regression_logistique&amp;rev=1609421747&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:regression_regularisee&amp;rev=1606213087&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:regression_supervisee&amp;rev=1599594241&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:scrapper_les_donnees&amp;rev=1612261198&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:simplexe&amp;rev=1601488613&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:simplexecoupes&amp;rev=1602694449&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:simplexephase&amp;rev=1602693602&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:start&amp;rev=1591096902&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:sujets_divers_informatique&amp;rev=1614543301&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:sujets_divers_mathematiques&amp;rev=1609583729&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:tendance_et_saisonnalite&amp;rev=1618745738&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:travaux_datajam_hackathon&amp;rev=1612788236&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:unity_c&amp;rev=1594456705&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:unitygodotintrogameengine&amp;rev=1597165972&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:veille_technologique&amp;rev=1601535548&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=cpp:visualiser_le_dataset&amp;rev=1612262175&amp;do=diff"/>
+            </rdf:Seq>
+        </items>
+    </channel>
+    <image rdf:about="https://llamaspartan.fr/lib/tpl/flat/images/favicon.ico">
+        <title>Llamas'Partan</title>
+        <link>https://llamaspartan.fr/</link>
+        <url>https://llamaspartan.fr/lib/tpl/flat/images/favicon.ico</url>
+    </image>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:acm&amp;rev=1611969904&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2021-01-30T02:25:04+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:acm</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:acm&amp;rev=1611969904&amp;do=diff</link>
+        <description>L'Analyse des Correspondances Multiples est une méthode  qui permet d'étudier les corrélations entre au moins trois variables exclusivement qualitatives (pour deux variables qualitatives, on utilise une méthode appelée AFC). 
+
+De la même manière que $n$$n$$\alpha = 5%$$n \times p$$$d^{2}(i,i^{*}) = \sum_{j = 1}^{n}  \frac{1}{\frac{n_{j}}{n \times p}} (\frac{M_{i,j} }{p}- \frac{M_{i^{*},j}}{p})^{2} $$$n$$p$$n_{j}$$j$$M_{i,j}$$n \times p$$$d^{2}(i,i^{*}) = \sum_{j = 1}^{n}  \frac{1}{\frac{1}{n}} (…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:acp&amp;rev=1606837628&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-12-01T16:47:08+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:acp</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:acp&amp;rev=1606837628&amp;do=diff</link>
+        <description>Machine Learning
+
+[Fléau de la dimension]
+
+L'ACP (Analyse en Composantes Principales) est une méthode d'apprentissage non supervisée. Son but est de réduire le nombre de dimensions d'un problème (nombre de variables) en exprimant l'ensemble des données selon des axes. Il s'agit de combinaisons linéaires entre variables qui résument l'essentiel de l'information du jeu de données.
+ Les objectifs de cette méthode sont les suivants :$m &lt;&lt; n$$$X = U \Sigma V^{T}$$$\Sigma$$V^{T}$$P_{d}$$$X_{proj} = XP…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:analyse_factorielle_avec_donnees_mixtes&amp;rev=1603896010&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-10-28T15:40:10+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:analyse_factorielle_avec_donnees_mixtes</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:analyse_factorielle_avec_donnees_mixtes&amp;rev=1603896010&amp;do=diff</link>
+        <description>L'Analyse Factorielle des Données Mixtes est une méthode visant à analyser un dataset contenant à la fois des données quantitatives et qualitatives.</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:arbres_de_classification&amp;rev=1597535198&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-08-16T01:46:38+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:arbres_de_classification</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:arbres_de_classification&amp;rev=1597535198&amp;do=diff</link>
+        <description>Machine Learning
+
+
+
+Pour faire de la classification, les arbres sont particulièrement sont beaucoup utilisé. Il existe plusieurs types d'arbres pour classifier les données.
+
+Les arbres de décision
+
+Prenons ici l'exemple du Titanic et tentons de prédire quelles seraient vos chance de survie. Vous pouvez récupérer le dataset $$Ent(E) = -\sum_{i=1}^{k} p_{i} * log(p_{i})$$$$Gini(E) = \sum_{i=1}^{k} p_{i} * (1-p_{i})$$$p_{i}$$J(k, t_{k})$$$J(k, t_{k}) = \frac{n_{gauche}}{n}G_{gauche} + \frac{n_{droi…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:autre_algorithme_classification&amp;rev=1598029412&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-08-21T19:03:32+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:autre_algorithme_classification</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:autre_algorithme_classification&amp;rev=1598029412&amp;do=diff</link>
+        <description>Machine Learning
+
+[ Autre algorithme d'arbre]
+
+Nous allons développer ici d'autres arbres qui pourront vous être utile dans des problèmes spécifiques ou pour faire des comparaisons de performence. Il ne s'agit bien entendu que d'une introduction pour élargir votre spectre de connaissance.$$\chi^{2} = \sqrt{\frac{(y - y')^2}{y'}}$$$y$$y'$$H_{0}$$H_{1}$$\alpha$$\chi^{2}$$\alpha$$$Ent(E) = -\sum_{i=1}^{k} p_{i} * log(p_{i})$$$$Gain = Ent(E) - \sum_{i=1}^{k} p_{i} * Ent(E_{i})$$$$SplitInfo(X) = - \s…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:charte_d_ecriture&amp;rev=1599760901&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-09-10T20:01:41+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:charte_d_ecriture</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:charte_d_ecriture&amp;rev=1599760901&amp;do=diff</link>
+        <description>Bonjour et merci de prendre le temps de lire cette page. Elle est indispensable si vous souhaitez publier du contenu sur notre wiki.
+
+Objectif
+
+Aujourd'hui, nous avons un défi : rassembler une documentation la plus complète possible en gardant un contenu de bonne qualité, accessible à tous. Nous sommes de fervents défenseurs de la liberté mais des règles nous ont semblé nécessaires afin d'éviter la dévalorisation du contenu par maladresse ou manque de recherches. Nous avons donc mis en place une…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:cmake&amp;rev=1602008617&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-10-06T20:23:37+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:cmake</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:cmake&amp;rev=1602008617&amp;do=diff</link>
+        <description>On va voir sur cette page comment compiler un projet relativement simple avec CMake.
+Pour rappel, CMake est un outil fonctionnant avec son propre langage, permettant de configurer une compilation. En fonction de cette configuration, CMake génère un makefile qui s'utilise avec make. CMake est compatible avec plusieurs langages, mais on l'utilisera ici pour du C++ ou du C.</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:commande_systeme&amp;rev=1597487843&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-08-15T12:37:23+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:commande_systeme</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:commande_systeme&amp;rev=1597487843&amp;do=diff</link>
+        <description>Sujet : Le but de cette partie est de se familiariser avec la console des différents systèmes d'exploitation Linux, Windows et Mac. Nous apprendrons à installer des programmes avec un gestionnaire de paquets, à modifier une arborescence de fichiers et à gérer les processus, tout ça en ligne de commande</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:complement_acp&amp;rev=1606588302&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-11-28T19:31:42+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:complement_acp</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:complement_acp&amp;rev=1606588302&amp;do=diff</link>
+        <description>Data exploration
+
+Compléments de l'algorithme ACP
+
+L'Analyse en Composantes Principales admet d'autres types de traitement de données. Cela permet de gérer le flux d'arrivée des données mais aussi de traiter des données à formes particulières.
+
+Ces méthodes ne sont pas utilisées comme une ACP classique mais ont plutôt une vocation d'adaptation à la forme des données ainsi qu'à leur fond.$X_{n}$$\mathbb{R^{n}}$$\phi$$X_{0}$$X_{1}$$X_{n}$$\mathbb{R^{n}}$$\phi(X_{0})$$\phi(X_{1})$$\phi(X_{n})$$\mat…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:complement_reg&amp;rev=1597774204&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-08-18T20:10:04+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:complement_reg</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:complement_reg&amp;rev=1597774204&amp;do=diff</link>
+        <description>L'algorithme de MARS
+
+L'algorithme MARS (Multivariate Adaptive Regression Splines) est un modèle qui est le plus souvent utilisé dans des tâches de régression.
+
+Principe de l'algorithme
+
+
+pip install sklearn-contrib-py-earth
+
+
+Source :
+
+	*  &lt;https://www.statsoft.fr/concepts-statistiques/multivariate-adaptive-regression-splines/MARSplines.php&gt;
+	*</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:controler_le_joueur&amp;rev=1606812380&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-12-01T09:46:20+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:controler_le_joueur</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:controler_le_joueur&amp;rev=1606812380&amp;do=diff</link>
+        <description>Programmation Orientée Objet
+
+La programmation orientée objet (POO) est un paradigme (manière d'écrire le code) qui permet de créer des structures logiques (appelées objets) ayant des attributs et des méthodes :
+
+	*  attribut : caractéristique (ex : position, vitesse de déplacement, couleur).</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:creation_et_operation_sur_dataframe&amp;rev=1612260429&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2021-02-02T11:07:09+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:creation_et_operation_sur_dataframe</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:creation_et_operation_sur_dataframe&amp;rev=1612260429&amp;do=diff</link>
+        <description>Machine Learning
+
+
+Il est bon de rappeler qu'il est inutile de construire un modèle de Machine Learning s’il n'est pas entrainé avec des données de bonne qualité. Il faut donc savoir comment et où récupérer les données.
+
+Récupération classique de données ordonnées</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:data_exploration&amp;rev=1606588053&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-11-28T19:27:33+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:data_exploration</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:data_exploration&amp;rev=1606588053&amp;do=diff</link>
+        <description>Machine Learning
+
+La réduction de dimension
+
+La réduction de dimension trouve son sens dans le cadre d'un phénomène lié aux espaces de grandes dimensions : le fléau de la dimension. Celui-ci reflète le fait que de nombreux problèmes qui n'existent pas dans un espace de dimension inférieure, se produisent dans des espaces de grandes dimensions.</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:decouvrirlaconsole&amp;rev=1596909879&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-08-08T20:04:39+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:decouvrirlaconsole</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:decouvrirlaconsole&amp;rev=1596909879&amp;do=diff</link>
+        <description>Commandes système
+
+Accéder à la console
+
+Il est possible sur Linux d'ouvrir le terminal avec un raccourci. Sur Mac et Windows, c'est un tout petit peu plus long.
+LinuxWindowsMacCtrl+Alt+TTaper cmd dans la barre de recherche à côté de Démarrer, choisir Invite de commandes</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:dichotomie&amp;rev=1604829984&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-11-08T11:06:24+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:dichotomie</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:dichotomie&amp;rev=1604829984&amp;do=diff</link>
+        <description>La dichotomie est une des méthodes les plus connues en optimisation, nous allons détailler ici l'implémentation de son algorithme normal et récursif en les commentant. 
+
+Déclarer la fonction à traiter
+
+Commençons par déclarer la fonction ce qui nous permettra de la manipuler et de travailler avec.$\epsilon$$log_2(b-a))$$log_2(b-a))$</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:evaluer_son_modele_de_classification&amp;rev=1603712149&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-10-26T12:35:49+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:evaluer_son_modele_de_classification</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:evaluer_son_modele_de_classification&amp;rev=1603712149&amp;do=diff</link>
+        <description>Machine Learning
+
+
+
+On peut ensuite évaluer le modèle pour avoir une meilleur idée de sa précision. L'évaluation est une étape indispensable pour tout travail de Data Science autant pour les travaux de régression que les modèles de classification. Il est bon de pouvoir tester plusieurs methodes pour évaluer son modèle car $$
+\begin{pmatrix}
+274 &amp; 4\\
+12 &amp; 114
+\end{pmatrix}
+$$$$\frac{Vrai Positif}{Vrai Positif + Faux Positif}$$$$\frac{Vrai Positif}{Vrai Positif + Faux Négatif}$$$$F1 = 2 \times \f…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:evenements_mensuels&amp;rev=1614100974&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2021-02-23T18:22:54+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:evenements_mensuels</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:evenements_mensuels&amp;rev=1614100974&amp;do=diff</link>
+        <description>Mois Novembre 2020
+
+
+
+Il s'agit de la première version du concours avec 4 participants dont 3 que nous avons décidé de mettre en avant. Nous remercions les étudiants pour leur participation et nous espérons les revoir avec de nouveaux projets !!</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:expention_de_donnees&amp;rev=1602866371&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-10-16T18:39:31+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:expention_de_donnees</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:expention_de_donnees&amp;rev=1602866371&amp;do=diff</link>
+        <description>&lt;https://medium.com/@bluedme_tech/comment-traiter-les-probl%C3%A8mes-de-classification-d%C3%A9s%C3%A9quilibr%C3%A9e-en-machine-learning-8c3bc95ca25b&gt;</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:future_page_ou_page_en_construction_c_et_java&amp;rev=1598887596&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-08-31T17:26:36+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:future_page_ou_page_en_construction_c_et_java</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:future_page_ou_page_en_construction_c_et_java&amp;rev=1598887596&amp;do=diff</link>
+        <description>Gérer les actions
+
+	*   Contrôler le joueur
+
+Futures Pages
+
+
+
+Générer une carte
+
+	*   Lire et interpréter un fichier
+
+Animation graphique
+
+	*   Animer les textures
+	*   Animer les déplacement
+
+Les ennemis
+
+	*   Générer les ennemis
+	*   Les actions des ennemis
+	*   Décrire le déplacement
+
+Ajouter des joueurs
+
+	*   Faire jouer 2 joueurs en local</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:future_page_ou_page_en_construction_ia&amp;rev=1613403324&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2021-02-15T16:35:24+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:future_page_ou_page_en_construction_ia</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:future_page_ou_page_en_construction_ia&amp;rev=1613403324&amp;do=diff</link>
+        <description>Machine Learning
+
+Pages en construction
+
+
+
+Exploration des données
+
+	*   Data exploration
+	*   Manipuler les series temporelles
+	*   Tendance et saisonnalité
+
+Evaluation modèle classification
+
+ Evaluer son modèle de classification
+
+Futures pages
+
+
+
+Complément data exploration
+
+	*   Les réductions de dimension
+
+Complément préparation de données
+
+	*   Expention de données
+
+Complément régression
+
+	*   Complément régressions
+
+Les Support Vector Machine</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:future_page_ou_page_en_construction_optimisation&amp;rev=1599305436&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-09-05T13:30:36+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:future_page_ou_page_en_construction_optimisation</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:future_page_ou_page_en_construction_optimisation&amp;rev=1599305436&amp;do=diff</link>
+        <description>Page en construction
+
+
+
+Méthode de type Descente du Gradient
+
+	*  Méthode de la Descente du Gradient Conjugué
+
+Future page
+
+
+
+La méthode BFGS
+
+	*  Introduction et Exemple d'application</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:future_page_ou_page_en_construction_traitement_3d&amp;rev=1599859702&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-09-11T23:28:22+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:future_page_ou_page_en_construction_traitement_3d</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:future_page_ou_page_en_construction_traitement_3d&amp;rev=1599859702&amp;do=diff</link>
+        <description>Future page
+
+
+
+Introduction à Unity 3D et Godot
+
+	*   Comment fonctionne un Game Engine ?
+
+	*   Comparatif des Game Engine
+
+Bomberman
+
+	*   Les déplacements et la Caméra 
+
+	*   Créer une bombe à retardement
+
+	*   Introduction à la physique : Pousser la bombe
+
+	*   Faire exploser un mur
+
+	*   Créer un Menu et une User Interface
+
+	*   Créer un adversaire contrôler par l'ordinateur (A voir si ce n'est pas trop dur)</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:gaussian_mixture_models&amp;rev=1617049233&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2021-03-29T22:20:33+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:gaussian_mixture_models</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:gaussian_mixture_models&amp;rev=1617049233&amp;do=diff</link>
+        <description>Le Clustering
+
+
+
+
+L'algorithme Gaussian Mixture Models (GMM) peut être vu comme une amélioration de l'algorithme des K-Means. En effet, quand on associe des observations à un cluster avec les K-Means on ne connaît pas la probabilité pour chacune d'entre elles $O(kmn)$$O(kmn^2 + kn^3)$$$AIC = 2p - 2 log(L)$$$$BIC = log(m)p - 2 log(L)$$</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:geometrique&amp;rev=1601487754&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-09-30T19:42:34+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:geometrique</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:geometrique&amp;rev=1601487754&amp;do=diff</link>
+        <description>Mise en équation du problème
+
+Tout d'abord, posons quelques notations :
+
+	*  $x_1$ le nombre de dagues antiques
+	*  $x_2$ le nombre de montres magiques
+
+Notre but principal est de maximiser les revenus, c'est-à-dire :
+$\underset{x}{max}(142x_1+241x_2)$
+Cependant, il faut respecter certaines contraintes concernant les $\begin{cases} \underset{x}{max}(142x_1+241x_2) \\ 0.23x_1+0.7x_2 \le 20.21 \\ 0.015x_1+0.015x_2 \le 0.705 \\ 1.8x_1+1.1x_2 \le 75 \end{cases} $$\begin{cases} \underset{x}{max}(142x…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:godot&amp;rev=1592130881&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-06-14T12:34:41+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:godot</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:godot&amp;rev=1592130881&amp;do=diff</link>
+        <description>Godot
+
+Ce wiki est pour les utilisateurs de Godot utilisant le C#. Il est basé sur la documentation “Your first game” de Godot Engine. Il s'agit ici d'une première ébauche pour les jeux 2D. 
+
+Travailler sur les scène
+
+Godot est basé sur le même principe que JavaFX, il y a des noeuds et des scènes. On fait plusieurs scènes et on les lie entre elles et on peut les superposer. Par exemples, il y a une scène Joueur, une scène Enemie et ainsi de suite. Chaque scène a ces différents noeuds et un scrip…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:gradient&amp;rev=1599261123&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-09-05T01:12:03+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:gradient</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:gradient&amp;rev=1599261123&amp;do=diff</link>
+        <description>[ ]
+
+Pour produire de la bière, Il nous faut trois ingrédients différents: eau,  houblon et malt. Cependant, vous avez confondu les étiquettes de vos produits et vous ne vous souvenez plus des masses volumiques de vos ingrédients (en  $g/cm^3$). 
+
+Supposons qu’un volume de 2 $cm^3$$cm^3$$cm^3$$cm^3$$cm^3$$R^{n}$$$Ax= b$$$A = \begin{pmatrix} 2 &amp; 1 &amp; 1\\ 1 &amp; 2 &amp; 1\\1 &amp; 1 &amp; 2\end{pmatrix}$$b = \begin{pmatrix} 2 \\ 3\\3\end{pmatrix}$$x^* =  \begin{pmatrix} 1.5 \\ 0.5\\0.5\end{pmatrix}$$$f(x) = \frac…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:hello_world_graphique&amp;rev=1597511345&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-08-15T19:09:05+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:hello_world_graphique</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:hello_world_graphique&amp;rev=1597511345&amp;do=diff</link>
+        <description>Nous allons dans cette page introduire le langage Java et C++. Pour obtenir le résultat ci-dessous grace aux librairies installées préalablement. Vous trouverez le code complet concernant cette page ici.
+  C++    Java           
+Attention :
+
+Environnement de travail et éléments syntaxiques</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:ia&amp;rev=1611695436&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2021-01-26T22:10:36+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:ia</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:ia&amp;rev=1611695436&amp;do=diff</link>
+        <description>*  Sujet : ici, nous allons présenter les différentes méthodes de Machine Learning en se centrant sur la pratique tout en proposant des résumés de la théorie.
+	*  Outils nécessaires : nous emploierons les  langages R et Python. Nous vous invitons à utiliser Jupyter notebook pour Python et RStudio pour R. Concernant les données, nous nous servirons des datasets, open sources simples d'accès.</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:identite&amp;rev=1597485382&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-08-15T11:56:22+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:identite</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:identite&amp;rev=1597485382&amp;do=diff</link>
+        <description>Nous sommes, avant tout, un groupe d'amis passionnés par nos études et fiers de la formation proposée par nos écoles. Nos discussions sur l'évolution des méthodes de programmation ont débouché sur une constatation commune : la nécessité de compléter l'apport théorique et pratique de nos formations façon tuto.</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:installation_environnement_c_sfml&amp;rev=1596292220&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-08-01T16:30:20+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:installation_environnement_c_sfml</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:installation_environnement_c_sfml&amp;rev=1596292220&amp;do=diff</link>
+        <description>Le C++ (1980) est un langage mis à jour régulièrement particulièrement puissant. Il croise plusieurs paradigmes de programmation (objet, procédural). Le langage est compatible avec le langage C et c'est pourquoi il est très utilisé sur des outils où il est important d'obtenir de</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:installation_environnement_java_javafx&amp;rev=1596383174&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-08-02T17:46:14+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:installation_environnement_java_javafx</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:installation_environnement_java_javafx&amp;rev=1596383174&amp;do=diff</link>
+        <description>Introduction sur l'environnement de développement de Java
+
+Java est un langage qui fonctionne dans une machine virtuelle, comme le C#.
+
+[ Fonctionnement de l'environnement Java]
+
+Le  JDK (Java Development Kit) que l'on peut compiler des programmes compatibles avec la  JVM (Java Virtual Machine)</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:jouer_et_coder&amp;rev=1597511748&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-08-15T19:15:48+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:jouer_et_coder</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:jouer_et_coder&amp;rev=1597511748&amp;do=diff</link>
+        <description>*  Sujet : Nous allons dans ce cours coder un jeu du type  Hotline Miami à l'aide de C++ ou de Java. Vous apprendrez à manipuler ces langages en utilisant des bibliothèques graphiques qui vous pourront s'avérer utiles dans la vie professionnelle. Ce cours ne traitera pas de la gestion du son.</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:la_methode_a_densite&amp;rev=1616685248&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2021-03-25T16:14:08+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:la_methode_a_densite</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:la_methode_a_densite&amp;rev=1616685248&amp;do=diff</link>
+        <description>Le Clustering
+
+
+Les algorithmes de clustering utilisant la notion de densité font partie des plus utilisés. Contrairement aux K-Means, ils ne nécessitent pas de préciser un nombre préalable de clusters et permettent de gérer correctement les clusters étirés. $\epsilon$$MinPts$$\epsilon$$MinPoint$$\epsilon$$MinPoint$$\epsilon$$\epsilon$$+\infty$$\epsilon$$$
+CoreDistance_{\epsilon ,MinPts}(p) = \left\{
+    \begin{array}{ll}
+        Indéfini &amp; \mbox{si } N_{\epsilon}(p)&lt;MinPts \\
+        Distance \…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:la_monetisation_des_donnees&amp;rev=1593383581&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-06-29T00:33:01+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:la_monetisation_des_donnees</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:la_monetisation_des_donnees&amp;rev=1593383581&amp;do=diff</link>
+        <description>Introduction
+
+Nous vivons dans une société où les données sont partout et sont devenues un capital que les entreprises s'arrachent afin d'enrichir leurs services et leur compétitivité.
+Cet enrichissement se fait non seulement par une capitalisation en interne des données mais aussi via leur monétisation à d'autres entreprises.</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:la_reduction_de_dimension&amp;rev=1597842226&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-08-19T15:03:46+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:la_reduction_de_dimension</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:la_reduction_de_dimension&amp;rev=1597842226&amp;do=diff</link>
+        <description>L'Analyse des Composantes Principales
+
+Remarque :ici
+
+Le fléau de la dimension est un problème qui complexifie inutilement un jeu de données. 
+
+L'ACP permet de réduire le nombre de dimensions d'un problème, en exprimant l'ensemble des données selon des axes, qui sont des combinaisons linéaires de toutes les autres variables. Ainsi chaque variable exprime un pourcentage de l'information totale ou variance totale (inertie), et l'objectif est de maximiser cette inertie pour gagner de l'information.…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:le_cah&amp;rev=1617044397&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2021-03-29T20:59:57+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:le_cah</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:le_cah&amp;rev=1617044397&amp;do=diff</link>
+        <description>Le Clustering
+
+
+
+
+
+
+
+
+
+DataSet : ici
+
+L'algorithme CAH
+
+Au début de l'algorithme, chaque individu forme une classe.
+
+	*  À chaque itération, on regroupe les individus les plus proches et on observe la perte d'information sous la forme d'un dendrogramme.
+
+
+
+	*  À partir de ce graphique, on choisit finalement $$D_{C_{1}, C_{2}} = \frac{||G_{1} - G_{2}||^2}{\frac{1}{n_{1}} + \frac{1}{n_{2}}}$$$G_{1}, G_{2}$$n_{1}, n_{2}$</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:le_clustering&amp;rev=1616681886&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2021-03-25T15:18:06+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:le_clustering</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:le_clustering&amp;rev=1616681886&amp;do=diff</link>
+        <description>Machine Learning
+
+
+
+ Plusieurs types de données doivent être explorés et préparés avant de pouvoir appliquer les algorithmes de traitement et prédiction :
+
+	*  Les données qualifiées (qui ont déjà une étiquette), dans ce cas on peut directement préparer les données pour les algorithmes de classification comme les</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:le_k-means&amp;rev=1616683675&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2021-03-25T15:47:55+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:le_k-means</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:le_k-means&amp;rev=1616683675&amp;do=diff</link>
+        <description>Le Clustering
+
+
+L'algorithme des K-Means est l'un des plus connus et utilisés. Il est assez simple ce qui lui permet d'être exécuté facilement sans nuire à son niveau de performance.
+
+Animation :
+
+	*  www.analyticsvidhya.com
+
+Principe de l'algorithme
+
+Rappel :ici
+
+Préconditions
+
+	* $$\mu_{k} = \sum_{x_{i} \in C_{k}} x_{i}$$$$Inertie(X) = \sum_{k=1}^{n} \sum_{i=1}^{m} d(C_{k}, x_{i})^2$$$C_{k}$$d()$$$a(x) = \frac{1}{n_{k} -1} \sum_{u \in C_{k}, u\ne x} d(x, u)$$$$b(x) = \min_{l \ne k} \frac{1}{n_…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:le_scripting&amp;rev=1597487740&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-08-15T12:35:40+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:le_scripting</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:le_scripting&amp;rev=1597487740&amp;do=diff</link>
+        <description>Commandes système
+
+Dans cette partie nous allons faire une introduction aux scripts en décrivant 2 exemples :
+
+	*  Nous commencerons par nous familiariser aux variables et aux conditions en réalisant des opérations simples sur le prénom et l'âge de l'utilisateur</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:les_algorithmes_a_grille&amp;rev=1599143433&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-09-03T16:30:33+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:les_algorithmes_a_grille</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:les_algorithmes_a_grille&amp;rev=1599143433&amp;do=diff</link>
+        <description>&lt;http://hanj.cs.illinois.edu/cs412/bk3/10.pdf&gt;</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:les_crypto_monnais&amp;rev=1592514315&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-06-18T23:05:15+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:les_crypto_monnais</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:les_crypto_monnais&amp;rev=1592514315&amp;do=diff</link>
+        <description>Article 1 : What is Bitcoin ?
+
+&lt;https://www.datasciencecentral.com/profiles/blogs/what-is-bitcoin?fbclid=IwAR32715-j0v1bUIrq3qkwN22z0N_x7S8568AVClWFhmDZPhXa3eBjB5C3ZA&gt;</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:les_distances&amp;rev=1598886453&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-08-31T17:07:33+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:les_distances</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:les_distances&amp;rev=1598886453&amp;do=diff</link>
+        <description>Quelle distance choisir en Machine Learning ?
+
+Il est parfois nécessaire d'adapter la distance pour calculer l'éloignement aux centres de gravité. Il en existe plusieurs et nous allons décrire ici les principales.
+  Manhattan et Euclidien    Cosine et Euclidien  $$\sum_{i=1}^{n} \sqrt{(x_{i} - y_{i})^2}$$$$\sum_{i=1}^{k=1}|x_{i}-y_{i}|$$$$\sqrt[x]{\sum_{i=1}^{n} |x_{i} - y{i}|^x}$$$L^{x}$$+\infty$$\frac{1}{p}$$x=1$$x=2$$$d = 2r\, arcsin(\sqrt{hav(\varphi_{1} - \varphi_{2}) + cos(\varphi_{1})  co…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:les_dossiers_et_fichiers&amp;rev=1596972302&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-08-09T13:25:02+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:les_dossiers_et_fichiers</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:les_dossiers_et_fichiers&amp;rev=1596972302&amp;do=diff</link>
+        <description>Commandes système
+
+Naviguer dans le système de fichiers
+
+Dans cette partie nous verrons comment on peut visualiser les dossiers et fichiers présents sur l'ordinateur, les modifier, en créer ou en rechercher des particuliers. Certaines de ces actions sont tout à fait réalisables avec l'explorateur de fichier mais nous nous intéressons à le faire par la console pour plusieurs raisons :</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:les_flux_et_les_processus&amp;rev=1596381430&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-08-02T17:17:10+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:les_flux_et_les_processus</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:les_flux_et_les_processus&amp;rev=1596381430&amp;do=diff</link>
+        <description>Commandes système
+
+
+
+Les flux
+
+Quand on tape une commande, le résultat s'affiche généralement dans la console, comme pour ls/dir par exemple. Cependant, il est possible de rediriger cette sortie dans un fichier ou dans une autre commande.
+
+Le but de cette partie sera de remplir les fichiers de</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:les_foret_de_classification_et_de_regression&amp;rev=1603714498&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-10-26T13:14:58+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:les_foret_de_classification_et_de_regression</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:les_foret_de_classification_et_de_regression&amp;rev=1603714498&amp;do=diff</link>
+        <description>Machine Learning
+
+
+
+L'un des plus gros problèmes des arbres de décision est leur instabilité. Une petite variation des données entraîne une grande variation au niveau du modèle. Il existe plusieurs algorithmes pour entraîner des modèles et combiner les résultats. Il s'agit d'algorithmes efficaces qui reviennent souvent dans les concours de Data Science comme meilleur modèles.$\frac{1}{m}$$$\tau_{j} = \frac{Somme \, des \, poids \, des \, observations \, males \, prédites}{Somme \, des \, poids \…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:les_regles_d_association&amp;rev=1597842345&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-08-19T15:05:45+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:les_regles_d_association</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:les_regles_d_association&amp;rev=1597842345&amp;do=diff</link>
+        <description>Les règles d'association
+
+Nous allons travailler avec un DataSet qui recense plusieurs tickets de caisse par pays. Nous avons un peu pré-traité le dataset pour qu'il soit directement utilisable pour la construction de règle. Vous trouverez le dataset utilisé</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:les_tests_statistiques&amp;rev=1597847867&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-08-19T16:37:47+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:les_tests_statistiques</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:les_tests_statistiques&amp;rev=1597847867&amp;do=diff</link>
+        <description>Il s'agit d'une étape importante dans le nettoyage des données. Après le travail d'encodage, un nombre trop élevé de variables peut entrainer deux problèmes :
+
+	*  Un sur-apprentissage (over-fitting) de votre modèle de prédiction sur les données d'entrainement et de validation. Ce qui dégrade considérablement les performances de vote modèle lors de la généralisation sur de nouvelles données.</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:machine_learning_et_finance&amp;rev=1593383483&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-06-29T00:31:23+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:machine_learning_et_finance</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:machine_learning_et_finance&amp;rev=1593383483&amp;do=diff</link>
+        <description>Article 1 : Top 7 de l'utilisation du Machine Learning en finance
+
+Ces dernières années les data scientistes ceux sont largement invité dans les secteurs financiers pour des tâches diverses. Nous allons ici décrire rapidement quelques domaines qui en découlent :</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:manipuler_les_series_temporelles&amp;rev=1613403382&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2021-02-15T16:36:22+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:manipuler_les_series_temporelles</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:manipuler_les_series_temporelles&amp;rev=1613403382&amp;do=diff</link>
+        <description>Les données suivant un ordre chronologique ne se manipulent aussi facilement que les données classiques. En effet, le temps ne peut être traité ni comme un entier ni comme une chaine de caractère. C'est pourquoi il a un type unique, lui permettant d'être manipulé facilement, afin d'obtenir les informations voulues. Vous allez devenir le maitre du temps et apprendre à le manipuler.</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:manipuler_son_dataset&amp;rev=1598213499&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-08-23T22:11:39+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:manipuler_son_dataset</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:manipuler_son_dataset&amp;rev=1598213499&amp;do=diff</link>
+        <description>Machine Learning
+[ Manipulation du dataset]
+
+Une fois le dataset constitué il peut être intéressant d'être à l'aise avec et de savoir le manipuler. Le but étant de construire de nouvelles variables, d'en supprimer ou encore de faire ressortir des informations précises. Le modèle que nous constituerons pourra se basera sur ce dataset il est donc primordiale qu'il soit de optimisé au maximum.</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:mathematiques&amp;rev=1593383605&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-06-29T00:33:25+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:mathematiques</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:mathematiques&amp;rev=1593383605&amp;do=diff</link>
+        <description>Article 1 : What do mathematicians mean by good math and bad math ?
+
+Les mathématiques font partie des matières les plus abstraites du monde scientifique. Le vocabulaire y est assez spécialisé et le style d'écriture peut parfois impacter beaucoup à la compréhension du lecteur. Clairement, si on change le style d'écriture, on enlève certaines démonstrations ou encore on  vulgarise le sujet, on ne peut être publié dans aucun journal scientifique. Certes il s'agirait de</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:natural_langage_processing&amp;rev=1593523391&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-06-30T15:23:11+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:natural_langage_processing</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:natural_langage_processing&amp;rev=1593523391&amp;do=diff</link>
+        <description>Etude de données textuelles
+
+[ ]
+
+	*  Sujet : Nous allons voir ici comment analyser des données textuelles de leur récupération à leur classification. 
+	*  Outils : L'ensemble de cette documentation sera écrite en R et en Python. La plus part des exemples se baseront sur des données extraites de commentaires. Nous vous invitons à tester les morceaux de code avec vos propres données.</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:newton_et_regula_falsi&amp;rev=1604830746&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-11-08T11:19:06+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:newton_et_regula_falsi</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:newton_et_regula_falsi&amp;rev=1604830746&amp;do=diff</link>
+        <description>Nous allons présenter ici 2 méthodes utilisant la dérivation pour trouver la valeur optimum de notre problème de bière.
+
+Méthode de Newton-Raphson
+
+
+
+
+L'idée générale de cette méthode est de partir d'un point que l'on note $x_0$, “assez proche$f$$x_0$$y_{bleu} = 0$$x_1$$x_0$$x_1$$f$$x_1$$y_{vert}=0$$x_3$$\alpha$$P(z) = z^3 -1$$P(z)$$z = 1$$x_0=10$$a$$b$$a$$a$$a$$a$$b$$c$$m$$m ← a -f(a)* \frac{(b-a)}{(f(b)-f(a))}$</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:operationmatricielle&amp;rev=1604939624&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-11-09T17:33:44+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:operationmatricielle</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:operationmatricielle&amp;rev=1604939624&amp;do=diff</link>
+        <description>*  Sujet : les mathématiques sont aujourd'hui de plus en plus présentes dans nos vies. Les comprendre de façon théorique est essentiel pour mieux les utiliser dans les matières scientifiques. Cette page est destinée à donner une première approche didactique de notions mathématiques apprises souvent, dans un premier temps, de façon purement théorique.$f$$$A = \begin{pmatrix} 1 &amp; 3 &amp; 1 \\ 5 &amp; 6 &amp; 4 \\ 7 &amp; 3 &amp; 1\end{pmatrix}  B = \begin{pmatrix} 4 &amp; 5 &amp; 7 \\ 1 &amp; 9 &amp; 3 \\ 6 &amp; 2 &amp; 2\end{pmatrix} C = …</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:optimisation_lineaire&amp;rev=1600683009&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-09-21T12:10:09+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:optimisation_lineaire</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:optimisation_lineaire&amp;rev=1600683009&amp;do=diff</link>
+        <description>*  Sujet : Dans cette section, nous présenterons les différentes méthodes d'optimisation permettant de déterminer les paramètres d’entrée maximisant (ou minimisant) la valeur d'une fonction. Nous appliquerons les algorithmes vus dans ce cours à une situation concrète : la vente de bière.  $f(t) = t^{2} - 10$</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:organiser_et_gerer_son_projet&amp;rev=1594590300&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-07-12T23:45:00+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:organiser_et_gerer_son_projet</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:organiser_et_gerer_son_projet&amp;rev=1594590300&amp;do=diff</link>
+        <description>On va dans cette partie voir comment faire pour organiser correctement un projet via deux exemples. Afin de comparer la manière de procéder dans un cadre privé et dans un cadre professionnel.
+
+Cadre privé (universitaire)
+
+
+
+
+Contraintes du projet :</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:preprocessing_avec_nltk&amp;rev=1606837079&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-12-01T16:37:59+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:preprocessing_avec_nltk</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:preprocessing_avec_nltk&amp;rev=1606837079&amp;do=diff</link>
+        <description>Nous allons traiter ici du preprocessing pour les données textuelles dans le but de faire une analyse de fréquence des mots et visualiser notre corpus.
+
+
+
+
+
+Librairies nécessaires
+ Librairie Python  Package R     Utilité  nltk              tm, NLP       $$TF(i) = \frac{\log_{2}(Freq(i,j) + 1)}{\log_{2}(L_{j})}$$$Freq(i,j)$$L_{j}$$$IDF(i) = \log{\frac{N_{d}}{f_{i}} + 1}$$$N_{d}$$f_{i}$$$TF(i,j) = TF_{i,j} * IDF_{i}$$</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:preprocessing_et_encodage&amp;rev=1614111050&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2021-02-23T21:10:50+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:preprocessing_et_encodage</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:preprocessing_et_encodage&amp;rev=1614111050&amp;do=diff</link>
+        <description>Machine Learning
+[Pré-traitement ]
+
+Le pré-traitement des données nécessite de la patience et peut représenter jusqu'à 80 % du travail d'un data scientist.  Il se fait à tâton, parallèlement à la phase de création du modèle, selon les hypothèses émises.
+
+[Objectifs du pré-traitement des données]
+
+Remarque :ici
+
+Les valeurs manquantes
+$$
+X_{standardisé} = \frac{X - \mu_{X}}{\sigma_{X}}
+$$$\mu_{X}$$X$$\sigma_{X} $$$
+X_{normalisé} = \frac{X - m}{Q_{3} - Q_{1}}
+$$$Q_{3} - Q_{1}$$X$</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:printing&amp;rev=1591096327&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-06-02T13:12:07+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:printing</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:printing&amp;rev=1591096327&amp;do=diff</link>
+        <description>Voici la page d'informations sur comment écrire dans le terminal en c++</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:projet_personnelle_professionnel&amp;rev=1594818331&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-07-15T15:05:31+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:projet_personnelle_professionnel</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:projet_personnelle_professionnel&amp;rev=1594818331&amp;do=diff</link>
+        <description>Les métiers techniques
+
+Les métiers du management</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:qu_est-ce_que_l_optimisation&amp;rev=1604828834&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-11-08T10:47:14+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:qu_est-ce_que_l_optimisation</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:qu_est-ce_que_l_optimisation&amp;rev=1604828834&amp;do=diff</link>
+        <description>Pour illustrer ce cours, nous prendrons comme exemple la bière. Tout au long de sa fabrication , de son stockage ou de sa vente, la boisson est l'objet de multiples problèmes d'optimisation afin d'économiser des ressources et donc, générer plus de profits.
+Le cours se déroulera selon le plan suivant :$ x^{∗} = argmin (F(x), x ∈ \mathbb{R})$$F$$\mathbb{R}^{d}$$\mathbb{R}$$x$$\mathbb{R}^{d}$$f(x) = 0$$f$$\mathbb{R}^{d}$$\mathbb{R}$$ln(2)+exp(3*sin(4))$$10^{-4}$$x(0)$$x(n)$$x^{*}$$x_n$$\mu$$\lim\li…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:qu_est-ce_que_le_machine_learning&amp;rev=1612258231&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2021-02-02T10:30:31+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:qu_est-ce_que_le_machine_learning</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:qu_est-ce_que_le_machine_learning&amp;rev=1612258231&amp;do=diff</link>
+        <description>Machine Learning
+
+
+
+Connu aussi sous le nom d'apprentissage automatique, le Machine Learning est un domaine de recherche en  intelligence artificielle basé sur des méthodes mathématiques et 
+statistiques. Il est utilisé pour donner aux ordinateurs la capacité “</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:qu_est-ce_que_le_nlp&amp;rev=1606833922&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-12-01T15:45:22+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:qu_est-ce_que_le_nlp</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:qu_est-ce_que_le_nlp&amp;rev=1606833922&amp;do=diff</link>
+        <description>Natural Langage Processing
+
+Le NLP est un domaine particulier du Machine Learning. Nous allons ici vous en faire une description simple pour mieux comprendre sa signification.
+
+
+
+Quels sont les thèmes liés au NLP ?
+
+	*  Analyse de sentiments : il est possible, à partir de textes produits par une personne, d'identifier ses sentiments de façon reproductible par rapport à un thème donné. Ainsi, lors d'une étude de marché, on peut savoir si une marque est perçue positivement ou négativement.…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:regression_lineaire_interpret_daniel&amp;rev=1619096056&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2021-04-22T14:54:16+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:regression_lineaire_interpret_daniel</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:regression_lineaire_interpret_daniel&amp;rev=1619096056&amp;do=diff</link>
+        <description>Machine Learning
+
+
+
+La régression linéaire n'est pas forcément utilisée pour faire des modèles de prédiction et on peut même dire que c'est rarement le cas.  En revanche elle est souvent prise pour faire une étude statistique et répondre à une question primordiale : $H_0$$$Vente = 3.005 - 0.0005 \times X + 0.0457  \times  TV + 0.1885  \times  Radio - 0.0012  \times  Newspaper$$$H_0$$H_1$$\alpha$$H_0$$$DDL = n - p - 1$$$195 + 4 + 1 = 200$$H_0$$H_1$$$v_j = \frac{1}{1-R^2_j}$$$R^2_j$$R^2$$p-1$$$
+Co…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:regression_lineaire_interpret_pierre&amp;rev=1609585295&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2021-01-02T12:01:35+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:regression_lineaire_interpret_pierre</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:regression_lineaire_interpret_pierre&amp;rev=1609585295&amp;do=diff</link>
+        <description>Machine Learning
+
+
+
+Pour attester d'une relation linéaire entre la variable cible et les variables explicatives, il est nécessaire que les résidus (différence entre une valeur réelle et sa projection sur la droite de régression) respectent les conditions suivantes :$H_{0}$$x_{0},x_{1},x_{2},\ldots,x_{n}$$$ W = \frac{[\sum_{i = 1}^{n} a_{i} (x_{(n-i+1)} - x_{(i)})]^{2}}{ \sum_{i = 1}^{n} (x_{i} - \sigma_{x})^{2}}$$$x_{(i)}$$a_{i}$$a_{i}$$j$$W_{observée}$$W_{critique}$$W_{observée}$$W_{critique}$$…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:regression_logistique&amp;rev=1609421747&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-12-31T14:35:47+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:regression_logistique</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:regression_logistique&amp;rev=1609421747&amp;do=diff</link>
+        <description>Machine Learning
+
+[Régression logistique]
+
+La régression logistique
+
+La régression logistique est utilisée pour estimer la probabilité, qu'une observation appartienne à une classe
+donnée. Considérons pour cela un cas d'application : l'attribution de crédit bancaire.
+
+Le classificateur va retourner la probabilité que Marie, 65 ans et retraitée, obtienne un crédit. Dans le cas où cette probabilité est supérieure ou égale à 50 %, le modèle prédit que Marie aura son crédit. Sinon 
+elle ne l'a pas.  …</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:regression_regularisee&amp;rev=1606213087&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-11-24T11:18:07+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:regression_regularisee</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:regression_regularisee&amp;rev=1606213087&amp;do=diff</link>
+        <description>Machine Learning
+
+
+
+La régression polynomiale
+
+Les données ne sont pas toujours modélisables par une droite, ce qui nécessite l'utilisation de fonctions polynomiales qui permettent de faire de meilleures prédictions.
+
+Générer les points de l'exemple
+
+Comme pour la page sur la $J(\Theta)$$$
+J(\Theta) = \underbrace{MSE(\Theta)}_{\text{Fonction coût}}  + \underbrace{\alpha \frac{1}{2} \sum_{i = 1}^{n} \Theta_{i}^{2}}_{\text{Terme de régularisation}}
+$$$\alpha$$\Theta$$\alpha$$\alpha$$l_{2}$$l_{1}$$…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:regression_supervisee&amp;rev=1599594241&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-09-08T21:44:01+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:regression_supervisee</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:regression_supervisee&amp;rev=1599594241&amp;do=diff</link>
+        <description>Machine Learning
+
+
+
+
+
+
+
+
+
+
+
+Les différentes régressions sont le plus souvent utilisées pour prédire des cibles quantitatives (prix d'appartement, nombre de morts du COVID...). Il en existe beaucoup et nous allons ici décrire les principaux.
+
+Génération de points
+$x_{0}$$x_{1}$$x_{2}$$$y = a * x_{0} + b * x_{1} + c * x_{2} + d + \epsilon$$$(x_{0}, x_{1}, x_{2})$$(a, b, c)$$d + \epsilon$$$ŷ = h_{\theta}(x) = \theta . x$$$\theta$$(a,b,c,d)$$x$$(x_{0}, x_{1}, x_{2}, 1_{m})$$ŷ$$$MSE(X,h_{\theta}) = \…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:scrapper_les_donnees&amp;rev=1612261198&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2021-02-02T11:19:58+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:scrapper_les_donnees</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:scrapper_les_donnees&amp;rev=1612261198&amp;do=diff</link>
+        <description>Machine Learning
+
+
+
+
+Dans cette partie, nous allons apprendre à récupérer des données directement depuis le web.
+ Librairies Python  Librairie R  Utilisation  BeautifulSoup  xml2,  rvest  Récupérer des données depuis une page web  request  request  Effectuer des requêtes pour récupérer des données</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:simplexe&amp;rev=1601488613&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-09-30T19:56:53+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:simplexe</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:simplexe&amp;rev=1601488613&amp;do=diff</link>
+        <description>Introduction : méthode géométrique
+
+
+
+Nous présenterons la méthode du simplexe dans sa forme pratique que nous appellerons la méthode des tableaux, puis, nous la programmerons en Python et Matlab.
+
+Mise en forme
+
+La première chose que nous allons faire est de changer la forme de notre système pour que nous puissions appliquer la méthode du $\begin{cases} \underset{x}{max}(142x_1+241x_2) \\ 0.23x_1+0.7x_2 \le 20.21 \\ 0.015x_1+0.015x_2 \le 0.705 \\ 1.8x_1+1.1x_2 \le 75 \\ x_1,x_2 \ge 0\end{cases}…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:simplexecoupes&amp;rev=1602694449&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-10-14T18:54:09+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:simplexecoupes</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:simplexecoupes&amp;rev=1602694449&amp;do=diff</link>
+        <description>Méthode des phases
+
+
+
+Supposons que j'aie en ma possession 69 diamants et 19 g d'or que je peux transformer en deux types de bijoux :
+
+	*  une paire de boucles d'oreilles nécessitant 6 diamants et 2 g d'or et se vendant à 150 pièces d'or
+	*  un collier utilisant 20 $\begin{cases} \underset{x}{max}(150x_1+600x_2) \\ 6x_1+20x_2 \le 69 \\ 2x_1+4x_2 \le 19 \\ x_1,x_2 \ge 0\end{cases}$$x_1$$x_2$$y_1$$y_2$$f$$x_2$$\frac{3}{10}$$\frac{1}{20}$$\frac{69}{20}$$y_2$$\frac{4}{5}$$\frac{1}{5}$$\frac{26}{5}$$…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:simplexephase&amp;rev=1602693602&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-10-14T18:40:02+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:simplexephase</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:simplexephase&amp;rev=1602693602&amp;do=diff</link>
+        <description>Méthode du simplexe
+
+
+
+ici
+
+Je vous ai dit, un peu plus tôt dans le cours, que la méthode du simplexe consistait à itérer de sommet en sommet en partant de l'origine jusqu'à ce que l'on trouve le sommet optimal. 
+Seulement voilà : on est partis du principe que l'origine$\begin{cases} \underset{x}{max}(x_1+2x_2) \\ -x_1+3x_2 \le 10 \\ 5x_1-4x_2 \le 1 \\ -3x_1+x_2 \le -1 \\ x_1,x_2 \ge 0\end{cases}$$(0,0)$$y_3$$x_1$$x_2$$y_1$$y_2$$y_3$$f$$y_1$$y_2$$y_3$$\begin{cases} \underset{x}{max}(c|x) \\ Ax \…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:start&amp;rev=1591096902&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-06-02T13:21:42+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:start</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:start&amp;rev=1591096902&amp;do=diff</link>
+        <description>Affichage dans le terminal en C++
+
+Cette section va traiter uniquement des flux de sorties en c++.
+On y utilisera donc plusieurs bibliothèques :
+
+	*  &lt;https://en.cppreference.com/w/cpp/header/iostream&gt;
+	*  &lt;https://en.cppreference.com/w/cpp/header/iomanip&gt;
+
+Une partie des informations provient des sources suivantes :
+
+	*  &lt;http://faculty.cs.niu.edu/~mcmahon/CS241/c241man/node83.html&gt;</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:sujets_divers_informatique&amp;rev=1614543301&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2021-02-28T21:15:01+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:sujets_divers_informatique</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:sujets_divers_informatique&amp;rev=1614543301&amp;do=diff</link>
+        <description>Compiler son code
+
+	*   CMake
+
+Moteurs de jeux
+
+ Qu'est-ce qu'un Game Engine ?
+
+Informatique et management
+
+	*   Organiser et gérer son projet</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:sujets_divers_mathematiques&amp;rev=1609583729&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2021-01-02T11:35:29+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:sujets_divers_mathematiques</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:sujets_divers_mathematiques&amp;rev=1609583729&amp;do=diff</link>
+        <description>Mathématiques
+
+	*   Outils informatiques pour les Mathématiques
+
+Machine Learning
+
+	*   Bien choisir sa mesure de distance
+	*   Vérifier les résidus en régression linéaire</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:tendance_et_saisonnalite&amp;rev=1618745738&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2021-04-18T13:35:38+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:tendance_et_saisonnalite</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:tendance_et_saisonnalite&amp;rev=1618745738&amp;do=diff</link>
+        <description>Savoir manipuler les séries temporelles est fort utile mais savoir prévoir les fluctuations futures est d'autant plus important. Nous allons ici décrire des notions propres aux séries temporelles qui permettront par la suite de développer les modèles spécifiques. Il existe principalement 2 types de modèles, les $X_t = Z_t + S_t + \epsilon_t$$ X_t = Z_t  (1 + S_t) (1 + \epsilon_t)$$Z_t$$S_t$$\epsilon_t$$$\sigma = a \bar{x} + b$$$$X_t = m_t + \epsilon_t$$$m_t = \beta_0 + \beta_1 t$$m_t =  \beta_0 …</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:travaux_datajam_hackathon&amp;rev=1612788236&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2021-02-08T13:43:56+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:travaux_datajam_hackathon</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:travaux_datajam_hackathon&amp;rev=1612788236&amp;do=diff</link>
+        <description>Hackathon février 2021
+
+
+
+	*  Ecoles : ISIMA et CY Tech
+	*  Nombre de participants : 25 participants de bac+3 à bac +5
+	*  Sujet : Le but du Hackathon est de proposer aux différentes équipes l'analyses de pièces composants les différents modèles industriels. Cette analyse est découper en 3 étapes, l'extraction des données leur analyse et la présentation des résultats. Le but est de manipuler et mieux comprendre les outils proposés par l'entreprise. Les étudiants sont invités pendant tout l'évène…</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:unity_c&amp;rev=1594456705&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-07-11T10:38:25+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:unity_c</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:unity_c&amp;rev=1594456705&amp;do=diff</link>
+        <description>Création de jeux 3D
+
+	*   Créer un jeu avec Unity et Godot</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:unitygodotintrogameengine&amp;rev=1597165972&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-08-11T19:12:52+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:unitygodotintrogameengine</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:unitygodotintrogameengine&amp;rev=1597165972&amp;do=diff</link>
+        <description>Qu'est-ce qu'un Game Engine ?
+
+Un Game Engine ou moteur de jeu est un logiciel regroupant différents composants logiciels permettant d'effectuer plusieurs tâches complexes :
+
+	*  Affichage de modèles 3D (un personnage par exemple) =&gt; Rendu Graphique</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:veille_technologique&amp;rev=1601535548&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-10-01T08:59:08+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:veille_technologique</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:veille_technologique&amp;rev=1601535548&amp;do=diff</link>
+        <description>Cette partie est un condensé de résumé d'article que nous lirons sur les prochains mois. Chacun peu faire son résumé mais le tout doit être associé à une source et une date. Nous essayerons de rester le plus subjectif pour ne pas altérer l'article. Nous définissons différents thèmes qui sont voué à évoluer.</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=cpp:visualiser_le_dataset&amp;rev=1612262175&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2021-02-02T11:36:15+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>cpp:visualiser_le_dataset</title>
+        <link>https://llamaspartan.fr/doku.php?id=cpp:visualiser_le_dataset&amp;rev=1612262175&amp;do=diff</link>
+        <description>Machine Learning
+
+
+
+
+
+Cette partie présente les différents types de graphiques qui permettent de réaliser des analyses de données pertinentes.
+Pour appliquer notre code, nous utiliserons le plus souvent le dataset des fleurs d'iris qui fait partie des jeux de données de classification les plus connus.$X^{3}$</description>
+    </item>
+</rdf:RDF>

@@ -1,0 +1,9 @@
+[[cpp:Natural Langage Processing | Natural Langage Processing]]
+
+====Page en construction====
+
+ [[cpp: La stylométrie | Quelques notions de stylométrie]]
+
+====Utiliser Spacy====
+
+ [[cpp: Spacy | Spacy]]

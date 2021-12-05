@@ -1,0 +1,2 @@
+data %<span class="sy0">&gt;</span>%
+        mutate<span class="br0">&#40;</span>price_per_room <span class="sy0">=</span> price / bedrooms<span class="br0">&#41;</span>

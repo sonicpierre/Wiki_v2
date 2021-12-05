@@ -1,0 +1,7 @@
+==== Mathématiques ====
+
+  * [[cpp:OperationMatricielle | Outils informatiques pour les Mathématiques]]
+
+==== Machine Learning ====
+   * [[cpp:Les distances | Bien choisir sa mesure de distance]]
+   * [[cpp:Régression lineaire interpret Pierre | Vérifier les résidus en régression linéaire]]

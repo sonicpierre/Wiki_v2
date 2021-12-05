@@ -1,0 +1,79 @@
+[[cpp:Commande système| Commandes système]]
+
+=====Accéder à la console=====
+
+Il est possible sur Linux d'ouvrir le terminal avec un <fc #008000>**raccourci**</fc>. Sur Mac et Windows, c'est un tout petit peu plus long.
+
+^Linux^Windows^Mac^^
+|Ctrl+Alt+T|Taper cmd dans la barre de recherche à côté de Démarrer, choisir Invite de commandes|Launchpad, saisir Terminal dans le champ de recherche, choisir Terminal. ||
+
+Si le raccourci Linux ne marche pas pour vous vous pouvez tout aussi bien rechercher Terminal dans le menu des applications.
+Il faut savoir que puisque Mac possède le même noyau que Linux, <fc #ff0000>**les commandes à entrer dans le terminal sur Mac sont sauf précision contraire les mêmes que sur Linux**</fc>.
+
+=====Commandes générales=====
+
+Dans cette partie, nous allons prendre comme <fc #ff0000>**fil conducteur**</fc> pour introduire les différentes commandes l'installation d'un logiciel de traitement d'images, <fc #ffa500>**Gimp**</fc>. Bien sûr, vous pouvez choisir le logiciel que vous voulez :)
+
+Pour cela, nous allons utiliser la commande 
+^Linux^Windows^Mac^^
+|apt|choco|brew cask||
+
+====L'aide====
+
+Je vais tout de suite vous donner une <fc #008000>**astuce**</fc> très utile : lorsque vous voulez savoir à quoi sert une commande, vous pouvez demander son <fc #ff0000>**manuel**</fc> avec la commande
+^Linux et mac^Windows^^
+|man|help||
+Par exemple l'aide de <fc #800000>**apt**</fc> donne
+<code>man apt</code>
+{{:cpp:man_apt.png?1000|}}
+
+====Mode administrateur====
+
+Pour pouvoir exécuter certaines commandes, comme l'installation de paquets, il faut les droits d'administrateur. 
+^Linux^Windows^^
+|sudo|runas||
+Pour utiliser <fc #800000>**runas**</fc> il faut rajouter en paramètre le nom de la machine et du compte administrateur
+<code>runas /user:NomMachine\NomCompteAdministrateur</code>
+Vous trouverez ces deux informations en utilisant la commande 
+<code>net user</code>
+
+**Note** : je trouve que sur Windows le moyen le plus rapide pour passer en mode administrateur est de tout simplement faire **Clic droit>Exécuter en tant qu'administrateur** quand vous voulez ouvrir la console.
+
+Si vous êtes sur une version de Linux ne possédant pas la commande <fc #800000>**sudo**</fc>, vous pouvez utiliser à la place
+<code>su root</code>
+suivi de votre mot de passe pour passer en mode administrateur.
+
+**Note : **Alors que <fc #800000>**sudo**</fc> sert à lancer la commande donnée en paramètre en tant qu'administrateur, <fc #800000>**su**</fc> et <fc #800000>**runas**</fc> vous connectent en tant qu'administrateur exécutant toutes les commandes que vous entrez par la suite en tant qu'administrateur. Vous pouvez quitter ce mode en réutilisant <fc #800000>**su/runas**</fc>.
+
+====La gestion de paquets====
+
+On y arrive finalement !
+
+Pour installer des logiciels sur Linux il faut installer ce qui s'appelle un <fc #008000>**paquet**</fc> (package en anglais). Il y a des gestionnaires de paquets pour gérer ça à partir de la  console et **installer**, **mettre à jour** ou **désinstaller** rapidement des applications. 
+
+Le plus intéressant est que ces gestionnaires de paquets permettent de <fc #ff0000>**mettre à jour tout ses paquets avec une seule commande**</fc> ! Plus besoin d'aller sur des sites parfois douteux et de risquer d’attraper des logiciels malveillants. Les gestionnaires de paquets sont très utilisés sur Linux et moins sur les autres systèmes d'exploitation mais nous en verrons un compatible avec Windows et un compatible avec Mac.
+
+Si vous êtes sur Linux la commande à utiliser est déjà installée par défaut. Sur Debian, la commande est <fc #800000>**apt**</fc>. Si vous êtes sur <fc #ffa500>**Fedora**</fc> ou <fc #ffa500>**CentOS**</fc> par exemple, il faut utiliser <fc #800000>**rpm**</fc> et si vous êtes sur <fc #ffa500>**Arch**</fc> la commande est <fc #800000>**pacman**</fc>.
+
+Sur Windows, il faut installer <fc #800000>**Chocolatey**</fc>. Pour ce faire, ouvrez le Windows Powershell (Win+X,A) et entrez <code>Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))</code> Vous pouvez ensuite fermer la fenêtre et retourner sur le terminal classique.
+
+Sur Mac, on aura besoin d'<fc #800000>**Homebrew**</fc>. Tout d'abord, installons Xcode avec <code>xcode-select --install</code>Ensuite, installons Homebrew <code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"</code>Finalement entrez cette commande et Homebrew sera en état de marche !<code>brew doctor</code>
+
+**Note :** les commandes de gestion de paquets doivent être exécutées en tant qu'<fc #008000>**administrateur**</fc>
+
+^Linux^Windows^Mac^Utilité^^
+|apt update|choco outdated|brew cask outdated|Rechercher des mises à jour de tous les paquets||
+|apt upgrade|choco upgrade all|brew cask upgrade|Installer les mises à jour repérées par la commande du dessus||
+|apt search gimp|choco search gimp|brew search gimp|Rechercher un package dont le nom est fourni en paramètre (ici Gimp)||
+|apt install gimp|choco install gimp|brew cask install gimp|Installer un package dont le nom est fourni en paramètre (ici Gimp)||
+|apt remove gimp|choco uninstall gimp|brew cask uninstall gimp|Supprimer un package dont le nom est fourni en paramètre (ici Gimp)||
+|apt show gimp|choco search gim|brew list --versions gimp|Consulter la version d'un package dont le nom est fourni en paramètre (ici Gimp)||
+
+Il y a même une commande assez récente du nom de <fc #800000>**snap**</fc> qui marche dans tous les systèmes Linux et qui vise à améliorer <fc #800000>**apt**</fc>. je ne vais pas m'étendre sur le sujet mais vous pouvez aller chercher des [[https://doc.ubuntu-fr.org/snap|informations supplémentaires]] si ça vous intéresse ;) 
+
+**Note :** Pour la gestion des versions de python un package manager spécial est utilisé du nom de [[https://pip.pypa.io/en/stable/|pip]].
+
+Maintenant qu'on a installé notre premier logiciel entièrement avec la console vous avez <fc #008000>**la base de la base**</fc> pour utiliser votre console, il est temps de découvrir comment faire des <fc #ffa500>**merveilles**</fc> avec !
+
+
+[[cpp:Les dossiers et fichiers| Les dossiers et fichiers]]

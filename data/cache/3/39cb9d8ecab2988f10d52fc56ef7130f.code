@@ -1,0 +1,1 @@
+primaryStage.<span class="me1">setScene</span><span class="br0">&#40;</span><span class="kw1">new</span> Scene<span class="br0">&#40;</span>root, <span class="nu0">1280</span>, <span class="nu0">720</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>

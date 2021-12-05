@@ -1,0 +1,98 @@
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aoptimisation_lineaire&amp;media=cpp:optimisationimage.jpeg" class="media" title="cpp:optimisationimage.jpeg"><img src="/lib/exe/fetch.php?w=550&amp;tok=11afa6&amp;media=cpp:optimisationimage.jpeg" class="mediacenter" alt="" width="550" /></a>
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Sujet</strong> : Dans cette section, nous présenterons les différentes méthodes d&#039;optimisation permettant de déterminer les paramètres d’entrée maximisant (ou minimisant) la valeur d&#039;une fonction. Nous appliquerons les algorithmes vus dans ce cours à une situation concrète : la vente de bière.  </div>
+</li>
+<li class="level1"><div class="li"> <strong>Outils nécessaires</strong> : Nous utiliserons les langages <a href="https://fr.wikipedia.org/wiki/MATLAB" class="urlextern" title="https://fr.wikipedia.org/wiki/MATLAB" rel="nofollow">Matlab</a>  et <a href="https://fr.wikipedia.org/wiki/Python_(langage)" class="urlextern" title="https://fr.wikipedia.org/wiki/Python_(langage)" rel="nofollow">Python</a>. J&#039;utilise personnellement   <a href="https://pyzo.org/start.html" class="urlextern" title="https://pyzo.org/start.html" rel="nofollow">Pyzo</a> pour Python et Octave <abbr title="Graphical User Interface">GUI</abbr> pour Matlab. </div>
+</li>
+<li class="level1"><div class="li"> <strong>Prérequis</strong> : Il est nécessaire d&#039;avoir certaines notions de mathématiques (dérivée, gradient…) et d&#039;informatique (itération, recursivité) pour comprendre ce chapitre. Savoir manipuler les outils mathématiques exposés <a href="/doku.php?id=cpp:operationmatricielle" class="wikilink1" title="cpp:operationmatricielle"> ici</a> peut être un plus.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Temps</strong> : Il faut  environ 10 h pour maitriser les concepts abordés.</div>
+</li>
+</ul>
+
+<p>
+<div class='alert alert-warning'><strong><span style="font-size:large;">Important :</span></strong> vous trouverez l&#039;ensemble des codes <a href="https://github.com/LlamasPartan/Optimisation" class="urlextern" title="https://github.com/LlamasPartan/Optimisation" rel="nofollow"> ici</a></div>
+</p>
+
+<h2 class="sectionedit1" id="les_grandes_methodes_d_optimisation">Les grandes méthodes d&#039;optimisation</h2>
+<div class="level2">
+
+<p>
+<a href="/lib/exe/fetch.php?media=cpp:cave_biere.jpg" class="media" title="cpp:cave_biere.jpg"><img src="/lib/exe/fetch.php?w=500&amp;tok=07f6b3&amp;media=cpp:cave_biere.jpg" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+Supposons que vous ayez un stock de fûts de bière et que vous souhaitiez savoir quand ce stock sera totalement épuisé (pour partir en vacances ou bien refaire le stock).
+</p>
+
+<p>
+Par chance, un de vos amis vous a fourni une fonction ($f(t) = t^{2} - 10$) qui prédit très précisément l&#039;évolution potentielle de votre stock au cours des prochains mois. Grâce à ce cours, vous pourrez déterminer, expérimentalement, le zéro  de la fonction qui s&#039;annule sur un intervalle de temps connu.
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="/doku.php?id=cpp:qu_est-ce_que_l_optimisation" class="wikilink1" title="cpp:qu_est-ce_que_l_optimisation"> L&#039;optimisation, pourquoi, comment ?</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=cpp:dichotomie" class="wikilink1" title="cpp:dichotomie">Méthode dichotomique</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=cpp:newton_et_regula_falsi" class="wikilink1" title="cpp:newton_et_regula_falsi">Méthode Newton et  Regula Falsi</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les grandes m\u00e9thodes d&#039;optimisation&quot;,&quot;hid&quot;:&quot;les_grandes_methodes_d_optimisation&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1139-1916&quot;} -->
+<h2 class="sectionedit2" id="methode_du_simplexe">Méthode du simplexe</h2>
+<div class="level2">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aoptimisation_lineaire&amp;media=cpp:alchimie.jpg" class="media" title="cpp:alchimie.jpg"><img src="/lib/exe/fetch.php?w=340&amp;tok=a5741b&amp;media=cpp:alchimie.jpg" class="mediacenter" alt="" width="340" /></a>
+</p>
+
+<p>
+ Mettons-nous dans la peau d&#039;un <strong><span style="color:#008000;">alchimiste</span></strong> astucieux. Nous avons à notre disposition :
+</p>
+<ul>
+<li class="level1"><div class="li"> 20,21 kg de sable des âmes</div>
+</li>
+<li class="level1"><div class="li"> 705 g de rouge-pierre</div>
+</li>
+<li class="level1"><div class="li"> 75 kg de débris antiques</div>
+</li>
+</ul>
+
+<p>
+Avec ces composants, nous pouvons réaliser des dagues antiques ou des montres magiques que nous pouvons vendre, respectivement, au prix de 142 ou 241 pièces d&#039;or. Notre but est donc de maximiser nos profits avec la matière première que nous possédons en sachant que :
+</p>
+<ul>
+<li class="level1"><div class="li"> une dague antique requiert 230 g de sable des âmes, 15 g de rouge-pierre et 1,8 kg de débris antiques</div>
+</li>
+<li class="level1"><div class="li"> une montre magique requiert 700 g de sable des âmes, 15 g de rouge-pierre et 1,1 kg de débris antiques</div>
+</li>
+</ul>
+
+<p>
+<span style='color:#ed1c24; '><strong>Essayons maintenant de gagner un maximum de pièces d&#039;or !!</strong></span>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="/doku.php?id=cpp:geometrique" class="wikilink1" title="cpp:geometrique">Mathématisation et méthode géométrique</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=cpp:simplexe" class="wikilink1" title="cpp:simplexe">Méthode du simplexe</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=cpp:simplexephase" class="wikilink1" title="cpp:simplexephase">Méthode des phases</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=cpp:simplexecoupes" class="wikilink1" title="cpp:simplexecoupes">Méthode des coupes</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;M\u00e9thode du simplexe&quot;,&quot;hid&quot;:&quot;methode_du_simplexe&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;1917-2960&quot;} -->
+<h2 class="sectionedit3" id="page_en_construction_ou_futures_pages">Page en construction ou futures pages</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> <a href="/doku.php?id=cpp:future_page_ou_page_en_construction_optimisation" class="wikilink1" title="cpp:future_page_ou_page_en_construction_optimisation"> Future page ou page en construction</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Page en construction ou futures pages&quot;,&quot;hid&quot;:&quot;page_en_construction_ou_futures_pages&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;2961-&quot;} -->

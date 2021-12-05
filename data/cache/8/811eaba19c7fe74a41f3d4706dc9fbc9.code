@@ -1,0 +1,20 @@
+##Initialisation
+a<span class="sy0">=</span><span class="nu0">0</span><span class="sy0">;</span>
+b<span class="sy0">=</span><span class="nu0">10</span><span class="sy0">;</span>
+eps<span class="sy0">=</span>1e<span class="sy0">-</span>12<span class="sy0">;</span> #précision
+&nbsp;
+<a href="http://www.<a href="http://www.scilab.org/product/dic-mat-sci/M2SCI_doc.htm"><span class="kw3">scilab</span></a>.org<span class="sy0">/</span>product<span class="sy0">/</span>dic<span class="sy0">-</span>mat<span class="sy0">-</span>sci<span class="sy0">/</span>M2SCI_doc.htm"><span class="kw1">while</span></a> <span class="br0">&#40;</span>b<span class="sy0">-</span>a <span class="sy0">&gt;=</span> eps<span class="br0">&#41;</span>
+    m<span class="sy0">=</span><span class="br0">&#40;</span>a<span class="sy0">+</span>b<span class="br0">&#41;</span><span class="sy0">/</span><span class="nu0">2</span><span class="sy0">;</span> #milieu du segment
+    #si TVI applicable sur <span class="br0">&#91;</span>a<span class="sy0">;</span>m<span class="br0">&#93;</span> on garde <span class="br0">&#91;</span>a<span class="sy0">;</span>m<span class="br0">&#93;</span>
+    <a href="http://www.<a href="http://www.scilab.org/product/dic-mat-sci/M2SCI_doc.htm"><span class="kw3">scilab</span></a>.org<span class="sy0">/</span>product<span class="sy0">/</span>dic<span class="sy0">-</span>mat<span class="sy0">-</span>sci<span class="sy0">/</span>M2SCI_doc.htm"><span class="kw1">if</span></a> f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="sy0">*</span>f<span class="br0">&#40;</span>m<span class="br0">&#41;</span><span class="sy0">&lt;</span><span class="nu0">0</span> 
+       b<span class="sy0">=</span>m<span class="sy0">;</span>
+    #sinon on garde <span class="br0">&#91;</span>m<span class="sy0">;</span>b<span class="br0">&#93;</span>
+    <a href="http://www.<a href="http://www.scilab.org/product/dic-mat-sci/M2SCI_doc.htm"><span class="kw3">scilab</span></a>.org<span class="sy0">/</span>product<span class="sy0">/</span>dic<span class="sy0">-</span>mat<span class="sy0">-</span>sci<span class="sy0">/</span>M2SCI_doc.htm"><span class="kw1">else</span></a>
+      a<span class="sy0">=</span>m<span class="sy0">;</span>
+    endif
+endwhile
+&nbsp;
+&nbsp;
+&nbsp;
+##Affichage
+<a href="http://www.scilab.org/product/dic-mat-sci/M2SCI_doc.htm"><span class="kw3">disp</span></a><span class="br0">&#40;</span><span class="st_h">'Le zéro de la fonction f sur [a;b] est:'</span><span class="br0">&#41;</span><span class="sy0">,</span><a href="http://www.scilab.org/product/dic-mat-sci/M2SCI_doc.htm"><span class="kw3">disp</span></a><span class="br0">&#40;</span>m<span class="br0">&#41;</span>

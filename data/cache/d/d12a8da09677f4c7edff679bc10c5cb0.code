@@ -1,0 +1,7 @@
+rectangle.<span class="me1">setX</span><span class="br0">&#40;</span><span class="nu0">100</span><span class="br0">&#41;</span><span class="sy0">;</span>
+rectangle.<span class="me1">setY</span><span class="br0">&#40;</span><span class="nu0">100</span><span class="br0">&#41;</span><span class="sy0">;</span>
+circle.<span class="me1">setCenterX</span><span class="br0">&#40;</span><span class="nu0">30</span><span class="br0">&#41;</span><span class="sy0">;</span>
+circle.<span class="me1">setCenterY</span><span class="br0">&#40;</span><span class="nu0">30</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+rectangle.<span class="me1">setFill</span><span class="br0">&#40;</span><a href="http://www.google.com/search?hl=en&amp;q=allinurl%3Adocs.oracle.com+javase+docs+api+color"><span class="kw3">Color</span></a>.<span class="me1">GREEN</span><span class="br0">&#41;</span><span class="sy0">;</span>
+circle.<span class="me1">setFill</span><span class="br0">&#40;</span><a href="http://www.google.com/search?hl=en&amp;q=allinurl%3Adocs.oracle.com+javase+docs+api+color"><span class="kw3">Color</span></a>.<span class="me1">BLUE</span><span class="br0">&#41;</span><span class="sy0">;</span>

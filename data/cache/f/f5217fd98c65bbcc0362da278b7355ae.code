@@ -1,0 +1,5 @@
+ggplot<span class="br0">&#40;</span>data_plot2<span class="sy0">,</span>aes<span class="br0">&#40;</span>X<span class="sy0">,</span>Y<span class="br0">&#41;</span><span class="br0">&#41;</span> +
+     stat_voronoi<span class="br0">&#40;</span>geom<span class="sy0">=</span><span class="st0">&quot;path&quot;</span><span class="br0">&#41;</span> +
+     plot<span class="br0">&#40;</span>data_plot<span class="br0">&#41;</span>+
+     geom_point<span class="br0">&#40;</span><span class="br0">&#41;</span>+
+     geom_point<span class="br0">&#40;</span>data <span class="sy0">=</span> data_plot<span class="sy0">,</span> aes<span class="br0">&#40;</span>X_data<span class="sy0">,</span> Y_data<span class="br0">&#41;</span><span class="sy0">,</span> col <span class="sy0">=</span> model$cluster<span class="br0">&#41;</span>

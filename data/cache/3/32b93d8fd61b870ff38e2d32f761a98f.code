@@ -1,0 +1,6 @@
+       	Connect<span class="br0">&#40;</span><span class="st0">&quot;body_entered&quot;</span>, <span class="kw1">this</span>, <a href="http://www.google.com/search?q=nameof+msdn.microsoft.com"><span class="kw3">nameof</span></a><span class="br0">&#40;</span>OnBodyEnterred<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+	AddUserSignal<span class="br0">&#40;</span><span class="st0">&quot;hit&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        <span class="co1">//......</span>
+        <span class="kw4">void</span> OnBodyEnterred<span class="br0">&#40;</span>PhysicsBody2D body<span class="br0">&#41;</span><span class="br0">&#123;</span>
+	   EmitSignal<span class="br0">&#40;</span><span class="st0">&quot;hit&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+	<span class="br0">&#125;</span>

@@ -1,0 +1,1 @@
+c <span class="sy0">=</span> cutree<span class="br0">&#40;</span>h<span class="sy0">,</span> k<span class="sy0">=</span><span class="nu0">3</span><span class="br0">&#41;</span><span class="co1">#Création des différentes classes</span>

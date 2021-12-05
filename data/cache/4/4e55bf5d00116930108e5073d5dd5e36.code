@@ -1,0 +1,4 @@
+name <span class="sy0">=</span> <span class="br0">&#91;</span><span class="st0">'Lagrange multiplier statistic'</span><span class="sy0">,</span> <span class="st0">'p-value'</span><span class="sy0">,</span>
+        <span class="st0">'f-value'</span><span class="sy0">,</span> <span class="st0">'f p-value'</span><span class="br0">&#93;</span>
+<span class="kw3">test</span> <span class="sy0">=</span> sm.<span class="me1">stats</span>.<span class="me1">diagnostic</span>.<span class="me1">het_white</span><span class="br0">&#40;</span>Regression_Lin.<span class="me1">resid</span><span class="sy0">,</span> Regression_Lin.<span class="me1">model</span>.<span class="me1">exog</span><span class="br0">&#41;</span>
+lzip<span class="br0">&#40;</span>name<span class="sy0">,</span> <span class="kw3">test</span><span class="br0">&#41;</span>

@@ -1,0 +1,491 @@
+
+<p>
+<a href="/doku.php?id=cpp:le_clustering" class="wikilink1" title="cpp:le_clustering"> Le Clustering</a>
+<a href="/lib/exe/detail.php?id=cpp%3Ala_methode_a_densite&amp;media=cpp:dbscan.gif" class="media" title="cpp:dbscan.gif"><img src="/lib/exe/fetch.php?w=350&amp;tok=2c3be9&amp;media=cpp:dbscan.gif" class="mediacenter" alt="" width="350" /></a>
+</p>
+
+<p>
+Les algorithmes de clustering utilisant la <span style='color:#ed1c24; '><strong>notion de densité</strong></span> font partie des plus utilisés. Contrairement aux K-Means, ils <span style='color:#ed1c24; '><strong>ne nécessitent pas de préciser un nombre préalable de clusters</strong></span> et permettent de gérer correctement les clusters étirés. 
+</p>
+
+<p>
+<strong>Animation :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> Animation : zhuanlan.zhihu.com</div>
+</li>
+</ul>
+
+<h2 class="sectionedit1" id="generer_des_donnees">Générer des données</h2>
+<div class="level2">
+
+<p>
+Avant toute chose, nous allons générer des clusters qui ne sont pas bien circulaires. Je montrerai deux formes possibles de données :
+</p>
+<ul>
+<li class="level1"><div class="li"> Sous forme circulaire en Python </div>
+</li>
+<li class="level1"><div class="li"> Sous forme spirale en R</div>
+</li>
+</ul>
+
+<p>
+Il est possible de réaliser les 2 formes dans les deux langages mais j&#039;ai préféré vous montrer un spectre d&#039;application plus large en présentant deux formes différentes.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">data <span class="sy0">=</span> make_circles<span class="br0">&#40;</span>n_samples<span class="sy0">=</span><span class="nu0">1000</span><span class="sy0">,</span> shuffle<span class="sy0">=</span><span class="kw2">True</span><span class="sy0">,</span> noise<span class="sy0">=</span><span class="nu0">0.1</span><span class="sy0">,</span> random_state<span class="sy0">=</span><span class="kw2">None</span><span class="sy0">,</span> factor<span class="sy0">=</span><span class="nu0">0.4</span><span class="br0">&#41;</span>
+dataFrame <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>data<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span> columns<span class="sy0">=</span><span class="br0">&#91;</span><span class="st0">'X'</span><span class="sy0">,</span> <span class="st0">'Y'</span><span class="br0">&#93;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>mlbench<span class="br0">&#41;</span>
+data<span class="sy0">&lt;</span>-mlbench.<span class="me1">spirals</span><span class="br0">&#40;</span><span class="nu0">300</span><span class="sy0">,</span><span class="nu0">1.0</span><span class="sy0">,</span><span class="nu0">0.05</span><span class="br0">&#41;</span>$x
+dataFrame <span class="sy0">&lt;</span>- data.<span class="me1">frame</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span></pre>
+<div class="table sectionedit2"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Cercle  </th><th class="col1 centeralign">  Spirale   </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  <a href="/lib/exe/detail.php?id=cpp%3Ala_methode_a_densite&amp;media=cpp:gene_dbscan.png" class="media" title="cpp:gene_dbscan.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=377486&amp;media=cpp:gene_dbscan.png" class="mediacenter" alt="" width="400" /></a>  </td><td class="col1 centeralign">   <a href="/lib/exe/detail.php?id=cpp%3Ala_methode_a_densite&amp;media=cpp:spirale_dbscan.png" class="media" title="cpp:spirale_dbscan.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=5cf341&amp;media=cpp:spirale_dbscan.png" class="mediacenter" alt="" width="400" /></a>   </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:2,&quot;range&quot;:&quot;1146-1252&quot;} -->
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.rdocumentation.org/packages/mlbench/versions/2.1-1/topics/mlbench.spirals" class="urlextern" title="https://www.rdocumentation.org/packages/mlbench/versions/2.1-1/topics/mlbench.spirals" rel="nofollow">https://www.rdocumentation.org/packages/mlbench/versions/2.1-1/topics/mlbench.spirals</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;G\u00e9n\u00e9rer des donn\u00e9es&quot;,&quot;hid&quot;:&quot;generer_des_donnees&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;426-1360&quot;} -->
+<h2 class="sectionedit3" id="dbscan">DBSCAN</h2>
+<div class="level2">
+
+<p>
+L&#039;algorithme <span style='color:#ed1c24; '><strong>DBSCAN</strong></span> (Density-Based Spatial Clustering of Applications with Noise) est une évolution de l&#039;algorithme CLARANS le rendant bien plus performant. Il permet de trouver des <span style='color:#ed1c24; '><strong>clusters de formes arbitraires</strong></span> ou des clusters imbriqués les uns dans les autres.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;DBSCAN&quot;,&quot;hid&quot;:&quot;dbscan&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:3,&quot;range&quot;:&quot;1361-1698&quot;} -->
+<h3 class="sectionedit4" id="principe_de_l_algorithme">Principe de l&#039;algorithme</h3>
+<div class="level3">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ala_methode_a_densite&amp;media=cpp:dbscan_illu.png" class="media" title="cpp:dbscan_illu.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=c53b31&amp;media=cpp:dbscan_illu.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+<p>
+Paul est quelqu&#039;un de prudent, il aime se déplacer d&#039;<span style='color:#ed1c24; '><strong>une plateforme à l&#039;autre</strong></span> en utilisant son échelle de longueur $\epsilon$. Il ne se déplacera que si la plateforme d&#039;<span style='color:#ed1c24; '><strong>arrivée</strong></span> est entourée d&#039;<span style='color:#ed1c24; '><strong>au moins</strong> $MinPts$ <strong>autres plateformes</strong></span>. Toutes les plateformes ayant $MinPts$ autour d&#039;elles ainsi que les plateformes à une distance $\epsilon$ des premières appartiennent au <span style='color:#ed1c24; '><strong>même cluster</strong></span>. En revanche, Paul n&#039;ira pas sur ces dernières pour <span style='color:#ed1c24; '><strong>regarder si d&#039;autres plateformes sont accessibles</strong></span>.
+</p>
+
+<p>
+Une fois que Paul a défini toute les plateformes visibles pour lui, il y a deux possibilités :
+</p>
+<ul>
+<li class="level1"><div class="li"> Il reste des plateformes non recensées par Paul et alors Jean apparaît pour pratiquer le même travail que Paul et recenser son groupe de plateformes.</div>
+</li>
+<li class="level1"><div class="li"> Toutes les plateformes ont été visitées par au moins une personne → <span style='color:#ed1c24; '><strong>FIN ALGORITHME</strong></span></div>
+</li>
+</ul>
+
+<p>
+Les plateformes isolées formant un groupe à elles seules et n&#039;ayant pas $MinPoint$ plateformes autour d&#039;elles sont <span style='color:#ed1c24; '><strong>considérées</strong></span> comme du <span style='color:#ed1c24; '><strong>bruit</strong></span>.
+</p>
+
+<p>
+<div class='alert alert-success'><strong>Approfondir :</strong> vous trouverez le pseudo code formel <a href="https://fr.wikipedia.org/wiki/DBSCAN" class="urlextern" title="https://fr.wikipedia.org/wiki/DBSCAN" rel="nofollow">ici</a>.</div>
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">cluster</span> <span class="kw1">import</span> DBSCAN 
+model <span class="sy0">=</span> DBSCAN<span class="br0">&#40;</span>eps <span class="sy0">=</span> <span class="nu0">0.12</span><span class="sy0">,</span> min_samples<span class="sy0">=</span> <span class="nu0">5</span><span class="br0">&#41;</span>
+model.<span class="me1">fit</span><span class="br0">&#40;</span>dataFrame<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>dbscan<span class="br0">&#41;</span>
+model <span class="sy0">&lt;</span>- dbscan<span class="br0">&#40;</span>data<span class="sy0">,</span> <span class="nu0">0.12</span><span class="sy0">,</span> minPts <span class="sy0">=</span> <span class="nu0">7</span><span class="br0">&#41;</span></pre>
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> les observations définies comme bruit par l&#039;algorithme seront directement supprimées des résultats.</div>
+</p>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+Nous avons fait varier un peu $\epsilon$ et $MinPoint$ pour voir concrètement comment ils influençaient les résultats :
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ala_methode_a_densite&amp;media=cpp:appli_dbscan.png" class="media" title="cpp:appli_dbscan.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=cd00ac&amp;media=cpp:appli_dbscan.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://openclassrooms.com/fr/courses/4379436-explorez-vos-donnees-avec-des-algorithmes-non-supervises/4379571-partitionnez-vos-donnees-avec-dbscan" class="urlextern" title="https://openclassrooms.com/fr/courses/4379436-explorez-vos-donnees-avec-des-algorithmes-non-supervises/4379571-partitionnez-vos-donnees-avec-dbscan" rel="nofollow">https://openclassrooms.com/fr/courses/4379436-explorez-vos-donnees-avec-des-algorithmes-non-supervises/4379571-partitionnez-vos-donnees-avec-dbscan</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://penseeartificielle.fr/clustering-avec-lalgorithme-dbscan/" class="urlextern" title="https://penseeartificielle.fr/clustering-avec-lalgorithme-dbscan/" rel="nofollow">https://penseeartificielle.fr/clustering-avec-lalgorithme-dbscan/</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://devezeb.free.fr/downloads/ecrits/datamining.pdf" class="urlextern" title="http://devezeb.free.fr/downloads/ecrits/datamining.pdf" rel="nofollow">http://devezeb.free.fr/downloads/ecrits/datamining.pdf</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Principe de l&#039;algorithme&quot;,&quot;hid&quot;:&quot;principe_de_l_algorithme&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:4,&quot;range&quot;:&quot;1699-3953&quot;} -->
+<h3 class="sectionedit5" id="limite_de_l_algorithme">Limite de l&#039;algorithme</h3>
+<div class="level3">
+
+<p>
+En travaillant sous R, vous avez dû arriver à ce résultat qui montre une véritable faiblesse de l&#039;algorithme DBSCAN.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ala_methode_a_densite&amp;media=cpp:limite_dbscan.png" class="media" title="cpp:limite_dbscan.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=988459&amp;media=cpp:limite_dbscan.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<p>
+En effet, l&#039;un des problèmes majeurs réside dans le paramétrage du modèle qui n&#039;est pas forcément évident. Il ne permet pas un changement de densité comme nous pouvons le voir dans le résultat R c&#039;est pourquoi l&#039;algorithme OPTICS a été créé.
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://devezeb.free.fr/downloads/ecrits/datamining.pdf" class="urlextern" title="http://devezeb.free.fr/downloads/ecrits/datamining.pdf" rel="nofollow">http://devezeb.free.fr/downloads/ecrits/datamining.pdf</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Limite de l&#039;algorithme&quot;,&quot;hid&quot;:&quot;limite_de_l_algorithme&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:5,&quot;range&quot;:&quot;3954-4474&quot;} -->
+<h2 class="sectionedit6" id="une_alternativel_algorithme_optics">Une alternative : l&#039;algorithme OPTICS</h2>
+<div class="level2">
+
+<p>
+L&#039;algorithme OPTICS est basé sur le même principe que DBSCAN cependant il permet de pallier le problème de changement de densité dans un même cluster.
+</p>
+
+<p>
+<strong>Théorie :</strong>
+</p>
+
+<p>
+La définition de $\epsilon$ est facultative et si elle n&#039;est pas donnée l&#039;algorithme fixera $\epsilon$ à $+\infty$. Pour chaque itération l&#039;algorithme va tout d&#039;abord calculer un $\epsilon$ propre à chacune des observations.
+<br/>
+
+<a href="/lib/exe/detail.php?id=cpp%3Ala_methode_a_densite&amp;media=cpp:core_distance_and_reachability_distance.png" class="media" title="cpp:core_distance_and_reachability_distance.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=a5d47c&amp;media=cpp:core_distance_and_reachability_distance.png" class="mediacenter" alt="" width="500" /></a>
+<br/>
+
+$$
+CoreDistance_{\epsilon ,MinPts}(p) = \left\{
+    \begin{array}{ll}
+        Indéfini &amp; \mbox{si } N_{\epsilon}(p)&lt;MinPts \\
+        Distance \, avec \, le \, MinPts ième \, point \, le \, plus \, proche &amp; \mbox{sinon.}
+    \end{array}
+\right.
+$$
+<br/>
+
+On peut ensuite déterminer une distance atteignable pour chacun des points :
+<br/>
+
+<br/>
+
+$$
+DistanceAtteignable_{\epsilon ,MinPts}(p, o) = \left\{
+    \begin{array}{ll}
+        Indéfini &amp; \mbox{si } N_{\epsilon}(p)&lt;MinPts \\
+        \max (CoreDistance_{\epsilon ,MinPts}(p), distance(p, o)) &amp; \mbox{sinon.}
+    \end{array}
+\right.
+$$
+<br/>
+
+De ces deux mesures l&#039;algorithme va pouvoir tracer un graphique qui permettra de sélectionner les clusters. 
+</p>
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> même si $\epsilon$ n&#039;est pas défini, ces deux distances le seront. Cependant, $N_{\epsilon}$ renverra toujours l&#039;ensemble des données et la complexité sera de $O(n^2)$ c&#039;est pourquoi fixer un $\epsilon$ permet de réduire la complexité de l&#039;algorithme.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Une alternative : l&#039;algorithme OPTICS&quot;,&quot;hid&quot;:&quot;une_alternativel_algorithme_optics&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:6,&quot;range&quot;:&quot;4475-5986&quot;} -->
+<h3 class="sectionedit7" id="generer_de_nouvelles_donnees">Générer de nouvelles données</h3>
+<div class="level3">
+
+<p>
+Nous allons regénérer des données où les clusters sont plus difficiles à distinguer avec DBSCAN.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">datasets</span> <span class="kw1">import</span> make_moons
+noisy_moons <span class="sy0">=</span> make_moons<span class="br0">&#40;</span>n_samples<span class="sy0">=</span><span class="nu0">1000</span><span class="sy0">,</span> noise<span class="sy0">=</span><span class="nu0">.11</span><span class="br0">&#41;</span>
+data <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>noisy_moons<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span> columns<span class="sy0">=</span><span class="br0">&#91;</span><span class="st0">'X'</span><span class="sy0">,</span> <span class="st0">'Y'</span><span class="br0">&#93;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ala_methode_a_densite&amp;media=cpp:optics_data.png" class="media" title="cpp:optics_data.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=2a5732&amp;media=cpp:optics_data.png" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">data<span class="br0">&#40;</span><span class="st0">&quot;DS3&quot;</span><span class="sy0">,</span> package <span class="sy0">=</span> <span class="st0">&quot;dbscan&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ala_methode_a_densite&amp;media=cpp:data_dbscan_autre.png" class="media" title="cpp:data_dbscan_autre.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=869443&amp;media=cpp:data_dbscan_autre.png" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;G\u00e9n\u00e9rer de nouvelles donn\u00e9es&quot;,&quot;hid&quot;:&quot;generer_de_nouvelles_donnees&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:7,&quot;range&quot;:&quot;5987-6457&quot;} -->
+<h3 class="sectionedit8" id="dessiner_le_reachability_plot">Dessiner le reachability plot</h3>
+<div class="level3">
+
+<p>
+Commençons par entrainer le modèle pour avoir ensuite la possibilité de tracer le graphique :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">cluster</span> <span class="kw1">import</span> OPTICS
+model <span class="sy0">=</span> OPTICS<span class="br0">&#40;</span>min_samples<span class="sy0">=</span><span class="nu0">50</span><span class="sy0">,</span> xi<span class="sy0">=</span><span class="nu0">.05</span><span class="sy0">,</span> min_cluster_size<span class="sy0">=</span><span class="nu0">.05</span><span class="br0">&#41;</span>.<span class="me1">fit</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">optic_model <span class="sy0">&lt;</span>- dbscan::optics<span class="br0">&#40;</span>DS3<span class="sy0">,</span> minPts <span class="sy0">=</span> <span class="nu0">50</span><span class="br0">&#41;</span></pre>
+
+<p>
+On peut ensuite afficher le graphique correspondant permettant de sélectionner les clusters avec une méthode automatique appelée xi qui repère les grandes variations de distance atteignable :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">space <span class="sy0">=</span> np.<span class="me1">arange</span><span class="br0">&#40;</span><span class="kw2">len</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="br0">&#41;</span>
+reachability <span class="sy0">=</span> model.<span class="me1">reachability_</span><span class="br0">&#91;</span>model.<span class="me1">ordering_</span><span class="br0">&#93;</span>
+labels <span class="sy0">=</span> model.<span class="me1">labels_</span><span class="br0">&#91;</span>model.<span class="me1">ordering_</span><span class="br0">&#93;</span>
+&nbsp;
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">7</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+colors <span class="sy0">=</span> <span class="br0">&#91;</span><span class="st0">'g.'</span><span class="sy0">,</span> <span class="st0">'r.'</span><span class="br0">&#93;</span>
+<span class="kw1">for</span> klass<span class="sy0">,</span> color <span class="kw1">in</span> <span class="kw2">zip</span><span class="br0">&#40;</span><span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#41;</span><span class="sy0">,</span> colors<span class="br0">&#41;</span>:
+    Xk <span class="sy0">=</span> space<span class="br0">&#91;</span>labels <span class="sy0">==</span> klass<span class="br0">&#93;</span>
+    Rk <span class="sy0">=</span> reachability<span class="br0">&#91;</span>labels <span class="sy0">==</span> klass<span class="br0">&#93;</span>
+    plt.<span class="me1">plot</span><span class="br0">&#40;</span>Xk<span class="sy0">,</span> Rk<span class="sy0">,</span> color<span class="sy0">,</span> alpha<span class="sy0">=</span><span class="nu0">0.3</span><span class="br0">&#41;</span>
+plt.<span class="me1">plot</span><span class="br0">&#40;</span>space<span class="br0">&#91;</span>labels <span class="sy0">==</span> -<span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">,</span> reachability<span class="br0">&#91;</span>labels <span class="sy0">==</span> -<span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="st0">'k.'</span><span class="sy0">,</span> alpha<span class="sy0">=</span><span class="nu0">0.3</span><span class="br0">&#41;</span>
+plt.<span class="me1">ylabel</span><span class="br0">&#40;</span><span class="st0">'Reachability (epsilon distance)'</span><span class="br0">&#41;</span>
+plt.<span class="me1">title</span><span class="br0">&#40;</span><span class="st0">'Reachability Plot'</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>opticskxi<span class="br0">&#41;</span>
+xi_gauss <span class="sy0">&lt;</span>- dbscan::extractXi<span class="br0">&#40;</span>optic_model<span class="sy0">,</span> xi <span class="sy0">=</span> <span class="nu0">0.023</span><span class="br0">&#41;</span>
+ggplot_optics<span class="br0">&#40;</span>optic_model<span class="sy0">,</span> groups <span class="sy0">=</span> xi_gauss$cluster<span class="br0">&#41;</span></pre>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ala_methode_a_densite&amp;media=cpp:reachability_plot.png" class="media" title="cpp:reachability_plot.png"><img src="/lib/exe/fetch.php?w=450&amp;tok=caf896&amp;media=cpp:reachability_plot.png" class="mediacenter" alt="" width="450" /></a>
+</p>
+
+<p>
+On peut enfin observer les clusters créés :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">plt.<span class="me1">scatter</span><span class="br0">&#40;</span>data<span class="br0">&#91;</span><span class="st0">'X'</span><span class="br0">&#93;</span><span class="sy0">,</span> data<span class="br0">&#91;</span><span class="st0">'Y'</span><span class="br0">&#93;</span><span class="sy0">,</span> c <span class="sy0">=</span> clust.<span class="me1">labels_</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">plot<span class="br0">&#40;</span>DS3<span class="sy0">,</span> col <span class="sy0">=</span> xi_gauss$cluster<span class="br0">&#41;</span></pre>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ala_methode_a_densite&amp;media=cpp:density_res_optics.png" class="media" title="cpp:density_res_optics.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=2aa240&amp;media=cpp:density_res_optics.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://medium.com/@xzz201920/optics-d80b41fd042a" class="urlextern" title="https://medium.com/@xzz201920/optics-d80b41fd042a" rel="nofollow">https://medium.com/@xzz201920/optics-d80b41fd042a</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://scikit-learn.org/stable/auto_examples/cluster/plot_optics.html" class="urlextern" title="https://scikit-learn.org/stable/auto_examples/cluster/plot_optics.html" rel="nofollow">https://scikit-learn.org/stable/auto_examples/cluster/plot_optics.html</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://cran.r-project.org/web/packages/opticskxi/vignettes/opticskxi.pdf" class="urlextern" title="https://cran.r-project.org/web/packages/opticskxi/vignettes/opticskxi.pdf" rel="nofollow">https://cran.r-project.org/web/packages/opticskxi/vignettes/opticskxi.pdf</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Dessiner le reachability plot&quot;,&quot;hid&quot;:&quot;dessiner_le_reachability_plot&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:8,&quot;range&quot;:&quot;6458-8225&quot;} -->
+<h2 class="sectionedit9" id="hdbscan">HDBSCAN</h2>
+<div class="level2">
+
+<p>
+L&#039;algorithme <span style='color:#ed1c24; '><strong>HDBSCAN</strong></span> (Hierarchical Density-Based Spatial Clustering of Applications with Noise) est un algorithme qui permet de construire une <span style='color:#ed1c24; '><strong>classification hiérarchique à densité</strong></span>.  
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;HDBSCAN&quot;,&quot;hid&quot;:&quot;hdbscan&quot;,&quot;codeblockOffset&quot;:12,&quot;secid&quot;:9,&quot;range&quot;:&quot;8226-8486&quot;} -->
+<h3 class="sectionedit10" id="principe_de_l_algorithme1">Principe de l&#039;algorithme</h3>
+<div class="level3">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ala_methode_a_densite&amp;media=cpp:dessinhdbscan.png" class="media" title="cpp:dessinhdbscan.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=a03697&amp;media=cpp:dessinhdbscan.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+
+<p>
+Décrivons ce schéma de façon plus formelle :
+</p>
+<ul>
+<li class="level1"><div class="li"> Le relief de l&#039;île aux lamas est en fait la <span style='color:#ed1c24; '><strong>Probability Density Function</strong></span> (PDF). Elle permet de donner une représentation de données, une idée de la densité du dataset.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> La mer représente le <span style='color:#ed1c24; '><strong>seuil</strong></span> $\lambda$ que l&#039;on va <span style='color:#ed1c24; '><strong>faire varier</strong></span> au cours de l&#039;algorithme. Il permet de faire varier le rayon que l&#039;on trace autour de chacun des points sachant que l&#039;on connaît $MinPts$. Ainsi, on peut calculer une <span style='color:#ed1c24; '><strong>évolution de la densité</strong></span>. De cette évolution vont ressortir les <span style='color:#ed1c24; '><strong>pics de densité</strong></span> qui permettent de construire l&#039;<span style='color:#ed1c24; '><strong>arbre de densité</strong></span>.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Principe de l&#039;algorithme&quot;,&quot;hid&quot;:&quot;principe_de_l_algorithme1&quot;,&quot;codeblockOffset&quot;:12,&quot;secid&quot;:10,&quot;range&quot;:&quot;8487-9313&quot;} -->
+<h3 class="sectionedit11" id="un_rayon_oui_mais_avec_quelle_distance">Un rayon oui mais avec quelle distance ?</h3>
+<div class="level3">
+
+<p>
+L&#039;algorithme HDBSCAN possède sa propre notion de distance définie grâce à la notion de $coreDistance$ :
+<br/>
+
+<br/>
+
+$$
+CoreDistance_{\epsilon ,MinPts}(p) = \left\{
+    \begin{array}{ll}
+        Indéfini &amp; \mbox{si } N_{\epsilon}(p)&lt;MinPts \\
+        Distance \, avec \, le \, MinPts ième \, point \, le \, plus \, proche &amp; \mbox{sinon.}
+    \end{array}
+\right.
+$$
+<br/>
+
+</p>
+<div class="table sectionedit12"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Théorie  </th><th class="col1 centeralign">  Signification  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  $\epsilon$  </td><td class="col1 centeralign">  Rayon autour de chacun des points  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  $MinPts$  </td><td class="col1 centeralign">  Nombre de points minimums pour définir un cluster  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  $N_{\epsilon}$  </td><td class="col1 centeralign">  Nombre de voisins dans un rayon $\epsilon$  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:12,&quot;range&quot;:&quot;9731-9956&quot;} -->
+<p>
+On peut ainsi, à partir de cette notion, définir la distance utilisée par l&#039;algorithme :
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ala_methode_a_densite&amp;media=cpp:explication_distance_dbscan.png" class="media" title="cpp:explication_distance_dbscan.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=0a32c9&amp;media=cpp:explication_distance_dbscan.png" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+$$
+d_{mreach-k}(a,b) = \max(core_{k}(a), core_{k}(b), d(a,b))
+$$
+</p>
+
+<p>
+<div class='alert alert-info'><strong>Info :</strong> cette méthode permet,entre autres, de mieux distinguer de petits groupes de données dûs au bruit des vrais clusters.</div>
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> hdbscan
+clusterer <span class="sy0">=</span> hdbscan.<span class="me1">HDBSCAN</span><span class="br0">&#40;</span>min_cluster_size<span class="sy0">=</span><span class="nu0">50</span><span class="sy0">,</span> gen_min_span_tree<span class="sy0">=</span><span class="kw2">True</span><span class="sy0">,</span> prediction_data<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span>
+clusterer.<span class="me1">fit</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">###EXCLU PYTHON###</span>
+plt.<span class="me1">subplot</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">2</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span>
+clusterer.<span class="me1">single_linkage_tree_</span>.<span class="me1">plot</span><span class="br0">&#40;</span>cmap<span class="sy0">=</span><span class="st0">'viridis'</span><span class="sy0">,</span> colorbar<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span>
+&nbsp;
+plt.<span class="me1">subplot</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">2</span><span class="sy0">,</span><span class="nu0">2</span><span class="br0">&#41;</span>
+clusterer.<span class="me1">condensed_tree_</span>.<span class="me1">plot</span><span class="br0">&#40;</span>select_clusters<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>dbscan<span class="br0">&#41;</span>
+hd <span class="sy0">=</span> hdbscan<span class="br0">&#40;</span>data<span class="sy0">,</span> minPts <span class="sy0">=</span> <span class="nu0">12</span><span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>hd<span class="sy0">,</span> show_flat <span class="sy0">=</span> T<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ala_methode_a_densite&amp;media=cpp:dbscan_res_arbre.png" class="media" title="cpp:dbscan_res_arbre.png"><img src="/lib/exe/fetch.php?w=700&amp;tok=e03108&amp;media=cpp:dbscan_res_arbre.png" class="mediacenter" alt="" width="700" /></a>
+</p>
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> le graphique de gauche est une exclusivité Python. Chacune des “vallées” représente un cluster, on voit clairement la séparation au niveau de la distance.</div>
+</p>
+
+<p>
+Il est parfois long d&#039;entrainer l&#039;algorithme donc, il est préférable de ne pas le réentrainer quand il y a de nouvelles données et c&#039;est pourquoi on spécifie au moment de l&#039;entrainement du modèle <strong>prediction_data=True</strong>.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">hdbscan.<span class="me1">approximate_predict</span><span class="br0">&#40;</span>clusterer<span class="sy0">,</span> np.<span class="kw3">array</span><span class="br0">&#40;</span>data.<span class="me1">iloc</span><span class="br0">&#91;</span><span class="nu0">20</span>:<span class="nu0">50</span><span class="sy0">,</span> :<span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+
+<p>
+Malheureusement, il sera nécessaire de réentrainer l&#039;algorithme en entier pour pouvoir classifier de nouveaux points car la méthode n&#039;a pas encore était codée..
+</p>
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> cet algorithme se montre très efficace pour visualiser les données mais il est important de garder à l&#039;esprit qu&#039;il a une complexité quadratique $O(n^2)$.</div>
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://towardsdatascience.com/understanding-hdbscan-and-density-based-clustering-121dbee1320e" class="urlextern" title="https://towardsdatascience.com/understanding-hdbscan-and-density-based-clustering-121dbee1320e" rel="nofollow">https://towardsdatascience.com/understanding-hdbscan-and-density-based-clustering-121dbee1320e</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://hdbscan.readthedocs.io/en/latest/how_hdbscan_works.html" class="urlextern" title="https://hdbscan.readthedocs.io/en/latest/how_hdbscan_works.html" rel="nofollow">https://hdbscan.readthedocs.io/en/latest/how_hdbscan_works.html</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://cran.r-project.org/web/packages/dbscan/vignettes/hdbscan.html" class="urlextern" title="https://cran.r-project.org/web/packages/dbscan/vignettes/hdbscan.html" rel="nofollow">https://cran.r-project.org/web/packages/dbscan/vignettes/hdbscan.html</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Un rayon oui mais avec quelle distance ?&quot;,&quot;hid&quot;:&quot;un_rayon_oui_mais_avec_quelle_distance&quot;,&quot;codeblockOffset&quot;:12,&quot;secid&quot;:11,&quot;range&quot;:&quot;9314-&quot;} -->

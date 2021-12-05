@@ -1,0 +1,24 @@
+{{ :cpp:c_java.png?400 |}}
+
+  * **Sujet :** Nous allons dans ce cours coder un jeu du type [[https://fr.wikipedia.org/wiki/Hotline_Miami| Hotline Miami]] à l'aide de C++ ou de Java. Vous apprendrez à manipuler ces langages en utilisant des bibliothèques graphiques qui vous pourront s'avérer utiles dans la vie professionnelle. Ce cours ne traitera pas de la gestion du son.
+  * **Outils :**
+
+|                    ^  Java  ^  C++  ^
+^ Editeur de code  |  [[https://www.eclipse.org/downloads/|Eclipse]]  |  [[http://www.codeblocks.org/| Code::Blocks]]  |
+^ Librairie graphique      |  [[https://openjfx.io/|JavaFX]]  |  [[https://www.sfml-dev.org/index-fr.php| SFML]]  |
+
+  * **Pré-requis :** Il est important de comprendre ce que sont les variables, fonctions, conditions et boucles. Il peut être intéressant d'aller voir la page sur [[cpp:CMake]] pour mieux comprendre comment se compile un code. Enfin, avant de se lancer dans ce type de projet en groupe, il faut savoir s'organiser. Nous l'avons traité dans une page spécifique [[cpp: Organiser et gérer son projet |ici]].
+  * **Temps :** Il faut prévoir au moins 30 h pour bien comprendre l'ensemble de ce cours.
+
+<alert warning> **Attention :** Il est parfois difficile d'installer les outils nécessaires,  c'est pourquoi l'installation a été traité [[cpp: Installation environnement Java & JavaFX| ici]] sous Linux et sous Windows.</alert>
+
+[[cpp: "Hello World" graphique | "Hello World" graphique]]
+
+===== Annexe =====
+
+  * [[cpp: Installation environnement Java & JavaFX | Installation environnement Java & JavaFX]]
+  * [[cpp: Installation environnement C++ & SFML | Installation environnement C++ & SFML]]
+
+=====Page en construction ou futures pages=====
+
+  * [[cpp:Future page ou page en construction C++ et Java| Future page ou page en construction]]

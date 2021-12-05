@@ -1,0 +1,13 @@
+<span class="kw1">from</span> sklearn.<span class="me1">model_selection</span> <span class="kw1">import</span> train_test_split
+<span class="kw1">from</span> sklearn.<span class="me1">metrics</span> <span class="kw1">import</span> mean_squared_error
+<span class="kw1">from</span> sklearn.<span class="me1">linear_model</span> <span class="kw1">import</span> ElasticNet
+&nbsp;
+data <span class="sy0">=</span> data.<span class="me1">select_dtypes</span><span class="br0">&#40;</span>exclude<span class="sy0">=</span><span class="br0">&#91;</span><span class="st0">'object'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="co1">#Sélection des variables quantitatives</span>
+&nbsp;
+y <span class="sy0">=</span> data<span class="br0">&#91;</span><span class="st0">'G3'</span><span class="br0">&#93;</span><span class="co1">#Définition variable cible</span>
+X <span class="sy0">=</span> data.<span class="me1">drop</span><span class="br0">&#40;</span>columns<span class="sy0">=</span><span class="br0">&#91;</span><span class="st0">'G3'</span><span class="br0">&#93;</span><span class="sy0">,</span> axis<span class="sy0">=</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="co1">#Variables explicatives</span>
+&nbsp;
+elastic <span class="sy0">=</span> ElasticNet<span class="br0">&#40;</span>alpha<span class="sy0">=</span><span class="nu0">1</span><span class="sy0">,</span> l1_ratio<span class="sy0">=</span><span class="nu0">0.5</span><span class="br0">&#41;</span><span class="co1">#Appel de la fonction avec alpha = 1 et le ration de mélange r = 0.5</span>
+elastic.<span class="me1">fit</span><span class="br0">&#40;</span>X_train<span class="sy0">,</span> y_train<span class="br0">&#41;</span><span class="co1">#Entraienement sur les données</span>
+elastic_pre <span class="sy0">=</span> elastic.<span class="me1">predict</span><span class="br0">&#40;</span>X_test<span class="br0">&#41;</span><span class="co1">#Prédiction sur les données tests</span>
+mean_squared_error<span class="br0">&#40;</span>y_test<span class="sy0">,</span> elastic_pre<span class="br0">&#41;</span><span class="co1">#Evaluation du modèle</span>

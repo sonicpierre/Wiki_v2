@@ -1,0 +1,2 @@
+<span class="kw1">from</span> sklearn.<span class="me1">metrics</span> <span class="kw1">import</span> f1_score
+f1_score<span class="br0">&#40;</span>prediction<span class="sy0">,</span> data_test<span class="br0">&#41;</span>

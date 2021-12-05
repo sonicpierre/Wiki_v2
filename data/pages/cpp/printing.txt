@@ -1,0 +1,1 @@
+Voici la page d'informations sur comment écrire dans le terminal en c++

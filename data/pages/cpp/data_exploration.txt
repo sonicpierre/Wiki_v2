@@ -1,0 +1,23 @@
+[[cpp:IA| Machine Learning]]
+
+====La réduction de dimension====
+
+La réduction de dimension trouve son sens dans le cadre d'un phénomène lié aux espaces de grandes dimensions : <fc #ff0000>le fléau de la dimension</fc>. Celui-ci reflète le fait que de nombreux problèmes qui n'existent pas dans un espace de dimension inférieure, se produisent dans des espaces de grandes dimensions. 
+
+C'est notamment le cas lorsqu'on s'intéresse à la distance entre deux vecteurs aléatoires d'un espace de grande dimension. Dans cet espace, les vecteurs sont très éparpillés ce qui augmente le risque d'over-fitting et rend la structure des données difficile à identifier si on ne dispose pas d'un jeu de données suffisamment grand. 
+
+Dans cette partie, on étudiera des méthodes de réduction de dimension pour des données linéaires et non linéaires.
+
+  * [[cpp: Complément ACP|ACP pour des données non linéaires]]
+  * [[cpp: ACM| Analyse des Correspondances Multiples]]
+  * [[cpp: Analyse factorielle avec données mixtes| Analyse factorielle avec données mixtes]]
+  * [[cpp: Les tests statistiques| Les tests statistiques]]
+
+====Les règles d'association====
+
+  * [[cpp: Les règles d'association| Les règles d'association]]
+
+
+=====Conclusion=====
+
+Avoir une idée claire de ses données, c'est savoir quelles sont les variables à  ajuster ou à créer pour améliorer son apprentissage. Il s'agit d'une étape primordiale pour mieux appréhender le problème donné et  apporter une réponse plus adaptée. Ainsi, avec toutes les techniques présentées, vous avez les outils pour mieux aborder le problème.

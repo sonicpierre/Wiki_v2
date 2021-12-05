@@ -1,0 +1,9 @@
+<span class="kw1">from</span> sklearn.<span class="me1">metrics</span> <span class="kw1">import</span> davies_bouldin_score
+&nbsp;
+davidBouldin <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+K_range <span class="sy0">=</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">3</span><span class="sy0">,</span><span class="nu0">10</span><span class="br0">&#41;</span><span class="co1">#Création d'une liste de nombre de cluster</span>
+<span class="kw1">for</span> k <span class="kw1">in</span> K_range:
+    model <span class="sy0">=</span> model <span class="sy0">=</span> KMeans<span class="br0">&#40;</span>n_clusters <span class="sy0">=</span> k<span class="sy0">,</span> max_iter<span class="sy0">=</span><span class="nu0">500</span><span class="sy0">,</span> init<span class="sy0">=</span><span class="st0">'k-means++'</span><span class="br0">&#41;</span>.<span class="me1">fit</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span>
+    davidBouldin.<span class="me1">append</span><span class="br0">&#40;</span>davies_bouldin_score<span class="br0">&#40;</span>data<span class="sy0">,</span> model.<span class="me1">labels_</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Partie visualisation identique à celle du calcule d'inertie et de silhouette</span>

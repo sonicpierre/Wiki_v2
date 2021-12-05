@@ -1,0 +1,28 @@
+====Introduction====
+
+Nous vivons dans une société où les données sont partout et sont devenues un capital que les entreprises s'arrachent afin d'enrichir leurs services et leur compétitivité.
+Cet enrichissement se fait non seulement par une capitalisation en interne des données mais aussi via leur monétisation à d'autres entreprises.
+
+====Qu'est-ce que la monétisation des données ? ====
+
+Il en existe de deux sortes, mais chacune d'elle consiste à utiliser les données recueillies pour accélérer le fonctionnement de l'entreprise (notamment grâce à l'apprentissage automatique) et augmenter leurs profits grâce à la vente de données à d'autres entreprises.
+On distingue ainsi : 
+
+  * **La monétisation interne :** Qui consiste au partage des données au sein de l'entreprise afin d'en avoir une meilleure compréhension et permettre la construction de modèles de prédictions. Cela a par exemple pour but de réduire le temps de traitement de certaines opérations, mais aussi des coûts associés.
+  * **La monétisation externe :** Il s'agit de la vente de données à d'autres partenaires afin de générer de nouveaux revenus. Elle permet aussi d'obtenir des données d'autres entreprises afin d'optimiser leur propre fonctionnement et encore une fois générer des revenus.
+
+====Comment évolue le marché des données ?====
+
+Le marché des données suit une courbe ascendante depuis les dernières années et nombre de plates-formes participent aujourd'hui à l'achat, la vente et l'échange d'actifs de données. On peut par exemple citer **Amazon Web** qui est une plate-forme d'échange de données d'apprentissage automatique ou d'intelligence artificielle,
+ou encore **AWS** qui propose aux entreprises des données pour répondre à leurs besoins marketing. La liste des marchés continue de s'allonger et les sociétés de ce type voient de plus en plus le jour.
+
+
+====Réaliser de la valeur grâce à vos données====
+
+La monétisation des données est un véritable tremplin pour réaliser de la valeur grâce aux données. En effet les entreprises augmentent considérablement leur revenus via une amélioration des services proposés aux clients, des campagnes de publicités plus pertinentes et des résultats de recherches scientifiques plus aboutis.
+
+====Conclusion====
+
+La demande en données continuera de croître dans tous les domaines et leur monétisation prospèrera du fait de leur facilité d'utilisation pour les acheteurs et vendeurs, mais surtout de l'ajout d'une plus-value considérable.
+
+Source : [[https://www.datasciencecentral.com/profiles/blogs/how-data-marketplaces-will-shape-the-future-of-data-monetization|Data science central]]

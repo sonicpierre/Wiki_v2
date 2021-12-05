@@ -1,0 +1,7 @@
+DB_score <span class="sy0">&lt;</span>- function<span class="br0">&#40;</span>k<span class="br0">&#41;</span><span class="br0">&#123;</span>
+    km <span class="sy0">&lt;</span>- kmeans<span class="br0">&#40;</span>data<span class="sy0">,</span> center<span class="sy0">=</span>k<span class="br0">&#41;</span>
+    index.<span class="me1">DB</span><span class="br0">&#40;</span>data<span class="sy0">,</span> km$cluster<span class="br0">&#41;</span>$DB
+<span class="br0">&#125;</span>
+k <span class="sy0">&lt;</span>- <span class="nu0">3</span>:<span class="nu0">10</span>
+DB <span class="sy0">&lt;</span>- sapply<span class="br0">&#40;</span>k<span class="sy0">,</span> DB_score<span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>k<span class="sy0">,</span> <span class="kw2">type</span><span class="sy0">=</span><span class="st0">'b'</span><span class="sy0">,</span> DB<span class="sy0">,</span> xlab<span class="sy0">=</span><span class="st0">'Number of clusters'</span><span class="sy0">,</span> ylab<span class="sy0">=</span><span class="st0">'Average Silhouette Scores'</span><span class="sy0">,</span> frame<span class="sy0">=</span>FALSE<span class="br0">&#41;</span>

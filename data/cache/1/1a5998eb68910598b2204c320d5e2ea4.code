@@ -1,0 +1,2 @@
+install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;corpcor&quot;</span><span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>corpcor<span class="br0">&#41;</span>

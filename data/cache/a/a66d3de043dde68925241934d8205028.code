@@ -1,0 +1,13 @@
+<span class="kw1">function</span> <span class="br0">&#91;</span>tabDelta,x<span class="br0">&#93;</span>=simplexePhases<span class="br0">&#40;</span>tab,x<span class="br0">&#41;</span>
+    <span class="co1">%Construction du tableau du problème auxiliaire</span>
+    tabDelta=auxiliaire<span class="br0">&#40;</span>tab<span class="br0">&#41;</span>
+    <span class="co1">%Première phase</span>
+    <span class="br0">&#91;</span>tabDelta,x<span class="br0">&#93;</span>=phase1<span class="br0">&#40;</span>tabDelta,x<span class="br0">&#41;</span>
+    <span class="co1">%On regarde si on peut passer à la seconde phase</span>
+    <span class="kw1">if</span> tabDelta<span class="br0">&#40;</span><span class="nu0">1</span>,<span class="kw1">end</span><span class="br0">&#41;</span>&gt;<span class="nu0">0</span>
+        <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span>&quot;Le problème n'a pas d'optimum&quot;<span class="br0">&#41;</span>
+        <span class="kw1">return</span>
+    endif
+    <span class="co1">%Seconde phase</span>
+    <span class="br0">&#91;</span>tabDelta,x<span class="br0">&#93;</span>=phase2<span class="br0">&#40;</span>tabDelta,x,tab<span class="br0">&#41;</span>
+endfunction

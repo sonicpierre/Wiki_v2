@@ -1,0 +1,13 @@
+<span class="kw1">def</span> fetch_housing_data<span class="br0">&#40;</span>housing_url<span class="sy0">=</span>HOUSING_URL<span class="sy0">,</span> housing_path<span class="sy0">=</span>HOUSING_PATH<span class="br0">&#41;</span>: <span class="co1">#On a mis des valeurs par desfaut si aucunes ne sont données à la fonction</span>
+    <span class="kw1">if</span> <span class="kw1">not</span> <span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">isdir</span><span class="br0">&#40;</span>housing_path<span class="br0">&#41;</span>: <span class="co1">#On vérifie si le dossier existe et on le crée sinon</span>
+        <span class="kw3">os</span>.<span class="me1">makedirs</span><span class="br0">&#40;</span>housing_path<span class="br0">&#41;</span>
+    <span class="co1">#On crée le chemin où sera l'archive</span>
+    tgz_path <span class="sy0">=</span> <span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">join</span><span class="br0">&#40;</span>housing_path<span class="sy0">,</span> <span class="st0">&quot;housing.tgz&quot;</span><span class="br0">&#41;</span>
+    <span class="co1">#On récupère sur le site les données</span>
+    <span class="kw3">urllib</span>.<span class="me1">request</span>.<span class="me1">urlretrieve</span><span class="br0">&#40;</span>housing_url<span class="sy0">,</span> tgz_path<span class="br0">&#41;</span>
+    <span class="co1">#On ouvre l'archive</span>
+    housing_tgz <span class="sy0">=</span> <span class="kw3">tarfile</span>.<span class="kw2">open</span><span class="br0">&#40;</span>tgz_path<span class="br0">&#41;</span>
+    <span class="co1">#On la décompresse</span>
+    housing_tgz.<span class="me1">extractall</span><span class="br0">&#40;</span>path<span class="sy0">=</span>housing_path<span class="br0">&#41;</span>
+    <span class="co1">#On refer le tout</span>
+    housing_tgz.<span class="me1">close</span><span class="br0">&#40;</span><span class="br0">&#41;</span>

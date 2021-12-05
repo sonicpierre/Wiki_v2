@@ -1,0 +1,16 @@
+install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;superml&quot;</span><span class="br0">&#41;</span>
+install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;CatEncoders&quot;</span><span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>CatEncoders<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>superml<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">####Méthode 1 qui facilite l'inversion de la transformation####</span>
+&nbsp;
+y <span class="sy0">&lt;</span>- factor<span class="br0">&#40;</span>df$Appreciation<span class="br0">&#41;</span><span class="co1">#Déclaration des attributs à encoder. Il est nécessaire de convertir la variable en facteur.</span>
+encoder <span class="sy0">&lt;</span>- LabelEncoder.<span class="me1">fit</span><span class="br0">&#40;</span>y<span class="br0">&#41;</span><span class="co1">#Application de l'encodage aux données</span>
+val <span class="sy0">&lt;</span>- transform<span class="br0">&#40;</span>encoder<span class="sy0">,</span> y<span class="br0">&#41;</span><span class="co1">#Transformation des données, qu'on récupère dans une variable pour pouvoir les décoder</span>
+&nbsp;
+<span class="co1">####Méthode 2 qui complique l'inversion####</span>
+&nbsp;
+y <span class="sy0">&lt;</span>- factor<span class="br0">&#40;</span>df$Appreciation<span class="br0">&#41;</span><span class="co1">#Déclaration des attributs à encoder. Il est nécessaire de convertir la variable en facteur.</span>
+encoder <span class="sy0">&lt;</span>- LabelEncoder$new<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="co1">#Appel du transformeur</span>
+encode_data <span class="sy0">&lt;</span>- encoder$fit_transform<span class="br0">&#40;</span>y<span class="br0">&#41;</span><span class="co1">#Application de la transformation à l'ensemble des attributs de y</span>

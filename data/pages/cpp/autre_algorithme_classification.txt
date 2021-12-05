@@ -1,0 +1,235 @@
+[[cpp:IA| Machine Learning]]
+
+{{ :cpp:arbrevieuxautrealgo.jpg?500 | Autre algorithme d'arbre}}
+
+Nous allons développer ici d'autres arbres qui pourront vous être utile dans des problèmes spécifiques ou pour faire des comparaisons de performence. Il ne s'agit bien entendu que d'une introduction pour élargir votre spectre de connaissance.
+
+=====Arbre CHAID=====
+
+L'arbre de CHAID (CHi-squared Automatic Interaction Detection) est l'un des premiers algorithmes à avoir été implémenté dans des logiciels comerciaux. Contrairement à l'algorithme de CART, il permet de construire des arbres qui ne sont pas binaire.
+
+
+
+====Mesure pour le choix de variable====
+
+Expliquons les variables en utilisant l'exemple qui nous servira à construire l'arbre. Il s'agit de données sur le vote aux Etats-Unis. Le but est de trouver à partir des caractéristiques d'une personne <color #ed1c24>**pour qui elle votera**</color>. L'algorithme va <color #ed1c24>**calculer le Khi2**</color> pour chacune des variables. Prenons comme exemple la variable <color #ed1c24>**age**</color> qui représente les différentes tranches 18-24 < 25-34 < 35-44 < 45-54 < 55-64 < 65+.
+
+  * On commence par calculer le Khi2 pour une tranche d'age grace à la formule du Khi2 qui permet de faire la sélection des variables les plus importantes :
+
+$$\chi^{2} = \sqrt{\frac{(y - y')^2}{y'}}$$
+
+^  Théorie  ^  Signification  ^
+|  $y$  |  Le nombre de personne ayant entre 18 et 24 ans et ayant voté pour Bush  |
+|  $y'$  |  La moyenne entre les gens de 18 et 24 ans qui ont voté pour et contre Bush  |
+
+  * On re-itère sur chacune des tranches d'age, on somme tout et on a notre Khi2 pour la variable !! On choisira la variable ayant le Khi2 le plus important comme noeud. 
+
+<alert info>**Info :** Le Khi2 avantage fortement les variables qui ont beaucoup de modalité. C'est pourquoi il est parfois préférable, quand le décalage est trop grand, d'utiliser le t de Tschuprow qui est traité [[https://lemakistatheux.wordpress.com/2013/09/01/le-t-de-tschuprow/ | ici]].</alert>
+
+<color #ed1c24>**Originellement**</color>, on créait <color #ed1c24>**une branche par modalité**</color> de la variable mais une technique de <color #ed1c24>**fusion**</color> a été mise en place pour éviter la construction de <color #ed1c24>**branches inutiles**</color> qui ne contiendrait que peu d'individus. Si vous avez déjà fait des <color #ed1c24>**statistiques inférentielles**</color> la méthode va vous sembler plus commune. On commence par poser <color #ed1c24>**2 hypothèses**</color> :
+
+$H_{0}$ : Deux attributs d'une variable ont un profil similaire
+\\
+$H_{1}$ : Deux attributs d'une variable ont un profil différent
+
+L'utilisateur donne la valeur du risque que les sommets soient prédit différent alors qu'ils sont similaires, ce qui correspond au risque de première espèce $\alpha$. On évalue ainsi la probabilité que chaque attribu soit lié aux autres grâce au test du $\chi^{2}$ et on fusionne qd le $\alpha$ est inférieur à celui défini par l'utilisateur. 
+
+Il est possible qu'il y ai aucune fusion et que plusieurs branches soient créées car l'arbre n'est pas forcément binaire.
+
+<alert warning>**Attention :** Ce type d'arbres ne gère pas les valeurs manquantes.</alert>
+====Application dans le code====
+
+Maintenant que vous avez toute la théorie, mettons la en place dans les différents langages :
+
+__En Python :__
+
+<code python>
+from CHAID import Tree
+independent_variable_columns = ['gender', 'ager', 'empstat', 'educr', 'marstat']
+dep_variable = 'vote3'
+tree = Tree.from_pandas_df(data, dict(zip(independent_variable_columns, ['nominal'] * 5)), dep_variable)
+</code>
+
+__En R : __
+
+<code python>
+install.packages("partykit")
+install.packages("CHAID", repos="http://R-Forge.R-project.org")
+library(CHAID)
+data("USvote")
+tree = chaid(vote3~., USvote, control = control_tree)
+</code>
+
+On peut ensuite afficher l'arbre
+
+__En Python :__
+
+Il est nécessaire d'avoir deux librairies pour que les images puissent être crééent. La librairie **graphviz** qui s'installe normalement avec pip3 et la librairie **orca** qui nécessitera **npm**. Il faudra donc faire les commandes :
+
+<code bash>
+sudo npm install -g electron@6.1.4 orca
+sudo apt install npm
+</code>
+
+Une fois toutes ces installations faitent. Vous n'avez plus qu'à lancer la construction du graphique représentant votre arbre.
+
+<code python>
+import orca
+import graphviz
+tree.render(path=None, view=False)
+</code>
+
+L'arbre sera généré dans un dossier **trees** sous 2 formes gv et png.
+
+__En R :__
+
+<code python>
+plot(model)
+</code>
+
+{{ :cpp:arbrechaid.png?800 |}}
+
+<alert warning>**Remarque :** Il est possible de traiter des variables continues avec cet algorithme mais on utilisera plus le test du Khi2 mais celui de Bartlett's ou de Levene's qui sont plus adaptés.</alert>
+
+**Source :**
+  * [[https://www.rocq.inria.fr/axis/modulad/archives/numero-33/tutorial-rakotomalala-33/rakotomalala-33-tutorial.pdf]]
+  * [[https://sefiks.com/2020/03/18/a-step-by-step-chaid-decision-tree-example/#:~:text=CHAID%20in%20Python&text=Herein%2C%20you%20can%20find%20the,as%20gradient%20boosting%20and%20adaboost.]]
+  * [[https://presmarymethuen.org/fr/dictionary/what-are-the-differences-between-id3-c4-5-and-cart/]]
+  * [[https://www.r-bloggers.com/chaid-and-r-when-you-need-explanation-may-15-2018/]]
+  * [[https://github.com/Rambatino/CHAID]]
+  * [[http://cerim.univ-lille2.fr/fileadmin/user_upload/statistiques/michael_genin/Cours/Modelisation/Arbres_de_decision_printable.pdf]]
+
+
+=====De l'arbre ID3 au C4.5=====
+
+L'algorithme ID3 et C4.5 utilisent les mêmes principes. Nous allons tout d'abord décrire l'algorithme ID3 et expliciter ses inconvéniants pour bien comprendre comment l'algorithme C4.5 y remédie.
+====L'algorithme ID3====
+
+L'entropie et l'indice qui permet d'avoir le gain utilisé à l'origine dans l'algorithme ID3 créé par Ross Quinlan en 1979. Rappelons la formule permettant de calculer l'entropie et le gain vu pour la première fois [[cpp:Arbres de classification | ici]]:
+
+  * Entropie :
+
+$$Ent(E) = -\sum_{i=1}^{k} p_{i} * log(p_{i})$$
+
+  * Gain :
+
+$$Gain = Ent(E) - \sum_{i=1}^{k} p_{i} * Ent(E_{i})$$
+
+**Etapes de l'algorithme :**
+
+L'algorithme ID3 va procéder en plusieurs étapes :
+
+{{ :cpp:id3algorithme.png?700 |}}
+
+On recommence sur chacun des nouveaux noeuds tant que toute les cibles ne sont pas identiques.
+
+^  Inconvénient de l'algorithme d'ID3  ^
+|  ID3 ne gère pas les données manquantes  |
+|  ID3 ne gère pas les valeurs continues  |
+|  ID3 est sujet rapidement à l'overfiting et a tendance à faire des arbres trop grands  |
+|  ID3 coûte cher en ressource ce qui le ralentit  |
+
+<alert info>**Info :** Vous pouvez le mettre en place pour vous amuser et comparer les performances avec la librairie [[https://pypi.org/project/decision-tree-id3/ | ID3]] en Python.</alert>
+====L'algorithme C4.5====
+
+Il a alors été implémenté en 1993 par le même auteur que l'algorithme ID3, l'algorithme C4.5. Il permet de régler de nombreux problèmes :
+
+  * <color #ed1c24>ID3 est sujet rapidement à l'overfiting et a tendance à faire des arbres trop grands de plus coûte cher en ressource ce qui le ralentit</color>
+
+Pour palier à ce problème Ross Quinlan a changé la formule permettant de calculer le Gain en utilisant une nouvelle fonction **SplitInfo**
+
+$$SplitInfo(X) = - \sum_{i=1}^{k} \frac{n_{i}}{n} * log_{2}(\frac{n_{i}}{n})$$
+
+^  Théorie  ^  Signification  ^
+|  $X$  |  Variable testée  |
+|  $k$  |  Nombre d'attributs de la variable  |
+|  $n_{i}$  |  Nombre d'élément ayant l'attributs  |
+|  $n$  |  Effectif total  |
+
+Plus les attributs d'une variable sont équilibrés et plus la fonction sera proche de 1 dans le cas contraire elle augmentera et en l'utilisant comme diviseur diminura le Gain. D'où la nouvelle formule du Gain :
+
+$$NouveauGain(X) = \frac{Gain(X)}{SplitInfo(X)}$$
+
+On a ainsi un gain qui permet de mieux gérer des variables qui auraient des attributs très déséquilibrés et permet de créer des arbres plus performant.
+
+  * <color #ed1c24>ID3 ne gère pas les valeurs continues</color>
+
+Imaginons que l'age des personnes qui ont le droit de vote soit quantitatif et non qualitatif. 
+
+|              ^  Individu 1  ^  Individu 2  ^  Individu 3  ^  Individu 4  ^  Individu 5  ^  Individu 6  ^  Individu 7  ^
+^  Age  |  54  |  45  |  64  |  51  |  42  |  24  |  49  |
+
+Tout est dans le signe $\leq$ ou $\geq$, il suffit de séparer le panel d'individu en deux et calculer le gain en regardant si ils appartiennent ou non à l'intervalle. La découpe permettant le plus grand gain sera choisie.
+
+<alert info>**Info :** Cette méthode est utilisée par beaucoup d'arbre (CART, CHAID) en déclinant le type de mesure.</alert>
+
+  * <color #ed1c24>ID3 ne gère pas les valeurs manquantes</color>
+
+La méthode ici est assez simple, l'algorithme calcule les valeurs de gains en ignorant les valeurs manquantes et multiplie le résultat par le ratio des valeur existantes sur le nombre total de valeurs prévues. 
+
+<alert warning>**Remarque :** C4.5 est l'un des meilleurs algorithme de classification. Il a été élu meilleur algorithme d'exploration de données à la Conférence internationale IEEE sur l'exploration de données (de ICDM) en Décembre 2006.</alert>
+
+
+**Source :**
+  * [[https://www.academia.edu/33701469/Algorithmes_de_classification_ID3_and_C4_5]]
+====Le C4.5 en pratique====
+
+L'arbre de C4.5 est une évolution de l'arbre de l'algorithme de ID3. Il utilise le même principe en changeant l'indice qui permet d'obtenir la variable la plus importante. En effet, on utilisera un ratio du gain :
+
+__En Python :__
+
+<code python>
+#On importe les librairies
+from chefboost import Chefboost as chef
+import pandas as pd
+data = pd.read_csv("vote_Etats_Unis.csv", index_col="Unnamed: 0")
+
+#On modifie le dataFrame pour qu'il soit traitable par la bibliothèque importée
+dataFrame = data[['gender','ager','empstat','educr','marstat','vote3']]
+dataFrame = dataFrame.rename(columns={'vote3': 'Decision'})
+</code>
+
+On construit ensuite un modèle à partir du dataFrame préparé :
+
+<code python>
+config = {'algorithm' : 'C4.5'} #On spécifie le modèle que l'on va entraîner
+model = chef.fit(dataFrame, config)
+</code>
+
+<alert info>**Info :** Les règles qui décrivent l'arbres seront décrite dans un fichier rules créé avec le dossier output par la librairie.</alert>
+
+__En R :__
+
+Nous allons ici écrire sur l'algorithme C5.0 (See5 pour Windows) qui est une optimisation de l'algorithme de C4.5 permettant d'avoir une construction plus rapide, utilisant moins de mémoire et construisant des arbres plus petits. Malheureusement, il s'agit d'un produit commercial qui n'a pas était encore transcri en Python.
+ 
+Le package que nous utilisons ici peut être un peu compliqué à installer c'est pourquoi il est conseillé de suivre ces lignes de code :
+
+<code python>
+install.packages('libcoin', dependencies = T)
+install.packages('C50', dependencies = T)
+library('C50')
+</code>
+
+On peut ensuite entrainer le modèle :
+
+<code python>
+train.indices <- sample(1:nrow(USVote), 100)
+x.train <- USVote[train.indices, ]
+x.test <- USVote[-train.indices, ]
+model <- C5.0(vote3~., data=x.train)
+</code>
+
+**Source :**
+  * [[https://github.com/barisesmer/C4.5]]
+  * [[https://pypi.org/project/chefboost/]]
+
+
+
+=====Synthèse=====
+
+|                   ^  Avantages  ^  Inconvénients  ^
+^  Arbre C4.5  |  Gère les points de données incomplets, Résout les problèmes d'over-fiting grace à l'élagage  |  L'algorithme est particulièrement censible au bruit dans les données  |
+^  Arbre ID3  |  Pas de réel avantage, historiquement il s'agit du premier des 3 à avoir été créé  |  Overfiting sur des petits échantillons, Ne gère pas les attributs numériques, Nécessite beaucoup de ressource machine  |
+^  Arbre CART  |  Gère facilement les valeurs aberrantes, Gère les variables numériques et catégorielles  |  Les arbres formés sont instables (petit changement de données implique de gros changements de l'arbre)  |
+^  Arbre CHAID  |  Performant pour une phase exploratoire des données  |  Moyennement performant en classement et paramétrage du coefficient alpha empirique (on essaie)  |
+

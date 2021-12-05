@@ -1,0 +1,4 @@
+<span class="co1"># Importation de SelectKBest pour permet de définir le test statistique (ici f_classif) ainsi que</span>
+<span class="co1"># le nombre de feature à conserver en fonction du score d'évaluation du modèle.</span>
+&nbsp;
+<span class="kw1">from</span> sklearn.<span class="me1">feature_selection</span> <span class="kw1">import</span> SelectKBest<span class="sy0">,</span> f_classif

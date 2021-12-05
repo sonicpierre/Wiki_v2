@@ -1,0 +1,377 @@
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ainstallation_environnement_java_javafx&amp;media=cpp:java.jpg" class="media" title="cpp:java.jpg"><img src="/lib/exe/fetch.php?w=400&amp;tok=18067d&amp;media=cpp:java.jpg" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<h1 class="sectionedit1" id="introduction_sur_l_environnement_de_developpement_de_java">Introduction sur l&#039;environnement de développement de Java</h1>
+<div class="level1">
+
+<p>
+Java est un langage qui fonctionne dans une <strong><span style="color:#cd5c5c;">machine virtuelle</span></strong>, comme le <a href="https://fr.wikipedia.org/wiki/C_sharp" class="urlextern" title="https://fr.wikipedia.org/wiki/C_sharp" rel="nofollow">C#</a>.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ainstallation_environnement_java_javafx&amp;media=cpp:java_schema.png" class="media" title="cpp:java_schema.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=40e92c&amp;media=cpp:java_schema.png" class="mediacenter" title=" Fonctionnement de l&#039;environnement Java" alt=" Fonctionnement de l&#039;environnement Java" width="800" /></a>
+</p>
+
+<p>
+Le  <strong><span style="color:#cd5c5c;">JDK (Java Development Kit)</span></strong> que l&#039;on peut compiler des programmes compatibles avec la  <strong><span style="color:#cd5c5c;">JVM (Java Virtual Machine)</span></strong>. 
+Le choix du JDK définit les optimisations qui vont être faites sur le code ainsi que les <a href="https://en.wikipedia.org/wiki/List_of_JVM_languages" class="urlextern" title="https://en.wikipedia.org/wiki/List_of_JVM_languages" rel="nofollow">langages sources</a> supportés.
+</p>
+
+<p>
+La  JVM  est l&#039;environnement dans lequel s&#039;exécute le <a href="https://dzone.com/articles/introduction-to-java-bytecode" class="urlextern" title="https://dzone.com/articles/introduction-to-java-bytecode" rel="nofollow">bytecode</a> (code compilé). Il en existe plusieurs telles que :
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://openjdk.java.net/groups/hotspot/docs/RuntimeOverview.html" class="urlextern" title="http://openjdk.java.net/groups/hotspot/docs/RuntimeOverview.html" rel="nofollow">HotSpot VM</a> : C&#039;est la JVM de référence dans l&#039;écosytème Java.  <span style="color:#ff0000;">C&#039;est elle qui sera utilisé ici.</span></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.graalvm.org/docs/why-graal/" class="urlextern" title="https://www.graalvm.org/docs/why-graal/" rel="nofollow">GraalVM</a> : La majorité du programme fonctionnera en dehors de la  VM (Machine Virtuelle), le programme sera mieux optimisé. On pourra utiliser des langages supplémentaires (C++, Javascript, etc.).</div>
+</li>
+<li class="level1"><div class="li"> <a href="https://visualvm.github.io/index.html" class="urlextern" title="https://visualvm.github.io/index.html" rel="nofollow">VisualVM</a> : Permet la visualisation de l&#039;utilisation des ressources à l&#039;intérieur de la VM.</div>
+</li>
+</ul>
+
+<p>
+Une VM est créée à chaque fois qu&#039;un programme en Java est lancé. Dans certains cas précis certaines ressources peuvent être partagées, mais ça ne seras pas le cas ici.
+</p>
+
+<p>
+Le <strong><span style="color:#cd5c5c;">JRE (Java Runtime Environment)</span></strong> permet de  <a href="https://docs.oracle.com/javase/7/docs/technotes/tools/windows/java.html" class="urlextern" title="https://docs.oracle.com/javase/7/docs/technotes/tools/windows/java.html" rel="nofollow">configurer</a> les caractéristiques de la VM telles que la mémoire vive maximum que la VM pourra utiliser.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Introduction sur l&#039;environnement de d\u00e9veloppement de Java&quot;,&quot;hid&quot;:&quot;introduction_sur_l_environnement_de_developpement_de_java&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;27-1833&quot;} -->
+<h1 class="sectionedit2" id="installation_java">Installation Java</h1>
+<div class="level1">
+
+<p>
+Il faut télécharger l&#039;archive d&#039;un JDK. On va travailler ici avec <strong><span style="color:#cd5c5c;">OpenJDK</span></strong> car il suis au plus proche la version de Java développée par Oracle tout en restant open source (tout le monde peut regarder son code).
+</p>
+
+<p>
+Rendez-vous directement sur le <a href="https://jdk.java.net/14/" class="urlextern" title="https://jdk.java.net/14/" rel="nofollow">site officiel</a> et téléchargez la version Linux/x64 (au moment d&#039;écrire cette page la version la plus récente est la  14.0.2 (<a href="https://download.java.net/java/GA/jdk14.0.2/205943a0976c4ed48cb16f1043c5c647/12/GPL/openjdk-14.0.2_linux-x64_bin.tar.gz" class="urlextern" title="https://download.java.net/java/GA/jdk14.0.2/205943a0976c4ed48cb16f1043c5c647/12/GPL/openjdk-14.0.2_linux-x64_bin.tar.gz" rel="nofollow">linux</a>, <a href="https://download.java.net/java/GA/jdk14.0.2/205943a0976c4ed48cb16f1043c5c647/12/GPL/openjdk-14.0.2_windows-x64_bin.zip" class="urlextern" title="https://download.java.net/java/GA/jdk14.0.2/205943a0976c4ed48cb16f1043c5c647/12/GPL/openjdk-14.0.2_windows-x64_bin.zip" rel="nofollow">windows</a>).
+</p>
+
+<p>
+Les commandes qui vont suivre vont donc installer cette version.
+</p>
+
+<p>
+Déplacez le contenu de l&#039;archive pour le mettre dans :
+</p>
+<ul>
+<li class="level1"><div class="li"> Linux : <strong><span style="color:#cd5c5c;">/opt/</span></strong></div>
+</li>
+<li class="level1"><div class="li"> Windows : <strong><span style="color:#cd5c5c;">C:\Program Files\Java</span></strong></div>
+</li>
+</ul>
+
+<p>
+Pour Linux la commande suivante fera le travail pour vous :
+</p>
+<pre class="code bash">  <span class="kw2">tar</span> xvf openjdk-14.0.2_linux-x64_bin.tar.gz <span class="co0"># Décompression de l'archive</span>
+  <span class="kw2">mv</span> .<span class="sy0">/</span>jdk-14.0.2 <span class="sy0">/</span>opt<span class="sy0">/</span> <span class="co0"># Mise du JDK dans le dossier système recommandé</span></pre>
+
+<p>
+Et voila son équivalent Windows :
+</p>
+<pre class="code powershell">  mkdir <span class="st0">'C:\Program Files\Java'</span>
+  Expand<span class="sy0">-</span>Archive <span class="kw5">-Path</span> <span class="st0">'.\openjdk-14.0.2_windows-x64_bin.zip'</span> <span class="sy0">-</span>DestinationPath <span class="st0">'C:\Program Files\Java\'</span></pre>
+
+<p>
+Il ne reste plus qu&#039;à indiquer où Java est installé au système. Pour celà il faut modifier deux variables d&#039;environnement.
+</p>
+
+</div>
+
+<h4 id="pour_linux">Pour Linux</h4>
+<div class="level4">
+
+<p>
+Si votre shell est un <strong><span style="color:#cd5c5c;">bash</span></strong>, on va utiliser le dossier <strong>/etc/profil.d</strong>.
+Si vous n&#039;avez pas compris cette dernière phrase, vous utilisez certainement un <strong><span style="color:#cd5c5c;">Ubuntu</span></strong> ou un <strong><span style="color:#cd5c5c;">Debian</span></strong>. C&#039;est donc la méthode que vous devez suivre.
+</p>
+
+<p>
+Il faut utiliser la commande suivante avec les droits super utilisateur (sudo avec ubuntu).
+</p>
+<pre class="code bash">  <span class="kw2">tee</span> <span class="sy0">/</span>etc<span class="sy0">/</span>profile.d<span class="sy0">/</span>jdk14.sh <span class="sy0">&lt;&lt;</span>EOF
+  <span class="kw3">export</span> <span class="re2">JAVA_HOME</span>=<span class="sy0">/</span>opt<span class="sy0">/</span>jdk-14.0.2
+  <span class="kw3">export</span> <span class="re2">PATH</span>=\<span class="re1">$PATH</span>:\<span class="re1">$JAVA_HOME</span><span class="sy0">/</span>bin
+  EOF</pre>
+
+<p>
+Le fichier créé (jdk14.sh) sera lancé automatiquement au démarrage, cependant pour éviter un redémarrage on va l&#039;utiliser manuellement une première fois.
+</p>
+<pre class="code bash">  <span class="kw3">source</span> <span class="sy0">/</span>etc<span class="sy0">/</span>profile.d<span class="sy0">/</span>jdk14.sh</pre>
+
+</div>
+
+<h4 id="pour_windows_10">Pour Windows 10</h4>
+<div class="level4">
+
+<p>
+Il suffit de saisir <strong><span style="color:#cd5c5c;">“Modifier les variables d’environnement système”</span></strong> dans la barre de recherche.
+Dans la fenêtre qui apparaît utiliser le bouton <strong><span style="color:#cd5c5c;">“Variables d’environnement…”</span></strong> :
+<a href="/lib/exe/detail.php?id=cpp%3Ainstallation_environnement_java_javafx&amp;media=cpp:java_install_win-1.png" class="media" title="cpp:java_install_win-1.png"><img src="/lib/exe/fetch.php?w=300&amp;tok=6c9812&amp;media=cpp:java_install_win-1.png" class="mediacenter" title=" Fenêtre de propriétés système de Windows" alt=" Fenêtre de propriétés système de Windows" width="300" /></a>
+</p>
+
+<p>
+Sur la fenêtre qui s&#039;ouvre on cherche la variable <strong><span style="color:#cd5c5c;">“Path”</span></strong> dans le tableau du bas. Puis on clique sur modifier. <a href="/lib/exe/detail.php?id=cpp%3Ainstallation_environnement_java_javafx&amp;media=cpp:java_install_win-2.png" class="media" title="cpp:java_install_win-2.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=f34079&amp;media=cpp:java_install_win-2.png" class="mediacenter" title=" Fenêtre de variables d&#039;environnement de Windows" alt=" Fenêtre de variables d&#039;environnement de Windows" width="500" /></a>.
+</p>
+
+<p>
+On ajoute ensuite l&#039;élément <strong><span style="color:#cd5c5c;">“C:\Program Files\Java\jdk-14.0.2\bin”</span></strong>.
+On peut valider la modification et fermer cette fenêtre.
+</p>
+
+<p>
+Avant de quitte le second menu, on va ajouter une nouvelle variable d&#039;environnement <strong><span style="color:#cd5c5c;">JAVA_HOME</span></strong> qui contiendra :  <strong><span style="color:#cd5c5c;">“C:\Program Files\Java\jdk-14.0.2”</span></strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Installation Java&quot;,&quot;hid&quot;:&quot;installation_java&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;1834-4974&quot;} -->
+<h2 class="sectionedit3" id="installation_ide">Installation IDE</h2>
+<div class="level2">
+
+<p>
+L&#039;<strong><span style="color:#cd5c5c;">IDE (Integrated Development Environment)</span></strong> est un programme permettant de regrouper la majorité des besoins d&#039;un développeur au sein d&#039;une unique interface :
+</p>
+<ul>
+<li class="level1"><div class="li"> un éditeur de texte</div>
+</li>
+<li class="level1"><div class="li"> un compilateur</div>
+</li>
+<li class="level1"><div class="li"> une gestion simplifié des bibliothèques</div>
+</li>
+<li class="level1"><div class="li"> un débogueur</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Installation IDE&quot;,&quot;hid&quot;:&quot;installation_ide&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:3,&quot;range&quot;:&quot;4975-5292&quot;} -->
+<h3 class="sectionedit4" id="choix_de_l_ide">Choix de l&#039;IDE</h3>
+<div class="level3">
+
+<p>
+Il y a 3 IDEs principaux utilisés pour le développement en Java :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong><span style="color:#cd5c5c;">Eclipse</span></strong> : Il est assez vieux et est donc présents dans beaucoup d&#039;entreprises, malgré de petites instabilités.</div>
+</li>
+<li class="level1"><div class="li"> <strong><span style="color:#cd5c5c;">Netbeans</span></strong> : Très moderne, il se veut très simpliste en offrant une interface épurée. Il est souvent coûteux en performance.</div>
+</li>
+<li class="level1"><div class="li"> <strong><span style="color:#cd5c5c;">IntelliJ</span></strong> : Très en vogue dans les entreprises, il est apprécié des développeurs car il est très complet et stable avec une interface moderne. Cependant la version “complète” est payante.</div>
+</li>
+</ul>
+
+<p>
+On va ici utiliser <strong><span style="color:#cd5c5c;">Eclipse</span></strong>, comme c&#039;est l&#039;IDE que vous aurez le plus de chances de croiser lors de vos études ou de votre vie professionnelle.
+</p>
+
+</div>
+
+<h5 id="source">Source</h5>
+<div class="level5">
+
+<p>
+<a href="https://www.easypartner.fr/blog/les-meilleurs-ide-pour-developpeur-java/" class="urlextern" title="https://www.easypartner.fr/blog/les-meilleurs-ide-pour-developpeur-java/" rel="nofollow">https://www.easypartner.fr/blog/les-meilleurs-ide-pour-developpeur-java/</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Choix de l&#039;IDE&quot;,&quot;hid&quot;:&quot;choix_de_l_ide&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:4,&quot;range&quot;:&quot;5293-6149&quot;} -->
+<h3 class="sectionedit5" id="installation_d_eclispe">Installation d&#039;Eclispe</h3>
+<div class="level3">
+
+<p>
+On va utiliser <strong><span style="color:#cd5c5c;">Eclipse</span></strong>.
+Le télécharger depuis le <a href="https://www.eclipse.org/downloads/" class="urlextern" title="https://www.eclipse.org/downloads/" rel="nofollow">site officiel</a>.
+Décompressez l&#039;archive, et lancer le programme eclipse-inst présent à l&#039;intérieur.
+</p>
+
+<p>
+Sélectionnez <strong><span style="color:#cd5c5c;">Eclipse IDE for java Developers</span></strong>. Vous pouvez changer le dossier d&#039;installation sur la page suivante. Il ne reste qu&#039;à <strong>lancer l&#039;installation</strong> et <strong>accepter les licences d&#039;utilisation</strong>.
+Ignorez le message indiquant que l&#039;installation est plus longue que normalement (c&#039;est faux).
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Installation d&#039;Eclispe&quot;,&quot;hid&quot;:&quot;installation_d_eclispe&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:5,&quot;range&quot;:&quot;6150-6715&quot;} -->
+<h2 class="sectionedit6" id="configuration_de_l_espace_de_travail">Configuration de l&#039;espace de travail</h2>
+<div class="level2">
+
+<p>
+Au lancement d&#039;eclipse, vous devez choisir le dossier qui contiendra vos projets : le <strong><span style="color:#cd5c5c;">workspace</span></strong>.
+Une fois ceci fait, l&#039;IDE s&#039;ouvre avec une page d’accueil.
+On peut alors fermer l&#039;onglet, sans oublier de cocher la case pour ne plus que cette page s&#039;ouvre au lancement.
+</p>
+
+<p>
+<video class="mediacenter" width="800" height="450" controls="controls">
+<source src="/lib/exe/fetch.php?media=cpp:installationjava_part1.webm" type="video/webm" />
+<a href="/lib/exe/fetch.php?cache=&amp;media=cpp:installationjava_part1.webm" class="media mediafile mf_webm" title="cpp:installationjava_part1.webm (391.1 KB)">installationjava_part1.webm</a></video>
+
+Dans le bandeau de gauche, créer un nouveau projet java.
+Sélectionner le JRE 14.
+Nommez le projet : Game (si vous ne le faite pas, il faudra penser à changer le nom du module)
+Faire suivant.
+Dans l&#039;onglet Modules, faire add System Module… et sélectionner <strong>java.base</strong>.
+</p>
+
+<p>
+<video class="mediacenter" width="800" height="450" controls="controls">
+<source src="/lib/exe/fetch.php?media=cpp:installationjava_part2.webm" type="video/webm" />
+<a href="/lib/exe/fetch.php?cache=&amp;media=cpp:installationjava_part2.webm" class="media mediafile mf_webm" title="cpp:installationjava_part2.webm (1.9 MB)">installationjava_part2.webm</a></video>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Configuration de l&#039;espace de travail&quot;,&quot;hid&quot;:&quot;configuration_de_l_espace_de_travail&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:6,&quot;range&quot;:&quot;6716-7431&quot;} -->
+<h2 class="sectionedit7" id="verifier_l_installation_de_java">Vérifier l&#039;installation de java</h2>
+<div class="level2">
+
+<p>
+On peut désormais créer un package, en faisant clic droit sur le projet. 
+On va l&#039;appeller <strong>fr.tuto</strong>.
+Dans ce package on va créer une nouvelle classe : <strong>Main</strong>.
+On va y ajouter le code d&#039;une fonction main, soit manuellement soit dans la fenêtre de création de classe. 
+</p>
+<pre class="code java"><span class="kw1">public</span> <span class="kw1">static</span> <span class="kw4">void</span> main<span class="br0">&#40;</span><a href="http://www.google.com/search?hl=en&amp;q=allinurl%3Adocs.oracle.com+javase+docs+api+string"><span class="kw3">String</span></a><span class="br0">&#91;</span><span class="br0">&#93;</span> args<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <a href="http://www.google.com/search?hl=en&amp;q=allinurl%3Adocs.oracle.com+javase+docs+api+system"><span class="kw3">System</span></a>.<span class="me1">out</span>.<span class="me1">println</span><span class="br0">&#40;</span><span class="st0">&quot;Hello World&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+
+<p>
+Lancer le programme avec l&#039;icône de flèche blanche dans un rond vert (aka Run Main) en haut de l&#039;interface de l&#039;IDE.
+</p>
+
+</div>
+
+<h4 id="resultat">Résultat</h4>
+<div class="level4">
+
+<p>
+Dans la console intégrée à l&#039;IDE vous devriez voir apparaître “Hello World”.
+<video class="mediacenter" width="800" height="450" controls="controls">
+<source src="/lib/exe/fetch.php?media=cpp:installationjava_part3.webm" type="video/webm" />
+<a href="/lib/exe/fetch.php?cache=&amp;media=cpp:installationjava_part3.webm" class="media mediafile mf_webm" title="cpp:installationjava_part3.webm (2.4 MB)">installationjava_part3.webm</a></video>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;V\u00e9rifier l&#039;installation de java&quot;,&quot;hid&quot;:&quot;verifier_l_installation_de_java&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:7,&quot;range&quot;:&quot;7432-8123&quot;} -->
+<h1 class="sectionedit8" id="ajout_de_javafx">Ajout de JavaFX</h1>
+<div class="level1">
+
+<p>
+JavaFX est une bibliothèque graphique <strong>récente</strong> dans l&#039;écosystème Java. Elle a pour objectif de remplacer <strong>Swing</strong> qui est déprécié depuis quelques versions. Cette bibliothèque n&#039;est pas idéal pour faire du rendu graphique, mais elle permet tout de même de faire du dessin, en plus elle nous fournit de quoi faire des <strong>interfaces</strong> facilement.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Ajout de JavaFX&quot;,&quot;hid&quot;:&quot;ajout_de_javafx&quot;,&quot;codeblockOffset&quot;:5,&quot;secid&quot;:8,&quot;range&quot;:&quot;8124-8512&quot;} -->
+<h2 class="sectionedit9" id="installation_javafx">Installation JavaFx</h2>
+<div class="level2">
+
+<p>
+Télécharger la version 14 de java fx pour linux depuis : <a href="https://gluonhq.com/products/javafx/" class="urlextern" title="https://gluonhq.com/products/javafx/" rel="nofollow">https://gluonhq.com/products/javafx/</a>
+Décompressez l&#039;archive.
+</p>
+
+<p>
+Dans eclipse, faire clic droit sur le projet, puis Properties, Java Build Path. Dans la partie de droite sélectionnez Libraries puis Modulepath.
+</p>
+
+<p>
+Avec le bouton “Add External JARs…” à droite, ajoutez les .jar que vous venez de dézipper. Tous ne seront pas obligatoires pour ce tutoriel.
+</p>
+
+<p>
+<video class="mediacenter" width="800" height="450" controls="controls">
+<source src="/lib/exe/fetch.php?media=cpp:installationjava_part4.webm" type="video/webm" />
+<a href="/lib/exe/fetch.php?cache=&amp;media=cpp:installationjava_part4.webm" class="media mediafile mf_webm" title="cpp:installationjava_part4.webm (3.7 MB)">installationjava_part4.webm</a></video>
+
+Maintenant il reste à permettre à votre projet d&#039;utiliser les bons modules (c&#039;est une spécificité de java à partir de java 9).
+</p>
+
+<p>
+Pour cela : clic droit sur le projet, “Run As” &gt; “Run Configuration”.
+</p>
+
+<p>
+Dans l&#039;onglet Arguments, indiquez dans les VM Arguments :
+Il faudra modifier la première ligne pour correspondre avec l&#039;endroit où vous avez mis les fichiers
+</p>
+<pre class="code">--module-path /opt/javafx-sdk-14.0.1/lib
+--add-modules java.prefs,java.datatransfer,java.desktop,jdk.unsupported,java.xml,javafx.base,javafx.graphics,javafx.controls
+--add-exports GameModule/fr.game=javafx.graphics</pre>
+
+<p>
+<video class="mediacenter" width="800" height="450" controls="controls">
+<source src="/lib/exe/fetch.php?media=cpp:installationjava_part5.webm" type="video/webm" />
+<a href="/lib/exe/fetch.php?cache=&amp;media=cpp:installationjava_part5.webm" class="media mediafile mf_webm" title="cpp:installationjava_part5.webm (1.3 MB)">installationjava_part5.webm</a></video>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Installation JavaFx&quot;,&quot;hid&quot;:&quot;installation_javafx&quot;,&quot;codeblockOffset&quot;:5,&quot;secid&quot;:9,&quot;range&quot;:&quot;8513-9652&quot;} -->
+<h3 class="sectionedit10" id="verification_de_l_installation">Vérification de l&#039;installation</h3>
+<div class="level3">
+
+<p>
+Remplacez tous le code du fichier Main.java.
+On expliquera son contenu au début du cours sur le développement d&#039;un jeu en Java.
+</p>
+<pre class="code java"><span class="kw1">package</span> <span class="co2">fr.tuto</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">import</span> <span class="co2">javafx.application.Application</span><span class="sy0">;</span>
+<span class="kw1">import</span> <span class="co2">javafx.event.ActionEvent</span><span class="sy0">;</span>
+<span class="kw1">import</span> <span class="co2">javafx.event.EventHandler</span><span class="sy0">;</span>
+<span class="kw1">import</span> <span class="co2">javafx.scene.Scene</span><span class="sy0">;</span>
+<span class="kw1">import</span> <span class="co2">javafx.scene.control.Button</span><span class="sy0">;</span>
+<span class="kw1">import</span> <span class="co2">javafx.scene.layout.StackPane</span><span class="sy0">;</span>
+<span class="kw1">import</span> <span class="co2">javafx.stage.Stage</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">public</span> <span class="kw1">class</span> Main <span class="kw1">extends</span> Application <span class="br0">&#123;</span>
+    <span class="kw1">public</span> <span class="kw1">static</span> <span class="kw4">void</span> main<span class="br0">&#40;</span><a href="http://www.google.com/search?hl=en&amp;q=allinurl%3Adocs.oracle.com+javase+docs+api+string"><span class="kw3">String</span></a><span class="br0">&#91;</span><span class="br0">&#93;</span> args<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+        launch<span class="br0">&#40;</span>args<span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    @Override
+    <span class="kw1">public</span> <span class="kw4">void</span> start<span class="br0">&#40;</span>Stage primaryStage<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+        primaryStage.<span class="me1">setTitle</span><span class="br0">&#40;</span><span class="st0">&quot;Hello World!&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        <a href="http://www.google.com/search?hl=en&amp;q=allinurl%3Adocs.oracle.com+javase+docs+api+button"><span class="kw3">Button</span></a> btn <span class="sy0">=</span> <span class="kw1">new</span> <a href="http://www.google.com/search?hl=en&amp;q=allinurl%3Adocs.oracle.com+javase+docs+api+button"><span class="kw3">Button</span></a><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        btn.<span class="me1">setText</span><span class="br0">&#40;</span><span class="st0">&quot;Say 'Hello World'&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        btn.<span class="me1">setOnAction</span><span class="br0">&#40;</span><span class="kw1">new</span> EventHandler<span class="sy0">&lt;</span>ActionEvent<span class="sy0">&gt;</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+            @Override
+            <span class="kw1">public</span> <span class="kw4">void</span> handle<span class="br0">&#40;</span><a href="http://www.google.com/search?hl=en&amp;q=allinurl%3Adocs.oracle.com+javase+docs+api+actionevent"><span class="kw3">ActionEvent</span></a> event<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+                <a href="http://www.google.com/search?hl=en&amp;q=allinurl%3Adocs.oracle.com+javase+docs+api+system"><span class="kw3">System</span></a>.<span class="me1">out</span>.<span class="me1">println</span><span class="br0">&#40;</span><span class="st0">&quot;Hello World!&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+            <span class="br0">&#125;</span>
+        <span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        StackPane root <span class="sy0">=</span> <span class="kw1">new</span> StackPane<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        root.<span class="me1">getChildren</span><span class="br0">&#40;</span><span class="br0">&#41;</span>.<span class="me1">add</span><span class="br0">&#40;</span>btn<span class="br0">&#41;</span><span class="sy0">;</span>
+        primaryStage.<span class="me1">setScene</span><span class="br0">&#40;</span><span class="kw1">new</span> Scene<span class="br0">&#40;</span>root, <span class="nu0">300</span>, <span class="nu0">250</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        primaryStage.<span class="me1">show</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+
+<p>
+Et dans le fichier module-info.java :
+</p>
+<pre class="code java">module game <span class="br0">&#123;</span>
+	requires javafx.<span class="me1">base</span><span class="sy0">;</span>
+	requires javafx.<span class="me1">controls</span><span class="sy0">;</span>
+	requires javafx.<span class="me1">graphics</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+
+</div>
+
+<h4 id="resultat1">Résultat</h4>
+<div class="level4">
+
+<p>
+<video class="mediacenter" width="800" height="450" controls="controls">
+<source src="/lib/exe/fetch.php?media=cpp:installationjava_part6.webm" type="video/webm" />
+<a href="/lib/exe/fetch.php?cache=&amp;media=cpp:installationjava_part6.webm" class="media mediafile mf_webm" title="cpp:installationjava_part6.webm (3.8 MB)">installationjava_part6.webm</a></video>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;V\u00e9rification de l&#039;installation&quot;,&quot;hid&quot;:&quot;verification_de_l_installation&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:10,&quot;range&quot;:&quot;9653-&quot;} -->

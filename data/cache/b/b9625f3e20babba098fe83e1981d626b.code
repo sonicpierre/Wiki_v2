@@ -1,0 +1,3 @@
+library<span class="br0">&#40;</span><span class="st0">&quot;MeanShift&quot;</span><span class="br0">&#41;</span>
+data <span class="sy0">=</span> data.<span class="me1">frame</span><span class="br0">&#40;</span>t<span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="co1">#Les fromages doivent être placés sur les colonnes et les caractéristiques dans les lignes</span>
+model <span class="sy0">=</span> msClustering<span class="br0">&#40;</span>data<span class="br0">&#41;</span>

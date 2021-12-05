@@ -1,0 +1,12 @@
+phrase.<span class="me1">lower</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="sy0">&lt;</span>code<span class="sy0">&gt;</span>
+&nbsp;
+<span class="sy0">===</span>Suppression des stopwords<span class="sy0">===</span>
+&nbsp;
+Les stopwords sont des mots qui n<span class="st0">'apportent rien à l'</span>apprentissage du modèle. <span class="me1">Il</span> y en déjà par desfaut dans nltk mais on peut bien entendu en rajouter pour être plus en accord avec son étude.
+&nbsp;
+<span class="sy0">&lt;</span><span class="kw3">code</span> python<span class="sy0">&gt;</span>
+<span class="kw1">def</span> suppressionDesStopWords<span class="br0">&#40;</span>dataFrame<span class="br0">&#41;</span>:
+    stopW <span class="sy0">=</span> stopwords.<span class="me1">words</span><span class="br0">&#40;</span><span class="st0">'french'</span><span class="br0">&#41;</span>
+    <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>dataFrame.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>:
+        dataFrame<span class="br0">&#91;</span><span class="st0">'Commentaires'</span><span class="br0">&#93;</span><span class="br0">&#91;</span>i<span class="br0">&#93;</span> <span class="sy0">=</span> <span class="br0">&#91;</span>word <span class="kw1">for</span> word <span class="kw1">in</span> dataFrame<span class="br0">&#91;</span><span class="st0">'Commentaires'</span><span class="br0">&#93;</span><span class="br0">&#91;</span>i<span class="br0">&#93;</span> <span class="kw1">if</span> word <span class="kw1">not</span> <span class="kw1">in</span> stopW<span class="br0">&#93;</span>

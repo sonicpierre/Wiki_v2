@@ -1,0 +1,75 @@
+1600795165	89.88.75.36	C	cpp:complement_acp	pierrevirgaux	créée		43
+1600795240	89.88.75.36	E	cpp:complement_acp	pierrevirgaux			6205
+1601628439	89.88.75.36	E	cpp:complement_acp	danilouchouchou	[Optimisation de l'algorithme ACP] 		177
+1601629431	89.88.75.36	E	cpp:complement_acp	danilouchouchou	[Optimisation de l'algorithme ACP] 		2
+1601633581	89.88.75.36	E	cpp:complement_acp	danilouchouchou	[ACP randomisée] 		33
+1601660204	89.88.75.36	E	cpp:complement_acp	danilouchouchou	[Optimisation de l'algorithme ACP] 		152
+1601660259	89.88.75.36	E	cpp:complement_acp	danilouchouchou	[Optimisation de l'algorithme ACP] 		3
+1601660849	89.88.75.36	E	cpp:complement_acp	danilouchouchou	[ACP randomisée] 		-2
+1601934285	89.88.75.36	E	cpp:complement_acp	danilouchouchou	[ACP randomisée] 		4
+1601937632	89.88.75.36	E	cpp:complement_acp	danilouchouchou	[ACP randomisée] 		70
+1601937640	89.88.75.36	E	cpp:complement_acp	danilouchouchou	[ACP randomisée] 		1
+1601997345	217.119.181.222	E	cpp:complement_acp	danilouchouchou	[ACP randomisée] 		122
+1602017515	89.88.75.36	E	cpp:complement_acp	danilouchouchou	[ACP randomisée] 		-121
+1602062872	217.119.181.222	E	cpp:complement_acp	danilouchouchou	[ACP incrémentale] 		14
+1602090272	89.88.75.36	E	cpp:complement_acp	danilouchouchou	[Optimisation de l'algorithme ACP] 		21
+1602090341	89.88.75.36	E	cpp:complement_acp	danilouchouchou	[Optimisation de l'algorithme ACP] 		-4
+1602090457	89.88.75.36	E	cpp:complement_acp	danilouchouchou	[Optimisation de l'algorithme ACP] 		30
+1602090485	89.88.75.36	E	cpp:complement_acp	danilouchouchou	[Optimisation de l'algorithme ACP] 		-12
+1602092170	89.88.75.36	E	cpp:complement_acp	danilouchouchou	[ACP randomisée] 		-204
+1602095282	89.88.75.36	E	cpp:complement_acp	danilouchouchou	[ACP randomisée] 		265
+1602095304	89.88.75.36	E	cpp:complement_acp	danilouchouchou	[Locally Linear Emdedding] 		84
+1602581854	91.69.217.178	E	cpp:complement_acp	danilouchouchou	[ACP à noyau] 		-2
+1602595473	91.69.217.178	E	cpp:complement_acp	danilouchouchou	[ACP à noyau] 		38
+1602596615	91.69.217.178	E	cpp:complement_acp	danilouchouchou	[ACP à noyau] 		6
+1602851975	217.119.181.222	E	cpp:complement_acp	danilouchouchou	[ACP à noyau] 		27
+1602851991	217.119.181.222	E	cpp:complement_acp	danilouchouchou	[ACP à noyau] 		0
+1602860893	217.119.181.222	E	cpp:complement_acp	danilouchouchou	[ACP à noyau] 		-6
+1602866925	176.180.88.76	E	cpp:complement_acp	danilouchouchou	[ACP à noyau] 		94
+1602868805	176.145.69.64	E	cpp:complement_acp	danilouchouchou	[ACP à noyau] 		32
+1602929648	176.145.73.31	E	cpp:complement_acp	danilouchouchou	[ACP à noyau] 		1
+1602933440	176.180.80.35	E	cpp:complement_acp	danilouchouchou	[ACP à noyau] 		13
+1602933468	176.180.80.35	E	cpp:complement_acp	danilouchouchou	[ACP à noyau] 		0
+1602937890	176.145.73.31	E	cpp:complement_acp	danilouchouchou	[ACP à noyau] 		-167
+1602938406	176.145.77.27	E	cpp:complement_acp	danilouchouchou	[ACP à noyau] 		4
+1602965253	89.88.75.36	E	cpp:complement_acp	danilouchouchou	[ACP à noyau] 		242
+1603031870	89.88.75.36	E	cpp:complement_acp	danilouchouchou	[ACP à noyau] 		310
+1603050891	89.88.75.36	E	cpp:complement_acp	danilouchouchou	[ACP à noyau] 		2
+1603053932	89.88.75.36	E	cpp:complement_acp	danilouchouchou	[ACP à noyau] 		603
+1603053964	89.88.75.36	E	cpp:complement_acp	danilouchouchou	[ACP à noyau] 		1
+1603103028	217.119.181.222	E	cpp:complement_acp	danilouchouchou	[ACP à noyaux] 		129
+1603103083	217.119.181.222	E	cpp:complement_acp	danilouchouchou	[ACP à noyaux] 		14
+1603103296	217.119.181.222	E	cpp:complement_acp	danilouchouchou	[ACP à noyaux] 		-189
+1603107913	217.119.181.222	E	cpp:complement_acp	danilouchouchou	[ACP à noyaux] 		-41
+1603108410	217.119.181.222	E	cpp:complement_acp	danilouchouchou	[ACP à noyaux] 		-4
+1603375144	217.119.181.222	E	cpp:complement_acp	danilouchouchou	[ACP à noyaux] 		10
+1603375334	217.119.181.222	E	cpp:complement_acp	danilouchouchou	[ACP à noyaux] 		-52
+1603375500	217.119.181.222	E	cpp:complement_acp	danilouchouchou	[ACP randomisée] 		-1546
+1603377440	217.119.181.222	E	cpp:complement_acp	danilouchouchou	[Locally Linear Emdedding] 		-653
+1603377650	217.119.181.222	E	cpp:complement_acp	danilouchouchou	[Autres méthodes de traitement non linéaire] 		-56
+1603377678	217.119.181.222	E	cpp:complement_acp	danilouchouchou			0
+1603377686	217.119.181.222	E	cpp:complement_acp	danilouchouchou	[Optimisation de l'algorithme ACP] 		-2
+1603378471	217.119.181.222	E	cpp:complement_acp	danilouchouchou	[ACP à noyaux] 		-134
+1603378516	217.119.181.222	E	cpp:complement_acp	danilouchouchou	[ACP à noyaux] 		-145
+1603378572	217.119.181.222	E	cpp:complement_acp	danilouchouchou	[ACP à noyaux] 		-84
+1603379308	217.119.181.222	E	cpp:complement_acp	danilouchouchou	[ACP à noyaux] 		159
+1603379337	217.119.181.222	E	cpp:complement_acp	danilouchouchou	[ACP à noyaux] 		22
+1603379404	217.119.181.222	E	cpp:complement_acp	danilouchouchou			2
+1603879236	91.69.217.178	E	cpp:complement_acp	danilouchouchou	[ACP à noyaux] 		3
+1603880630	91.69.217.178	E	cpp:complement_acp	danilouchouchou	[ACP à noyaux] 		3
+1603881252	91.69.217.178	E	cpp:complement_acp	danilouchouchou	[ACP à noyaux] 		51
+1603881279	91.69.217.178	E	cpp:complement_acp	danilouchouchou	[Modèle de réduction avec ACP à noyaux] 		-2
+1603884128	91.69.217.178	E	cpp:complement_acp	danilouchouchou	[ACP à noyaux] 		333
+1603884904	91.69.217.178	E	cpp:complement_acp	danilouchouchou	[ACP à noyaux] 		290
+1603886713	91.69.217.178	E	cpp:complement_acp	danilouchouchou	[ACP incrémentale] 		56
+1603887597	91.69.217.178	E	cpp:complement_acp	danilouchouchou	[Optimisation de l'algorithme ACP] 		-152
+1603887608	91.69.217.178	E	cpp:complement_acp	danilouchouchou	[Optimisation de l'algorithme ACP] 		1
+1603887636	91.69.217.178	E	cpp:complement_acp	danilouchouchou	[Optimisation de l'algorithme ACP] 		0
+1603890256	91.69.217.178	E	cpp:complement_acp	danilouchouchou	[ACP à noyaux] 		24
+1603890520	91.69.217.178	E	cpp:complement_acp	danilouchouchou			152
+1603890612	91.69.217.178	E	cpp:complement_acp	danilouchouchou	[ACP incrémentale] 		-1
+1603891605	176.180.87.125	E	cpp:complement_acp	danilouchouchou	[ACP à noyaux] 		45
+1603921265	91.69.217.178	E	cpp:complement_acp	danilouchouchou	[Compléments de l'algorithme ACP] 		0
+1603921286	91.69.217.178	E	cpp:complement_acp	danilouchouchou	[Compléments de l'algorithme ACP] 		1
+1606588249	213.56.170.38	E	cpp:complement_acp	malama	[Compléments de l'algorithme ACP] 		-1
+1606588302	213.56.170.38	E	cpp:complement_acp	malama	[Compléments de l'algorithme ACP] 		-1

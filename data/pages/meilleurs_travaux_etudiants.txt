@@ -1,0 +1,20 @@
+{{ :penser.jpg?500 |}}
+
+Nous vous proposons ici un premier recensements des différents travaux étudiants qui se sont illustrés dans le cadre scolaire mais aussi lors de nos évènements. Nous présenton ici 3 grands types de travaux :
+
+====Projet à initiative personnelle====
+
+Nous pensons que les initiatives d'étudiants doivent être toujours être encouragées car elles permettent d'approfondir les notions vues en classe. Dans cette optique nous avons décidé de gratifier tout au long de l'année les meilleurs projets étudiants.
+
+[[cpp:Événements mensuels | Événements mensuels]]
+
+====Projet scolaire====
+
+Nous exposerons ici les meilleurs projets scolaires qui se sont démarqués par leur sérieux et leur excellence scientifique.
+
+[[Projet scolaire | Projet scolaire]]
+====Travaux de Communication ====
+
+Nous pensons que la communication a une vériatble place à jouer dans la formation des ingénieurs de demain. C'est pourquoi il est nécessaire d'encourager et mettre en avant les projets dans ce domaine qui se démarquent.
+
+[[cpp:Projet Personnelle Professionnel| Travaux de communication]]

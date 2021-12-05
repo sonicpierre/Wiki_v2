@@ -1,0 +1,2 @@
+primaryStage.<span class="me1">setWidth</span><span class="br0">&#40;</span><span class="nu0">1280</span><span class="br0">&#41;</span><span class="sy0">;</span>
+primaryStage.<span class="me1">setHeight</span><span class="br0">&#40;</span><span class="nu0">720</span><span class="br0">&#41;</span><span class="sy0">;</span>

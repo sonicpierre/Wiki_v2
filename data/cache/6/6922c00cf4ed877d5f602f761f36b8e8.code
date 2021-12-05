@@ -1,0 +1,7 @@
+<span class="co1">#Pour le bagging </span>
+bag$err
+&nbsp;
+<span class="co1">#Pour la random forest</span>
+err <span class="sy0">&lt;</span>- foret_alea$err.<span class="me1">rate</span>
+oob_err <span class="sy0">&lt;</span>- err<span class="br0">&#91;</span>nrow<span class="br0">&#40;</span>err<span class="br0">&#41;</span><span class="sy0">,</span> <span class="st0">&quot;OOB&quot;</span><span class="br0">&#93;</span>
+<span class="kw1">print</span><span class="br0">&#40;</span>oob_err<span class="br0">&#41;</span>

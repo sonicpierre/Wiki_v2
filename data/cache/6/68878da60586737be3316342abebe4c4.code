@@ -1,0 +1,5 @@
+library<span class="br0">&#40;</span>glmnet<span class="br0">&#41;</span>
+&nbsp;
+model <span class="sy0">&lt;</span>- glmnet<span class="br0">&#40;</span>X_train<span class="sy0">,</span> y_train<span class="sy0">,</span> family <span class="sy0">=</span> <span class="st0">'binomial'</span><span class="br0">&#41;</span><span class="co1">#Entrainement de l'estimateur </span>
+y_pred <span class="sy0">&lt;</span>- predict<span class="br0">&#40;</span>model<span class="sy0">,</span> newx <span class="sy0">=</span> X_test<span class="sy0">,</span> <span class="kw2">type</span> <span class="sy0">=</span> <span class="st0">'class'</span><span class="br0">&#41;</span><span class="co1">#Prédictions sur les données de test</span>
+y_prob <span class="sy0">&lt;</span>- predict<span class="br0">&#40;</span>model<span class="sy0">,</span> newx <span class="sy0">=</span> X_test<span class="sy0">,</span> <span class="kw2">type</span> <span class="sy0">=</span> <span class="st0">'response'</span><span class="br0">&#41;</span><span class="co1">#Calcul des probabilités d'appartenance</span>

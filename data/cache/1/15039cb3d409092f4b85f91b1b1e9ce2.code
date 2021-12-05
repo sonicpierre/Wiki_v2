@@ -1,0 +1,2 @@
+X_d <span class="sy0">=</span> Vt.<span class="me1">T</span><span class="br0">&#91;</span>:<span class="sy0">,</span>:<span class="nu0">9</span><span class="br0">&#93;</span><span class="co1">#On récupère les d = 9 premières composantes principales</span>
+X_proj <span class="sy0">=</span> X_Centered.<span class="me1">dot</span><span class="br0">&#40;</span>X_d<span class="br0">&#41;</span><span class="co1">#Projection des données d'entrainement sur l'espace à d dimension</span>

@@ -1,0 +1,7 @@
+<span class="kw1">from</span> sklearn.<span class="me1">decomposition</span> <span class="kw1">import</span> IncrementalPCA
+&nbsp;
+nombre_lot <span class="sy0">=</span> <span class="nu0">100</span><span class="co1">#Initialisation des lots à fournir à l'algorithme</span>
+model <span class="sy0">=</span> IncrementalPCA<span class="br0">&#40;</span>n_components<span class="sy0">=</span><span class="nu0">150</span><span class="br0">&#41;</span><span class="co1">#Création du modèle de réduction incrémental</span>
+<span class="kw1">for</span> lot_X <span class="kw1">in</span> np.<span class="me1">array_split</span><span class="br0">&#40;</span>X_train<span class="sy0">,</span> nombre_lot<span class="br0">&#41;</span>:<span class="co1">#Boucle d'entrainement des données par lots de 100</span>
+    model.<span class="me1">partial_fit</span><span class="br0">&#40;</span>lot_X<span class="br0">&#41;</span>
+X_reduced <span class="sy0">=</span> model.<span class="me1">transform</span><span class="br0">&#40;</span>X_train<span class="br0">&#41;</span><span class="co1">#Données réduitent à 150 dimensions</span>

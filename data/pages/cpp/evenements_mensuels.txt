@@ -1,0 +1,25 @@
+
+
+====Mois Novembre 2020====
+
+{{ :cpp:affiche_event.png?350 |}}
+
+Il s'agit de la première version du concours avec 4 participants dont 3 que nous avons décidé de mettre en avant. Nous remercions les étudiants pour leur participation et nous espérons les revoir avec de nouveaux projets !!
+
+^  Titre  ^  Etudiant(s)  ^  Lien  ^  Ecole  ^
+|  Myastro  |  Lucie SOANEN et Maxime POULAIN  |  [[https://mega.nz/file/yshTRIjL#DeNE_VrB7XtjKBrTXreU44CTHYaKUbZvdGpWYtjrsJ4 | Lien jeu]]  |  ISIMA  |
+|  Bot discord  |  Arthur Blaise  |  [[https://github.com/ZRunner/ZBot | Lien projet]]  |  CY Tech  |
+|  Remplissage contenaire  |  Paul LEGOUT  |  [[https://github.com/LlamasPartan/Projet_conteneur_Paul_LEGOUT| Lien Projet]]  |  CY Tech  |
+
+====Mois Fevrier 2021====
+
+{{ :cpp:affiche_event_janvier.png?400 |}}
+
+Pour cette édition, nous avons reçu 5 projets intéressants et ambitieux. Nous avons décidé d'en publier 3 qui nous semblent sortir du lot. 
+
+^  Titre  ^  Etudiant(s)  ^  Lien  ^  Ecole  ^
+|  IA Smash  |  Victor Villin  |  [[https://github.com/villinvic/daboy | Source code]]  |  CY Tech  |
+|  MinerZZ  |  Bastien HERREROS et Dylan AMORIM  |  [[https://drive.google.com/file/d/1Ng82FwJ-JYcFJyttqrU4sC_y3jwmjgzY/view?usp=sharing | Code jeux]]  |  ISIMA  |
+|  Amblinuo  |  Maxime Poulain  |  [[https://gitlab.com/maxd6363/amblinuo | Source code]]  |  ISIMA  |
+
+Si vous êtes intéressé pour contacter les participants n'hésitez pas à contacter **llamas.partan@gmail.com** pour obtenir leur CV. 

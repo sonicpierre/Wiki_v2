@@ -1,0 +1,21 @@
+a:2:{s:7:"current";a:9:{s:4:"date";a:2:{s:7:"created";i:1597845855;s:8:"modified";i:1617044397;}s:7:"creator";s:14:"Pierre Virgaux";s:4:"user";s:13:"pierrevirgaux";s:11:"last_change";a:8:{s:4:"date";i:1617044397;s:2:"ip";s:12:"90.4.156.105";s:4:"type";s:1:"E";s:2:"id";s:10:"cpp:le_cah";s:4:"user";s:6:"malama";s:3:"sum";s:28:"[Entraîner le bon modèle] ";s:5:"extra";s:0:"";s:10:"sizechange";i:0;}s:11:"contributor";a:3:{s:13:"pierrevirgaux";s:14:"Pierre Virgaux";s:6:"julien";s:14:"Buisson-Chavot";s:6:"malama";s:6:"Lamama";}s:8:"relation";a:3:{s:10:"references";a:4:{s:17:"cpp:le_clustering";b:1;s:22:"cpp:dashee87.github.io";b:0;s:17:"cpp:les_distances";b:1;s:14:"cpp:le_k-means";b:1;}s:5:"media";a:8:{s:29:"cpp:regrouper_pour_regner.png";b:1;s:11:"cpp:cah.gif";b:1;s:26:"cpp:regroupementdonnee.png";b:1;s:20:"cpp:dendrogramme.png";b:1;s:25:"cpp:dendrodistancemin.png";b:1;s:20:"cpp:dedrogrammax.png";b:1;s:22:"cpp:dendromcquitty.png";b:1;s:18:"cpp:mean_shift.png";b:1;}s:10:"firstimage";s:29:"cpp:regrouper_pour_regner.png";}s:5:"title";s:16:"L'algorithme CAH";s:11:"description";a:2:{s:15:"tableofcontents";a:9:{i:0;a:4:{s:3:"hid";s:16:"l_algorithme_cah";s:5:"title";s:16:"L'algorithme CAH";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:1;a:4:{s:3:"hid";s:35:"distance_et_methode_de_regroupement";s:5:"title";s:36:"Distance et méthode de regroupement";s:4:"type";s:2:"ul";s:5:"level";i:3;}i:2;a:4:{s:3:"hid";s:26:"construire_le_dendrogramme";s:5:"title";s:26:"Construire le dendrogramme";s:4:"type";s:2:"ul";s:5:"level";i:3;}i:3;a:4:{s:3:"hid";s:23:"entrainer_le_bon_modele";s:5:"title";s:25:"Entraîner le bon modèle";s:4:"type";s:2:"ul";s:5:"level";i:3;}i:4;a:4:{s:3:"hid";s:18:"les_limites_du_cah";s:5:"title";s:18:"Les limites du CAH";s:4:"type";s:2:"ul";s:5:"level";i:3;}i:5;a:4:{s:3:"hid";s:27:"l_algorithme_des_mean_shift";s:5:"title";s:27:"L'algorithme des Mean Shift";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:6;a:4:{s:3:"hid";s:12:"l_algorithme";s:5:"title";s:12:"L'algorithme";s:4:"type";s:2:"ul";s:5:"level";i:3;}i:7;a:4:{s:3:"hid";s:25:"comparaison_des_resultats";s:5:"title";s:26:"Comparaison des résultats";s:4:"type";s:2:"ul";s:5:"level";i:3;}i:8;a:4:{s:3:"hid";s:24:"les_limites_de_meanshift";s:5:"title";s:24:"Les limites de MeanShift";s:4:"type";s:2:"ul";s:5:"level";i:3;}}s:8:"abstract";s:425:"Le Clustering
+
+
+
+
+
+
+
+
+
+DataSet : ici
+
+L'algorithme CAH
+
+Au début de l'algorithme, chaque individu forme une classe.
+
+	*  À chaque itération, on regroupe les individus les plus proches et on observe la perte d'information sous la forme d'un dendrogramme.
+
+
+
+	*  À partir de ce graphique, on choisit finalement $$D_{C_{1}, C_{2}} = \frac{||G_{1} - G_{2}||^2}{\frac{1}{n_{1}} + \frac{1}{n_{2}}}$$$G_{1}, G_{2}$$n_{1}, n_{2}$";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}}s:10:"persistent";a:5:{s:4:"date";a:2:{s:7:"created";i:1597845855;s:8:"modified";i:1617044397;}s:7:"creator";s:14:"Pierre Virgaux";s:4:"user";s:13:"pierrevirgaux";s:11:"last_change";a:8:{s:4:"date";i:1617044397;s:2:"ip";s:12:"90.4.156.105";s:4:"type";s:1:"E";s:2:"id";s:10:"cpp:le_cah";s:4:"user";s:6:"malama";s:3:"sum";s:28:"[Entraîner le bon modèle] ";s:5:"extra";s:0:"";s:10:"sizechange";i:0;}s:11:"contributor";a:3:{s:13:"pierrevirgaux";s:14:"Pierre Virgaux";s:6:"julien";s:14:"Buisson-Chavot";s:6:"malama";s:6:"Lamama";}}}

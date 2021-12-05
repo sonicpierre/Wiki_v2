@@ -1,0 +1,3 @@
+Pane root <span class="sy0">=</span> <span class="kw1">new</span> Pane<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span> # Création du panneau
+root.<span class="me1">getChildren</span><span class="br0">&#40;</span><span class="br0">&#41;</span>.<span class="me1">add</span><span class="br0">&#40;</span>rectangle<span class="br0">&#41;</span><span class="sy0">;</span> # Ajout du rectangle au panneau
+root.<span class="me1">getChildren</span><span class="br0">&#40;</span><span class="br0">&#41;</span>.<span class="me1">add</span><span class="br0">&#40;</span>circle<span class="br0">&#41;</span><span class="sy0">;</span> # Ajout du cercle au panneau

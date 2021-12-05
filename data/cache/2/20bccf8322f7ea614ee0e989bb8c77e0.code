@@ -1,0 +1,5 @@
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">8</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+plt.<span class="me1">scatter</span><span class="br0">&#40;</span>X<span class="sy0">,</span>y<span class="br0">&#41;</span>
+<span class="co1">#positionX,positionY, Titre, Taille, Couleur, Transparence, Style</span>
+plt.<span class="me1">figtext</span><span class="br0">&#40;</span><span class="nu0">0.15</span><span class="sy0">,</span> <span class="nu0">0.8</span><span class="sy0">,</span> <span class="st0">'Texte sur toute la figure'</span><span class="sy0">,</span>
+               fontsize <span class="sy0">=</span> <span class="nu0">25</span><span class="sy0">,</span> color <span class="sy0">=</span> <span class="st0">'orange'</span><span class="sy0">,</span> alpha <span class="sy0">=</span> <span class="nu0">0.5</span><span class="sy0">,</span> fontweight <span class="sy0">=</span> <span class="st0">'bold'</span><span class="br0">&#41;</span>

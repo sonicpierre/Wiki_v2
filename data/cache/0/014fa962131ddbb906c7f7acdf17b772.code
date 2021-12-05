@@ -1,0 +1,11 @@
+<span class="kw1">from</span> sklearn.<span class="me1">feature_selection</span> <span class="kw1">import</span> SelectFromModel<span class="co1">#Importation du selecteur de variable en fonction de leur poids</span>
+&nbsp;
+selection <span class="sy0">=</span> SelectFromModel<span class="br0">&#40;</span>lasso<span class="sy0">,</span> prefit<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span><span class="co1">#Création du modèle de sélection </span>
+X_selected <span class="sy0">=</span> selection.<span class="me1">transform</span><span class="br0">&#40;</span>X_train<span class="br0">&#41;</span><span class="co1">#Application du modèle sur les données</span>
+&nbsp;
+<span class="co1">#On crée le dataframe avec la transformation des variables</span>
+selected_features <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>selection.<span class="me1">inverse_transform</span><span class="br0">&#40;</span>X_selected<span class="br0">&#41;</span><span class="sy0">,</span>
+                                 index<span class="sy0">=</span>X_train.<span class="me1">index</span><span class="sy0">,</span>
+                                 columns<span class="sy0">=</span>X_train.<span class="me1">columns</span><span class="br0">&#41;</span>
+&nbsp;
+selected_columns <span class="sy0">=</span> selected_features.<span class="me1">columns</span><span class="br0">&#91;</span>selected_features.<span class="me1">var</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy0">!=</span> <span class="nu0">0</span><span class="br0">&#93;</span><span class="co1">#On garde uniquement les variables les plus importantes, dont le coefficient est différent de zéro.</span>

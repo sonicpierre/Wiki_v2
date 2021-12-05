@@ -1,0 +1,3 @@
+head<span class="br0">&#40;</span>data<span class="br0">&#41;</span> <span class="co1">#Correspond aux premières lignes du dataset </span>
+tail<span class="br0">&#40;</span>data<span class="br0">&#41;</span> <span class="co1">#Correspond aux dernières lignes du dataset</span>
+summary<span class="br0">&#40;</span>data<span class="br0">&#41;</span>

@@ -1,0 +1,4 @@
+<span class="kw1">from</span> sklearn.<span class="me1">feature_extraction</span>.<span class="me1">text</span> <span class="kw1">import</span> TfidfVectorizer
+tfidf <span class="sy0">=</span> TfidfVectorizer<span class="br0">&#40;</span><span class="br0">&#41;</span>
+tfs <span class="sy0">=</span> tfidf.<span class="me1">fit</span><span class="br0">&#40;</span>dataTest<span class="br0">&#91;</span><span class="st0">'Commentaires'</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+tfs <span class="sy0">=</span> tfs.<span class="me1">transform</span><span class="br0">&#40;</span>dataTest<span class="br0">&#91;</span><span class="st0">'Commentaires'</span><span class="br0">&#93;</span><span class="br0">&#41;</span>

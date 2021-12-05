@@ -1,0 +1,4 @@
+<span class="kw1">from</span> sklearn.<span class="me1">decomposition</span> <span class="kw1">import</span> PCA
+&nbsp;
+model <span class="sy0">=</span> PCA<span class="br0">&#40;</span>n_components <span class="sy0">=</span> <span class="nu0">768</span><span class="br0">&#41;</span><span class="co1">#Création du modèle de réduction sur toutes les variables du dataset</span>
+X_reduced <span class="sy0">=</span> model.<span class="me1">fit_transform</span><span class="br0">&#40;</span>face<span class="br0">&#41;</span><span class="co1">#Application de la réduction aux données d'entrainement</span>

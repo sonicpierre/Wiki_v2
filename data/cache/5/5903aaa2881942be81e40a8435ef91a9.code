@@ -1,0 +1,3 @@
+library<span class="br0">&#40;</span>tidyr<span class="br0">&#41;</span>
+&nbsp;
+data <span class="sy0">&lt;</span>- drop_na<span class="br0">&#40;</span>data<span class="br0">&#41;</span>

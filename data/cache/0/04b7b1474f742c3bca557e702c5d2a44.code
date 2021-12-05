@@ -1,0 +1,6 @@
+tab3<span class="sy0">=</span>np.<span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#91;</span>
+<span class="br0">&#91;</span><span class="nu0">150</span>.<span class="sy0">,</span><span class="nu0">600</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span>
+<span class="br0">&#91;</span><span class="nu0">6</span><span class="sy0">,</span><span class="nu0">20</span><span class="sy0">,</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">69</span><span class="br0">&#93;</span><span class="sy0">,</span>
+<span class="br0">&#91;</span><span class="nu0">2</span><span class="sy0">,</span><span class="nu0">4</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">19</span><span class="br0">&#93;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+<span class="co1">#On résout le tableau par la méthode standard</span>
+tabCoupe<span class="sy0">,</span>x<span class="sy0">=</span>simplexeStandard<span class="br0">&#40;</span>tab<span class="br0">&#41;</span>

@@ -1,0 +1,3 @@
+hist<span class="br0">&#40;</span>residuals<span class="br0">&#40;</span>reg_lin<span class="br0">&#41;</span><span class="sy0">,</span>col<span class="sy0">=</span><span class="st0">&quot;grey&quot;</span><span class="sy0">,</span>freq<span class="sy0">=</span>F<span class="br0">&#41;</span>
+densite <span class="sy0">&lt;</span>- density<span class="br0">&#40;</span>residuals<span class="br0">&#40;</span>reg_lin<span class="br0">&#41;</span><span class="br0">&#41;</span>
+lines<span class="br0">&#40;</span>densite<span class="sy0">,</span> col <span class="sy0">=</span> <span class="st0">&quot;red&quot;</span><span class="sy0">,</span>lwd<span class="sy0">=</span><span class="nu0">3</span><span class="br0">&#41;</span>

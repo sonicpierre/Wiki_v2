@@ -1,0 +1,123 @@
+====== Création d'un sort dans le JSON d'un personnage ======
+Cet article réfère à la page de [[lambda:start | Configuration d'un personnage avec le JSON]]
+
+===== Contexte =====
+Pour remettre le contexte, un sort va être décrit au sein d'accolades dans le tableau du champ **spells** d'un personnage.
+
+<code json>
+{
+    #Autre attributs du personnage
+    "spells":
+    [
+        { Sort n°0 },
+        { Sort n°1 },
+        ...
+    ]
+}
+</code>
+
+===== Création d'un sort ===== 
+
+Un sort possède obligatoirement les champs suivants:
+  * **name** : Le nom du sort
+  * **description** : La description du sort
+  * **targetEffects** : Un tableau d'ensembles d'effets appliqué sur une même cibles
+<code json>
+{
+    "name": "Sort de test",
+    "description": "Le sort fait des dégats"
+    "targetEffects":
+    [
+        { Premier ensemble d'effets },
+        { Second ensemble d'effets },
+        ...
+    ]
+}
+</code>
+
+==== Les ensembles d'effet : targetEffects ====
+Un ensemble d'effets est un objet composé des éléments suivants :
+  * "typeOfTarget", contient une des 3 valeurs {"absolute", "relative", "selection"} et représente comment est-ce que les effets vont choisir leur cible. Ce choix changera la façon d'interpréter le champs "target" d'un effet.
+  * "targetAvailable", contient 1 des 3 valeurs {"ally", "enemy", "all"} ou aucune. Ce champs représente les cibles possibles des effets.
+  * "effects", tableau des effets
+
+Un effet est simplement un changement de statistiques sur un personnage. Il est représenté en JSon avec les champs suivants :
+  * "target"
+  * "stats", la statistique modifiée
+  * "type", comment la statistique est modifiée (set -> "=", buff -> "+", debuff -> "-", reset -> "")
+  * "value"
+
+==== Le champs "target" ====
+Ce champs détermine la cible sur laquelle s'appliquera l'effet. Il dépend également du champs "typeOfTarget" et "targetAvailable" vu au dessus.
+
+=== 1er cas de figure, "typeOfTarget": "absolute" ===
+Dans ce cas, le champs "target" est le numéro du personnage qui correspond au "targetAvailable". Ce numéro peut être 0, 1 ou 2 si le "targetAvailable" est "ally" ou "enemy", et peut être 0, 1, 2, 3, 4 ou 5 si le "targetAvailable" est "all".
+
+=== 2ème cas de figure, "typeOfTarget": "relative" ===
+Dans ce cas, le champs "target" est le numéro d'un personnage **en fonction du personnage qui lance le sort**. Si le "targetAvailable" est "ally", 0 correspond au personnage qui a lancé le sort, -1 correspond au personnage allié à sa gauche, 1 au personnage allié à sa droite.
+
+Si le "targetAvailable" est "enemy", 0 correspond au personnage ennemi en face du personnage qui lance le sort, -1 correspond au personnage ennemi à sa gauche et 1 au personnage ennemi à sa droite. 
+
+=== 3ème cas de figure, "typeOfTarget": "selection" ===
+Dans ce cas, le joueur doit sélectionner une cible, et ne peut sélectionner seulement le type de cible donné par "targetAvailable". Une fois une cible choisie, le champs "target" représente le personnage relatif par rapport à celui sélectionné. 0 le cible lui, -1 cible celui à sa gauche, 1 celui à sa droite.
+
+==== Le champs "value" ====
+Ce champs contient les valeurs pour calculer les dégâts / soins / tours qu'inflige le sort. Il contient un objet JSon avec :
+  * "type", type du sort (physique, magique, brute)
+  * "style", style du sort (projectile, melé, ...)
+  * "formula", un autre objet JSon contenant les degâts bruts et les multiplicateurs
+
+===== Exemple complet =====
+Dans cet exemple, le joueur executant ce code doit sélectionner un ennemi, et celui-ci ainsi que le personnage à sa gauche subissent des dégâts.
+<code json>
+"spells":
+[
+    {
+        "name": "Nom de sort"
+        "targetEffect":
+        [
+            {
+                "typeOfTarget": "selection"
+                "targetAvailable": "enemy"
+                "effects":
+                [
+                    {
+                        "target": 0 
+                        "stats":"life"
+                        "type":"-"
+                        "value":
+                        {
+                            "type": "physical",
+                            "style": "projectil",
+                            "formula":
+                            {
+                                "base": 150,
+                                "str": 0.5
+                            }
+                        }
+                    },
+                    {
+                        "target": -1 
+                        "stats":"life"
+                        "type":"-"
+                        "value":
+                        {
+                            "type": "physical",
+                            "style": "melea"
+                            "formula":
+                            {
+                                "base": 150,
+                                "str": 0.5
+                            }
+                        }
+                    },
+                ]
+ 
+            },
+            {
+                ...
+            }
+        ]
+    }
+]
+</code>

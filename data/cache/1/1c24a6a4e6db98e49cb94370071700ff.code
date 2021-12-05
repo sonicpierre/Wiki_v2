@@ -1,0 +1,4 @@
+    # u' *v &lt;=&gt; produit scalaire ente u et v
+&nbsp;
+    r_old = A*x-b;
+    p_old = -r_old;

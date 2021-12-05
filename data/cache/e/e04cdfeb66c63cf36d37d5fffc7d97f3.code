@@ -1,0 +1,20 @@
+<span class="kw2">set</span>.<span class="me1">seed</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="br0">&#41;</span><span class="co1">#Définition d'une répétabilité de l'aléatoire</span>
+index <span class="sy0">&lt;</span>- createDataPartition<span class="br0">&#40;</span>data$G3<span class="sy0">,</span> p <span class="sy0">=</span> <span class="nu0">.80</span><span class="sy0">,</span> <span class="kw2">list</span> <span class="sy0">=</span> F<span class="br0">&#41;</span>
+train <span class="sy0">&lt;</span>- data<span class="br0">&#91;</span>index<span class="sy0">,</span> <span class="br0">&#93;</span>
+<span class="kw3">test</span> <span class="sy0">&lt;</span>- data<span class="br0">&#91;</span>-index<span class="sy0">,</span> <span class="br0">&#93;</span>
+&nbsp;
+<span class="co1">#Définition train set</span>
+X_train <span class="sy0">&lt;</span>- subset<span class="br0">&#40;</span>train<span class="sy0">,</span> <span class="kw3">select</span> <span class="sy0">=</span> -c<span class="br0">&#40;</span>G3<span class="br0">&#41;</span><span class="br0">&#41;</span>
+X_train <span class="sy0">&lt;</span>- data.<span class="me1">matrix</span><span class="br0">&#40;</span>X_train<span class="br0">&#41;</span>
+y_train <span class="sy0">&lt;</span>- train$G3
+&nbsp;
+<span class="co1">#Définition test set</span>
+X_test <span class="sy0">&lt;</span>- subset<span class="br0">&#40;</span><span class="kw3">test</span><span class="sy0">,</span> <span class="kw3">select</span> <span class="sy0">=</span> -c<span class="br0">&#40;</span>G3<span class="br0">&#41;</span><span class="br0">&#41;</span>
+X_test <span class="sy0">&lt;</span>- data.<span class="me1">matrix</span><span class="br0">&#40;</span>X_test<span class="br0">&#41;</span>
+y_test <span class="sy0">&lt;</span>- <span class="kw3">test</span>$G3
+&nbsp;
+lasso <span class="sy0">&lt;</span>- glmnet<span class="br0">&#40;</span>X_train<span class="sy0">,</span> y_train<span class="sy0">,</span> alpha <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">,</span> <span class="kw1">lambda</span> <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">,</span> standardize <span class="sy0">=</span> F<span class="br0">&#41;</span><span class="co1">#Définition du modèle de régression Lasso</span>
+<span class="co1">#Le paramètre alpha = 1 définit la régression Lasso, et lambda = 1 est la constante de contrôle de la quantité de régularisation</span>
+&nbsp;
+lasso_pred <span class="sy0">&lt;</span>- predict<span class="br0">&#40;</span>lasso <span class="sy0">,</span> s <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">,</span> newx <span class="sy0">=</span> X_test<span class="br0">&#41;</span><span class="co1">#Prédictions</span>
+mse<span class="br0">&#40;</span>y_test<span class="sy0">,</span> lasso_pred<span class="br0">&#41;</span><span class="co1">#Evaluation du modèle</span>

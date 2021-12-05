@@ -1,0 +1,238 @@
+{{:cpp:cmake.png?550|}}
+
+On va voir sur cette page comment compiler un projet relativement simple avec CMake.
+Pour rappel, CMake est un outil fonctionnant avec son propre langage, permettant de configurer une compilation. En fonction de cette configuration, CMake génère un makefile qui s'utilise avec make. CMake est compatible avec plusieurs langages, mais on l'utilisera ici pour du C++ ou du C.
+
+====== Installation des prérequis ======
+CMake est un outil multiplateformes, on va voir comment l'utiliser dans le cadre d'un projet où les développeurs travaillent sur toutes les plateformes communes : Windows, MacOS et Linux.
+Sur chacune des plateformes il faut deux programmes :
+  * CMake
+  * Un compilateur
+
+Les compilateurs C++ n'ont pas tous les mêmes fonctionnalités et ne sont pas tous disponnibles sur tous les systèmes d'exploitation. Vous trouverez sur [[ https://en.cppreference.com/w/cpp/compiler_support | cppreference.com ]] les fonctionnalités supportées par chaque compilateur.
+
+==== Windows ====
+=== Compilateur ===
+La compilation sous Windows se fait avec deux outils principaux : MinGW ou MSVC. Le premier est un portage de GCC (compilateur Linux) et le second est le compilateur de Microsoft.
+
+Pour installer MSVC il suffit de télécharger Visual Studio qui permet en plus d'ouvrir directement des projets CMake sans configuration supplémentaire. C'est la manière recommandée.
+
+Pour la seconde possibilité il vous faudra installer MinGW, en laissant le dossier d'installation par défaut.
+Il vous faudra également modifier les variables d'environnements :
+  * Chercher "Path" dans la barre de recherche windows et ouvrir la première proposition.
+  * Cliquer ensuite sur **Variables d'environnement...**. 
+  * Chercher dans la première liste la variable **Path**.
+  * Modifier la en ajoutant une ligne contenant "C:\MinGW\bin", puis valider. 
+  * Vérifier également que la variable **Path** de la **seconde** liste, contienne le chemin vers CMake.
+  * Fermer les différents menus en cliquant sur "OK".
+
+=== CMake ===
+Pour installer CMake il suffit alors de télécharger l'installateur depuis le site officiel.
+
+==== MacOS ====
+
+=== Compilateur ===
+De la même manière que pour windows vous avez deux possibilités pour installer le compilateur, dans tous les cas le compilateur installé sera **apple-clang**, qui est souvent appelé **clang** (il existe également un compilateur **clang** pour linux).
+
+Vous pouvez installer XCode, qui est l'IDE d'Apple pour faire du C et du C++, ce qui installera directement clang. Sinon vous pouvez installer seulement clang avec  la commande :
+
+<code bash>
+command xcode-select --install
+</code>
+
+Il faudra ensuite donner l'autorisation d'installer l'outils en ligne de commande d'XCode et l'installation devrait se dérouler simplement.
+
+**Source :**
+
+  * [[https://www.ics.uci.edu/~pattis/common/handouts/macclion/clang.html|https://www.ics.uci.edu/~pattis/common/handouts/macclion/clang.html]]
+
+=== CMake ===
+
+L'installation de CMake sous MacOS est moins facile, vous pouvez l'installer depuis le site officiel grâce à un installateur qui vous permettra d'avoir l'application graphique de CMake. Or cela ne nous intéresse pas ici.
+On va donc juste installer la version ligne de commande de CMake.
+
+Pour cela on va d'abord installer HomeBrew, qui est un gestionnaire de paquets très connu sur MacOS.
+
+<code bash>
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+</code>
+
+Suivez ensuite les consignes d'installation du logiciel.
+
+Une fois installer la commande suivante installera CMake :
+<code bash>
+brew install cmake
+</code>
+
+**Source : **
+
+  * [[https://brew.sh/index_fr|https://brew.sh/index_fr]]
+
+==== Linux ====
+
+Sous Linux, c'est enfin une tâche simple.
+Il vous faudra utiliser votre gestionnaire de paquet préféré pour installer g++ et CMake.
+
+Sous **Ubuntu** on utilisera :
+<code bash>
+sudo apt install g++ cmake 
+</code>
+
+<color #ed1c24>**Et voilà vous êtes prêt pour l'utilisation de CMake.**</color>
+====== Utilisation de CMake ======
+La première fois que l'on utilisera CMake il faudra manuellement utiliser la commande suivante :
+<code bash>
+cmake <pathToFolder>
+</code>
+Le Makefile sera généré dans le dossier courant. Le **<pathToFolder>** doit pointé sur le dossier contenant le premier CMakeLists.txt, qui est le fichier de configuration de CMake.
+Ensuite, il suffit d'utiliser make, à chaque fois que l'on désire compiler.
+<code bash>
+make
+</code>
+Normallement le Makefile vérifie si le projet est à jour vis à vis de CMake. Si ce n'est pas le cas, il relance CMake avant de faire la compilation du projet.
+
+===== Bonne pratique =====
+
+La convention dans le monde de cmake veut que l'utilisateur créer un dossier **build** à la racine du projet. Puis exécute le CMake depuis ce dossier là, afin de rassembler tous les artefacts de build dans ce dossier.
+
+<code bash>
+mkdir build
+cd build
+</code>
+
+
+===== Configuration d'un projet simple =====
+La configuration de CMake passe par un fichier CMakeLists.txt.
+==== Organisation du projet ====
+On va dans notre cas utiliser l'arborescence suivante :
+<code>
+CMakeTuto
+├── bin
+└── src
+    ├── CMakeLists.txt
+    ├── main.cpp
+    └── subfolder
+        ├── CMakeLists.txt
+        └── file1.cpp
+</code>
+Le dossier src contient le code source du programme ainsi que le fichier de configuration de CMake.
+
+On va se contenter de faire un Hello World pour le moment, le fichier **main.cpp** ne contient donc que celà :
+<code cpp>
+#include <iostream>
+int main()
+{
+  std::cout << "Hello World" << std::endl;
+  return 0;
+}
+</code>
+==== Configuration de CMake ====
+La première chose à faire dans la configuration de CMake est de définir la version de CMake minimum nécessaire pour ce projet. On va ici utiliser la version 3.15.
+
+<code cmake>
+cmake_minimum_required(VERSION 3.15)
+</code>
+
+CMake fonctionne autour d'un système de **target**. On appliquera alors notre configuration à cette target. Pour en créer une il suffit d'utiliser la fonction suivante. On peut également préciser le ou les langages utilisés dans le projet. Ce n'est cependant pas obligatoire.
+<code cmake>
+project(cmaketuto C CXX)
+</code>
+Comme cette target est spéciale (c'est la target principale du projet), on peut obtenir son nom dans la variable : **CMAKE_PROJECT_NAME**.
+
+Il faut maintenant indiqué quels fichiers sources vont être utilisés par la target. On en profite pour utiliser la variable vue plus haut.
+<code cmake>
+add_executable(${CMAKE_PROJECT_NAME} main.cpp)
+</code>
+
+==== Compilation et lancement du programme ====
+Voila notre configuration basique de CMake est terminée. Il ne reste plus qu'à générer le makefile, compiler le projet et lancer le programme.
+Pour celà on va reprendre ce qu'on a vu au tout début. On se place dans le dossier racine du projet **CMakeTuto**.
+<code bash>
+cmake ../src
+make
+./cmaketuto
+</code>
+
+Le programme devrait afficher :
+<code>
+Hello World
+</code>
+
+**Attention sous windows** : 
+  * avec MinGW il faut utiliser **mingw32-make** au lieu de **make**
+  * avec MSVC il vous faudra ouvrir le fichier **.sln** créé par CMake dans le dossier build.
+
+==== Sélectionner le type de compilation ====
+Vous pouvez compiler votre programme en Release ou en Debug.
+
+Dans le premier cas le compilateur fera des optimisations dans le code. Dans le second il ajoutera dans l'exécutable des informations (**symboles**) pour permettre de déboguer plus facilement. 
+Pour sélectionner le mode de compilation on utilisera l'option : **-DCMAKE_BUILD_TYPE=Debug**.
+<code bash>
+cmake -DCMAKE_BUILD_TYPE=Debug ..
+# ou
+cmake -DCMAKE_BUILD_TYPE=Release ..
+</code>
+====== Ajout de fonctionnalités ======
+On va maintenant voir comment rendre notre CMake plus utile.
+
+===== Ajouter des sous-dossiers =====
+On doit tout d'abord indiquer à CMake que le sous dossier doit être traité.
+
+<code cmake>
+add_subdirectory("subfolder")
+</code>
+
+Ce dossier doit également contenir un CMakeLists.txt, dans lequel on va indiquer les fichiers faisant partie des sources du projet principale.
+
+<code cmake>
+file(GLOB sources_files "*.cpp")
+target_sources(${CMAKE_PROJECT_NAME} PRIVATE ${sources_files})
+</code>
+
+
+===== Choisir le dossier de sortie =====
+On va mettre l'exécutable de sortie dans le dossier **bin** présent à la racine du projet.
+<code cmake>
+set(EXECUTABLE_OUTPUT_PATH "./bin")
+</code>
+===== Ajout d'options de compilation =====
+Pour ajouter une option de compilation, il suffit d'utiliser une fonction de CMake.
+Attention à vérifier que l'option est compatible avec votre plateforme et votre compilateur.
+
+__Pour MSVC :__
+<code cmake>
+target_compile_options(${CMAKE_PROJECT_NAME} /Wall)
+</code>
+__Pour les autres compilateurs:__
+<code cmake>
+target_compile_options(${CMAKE_PROJECT_NAME} -Wall -Wextra)
+</code>
+
+==== Détection automatique du compilateur ====
+Pour éviter de changer le CMake entre les plateformes, on va demande à CMake de générer le projet avec les options demandées directement grâce à des variables définies par les compilateurs.
+<code cmake>
+if (MSVC)
+  target_compile_options(${CMAKE_PROJECT_NAME} /Wall)
+else()
+  target_compile_options(${CMAKE_PROJECT_NAME} -Wall -Wextra)
+endif()
+</code>
+
+===== Choix du standard C++ =====
+On aurait pu sélectionner un standard grâce au **target_compile_options**. Mais CMake propose une meilleure manière de le faire à partir de la version 3.8.
+<code cmake>
+target_compile_features(${CMAKE_PROJECT_NAME} PUBLIC cxx_std_17) #On passe ici à la version 17 du standard C++
+</code>
+===== Autres sources utiles =====
+Vous pouvez approfondir CMake grâce aux sources ci-dessous :
+  * https://pabloariasal.github.io/2018/02/19/its-time-to-do-cmake-right/
+  * https://cliutils.gitlab.io/modern-cmake/
+  * https://www.youtube.com/watch?v=y7ndUhdQuU8
+  * https://www.youtube.com/watch?v=y9kSr5enrSk
+  * https://www.youtube.com/watch?v=m0DwB4OvDXk
+  * https://cmake.org/cmake/help/v3.17/manual/cmake-buildsystem.7.html#transitive-usage-requirements
+  * http://codework-orange.io/2019/03/01/CMake-Compliant-Library.html
+  * https://github.com/onqtam/awesome-cmake
+  * https://github.com/cginternals/cmake-init/blob/master/CMakeLists.txt
+  * https://cliutils.gitlab.io/modern-cmake/chapters/install/installing.html
+  * https://cliutils.gitlab.io/modern-cmake/chapters/install/packaging.html

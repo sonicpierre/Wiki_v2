@@ -1,0 +1,159 @@
+1592556033	86.216.219.72	C	cpp:regression_supervisee	pierrevirgaux	créée		2752
+1592569075	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les différentes régression régularisée] 		393
+1592569133	86.216.219.72	e	cpp:regression_supervisee	pierrevirgaux			0
+1592569250	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les modèle réularisés] 		197
+1592569384	86.216.219.72	e	cpp:regression_supervisee	pierrevirgaux	[Les différentes régressions supervisées] 		140
+1592569422	86.216.219.72	e	cpp:regression_supervisee	pierrevirgaux	[Le modèle élastic net] 		-106
+1592569434	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[La régularisation L1] 		105
+1592569471	86.216.219.72	e	cpp:regression_supervisee	pierrevirgaux	[Le modèle élastic net] 		36
+1592581173	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires] 		347
+1592581918	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires et les descentes de gradient] 		400
+1592581988	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires et les descentes de gradient] 		17
+1592584254	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires] 		466
+1592584300	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires] 		18
+1592679598	82.64.124.27	E	cpp:regression_supervisee	pierrevirgaux			1816
+1593342690	91.69.217.178	E	cpp:regression_supervisee	danilouchouchou			11
+1593545801	82.64.124.27	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		72
+1593547637	82.64.124.27	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		72
+1593547814	82.64.124.27	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		3
+1593613133	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		66
+1593613739	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		23
+1593614939	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		76
+1593615227	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		115
+1593615278	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires] 		1
+1593615546	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		0
+1593615881	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		1
+1593616182	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		105
+1593617143	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		-102
+1593617485	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		23
+1593618151	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		238
+1593618340	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les modèle régularisés] 		1
+1593618445	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		-1
+1593618693	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		14
+1593618781	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		20
+1593619556	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		250
+1593620214	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		47
+1593621104	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		204
+1593621170	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		30
+1593621417	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		9
+1593621743	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		47
+1593622031	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux			-2936
+1593688434	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		674
+1593692456	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		106
+1593693778	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		13
+1593695410	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient] 		289
+1593695544	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classique] 		-11
+1593696262	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classique] 		343
+1593697047	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastique] 		121
+1593697123	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires] 		122
+1593697158	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires] 		5
+1593698213	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastique] 		212
+1593698424	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastique] 		50
+1593698581	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classique] 		146
+1593699067	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classique] 		29
+1593700003	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastique] 		369
+1593700433	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastique] 		98
+1593700471	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classique] 		3
+1593700802	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastique] 		100
+1593700851	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux			-31
+1593700994	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastique] 		-2
+1593701791	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastique] 		254
+1593701885	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux			16
+1593702157	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastique] 		174
+1593707013	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classique] 		2
+1593707092	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classique] 		6
+1593707130	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classique] 		6
+1593707168	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classique] 		-2
+1593707219	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classique] 		-1
+1593707349	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classique] 		-2
+1593707367	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classique] 		1
+1593707678	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastique] 		1
+1593722468	91.69.217.178	E	cpp:regression_supervisee	danilouchouchou			0
+1594031043	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires et les descentes de gradient] 		99
+1594036751	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires] 		102
+1594036804	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires] 		130
+1594037048	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires] 		77
+1594042804	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires] 		260
+1594042926	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires] 		14
+1594045968	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires] 		-110
+1594046637	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires] 		-66
+1594047658	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires] 		22
+1594051717	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classique] 		309
+1594051910	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classique] 		12
+1594052329	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires] 		166
+1594052537	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires] 		99
+1594052689	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastiques] 		61
+1594054713	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les différentes régressions supervisées] 		-11
+1594054732	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux			0
+1594054752	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux			5
+1594071226	82.64.124.27	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classique] 		208
+1594118524	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires] 		3
+1594123471	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires] 		190
+1594123798	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires] 		80
+1594123890	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires] 		-3
+1594123989	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires et les descentes de gradient] 		-34
+1594124053	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires] 		10
+1594124135	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classique] 		36
+1594125139	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Méthode analytique (mathématiques)] 		70
+1594125309	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Méthode utilisant les librairies] 		60
+1594125950	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Méthode utilisant les librairies] 		-25
+1594127318	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Méthode utilisant les librairies] 		55
+1594127369	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Méthode utilisant les librairies] 		-2
+1594127551	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastiques] 		73
+1594127814	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastiques] 		102
+1594130018	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastiques] 		103
+1594130350	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastiques] 		292
+1594130512	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastiques] 		63
+1594130627	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastiques] 		94
+1594130819	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastiques] 		146
+1594130904	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastiques] 		98
+1594132010	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastiques] 		135
+1594132411	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastiques] 		21
+1594132842	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Sythèse] 		334
+1594132884	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Sythèse] 		1
+1594133668	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastiques] 		297
+1594133873	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastiques] 		23
+1594134147	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Synthèse] 		126
+1594134182	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastiques] 		-309
+1594141666	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Théorie :] 		25
+1594144473	82.64.124.27	E	cpp:regression_supervisee	pierrevirgaux	[Théorie :] 		-25
+1594200966	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastiques] 		0
+1594201565	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastiques] 		132
+1594202827	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastiques] 		160
+1594202881	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastiques] 		5
+1594216740	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classique] 		23
+1594218126	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classique] 		524
+1594218228	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classique] 		75
+1594218271	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastiques] 		104
+1594219287	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classique] 		-114
+1594368250	82.64.124.27	E	cpp:regression_supervisee	pierrevirgaux	[Méthode utilisant les librairies] 		107
+1594588414	82.64.124.27	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classique] 		-4
+1594987076	86.216.219.72	E	cpp:regression_supervisee	pierrevirgaux	[Théorie :] 		-3
+1597441485	88.124.10.73	E	cpp:regression_supervisee	pierrevirgaux			29
+1597704191	88.124.10.73	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classique] 		1
+1598113777	88.124.10.73	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient stochastiques] 		4
+1598113871	88.124.10.73	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classique] 		54
+1598300444	91.160.167.245	E	cpp:regression_supervisee	matheo.bolland	[Les descentes de gradient classique] 		1
+1599556816	188.141.243.39	E	cpp:regression_supervisee	pierrevirgaux	[Méthode utilisant les librairies] 		0
+1599567820	217.119.181.222	E	cpp:regression_supervisee	pierrevirgaux	[Théorie :] 		187
+1599568996	217.119.181.222	E	cpp:regression_supervisee	pierrevirgaux	[Théorie :] 		-187
+1599569068	217.119.181.222	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires] 		257
+1599569248	217.119.181.222	E	cpp:regression_supervisee	pierrevirgaux	[Les régressions linéaires] 		117
+1599570564	217.119.181.222	E	cpp:regression_supervisee	pierrevirgaux	[Théorie :] 		251
+1599570641	217.119.181.222	E	cpp:regression_supervisee	pierrevirgaux	[Théorie :] 		-129
+1599570702	217.119.181.222	E	cpp:regression_supervisee	pierrevirgaux	[Théorie :] 		52
+1599571154	217.119.181.222	E	cpp:regression_supervisee	pierrevirgaux	[Théorie :] 		139
+1599571492	217.119.181.222	E	cpp:regression_supervisee	pierrevirgaux	[Méthode analytique (mathématiques)] 		184
+1599571787	217.119.181.222	E	cpp:regression_supervisee	pierrevirgaux			-136
+1599571887	217.119.181.222	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classiques] 		-11
+1599571951	217.119.181.222	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classiques] 		-12
+1599572291	217.119.181.222	E	cpp:regression_supervisee	pierrevirgaux	[Méthode utilisant les librairies] 		5
+1599572377	217.119.181.222	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classiques] 		2
+1599572622	217.119.181.222	E	cpp:regression_supervisee	pierrevirgaux	[Les descentes de gradient classiques] 		162
+1599572777	217.119.181.222	E	cpp:regression_supervisee	pierrevirgaux	[Théorie :] 		-12
+1599572816	217.119.181.222	E	cpp:regression_supervisee	pierrevirgaux	[Théorie :] 		1
+1599572837	217.119.181.222	E	cpp:regression_supervisee	pierrevirgaux	[Théorie :] 		-7
+1599573005	217.119.181.222	E	cpp:regression_supervisee	pierrevirgaux	[Théorie :] 		3
+1599573342	217.119.181.222	E	cpp:regression_supervisee	pierrevirgaux	[Théorie :] 		7
+1599573371	217.119.181.222	E	cpp:regression_supervisee	pierrevirgaux	[Théorie :] 		27
+1599594241	89.88.75.36	E	cpp:regression_supervisee	pierrevirgaux	[Utilisation :] 		2

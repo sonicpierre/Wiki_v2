@@ -1,0 +1,29 @@
+##Fonctions:
+&nbsp;
+<span class="kw1">function</span> <span class="br0">&#91;</span>y<span class="br0">&#93;</span> = df<span class="br0">&#40;</span>x<span class="br0">&#41;</span>
+  y = <span class="nu0">2</span>.*x;
+endfunction
+&nbsp;
+##code:
+&nbsp;
+<span class="kw1">function</span> <span class="br0">&#91;</span>x,nIter<span class="br0">&#93;</span> = newton<span class="br0">&#40;</span>x, nIter<span class="br0">&#41;</span>
+  <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a>=<span class="nu0">10</span>^<span class="br0">&#40;</span>-<span class="nu0">12</span><span class="br0">&#41;</span>;
+  dif=<span class="nu0">2</span>*<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a>;
+  nIter=<span class="nu0">0</span>;
+  x1 = <span class="nu0">0</span>;
+  <span class="kw1">while</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/abs.html"><span class="kw2">abs</span></a><span class="br0">&#40;</span>dif<span class="br0">&#41;</span>&gt;<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a> 
+      x1=x-f<span class="br0">&#40;</span>x<span class="br0">&#41;</span>/df<span class="br0">&#40;</span>x<span class="br0">&#41;</span>;
+      dif=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/abs.html"><span class="kw2">abs</span></a><span class="br0">&#40;</span>x1-x<span class="br0">&#41;</span>;
+      x= x1;
+      nIter=nIter+<span class="nu0">1</span>;
+  <span class="kw1">end</span>
+endfunction
+&nbsp;
+#Affectations
+x=<span class="nu0">10</span>; #valeur de départ
+nIter=<span class="nu0">0</span>; #nombre d'itérations
+&nbsp;
+#Affichage
+<span class="br0">&#91;</span>x, nIter<span class="br0">&#93;</span>= newton<span class="br0">&#40;</span>x ,nIter<span class="br0">&#41;</span>;  
+<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="co2">' La solution est : '</span>, <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/num2str.html"><span class="kw2">num2str</span></a><span class="br0">&#40;</span>x1<span class="br0">&#41;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>;
+<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="co2">' Nb d'</span><span class="co2">'itérations : '</span>, <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/num2str.html"><span class="kw2">num2str</span></a><span class="br0">&#40;</span>nIter<span class="br0">&#41;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>;

@@ -1,0 +1,424 @@
+
+<p>
+<a href="/doku.php?id=cpp:ia" class="wikilink1" title="cpp:ia"> Machine Learning</a>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aautre_algorithme_classification&amp;media=cpp:arbrevieuxautrealgo.jpg" class="media" title="cpp:arbrevieuxautrealgo.jpg"><img src="/lib/exe/fetch.php?w=500&amp;tok=62ddef&amp;media=cpp:arbrevieuxautrealgo.jpg" class="mediacenter" title=" Autre algorithme d&#039;arbre" alt=" Autre algorithme d&#039;arbre" width="500" /></a>
+</p>
+
+<p>
+Nous allons développer ici d&#039;autres arbres qui pourront vous être utile dans des problèmes spécifiques ou pour faire des comparaisons de performence. Il ne s&#039;agit bien entendu que d&#039;une introduction pour élargir votre spectre de connaissance.
+</p>
+
+<h2 class="sectionedit1" id="arbre_chaid">Arbre CHAID</h2>
+<div class="level2">
+
+<p>
+L&#039;arbre de CHAID (CHi-squared Automatic Interaction Detection) est l&#039;un des premiers algorithmes à avoir été implémenté dans des logiciels comerciaux. Contrairement à l&#039;algorithme de CART, il permet de construire des arbres qui ne sont pas binaire.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Arbre CHAID&quot;,&quot;hid&quot;:&quot;arbre_chaid&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;346-626&quot;} -->
+<h3 class="sectionedit2" id="mesure_pour_le_choix_de_variable">Mesure pour le choix de variable</h3>
+<div class="level3">
+
+<p>
+Expliquons les variables en utilisant l&#039;exemple qui nous servira à construire l&#039;arbre. Il s&#039;agit de données sur le vote aux Etats-Unis. Le but est de trouver à partir des caractéristiques d&#039;une personne <span style='color:#ed1c24; '><strong>pour qui elle votera</strong></span>. L&#039;algorithme va <span style='color:#ed1c24; '><strong>calculer le Khi2</strong></span> pour chacune des variables. Prenons comme exemple la variable <span style='color:#ed1c24; '><strong>age</strong></span> qui représente les différentes tranches 18-24 &lt; 25-34 &lt; 35-44 &lt; 45-54 &lt; 55-64 &lt; 65+.
+</p>
+<ul>
+<li class="level1"><div class="li"> On commence par calculer le Khi2 pour une tranche d&#039;age grace à la formule du Khi2 qui permet de faire la sélection des variables les plus importantes :</div>
+</li>
+</ul>
+
+<p>
+$$\chi^{2} = \sqrt{\frac{(y - y&#039;)^2}{y&#039;}}$$
+</p>
+<div class="table sectionedit3"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Théorie  </th><th class="col1 centeralign">  Signification  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  $y$  </td><td class="col1 centeralign">  Le nombre de personne ayant entre 18 et 24 ans et ayant voté pour Bush  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  $y&#039;$  </td><td class="col1 centeralign">  La moyenne entre les gens de 18 et 24 ans qui ont voté pour et contre Bush  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:3,&quot;range&quot;:&quot;1371-1580&quot;} --><ul>
+<li class="level1"><div class="li"> On re-itère sur chacune des tranches d&#039;age, on somme tout et on a notre Khi2 pour la variable !! On choisira la variable ayant le Khi2 le plus important comme noeud. </div>
+</li>
+</ul>
+
+<p>
+<div class='alert alert-info'><strong>Info :</strong> Le Khi2 avantage fortement les variables qui ont beaucoup de modalité. C&#039;est pourquoi il est parfois préférable, quand le décalage est trop grand, d&#039;utiliser le t de Tschuprow qui est traité <a href="https://lemakistatheux.wordpress.com/2013/09/01/le-t-de-tschuprow/" class="urlextern" title="https://lemakistatheux.wordpress.com/2013/09/01/le-t-de-tschuprow/" rel="nofollow"> ici</a>.</div>
+</p>
+
+<p>
+<span style='color:#ed1c24; '><strong>Originellement</strong></span>, on créait <span style='color:#ed1c24; '><strong>une branche par modalité</strong></span> de la variable mais une technique de <span style='color:#ed1c24; '><strong>fusion</strong></span> a été mise en place pour éviter la construction de <span style='color:#ed1c24; '><strong>branches inutiles</strong></span> qui ne contiendrait que peu d&#039;individus. Si vous avez déjà fait des <span style='color:#ed1c24; '><strong>statistiques inférentielles</strong></span> la méthode va vous sembler plus commune. On commence par poser <span style='color:#ed1c24; '><strong>2 hypothèses</strong></span> :
+</p>
+
+<p>
+$H_{0}$ : Deux attributs d&#039;une variable ont un profil similaire
+<br/>
+
+$H_{1}$ : Deux attributs d&#039;une variable ont un profil différent
+</p>
+
+<p>
+L&#039;utilisateur donne la valeur du risque que les sommets soient prédit différent alors qu&#039;ils sont similaires, ce qui correspond au risque de première espèce $\alpha$. On évalue ainsi la probabilité que chaque attribu soit lié aux autres grâce au test du $\chi^{2}$ et on fusionne qd le $\alpha$ est inférieur à celui défini par l&#039;utilisateur. 
+</p>
+
+<p>
+Il est possible qu&#039;il y ai aucune fusion et que plusieurs branches soient créées car l&#039;arbre n&#039;est pas forcément binaire.
+</p>
+
+<p>
+<div class='alert alert-warning'><strong>Attention :</strong> Ce type d&#039;arbres ne gère pas les valeurs manquantes.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Mesure pour le choix de variable&quot;,&quot;hid&quot;:&quot;mesure_pour_le_choix_de_variable&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;627-3279&quot;} -->
+<h3 class="sectionedit4" id="application_dans_le_code">Application dans le code</h3>
+<div class="level3">
+
+<p>
+Maintenant que vous avez toute la théorie, mettons la en place dans les différents langages :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> CHAID <span class="kw1">import</span> Tree
+independent_variable_columns <span class="sy0">=</span> <span class="br0">&#91;</span><span class="st0">'gender'</span><span class="sy0">,</span> <span class="st0">'ager'</span><span class="sy0">,</span> <span class="st0">'empstat'</span><span class="sy0">,</span> <span class="st0">'educr'</span><span class="sy0">,</span> <span class="st0">'marstat'</span><span class="br0">&#93;</span>
+dep_variable <span class="sy0">=</span> <span class="st0">'vote3'</span>
+tree <span class="sy0">=</span> Tree.<span class="me1">from_pandas_df</span><span class="br0">&#40;</span>data<span class="sy0">,</span> <span class="kw2">dict</span><span class="br0">&#40;</span><span class="kw2">zip</span><span class="br0">&#40;</span>independent_variable_columns<span class="sy0">,</span> <span class="br0">&#91;</span><span class="st0">'nominal'</span><span class="br0">&#93;</span> * <span class="nu0">5</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span> dep_variable<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R : </em>
+</p>
+<pre class="code python">install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;partykit&quot;</span><span class="br0">&#41;</span>
+install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;CHAID&quot;</span><span class="sy0">,</span> repos<span class="sy0">=</span><span class="st0">&quot;http://R-Forge.R-project.org&quot;</span><span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>CHAID<span class="br0">&#41;</span>
+data<span class="br0">&#40;</span><span class="st0">&quot;USvote&quot;</span><span class="br0">&#41;</span>
+tree <span class="sy0">=</span> chaid<span class="br0">&#40;</span>vote3<span class="sy0">~</span>.<span class="sy0">,</span> USvote<span class="sy0">,</span> control <span class="sy0">=</span> control_tree<span class="br0">&#41;</span></pre>
+
+<p>
+On peut ensuite afficher l&#039;arbre
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+
+<p>
+Il est nécessaire d&#039;avoir deux librairies pour que les images puissent être crééent. La librairie <strong>graphviz</strong> qui s&#039;installe normalement avec pip3 et la librairie <strong>orca</strong> qui nécessitera <strong>npm</strong>. Il faudra donc faire les commandes :
+</p>
+<pre class="code bash"><span class="kw2">sudo</span> npm <span class="kw2">install</span> <span class="re5">-g</span> electron<span class="sy0">@</span>6.1.4 orca
+<span class="kw2">sudo</span> apt <span class="kw2">install</span> npm</pre>
+
+<p>
+Une fois toutes ces installations faitent. Vous n&#039;avez plus qu&#039;à lancer la construction du graphique représentant votre arbre.
+</p>
+<pre class="code python"><span class="kw1">import</span> orca
+<span class="kw1">import</span> graphviz
+tree.<span class="me1">render</span><span class="br0">&#40;</span>path<span class="sy0">=</span><span class="kw2">None</span><span class="sy0">,</span> view<span class="sy0">=</span><span class="kw2">False</span><span class="br0">&#41;</span></pre>
+
+<p>
+L&#039;arbre sera généré dans un dossier <strong>trees</strong> sous 2 formes gv et png.
+</p>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">plot<span class="br0">&#40;</span>model<span class="br0">&#41;</span></pre>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aautre_algorithme_classification&amp;media=cpp:arbrechaid.png" class="media" title="cpp:arbrechaid.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=cc2031&amp;media=cpp:arbrechaid.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> Il est possible de traiter des variables continues avec cet algorithme mais on utilisera plus le test du Khi2 mais celui de Bartlett&#039;s ou de Levene&#039;s qui sont plus adaptés.</div>
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.rocq.inria.fr/axis/modulad/archives/numero-33/tutorial-rakotomalala-33/rakotomalala-33-tutorial.pdf" class="urlextern" title="https://www.rocq.inria.fr/axis/modulad/archives/numero-33/tutorial-rakotomalala-33/rakotomalala-33-tutorial.pdf" rel="nofollow">https://www.rocq.inria.fr/axis/modulad/archives/numero-33/tutorial-rakotomalala-33/rakotomalala-33-tutorial.pdf</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://sefiks.com/2020/03/18/a-step-by-step-chaid-decision-tree-example/#:~:text=CHAID%20in%20Python&amp;text=Herein%2C%20you%20can%20find%20the,as%20gradient%20boosting%20and%20adaboost." class="urlextern" title="https://sefiks.com/2020/03/18/a-step-by-step-chaid-decision-tree-example/#:~:text=CHAID%20in%20Python&amp;text=Herein%2C%20you%20can%20find%20the,as%20gradient%20boosting%20and%20adaboost." rel="nofollow">https://sefiks.com/2020/03/18/a-step-by-step-chaid-decision-tree-example/#:~:text=CHAID%20in%20Python&amp;text=Herein%2C%20you%20can%20find%20the,as%20gradient%20boosting%20and%20adaboost.</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://presmarymethuen.org/fr/dictionary/what-are-the-differences-between-id3-c4-5-and-cart/" class="urlextern" title="https://presmarymethuen.org/fr/dictionary/what-are-the-differences-between-id3-c4-5-and-cart/" rel="nofollow">https://presmarymethuen.org/fr/dictionary/what-are-the-differences-between-id3-c4-5-and-cart/</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.r-bloggers.com/chaid-and-r-when-you-need-explanation-may-15-2018/" class="urlextern" title="https://www.r-bloggers.com/chaid-and-r-when-you-need-explanation-may-15-2018/" rel="nofollow">https://www.r-bloggers.com/chaid-and-r-when-you-need-explanation-may-15-2018/</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://github.com/Rambatino/CHAID" class="urlextern" title="https://github.com/Rambatino/CHAID" rel="nofollow">https://github.com/Rambatino/CHAID</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://cerim.univ-lille2.fr/fileadmin/user_upload/statistiques/michael_genin/Cours/Modelisation/Arbres_de_decision_printable.pdf" class="urlextern" title="http://cerim.univ-lille2.fr/fileadmin/user_upload/statistiques/michael_genin/Cours/Modelisation/Arbres_de_decision_printable.pdf" rel="nofollow">http://cerim.univ-lille2.fr/fileadmin/user_upload/statistiques/michael_genin/Cours/Modelisation/Arbres_de_decision_printable.pdf</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Application dans le code&quot;,&quot;hid&quot;:&quot;application_dans_le_code&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;3280-5548&quot;} -->
+<h2 class="sectionedit5" id="de_l_arbre_id3_au_c45">De l&#039;arbre ID3 au C4.5</h2>
+<div class="level2">
+
+<p>
+L&#039;algorithme ID3 et C4.5 utilisent les mêmes principes. Nous allons tout d&#039;abord décrire l&#039;algorithme ID3 et expliciter ses inconvéniants pour bien comprendre comment l&#039;algorithme C4.5 y remédie.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;De l&#039;arbre ID3 au C4.5&quot;,&quot;hid&quot;:&quot;de_l_arbre_id3_au_c45&quot;,&quot;codeblockOffset&quot;:5,&quot;secid&quot;:5,&quot;range&quot;:&quot;5549-5782&quot;} -->
+<h3 class="sectionedit6" id="l_algorithme_id3">L&#039;algorithme ID3</h3>
+<div class="level3">
+
+<p>
+L&#039;entropie et l&#039;indice qui permet d&#039;avoir le gain utilisé à l&#039;origine dans l&#039;algorithme ID3 créé par Ross Quinlan en 1979. Rappelons la formule permettant de calculer l&#039;entropie et le gain vu pour la première fois <a href="/doku.php?id=cpp:arbres_de_classification" class="wikilink1" title="cpp:arbres_de_classification"> ici</a>:
+</p>
+<ul>
+<li class="level1"><div class="li"> Entropie :</div>
+</li>
+</ul>
+
+<p>
+$$Ent(E) = -\sum_{i=1}^{k} p_{i} * log(p_{i})$$
+</p>
+<ul>
+<li class="level1"><div class="li"> Gain :</div>
+</li>
+</ul>
+
+<p>
+$$Gain = Ent(E) - \sum_{i=1}^{k} p_{i} * Ent(E_{i})$$
+</p>
+
+<p>
+<strong>Etapes de l&#039;algorithme :</strong>
+</p>
+
+<p>
+L&#039;algorithme ID3 va procéder en plusieurs étapes :
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aautre_algorithme_classification&amp;media=cpp:id3algorithme.png" class="media" title="cpp:id3algorithme.png"><img src="/lib/exe/fetch.php?w=700&amp;tok=4a0ee1&amp;media=cpp:id3algorithme.png" class="mediacenter" alt="" width="700" /></a>
+</p>
+
+<p>
+On recommence sur chacun des nouveaux noeuds tant que toute les cibles ne sont pas identiques.
+</p>
+<div class="table sectionedit7"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Inconvénient de l&#039;algorithme d&#039;ID3  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  ID3 ne gère pas les données manquantes  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  ID3 ne gère pas les valeurs continues  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  ID3 est sujet rapidement à l&#039;overfiting et a tendance à faire des arbres trop grands  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">  ID3 coûte cher en ressource ce qui le ralentit  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:7,&quot;range&quot;:&quot;6416-6696&quot;} -->
+<p>
+<div class='alert alert-info'><strong>Info :</strong> Vous pouvez le mettre en place pour vous amuser et comparer les performances avec la librairie <a href="https://pypi.org/project/decision-tree-id3/" class="urlextern" title="https://pypi.org/project/decision-tree-id3/" rel="nofollow"> ID3</a> en Python.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;L&#039;algorithme ID3&quot;,&quot;hid&quot;:&quot;l_algorithme_id3&quot;,&quot;codeblockOffset&quot;:5,&quot;secid&quot;:6,&quot;range&quot;:&quot;5783-6888&quot;} -->
+<h3 class="sectionedit8" id="l_algorithme_c45">L&#039;algorithme C4.5</h3>
+<div class="level3">
+
+<p>
+Il a alors été implémenté en 1993 par le même auteur que l&#039;algorithme ID3, l&#039;algorithme C4.5. Il permet de régler de nombreux problèmes :
+</p>
+<ul>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '>ID3 est sujet rapidement à l&#039;overfiting et a tendance à faire des arbres trop grands de plus coûte cher en ressource ce qui le ralentit</span></div>
+</li>
+</ul>
+
+<p>
+Pour palier à ce problème Ross Quinlan a changé la formule permettant de calculer le Gain en utilisant une nouvelle fonction <strong>SplitInfo</strong>
+</p>
+
+<p>
+$$SplitInfo(X) = - \sum_{i=1}^{k} \frac{n_{i}}{n} * log_{2}(\frac{n_{i}}{n})$$
+</p>
+<div class="table sectionedit9"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Théorie  </th><th class="col1 centeralign">  Signification  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  $X$  </td><td class="col1 centeralign">  Variable testée  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  $k$  </td><td class="col1 centeralign">  Nombre d&#039;attributs de la variable  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  $n_{i}$  </td><td class="col1 centeralign">  Nombre d&#039;élément ayant l&#039;attributs  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">  $n$  </td><td class="col1 centeralign">  Effectif total  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table2&quot;,&quot;secid&quot;:9,&quot;range&quot;:&quot;7452-7647&quot;} -->
+<p>
+Plus les attributs d&#039;une variable sont équilibrés et plus la fonction sera proche de 1 dans le cas contraire elle augmentera et en l&#039;utilisant comme diviseur diminura le Gain. D&#039;où la nouvelle formule du Gain :
+</p>
+
+<p>
+$$NouveauGain(X) = \frac{Gain(X)}{SplitInfo(X)}$$
+</p>
+
+<p>
+On a ainsi un gain qui permet de mieux gérer des variables qui auraient des attributs très déséquilibrés et permet de créer des arbres plus performant.
+</p>
+<ul>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '>ID3 ne gère pas les valeurs continues</span></div>
+</li>
+</ul>
+
+<p>
+Imaginons que l&#039;age des personnes qui ont le droit de vote soit quantitatif et non qualitatif. 
+</p>
+<div class="table sectionedit10"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0 leftalign">              </td><th class="col1 centeralign">  Individu 1  </th><th class="col2 centeralign">  Individu 2  </th><th class="col3 centeralign">  Individu 3  </th><th class="col4 centeralign">  Individu 4  </th><th class="col5 centeralign">  Individu 5  </th><th class="col6 centeralign">  Individu 6  </th><th class="col7 centeralign">  Individu 7  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 centeralign">  Age  </th><td class="col1 centeralign">  54  </td><td class="col2 centeralign">  45  </td><td class="col3 centeralign">  64  </td><td class="col4 centeralign">  51  </td><td class="col5 centeralign">  42  </td><td class="col6 centeralign">  24  </td><td class="col7 centeralign">  49  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table3&quot;,&quot;secid&quot;:10,&quot;range&quot;:&quot;8238-8418&quot;} -->
+<p>
+Tout est dans le signe $\leq$ ou $\geq$, il suffit de séparer le panel d&#039;individu en deux et calculer le gain en regardant si ils appartiennent ou non à l&#039;intervalle. La découpe permettant le plus grand gain sera choisie.
+</p>
+
+<p>
+<div class='alert alert-info'><strong>Info :</strong> Cette méthode est utilisée par beaucoup d&#039;arbre (CART, CHAID) en déclinant le type de mesure.</div>
+</p>
+<ul>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '>ID3 ne gère pas les valeurs manquantes</span></div>
+</li>
+</ul>
+
+<p>
+La méthode ici est assez simple, l&#039;algorithme calcule les valeurs de gains en ignorant les valeurs manquantes et multiplie le résultat par le ratio des valeur existantes sur le nombre total de valeurs prévues. 
+</p>
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> C4.5 est l&#039;un des meilleurs algorithme de classification. Il a été élu meilleur algorithme d&#039;exploration de données à la Conférence internationale IEEE sur l&#039;exploration de données (de ICDM) en Décembre 2006.</div>
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.academia.edu/33701469/Algorithmes_de_classification_ID3_and_C4_5" class="urlextern" title="https://www.academia.edu/33701469/Algorithmes_de_classification_ID3_and_C4_5" rel="nofollow">https://www.academia.edu/33701469/Algorithmes_de_classification_ID3_and_C4_5</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;L&#039;algorithme C4.5&quot;,&quot;hid&quot;:&quot;l_algorithme_c45&quot;,&quot;codeblockOffset&quot;:5,&quot;secid&quot;:8,&quot;range&quot;:&quot;6889-9412&quot;} -->
+<h3 class="sectionedit11" id="le_c45_en_pratique">Le C4.5 en pratique</h3>
+<div class="level3">
+
+<p>
+L&#039;arbre de C4.5 est une évolution de l&#039;arbre de l&#039;algorithme de ID3. Il utilise le même principe en changeant l&#039;indice qui permet d&#039;obtenir la variable la plus importante. En effet, on utilisera un ratio du gain :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#On importe les librairies</span>
+<span class="kw1">from</span> chefboost <span class="kw1">import</span> Chefboost <span class="kw1">as</span> chef
+<span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+data <span class="sy0">=</span> pd.<span class="me1">read_csv</span><span class="br0">&#40;</span><span class="st0">&quot;vote_Etats_Unis.csv&quot;</span><span class="sy0">,</span> index_col<span class="sy0">=</span><span class="st0">&quot;Unnamed: 0&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#On modifie le dataFrame pour qu'il soit traitable par la bibliothèque importée</span>
+dataFrame <span class="sy0">=</span> data<span class="br0">&#91;</span><span class="br0">&#91;</span><span class="st0">'gender'</span><span class="sy0">,</span><span class="st0">'ager'</span><span class="sy0">,</span><span class="st0">'empstat'</span><span class="sy0">,</span><span class="st0">'educr'</span><span class="sy0">,</span><span class="st0">'marstat'</span><span class="sy0">,</span><span class="st0">'vote3'</span><span class="br0">&#93;</span><span class="br0">&#93;</span>
+dataFrame <span class="sy0">=</span> dataFrame.<span class="me1">rename</span><span class="br0">&#40;</span>columns<span class="sy0">=</span><span class="br0">&#123;</span><span class="st0">'vote3'</span>: <span class="st0">'Decision'</span><span class="br0">&#125;</span><span class="br0">&#41;</span></pre>
+
+<p>
+On construit ensuite un modèle à partir du dataFrame préparé :
+</p>
+<pre class="code python">config <span class="sy0">=</span> <span class="br0">&#123;</span><span class="st0">'algorithm'</span> : <span class="st0">'C4.5'</span><span class="br0">&#125;</span> <span class="co1">#On spécifie le modèle que l'on va entraîner</span>
+model <span class="sy0">=</span> chef.<span class="me1">fit</span><span class="br0">&#40;</span>dataFrame<span class="sy0">,</span> config<span class="br0">&#41;</span></pre>
+
+<p>
+<div class='alert alert-info'><strong>Info :</strong> Les règles qui décrivent l&#039;arbres seront décrite dans un fichier rules créé avec le dossier output par la librairie.</div>
+</p>
+
+<p>
+<em class="u">En R :</em>
+</p>
+
+<p>
+Nous allons ici écrire sur l&#039;algorithme C5.0 (See5 pour Windows) qui est une optimisation de l&#039;algorithme de C4.5 permettant d&#039;avoir une construction plus rapide, utilisant moins de mémoire et construisant des arbres plus petits. Malheureusement, il s&#039;agit d&#039;un produit commercial qui n&#039;a pas était encore transcri en Python.
+</p>
+
+<p>
+Le package que nous utilisons ici peut être un peu compliqué à installer c&#039;est pourquoi il est conseillé de suivre ces lignes de code :
+</p>
+<pre class="code python">install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">'libcoin'</span><span class="sy0">,</span> dependencies <span class="sy0">=</span> T<span class="br0">&#41;</span>
+install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">'C50'</span><span class="sy0">,</span> dependencies <span class="sy0">=</span> T<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span><span class="st0">'C50'</span><span class="br0">&#41;</span></pre>
+
+<p>
+On peut ensuite entrainer le modèle :
+</p>
+<pre class="code python">train.<span class="me1">indices</span> <span class="sy0">&lt;</span>- sample<span class="br0">&#40;</span><span class="nu0">1</span>:nrow<span class="br0">&#40;</span>USVote<span class="br0">&#41;</span><span class="sy0">,</span> <span class="nu0">100</span><span class="br0">&#41;</span>
+x.<span class="me1">train</span> <span class="sy0">&lt;</span>- USVote<span class="br0">&#91;</span>train.<span class="me1">indices</span><span class="sy0">,</span> <span class="br0">&#93;</span>
+x.<span class="kw3">test</span> <span class="sy0">&lt;</span>- USVote<span class="br0">&#91;</span>-train.<span class="me1">indices</span><span class="sy0">,</span> <span class="br0">&#93;</span>
+model <span class="sy0">&lt;</span>- C5.0<span class="br0">&#40;</span>vote3<span class="sy0">~</span>.<span class="sy0">,</span> data<span class="sy0">=</span>x.<span class="me1">train</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://github.com/barisesmer/C4.5" class="urlextern" title="https://github.com/barisesmer/C4.5" rel="nofollow">https://github.com/barisesmer/C4.5</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://pypi.org/project/chefboost/" class="urlextern" title="https://pypi.org/project/chefboost/" rel="nofollow">https://pypi.org/project/chefboost/</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le C4.5 en pratique&quot;,&quot;hid&quot;:&quot;le_c45_en_pratique&quot;,&quot;codeblockOffset&quot;:5,&quot;secid&quot;:11,&quot;range&quot;:&quot;9413-11355&quot;} -->
+<h2 class="sectionedit12" id="synthese">Synthèse</h2>
+<div class="level2">
+<div class="table sectionedit13"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0 leftalign">                   </td><th class="col1 centeralign">  Avantages  </th><th class="col2 centeralign">  Inconvénients  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 centeralign">  Arbre C4.5  </th><td class="col1 centeralign">  Gère les points de données incomplets, Résout les problèmes d&#039;over-fiting grace à l&#039;élagage  </td><td class="col2 centeralign">  L&#039;algorithme est particulièrement censible au bruit dans les données  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  Arbre ID3  </th><td class="col1 centeralign">  Pas de réel avantage, historiquement il s&#039;agit du premier des 3 à avoir été créé  </td><td class="col2 centeralign">  Overfiting sur des petits échantillons, Ne gère pas les attributs numériques, Nécessite beaucoup de ressource machine  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  Arbre CART  </th><td class="col1 centeralign">  Gère facilement les valeurs aberrantes, Gère les variables numériques et catégorielles  </td><td class="col2 centeralign">  Les arbres formés sont instables (petit changement de données implique de gros changements de l&#039;arbre)  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  Arbre CHAID  </th><td class="col1 centeralign">  Performant pour une phase exploratoire des données  </td><td class="col2 centeralign">  Moyennement performant en classement et paramétrage du coefficient alpha empirique (on essaie)  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table4&quot;,&quot;secid&quot;:13,&quot;range&quot;:&quot;11377-12253&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Synth\u00e8se&quot;,&quot;hid&quot;:&quot;synthese&quot;,&quot;codeblockOffset&quot;:9,&quot;secid&quot;:12,&quot;range&quot;:&quot;11356-&quot;} -->

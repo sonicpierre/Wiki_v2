@@ -1,0 +1,798 @@
+
+<p>
+<a href="/doku.php?id=cpp:natural_langage_processing" class="wikilink1" title="cpp:natural_langage_processing"> Natural Langage Processing</a>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Apreprocessing_avec_nltk&amp;media=cpp:preprocessing.jpg" class="media" title="cpp:preprocessing.jpg"><img src="/lib/exe/fetch.php?w=500&amp;tok=b3501a&amp;media=cpp:preprocessing.jpg" class="media" alt="" width="500" /></a>
+</p>
+
+<p>
+Nous allons traiter ici du preprocessing pour les données textuelles dans le but de faire une analyse de fréquence des mots et visualiser notre corpus.
+<br/>
+
+<br/>
+
+</p>
+
+<h4 id="librairies_necessaires">Librairies nécessaires</h4>
+<div class="level4">
+<div class="table sectionedit1"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0"> Librairie Python </th><th class="col1 leftalign"> Package R    </th><th class="col2"> Utilité </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 leftalign"> nltk             </td><td class="col1 leftalign"> tm, NLP       </td><td class="col2 leftalign"> Texte mining    </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> nltk             </td><td class="col1 leftalign"> tidytext     </td><td class="col2 leftalign"> ngrams          </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> nltk             </td><td class="col1 leftalign"> bind_tf_idf  </td><td class="col2 leftalign"> tf-idf          </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> spacy ou nltk    </td><td class="col1 leftalign"> SnowballC    </td><td class="col2 leftalign"> Stemming        </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> wordcloud        </td><td class="col1 leftalign"> wordcloud    </td><td class="col2 leftalign">Nuage de mots    </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> seasborn         </td><td class="col1"> RColorBrewer </td><td class="col2"> Affichage de graphiques </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:1,&quot;range&quot;:&quot;290-669&quot;} -->
+</div>
+
+<h2 class="sectionedit2" id="nettoyage_des_donnees">Nettoyage des données</h2>
+<div class="level2">
+
+<p>
+Dans un texte, tout n&#039;est pas important c&#039;est pourquoi il est nécessaire de nettoyer les données, afin de garder, en priorité, les mots qui apportent le plus d&#039;informations. On va voir ici cinq méthodes parmi les plus courantes :
+</p>
+<ul>
+<li class="level1"><div class="li"> Tokénisation</div>
+</li>
+<li class="level1"><div class="li"> Normalisation du texte</div>
+</li>
+<li class="level1"><div class="li"> Suppression des stopwords</div>
+</li>
+<li class="level1"><div class="li"> Lemmatization (ou Stemming)</div>
+</li>
+<li class="level1"><div class="li"> N_grams</div>
+</li>
+</ul>
+
+<p>
+Pour les exemples, nous utiliserons la phrase :
+</p>
+<pre class="code python">phrase <span class="sy0">=</span> <span class="st0">&quot;JE suiS Un ABruti Et, je vAis t'écrire quelque CHosE !!&quot;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Nettoyage des donn\u00e9es&quot;,&quot;hid&quot;:&quot;nettoyage_des_donnees&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;671-1199&quot;} -->
+<h3 class="sectionedit3" id="tokenisation">Tokénisation</h3>
+<div class="level3">
+
+<p>
+Il s&#039;agit de couper une phrase dans le but de construire une liste avec, à chaque indice (place dans la liste), un mot ce qui facilite grandement l&#039;apprentissage de la machine. Il est nécessaire de prendre le tokéniseur adapté à la langue (ici ce sera le français).
+</p>
+
+<p>
+<em class="u">Code Python :</em>
+</p>
+<pre class="code python">tokenizer <span class="sy0">=</span> nltk.<span class="me1">RegexpTokenizer</span><span class="br0">&#40;</span>r<span class="st0">'<span class="es0">\w</span>+'</span><span class="br0">&#41;</span>
+tokenizer.<span class="kw3">tokenize</span><span class="br0">&#40;</span>phrase<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Équivalent R</em>
+</p>
+
+<p>
+Il n&#039;y a pas de construction directe de listes comme en Python. Il s&#039;agit plutôt de corriger et de filtrer les caractères non voulus. 
+</p>
+<pre class="code python"><span class="co1">#Remplace tous les caractères spéciaux</span>
+toSpace <span class="sy0">&lt;</span>- content_transformer<span class="br0">&#40;</span>function <span class="br0">&#40;</span>x <span class="sy0">,</span> pattern <span class="br0">&#41;</span> gsub<span class="br0">&#40;</span>pattern<span class="sy0">,</span> <span class="st0">&quot; &quot;</span><span class="sy0">,</span> x<span class="br0">&#41;</span><span class="br0">&#41;</span>
+docs <span class="sy0">&lt;</span>- tm_map<span class="br0">&#40;</span>docs<span class="sy0">,</span> toSpace<span class="sy0">,</span> <span class="st0">&quot;/&quot;</span><span class="br0">&#41;</span>
+docs <span class="sy0">&lt;</span>- tm_map<span class="br0">&#40;</span>docs<span class="sy0">,</span> toSpace<span class="sy0">,</span> <span class="st0">&quot;@&quot;</span><span class="br0">&#41;</span>
+docs <span class="sy0">&lt;</span>- tm_map<span class="br0">&#40;</span>docs<span class="sy0">,</span> toSpace<span class="sy0">,</span> <span class="st0">&quot;<span class="es0">\\</span>|&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># Supprimer les ponctuations</span>
+docs <span class="sy0">&lt;</span>- tm_map<span class="br0">&#40;</span>docs<span class="sy0">,</span> removePunctuation<span class="br0">&#41;</span>
+<span class="co1"># Supprimer les espaces vides supplémentaires</span>
+docs <span class="sy0">&lt;</span>- tm_map<span class="br0">&#40;</span>docs<span class="sy0">,</span> stripWhitespace<span class="br0">&#41;</span>
+<span class="co1"># Supprimer les nombres</span>
+docs <span class="sy0">&lt;</span>- tm_map<span class="br0">&#40;</span>docs<span class="sy0">,</span> removeNumbers<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+
+[&quot;JE&quot;, &quot;suiS&quot;, &quot;Un&quot;, &quot;ABruti&quot;, &quot;Et&quot;, &quot;je&quot;, &quot;vAis&quot;, &quot;t&quot;, &quot;écrire&quot;, &quot;quelque&quot;, &quot;CHosE&quot;]
+
+</p>
+
+<p>
+Ici, il y a même un premier traitement qui enlève certaines ponctuations.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Tok\u00e9nisation&quot;,&quot;hid&quot;:&quot;tokenisation&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:3,&quot;range&quot;:&quot;1200-2427&quot;} -->
+<h3 class="sectionedit4" id="normalisation_du_texte">Normalisation du texte</h3>
+<div class="level3">
+
+<p>
+La normalisation du texte revient à mettre tous les caractères en minuscules afin de limiter la diversité du texte et gagner en simplicité.
+</p>
+
+<p>
+<em class="u">Code python</em>
+</p>
+<pre class="code python"><span class="co1"># Convertir le texte en minuscule</span>
+phrase.<span class="me1">lower</span><span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Équivalent R</em>
+</p>
+<pre class="code python">docs <span class="sy0">&lt;</span>- tm_map<span class="br0">&#40;</span>docs<span class="sy0">,</span> content_transformer<span class="br0">&#40;</span>tolower<span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+
+&quot;je suis un abruti et, je vais t&#039;écrire quelque chose !!&quot;
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Normalisation du texte&quot;,&quot;hid&quot;:&quot;normalisation_du_texte&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:4,&quot;range&quot;:&quot;2428-2882&quot;} -->
+<h3 class="sectionedit5" id="suppression_des_stopwords">Suppression des stopwords</h3>
+<div class="level3">
+
+<p>
+Les stopwords sont des mots qui n&#039;apportent rien à l&#039;apprentissage du modèle. Il en existe déjà par défaut dans la librairie <strong>nltk</strong> mais, bien entendu, on peut  en rajouter pour être plus en accord avec son étude.
+</p>
+
+<p>
+<em class="u">Code Python :</em>
+</p>
+<pre class="code python"><span class="co1">#Ici dataFrame['Commentaires'] est une phrase sous forme de liste après tokénisation.</span>
+<span class="kw1">def</span> suppressionDesStopWords<span class="br0">&#40;</span>dataFrame<span class="br0">&#41;</span>:
+    stopW <span class="sy0">=</span> stopwords.<span class="me1">words</span><span class="br0">&#40;</span><span class="st0">'french'</span><span class="br0">&#41;</span>
+    <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>dataFrame.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>:
+        dataFrame<span class="br0">&#91;</span><span class="st0">'Commentaires'</span><span class="br0">&#93;</span><span class="br0">&#91;</span>i<span class="br0">&#93;</span> <span class="sy0">=</span> <span class="br0">&#91;</span>word <span class="kw1">for</span> word <span class="kw1">in</span> dataFrame<span class="br0">&#91;</span><span class="st0">'Commentaires'</span><span class="br0">&#93;</span><span class="br0">&#91;</span>i<span class="br0">&#93;</span> <span class="kw1">if</span> word <span class="kw1">not</span> <span class="kw1">in</span> stopW<span class="br0">&#93;</span></pre>
+
+<p>
+<em class="u">Équivalent R :</em>
+</p>
+<pre class="code python"><span class="co1"># Supprimer les mots vides anglais</span>
+docs <span class="sy0">&lt;</span>- tm_map<span class="br0">&#40;</span>docs<span class="sy0">,</span> removeWords<span class="sy0">,</span> stopwords<span class="br0">&#40;</span><span class="st0">&quot;english&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+
+[&#039;abruti&#039;, &#039;vais&#039;, &#039;écrire&#039;, &#039;quelque&#039;, &#039;chose&#039;]
+
+</p>
+
+<p>
+Pour rajouter des mots aux stopwords on utilise :
+</p>
+
+<p>
+<em class="u">Code Python :</em>
+</p>
+<pre class="code python">stopsW.<span class="me1">extend</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="st0">&quot;ma&quot;</span><span class="sy0">,</span> <span class="st0">&quot;poule&quot;</span><span class="br0">&#93;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Équivalent R :</em>
+</p>
+<pre class="code python"><span class="co1"># Supprimer votre propre liste de mots non désirés</span>
+docs <span class="sy0">&lt;</span>- tm_map<span class="br0">&#40;</span>docs<span class="sy0">,</span> removeWords<span class="sy0">,</span> c<span class="br0">&#40;</span><span class="st0">&quot;ma&quot;</span><span class="sy0">,</span> <span class="st0">&quot;poule&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> </pre>
+
+<p>
+Il est donc nécessaire de prendre le temps de modifier son panel de stopwords en fonction du problème donné.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Suppression des stopwords&quot;,&quot;hid&quot;:&quot;suppression_des_stopwords&quot;,&quot;codeblockOffset&quot;:5,&quot;secid&quot;:5,&quot;range&quot;:&quot;2883-4106&quot;} -->
+<h3 class="sectionedit6" id="stemming">Stemming</h3>
+<div class="level3">
+
+<p>
+Il s&#039;agit ici de <em>raciner</em> les mots pour ne garder que leur radical. C&#039;est un processus assez rapide qui enlève les suffixes et les préfixes et apparaît actuellement comme une solution viable pour la langue française.
+</p>
+
+<p>
+<em class="u">Code Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> nltk.<span class="me1">stem</span>.<span class="me1">snowball</span> <span class="kw1">import</span> FrenchStemmer
+stemmer <span class="sy0">=</span> FrenchStemmer<span class="br0">&#40;</span><span class="br0">&#41;</span>
+phrase <span class="sy0">=</span> stemmer.<span class="me1">stem</span><span class="br0">&#40;</span>phrase<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Equivalent R :</em>
+</p>
+<pre class="code python"><span class="co1"># Text stemming</span>
+docs <span class="sy0">&lt;</span>- tm_map<span class="br0">&#40;</span>docs<span class="sy0">,</span> stemDocument<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+
+&quot;je suis un abruti et je vais t&#039;écrire quelque chos&quot;
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Stemming&quot;,&quot;hid&quot;:&quot;stemming&quot;,&quot;codeblockOffset&quot;:9,&quot;secid&quot;:6,&quot;range&quot;:&quot;4107-4677&quot;} -->
+<h3 class="sectionedit7" id="lemmatization">Lemmatization</h3>
+<div class="level3">
+
+<p>
+Ce processus consiste à transformer tous les noms en leur sigulier et tous les verbes en leur infinitif. Cependant ce procédé <strong>n&#039;existe pas en français</strong>.
+</p>
+<pre class="code python"><span class="kw1">from</span> nltk <span class="kw1">import</span> word_tokenize
+<span class="kw1">from</span> nltk.<span class="me1">stem</span>.<span class="me1">wordnet</span> <span class="kw1">import</span> WordNetLemmatizer 
+lemma <span class="sy0">=</span> WordNetLemmatizer<span class="br0">&#40;</span><span class="br0">&#41;</span>
+text <span class="sy0">=</span> word_tokenize<span class="br0">&#40;</span><span class="st0">'The girls want to play with their parents'</span><span class="br0">&#41;</span>
+<span class="br0">&#91;</span>lemma.<span class="me1">lemmatize</span><span class="br0">&#40;</span>word<span class="br0">&#41;</span> <span class="kw1">for</span> word <span class="kw1">in</span> text<span class="br0">&#93;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+
+[&quot;The&quot;, &quot;girl&quot;, &quot;want&quot;, &quot;to&quot;, &quot;play&quot;, &quot;with&quot;, &quot;their&quot;, &quot;parent&quot;]
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Lemmatization&quot;,&quot;hid&quot;:&quot;lemmatization&quot;,&quot;codeblockOffset&quot;:11,&quot;secid&quot;:7,&quot;range&quot;:&quot;4678-5201&quot;} -->
+<h3 class="sectionedit8" id="n_grams">N_grams</h3>
+<div class="level3">
+
+<p>
+Cette méthode consiste à garder les suites de mots à la place du mot seul. On peut ainsi obtenir, pour chaque mot, celui qui suit juste derrière de façon simple. Cette approche permet de saisir de façon minimale le contexte dans lequel le mot est employé.
+</p>
+
+<p>
+<em class="u">Code Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> nltk <span class="kw1">import</span> ngrams
+<span class="kw1">from</span> nltk <span class="kw1">import</span> word_tokenize
+tokens <span class="sy0">=</span> word_tokenise<span class="br0">&#40;</span>phrase<span class="br0">&#41;</span>
+bigrams <span class="sy0">=</span> ngrams<span class="br0">&#40;</span>tokens<span class="sy0">,</span> <span class="nu0">2</span><span class="br0">&#41;</span>
+<span class="kw1">for</span> words <span class="kw1">in</span> bigrams:
+    <span class="kw1">print</span><span class="br0">&#40;</span>words<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>tidytext<span class="br0">&#41;</span>
+<span class="co1">#Bigram</span>
+book_bigram <span class="sy0">&lt;</span>- data_frame<span class="br0">&#40;</span>line <span class="sy0">=</span> <span class="nu0">1</span>:nrow<span class="br0">&#40;</span>book<span class="br0">&#41;</span><span class="sy0">,</span> text <span class="sy0">=</span> book$text<span class="br0">&#41;</span>  %<span class="sy0">&gt;</span>%
+  unnest_tokens<span class="br0">&#40;</span>bigram<span class="sy0">,</span> text<span class="sy0">,</span> <span class="kw3">token</span> <span class="sy0">=</span> <span class="st0">&quot;ngrams&quot;</span><span class="sy0">,</span> n <span class="sy0">=</span> <span class="nu0">2</span><span class="br0">&#41;</span> %<span class="sy0">&gt;</span>%
+  count<span class="br0">&#40;</span>bigram<span class="sy0">,</span> sort <span class="sy0">=</span> TRUE<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+
+(&#039;Je&#039;, &#039;suis&#039;)
+(&#039;suis&#039;, &#039;un&#039;)
+(&#039;un&#039;, &#039;abruti&#039;)
+(&#039;abruti&#039;, &#039;et&#039;)
+(&#039;et&#039;, &#039;je&#039;)
+(&#039;je&#039;, &#039;vais&#039;)
+(&#039;vais&#039;, &quot;t&#039;écrire&quot;)
+(&quot;t&#039;écrire&quot;, &#039;quelque&#039;)
+(&#039;quelque&#039;, &#039;chose&#039;)
+
+</p>
+
+<p>
+<strong>Sources</strong>
+</p>
+
+<p>
+<a href="https://www.actuia.com/contribution/victorbigand/tutoriel-tal-pour-les-debutants-classification-de-texte/" class="urlextern" title="https://www.actuia.com/contribution/victorbigand/tutoriel-tal-pour-les-debutants-classification-de-texte/" rel="nofollow">https://www.actuia.com/contribution/victorbigand/tutoriel-tal-pour-les-debutants-classification-de-texte/</a>
+</p>
+
+<p>
+<a href="https://openclassrooms.com/fr/courses/4470541-analysez-vos-donnees-textuelles/4855006-effectuez-des-plongements-de-mots-word-embeddings" class="urlextern" title="https://openclassrooms.com/fr/courses/4470541-analysez-vos-donnees-textuelles/4855006-effectuez-des-plongements-de-mots-word-embeddings" rel="nofollow">https://openclassrooms.com/fr/courses/4470541-analysez-vos-donnees-textuelles/4855006-effectuez-des-plongements-de-mots-word-embeddings</a>
+</p>
+
+<p>
+<a href="http://www.sthda.com/french/wiki/text-mining-et-nuage-de-mots-avec-le-logiciel-r-5-etapes-simples-a-savoir" class="urlextern" title="http://www.sthda.com/french/wiki/text-mining-et-nuage-de-mots-avec-le-logiciel-r-5-etapes-simples-a-savoir" rel="nofollow">http://www.sthda.com/french/wiki/text-mining-et-nuage-de-mots-avec-le-logiciel-r-5-etapes-simples-a-savoir</a>
+</p>
+
+<p>
+<a href="https://thinkr.fr/text-mining-n-gramme-avec-r/#bigramme,_trigramme_et_quadrigramme" class="urlextern" title="https://thinkr.fr/text-mining-n-gramme-avec-r/#bigramme,_trigramme_et_quadrigramme" rel="nofollow">https://thinkr.fr/text-mining-n-gramme-avec-r/#bigramme,_trigramme_et_quadrigramme</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;N_grams&quot;,&quot;hid&quot;:&quot;n_grams&quot;,&quot;codeblockOffset&quot;:12,&quot;secid&quot;:8,&quot;range&quot;:&quot;5202-6557&quot;} -->
+<h2 class="sectionedit9" id="visualiser_les_donnees">Visualiser les données</h2>
+<div class="level2">
+
+<p>
+Ici on va aborder les différentes méthodes pour visualiser le texte nettoyé. Pour cela on utilisera les librairies wordcloud et seaborn.
+</p>
+
+<p>
+On part du principe que le texte a été nettoyé avec les méthodes ci-dessus et qu&#039;il ne reste plus qu&#039;une seule chaîne de caractères que l&#039;on nomme corpus.
+</p>
+
+<p>
+Pour visualiser le texte de façon graphique, il y a plusieurs méthodes :
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Visualiser les donn\u00e9es&quot;,&quot;hid&quot;:&quot;visualiser_les_donnees&quot;,&quot;codeblockOffset&quot;:14,&quot;secid&quot;:9,&quot;range&quot;:&quot;6558-6971&quot;} -->
+<h3 class="sectionedit10" id="les_wordcloud">Les wordCloud</h3>
+<div class="level3">
+
+<p>
+<em class="u">Code Python :</em>
+</p>
+<pre class="code python">wordcloud <span class="sy0">=</span> WordCloud<span class="br0">&#40;</span>width<span class="sy0">=</span><span class="nu0">800</span><span class="sy0">,</span> height<span class="sy0">=</span><span class="nu0">500</span><span class="sy0">,</span>
+                      random_state<span class="sy0">=</span><span class="nu0">21</span><span class="sy0">,</span> max_font_size<span class="sy0">=</span><span class="nu0">110</span><span class="br0">&#41;</span>.<span class="me1">generate</span><span class="br0">&#40;</span>phrase<span class="br0">&#41;</span>
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">15</span><span class="sy0">,</span> <span class="nu0">12</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+plt.<span class="me1">imshow</span><span class="br0">&#40;</span>wordcloud<span class="sy0">,</span> interpolation<span class="sy0">=</span><span class="st0">&quot;bilinear&quot;</span><span class="br0">&#41;</span>
+plt.<span class="me1">axis</span><span class="br0">&#40;</span><span class="st0">'off'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+
+<p>
+<em class="u">Équivalent R</em>
+</p>
+<pre class="code python"><span class="co1">#On commence par calculer la matrice des mots</span>
+&nbsp;
+dtm <span class="sy0">&lt;</span>- TermDocumentMatrix<span class="br0">&#40;</span>docs<span class="br0">&#41;</span>
+m <span class="sy0">&lt;</span>- <span class="kw1">as</span>.<span class="me1">matrix</span><span class="br0">&#40;</span>dtm<span class="br0">&#41;</span>
+v <span class="sy0">&lt;</span>- sort<span class="br0">&#40;</span>rowSums<span class="br0">&#40;</span>m<span class="br0">&#41;</span><span class="sy0">,</span>decreasing<span class="sy0">=</span>TRUE<span class="br0">&#41;</span>
+d <span class="sy0">&lt;</span>- data.<span class="me1">frame</span><span class="br0">&#40;</span>word <span class="sy0">=</span> names<span class="br0">&#40;</span>v<span class="br0">&#41;</span><span class="sy0">,</span>freq<span class="sy0">=</span>v<span class="br0">&#41;</span>
+head<span class="br0">&#40;</span>d<span class="sy0">,</span> <span class="nu0">10</span><span class="br0">&#41;</span></pre>
+<div class="table sectionedit11"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 leftalign"> word          </th><th class="col1 leftalign"> freq      </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 leftalign"> will          </td><td class="col1 leftalign"> 17        </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> freedom       </td><td class="col1 leftalign"> 13        </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> ring          </td><td class="col1 leftalign"> 12        </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> day           </td><td class="col1 leftalign"> 11        </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> dream         </td><td class="col1 leftalign"> 11        </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:11,&quot;range&quot;:&quot;7483-7662&quot;} --><pre class="code python"><span class="co1">#On construit le bon graphique</span>
+&nbsp;
+<span class="kw2">set</span>.<span class="me1">seed</span><span class="br0">&#40;</span><span class="nu0">42</span><span class="br0">&#41;</span>
+wordcloud<span class="br0">&#40;</span>words <span class="sy0">=</span> d$word<span class="sy0">,</span> freq <span class="sy0">=</span> d$freq<span class="sy0">,</span> <span class="kw2">min</span>.<span class="me1">freq</span> <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">,</span>
+          <span class="kw2">max</span>.<span class="me1">words</span><span class="sy0">=</span><span class="nu0">200</span><span class="sy0">,</span> <span class="kw3">random</span>.<span class="me1">order</span><span class="sy0">=</span>FALSE<span class="sy0">,</span> rot.<span class="me1">per</span><span class="sy0">=</span><span class="nu0">0.35</span><span class="sy0">,</span> 
+          colors<span class="sy0">=</span>brewer.<span class="me1">pal</span><span class="br0">&#40;</span><span class="nu0">8</span><span class="sy0">,</span> <span class="st0">&quot;Dark2&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Apreprocessing_avec_nltk&amp;media=cpp:nuagedemots.png" class="media" title="cpp:nuagedemots.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=670643&amp;media=cpp:nuagedemots.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<p>
+Ainsi, on voit clairement les mots qui ressortent du texte et on a une meilleure idée de la communauté à laquelle on a affaire.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les wordCloud&quot;,&quot;hid&quot;:&quot;les_wordcloud&quot;,&quot;codeblockOffset&quot;:14,&quot;secid&quot;:10,&quot;range&quot;:&quot;6972-8052&quot;} -->
+<h3 class="sectionedit12" id="visualiser_les_frequences_dans_un_histogramme">Visualiser les fréquences dans un histogramme</h3>
+<div class="level3">
+
+<p>
+Il est parfois nécessaire de mieux comprendre la fréquence d&#039;apparition des mots et pour cela un histogramme peut être une bonne solution :
+</p>
+
+<p>
+<em class="u">Code Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> <span class="kw3">collections</span> <span class="kw1">import</span> Counter
+<span class="kw1">import</span> seaborn <span class="kw1">as</span> sns
+&nbsp;
+eap_list <span class="sy0">=</span> recompositionDuText<span class="br0">&#40;</span>data<span class="br0">&#41;</span>.<span class="me1">split</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+eap_counts <span class="sy0">=</span> Counter<span class="br0">&#40;</span>eap_list<span class="br0">&#41;</span>
+eap_common_words <span class="sy0">=</span> <span class="br0">&#91;</span>word<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> <span class="kw1">for</span> word <span class="kw1">in</span> eap_counts.<span class="me1">most_common</span><span class="br0">&#40;</span><span class="nu0">25</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+eap_common_counts <span class="sy0">=</span> <span class="br0">&#91;</span>word<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span> <span class="kw1">for</span> word <span class="kw1">in</span> eap_counts.<span class="me1">most_common</span><span class="br0">&#40;</span><span class="nu0">25</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+&nbsp;
+plt.<span class="me1">style</span>.<span class="me1">use</span><span class="br0">&#40;</span><span class="st0">'dark_background'</span><span class="br0">&#41;</span>
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">15</span><span class="sy0">,</span> <span class="nu0">12</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+sns.<span class="me1">barplot</span><span class="br0">&#40;</span>x<span class="sy0">=</span>eap_common_words<span class="sy0">,</span> y<span class="sy0">=</span>eap_common_counts<span class="br0">&#41;</span>
+plt.<span class="me1">title</span><span class="br0">&#40;</span><span class="st0">'Fréquence des mots'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+
+<p>
+<em class="u">Équivalent R</em>
+</p>
+<pre class="code python">barplot<span class="br0">&#40;</span>d<span class="br0">&#91;</span><span class="nu0">1</span>:<span class="nu0">10</span><span class="sy0">,</span><span class="br0">&#93;</span>$freq<span class="sy0">,</span> las <span class="sy0">=</span> <span class="nu0">2</span><span class="sy0">,</span> names.<span class="me1">arg</span> <span class="sy0">=</span> d<span class="br0">&#91;</span><span class="nu0">1</span>:<span class="nu0">10</span><span class="sy0">,</span><span class="br0">&#93;</span>$word<span class="sy0">,</span>
+        col <span class="sy0">=</span><span class="st0">&quot;lightblue&quot;</span><span class="sy0">,</span> main <span class="sy0">=</span><span class="st0">&quot;Most frequent words&quot;</span><span class="sy0">,</span>
+        ylab <span class="sy0">=</span> <span class="st0">&quot;Word frequencies&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Apreprocessing_avec_nltk&amp;media=cpp:histogrammedesmots.png" class="media" title="cpp:histogrammedesmots.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=4dae00&amp;media=cpp:histogrammedesmots.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Visualiser les fr\u00e9quences dans un histogramme&quot;,&quot;hid&quot;:&quot;visualiser_les_frequences_dans_un_histogramme&quot;,&quot;codeblockOffset&quot;:17,&quot;secid&quot;:12,&quot;range&quot;:&quot;8053-8945&quot;} -->
+<h3 class="sectionedit13" id="visualiser_la_richesse_lexicale">Visualiser la richesse lexicale</h3>
+<div class="level3">
+
+<p>
+Il est parfois intéressant de faire ressortir les mots les plus utilisés, les moins utilisés ou encore ceux d&#039;une certaine longueur. Nous allons ici essayer de faire ressortir ces différents mots pour mieux comprendre le texte qui les contient. Pour illustrer nos propos, nous utiliserons un texte déjà présent dans les librairies.
+</p>
+
+<p>
+<em class="u">Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> nltk.<span class="me1">book</span> <span class="kw1">import</span> *
+<span class="co1">#Pour Python, il y a différents textes avec différents type de langages, nous continuerons avec ces textes</span></pre>
+
+<p>
+<em class="u">R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span><span class="st0">&quot;proustr&quot;</span><span class="br0">&#41;</span>
+books <span class="sy0">&lt;</span>- proust_books<span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+
+<p>
+On va maintenant comparer 2 types de diversités lexicales :
+</p>
+
+<p>
+<strong>Diversité texte</strong>
+</p>
+
+<p>
+<em class="u">Python :</em>
+</p>
+<pre class="code python"><span class="kw1">def</span> diversiteLexicale<span class="br0">&#40;</span>text<span class="br0">&#41;</span>:
+    <span class="kw1">return</span> <span class="kw2">len</span><span class="br0">&#40;</span>text<span class="br0">&#41;</span> / <span class="kw2">len</span><span class="br0">&#40;</span><span class="kw2">set</span><span class="br0">&#40;</span>text<span class="br0">&#41;</span><span class="br0">&#41;</span>
+diversiteLexicale<span class="br0">&#40;</span>text3<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Diversité d&#039;un mot</strong>
+</p>
+
+<p>
+<em class="u">Python :</em>
+</p>
+<pre class="code python"><span class="kw1">def</span> pourcentage<span class="br0">&#40;</span>compte<span class="sy0">,</span> total<span class="br0">&#41;</span>:
+    <span class="kw1">return</span> <span class="nu0">100</span> * compte / total
+pourcentage<span class="br0">&#40;</span>text3.<span class="me1">count</span><span class="br0">&#40;</span><span class="st0">'a'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw2">len</span><span class="br0">&#40;</span>text3<span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+<p>
+Maintenant, faisons ressortir les mots avec certaines caractéristiques : 
+</p>
+
+<p>
+<strong>Les mots d&#039;une certaine longueur</strong>
+</p>
+
+<p>
+<em class="u">Python :</em>
+</p>
+<pre class="code python">V <span class="sy0">=</span> <span class="kw2">set</span><span class="br0">&#40;</span>text1<span class="br0">&#41;</span>
+mots_longs <span class="sy0">=</span> <span class="br0">&#91;</span>w <span class="kw1">for</span> w <span class="kw1">in</span> V <span class="kw1">if</span> <span class="kw2">len</span><span class="br0">&#40;</span>w<span class="br0">&#41;</span> <span class="sy0">&gt;</span> <span class="nu0">15</span><span class="br0">&#93;</span>
+<span class="kw2">sorted</span><span class="br0">&#40;</span>mots_longs<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+[&#039;CIRCUMNAVIGATION&#039;,
+ &#039;Physiognomically&#039;,
+ &#039;apprehensiveness&#039;,
+ &#039;cannibalistically&#039;,….
+</p>
+
+<p>
+<strong>Les mots n&#039;apparaissant qu&#039;une seule fois (hapax)</strong>
+</p>
+<pre class="code python">fdist <span class="sy0">=</span> FreqDist<span class="br0">&#40;</span>text3<span class="br0">&#41;</span>
+fdist.<span class="me1">hapaxes</span><span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+[&#039;form&#039;,
+ &#039;void&#039;,
+ &#039;Day&#039;,
+ &#039;Night&#039;,
+ &#039;firmame&#039;…
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Visualiser la richesse lexicale&quot;,&quot;hid&quot;:&quot;visualiser_la_richesse_lexicale&quot;,&quot;codeblockOffset&quot;:19,&quot;secid&quot;:13,&quot;range&quot;:&quot;8946-10472&quot;} -->
+<h2 class="sectionedit14" id="correlation_entre_mots">Corrélation entre mots</h2>
+<div class="level2">
+
+<p>
+On peut regarder de façon simple quel mot est couramment associé à un autre mot. Bien évidemment, avant de faire cette étude, il faut avoir récupéré la matrice de corrélation des mots. On va chercher les corrélations entre le mot <em>freedom</em> et les autres.
+</p>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">findAssocs<span class="br0">&#40;</span>dtm<span class="sy0">,</span> terms <span class="sy0">=</span> <span class="st0">&quot;freedom&quot;</span><span class="sy0">,</span> corlimit <span class="sy0">=</span> <span class="nu0">0.3</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Équivalent en Python</em>
+</p>
+
+<p>
+Il n&#039;existe pas d&#039;équivalent direct en Python mais il est possible de proposer de passer par les règles d&#039;association. Voir cours Machine Learning
+</p>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+<div class="table sectionedit15"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 leftalign"> word          </th><th class="col1 leftalign"> Corrélation   </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 leftalign"> will          </td><td class="col1 leftalign"> 0.5            </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> freedom       </td><td class="col1 leftalign"> 0.3            </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> ring          </td><td class="col1 leftalign"> 0.05           </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> day           </td><td class="col1 leftalign"> 0.1            </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> dream         </td><td class="col1 leftalign"> 0.1            </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table2&quot;,&quot;secid&quot;:15,&quot;range&quot;:&quot;11056-11265&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Corr\u00e9lation entre mots&quot;,&quot;hid&quot;:&quot;correlation_entre_mots&quot;,&quot;codeblockOffset&quot;:25,&quot;secid&quot;:14,&quot;range&quot;:&quot;10473-11266&quot;} -->
+<h2 class="sectionedit16" id="tf-idf">Tf-IDF</h2>
+<div class="level2">
+
+<p>
+Le calcul Tf-IDF (term frequency-inverse document frequency) permet de calculer un score de proximité entre un terme recherché et un document. 
+</p>
+
+<p>
+<strong>Théorie :</strong>
+</p>
+
+<p>
+La partie Tf calcule une fonction croissante de la fréquence du terme recherché dans le document d&#039;étude.
+</p>
+
+<p>
+$$TF(i) = \frac{\log_{2}(Freq(i,j) + 1)}{\log_{2}(L_{j})}$$
+</p>
+<div class="table sectionedit17"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 leftalign"> Termes         </th><th class="col1 leftalign"> Signification                         </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 leftalign"> $Freq(i,j)$    </td><td class="col1 leftalign"> Fréquence du mt i dans le document j  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> $L_{j}$        </td><td class="col1 leftalign"> Nombre de mots dans le document j     </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table3&quot;,&quot;secid&quot;:17,&quot;range&quot;:&quot;11620-11818&quot;} -->
+<p>
+La partie IDF calcule une fonction inversement proportionnelle à la fréquence du terme dans l&#039;ensemble des documents (ou corpus). 
+</p>
+
+<p>
+$$IDF(i) = \log{\frac{N_{d}}{f_{i}} + 1}$$
+</p>
+<div class="table sectionedit18"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 leftalign"> Expression       </th><th class="col1 leftalign"> Signification                                  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 leftalign"> $N_{d}$          </td><td class="col1 leftalign"> Nombre de documents                            </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> $f_{i}$          </td><td class="col1 leftalign"> Nombre de documents où le mot i apparaît        </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table4&quot;,&quot;secid&quot;:18,&quot;range&quot;:&quot;11998-12210&quot;} -->
+<p>
+Enfin, 
+</p>
+
+<p>
+$$TF(i,j) = TF_{i,j} * IDF_{i}$$
+</p>
+
+<p>
+Ce score final permet de donner un score d&#039;autant plus élevé que le terme est surreprésenté dans un document (par rapport à l&#039;ensemble des documents).
+</p>
+
+<p>
+<strong>Pratique Python :</strong>
+</p>
+
+<p>
+On déclare et on entraine le modèle,
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">feature_extraction</span>.<span class="me1">text</span> <span class="kw1">import</span> TfidfVectorizer
+tfidf <span class="sy0">=</span> TfidfVectorizer<span class="br0">&#40;</span><span class="br0">&#41;</span>
+tfs <span class="sy0">=</span> tfidf.<span class="me1">fit</span><span class="br0">&#40;</span>dataTest<span class="br0">&#91;</span><span class="st0">'Commentaires'</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+tfs <span class="sy0">=</span> tfs.<span class="me1">transform</span><span class="br0">&#40;</span>dataTest<span class="br0">&#91;</span><span class="st0">'Commentaires'</span><span class="br0">&#93;</span><span class="br0">&#41;</span></pre>
+
+<p>
+On construit un DataFrame (tableau de données) avec les différents scores calculés pour chaque mot. Sur les lignes on trouve les commentaires et dans les colonnes, chacun des mots du vocabulaire.
+</p>
+<pre class="code python"><span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+feature_names <span class="sy0">=</span> tfidf.<span class="me1">get_feature_names</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+corpus_index <span class="sy0">=</span> <span class="br0">&#91;</span>n <span class="kw1">for</span> n <span class="kw1">in</span> <span class="kw2">list</span><span class="br0">&#40;</span>tfidf.<span class="me1">vocabulary_</span>.<span class="me1">keys</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+df <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>tfs.<span class="me1">todense</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> columns<span class="sy0">=</span>feature_names<span class="br0">&#41;</span></pre>
+
+<p>
+On peut ainsi faire ressortir les phrases où un mot particulier aurait un score élevé. Prenons ici le mot “infirmière” :
+</p>
+<pre class="code python"><span class="kw1">for</span> x <span class="kw1">in</span> df<span class="br0">&#91;</span><span class="st0">&quot;infirmière&quot;</span><span class="br0">&#93;</span>.<span class="me1">sort_values</span><span class="br0">&#40;</span>ascending <span class="sy0">=</span><span class="kw2">False</span><span class="br0">&#41;</span>.<span class="me1">head</span><span class="br0">&#40;</span>n<span class="sy0">=</span><span class="nu0">10</span><span class="br0">&#41;</span>.<span class="me1">index</span> : 
+    <span class="kw1">print</span><span class="br0">&#40;</span>dataTest.<span class="me1">iloc</span><span class="br0">&#91;</span>x<span class="br0">&#93;</span><span class="br0">&#91;</span><span class="st0">&quot;Commentaires&quot;</span><span class="br0">&#93;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+dit infirmière
+</p>
+
+<p>
+vraiment infirmière
+</p>
+
+<p>
+infirmière assistante techn
+</p>
+
+<p>
+etre infirmière empêche dealer
+</p>
+
+<p>
+cette infirmière caillasse policiers interpellée quoi plus normal pays normal maintenant va manifester
+</p>
+
+<p>
+libérée autre part orange très vite empressée retirer prénom cette infirmière pourquoi parce disant
+</p>
+
+<p>
+infirmière origine maghrébine faut surtout toucher laisser caillasser flics quel monde vivons
+</p>
+
+<p>
+On remarque que les commentaires courts avec le mot cherché à l&#039;intérieur remontent en premier ainsi que les commentaires un peu plus longs  mais avec plusieurs fois le mot cherché à l&#039;intérieur.
+</p>
+
+<p>
+<strong>Pratique en R :</strong>
+</p>
+
+<p>
+Pour cette démonstration, nous utiliserons les romans de Jane Austen&#039;s. Rappelons, qu&#039;ici aussi, il est bon de nettoyer le dataset des stopwords avant de l&#039;étudier. 
+Il faut, tout d&#039;abord, construire un DataFrame avec les mots et leur roman associé :
+</p>
+<pre class="code Python">library<span class="br0">&#40;</span>dplyr<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>janeaustenr<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>tidytext<span class="br0">&#41;</span>
+&nbsp;
+book_words <span class="sy0">&lt;</span>- austen_books<span class="br0">&#40;</span><span class="br0">&#41;</span> %<span class="sy0">&gt;</span>%
+  unnest_tokens<span class="br0">&#40;</span>word<span class="sy0">,</span> text<span class="br0">&#41;</span> %<span class="sy0">&gt;</span>%
+  count<span class="br0">&#40;</span>book<span class="sy0">,</span> word<span class="sy0">,</span> sort <span class="sy0">=</span> TRUE<span class="br0">&#41;</span>
+&nbsp;
+total_words <span class="sy0">&lt;</span>- book_words %<span class="sy0">&gt;</span>% 
+  group_by<span class="br0">&#40;</span>book<span class="br0">&#41;</span> %<span class="sy0">&gt;</span>% 
+  summarize<span class="br0">&#40;</span>total <span class="sy0">=</span> <span class="kw2">sum</span><span class="br0">&#40;</span>n<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+book_words <span class="sy0">&lt;</span>- left_join<span class="br0">&#40;</span>book_words<span class="sy0">,</span> total_words<span class="br0">&#41;</span></pre>
+<div class="table sectionedit19"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 leftalign"> Livre          </th><th class="col1 leftalign"> Mots          </th><th class="col2 leftalign"> Occurrences          </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 leftalign"> Mansfield Park   </td><td class="col1 leftalign"> the           </td><td class="col2 leftalign"> 160 460             </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> Mansfield Park   </td><td class="col1 leftalign"> and           </td><td class="col2 leftalign"> 120 540             </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> Emma             </td><td class="col1 leftalign"> to            </td><td class="col2 leftalign"> 110 230             </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> Emma             </td><td class="col1 leftalign"> and           </td><td class="col2 leftalign"> 145 456             </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table5&quot;,&quot;secid&quot;:19,&quot;range&quot;:&quot;14560-14853&quot;} -->
+<p>
+Ensuite, on peut appliquer l&#039;algorithme de IF-IDF et visualiser les résultats :
+</p>
+<pre class="code Python">bind_tf_idf<span class="br0">&#40;</span>word<span class="sy0">,</span> book<span class="sy0">,</span> n<span class="br0">&#41;</span>
+book_words %<span class="sy0">&gt;</span>%
+  <span class="kw3">select</span><span class="br0">&#40;</span>-total<span class="br0">&#41;</span> %<span class="sy0">&gt;</span>%
+&nbsp;
+  arrange<span class="br0">&#40;</span>desc<span class="br0">&#40;</span>tf_idf<span class="br0">&#41;</span><span class="br0">&#41;</span> %<span class="sy0">&gt;</span>%
+  mutate<span class="br0">&#40;</span>word <span class="sy0">=</span> factor<span class="br0">&#40;</span>word<span class="sy0">,</span> levels <span class="sy0">=</span> rev<span class="br0">&#40;</span>unique<span class="br0">&#40;</span>word<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> %<span class="sy0">&gt;</span>% 
+  group_by<span class="br0">&#40;</span>book<span class="br0">&#41;</span> %<span class="sy0">&gt;</span>% 
+  top_n<span class="br0">&#40;</span><span class="nu0">15</span><span class="br0">&#41;</span> %<span class="sy0">&gt;</span>% 
+  ungroup<span class="br0">&#40;</span><span class="br0">&#41;</span> %<span class="sy0">&gt;</span>%
+  ggplot<span class="br0">&#40;</span>aes<span class="br0">&#40;</span>word<span class="sy0">,</span> tf_idf<span class="sy0">,</span> fill <span class="sy0">=</span> book<span class="br0">&#41;</span><span class="br0">&#41;</span> +
+  geom_col<span class="br0">&#40;</span>show.<span class="me1">legend</span> <span class="sy0">=</span> FALSE<span class="br0">&#41;</span> +
+  labs<span class="br0">&#40;</span>x <span class="sy0">=</span> NULL<span class="sy0">,</span> y <span class="sy0">=</span> <span class="st0">&quot;tf-idf&quot;</span><span class="br0">&#41;</span> +
+  facet_wrap<span class="br0">&#40;</span><span class="sy0">~</span>book<span class="sy0">,</span> ncol <span class="sy0">=</span> <span class="nu0">2</span><span class="sy0">,</span> scales <span class="sy0">=</span> <span class="st0">&quot;free&quot;</span><span class="br0">&#41;</span> +
+  coord_flip<span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Apreprocessing_avec_nltk&amp;media=cpp:tf-idfr.png" class="media" title="cpp:tf-idfr.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=94c3a9&amp;media=cpp:tf-idfr.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<p>
+<strong>Source</strong>
+</p>
+
+<p>
+<a href="https://www.tidytextmining.com/tfidf.html" class="urlextern" title="https://www.tidytextmining.com/tfidf.html" rel="nofollow">https://www.tidytextmining.com/tfidf.html</a>
+</p>
+
+<p>
+<a href="https://www.ionos.fr/digitalguide/web-marketing/analyse-web/analyse-tf-idf/" class="urlextern" title="https://www.ionos.fr/digitalguide/web-marketing/analyse-web/analyse-tf-idf/" rel="nofollow">https://www.ionos.fr/digitalguide/web-marketing/analyse-web/analyse-tf-idf/</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Tf-IDF&quot;,&quot;hid&quot;:&quot;tf-idf&quot;,&quot;codeblockOffset&quot;:26,&quot;secid&quot;:16,&quot;range&quot;:&quot;11267-15531&quot;} -->
+<h2 class="sectionedit20" id="conclusion">Conclusion</h2>
+<div class="level2">
+
+<p>
+ Tout au long de ce chapitre, nous avons découvert combien l&#039;exploitation de données textuelles était complexe et diversifié. Il est nécessaire de bien respecter les étapes pour avoir une vision globale de la donnée et pouvoir, ainsi, mieux appréhender le problème soumis. Dans les prochaines pages, nous verrons comment classifier ce texte avec des modèles comme le LDA ou encore le Word Embedding se basant sur les réseaux de neurones.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Conclusion&quot;,&quot;hid&quot;:&quot;conclusion&quot;,&quot;codeblockOffset&quot;:31,&quot;secid&quot;:20,&quot;range&quot;:&quot;15532-&quot;} -->

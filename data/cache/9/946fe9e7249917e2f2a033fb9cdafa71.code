@@ -1,0 +1,10 @@
+<span class="kw1">from</span> sklearn.<span class="me1">decomposition</span> <span class="kw1">import</span> PCA
+<span class="co1">#On prend toutes les variables et on regarde l'évolution de la somme cumulative de la variance. Disons ici que nous avons 64 variables</span>
+&nbsp;
+model <span class="sy0">=</span> PCA<span class="br0">&#40;</span>n_components <span class="sy0">=</span> <span class="nu0">64</span><span class="br0">&#41;</span>
+X_reduced <span class="sy0">=</span> model.<span class="me1">fit_transform</span><span class="br0">&#40;</span>X<span class="br0">&#41;</span>
+np.<span class="me1">argmax</span><span class="br0">&#40;</span>np.<span class="me1">cumsum</span><span class="br0">&#40;</span>model.<span class="me1">explained_variance_ratio</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy0">&gt;</span> <span class="nu0">0.95</span>
+&nbsp;
+<span class="co1">#Affichage de la courbe représentative</span>
+&nbsp;
+plt.<span class="me1">plot</span><span class="br0">&#40;</span>np.<span class="me1">cumsum</span><span class="br0">&#40;</span>model.<span class="me1">explained_variance_ratio</span><span class="br0">&#41;</span><span class="br0">&#41;</span>

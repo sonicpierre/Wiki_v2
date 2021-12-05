@@ -1,0 +1,187 @@
+
+<h1 class="sectionedit1" id="evaluer_son_modele">Évaluer son modèle</h1>
+<div class="level1">
+
+<p>
+On peut ensuite évaluer le modèle pour avoir une meilleur idée de sa précision. L&#039;évaluation est plus complexe qu&#039;en régression et il est bon de savoir choisir la bonne mesure.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u00c9valuer son mod\u00e8le&quot;,&quot;hid&quot;:&quot;evaluer_son_modele&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-218&quot;} -->
+<h2 class="sectionedit2" id="construction_du_score_f1">Construction du score F1</h2>
+<div class="level2">
+
+<p>
+La construction de ce score peut se faire en une ligne de code, cependant il est important de comprendre ce qu&#039;il se passe derrière. La construction d&#039;une matrice de confusion et les notions de rappel et précision sont essantielles pour bien comprendre tous les aspects de score F1 c&#039;est pourquoi nous allons les aborder.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Construction du score F1&quot;,&quot;hid&quot;:&quot;construction_du_score_f1&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;219-579&quot;} -->
+<h3 class="sectionedit3" id="les_matrices_de_confusion">Les matrices de confusion</h3>
+<div class="level3">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aevaluer_son_modele_de_classification&amp;media=cpp:matricedeconfusion.png" class="media" title="cpp:matricedeconfusion.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=fb566a&amp;media=cpp:matricedeconfusion.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+<p>
+Plus la matrice est proche d&#039;une matrice diagonale et plus le modèle est bon.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">metrics</span> <span class="kw1">import</span> confusion_matrix
+data_Test <span class="sy0">=</span> pd.<span class="me1">read_csv</span><span class="br0">&#40;</span><span class="st0">&quot;test_Titanic_py.csv&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+data_train<span class="sy0">=</span> data_Test.<span class="me1">drop</span><span class="br0">&#40;</span><span class="st0">&quot;Survived&quot;</span><span class="sy0">,</span> axis <span class="sy0">=</span> <span class="nu0">1</span><span class="br0">&#41;</span>
+data_test <span class="sy0">=</span> data_Test.<span class="me1">Survived</span>
+&nbsp;
+prediction <span class="sy0">=</span> tree_clf.<span class="me1">predict</span><span class="br0">&#40;</span>data_train<span class="br0">&#41;</span>
+confusion_matrix<span class="br0">&#40;</span>prediction<span class="sy0">,</span> data_test<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>caret<span class="br0">&#41;</span>
+data_test <span class="sy0">&lt;</span>- read.<span class="kw3">csv</span><span class="br0">&#40;</span><span class="st0">&quot;test_Titanic_R.csv&quot;</span><span class="sy0">,</span> row.<span class="me1">names</span> <span class="sy0">=</span> <span class="nu0">1</span><span class="br0">&#41;</span>
+<span class="co1">#On fait les prédictions</span>
+class_prediction <span class="sy0">&lt;</span>- predict<span class="br0">&#40;</span><span class="kw2">object</span> <span class="sy0">=</span> model<span class="sy0">,</span>
+                            newdata <span class="sy0">=</span> data_test<span class="sy0">,</span>
+                            <span class="kw2">type</span> <span class="sy0">=</span> <span class="st0">&quot;class&quot;</span><span class="br0">&#41;</span>
+<span class="co1">#On construit la matrice</span>
+matrice_de_Confusion <span class="sy0">&lt;</span>- table<span class="br0">&#40;</span>data_test$Survived<span class="sy0">,</span> class_prediction<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+On obtient ainsi la matrice de confusion suivante :
+</p>
+
+<p>
+$$
+\begin{pmatrix}
+274 &amp; 4\\
+12 &amp; 114
+\end{pmatrix}
+$$
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les matrices de confusion&quot;,&quot;hid&quot;:&quot;les_matrices_de_confusion&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;580-1520&quot;} -->
+<h3 class="sectionedit4" id="la_precision_et_le_rappel">La précision et le rappel</h3>
+<div class="level3">
+
+<p>
+Évaluer un modèle de classification n&#039;est pas forcément une chose aisée tout dépend du résultat voulu :
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aevaluer_son_modele_de_classification&amp;media=cpp:precisionrappel.png" class="media" title="cpp:precisionrappel.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=0a1974&amp;media=cpp:precisionrappel.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+
+<p>
+Il y a un compromis à avoir entre <strong>Rappel</strong> et <strong>Précision</strong>. Une forte précision implique un rappel plus faible et vice versa. Tout dépend des désirs du clients et du problème traité.
+<br/>
+
+Dans le cas du Titanic, vous voulez peut-être monter à bord que si vous êtes sûr de survivre donc il faut un modèle avec une forte précision.
+</p>
+
+<p>
+<strong>Théorie :</strong>
+</p>
+
+<p>
+Les scores de rappel et de précision sont calculés grace à la matrice de confusion vu précédemment. 
+</p>
+<ul>
+<li class="level1"><div class="li"> Précision : $$\frac{Vrai Positif}{Vrai Positif + Faux Positif}$$</div>
+</li>
+</ul>
+
+<p>
+<br/>
+
+<br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Rappel : $$\frac{Vrai Positif}{Vrai Positif + Faux Négatif}$$</div>
+</li>
+</ul>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">metrics</span> <span class="kw1">import</span> precision_score<span class="sy0">,</span> recall_score
+precision_score<span class="br0">&#40;</span>prediction<span class="sy0">,</span> data_test<span class="br0">&#41;</span>
+recall_score<span class="br0">&#40;</span>prediction<span class="sy0">,</span> data_test<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">precision <span class="sy0">&lt;</span>- matrice_Confusion<span class="br0">&#91;</span><span class="nu0">4</span><span class="br0">&#93;</span>/<span class="br0">&#40;</span>matrice_Confusion<span class="br0">&#91;</span><span class="nu0">4</span><span class="br0">&#93;</span> + matrice_Confusion<span class="br0">&#91;</span><span class="nu0">3</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+rappel <span class="sy0">&lt;</span>- matrice_Confusion<span class="br0">&#91;</span><span class="nu0">4</span><span class="br0">&#93;</span>/<span class="br0">&#40;</span>matrice_Confusion<span class="br0">&#91;</span><span class="nu0">4</span><span class="br0">&#93;</span> + matrice_Confusion<span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://apiacoa.org/blog/2014/02/initiation-a-rpart.fr.html" class="urlextern" title="https://apiacoa.org/blog/2014/02/initiation-a-rpart.fr.html" rel="nofollow">https://apiacoa.org/blog/2014/02/initiation-a-rpart.fr.html</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La pr\u00e9cision et le rappel&quot;,&quot;hid&quot;:&quot;la_precision_et_le_rappel&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:4,&quot;range&quot;:&quot;1521-2762&quot;} -->
+<h3 class="sectionedit5" id="score_f1">Score F1</h3>
+<div class="level3">
+
+<p>
+Ce score est coramment utilisé en classification pour comparer rapidement 2 modèles de classification. Il favorise un rappel et une précision élevée, si l&#039;un des deux est plus faible alors le score s&#039;en verra amoindri.
+</p>
+
+<p>
+$$F1 = 2 \times \frac{précision \times rappel}{précision + rappel}$$
+</p>
+
+<p>
+Appliquons cette mesure à notre modèle du Titanic :
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">metrics</span> <span class="kw1">import</span> f1_score
+f1_score<span class="br0">&#40;</span>prediction<span class="sy0">,</span> data_test<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">F1 <span class="sy0">&lt;</span>- <span class="br0">&#40;</span><span class="nu0">2</span> * precision * rappel<span class="br0">&#41;</span> / <span class="br0">&#40;</span>precision + rappel<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.it-swarm.dev/fr/r/un-moyen-facile-de-compter-la-precision-le-rappel-et-le-score-f1-en-r/941171789/" class="urlextern" title="https://www.it-swarm.dev/fr/r/un-moyen-facile-de-compter-la-precision-le-rappel-et-le-score-f1-en-r/941171789/" rel="nofollow">https://www.it-swarm.dev/fr/r/un-moyen-facile-de-compter-la-precision-le-rappel-et-le-score-f1-en-r/941171789/</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Score F1&quot;,&quot;hid&quot;:&quot;score_f1&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:5,&quot;range&quot;:&quot;2763-3463&quot;} -->
+<h2 class="sectionedit6" id="construction_de_la_courbe_roc">Construction de la courbe ROC</h2>
+<div class="level2">
+
+<p>
+La courbe ROC (Receiver-Operator Characteristic) 
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://openclassrooms.com/fr/courses/4297211-evaluez-les-performances-dun-modele-de-machine-learning/4308261-evaluez-un-algorithme-de-classification-qui-retourne-des-scores" class="urlextern" title="https://openclassrooms.com/fr/courses/4297211-evaluez-les-performances-dun-modele-de-machine-learning/4308261-evaluez-un-algorithme-de-classification-qui-retourne-des-scores" rel="nofollow">https://openclassrooms.com/fr/courses/4297211-evaluez-les-performances-dun-modele-de-machine-learning/4308261-evaluez-un-algorithme-de-classification-qui-retourne-des-scores</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Construction de la courbe ROC&quot;,&quot;hid&quot;:&quot;construction_de_la_courbe_roc&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:6,&quot;range&quot;:&quot;3464-&quot;} -->

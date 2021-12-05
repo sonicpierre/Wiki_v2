@@ -1,0 +1,175 @@
+[[cpp:IA| Machine Learning]]
+
+{{  :cpp:cluster.jpg?470  |}}
+
+ Plusieurs types de données doivent être <color #ed1c24>**explorés et préparés**</color> avant de pouvoir appliquer les <color #ed1c24>**algorithmes**</color> de traitement et <color #ed1c24>**prédiction**</color> :
+
+  * Les données <color #ed1c24>**qualifiées**</color> (qui ont déjà une étiquette), dans ce cas on peut <color #ed1c24>**directement**</color> préparer les données pour les algorithmes de classification comme les <color #ed1c24>**arbres ou les Support Vector Machin (SVM)**</color>.
+  * Les données <color #ed1c24>**non qualifiées**</color> et dans ce cas il est nécessaire de <color #ed1c24>**trouver les étiquettes**</color> avant d'appliquer un algorithme.
+
+<alert info>**Définition** : Une étiquette est une variable cible que l'on essaie de prédire en fonction des autres variables (exogènes). </alert>
+
+Le clustering est une méthode d'apprentissage <color #ed1c24>**non supervisée**</color> qui répond au second cas. La machine va apprendre toute seule  à <color #ed1c24>**reconnaître**</color> les différents groupements de données en identifiant des <color #ed1c24>**"nuages" de données**</color>.
+
+=====Les différents algorithmes de clustering=====
+
+Il existe de <color #ed1c24>**nombreux algorithmes utiles**</color> pour faire du clustering;  nous verrons ici les plus connus.
+
+<alert info> **Info :** il est préférable de centrer et réduire ses données avant d'appliquer un algorithme de clustering.</alert>
+
+====Les algorithmes classiques====
+
+Commençons par les algorithmes classiques qui sont intéressants dans le cadre de l'exploration de données et qui sont très efficaces quand on peut distinguer des nuages de données circulaires :
+
+  * [[cpp: Le K-Means | Introduction avec K-means]]
+
+  * [[cpp: Le CAH| Le CAH et Mean Shift]]
+====Gérer les clusters de forme exotique====
+
+Les algorithmes classiques ont leurs limites et nous allons ici développer quelques méthodes permettant de gérer les clusters de taille moins conventionnelle.
+
+{{ :cpp:comparaisonclusteringdensite.png?600 |}}
+
+  * [[cpp: La méthode à densité| Les algorithmes à densité]]
+
+====D'autre algorithmes====
+
+Savoir combien il y a de clusters c'est bien mais savoir quelle est la probabilité que chacune des observations appartienne à un cluster c'est mieux ! Détaillons ici un algorithme permettant de le découvrir : 
+
+  * [[cpp: Gaussian Mixture Models | Gaussian Mixture Models]]
+
+
+
+
+=====Autre utilisation=====
+
+Le clustering permet d'étiqueter les données mais a aussi d'autres utilisations qu'il est intéressant d'expliciter. Les utilisations sont nombreuses et nous n'en donnerons ici qu'un avant-goût. 
+====Le traitement d'image====
+
+Il est souvent <color #ed1c24>**difficile**</color> de <color #ed1c24>**traiter des images**</color> car elles sont parfois trop <color #ed1c24>**complexes**</color> à cause du nombre de <color #ed1c24>**couleurs**</color> qui les compose. Chacun des pixels est représenté par une <color #ed1c24>**combinaison RVB**</color> ce qui amène une grande complexité. Nous allons utiliser l'<color #ed1c24>**algorithme des K-Means**</color> pour essayer de <color #ed1c24>**simplifier l'image**</color>.
+
+Nous allons repérer les couleurs les plus représentatives de l'image et nous remplacerons chacune des couleurs par celle qui la représente le plus. Commençons par charger l'image :
+
+<alert warning>**Remarque :** je vous invite à choisir votre propre image sur Internet.</alert>
+
+__En Python :__
+
+<code python>
+import matplotlib.image as mpimg
+import matplotlib.pyplot as plt
+
+img = mpimg.imread("lama_clustering.jpg")
+# plt.imshow(img) pour visualiser l'image
+</code>
+
+__En R :__
+
+<code python>
+library(jpeg)
+img <- readJPEG("lama.jpg")
+imgDm <- dim(img)
+
+# On transforme en un dataframe clair
+imgRGB <- data.frame(
+    x = rep(1:imgDm[2], each = imgDm[1]),
+    y = rep(imgDm[1]:1, imgDm[2]),
+    R = as.vector(img[,,1]),
+    G = as.vector(img[,,2]),
+    B = as.vector(img[,,3])
+)
+</code>
+
+Nous allons maintenant <color #ed1c24>**remodeler**</color> un peu l'image pour qu'elle soit sous la forme d'une <color #ed1c24>**liste de pixels**</color> ayants 3 valeurs, <color #ed1c24>**rouge, vert et bleu**</color>. Ensuite on entraîne l'algorithme des <color #ed1c24>**K-Means**</color> pour trouver les couleurs les plus représentatives de l'image. On <color #ed1c24>**remplace**</color> enfin chacun des pixels par son <color #ed1c24>**centre le plus proche**</color> et on reforme l'image pour l'afficher.
+
+__En Python :__
+
+<code python>
+X = img.reshape(-1,3)
+kmeans = KMeans(n_clusters=12).fit(X)
+segmented_img = kmeans.cluster_centers_[kmeans.labels_]
+segmented_img = segmented_img.reshape(img.shape)
+plt.imshow((segmented_img * 255).astype(np.uint8))
+</code>
+
+__En R :__
+
+<code python>
+library(ggplot2)
+kClusters <- 12
+kMeans <- kmeans(imgRGB[, c("R", "G", "B")], centers = kClusters)
+kColours <- rgb(kMeans$centers[kMeans$cluster,])
+ggplot(data = imgRGB, aes(x = x, y = y)) + 
+    geom_point(colour = kColours) +
+    labs(title = paste("k-Means Clustering of", kClusters, "Colours")) +
+    xlab("x") +
+    ylab("y")
+</code>
+
+**Résultat :**
+
+Ici, on a fait varier un peu le nombre de clusters pour voir comment évoluait l'image :
+
+{{ :cpp:traitement_image_kmeans.png?800 |}}
+
+**Source :**
+  * [[https://www.quantmetry.com/initiation-au-clustering/]]
+  * [[https://ensip.gitlab.io/pages-info/ressources/transverse/tuto_images.html]]
+  * [[https://www.r-bloggers.com/2014/09/r-k-means-clustering-on-an-image/#:~:text=k%2Dmeans%20clustering%20aims%20to,a%20prototype%20of%20the%20cluster.]]
+
+====Générer des images====
+
+Si nous sommes capables de connaître, pour chacun des <color #ed1c24>**clusters, la loi de probabilité**</color> qui régit la distribution des observations nous pouvons <color #ed1c24>**générer**</color> de nouvelles observations !! Nous pouvons donc créer des données qui respectent la distribution et, donc, <color #ed1c24>**agrandir notre dataset**</color>. Nous pourrons ainsi <color #ed1c24>**entraîner**</color> notre modèle sur un <color #ed1c24>**plus grand dataset**</color> et obtenir, par la suite, de <color #ed1c24>**meilleurs estimations**</color>.
+
+Prenons comme exemple un dataset MNIST utilisé pour la reconnaissance de chiffres écrits à la main :
+
+__En Python :__
+
+<code python>
+from sklearn.datasets import fetch_openml
+digits = fetch_openml('mnist_784', version = 1)['data']
+
+def plot_digits(data):
+    fig, ax = plt.subplots(10, 10, figsize=(10, 10),
+                           subplot_kw=dict(xticks=[], yticks=[]))
+    fig.subplots_adjust(hspace=0.05, wspace=0.05)
+    for i, axi in enumerate(ax.flat):
+        im = axi.imshow(data[i].reshape(28, 28), cmap='binary')
+        im.set_clim(0, 16)
+    
+plot_digits(digits)
+</code>
+
+__En R :__ 
+
+<code python>
+par(mfrow=c(5,5))
+for (i in 1:25){
+    digit <- matrix(digits[i,], nrow = 28, ncol = 28)
+    image(digit[,28:1], col = gray(255:0 / 255))
+}
+</code>
+
+{{ :cpp:digit_mnist.png?400 |}}
+
+On va ici entraîner l'algorithme sur un échantillon pour que l'algorithme s'exécute en un temps raisonable. 
+<alert info>**Info :** l'entraînement peut quand même prendre quelques minutes, tout dépend de la puissance de votre ordinateur. L'algorithme restera néanmoins moins performant que celui des K-means.</alert>
+
+__En Python :__
+
+<code python>
+data = digits[0:10000,:]
+
+gmm = GaussianMixture(100, covariance_type='full', random_state=0)
+gmm.fit(data)
+
+data_new = gmm.sample(100)[0]
+plot_digits(digits_new)
+</code>
+
+__En R :__
+
+En R, l'algorithme classique (CRAN) ne permet pas la génération de données. Si vous voulez un package permettant plus de fonctionnalités, vous pouvez aller voir [[https://cran.rstudio.com/bin/windows/Rtools/|ici]].
+
+{{ :cpp:digit_generated.png?400 |}}
+
+<alert warning>**Remarque :** il serait judicieux d'appliquer une ACP vue [[cpp: ACP| ici]] avant d'appliquer l'algorithme. Ainsi, le nombre de dimensions en serait drastiquement réduit sans une grosse perte d'informations. L'algorithme serait plus rapide et pourrait être plus efficace.</alert>

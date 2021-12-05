@@ -1,0 +1,6 @@
+X_data <span class="sy0">=</span> data$X0.799_0.201
+Y_data <span class="sy0">=</span> data$X0.799_0.201.1
+data_plot <span class="sy0">=</span> data.<span class="me1">frame</span><span class="br0">&#40;</span>X_data<span class="sy0">,</span> Y_data<span class="br0">&#41;</span>
+X <span class="sy0">=</span> model$centers<span class="br0">&#91;</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#93;</span>
+Y <span class="sy0">=</span> model$centers<span class="br0">&#91;</span><span class="sy0">,</span><span class="nu0">2</span><span class="br0">&#93;</span>
+data_plot2 <span class="sy0">=</span> data.<span class="me1">frame</span><span class="br0">&#40;</span>X_data<span class="sy0">,</span> Y_data<span class="br0">&#41;</span>

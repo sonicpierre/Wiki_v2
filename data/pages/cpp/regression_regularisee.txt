@@ -1,0 +1,368 @@
+[[cpp:IA| Machine Learning]]
+
+{{:cpp:regressionpolynomiale.png?550|}}
+
+=====La régression polynomiale=====
+
+Les données ne sont pas toujours modélisables par une droite, ce qui nécessite l'utilisation de fonctions polynomiales qui permettent de faire de meilleures prédictions.
+
+====Générer les points de l'exemple====
+
+Comme pour la page sur la [[regression_supervisee|régression supervisée]] nous allons générer des points pour pouvoir entraîner notre modèle dessus. Il s'agit de données non linéaires qui nous permettront d'évaluer l'efficacité de l'algorithme sur ce set de données artificielles.
+
+__Code Python__
+
+<code python>
+import numpy as np
+m = 100#Définition du nombre de points à représenter
+X = np.linspace(-15, 15, m).reshape((m, 1))#Création des données X (linéaires) en y ajoutant un aléatoire
+y = 0.11 * X**2 + X + 2 + np.random.randn(m,1)#Création des données polynomiales y 
+</code>
+
+__Code R__
+
+<code python>
+library(pracma)
+
+m = 100#Définition du nombre de points à générer
+X = linspace(-15, 15, m)#Génération des points
+y = 0.11 * X**2 + X + 2 +  rnorm(m)#Création des données polynomiales y
+</code>
+
+**Observations :** 
+
+{{ :cpp:droite_regression_donnee_poly.png?600 |Droite de régression linéaire sur des données polynomiales}}
+
+;#;**Figure 1 :** Droite de régression linéaire sur des données polynomiales
+;#;
+
+<alert warning>**Remarque :** Comme on peut l'observer ici la régression linéaire n'est pas du tout adapté aux données que nous avons généré.</alert>
+====Créer les données polynomiales====
+
+Il est certain que la droite de régression linéaire n'ajustera jamais les données fournies. Commençons alors par transformer les données d'apprentissage en rajoutant à chacune son carré (puisque y est de la forme d'un polynôme de degré 2).
+
+__Code Python__
+
+<code python>
+from sklearn.preprocessing import PolynomialFeatures
+
+poly_feature = PolynomialFeatures(degree = 2, include_bias = False)#Création des polynômes de degré 2 pour les données d'apprentissage
+X_poly = poly_feature.fit_transform(X)#Application de la création de polynômes aux données
+</code>
+
+<alert info>Il n'existe pas de fonction **PolynomialFeatures** sur R. Les coefficients polynomiaux sont générés directement dans le modèle polynomial.
+</alert>
+
+
+**Résultat :**
+
+{{ :cpp:donnees_mise_au_carre.png?300 |Résultat avant-après transformation}}
+
+====Entrainement du modèle====
+
+On entraine ensuite un modèle linéaire sur les données transformées :
+
+__Code Python__
+
+<code python>
+from sklearn.linear_model import LinearRegression
+model = LinearRegression()
+model.fit(X_poly, y)
+print("Coefficient constant :", model.intercept_)
+print("Coefficient X et X^2 : ", model.coef_)
+</code>
+
+__Code R__
+
+<code Python>
+model <- lm(y~poly(X, 2, raw = T))#Création du modèle polynomial.
+
+model$coefficients#Affichage des coefficients estimés par le modèle.
+
+#Lorsque vous utilisez des dataframe, il est nécessaire de mentionner le nom du set de données 
+#model <- lm(y~poly(X, 2, raw = T), data = DataFrame)
+</code>
+
+**Résultat :**
+
+{{ :cpp:resultat_coefs.png?400 |Coefficients estimés du polynôme}}
+
+Le modèle estime que notre fonction est de la forme <fc #fa8072>$y = 0.10 X^2 + 0.97  X + 1.96$</fc> alors qu'elle est de la forme <fc #fa8072>$y = 0.11 X^2 + X + 2$</fc>, ce qui est un bon résultat. Visualisons maintenant le résultat sur un graphique pour voir s’il est cohérent.
+
+
+**Observations :**
+
+{{ :cpp:donnee_ajustee.png?600 |Ajustement après transformation des données}}
+
+;#;**Figure 2 :** Ajustement des données après leur transformation
+;#;
+
+
+<alert danger>**Danger :** Il est important de bien fixer le degré de la fonction recherchée. Si le degré est trop bas, l'algorithme va faire de l'under-fitting et s'il est trop haut il fera de l'over-fitting. Dans tous les cas les prédictions seront mauvaises.</alert>
+
+{{:cpp:underfitting.png?400|Under-fitting}} {{:cpp:overfittingpolynomial.png?400|Over-fitting}} 
+
+**Sources**
+
+  * Machine Learning avec Scikit-Learn, Aurélien Géron, 2e édition
+  * Data science : fondamentaux et études de cas, Eric Biernat et Michel Lutz
+
+
+=====Les modèles régularisés=====
+
+Les modèles régularisés sont des modèles de régression linéaire dans lesquelles on supprime ou amoindri une partie des variables qui le composent. On a ainsi des modèles qui permettent de gérer l'over-fitting.
+
+<alert info>**<fs large>Remarque :</fs>**  Avant d'effectuer une régression régularisée, il est nécessaire de normaliser les données, lorsqu'elles présentent des valeurs à échelles trop éloignées.</alert>
+
+Par la suite on utilisera le data sur les performances scolaires d'élèves, disponible [[https://github.com/LlamasPartan/Ressource-Wiki/tree/master/Intelligence%20Artificielle/Machine%20Learning/R%C3%A9gression/R%C3%A9gression%20polynomiale%20et%20r%C3%A9gularis%C3%A9es| ici]].
+Vous trouverez également l'ensemble des codes Python présentés dans cette partie.
+
+{{ :cpp:shinkage.png?750 |Fonctionnement des modèles régularisés}}
+====Le modèle Ridge====
+
+
+La régression Ridge est une version régularisée de la régression linéaire. Elle amoindri le poids de certaines variables, en minimisant la fonction $J(\Theta)$.
+
+
+**Théorie :**
+
+$$
+J(\Theta) = \underbrace{MSE(\Theta)}_{\text{Fonction coût}}  + \underbrace{\alpha \frac{1}{2} \sum_{i = 1}^{n} \Theta_{i}^{2}}_{\text{Terme de régularisation}}
+$$
+
+^      Paramètre        ^ Signification^
+|  MSE  | Erreur quadratique moyenne |
+|   $\alpha$     | Constante contrôlant la quantité de régularisation (*)|
+|    $\Theta$     | Coefficient de régression linéaire |
+
+(*) Plus $\alpha$ est proche de zéro, plus on se rapproche d'une régression linéaire non régularisée. Inversement, plus on augmente $\alpha$, plus les coefficients de pondération (valeurs des variables), auront des valeurs proches de zéro.
+
+__Code Python__
+
+<code python>
+#Librairies 
+from sklearn.metrics import mean_squared_error#Mesure de précision
+from sklearn.linear_model import Ridge#Régression Ridge
+
+data = data.select_dtypes(exclude=['object'])#Filtration des variables qualitatives
+
+y = data['G3']#Variable cible
+X = data.drop(columns=['G3'], axis=1)#Variables explicatives
+
+ridge = Ridge(alpha=1, solver="auto")#Algorithme Ridge, avec alpha = 1 et un choix de solveur automatique, qui s'adaptera en fonction des données
+
+ridge.fit(X_train, y_train)#Entrainement du modèle
+ridge_pre = ridge.predict(X_test)#Prédictions
+mean_squared_error(y_test, ridge_pre)#Résultat de performance
+</code>
+
+__Code R__
+
+<alert info> **Remarque :** Il est nécessaire de convertir les données X de test et d'entrainement en matrices.</alert>
+
+<code python>
+library(Metrics)
+library(glmnet)
+
+data <- Filter(is.numeric, data)#Filtre des variables numériques
+
+ridge <- glmnet(X_train, y_train, alpha = 0, lambda = 1, standardize = F)#Définition du modèle de régression Ridge
+#Le paramètre alpha = 0 définit la régression Ridge, lambda = 1 est la constante de contrôle de la quantité de régularisation et standardize = F 
+#définit si les données doivent être normalisées (ici c'est non car elles sont toutes à la même échelle).
+
+ridge_pred <- predict(ridge, s = 1, newx = X_test)#Prédictions
+mse(y_test, ridge_pred)#Evaluation du modèle
+</code>
+
+**Résultat**
+
+{{ :cpp:resultat_ridge.png |Résultat évaluation Ridge}}
+
+Cela signifie qu'avec la régression Ridge, en moyenne, il y a une différence de +/- 2.2 entre les valeurs prédites et les valeurs réelles.
+
+**Sources :**
+
+  * Machine Learning avec Scikit-Learn, 2e édition, Aurélien Géron
+  * [[https://www.math.univ-toulouse.fr/~besse/Wikistat/pdf/st-scenar-reg-penal-prostate.pdf | WikiStat]]
+  * [[https://rstatisticsblog.com/data-science-in-action/machine-learning/ridge-regression-in-r/|R Statistics]]
+====Le modèle Lasso====
+
+La régularisation Lasso fonctionne de manière analogue à la précédente. A la place de la normale $l_{2}$ , elle ajoute la norme $l_{1}$ à la fonction de coût.
+
+**Théorie**
+
+$$
+J(\Theta) = \underbrace{MSE(\Theta)}_{\text{Fonction coût}}  + \underbrace{\alpha \sum_{i = 1}^{n} \lvert\Theta_{i} \rvert}_{\text{Terme de régularisation}}
+$$
+
+^      Paramètre        ^ Signification^
+|  MSE  | Erreur quadratique moyenne |
+|   $\alpha$     | Constante contrôlant la quantité de régularisation |
+|    $\Theta$     | Coefficient de régression linéaire |
+
+__Code Python__
+
+<code python>
+from sklearn.metrics import mean_squared_error
+from sklearn.linear_model import Lasso
+
+data = data.select_dtypes(exclude=['object'])#Sélection des variables quantitatives
+
+y = data['G3']#Définition variable cible
+X = data.drop(columns=['G3'], axis=1)#Variables explicatives
+
+lasso = Lasso(alpha=1)#Appel de la fonction avec alpha = 1
+lasso.fit(X_train, y_train)#Entraienement sur les données
+lasso_pre = lasso.predict(X_test)#Prédiction sur les données tests
+mean_squared_error(y_test, lasso_pre)#Evaluation du modèle
+</code>
+
+__Code R__
+
+<alert info> **Remarque :** Il est nécessaire de convertir les données X de test et d'entrainement en matrices.</alert>
+
+<code python>
+library(Metrics)
+library(glmnet)
+ 
+data <- Filter(is.numeric, data)#Filtre des variables numériques
+
+lasso <- glmnet(X_train, y_train, alpha = 1, lambda = 1, standardize = F)#Définition du modèle de régression Lasso
+#Le paramètre alpha = 1 définit la régression Lasso, et lambda = 1 est la constante de contrôle de la quantité de régularisation
+
+lasso_pred <- predict(lasso , s = 1, newx = X_test)#Prédictions
+mse(y_test, lasso_pred)#Evaluation du modèle
+</code>
+
+**Résultat**
+
+{{ :cpp:lasso.png |Résultat régression Lasso}}
+
+Cela signifie qu'avec la régression Lasso, en moyenne, il y a une différence de +/- 1.9 entre les valeurs prédites et les valeurs réelles.
+
+===Sélection de variables avec Lasso===
+
+{{ :cpp:selected_variables.png?600 |Sélection de variables de la régression Lasso}}
+
+Un point important de la régularisation Lasso est qu'elle élimine le poids des variables les moins importantes en leur donnant la valeur zéro. Cela permet de rendre le modèle moins complexe en sélectionnant des variables les plus significatives.
+
+Il est possible de voir combien de variables ont été utilisées par le modèle en regardant le coefficient attribué à chaque variable.
+
+__Code Python__
+
+<code python>
+lasso.coef_
+</code>
+
+__Code R__
+
+<code python>
+lasso$beta
+</code>
+
+Ensuite on récupère le nom des variables conservées.
+
+__Code Python__
+
+<code python>
+from sklearn.feature_selection import SelectFromModel#Importation du selecteur de variable en fonction de leur poids
+
+selection = SelectFromModel(lasso, prefit=True)#Création du modèle de sélection 
+X_selected = selection.transform(X_train)#Application du modèle sur les données
+
+#On crée le dataframe avec la transformation des variables
+selected_features = pd.DataFrame(selection.inverse_transform(X_selected),
+                                 index=X_train.index,
+                                 columns=X_train.columns)
+
+selected_columns = selected_features.columns[selected_features.var() != 0]#On garde uniquement les variables les plus importantes, dont le coefficient est différent de zéro.
+</code>
+
+__Code R__
+
+<code python>
+lasso$beta
+</code>
+
+**Observations**
+
+{{ :cpp:selected_features.png |Variables sélectionnées}}
+
+;#;**Figure 4 :** Répartition des variables selon leur importance dans le modèle
+;#;
+
+**Sources :**
+
+  * Machine Learning avec Scikit-Learn, 2e édition, Aurélien Géron
+  * [[https://rstatisticsblog.com/data-science-in-action/machine-learning/lasso-regression/|R Statistics]]
+====Le modèle Elastic net====
+
+Il s'agit d'un compromis entre les modèles Lasso et Ridge et sa fonction de coût est simplement un mélange des termes de régularisation des deux régressions.
+
+**Théorie**
+
+$$
+J(\Theta) = \underbrace{MSE(\Theta)}_{\text{Fonction coût}}  + \underbrace{\alpha r\sum_{i = 1}^{n} \lvert\Theta_{i} \rvert}_{\text{Terme de régularisation Lasso}} +  \underbrace{\alpha\frac{1 - r}{2} \sum_{i = 1}^{n} \Theta_{i}^{2}}_{\text{Terme de régularisation Ridge}}
+$$
+
+^      Paramètre        ^ Signification^
+|  MSE  | Erreur quadratique moyenne |
+|   $\alpha$     | Constante contrôlant la quantité de régularisation |
+|    $\Theta$     | Coefficient de régression linéaire |
+|    r     | Ratio de mélange (r = 0 ⇔ Ridge et r = 1 ⇔ Lasso) |
+
+
+__Code Python__
+
+<code python>
+from sklearn.metrics import mean_squared_error
+from sklearn.linear_model import ElasticNet
+
+data = data.select_dtypes(exclude=['object'])#Sélection des variables quantitatives
+
+y = data['G3']#Définition variable cible
+X = data.drop(columns=['G3'], axis=1)#Variables explicatives
+
+elastic = ElasticNet(alpha=1, l1_ratio=0.5)#Appel de la fonction avec alpha = 1 et le ration de mélange r = 0.5
+elastic.fit(X_train, y_train)#Entraienement sur les données
+elastic_pre = elastic.predict(X_test)#Prédiction sur les données tests
+mean_squared_error(y_test, elastic_pre)#Evaluation du modèle
+</code>
+
+__Code R__
+
+<alert info> **Remarque :** Il est nécessaire de convertir les données X de test et d'entrainement en matrices.</alert>
+
+<code python>
+library(Metrics)
+library(glmnet)
+
+data <- Filter(is.numeric, data)#Filtre des variables numériques
+
+elastic<- glmnet(X_train, y_train, alpha = .5, lambda = 1, standardize = F)#Définition du modèle de régression Elasticnet
+#Le paramètre alpha = 0.5 définit la régression Elasticnet, et lambda = 1 est la constante de contrôle de la quantité de régularisation
+
+elastic_pred <- predict(elastic, s = 1, newx = X_test)#Prédictions
+mse(y_test, elastic_pred)#Evaluation du modèle
+</code>
+
+**Résultat**
+
+{{ :cpp:elasticnet_evaluation.png |Résultat d'évaluation}}
+
+Cela signifie qu'avec la régression Elastic net, en moyenne, il y a une différence de +/- 1.9 entre les valeurs prédites et les valeurs réelles.
+
+=====Lequel choisir ?=====
+
+<alert info>**<fs large>Remarque :</fs>** Il est préférable de toujours utiliser un modèle régularisé, à la place d'une simple régression linéaire. L'over-fitting étant un problème récurrent en data science, utiliser ce type de modèle permet de mieux gérer cela.
+</alert>
+
+|              ^ Fonctionnement ^ Quand utiliser ?        ^Remarques ^
+^ Ridge       | Utilise le carré de la norme L2.   |Lorsque toutes les variables sont importantes. | Il peut être le choix par défaut face à une simple régression linéaire.|
+^ Lasso    | Utilise la norme L1.      |Lorsque vous soupçonnez la présence de variables inutiles. |Lorsque des variables sont fortement corrélées, elle peut en privilégier une au détriment des autres.|
+^ Elastic net    |Combinaison des régularisations Ridge et Lasso.  |Idem que pour la régression Lasso.| Est préférée à Lasso car plus stable.|
+
+**Sources**
+  * Machine Learning avec Scikit-Learn, 2e édition, Aurélien Géron
+  * Data science : fondamentaux et études de cas, Eric Biernat et Michel Lutz
+

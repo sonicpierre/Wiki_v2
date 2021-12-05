@@ -1,0 +1,1 @@
+<span class="sy0">/</span>bin<span class="sy0">/</span><span class="kw2">bash</span> <span class="re5">-c</span> <span class="st0">&quot;<span class="es4">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)</span>&quot;</span>

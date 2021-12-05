@@ -1,0 +1,10 @@
+install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;isotree&quot;</span><span class="br0">&#41;</span>
+install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;ggplot2&quot;</span><span class="br0">&#41;</span>
+install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;solitude&quot;</span><span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>solitude<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>isotree<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>ggplot2<span class="br0">&#41;</span>
+&nbsp;
+model <span class="sy0">&lt;</span>- isolationForest$new<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="co1">#Appel du modèle de détection</span>
+model$fit<span class="br0">&#40;</span>X<span class="br0">&#41;</span><span class="co1">#Ajustement sur les données</span>
+outliers_pred <span class="sy0">&lt;</span>- model$predict<span class="br0">&#40;</span>X<span class="br0">&#41;</span><span class="co1">#Prédiction des outliers : Retourne un tableau récapitulatif qui donne le score d'anomalie. Celui-ci défini si une valeur est aberrante si elle est proche de 1 et non aberrante si autour de 0.5</span>

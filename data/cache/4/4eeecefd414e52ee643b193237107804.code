@@ -1,0 +1,11 @@
+<span class="kw1">from</span> sklearn.<span class="me1">decomposition</span> <span class="kw1">import</span> PCA
+&nbsp;
+model <span class="sy0">=</span> PCA<span class="br0">&#40;</span>n_components <span class="sy0">=</span> <span class="nu0">25</span><span class="br0">&#41;</span><span class="co1">#Création du modèle de réduction sur toutes les variables du dataset</span>
+X_reduced <span class="sy0">=</span> model.<span class="me1">fit_transform</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="co1">#Application de la réduction aux données d'entrainement</span>
+np.<span class="me1">argmax</span><span class="br0">&#40;</span>np.<span class="me1">cumsum</span><span class="br0">&#40;</span>model.<span class="me1">explained_variance_ratio_</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy0">&gt;</span> <span class="nu0">0.95</span><span class="co1">#Détermination des variables </span>
+&nbsp;
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">12</span><span class="sy0">,</span><span class="nu0">6</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Définition de la taille du graphique</span>
+plt.<span class="me1">plot</span><span class="br0">&#40;</span>np.<span class="me1">cumsum</span><span class="br0">&#40;</span>model.<span class="me1">explained_variance_ratio_</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Affichage des variances expliquées en fonction du nombre de variables</span>
+&nbsp;
+plt.<span class="me1">xlabel</span><span class="br0">&#40;</span><span class="st0">&quot;Nombres de variables&quot;</span><span class="br0">&#41;</span>
+plt.<span class="me1">ylabel</span><span class="br0">&#40;</span><span class="st0">&quot;Variance expliquée&quot;</span><span class="br0">&#41;</span>

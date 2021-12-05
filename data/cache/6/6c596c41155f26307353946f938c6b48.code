@@ -1,0 +1,4 @@
+<span class="co1">#On indique clairement la table dans laquelle on veut insérer la base de donnée</span>
+posts <span class="sy0">=</span> db.<span class="me1">posts</span>
+<span class="co1">#On insert la collection dans cette table</span>
+post_id <span class="sy0">=</span> posts.<span class="me1">insert_one</span><span class="br0">&#40;</span>post<span class="br0">&#41;</span>.<span class="me1">inserted_id</span>

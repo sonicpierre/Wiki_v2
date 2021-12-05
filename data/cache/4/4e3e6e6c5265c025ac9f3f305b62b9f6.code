@@ -1,0 +1,4 @@
+plt.<span class="me1">hist</span><span class="br0">&#40;</span>X<span class="br0">&#91;</span>:<span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="co1"># A l'intérieur de la fonction d'histogramme on peut choisir de modifier le paramètre bins, qui </span>
+<span class="co1">#détermine le nombre de section qu'on veut dans l'histogramme.</span>
+plt.<span class="me1">xlabel</span><span class="br0">&#40;</span><span class="st0">&quot;Longueur sépal&quot;</span><span class="br0">&#41;</span>
+plt.<span class="me1">ylabel</span><span class="br0">&#40;</span><span class="st0">&quot;Nombre d<span class="es0">\'</span>apparition&quot;</span><span class="br0">&#41;</span>

@@ -1,0 +1,290 @@
+{{ :cpp:derive.jpg?500 |}}
+
+Nous allons présenter ici 2 méthodes utilisant la dérivation pour trouver la valeur optimum de notre problème de bière.
+
+=====Méthode de Newton-Raphson=====
+
+{{ :cpp:methode_newton.png?500 |}}
+\\
+L'idée générale de cette méthode est de partir d'un point que l'on note $x_0$, "assez proche" du zéro de notre<color #ed1c24> fonction</color>, et de tracer <color #00a2e8>la tangente</color> à la courbe de $f$  en $x_0$.  
+On résout ensuite  l'équation $y_{bleu} = 0$. On obtient alors un nouveau point, $x_1$  qui sera  plus proche de la racine que $x_0$. 
+
+On réitère la méthode : on part de $x_1$, on trace <color #22b14c>la tangente</color> à $f$ en $x_1$, on résout $y_{vert}=0$. La solution de cette équation est $x_3$ et ainsi de suite jusqu'à converger vers $\alpha$.
+\\
+\\
+La théorie socle de cet algorithme est basée sur les [[https://fr.wikipedia.org/wiki/Th%C3%A9or%C3%A8me_de_Taylor|développements de Taylor au premier ordre]]. La méthode de Newton permet de résoudre le même type de problèmes que la dichotomie mais sa convergence est quadratique et non linéaire ce qui en fait une méthode plus efficace.
+\\
+====Algorithme====
+
+<code>
+
+Fonction newton(Entrée/sortie réel x,Entrée/sortie entier nIter)
+
+    Preconditions: x_0 appartient au domaine de définition de f,  f est semi-lisse sur [a;b] et la dérivée de f ne s'annule pas sur [a,b]
+    Postcondition: Renvoie la racine de f sur [a;b] à epsilon près
+    
+    Variables:
+        prec //réel : précision sur la solution
+
+    Début
+        Initialisation:
+            lire prec
+            lire x
+
+        Traitement:
+            Tant que f(x)/f'(x) >prec  faire //condition d'arret
+                x <- x - f(x)/f'(x) //calcul terme suivant de x
+               nIter<- nIter +1  //incrémentation de nIter
+            Fin tant que
+    Fin
+</code>
+<alert info>**Info :** toute fonction convexe en x est semi-lisse en x. Vous pouvez approfondir le sujet sur les fonctions semi-lisses [[https://fr.wikipedia.org/wiki/Fonction_semi-lisse#:~:text=Une%20fonction%20convexe%20est%20aussi%20semi%2Dlisse.&text=On%20peut%20aussi%20obtenir%20la,ses%20composantes%20sont%20semi%2Dlisses.&text=La%20semi%2Dlissit%C3%A9%20est%20stable%20par%20composition.|ici]]</alert>
+\\
+{{ :cpp:fractale.jpg?350 |}}
+
+Ci-dessus, une application de la méthode de Newton dans le cas de la recherche des zéros complexes de $P(z) = z^3 -1$. Tous les points d'une même couleur représentent la convergence vers une des trois racines de $P(z)$. Par exemple, tous les points dans la zone rouge représentent la convergence vers la racine $z = 1$.
+
+<alert info>**Info :** on peut noter que cette figure est fractale, c’est-à-dire que le même motif se répète en boucle à l'infini.</alert>
+\\
+
+====Calcule de la dérivée====
+
+La dérivée n'est pas toujours simple à calculer c'est pourquoi il existe des méthodes numériques pour l'estimer.
+
+__En Python:__
+<code python>
+from scipy.misc import derivative
+derivee = lambda x:  derivative(f, x, 0.01)
+</code>
+
+__En Octave (avec le package optim):__
+<code matlab>
+function [y] = df(x)
+  y = deriv(@(x0) x0**2-10, x);
+endfunction
+</code>
+
+<alert>La structure de la fonction deriv est:
+
+deriv(@(variable de dérivée) *fonction*, valeur d'évaluation de la dérivée).
+Le @ sert donc à préciser la variable selon laquelle on va dériver la fonction.</alert>
+
+
+
+====Application de l'algorithme de Newton====
+
+Maintenant que nous savons calculer la dérivée nous pouvons appliquer l'algorithme de Newton.
+
+__En Python:__
+\\
+<code python>
+def NewtonsMethod(x, epsilon):
+    dif = 2*epsilon #initialisation de la variable difference
+    while (dif > epsilon) :
+        x1 = x - fonction(x) / derivee(x)#calcul recursif du prochain point
+        dif = abs(x1 - x)
+        x = x1
+    return x
+
+#Affichage
+print("Solution:" NewtonsMethod(10,1e-12))
+</code>
+
+Il existe une fonction pré-codée en Python pour cette méthode :
+
+__Newton précodé :__
+<code python>
+from scipy import optimize
+import matplotlib.pyplot as plt
+
+print("Le zéro de notre fonction sur [a;b] est:", optimize.newton(f, 1.5, fprime=lambda x: 2 * x))
+</code>
+
+__En Matlab:__
+\\
+<code matlab>
+function [x] = newton(x)
+  eps=10^(-12);
+  dif=2*eps;
+  x1 = 0;
+  while abs(dif)>eps 
+      x1=x-f(x)/df(x);
+      dif=abs(x1-x);
+      x= x1;
+  end
+endfunction
+
+#Affichage
+disp([' La solution en partant de x0=10 est : ', num2str(newton(10))]);
+
+</code>
+
+print("Le zéro de notre fonction sur [a;b] est:", optimize.newton(f, 10))
+</code>
+\\
+|              ^ Temps d'exécution                  ^ Convergence          ^ Nombre d'itérations ^
+^ Newton     |       0.0448 µs           |              Quadratique                |                      6 (pour $x_0=10$)             |
+^ Newton précodé    |       669.7 µs          |              Quadratique                |                    ???          |
+
+=====Regula Falsi=====
+
+On peut voir la méthode de Regula Falsi (fausse position) comme un mélange entre la méthode de Newton et la méthode de la dichotomie. 
+
+{{ :cpp:regula_image.png?400 |}}
+
+^  Couleur et type de trait  ^  Signification  ^
+|  Courbe   pleine  |  Fonction étudiée  |   
+|  <color #ed1c24>Trait plein gauche </color>  |  Borne $a$ initiale  |     
+|  <color #ed1c24>Trait plein droit </color>  |  Borne $b$ initiale  |  
+|   <color #99d9ea>Trait pointillé</color>       |  Borne $a$ itération 1  |  
+|  <color #b5e61d>Trait pointillé</color>   |  Borne $a$ itération 2  |  
+|  <color #c8bfe7>Trait pointillé</color>  |  Borne $a$ itération 3  |  
+
+En effet, cette méthode hérite du fonctionnement de la dichotomie : on applique du TVI entre deux points ($a$ et $b$) pour trouver un point (noté $c$ ou $m$) qui remplacera une des bornes de départ. Ainsi, le nouvel intervalle sera réduit tout en contenant, à coup sûr, notre zéro. Pour calculer cette borne on utilisera une formule qui vient de la méthode de Newton : $m ← a -f(a)* \frac{(b-a)}{(f(b)-f(a))}$. On réitère cette méthode récursivement ou itérativement jusqu'à obtenir le zéro de notre fonction. 
+
+<alert info>**Info :** on a remplacé la dérivée utilisée par la méthode de Newton par [[https://ljk.imag.fr/membres/Bernard.Ycart/mel/dc/node3.html|le taux d'accroissement]] de $f$ (plus facile à calculer). </alert>
+
+===Algorithme===
+
+  * <color #ed1c24>**Précondition**</color> : il existe un unique m, zéro de la fonction f, sur l'intervalle [a,b].
+  * <color #ed1c24>**Postcondition**</color> : la fonction doit renvoyer ce zéro avec une précision epsilon.
+
+
+^  Algorithme classique    ^  Algorithme récursif  ^
+|<code>
+Variables
+
+   réel a //borne inf de départ
+   réel b //borne sup de départ
+   réel ε // précision
+
+Début
+ Tant que (abs(f(a)) > ε)
+    m ← a -f(a)*(b-a)/(f(b)-f(a))
+    Si (f(a)*f(m) ≤ 0) alors
+       b ← m
+    sinon
+       a ← m
+    Fin Si
+ Fin Tant que
+Fin
+</code>   |<code>
+Variables
+
+   réel a //borne inferieur
+   réel b //borne superieur
+   réel c //nouvelle borne
+   
+Début
+    Si (abs(f(a))<=prec) alors 
+        Renvoyer (a -f(a)*(b-a)/(f(b)-f(a)))
+    Sinon     
+        c = a -f(a)*(b-a)/(f(b)-f(a)) 
+    Fin Si
+     
+    Si f(a)*f(c) <= 0 alors
+        Renvoyer (regu_rec(f,a,c,prec))
+    Sinon    
+        Renvoyer (regu_rec(f,c,b,prec))
+    Fin si
+ Fin
+</code>  |
+
+===Mise en place pratique===
+
+Maintenant que vous connaissez l'algorithme, il n'y a plus qu'à le traduire dans les différents langages :
+
+__En Python:__
+\\
+
+^  Python Classique  ^  Python récursif  ^
+|<code python>
+def regula_falsi(f, a, b, epsilon):
+
+    if f(a) * f(b) > 0:
+        return None
+    u, v = float(a), float(b)
+    while (abs(f(u)) > epsilon):
+        i = i+1
+        w = u -f(u)*(v-u)/(f(v)-f(u))
+        if f(u) * f(w) <= 0:
+            v = w
+        else:
+            u = w
+    return w
+</code>  |<code python>
+def regu_rec(f,a, b,prec):
+    a, b = float(a), float(b)
+    if (abs(f(a))<=prec):
+        return a -f(a)*(b-a)/(f(b)-f(a))
+    else:
+        c = a -f(a)*(b-a)/(f(b)-f(a)) 
+
+    if f(a)*f(c) <= 0:
+        return regu_rec(f,a,c,prec)
+    else: #sinon c remplace b
+        return regu_rec(f,c,b,prec) </code>   |
+
+**Résultat :**
+
+<code python>
+#Résultat classique
+print("La valeur du zéro de cette fonction sur (a,b) est:",regula_falsi(f,0,10,1e-12))</code
+
+# Résultats récursif
+print("La valeur du zéro de cette fonction sur (a,b) est:",regula_falsi(f,0,10,1e-12))
+</code>
+
+
+__En Matlab:__
+\\
+^  Matlab Classique  ^  Matlab récurssif  ^
+|<code matlab>
+function [y]=regula(a, b, eps)
+
+  if (f(a).*f(b)>0)
+    disp('TVI non applicable');
+  else
+    while (abs(f(a))>eps) #condition d'arret
+      c = a - ((f(a)*(b-a))/(f(b) - f(a)));
+      if (f(a).*f(c) <= 0) #c remplace b
+          b = c;
+      else #c remplace a
+          a = c;
+      endif
+    endwhile
+    y = c;
+  endif
+endfunction
+</code>  |<code matlab>
+function [y]= regu_rec(a,b,eps)
+ 
+  c =  0;
+  if (abs(f(a))<eps)
+    y = a - ((f(a).*(b-a))./(f(b) - f(a)))
+  else
+    c =  a - ((f(a).*(b-a))./(f(b) - f(a)));
+    if (f(a).*f(c)<=0)
+      y = regu_rec(a,c, eps);
+    else 
+      y = regu_rec(c,b,eps);
+    endif
+  endif
+endfunction</code>   |
+
+
+**Résultat :**
+
+<code matlab>
+#Résultat classique
+disp([' La solution en partant de a=0, b= 10 est : ', num2str((regula(0, 10, 1e-12))]);
+
+#Resultat récursif
+disp([' La solution en partant de a=0, b= 10 est : ', num2str((regula_rec(0, 10, 1e-12))]);
+</code>
+
+\\
+|              ^  Temps d'exécution  ^  Convergence  ^  Nombre d'itérations  ^
+^  Regula falsi classique  |  0.231799 ns (python)  |  Superlinéaire( mais moins rapide que Newton)  |  27  |
+^  Regula falsi récursive  |  0.1762  ns(python)  |  Superlinéaire (plus rapide que dichotomie)  |  27  |
+

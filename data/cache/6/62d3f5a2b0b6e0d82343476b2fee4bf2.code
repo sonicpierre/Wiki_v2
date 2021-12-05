@@ -1,0 +1,16 @@
+Variables
+&nbsp;
+   réel a <span class="sy0">/</span>borne inf de départ
+   réel b <span class="sy0">/</span>borne sup de départ
+   réel ε <span class="sy0">/</span> <span class="kw2">pr</span>écision
+&nbsp;
+Début
+Tant que <span class="br0">&#40;</span>abs<span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy0">&gt;</span> ε<span class="br0">&#41;</span>
+    m ← a -f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="sy0">*</span><span class="br0">&#40;</span>b-a<span class="br0">&#41;</span><span class="sy0">/</span><span class="br0">&#40;</span>f<span class="br0">&#40;</span>b<span class="br0">&#41;</span>-f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="br0">&#41;</span>
+    Si <span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="sy0">*</span>f<span class="br0">&#40;</span>m<span class="br0">&#41;</span> ≤ <span class="nu0">0</span><span class="br0">&#41;</span> alors
+       b ← m
+    sinon
+       a ← m
+    Fin Si
+ Fin Tant que
+Fin

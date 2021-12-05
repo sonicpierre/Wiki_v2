@@ -1,0 +1,1 @@
+data <span class="sy0">=</span> pd.<span class="me1">read_csv</span><span class="br0">&#40;</span>CHEMIN_DE_DEPOT + <span class="st0">'/housing.csv'</span><span class="br0">&#41;</span>

@@ -1,0 +1,414 @@
+[[cpp:Le Clustering | Le Clustering]]
+{{ :cpp:k-mean.gif?500 |}}
+
+L'algorithme des K-Means est l'un des plus connus et utilisés. Il est assez simple ce qui lui permet d'être exécuté facilement sans nuire à son niveau de performance.
+
+**Animation :**
+  * [[www.analyticsvidhya.com]]
+
+=====Principe de l'algorithme=====
+
+<alert info> **Rappel :** dans cette partie, on utilisera le dataset de mesures de gaz contenus dans l'alcool, disponible [[https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Exploration%20des%20donnees/Data%20gaz|ici]]. On considérera le premier relevé que l'on nommera dans le code data.</alert>
+====Préconditions====
+
+  * Avoir une idée du nombre de clusters à trouver. (Nous donnerons des techniques pour aborder ce problème ci-dessous.)
+  * Normaliser ses données pour que l'algorithme soit plus performant.
+
+__Code Python__
+
+<code python>
+from sklearn.preprocessing import StandardScaler
+ 
+scaler = StandardScaler()#Appel du transformeur
+scaler.fit_transform(data)#Transformation des données
+data = pd.DataFrame(scaler.fit_transform(data), index = data.index, columns = data.columns)#Construction du DataFrame
+</code>
+
+__Code R__
+
+<code python>
+data <- scale(data)
+</code>
+
+<alert info> **Remarque :** consultez la page [[preprocessing_et_encodage|pre-processing et encodage]] pour plus d'informations.</alert>
+
+====Entraîner l'algorithme====
+
+Nous allons découper chaque itération de l'algorithme en plusieurs étapes :
+
+  * On <color #ed1c24>**calcule la distance**</color> entre un centre de gravité et chacune des données.
+  * On recommence pour <color #ed1c24>**chacun des centres de gravité**</color>.
+  * On <color #ed1c24>**sélectionne**</color>,  pour chaque centre,  les <color #ed1c24>**données**</color> dont il est le <color #ed1c24>**plus proche**</color>.
+  * On <color #ed1c24>**déplace**</color> les centres pour les positionner au <color #ed1c24>**centre de l'ensemble sélectionné**</color> en appliquant la formule ci-dessous qui est une simple moyenne des coordonnées :
+
+$$\mu_{k} = \frac{1}{n_k} \sum_{x_{i} \in C_{k}} x_{i}$$ 
+
+<alert warning> **Attention :** il est important de préciser que l'algorithme de K-means a été conçu en utilisant la distance euclidienne. Ainsi, cette distance permet une meilleure convergence lors du replacement des centres calculés grâce à  la moyenne. Changer la distance utilisée signifie changer la méthode permettant d'avoir les nouveaux centres de clusters.</alert>
+
+**Condition d'arrêt :** si les centres des clusters ne varient pas d'une itération à l'autre on arrête d'itérer
+
+__Code Python__
+
+<code python>
+from sklearn.cluster import KMeans
+ 
+model = KMeans(n_clusters = 3, max_iter=500, init='k-means++')
+model.fit(data)#Entrainement du modèle
+</code>
+
+ L'argument 'k-means++' définit la méthode d'initialisation des centres de clusters. Cette dernière permet, entre autres, d'avoir des clusters les plus éloignés possible les uns des autres tout en faisant partie des groupes d'observation. Vous pouvez comparer avec la méthode d'origine 'random' pour évaluer leurs performances respectives. 
+
+__Code R__
+
+<code python>
+library(cluster)
+
+model = kmeans(data, center=3)#data étant le jeu de données et center le nombre de clusters
+</code>
+
+
+=====Visualiser la forme des clusters=====
+
+Un bon moyen rapide de savoir si son modèle a fonctionné est de regarder si les prédictions sont conformes aux observations graphiques que l'on a pu faire. Cette vérification nécessite de connaître un peu les variables qui composent le dataset et de bien comprendre la problématique.
+
+====Visualisation classique====
+
+__Code Python__
+
+<code python>
+plt.figure(figsize=(12, 6))#Définition de la taille du graphique
+
+plt.scatter(data['0.799_0.201'], data['0.799_0.201.1'], c=model.predict(data))#Nuage de points des clusters 
+plt.scatter(model.cluster_centers_[:,0], model.cluster_centers_[:,1], c='r')#Positionnement des centres des différent clusters
+</code>
+
+__Code R__
+
+<code python>
+data2Premier = slice(data) %>%
+    select("X0.799_0.201", "X0.799_0.201.1")
+plot(data2Premier, col =model$cluster)
+points(model$centers, col = 1:2, pch = 8, cex = 2)#Positionnement des centres des clusters
+</code>
+
+**Résultat**
+
+{{ :cpp:clustering_clus3.png?600 |Résultat du clustering avec 3 clusters}}
+
+;#;**Figure 1 :** Résultat du clustering avec 3 clusters
+;#;
+
+<alert warning>**Remarque :** parmi les trois clusters définis initialement, seul l'un d'entre eux correspond à son centre de gravité. Cela veut donc dire que le nombre de clusters définis n'est pas exact vu qu'il n'y a pas de convergence des deux autres centres de gravité. Prenons 5 clusters, nous expliquerons en détail ce choix plus tard.</alert>
+====Diagramme de Voronoï====
+
+Cette découpe a été découverte par le mathématicien russe Gueorgui Voronoï. Elle permet de <color #ed1c24>**découper l'espace**</color> en différentes <color #ed1c24>**zones contenant chacune un seul point**</color>. Ici, nos centres de cluster. 
+
+{{ :cpp:voronoi.gif?400 |}}
+
+On commence donc par <color #ed1c24>**récupérer**</color> les coordonnées des <color #ed1c24>**centres nécessaires**</color> à la construction du graphique:
+
+__En Python :__ 
+
+<code python>
+CoorCentreVoulu = []
+for i in model.cluster_centers_:
+    tampon = []
+    tampon.append(i[0])
+    tampon.append(i[1])
+    CoorCentreVoulu.append(tampon)
+</code>
+
+__En R :__
+
+<code python>
+X_data = data$X0.799_0.201
+Y_data = data$X0.799_0.201.1
+data_plot = data.frame(X_data, Y_data)
+X = model$centers[,1]
+Y = model$centers[,2]
+data_plot2 = data.frame(X_data, Y_data)
+</code>
+
+Une fois les centres récupérés, on peut lancer le calcul de chacun des polygones puis les représenter sur le graphique :
+
+__En Python :__
+
+<code python>
+from scipy.spatial import Voronoi, voronoi_plot_2d
+y_kmeans = model.predict(data)
+plt.figure(figsize=(10, 10))
+ax = plt.gca()
+vor = Voronoi(CoorCentreVoulu)
+voronoi_plot_2d(vor, ax, point_size = 1)
+plt.scatter(data['0.799_0.201'], data['0.799_0.201.1'], c=y_kmeans, s=15, cmap='summer')
+</code>
+
+__En R :__
+
+<code python>
+library(ggvoronoi)
+
+ggplot(data_plot2,aes(X,Y)) +
+     stat_voronoi(geom="path") +
+     plot(data_plot)+
+     geom_point()+
+     geom_point(data = data_plot, aes(X_data, Y_data), col = model$cluster)
+</code>
+
+{{ :cpp:diagramme_voronoi.png?500 |}}
+;#;**Figure 2 :** Diagramme de Voronoï
+;#;
+
+**Source :**
+  * [[https://freakonometrics.hypotheses.org/19156]]
+====Visualiser les clusters de plusieurs points de vue====
+
+Le <color #ed1c24>**problème majeur**</color> de cette représentation est qu'elle <color #ed1c24>**ne compare que 2 variables**</color> alors que le set de données en compte beaucoup plus. On retrouve souvent ce problème dans les représentations graphiques, elles <color #ed1c24>**imposent**</color> une représentation en <color #ed1c24>**2D ou en 3D**</color> ce qui limite grandement notre <color #ed1c24>**visualisation des clusters**</color>. 
+
+On peut essayer de minimiser le problème avec un graphique représentant lui-même plusieurs graphiques :
+
+__En Python :__
+
+<code python>
+import seaborn as sns
+
+#Définition de nouvelles colonnes utiles à la construction du graphique
+cols = ["0.799_0.201", "0.799_0.201.1", "0.700_0.300","0.700_0.300.1","0.600_0.400"] 
+data["k-means_5"] = model.predict(data[cols]) 
+data["k-means5clusters"] = data["k-means_5"].map(lambda i: "cluster "+str(i))
+
+#Traçage du graphique
+cols = ["0.799_0.201", "0.799_0.201.1", "0.700_0.300","0.700_0.300.1","0.600_0.400", "k-means5clusters"] 
+g1 = sns.pairplot(data[cols], palette="husl", hue="k-means5clusters", diag_kind='kde')
+</code>
+
+__En R :__
+
+<code python>
+data5Premier = slice(data) %>%
+    select("X0.799_0.201", "X0.799_0.201.1", "X0.700_0.300", "X0.700_0.300.1", "X0.600_0.400")
+plot(data5Premier, col = model$cluster)
+</code>
+
+{{ :cpp:kmeans_graph.png?800 |}}
+;#;**Figure 3 :** Représentation des combinaisons des 5 premières variables
+;#;
+
+**Source :**
+  * [[https://openclassrooms.com/fr/courses/4379436-explorez-vos-donnees-avec-des-algorithmes-non-supervises/4379556-definissez-les-criteres-que-doit-satisfaire-votre-clustering]]
+  * [[https://www.polymorphe.org/index.php/k-means-clustering-part-1]]
+=====Choisir le bon nombre de clusters=====
+
+L'algorithme des K-means comporte une <color #ed1c24>**faiblesse majeure**</color>. Il est nécessaire de <color #ed1c24>**préciser le nombre de clusters**</color> que l'on souhaite avant de lancer l'algorithme ce qui peut être problématique quand on n'a <color #ed1c24>**aucune idée de la forme des données**</color>.
+
+====Elbow Method====
+
+On calcule l'<color #ed1c24>**inertie**</color> pour chacun des modèles entraînés. On déterminera le nombre de clusters optimaux expliquant au mieux nos données. Il faut bien compter que plus le nombre de clusters va augmenter plus l'inertie diminuera. 
+
+<alert danger>**Attention :** il faut veiller à ne pas couper en deux un très bon cluster et dégrader le partitionnement.</alert>
+
+**Théorie :**
+
+On appelle **inertie** la somme des carrés des distances entre les observations et leur centre de cluster associé.
+
+$$Inertie(X) = \sum_{k=1}^{n} \sum_{i=1}^{m} d(C_{k}, x_{i})^2$$
+
+^  Théorie  ^  Signification  ^
+|  n  |  Nombre de clusers  |
+|  m  |  Nombre d'observations du cluster k  |
+|  $C_{k}$  |  Centre du cluster k  |
+|  $d()$  |  Distance choisie  |
+
+__Code Python__
+
+<code python>
+inertia = []#Initialisation d'un tableau d'inertie
+K_range = range(1,20)#Création d'une liste de nombre de cluster
+for k in K_range:
+    model = KMeans(n_clusters = k).fit(data)#Entrainement du modèle pour chaque nombre de clusters de la liste
+    inertia.append(model.inertia_)#Ajout de l'inertie de chaque modèle
+ 
+#Partie visualisation
+ 
+plt.plot(K_range, inertia)#Graphique d'inertie de chaque modèle en fonction du nombre de clusters associés
+plt.xlabel('Nombre de cluster')
+plt.ylabel('Inertie expliquée')
+</code>
+
+__Code R__
+
+<code python>
+R2 = vector ("numeric", 9)
+for(k in 2:10)           #pour i allant de 2 à
+{
+  cl = kmeans(data, centers=k, nstart=5)
+  R2[k-1]=cl$betweenss/cl$totss
+}
+plot(2:10,R2,type="b")
+</code>
+
+**Résultat**
+
+{{ :cpp:elbow.png?600 |Inertie des modèles en fonction du nombre de clusters}}
+
+;#;**Figure 4 :** Inertie des modèles en fonction du nombre de clusters
+;#;
+
+On lit la donnée au creux du coude, il en ressort que le jeu de données utilisé contient <color #ed1c24>**cinq clusters**</color>.
+
+**Source :**
+  * [[http://www.jybaudot.fr/Stats/inertie.html]]
+====Le score de silhouette====
+
+On remarque rapidement que le calcul de l'<color #ed1c24>**inertie est peu coûteux**</color> en ressources mais donne une information qui n'est <color #ed1c24>**pas d'une grande clarté**</color>. Nous n'avons que peu d'informations sur les modèles à 6 clusters ou plus. Le <color #ed1c24>**score de silhouette**</color> est plus <color #ed1c24>**coûteux**</color> à calculer mais permet de détecter le cas de la **Figure 5**.
+
+{{ :cpp:silhouette.png?400 |}}
+;#;**Figure 5 :** Problème de dissociation de clusters
+;#;
+
+**Théorie :**
+
+Pour obtenir le score de silhouette, il est tout d'abord nécessaire de calculer la <color #ed1c24>**cohésion**</color>. Il s'agit de la distance entre une observation particulière et les autres observations du même cluster divisée par le nombre total d'observations dans le cluster :
+
+$$a(x) = \frac{1}{n_{k} -1} \sum_{u \in C_{k}, u\ne x} d(x, u)$$
+
+Il est ensuite nécessaire de calculer la <color #ed1c24>**séparation**</color>. Il s'agit de la distance minimum entre une observation particulière et les observations des autres clusters divisée par le nombre d'observations hors cluster :
+
+$$b(x) = \min_{l \ne k} \frac{1}{n_{l} - 1} \sum_{u \in C_{l}} d(x, u)$$
+
+On peut enfin calculer le score de <color #ed1c24>**silhouette**</color> qui sera compris dans [-1,1] :
+
+$$s(x) = \frac{b(x) - a(x)}{\max(a(x), b(x))} $$
+
+**Interprétation :**
+
+  * Si l'observation est proche de 1, elle se trouve au centre du bon cluster.
+  * Si l'observation est proche de 0, elle est sur la frontière entre deux clusters.
+  * Si l'observation est proche de -1, elle est dans le mauvais cluster.
+
+Enfin, on fait la moyenne des scores pour avoir une idée globale de la performance du modèle.
+
+__En Python :__
+
+<code python>
+from sklearn.metrics import silhouette_score
+silhouette = []
+K_range = range(2,10)#Création d'une liste de nombre de cluster
+for k in K_range:
+    model = KMeans(n_clusters = k, max_iter=500, init='k-means++').fit(data)
+    silhouette.append(silhouette_score(data, model.labels_))
+
+#Visualisation idem que pour Elbow Method
+</code>
+
+__En R :__
+
+<code python>
+library(cluster)
+silhouette_score <- function(k){
+    km <- kmeans(data, center=k)
+    ss <- silhouette(km$cluster, dist(data))
+    mean(ss[, 3])
+}
+k <- 2:10
+avg_sil <- sapply(k, silhouette_score)
+plot(k, type='b', avg_sil, xlab='Number of clusters', ylab='Average Silhouette Scores', frame=FALSE)
+</code>
+
+**Résultat :**
+
+{{ :cpp:score_de_silhouette.png?400 |}}
+;#;**Figure 6 :** Évolution du score de silhouette en fonction du nombre de cluster
+;#;
+
+On confirme ainsi que le <color #ed1c24>**nombre optimal de clusters**</color> est encore de<color #ed1c24>** 5**</color>. On peut donc modifier les <color #ed1c24>**hyperparamètres**</color> pour avoir son <color #ed1c24>**modèle optimisé**</color>. 
+
+**Sources :**
+
+  * [[https://www.youtube.com/watch?v=FTtzd31IAOw&list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&index=28| Machine Learnia, par Guillaume Saint-Cirgue]]
+  * Cours de Data Mining : Clustering, par Astrid Jourdan, CY Tech
+  * [[https://lovelyanalytics.com/2017/11/18/cah-methode-mixte/]]
+  * [[https://www.youtube.com/watch?v=N7sx9_nX8Ng&list=PLPN-43XehstOjGY6vM6nBpSggHoAv9hkR]]
+  * [[https://medium.com/codesmart/r-series-k-means-clustering-silhouette-794774b46586]]
+
+====L'indice de Davies-Bouldin====
+
+L'indice de Davies-Bouldin est encore plus complexe à calculer mais reste la mesure la <color #ed1c24>**plus utilisée**</color> pour connaître la <color #ed1c24>**qualité**</color> d'un algorithme de <color #ed1c24>**clustering**</color>. Pour obtenir cet indice on a besoin des deux indices de la **figure 7**.
+
+
+{{ :cpp:indice-davies-bouldin.png?400 |}}
+;#;**Figure 7 :** Mesures pour l'indice de Davies- Bouldin
+;#;
+
+**Théorie :**
+
+On commence par calculer l'<color #ed1c24>**homogénéité**</color> pour chacun des clusters :
+
+$$T_{k} = \frac{1}{n_{k}} \sum_{x \in C_{k}} d(x, \mu_{k})$$
+
+^  Théorie  ^  Signification  ^
+|  d(x)  |  Mesure de distance  |
+|  $n_{k}$  |  Effectif du cluster $k$  |
+|  $\mu_{k}$  |  Centre du cluster $k$  |
+
+
+On calcule ensuite la <color #ed1c24>**distance inter- clusters**</color> :
+
+$$S = \frac{2}{K(K-1)} \sum_{k = 1}^{K} \sum_{l = k+1}^{K} S_{kl}$$
+
+^  Théorie  ^  Signification  ^
+|  $K$  |  Nombre total de clusters définis  |
+|  $S_{kl}$  |  Distance entre le centroïde $k$ et le centroïde $l$ ( $d(\mu_{k}, \mu{l})$)  |
+
+On peut calculer l'indice de <color #ed1c24>**Davies-Bouldin**</color> pour les <color #ed1c24>**clusters 2 à 2**</color> en combinant ces deux mesures :
+
+$$D_{k} = \frac{T_{k} + T_{l}}{S_{kl}} \, avec \, k \ne l$$ 
+
+Enfin, on calcule l'<color #ed1c24>**indice global de Davies-Bouldin**</color> :
+
+$$DB = \frac{1}{K} \sum_{k = 1}^{K} D_{k}$$
+
+Plus l'indice est proche de 0 et meilleur est le modèle.
+
+__En Python :__
+
+<code python>
+from sklearn.metrics import davies_bouldin_score
+
+davidBouldin = []
+K_range = range(3,10)#Création d'une liste de nombre de cluster
+for k in K_range:
+    model = KMeans(n_clusters = k, max_iter=500, init='k-means++').fit(data)
+    davidBouldin.append(davies_bouldin_score(data, model.labels_))
+
+#Partie visualisation identique à celle du calcule d'inertie et de silhouette
+</code>
+
+__En R :__
+
+<code python>
+library(clusterSim)
+DB_score <- function(k){
+    km <- kmeans(data, center=k)
+    index.DB(data, km$cluster)$DB
+}
+k <- 3:10
+DB <- sapply(k, DB_score)
+plot(k, type='b', DB, xlab='Number of clusters', ylab='Average Silhouette Scores', frame=FALSE)
+</code>
+
+**Résultat :**
+
+{{ :cpp:david_bouldin.png.png?400 |}}
+;#;**Figure 8 :** Évolution de l'indice de Davies-Bouldin en fonction du nombre de clusters
+;#;
+
+**Source :**
+  * [[https://fr.wikipedia.org/wiki/Indice_de_Davies-Bouldin#:~:text=L'indice%20de%20Davies%2DBouldin,entre%20deux%20centres%20de%20groupes.]]
+  * [[https://openclassrooms.com/fr/courses/4379436-explorez-vos-donnees-avec-des-algorithmes-non-supervises/4379556-definissez-les-criteres-que-doit-satisfaire-votre-clustering]]
+=====Limites des K-means=====
+
+Pourvu de nombreuses qualités, cet algorithme présente néanmoins 2 grandes faiblesses :
+
+  * Comme vu précédemment, il nécessite d'être <color #ed1c24>**entrainé plusieurs fois**</color> avant d'obtenir les paramètres optimaux. L'entrainement est certes rapide mais utilise de <color #ed1c24>**grands jeux de données**</color> ce qui peut amener une baisse <color #ed1c24>** de performance**</color> importante.
+  * Il gère très <color #ed1c24>**mal les clusters ovales**</color> c'est pourquoi, dans ce cas précis, il est préférable d'utiliser un algorithme de clustering à densité.

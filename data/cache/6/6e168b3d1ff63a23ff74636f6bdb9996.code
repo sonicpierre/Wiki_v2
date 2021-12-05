@@ -1,0 +1,7 @@
+<span class="kw1">from</span> statsmodels.<span class="me1">tsa</span>.<span class="me1">seasonal</span> <span class="kw1">import</span> seasonal_decompose
+&nbsp;
+n<span class="sy0">,</span> m <span class="sy0">=</span> <span class="nu0">12</span><span class="sy0">,</span> <span class="nu0">8</span>
+&nbsp;
+<span class="kw1">with</span> plt.<span class="me1">rc_context</span><span class="br0">&#40;</span><span class="br0">&#41;</span>:
+    plt.<span class="me1">rc</span><span class="br0">&#40;</span><span class="st0">&quot;figure&quot;</span><span class="sy0">,</span> figsize<span class="sy0">=</span><span class="br0">&#40;</span>n<span class="sy0">,</span>m<span class="br0">&#41;</span><span class="br0">&#41;</span>
+    seasonal_decompose<span class="br0">&#40;</span>data<span class="sy0">,</span> period <span class="sy0">=</span> <span class="nu0">12</span><span class="br0">&#41;</span>.<span class="me1">plot</span><span class="br0">&#40;</span><span class="br0">&#41;</span>

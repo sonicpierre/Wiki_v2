@@ -1,0 +1,379 @@
+[[cpp:IA| Machine Learning]]
+\\
+\\
+{{:cpp:imagecouvertureregression.png?550|}}
+\\
+\\
+\\
+Les différentes régressions sont le plus souvent utilisées pour prédire des <color #ed1c24>**cibles quantitatives**</color> (prix d'appartement, nombre de morts du COVID...). Il en existe beaucoup et nous allons ici décrire les principaux.
+
+=====Génération de points=====
+
+Pour commencer nous allons générer les points qui nous permettront d'entraîner les modèles. On rajoute un certain bruit modélisé grâce à l'aléatoire sur les données.
+
+__En python :__
+
+<code python>
+X = 2 * np.random.rand(100, 1)
+y = 4 + 3 * X + np.random.randn(100,1)
+plt.figure(figsize=(10,8))
+plt.scatter(X,y)
+</code>
+
+__En R :__
+
+<code python>
+X = 2 * rnorm(100,1,1)
+y = 4 + 3 * X + rnorm(100,1,1)
+plot(X,y)
+</code>
+
+**Résultat**
+
+{{ :cpp:regressiontestpython.png?400 |}}
+=====Principe des régressions linéaires=====
+
+Supposons que nous aillons que 3 variables qui caractérisent un lama son <color #ed1c24>**poids**</color>, <color #ed1c24>**sa taille**</color> et <color #ed1c24>**sa vitesse de course**</color>. Nous appellerons chacune de ces variables $x_{0}$, $x_{1}$, $x_{2}$. Nous allons essayé de prédir sa <color #ed1c24>**note au futur salon de l'agriculture**</color>.
+====Théorie :====
+
+La régression linéaire est <color #ed1c24>**une méthode**</color> permettant d'exprimer notre variable cible (note du la lama) sous la forme : 
+
+$$y = a * x_{0} + b * x_{1} + c * x_{2} + d + \epsilon$$ 
+
+^  Théorie  ^  Signification  ^
+|  y  |  La variable prédite  |
+|  $(x_{0}, x_{1}, x_{2})$  |  Les variables d'entrainement  |
+|  $(a, b, c)$  |  Les différentes pondérations  |
+|  $d + \epsilon$  |  d le terme constant plus le bruit  |
+
+On peut résumer cette équation à :
+
+$$ŷ = h_{\theta}(x) = \theta . x$$
+
+^  Théorie  ^  Signification  ^
+|  $\theta$  |  Le vecteur paramètre du modèle $(a,b,c,d)$  |
+|  $x$  |  Les variables d'entrainement $(x_{0}, x_{1}, x_{2}, 1_{m})$  |
+|  $ŷ$  |  La valeur de la variable cible prédite  |
+**Erreur associée**
+\\
+La MSE (Mean Square Error) est la plus simple à minimiser et implique que la RMSE (Root Mean Square Error) sera minimisée. Rappelons la forme qui la caractérise :
+
+$$MSE(X,h_{\theta}) = \frac{1}{m} \overset{m}{\underset{i = 1}{\sum}} (ŷ - y^{(i)})^2 $$
+
+^  Théorie  ^  Signification  ^
+|  y  |  La véritable valeur de la variable prédite  |
+|  m  |  Le nombre d'observations  |
+
+<alert warning>**Remarque :** Il est important de bien comprendre cette mesure car on va essayer de la minimiser par plusieurs méthodes.</alert>
+====Méthode analytique (mathématiques)====
+
+Une des méthodes pour obtenir les meilleurs coefficients est l'équation normale. Elle permet de minimiser l'erreur MSE mais oblige la matrice à être inversible :
+
+$$\theta = (X~^tX)^{-1} X~^t y $$
+
+**Pratique :**
+
+Si la matrice n'est pas inversible vous tomberez soit sur des résultats aberrants soit sur une erreur de l'ordinateur.
+
+__En Python :__
+
+<code python>
+X_b = np.c_[np.ones((100,1)), X] # ajouter x0 = 1 à chaque observation voir partie théorique
+theta_best = np.linalg.inv(X_b.T.dot(X_b)).dot(X_b.T).dot(y) #.dot permet la multiplication entre matrices et .linalg.inv permet d'inverser la matrice 
+print(theta_best)
+</code>
+
+__En R :__
+
+<code python>
+vecteurUnitaire <- rep(1,100)
+X_b = matrix(c(vecteurUnitaire, X), nrow = 100, ncol = 2)
+theta_best <- solve(aperm(X_b) %*% X_b) %*% aperm(X_b) %*% y #%*% permet de faire une multiplication entre 2 matrices, aperm permet de calculer une transposée
+print(theta_best)
+</code>
+
+**Résultat :**
+
+<nowiki>
+array([[4.215087],
+      [2.7701154]])
+</nowiki>
+
+Si la méthode était parfaite on aurait trouvé a=4 et b=3, le bruit dans le jeu de données n’a pas donné cette possibilité.
+
+====Méthode utilisant les librairies====
+
+Cette méthode est prés codé et utilise la méthode des moindres carrés avec la fonction scipy.linalg.ltsq().  
+
+__En Python :__
+
+<code python>
+from sklearn.linear_model import LinearRegression
+lin_reg = LinearRegression()
+lin_reg.fit(X,y)
+print(lin_reg.intercept_) #Il s'agit du terme constant
+print(lin_reg.coef_)  #Il s'agit des pondérations
+</code>
+
+__En R :__
+
+<code python>
+model = lm(X~y)
+print(coef(model))
+</code>
+
+**Résultat :**
+
+<nowiki>
+[4.21]
+[[2.75]]
+</nowiki>
+
+Maintenant qu'on a un modèle il est intéressant de calculer son erreur MSE
+
+__En python :__
+
+<code python>
+from sklearn.metrics import mean_squared_error
+ypred = lin_reg.intercept_ + lin_reg.coef_[0] * X
+mean_squared_error(y, ypred)
+</code>
+
+__En R :__
+
+<code python>
+lm_mse <- mean((y - model$fitted.values)^2)
+print(lm_mse)
+</code>
+
+**Résultat :**
+
+0.7728972383696089
+
+Visualisons les résultats dans un graphique adapté pour être sûr de ses résultats :
+
+__En Python :__
+
+<code python>
+plt.figure(figsize=(10,8))
+plt.scatter(X,y)
+x = np.linspace(0, 2, 1000)
+yConstruit = theta_best[0] * x + theta_best[1]
+plt.plot(x,yConstruit)
+</code>
+
+__En R :__
+
+<code python>
+library(pracma)
+plot(X,y)
+x = linspace(-3,30,1500)
+yConstruit = coef(model)[1] + coef(model)[2] * x
+lines(yConstruit, x)
+</code>
+
+{{ :cpp:resregression.png?400 |}}
+
+====Utilisation :====
+
+| ^ Gérer beaucoup de donnée    ^ Complexité    ^ Evaluer la précision^
+^ Régression linéaire ​    |Ce modèle est optimal quand il n’y a pas trop de variables (<100 000)| Quadratique $O(n^{2}$), sinon l'inversion de la matrice est trop coûteuse.         | Métrique adapté RMSE	|
+
+**Source :**
+  * [[https://openclassrooms.com/fr/courses/1393696-effectuez-vos-etudes-statistiques-avec-r/1394666-les-matrices]]
+  * [[https://fr.wikibooks.org/wiki/Programmer_en_R/Manipuler_les_matrices]]
+=====Les descentes de gradient=====
+
+<alert warning>**Indication :**  Il est important de normaliser les données avant d'appliquer un algorithme de descente de gradient.</alert>
+
+Nous allons ici développer la descente de gradient dans le cas d'une régression linéaire mais il est important de savoir que cette méthode est une des plus utilisées dans les problèmes d'optimisation.
+====Les descentes de gradient classiques====
+
+Commençons par introduire le problème de la descente de gradient :
+
+[{{ :cpp:descentedegradient.png?950 | Schéma d'une descente de gradient}}]
+
+<alert warning>**Remarque :** La fonction MSE représentative de l'erreur est convexe, il n'y a donc pas de minimums locaux (petits creux avant le fond de la vallée).</alert>
+
+\\
+**Théorie :**
+
+Il faut voir la <color #ed1c24>**complexité**</color> comme une fonction dont on <color #ed1c24>**cherche le minimum**</color> (la vallée). On fait varier les paramètres pour essayer d'avoir un <color #ed1c24>**minimum d'erreur**</color>. Pour cela, on calcule les <color #ed1c24>**dérivées partielles de cette fonction**</color> par rapport aux différents paramètres :
+
+$$\nabla_{\theta}MSE(\theta) = \begin{pmatrix}
+\frac{\partial }{\partial \theta_{0}} MSE(\theta)\\[4mm]
+\frac{\partial }{\partial \theta_{1}} MSE(\theta)\\[0.1mm]
+.\\[0.1mm]
+.\\[0.1mm]
+.\\[0.1mm]
+\frac{\partial }{\partial \theta_{n}} MSE(\theta)\\[0.1mm]
+\end{pmatrix}  = \frac{2}{m} + X~^t(X\theta - y)$$
+
+^  Paramètre  ^  Signification  ^
+|  $\nabla_{\theta}MSE(\theta)$  |  Gradient de la fonction d'erreur  |
+|  $X$  |  Ensemble du jeu d'entrainement  |
+|  $\theta$  |  Paramètre de la fonction prédictive  |
+|  $y$  |  Réponse aux estimations  |
+|  $m$  |  Nombre d'échantillons  |
+
+On peut définir maintenant la suite qui va permettre d'adapter les différents paramètres en réduisant à chaque fois l'erreur.
+\\
+$$ \theta_{n+1} = \theta_{n} - \eta * \nabla_{\theta}MSE(\theta_{n})$$
+\\
+^      Paramètre        ^ Signification^
+| $\eta$ | Le pas du Monsieur (taux d'apprentissage) |
+
+**Pratique sans librairies :**
+
+Maintenant, nous allons mettre en place cet algorithme d'un <color #ed1c24>**point de vue technique**</color> dans le code. Pour démarrer on <color #ed1c24>**fixe les constantes importantes**</color> et nécessaires à l'algorithme et on fixe le point de départ aléatoirement.
+
+__En Python :__
+
+<code python>
+eta = 0.1 #Taux d'apprentissage (pas du Monsieur)
+n_iterations = 1000 #Nombre d'itérations de l'algorithme
+m = 100 #Nombre d'échantillons
+theta = np.random.randn(2,1) #Paramètre fixé aléatoirement
+X_b = np.c_[np.ones((100,1)), X] #ajoute x0 = 1 à chaque observation
+</code>
+
+__En R :__
+
+<code python>
+eta <- 0.1
+n_iteration <- 100
+m <- 100
+theta <- rnorm(2)
+X_b <- matrix(c(vecteurUnitaire, X), nrow = 100, ncol = 2)
+</code>
+
+Maintenant que nous avons défini les constantes nécessaires, il est possible de traduire les formules correctement :
+
+__En Python :__
+
+<code python>
+for iteration in range(n_iterations):
+    gradients = 2/m * X_b.T.dot(X_b.dot(theta)-y)
+    theta = theta - eta * gradients
+</code>
+
+__En R :__
+
+<code python>
+for(i in 0:n_iteration){
+    gradient <- 2/m * aperm(X_b) %*% ((X_b %*% theta) - y)
+    theta <- theta - eta * gradient 
+}
+</code>
+
+<alert warning>**Remarque :** Il est parfois plus judicieux de fixer une erreur minimale plutôt qu'un nombre d'itération maximal</alert>
+
+**Résultat :**
+
+{{ :cpp:descentegradientpetit.png?400 | Mr fait des pas trop petits}} {{:cpp:descentegradienttropgrand.png?400 | Mr fait des pas trop grands}}
+
+{{:cpp:descentegradientok.png?400 | Mr fait la bonne taille de pas}}
+
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+**Pratique avec les librairies :**
+
+Il est aussi possible de faire une descente de gradient dans ce cas en utilisant les librairies 
+
+__En Python :__
+
+<code python>
+from sklearn.linear_model import SGDRegressor
+model1 = SGDRegressor()
+model1.fit(X,y.ravel())
+model1.intercept_
+model.coef_
+</code>
+
+__En R :__
+
+<code python>
+library(gradDescent)
+model1 <- gradDescentR.learn(Dtoy, featureScaling = FALSE, learningMethod = "GD", seed = 1)
+print(model1$model)
+</code>
+
+<alert danger>**Danger :** L'ensemble des données est utilisé à chaque fois ce qui est un véritable problème car le programme en est fortement ralenti.</alert>
+====Les descentes de gradient stochastiques====
+
+Pour essayer de contrer la perte de temps dû au fait d'appliquer les calculs sur toutes les données à chaque itération la descente de gradient stochastique est apparue.
+
+**Théorie**
+
+On va comparer et calculer le gradient en prenant une seule observation à chaque fois. Il y a différents avantages et des inconvénients à cela :
+  * <color #22b14c>Ceci accélère considérablement le programme mais va rendre la descente beaucoup plus irrégulière, votre bonhomme va monter puis redescendre mais en moyenne descendra.</color>
+  * <color #22b14c>Cette méthode est une façon d'éviter les minimums locaux si la fonction représentative de l'erreur en a.</color>
+  *<color #ed1c24> L'algorithme n'atteindra jamais le minimum exact.</color>
+
+<alert info>**Info :** Un autre bon moyen de mettre d'éviter les minimums locaux est de faire varier le pas durant la marche. On met un grand pas au départ et on réduit petit à petit. </alert>
+
+**Pratique**
+
+Mettons en place cet algorithme à l'aide des librairies disponibles :
+
+__En Python :__
+
+<code python>
+from sklearn.linear_model import SGDRegressor
+#eta est le taux d'apprentissage
+#tol est la précision visée
+#penalty permet de savoir si on effectue des opérations de régularisation ( prochaine page)
+sgd_reg = SGDRegressor(max_iter = 1000, tol=1e-3, penalty=None, eta=0.1)
+sgd_reg.fit(X, y.ravel()) #ravel permet de tout mettre dans une liste à une dimension
+print(sgd_reg.intercept_) #affiche le coefficient constant
+print(sgd_reg.coef_) #affiche les autres coefficients 
+</code>
+
+__En R :__
+
+Avant d'entraîner le modèle R va prendre l'ensemble des données, il faudra que la variable cible se trouve à la fin 
+
+<code python>
+library(gradDescent)
+donneeTotales <- matrix(c(X_b, y), nrow = 100, ncol = 2)
+</code>
+
+On peut maintenant entraîner le modèle
+
+<code python>
+#Feature Scaling permet de recalibrer les variables quand elles ne sont pas à la même échelle
+#seed fixe la valeur de départ
+sgd_reg <- gradDescentR.learn(donneeTotales, featureScaling = FALSE, learningMethod = "SGD", seed = 1)
+#Remarque importante par desfaut le taux d'apprentissage est à 0.1 et le nombre maximum d'itération est de 10 
+#ce qui est loi d'être optimal dans certains cas.
+# Proposons une alternative :
+sgd_reg <- gradDescentR.learn(donneeTotales, featureScaling = FALSE, learningMethod = "SGD", seed = 1, control = list(maxIter = 100))
+print(mgd2$model)
+</code>
+
+<color #22b14c><fs large>**Approffondir :**</fs> Il existe un dernier algorithme qui est utilisé dans le cas de la régression linéaire. Il s'agit de la descente de gradient par lot. Ici on on n'utilise pas une ou toute les valeurs à chaque itération mais un lot. Il n'y a pas de grosses différences notables.</color>
+
+**Source :**
+  * http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Gradient_Descent_R.pdf
+  * http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Stochastic_Gradient_Descent_Python.pdf
+
+=====Synthèse=====
+
+Rappelons rapidements les différents algorithmes que nous avons dans cette page
+\\
+^  Algorithme  ^  m grand  ^  n grand  ^  Normalisation requise ^ Hors mémoire possible  ^
+|  Equation normale  |  rapide  |  lent  |  non  |  non  |
+|  Régression linéaire classique  |  rapide  |  lent  |  non  |  non  |
+|  Descente de gradient classique  |  lent  |  rapide  |  oui  |  oui  |
+|  Descente de gradient stochastique  |  rapide  |  rapide  |  oui  |  oui  |

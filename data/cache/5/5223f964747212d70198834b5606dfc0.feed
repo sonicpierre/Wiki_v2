@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generator="FeedCreator 1.8" -->
+<?xml-stylesheet href="https://llamaspartan.fr/lib/exe/css.php?s=feed" type="text/css"?>
+<rdf:RDF
+    xmlns="http://purl.org/rss/1.0/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel rdf:about="https://llamaspartan.fr/feed.php">
+        <title>Llamas'Partan</title>
+        <description></description>
+        <link>https://llamaspartan.fr/</link>
+        <image rdf:resource="https://llamaspartan.fr/lib/tpl/flat/images/favicon.ico" />
+       <dc:date>2021-05-31T01:31:23+0200</dc:date>
+        <items>
+            <rdf:Seq>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=livres_de_l_association&amp;rev=1608479143&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=meilleurs_travaux_etudiants&amp;rev=1608479423&amp;do=diff"/>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=start&amp;rev=1614543326&amp;do=diff"/>
+            </rdf:Seq>
+        </items>
+    </channel>
+    <image rdf:about="https://llamaspartan.fr/lib/tpl/flat/images/favicon.ico">
+        <title>Llamas'Partan</title>
+        <link>https://llamaspartan.fr/</link>
+        <url>https://llamaspartan.fr/lib/tpl/flat/images/favicon.ico</url>
+    </image>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=livres_de_l_association&amp;rev=1608479143&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-12-20T16:45:43+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>livres_de_l_association</title>
+        <link>https://llamaspartan.fr/doku.php?id=livres_de_l_association&amp;rev=1608479143&amp;do=diff</link>
+        <description>La bibliothèque Lama
+
+Dans le but d'améliorer et rendre le savoir accessible à moindre coût dans les domaines très spécialisés, l'association a décidé d'investir dans des livres et vous les rendre disponibles. Ils pourront être utilisés par les étudiants mais aussi les professeurs pour de la documentation personnelle ou pour l'écriture de pages dans notre association.</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=meilleurs_travaux_etudiants&amp;rev=1608479423&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-12-20T16:50:23+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>meilleurs_travaux_etudiants</title>
+        <link>https://llamaspartan.fr/doku.php?id=meilleurs_travaux_etudiants&amp;rev=1608479423&amp;do=diff</link>
+        <description>Nous vous proposons ici un premier recensements des différents travaux étudiants qui se sont illustrés dans le cadre scolaire mais aussi lors de nos évènements. Nous présenton ici 3 grands types de travaux :
+
+Projet à initiative personnelle</description>
+    </item>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=start&amp;rev=1614543326&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2021-02-28T21:15:26+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>start</title>
+        <link>https://llamaspartan.fr/doku.php?id=start&amp;rev=1614543326&amp;do=diff</link>
+        <description>[ Llamas'Partan]
+
+
+Bienvenue sur notre site, rappelez-vous, malgré les apparences, les lamas trouvent toujours leur chemin dans la montagne.
+
+
+
+	*   Qui sommes-nous ?
+	*   Charte d'écriture
+
+L'intelligence artificielle
+
+[ Intelligence Artificielle]
+
+
+
+L'intelligence artificielle est un domaine en plein essor. Il est  nécessaire de se former pour savoir quand et comment proposer des solutions adaptées aux différentes problématiques. Les fiches Llamas'partan se veulent, avant tout, pratiques mais …</description>
+    </item>
+</rdf:RDF>

@@ -1,0 +1,4 @@
+<span class="co1">#On calcule la moyenne mobile d'ordre 12</span>
+moyenne_mobile <span class="sy0">=</span> data_sans_tendance.<span class="me1">rolling</span><span class="br0">&#40;</span><span class="nu0">12</span><span class="br0">&#41;</span>.<span class="me1">mean</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#On calcule les coefficients saisonniers</span>

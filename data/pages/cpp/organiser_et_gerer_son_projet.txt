@@ -1,0 +1,193 @@
+{{ :cpp:orga_projet_header.png?500 |}}
+
+On va dans cette partie voir comment faire pour organiser correctement un projet via deux exemples. Afin de comparer la manière de procéder dans un cadre privé et dans un cadre professionnel.
+<columns 100% Colonne 50%>
+== Cadre privé (universitaire) ==
+{{ :cpp:projet.png?1000 |}}
+\\
+Contraintes du projet :
+  * Durée : 6 mois
+  * Participants : 3 développeurs sans expérience 
+Le client veut une application Android permettant de dessiner sur une carte une piste à suivre. Cette piste est partageable avec ses amis pour que plusieurs personnes puissent la faire. Il doit y avoir la possibilité de comparer les temps fais par chacun, avec la date, l'heure et la météo du jour.
+<newcolumn second>
+== Cadre professionnel ==
+{{ :cpp:projet_entreprise.png?800 |}}
+\\
+\\
+On va traiter le même sujet que dans le cadre privé, mais avec un temps beaucoup plus court comme l'équipe de travail est plus grande.
+
+Le **Product Owner (PO)** est la personne responsable du projet, c'est elle qui décide des tâches à faire.
+
+Le **Scrum Master (SM)** est la personne responsable de l'équipe, elle prépare et préside les réunions.
+
+Le **Développeur Qualité** a pour rôle de vérifier que le travail des autres développeurs est fonctionnel, il peut également intervenir lors de phases de tests d'un produit.
+</columns>
+
+
+====== Dangers lors d'un travail en groupe ======
+===== Source de problèmes =====
+{{ :cpp:danger.png?800 |}}
+
+===== Conséquences =====
+Problèmes engendrés : 
+  * Le développeur chargé de l'affichage du trajet sur la carte est bloqué par celui qui doit afficher la carte. **<fc #ff0000>(Désorganisation)</fc>**
+  * La livraison de l'application a 2 semaines de retard. **<fc #ff0000>(Retard de livraison)</fc>**
+  * Un développeur ne travaille plus pendant 1 semaine. **<fc #ff0000>(Démotivation)</fc>**
+  * Il manque le partage via Twitter. **<fc #ff0000>(Fonctionnalité manquante)</fc>**
+  * La géolocalisation n'est pas toujours fiable. **<fc #ff0000>(Fonctionnalité non aboutie)</fc>**
+
+====== Eviter les problèmes ======
+La résolution de problèmes liés au management et à la technique sont de véritables défis en entreprise. C'est pourquoi nous allons développer ces points ci-dessous.
+===== Connaître le client =====
+L'objectif est de contenter le client avant tout, cependant il ne sait pas toujours comment mener à bien son projet. Il faudra donc faire particulièrement attention à notre relation avec lui et garder une bonne communication pour aboutir à un résultat satisfaisant.
+==== Qu'est-ce qu'un client ? ====
+{{ :cpp:client.png?400 |}}
+
+Le client peut être représenté par plusieurs types de personnes. Tous n'ont pas la même capacité à prévoir un projet. Il faut donc répondre à plusieurs question avant de débuter le travail.
+
+^ Questions à se poser ^ Application avec l'exemple ^
+| Les fonctionnalités sont-elles décrites très précisément ? | Quelles plateformes vont permettre de partager les temps ? Facebook, Twitter, Mail, etc. |
+| Suis-je libre du choix des technologies utilisées ? | On peut utiliser Java et Kotlin, le client a-t-il une préférence ? |
+| Comment impliquer le client dans l'avancement ? | Tous les mois on organise une présentation de l'application devant le client |
+| Quelles sont les disponibilités des participants et du clients ? | Tous les mois on organise la présentation le mercredi après-midi |
+
+===== Besoins et Dangers liés au Leadership =====
+
+Pour organiser le groupe il est plus simple d'avoir un **chef de projet**. Son rôle va être d'avoir une vision d'ensemble et de trancher la prise de décision. Il faut cependant bien jauger son importance dans le projet.
+\\
+{{ :cpp:leadership.png?400 |}}
+\\
+^ Manque d'un chef de projet ^ Chef de projet trop présent    ^ Avantage du chef de projet ^
+| Pas d'organisation du travail | Il ne travaille pas sur le coeur du projet | Vision d'ensemble du projet |
+| Les participants ne savent pas ce qu'il se passe autour d'eux | Démoralisation des autres participants | Facilite les échanges entre les participants |
+| Prise de décision inexistante, ou lente | Augmentation des tensions | Prises de décisions plus rapides |
+
+===== Rôles du chef de projet =====
+{{ :cpp:roles.png?1000 |}}
+==== Attribuer une difficulté à chaque tâche ====
+Pour représenter une difficulté on utilise ici la **suite de Fibonacci**, cela permet de mieux montrer la difficulté que de garder une échelle linéaire. On remarque aussi que la somme des difficultés des sous-tâches ne donne pas la difficulté de la tâche principale.
+
+Pour établir la difficulté d'une tâche, on utilise une unité appelée **Story Point**, attention de ne pas confondre difficulté et temps de réalisation. Il faut aussi se rappeler que souvent dans le milieu professionnel, une tâche contient plusieurs étapes : 
+  * **<fc #4682b4>Raffinement</fc>** : On décrit plus précisément la tâche,  ses critère de validation et ses story points.
+  * **<fc #4682b4>Développement</fc>** : On réalise la tâche.
+  * **<fc #4682b4>Vérification</fc>** : Un autre membre du groupe (un développeur), regarde le code et indique les modifications à faire pour passer à l'étape suivante.
+  * **<fc #4682b4>Validation</fc>** : Un autre membre du groupe (un développeur qualité), teste la modification d'un point de vue fonctionnel manuellement ou avec des tests. 
+  * **<fc #4682b4>Intégration</fc>** : On intègre le travail à la base de code générale, la modification fait parti du produit.
+{{ :cpp:steps.png?800 |}}
+
+== Source ==
+  * https://www.qualitystreet.fr/2016/11/09/sprint-planning/
+
+Pour trouver la difficulté d'une tâche, c'est l'expérience qui sera utilisé dans un milieu professionnel. Dans les sociétés de services on pourra aussi trouver des **<fc #9acd32>abaques</fc>**, ce sont des documents indiquant le temps de travail pour réaliser une tâche. Par exemple : //faire une page pour une application android// correspond à 2 jours/homme, c'est à dire le travail effectué par un homme en 2 jours.
+
+Dans certains cas (tels que la recherche), on ne possède ni abaques ni expérience dans le domaine. On va alors utiliser des méthodes faisant une sorte de moyenne de l'avis de chacun. Chacun décide d'une difficulté grâce à **la technique du doigt mouillé**, c'est à dire que l'on essaie de deviner la difficulté.
+
+Ensuite on va rassembler les **<fc #cd5c5c>avis de chacun</fc>**, on peut alors tout simplement faire la **<fc #cd5c5c>moyenne</fc>** (puis la ramener sur la suite de Fibonacci). On peut aussi prendre la **<fc #cd5c5c>valeur majoritairement</fc>** représentée. 
+Il y a aussi des techniques un peu plus développée telle que le **poker planning**. On va ici utiliser un jeu de carte pour noter la difficulté et montrer toutes les cartes au même moment. L'avantage de cet méthode est surtout d'avoir un côté ludique.
+
+De manière plus générale, c'est important dans un projet de **<fc #ff0000>faire réfléchir individuellement</fc>** avant de mettre en commun (on obtient souvent une plus grande diversité dans les réponses). 
+
+== Source ==
+  * https://blog-gestion-de-projet.com/quest-ce-que-le-planning-poker/
+
+==== Découpage des tâches ====
+On va découper la tâche **affichage d'une carte avec l'emplacement de l'utilisateur**.
+
+Au départ, comme l'on ne sait pas exactement quoi faire on va avoir besoin d'une première tâche de recherche de solution, où l'on va chercher des sources, des bibliothèques. Cette tâche peut prendre assez de temps, on va lui attribuer une difficulté de 5.
+
+Après recherche on se rend compte que la tâche complète représente une difficulté de 13.
+Pour faire une meilleure découpe, on s'<fc #ff0000>**interdit de dépasser 8 de difficulté**</fc>.
+On peut donc redécouper la tâche :
+  * Création d'une activité : 2
+  * Insertion de la carte dans l'activité : 3
+  * Récupération des coordonnées GPS de l'utilisateur : 3
+  * Affichage d'un point représentant l'utilisateur : 3
+
+En entreprise, on peut considérer qu'une personne peut faire environ **<fc #ff0000>10 story points</fc>**.
+
+==== Outils ====
+
+^ Outils ^ Description ^ Lien d'accès ^
+| Google Agenda| Agenda pouvant être mis en commun. Permet de faire des invitations par emails | https://www.google.com/intl/fr/calendar/about/ |
+| Outlook| Similaire à Google Agenda, mais fournit par Microsoft | https://outlook.office.com/calendar/ |
+| Doodle| Sondage pour trouver le meilleur créneau pour un évênement | https://doodle.com/fr/ |
+| Trello| Organisation des tâches (Kanban) | https://trello.com/fr |
+| Jira| Solution pour les professionnels similaire à Trello (Kanban) | https://www.atlassian.com/fr/software/jira |
+| Slack| Messagerie instantanée avec possibilité de conversation de groupes et de répondre dans un fils de discussion indépendant | https://slack.com/intl/fr-fr/ |
+| Discord| Messagerie instantanée, salon de discussion audio et vidéo, gestion des permissions individuelles et de groupes | https://discord.com |
+
+=== Diagramme de Gantt ===
+Un diagramme de Gantt est une représentation schématique des tâches au cours du temps. Il est souvent demandé dans un cadre scolaire où on aura un diagramme prévisionnel et un diagramme réel. En entreprise il est très peu utilisé.
+
+On préferera des **roadmaps**, qui sont tous simplement des frises chronologiques indiquant les objectifs à venir.
+En général le diagramme de Gantt est utilisé avec une unité de l'ordre de la semaine, alors que la roadmap est plus souvent utilisé au mois voir au trimestre près.
+{{ :cpp:gantt.png?1000 |}}
+
+== Sources ==
+  * https://depictdatastudio.com/adjusting-bar-chart-spacing-microsoft-excel/
+  * https://www.officetimeline.com/make-gantt-chart/excel
+  * http://ww2.ac-poitiers.fr/biochimie/IMG/pdf/ganttproject_guide.pdf
+  * https://disciplines.ac-toulouse.fr/sii/sites/sii/files/ressources/didacticiels/gestion-projet/ganttproject.pdf
+
+==== Garder une bonne ambiance ====
+{{ :cpp:ambiance.png?400 |}}
+
+Récupérer des retours sur les réunions permet aussi de rendre les séances de travail plus agréable. On pourra utiliser ici le **ROTI** (**R**eturn **O**n **T**ime **I**nvest). L'idée est de demander à tous les participants de noter de 1 à 5 l'utilité de la réunion pour eux (avec un commentaire facultatif).
+{{ :cpp:roti.png?600 |}}
+
+== Sources ==
+  * https://www.excellence-operationnelle.tv/vous-prendrez-bien-un-roti.php/
+Et avec les deux liens suivant vous pouvez voir comment améliorer le résultat de ce ROTI :
+  * https://www.chefdentreprise.com/Thematique/rh-management-1026/Breves/conseils-organiser-reunion-efficace-301601.htm
+  * https://www.leblogdudirigeant.com/animer-une-reunion
+
+
+====== La fameuse méthode AGILE ======
+
+Le terme de **<fc #ff0000>méthode agile</fc>** est souvent employé en opposition au **<fc #ff0000>cycle en V</fc>**.
+
+===== Avantages et Inconvénients de la méthode agile =====
+^ Avantage ^ Inconvénient ^
+| Corrige plus vite les incompréhensions | Plus de réunions |
+| Permet d'être plus efficace | Lenteur d'adaptation |
+| Facilite l'intégration continue | |
+
+Globalement la méthode agile permet d'avoir de **<fc #008000>meilleurs résultats</fc>** avec un **<fc #008000>coût moins élevé</fc>**. Mais attention il faut pour cela que **<fc #cd5c5c>chacun connaisse son rôle</fc>**, il faut **<fc #cd5c5c>prendre du temps</fc>** pour que l'équipe prenne ses marques.
+
+===== LES méthodes agiles =====
+
+En réalité il n'y a pas qu'une méthode agile, mais plusieurs :
+  * <fc #4682b4>Scrum</fc>
+  * <fc #4682b4>BDD</fc>
+  * <fc #4682b4>FDD</fc>
+  * <fc #4682b4>XP</fc>
+Il y en a d'autres avec chacune ses spécialitées. On va ici se concentrer sur **<fc #ff0000>SCRUM</fc>**, qui est la plus répendue.
+== Source ==
+  * https://fr.wikipedia.org/wiki/M%C3%A9thode_agile
+
+Le **<fc #ff0000>point commun</fc>** de toutes ces méthodes et la découpe du temps sous la forme de **<fc #ff0000>sprints</fc>**. En général, un sprint a une durée de **2 ou 3 semaines**.
+
+===== Scrum =====
+
+On va ici simplement introduire la méthode Scrum sans rentrer trop dans les détails, pour aller plus loin je vous renvoie sur wikipédia : [[https://fr.wikipedia.org/wiki/Scrum_(d%C3%A9veloppement)]].
+
+==== Cérémonies ====
+Les cérémonies sont le nom données aux réunions liés à la méthode. On aura dans l'ordre d'apparition :
+  * **<fc #4682b4>Planning</fc>** : On décrit les tâches à faire pour le sprint.
+  * **<fc #4682b4>Review</fc>** : On fait le point sur ce qui a été fait pendant le sprint.
+  * **<fc #4682b4>Rétrospective</fc>** : On parle de ce qui s'est bien et mal passé pendant le sprint, on peut aborder des sujets plus personnels et des ressentis (tant que ça impacte le travail).
+On ajoutera à cette liste les **<fc #4682b4>dailys</fc>**, au cours des quels on raconte ce qu'on a fait la veille et ce qui est prévu pour la suite de la journée.
+
+Voilà ce que ça donne avec un sprint d'une semaine :
+{{ :cpp:sprint.png?800 |}}
+
+En général on ne met pas les changements de sprints en fin de semaine, pour éviter de faire des changements avec un impact négatif juste avant le weekend. De là même manière, on évite en début de semaine pour pouvoir se garder du temps en fin de sprint pour corriger d'éventuels problèmes.
+
+==== Kanban ====
+Une des dernières choses à savoir de la méthode Scrum est la manière dont sont organisés les tâches.
+Pour cela on utilise un **<fc #ff0000>Kanban</fc>**, c'est un tableau permettant d'afficher dans quel état est la tâche. Un tâche est alors représenté par une carte.
+
+On a vu plus haut des outils pour faire des kanbans (Trello et Jira), mais c'est très simple à mettre en place manuellement avec un tableau ou des post-its.
+Il est important que **<fc #cd5c5c>tous les membres de l'équipe y ai accès</fc>**, ça favorise les **<fc #008000>échanges</fc>** et **<fc #008000>l'implication</fc>** des participants.
+
+{{ :cpp:kanban.png?800 |}}

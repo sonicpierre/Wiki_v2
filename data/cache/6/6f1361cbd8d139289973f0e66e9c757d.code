@@ -1,0 +1,3 @@
+library<span class="br0">&#40;</span>xml2<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>rvest<span class="br0">&#41;</span>
+page <span class="sy0">&lt;</span>- xml2::read_html<span class="br0">&#40;</span><span class="st0">&quot;https://fr.wikipedia.org/wiki/%C3%89tats_des_%C3%89tats-Unis_par_population&quot;</span><span class="sy0">,</span> encoding <span class="sy0">=</span> <span class="st0">&quot;UTF-8&quot;</span><span class="br0">&#41;</span>

@@ -1,0 +1,99 @@
+{{ :cpp:dessinateur.jpg?500 |}}
+
+=====Mise en équation du problème=====
+
+Tout d'abord, posons quelques notations :
+  * $x_1$ le nombre de **<fc #ffc0cb>dagues antiques</fc>**
+  * $x_2$ le nombre de **<fc #fa8072>montres magiques</fc>**
+
+Notre but principal est de maximiser les revenus, c'est-à-dire :
+
+;#;
+$\underset{x}{max}(142x_1+241x_2)$
+;#;
+
+Cependant, il faut respecter certaines contraintes concernant les <fc #008000>**matières premières**</fc> car nous n'en avons qu'une quantité limitée :
+
+;#;
+$\begin{cases} \underset{x}{max}(142x_1+241x_2) \\ 0.23x_1+0.7x_2 \le 20.21 \\ 0.015x_1+0.015x_2 \le 0.705 \\ 1.8x_1+1.1x_2 \le 75 \end{cases} $
+;#;
+
+Finalement, il faut que les quantités d'**<fc #008000>objets produits</fc>** soient positives :
+
+;#;
+$\begin{cases} \underset{x}{max}(142x_1+241x_2) \\ 0.23x_1+0.7x_2 \le 20.21 \\ 0.015x_1+0.015x_2 \le 0.705 \\ 1.8x_1+1.1x_2 \le 75 \\ x_1,x_2 \ge 0\end{cases}$
+;#;
+
+Et voilà ! Nous avons donc un système linéaire qui décrit notre problème !
+
+<alert info>Il est possible que vous réalisiez un problème de minimisation et non de maximisation. Il est possible que vous ayez un $min$ au lieu d'un $max$ et des ≥ au lieu de ≤. Sachez que cela ne change pas grand chose à la méthode géométrique, faites juste attention quand vous tracez le domaine des contraintes (ne "coloriez" pas le mauvais côté).</alert>
+
+=====La méthode géométrique=====
+
+La méthode consiste à tracer un graphe dont les axes seront $x_1$ et $x_2$, à construire le domaine des contraintes $C$ et à déterminer, par la suite,  le **<fc #ffa500>point optimal</fc>**. J'utiliserai l'outil [[https://www.desmos.com/calculator/o2b8mnfigk?lang=fr|Desmos]] pour tracer les courbes.
+
+Tout d'abord, commençons par le graphe :
+
+;#;
+{{:cpp:grapheopti0.png?400|}}
+;#;
+
+ Puisque $x_1$ et $x_2$ doivent être positifs on peut déjà restreindre $C$ :
+
+;#;
+{{:cpp:grapheopti1.png?400|}}
+;#;
+
+On ajoute la contrainte $0.23x_1+0.7x_2 \le 20.21$ :
+
+;#;
+{{:cpp:grapheopti2.png?400|}}
+;#;
+
+<alert info>Pour tracer la droite de contrainte, placez le point $(0,\frac{20.21}{0.7})$ et le point ($(\frac{20.21}{0.23},0)$ puis reliez- les</alert>
+
+On continue avec la contrainte $0.015x_1+0.015x_2 \le 0.705$ :
+
+;#;
+{{:cpp:grapheopti3.png?400|}}
+;#;
+
+Et on termine avec la contrainte $1.8x_1+1.1x_2 \le 75$ :
+
+;#;
+{{:cpp:grapheopti4.png?400|}}
+;#;
+
+Nous avons donc tracé le domaine des contraintes $C$. N'importe quel point, à l'intérieur de la **zone incolore**, respecte les contraintes du problème. Il faut maintenant déterminer le **<fc #ffa500>point optimal</fc>** qui va générer le plus de profits.
+
+Nous allons tracer diverses **lignes de niveau** $L_b$ sur notre graphe. Ces lignes sont des droites d'équation $142x_1+241x_2=b$ et sont toutes parallèles entre elles pour les différentes valeurs de b.
+
+Commençons par tracer $L_{3000}$ :
+
+;#;
+{{:cpp:grapheopti5.png?400|}}
+;#;
+
+Puis $L_{7000}$ :
+
+;#;
+{{:cpp:grapheopti6.png?400|}}
+;#;
+
+Nous en déduisons donc que, pour augmenter les bénéfices, il faut //"monter"// la **ligne de niveau**. Il est alors assez clair que le **<fc #ffa500>point optimal</fc>** $(x_1,x_2)$ se trouve à l'intersection de la ligne pointillée rouge et la ligne pointillée bleue, ce qui veut dire qu'il est solution du système :
+
+;#;
+$\begin{cases} 0.23x_1+0.7x_2 = 20.21 \\ 0.015x_1+0.015x_2 = 0.705 \end{cases} \iff \begin{cases} x_1=27 \\ x_2=20 \end{cases}$
+;#;
+
+<alert info>Il est possible que, dans certains problèmes, il n'y ait pas de point optimal mais une droite optimale (la ligne de niveau est parallèle avec l'une des droites de contraintes).</alert>
+
+On conclut donc que l'alchimiste doit réaliser 27 **<fc #ffc0cb>dagues antiques</fc>** et 20 **<fc #fa8072>montres magiques</fc>** pour avoir le profit maximal de $142*27+241*20=8654$ **<fc #ffa500>pièces d'or</fc>**.
+
+;#;
+{{:cpp:grapheopti7.png?400|}}
+;#;
+
+Et voilà pour la **méthode géométrique** ! Elle a l'avantage d'être très visuelle et simple à comprendre mais elle est limitée à la dimension deux. Pour résoudre de tels problèmes dans des dimensions supérieures, nous aurons besoin de la **méthode du simplexe**.
+
+[[cpp:simplexe|Méthode du simplexe]]

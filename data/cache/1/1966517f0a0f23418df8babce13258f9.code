@@ -1,0 +1,5 @@
+library<span class="br0">&#40;</span>MASS<span class="br0">&#41;</span>
+&nbsp;
+model <span class="sy0">&lt;</span>- polr<span class="br0">&#40;</span><span class="kw1">as</span>.<span class="me1">factor</span><span class="br0">&#40;</span>Wine<span class="br0">&#41;</span><span class="sy0">~</span> Alcohol + Malic.<span class="me1">acid</span> + Ash + Acl + Mg<span class="sy0">,</span> data <span class="sy0">=</span> data_test<span class="sy0">,</span> method <span class="sy0">=</span> <span class="st0">'logistic'</span><span class="br0">&#41;</span><span class="co1">#Entrainement du modèle</span>
+y_pred <span class="sy0">&lt;</span>- predict<span class="br0">&#40;</span>model<span class="sy0">,</span> X_test<span class="br0">&#41;</span><span class="co1">#Prédiction sur les données X</span>
+y_prob <span class="sy0">&lt;</span>- predict<span class="br0">&#40;</span>model<span class="sy0">,</span> X_test<span class="sy0">,</span> <span class="kw2">type</span><span class="sy0">=</span><span class="st0">'p'</span><span class="br0">&#41;</span><span class="co1">#Prédiction des probabilités d'appartenance</span>

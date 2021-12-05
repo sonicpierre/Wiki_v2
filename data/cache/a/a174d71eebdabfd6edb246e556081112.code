@@ -1,0 +1,4 @@
+install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;Deriv&quot;</span><span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>Deriv<span class="br0">&#41;</span>
+fDeriv <span class="sy0">&lt;</span>- Deriv<span class="br0">&#40;</span>f<span class="br0">&#41;</span>
+fDeriv<span class="br0">&#40;</span><span class="nu0">3</span><span class="br0">&#41;</span>

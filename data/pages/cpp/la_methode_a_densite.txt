@@ -1,0 +1,310 @@
+[[cpp:Le Clustering | Le Clustering]]
+{{ :cpp:dbscan.gif?350 |}}
+
+Les algorithmes de clustering utilisant la <color #ed1c24>**notion de densité**</color> font partie des plus utilisés. Contrairement aux K-Means, ils <color #ed1c24>**ne nécessitent pas de préciser un nombre préalable de clusters**</color> et permettent de gérer correctement les clusters étirés. 
+
+**Animation :**
+  * Animation : zhuanlan.zhihu.com
+
+=====Générer des données=====
+
+Avant toute chose, nous allons générer des clusters qui ne sont pas bien circulaires. Je montrerai deux formes possibles de données :
+  * Sous forme circulaire en Python 
+  * Sous forme spirale en R
+
+Il est possible de réaliser les 2 formes dans les deux langages mais j'ai préféré vous montrer un spectre d'application plus large en présentant deux formes différentes.
+
+__En Python :__
+
+<code python>
+data = make_circles(n_samples=1000, shuffle=True, noise=0.1, random_state=None, factor=0.4)
+dataFrame = pd.DataFrame(data[0], columns=['X', 'Y'])
+</code>
+
+__En R :__
+
+<code python>
+library(mlbench)
+data<-mlbench.spirals(300,1.0,0.05)$x
+dataFrame <- data.frame(data)
+</code>
+
+^  Cercle  ^  Spirale   ^
+|  {{  :cpp:gene_dbscan.png?400  |}}  |   {{ :cpp:spirale_dbscan.png?400 |}}   |
+
+**Source :**
+  * [[https://www.rdocumentation.org/packages/mlbench/versions/2.1-1/topics/mlbench.spirals]]
+=====DBSCAN=====
+
+L'algorithme <color #ed1c24>**DBSCAN**</color> (Density-Based Spatial Clustering of Applications with Noise) est une évolution de l'algorithme CLARANS le rendant bien plus performant. Il permet de trouver des <color #ed1c24>**clusters de formes arbitraires**</color> ou des clusters imbriqués les uns dans les autres.
+====Principe de l'algorithme====
+
+{{ :cpp:dbscan_illu.png?600 |}}
+
+Paul est quelqu'un de prudent, il aime se déplacer d'<color #ed1c24>**une plateforme à l'autre**</color> en utilisant son échelle de longueur $\epsilon$. Il ne se déplacera que si la plateforme d'<color #ed1c24>**arrivée**</color> est entourée d'<color #ed1c24>**au moins** $MinPts$ **autres plateformes**</color>. Toutes les plateformes ayant $MinPts$ autour d'elles ainsi que les plateformes à une distance $\epsilon$ des premières appartiennent au <color #ed1c24>**même cluster**</color>. En revanche, Paul n'ira pas sur ces dernières pour <color #ed1c24>**regarder si d'autres plateformes sont accessibles**</color>.
+
+Une fois que Paul a défini toute les plateformes visibles pour lui, il y a deux possibilités :
+
+  * Il reste des plateformes non recensées par Paul et alors Jean apparaît pour pratiquer le même travail que Paul et recenser son groupe de plateformes.
+  * Toutes les plateformes ont été visitées par au moins une personne -> <color #ed1c24>**FIN ALGORITHME**</color>
+
+Les plateformes isolées formant un groupe à elles seules et n'ayant pas $MinPoint$ plateformes autour d'elles sont <color #ed1c24>**considérées**</color> comme du <color #ed1c24>**bruit**</color>.
+
+<alert success>**Approfondir :** vous trouverez le pseudo code formel [[https://fr.wikipedia.org/wiki/DBSCAN|ici]].</alert>
+
+__En Python :__
+
+<code python>
+from sklearn.cluster import DBSCAN 
+model = DBSCAN(eps = 0.12, min_samples= 5)
+model.fit(dataFrame)
+</code>
+
+__En R :__
+
+<code python>
+library(dbscan)
+model <- dbscan(data, 0.12, minPts = 7)
+</code>
+
+<alert warning>**Remarque :** les observations définies comme bruit par l'algorithme seront directement supprimées des résultats.</alert>
+
+**Résultat :**
+
+Nous avons fait varier un peu $\epsilon$ et $MinPoint$ pour voir concrètement comment ils influençaient les résultats :
+
+{{ :cpp:appli_dbscan.png?800 |}}
+
+**Source :**
+  * [[https://openclassrooms.com/fr/courses/4379436-explorez-vos-donnees-avec-des-algorithmes-non-supervises/4379571-partitionnez-vos-donnees-avec-dbscan]]
+  * [[https://penseeartificielle.fr/clustering-avec-lalgorithme-dbscan/]]
+  * [[http://devezeb.free.fr/downloads/ecrits/datamining.pdf]]
+
+====Limite de l'algorithme====
+
+En travaillant sous R, vous avez dû arriver à ce résultat qui montre une véritable faiblesse de l'algorithme DBSCAN.
+
+{{ :cpp:limite_dbscan.png?400 |}}
+
+En effet, l'un des problèmes majeurs réside dans le paramétrage du modèle qui n'est pas forcément évident. Il ne permet pas un changement de densité comme nous pouvons le voir dans le résultat R c'est pourquoi l'algorithme OPTICS a été créé.
+
+**Source :**
+  * [[http://devezeb.free.fr/downloads/ecrits/datamining.pdf]]
+
+=====Une alternative : l'algorithme OPTICS=====
+
+L'algorithme OPTICS est basé sur le même principe que DBSCAN cependant il permet de pallier le problème de changement de densité dans un même cluster.
+
+**Théorie :**
+
+La définition de $\epsilon$ est facultative et si elle n'est pas donnée l'algorithme fixera $\epsilon$ à $+\infty$. Pour chaque itération l'algorithme va tout d'abord calculer un $\epsilon$ propre à chacune des observations.
+\\
+{{ :cpp:core_distance_and_reachability_distance.png?500 |}}
+\\
+$$
+CoreDistance_{\epsilon ,MinPts}(p) = \left\{
+    \begin{array}{ll}
+        Indéfini & \mbox{si } N_{\epsilon}(p)<MinPts \\
+        Distance \, avec \, le \, MinPts ième \, point \, le \, plus \, proche & \mbox{sinon.}
+    \end{array}
+\right.
+$$
+\\
+On peut ensuite déterminer une distance atteignable pour chacun des points :
+\\
+\\
+$$
+DistanceAtteignable_{\epsilon ,MinPts}(p, o) = \left\{
+    \begin{array}{ll}
+        Indéfini & \mbox{si } N_{\epsilon}(p)<MinPts \\
+        \max (CoreDistance_{\epsilon ,MinPts}(p), distance(p, o)) & \mbox{sinon.}
+    \end{array}
+\right.
+$$
+\\
+De ces deux mesures l'algorithme va pouvoir tracer un graphique qui permettra de sélectionner les clusters. 
+
+<alert warning>**Remarque :** même si $\epsilon$ n'est pas défini, ces deux distances le seront. Cependant, $N_{\epsilon}$ renverra toujours l'ensemble des données et la complexité sera de $O(n^2)$ c'est pourquoi fixer un $\epsilon$ permet de réduire la complexité de l'algorithme.</alert>
+
+====Générer de nouvelles données====
+
+Nous allons regénérer des données où les clusters sont plus difficiles à distinguer avec DBSCAN.
+
+__En Python :__
+
+<code python>
+from sklearn.datasets import make_moons
+noisy_moons = make_moons(n_samples=1000, noise=.11)
+data = pd.DataFrame(noisy_moons[0], columns=['X', 'Y'])
+</code>
+
+{{ :cpp:optics_data.png?500 |}}
+
+__En R :__
+
+<code python>
+data("DS3", package = "dbscan")
+</code>
+
+{{ :cpp:data_dbscan_autre.png?500 |}}
+
+====Dessiner le reachability plot====
+
+Commençons par entrainer le modèle pour avoir ensuite la possibilité de tracer le graphique :
+
+__En Python :__
+
+<code python>
+from sklearn.cluster import OPTICS
+model = OPTICS(min_samples=50, xi=.05, min_cluster_size=.05).fit(data)
+</code>
+
+__En R :__
+
+<code python>
+optic_model <- dbscan::optics(DS3, minPts = 50)
+</code>
+
+On peut ensuite afficher le graphique correspondant permettant de sélectionner les clusters avec une méthode automatique appelée xi qui repère les grandes variations de distance atteignable :
+
+__En Python :__
+
+<code python>
+space = np.arange(len(data))
+reachability = model.reachability_[model.ordering_]
+labels = model.labels_[model.ordering_]
+
+plt.figure(figsize=(10,7))
+
+colors = ['g.', 'r.']
+for klass, color in zip(range(0, 1), colors):
+    Xk = space[labels == klass]
+    Rk = reachability[labels == klass]
+    plt.plot(Xk, Rk, color, alpha=0.3)
+plt.plot(space[labels == -1], reachability[labels == -1], 'k.', alpha=0.3)
+plt.ylabel('Reachability (epsilon distance)')
+plt.title('Reachability Plot')
+</code>
+
+__En R :__
+
+<code python>
+library(opticskxi)
+xi_gauss <- dbscan::extractXi(optic_model, xi = 0.023)
+ggplot_optics(optic_model, groups = xi_gauss$cluster)
+</code>
+
+{{ :cpp:reachability_plot.png?450 |}}
+
+On peut enfin observer les clusters créés :
+
+__En Python :__ 
+
+<code python>
+plt.scatter(data['X'], data['Y'], c = clust.labels_)
+</code>
+
+__En R :__
+
+<code python>
+plot(DS3, col = xi_gauss$cluster)
+</code>
+
+{{ :cpp:density_res_optics.png?400 |}}
+
+**Source :**
+  * [[https://medium.com/@xzz201920/optics-d80b41fd042a]]
+  * [[https://scikit-learn.org/stable/auto_examples/cluster/plot_optics.html]]
+  * [[https://cran.r-project.org/web/packages/opticskxi/vignettes/opticskxi.pdf]]
+
+=====HDBSCAN=====
+
+L'algorithme <color #ed1c24>**HDBSCAN**</color> (Hierarchical Density-Based Spatial Clustering of Applications with Noise) est un algorithme qui permet de construire une <color #ed1c24>**classification hiérarchique à densité**</color>.  
+
+====Principe de l'algorithme====
+
+{{ :cpp:dessinhdbscan.png?800 |}}
+
+Décrivons ce schéma de façon plus formelle :
+
+  * Le relief de l'île aux lamas est en fait la <color #ed1c24>**Probability Density Function**</color> (PDF). Elle permet de donner une représentation de données, une idée de la densité du dataset.
+
+  * La mer représente le <color #ed1c24>**seuil**</color> $\lambda$ que l'on va <color #ed1c24>**faire varier**</color> au cours de l'algorithme. Il permet de faire varier le rayon que l'on trace autour de chacun des points sachant que l'on connaît $MinPts$. Ainsi, on peut calculer une <color #ed1c24>**évolution de la densité**</color>. De cette évolution vont ressortir les <color #ed1c24>**pics de densité**</color> qui permettent de construire l'<color #ed1c24>**arbre de densité**</color>.
+
+====Un rayon oui mais avec quelle distance ?====
+
+L'algorithme HDBSCAN possède sa propre notion de distance définie grâce à la notion de $coreDistance$ :
+\\
+\\
+$$
+CoreDistance_{\epsilon ,MinPts}(p) = \left\{
+    \begin{array}{ll}
+        Indéfini & \mbox{si } N_{\epsilon}(p)<MinPts \\
+        Distance \, avec \, le \, MinPts ième \, point \, le \, plus \, proche & \mbox{sinon.}
+    \end{array}
+\right.
+$$
+\\
+^  Théorie  ^  Signification  ^
+|  $\epsilon$  |  Rayon autour de chacun des points  |
+|  $MinPts$  |  Nombre de points minimums pour définir un cluster  |
+|  $N_{\epsilon}$  |  Nombre de voisins dans un rayon $\epsilon$  |
+
+On peut ainsi, à partir de cette notion, définir la distance utilisée par l'algorithme :
+
+{{ :cpp:explication_distance_dbscan.png?500 |}}
+
+$$
+d_{mreach-k}(a,b) = \max(core_{k}(a), core_{k}(b), d(a,b))
+$$
+
+<alert info>**Info :** cette méthode permet,entre autres, de mieux distinguer de petits groupes de données dûs au bruit des vrais clusters.</alert>
+
+__En Python :__
+
+<code python>
+import hdbscan
+clusterer = hdbscan.HDBSCAN(min_cluster_size=50, gen_min_span_tree=True, prediction_data=True)
+clusterer.fit(data)
+
+###EXCLU PYTHON###
+plt.subplot(1,2,1)
+clusterer.single_linkage_tree_.plot(cmap='viridis', colorbar=True)
+
+plt.subplot(1,2,2)
+clusterer.condensed_tree_.plot(select_clusters=True)
+</code>
+
+__En R :__
+
+<code python>
+library(dbscan)
+hd = hdbscan(data, minPts = 12)
+plot(hd, show_flat = T)
+</code>
+
+**Résultat :**
+
+{{ :cpp:dbscan_res_arbre.png?700 |}}
+
+<alert warning>**Remarque :** le graphique de gauche est une exclusivité Python. Chacune des "vallées" représente un cluster, on voit clairement la séparation au niveau de la distance.</alert>
+
+Il est parfois long d'entrainer l'algorithme donc, il est préférable de ne pas le réentrainer quand il y a de nouvelles données et c'est pourquoi on spécifie au moment de l'entrainement du modèle **prediction_data=True**.
+
+__En Python :__
+
+<code python>
+hdbscan.approximate_predict(clusterer, np.array(data.iloc[20:50, :]))
+</code>
+
+__En R :__
+
+Malheureusement, il sera nécessaire de réentrainer l'algorithme en entier pour pouvoir classifier de nouveaux points car la méthode n'a pas encore était codée..
+
+<alert warning>**Remarque :** cet algorithme se montre très efficace pour visualiser les données mais il est important de garder à l'esprit qu'il a une complexité quadratique $O(n^2)$.</alert>
+
+**Source :**
+  * [[https://towardsdatascience.com/understanding-hdbscan-and-density-based-clustering-121dbee1320e]]
+  * [[https://hdbscan.readthedocs.io/en/latest/how_hdbscan_works.html]]
+  * [[https://cran.r-project.org/web/packages/dbscan/vignettes/hdbscan.html]]
+

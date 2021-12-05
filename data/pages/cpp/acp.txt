@@ -1,0 +1,290 @@
+[[cpp:IA| Machine Learning]]
+
+{{ :cpp:presentation.png?550 |Fléau de la dimension}}
+
+L'ACP (Analyse en Composantes Principales) est une méthode d'apprentissage non supervisée. Son but est de réduire le nombre de dimensions d'un problème (nombre de variables) en <fc #ff0000>exprimant l'ensemble des données selon des axes</fc>. Il s'agit de combinaisons linéaires entre variables qui résument l'essentiel de l'information du jeu de données.
+ Les objectifs de cette méthode sont les suivants : 
+  * Augmenter la vitesse d'entrainement du modèle.
+  * Représenter graphiquement des données de dimension n dans un espace de dimension  m, avec $m << n$.
+  * Opérer des traitements sur les images (compression, suppression du bruit, etc.)
+
+===Visualisation de l'information===
+
+^  Mauvais point de vue  ^  Bon point de vue  ^  Mauvais point de vue  ^
+|  {{:cpp:lamaface.jpg?135|}}  |  {{:cpp:lamaprofil.jpg?200|}}  |  {{ :cpp:lama3d.jpg?220 |}}  |
+
+Les différents points de vue ci-dessus montrent à quel point le choix de la bonne dimension permet de retenir l'essentiel de l'information. L'aperçu 2D résume très bien l'image qui fournira l'ensemble des caractéristiques du lama, là où les aperçus 1D ou 3D apportent soit trop peu d'informations (1D), soit trop d'informations (3D).
+
+=====Variance et composantes principales=====
+
+<alert info> **Rappel :** la variance est une mesure importante pour quantifier l'information contenue dans une variable. Si les valeurs de la variable ne changent pas, cela veut dire qu'elle est constante ce qui ne nous aide pas dans la prise de décision.</alert>
+
+La première étape de l'ACP est de déterminer les axes de projection qui conservent le maximum de variance. Ainsi, après avoir déterminé l'axe apportant le maximum d'informations, l'ACP trouve le deuxième axe (orthogonal au premier) qui contribue le plus à la variance. 
+Le processus est répété, ainsi de suite, avec autant d'axes que de dimensions dans le jeu de données. 
+
+<alert info>**Information :** le $i^{ème}$ axe est appelé la $i^{ème}$ composante principale du jeu de données.</alert>
+
+<color #ed1c24>Mais alors, comment la machine trouve-t-elle les composantes principales ?</color>
+
+====Recherche des composantes principales====
+
+<alert info> **DataSet :** l'ACP nécessite d'avoir des données [[https://llamaspartan.fr/doku.php?id=cpp:preprocessing_et_encodage#normalisation_des_donnees|centrées-réduites]] que vous pouvez trouver [[https://github.com/LlamasPartan/Machine_Learning_Ressource/blob/master/R%C3%A9gression/R%C3%A9gression%20logistique/audit_risk.csv|ici]]. Il s'agit d'un dataset de détection de fraude.</alert>
+
+Concernant le centrage-réduction, cela dépend des données :
+  * Si elles sont toutes dans la même unité et varient selon des ordres de grandeur identique, le centrage suffit (on l'appelle aussi ACP non-normée).
+  * Dans le cas contraire, le centrage-réduction est recommandé (ACP normée).
+
+
+On trouve les composantes principales grâce à une méthode appelée <fc #ff0000>**décomposition en valeurs singulières**</fc>. Le but est de décomposer les données d'entraînement en produit de trois matrices :
+
+$$X = U \Sigma V^{T}$$
+
+^  Paramètres  ^  Signification  ^
+|  X  |  Matrice des données.  |
+|  U  |  Matrice de vecteurs propres.  |
+|  $\Sigma$  |  Matrice de valeurs propres.   |
+|  $V^{T}$  |  Matrice contenant les composantes principales.  |
+
+__Code Python__
+
+<code python>
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()#Méthode de standadisation
+X_Centered = pd.DataFrame(scaler.fit_transform(X_train), columns = X_test.columns)#Application de la méthode sur les données
+
+U, s, Vt = np.linalg.svd(X_Centered)#Décompostion SVD de la matrice de données
+c1 = Vt.T[:,0]#Première composante principale
+c2 = Vt.T[:,1]#Seconde composante principale
+</code>
+
+__Code R__
+
+<code python>
+X_Centered <- scale(X, center = T)#Centrage des données
+X_Centered <- as.data.frame(X_Centered)#Consversion de la matrice en dataframe
+X_Centered <- subset(X_Centered, select = -c(24))#Suppression de la colonne de valeurs manquantes générées
+
+SVDecomp <- svd(X_Centered)#Décomposition en valeurs singulières
+c1 <- t(SVDecomp$v[,0])#Première composante principale
+c2 <- t(SVDecomp$v[,1])#Deuxième composante principale
+</code>
+=====Projection dimensionnelle=====
+
+Après avoir trouvé les composantes principales, il devient alors possible de réduire les données à un espace à d dimensions en les projetant dans l'espace défini par les d composantes principales. De ce fait, la projection conservera le plus de variance possible.
+
+**Théorie**
+
+La projection du jeu de données dans l'espace de moindre dimension se fait en calculant le <fc #ff0000>**produit matriciel **</fc> entre la matrice des données d'entrainement et la matrice $P_{d}$, contenant les d premières colonnes de V.
+
+$$X_{proj} = XP_{d}$$
+
+
+__Code Python__
+
+<code python>
+X_d = Vt.T[:,:9]#On récupère les d = 9 premières composantes principales
+X_proj = X_Centered.dot(X_d)#Projection des données d'entrainement sur l'espace à d dimension
+</code>
+
+__Code R__
+
+<code python>
+X_d <- t(SVDecomp$v[1:9,])#On récupère les d = 9 premières composantes principales
+X_proj <- X_Centered %*% X_d#Projection des données d'entrainement sur l'espace à d dimension
+</code>
+=====Construction du modèle de réduction=====
+
+On va commencer par créer le modèle de réduction et l'appliquer sur nos données d'entrainement. Pour cela on va d'abord créer un modèle de réduction entrainé sur l'ensemble des variables du dataset afin de déterminer le nombre maximal de variables à garder.
+
+__Code Python__
+
+<code python>
+from sklearn.decomposition import PCA
+
+model = PCA(n_components = 25)#Création du modèle de réduction sur toutes les variables du dataset
+X_reduit = model.fit_transform(data)#Application de la réduction aux données d'entrainement
+</code>
+
+__Code R__
+
+<code python>
+library(FactoMineR)
+
+model <- PCA(data, ncp = 25, scale = TRUE)#Création du modèle avec centrage des données et définition du nombre de composantes à prendre en compte
+</code>
+
+Ensuite, nous devons choisir le bon nombre de dimensions. Pour cela, il est nécessaire de visualiser l'apport d'information de chacune des variables. Ce choix se fait selon la tâche à effectuer :
+  * <fc #ff0000>**Visualisation : **</fc> on choisit en fonction de la dimension dans laquelle on souhaite visualiser les données.  
+  * <fc #ff0000>**Réduction :**</fc> on choisit en fonction de la contribution de chaque variable à la variance totale.
+
+__Code Python__
+
+<code python>
+plt.figure(figsize=(12,6))#Définition de la taille du graphique
+plt.plot(np.cumsum(model.explained_variance_ratio_))#Affichage des variances expliquées en fonction du nombre de variables
+ 
+plt.xlabel("Nombres de composantes principales")
+plt.ylabel("Variance expliquée")
+</code>
+
+__Code R__
+
+<code python>
+library(explor)
+
+#Vous pouvez aussi utiliser la commande suivante, offrant plus de possibilités d'observations.
+
+explor(model)#Ouverture d'une fenêtre permettant de visualiser les variables importantes
+</code>
+
+**Résultat**
+
+{{ :cpp:contribution_acp.png?600 |Variance expliquée en fonction du nombre de variables du jeu de données}}
+
+;#;**Figure 1 :** variance expliquée en fonction du nombre de variables du jeu de données
+;#;
+
+<alert info> **Remarque :** la variance expliquée de $N$ correspond au pourcentage de variance totale  expliquée par la variable $N$.</alert>
+=====Traitement d'images=====
+
+Lorsqu'on travaille avec des images, il peut être nécessaire d'utiliser l'ACP pour réduire le bruit ou encore compresser l'image. Cependant, ce type d'opérations cause une perte d'informations et l'algorithme de décompression ne pourra retourner que des valeurs proches de celles de l'état d'origine.
+
+**Théorie**
+
+La remise en forme des données se fait grâce au produit entre la matrice de données projetées et la transposée de la matrice $P_{d}$. 
+
+$$X_{Décompressé} = X_{proj}P_{d}^{T}$$
+
+
+__Code Python__
+
+<code python>
+X_decompressed = X_proj.dot(X_d.T)#Produit matriciel d'inversion de la méthode ACP
+</code>
+
+__Code R__
+
+<code python>
+X_decompressed <- X_proj %*% t(X_d)#Produit matriciel d'inversion de la méthode ACP
+</code>
+====Modèle de décompression d'images====
+
+===Importation de l'image===
+
+<alert info> **Dataset :** on va reprendre l'image d'un raton laveur souvent utilisée en Machine Learning.</alert>
+
+__Code Python__
+
+<code python>
+from scipy import misc
+import matplotlib.pyplot as plt 
+
+face = misc.face(gray=True)
+plt.imshow(face, cmap=plt.cm.gray)
+plt.show()
+</code>
+
+__Code R__
+
+Sous R, la librairie d'importation de l'image n'est pas disponible. Ainsi, nous l'avons téléchargée depuis Python puis importée dans l'espace de travail R.
+
+<code python>
+library(imager)
+
+img <- load.image("raton_laveur.png")
+plot(img)
+</code>
+
+===Modèle de compression===
+
+Commençons par déterminer le nombre de variables à garder pour maximiser le gain d'informations. Pour cela, nous allons utiliser la méthode présentée dans la partie **construction du modèle de réduction**.
+
+Il en ressort que le gain d'information est maximisé à partir de 150 variables. Faisons maintenant l'opération de décompression de l'image après avoir réduit la dimension d'origine à 150 variables.
+
+__Code Python__
+
+<code python>
+model = PCA(n_components = 150)#Création du modèle de réduction sur toutes les variables du dataset
+X_reduced = model.fit_transform(face)#Compression de l'image sur les 150 premières composantes principales 
+X_recovered = model.inverse_transform(X_reduced)#Décompression de l'image
+</code>
+
+__Code R__
+
+<alert info> **Remarque :** sous R il n'existe pas de méthode inverse_transform pour l'ACP  c'est pourquoi nous faisons d'abord 
+la décomposition en valeur singulière puis le produit matriciel nécessaire.</alert>
+
+<code python>
+library(rsvd)
+
+decomposition_svd <- svd(img)#Décomposition en valeur singulière
+composantes_pr <- 150#Définition du nombre de composantes principales à conserver
+img.svd <- decomposition_svd$u[,1:composantes_pr] %*% diag(decomposition_svd$d[1:composantes_pr]) %*% t(decomposition_svd$v[,1:composantes_pr])#Produit matriciel
+</code>
+
+**Résultat**
+
+{{ :cpp:raton_laveur_bis.png?800 |Résultat de la décompression de l'image}}
+
+;#;**Figure 2 :** Résultat de la décompression de l'image
+;#;
+
+On voit bien que les composantes principales résument l'essentiel de l'information de l'image.
+
+
+=====Comment choisir le nombre optimal de variables ?=====
+
+====Variance expliquée====
+
+Il s'agit de la méthode présentée dans la partie **construction du modèle de réduction**.  Elle décrit la quantité de variance totale décrite par les variables. Pourtant, elle n'est pas toujours appréciée car elle ne tient pas compte des corrélations entre variables.
+ 
+Si on considère $\lambda_{i}$, la variance de la $i^{ème}$ composante, alors la variance expliquée de la $i^{ème}$ composante ($\lambda_{Expliquee}$) est donnée par :
+
+$$\lambda_{Expliquee} = \frac{\lambda_{i}}{\sum\limits_{i = 0}^{n} \lambda_{i}}$$
+
+$\lambda_{Expliquee}$ $\in$ $[0,1]$ et plus sa valeur est proche de 1, plus importante sera la composante associée.
+
+====Méthode de Kaiser-Guttman====
+
+La règle de Kaiser-Guttman est une méthode analytique qui établit qu'une variable est intéressante lorsque sa valeur propre est supérieure à la moyenne des valeurs propres (en ACP normée elle vaut 1). Ainsi, pour $\Lambda_{i}$, la valeur propre de l'axe $i$, la règle de Kaiser impose la relation suivante : 
+
+$$\Lambda_{i} > 1 $$
+
+__Code Python__
+
+<code python>
+Kaiser = list(model.explained_variance_)#Affichage des valeurs propres du modèle 
+</code>
+
+__Code R__
+
+<code python>
+summary(model, ncp = 25)#Affichage des valeurs propres des variables du dataset 
+</code>
+
+**Résultat**
+
+{{ :cpp:kaiser_critere.png?700 |Composantes principales selon le critère de Kaiser}}
+
+;#;**Figure 3 :** Composantes principales selon le critère de Kaiser
+;#;
+
+<alert warning>**Remarque :**  ce critère n'est utilisé qu'en ACP normée.</alert>
+
+=====Quand utiliser une ACP ?=====
+
+L'ACP est particulièrement efficace lorsque les variables sont très corrélées entre elles. Cela permet de réduire la redondance de l'information sans risquer une perte conséquente.
+
+Ne négligeons pas le critère de linéarité des distributions car, rappelons-le, l'ACP est avant tout une méthode destinée à traiter des données linéairement séparables.
+
+{{ :cpp:donnes_lin_sep.png?400 |}}
+
+
+**Sources**
+  * Machine Learning avec Scikit-Learn, 2e édition, Aurélien Géron
+  * [[https://www.youtube.com/watch?v=FTtzd31IAOw&list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&index=28| Machine Learnia par Guillaume Saint-Cirgue]]
+  * [[http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Nb_Components_PCA.pdf|Université de Lyon 2]]
+  * [[https://jonathanlenoir.files.wordpress.com/2013/12/analyse-en-composante-principale-acp.pdf|Johnathan Lenoir (MCU), Université de Picardie Jules Verne]] 
+  * [[http://www.oranlooney.com/post/ml-from-scratch-part-6-pca/|Principal Component Analysis, Oran Looney]]
+

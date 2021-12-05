@@ -1,0 +1,31 @@
+<span class="sy0">&lt;</span>/python<span class="sy0">&gt;</span>
+&nbsp;
+&nbsp;
+**Source :**
+  * <span class="br0">&#91;</span><span class="br0">&#91;</span>http://www.<span class="me1">statsoft</span>.<span class="me1">fr</span>/concepts-statistiques/qualite-d-ajustement/qualite-d-ajustement.<span class="me1">htm</span><span class="br0">&#93;</span><span class="br0">&#93;</span>
+  * <span class="br0">&#91;</span><span class="br0">&#91;</span>https://openclassrooms.<span class="me1">com</span>/fr/courses/<span class="nu0">4297211</span>-evaluez-les-performances-dun-modele-de-machine-learning/<span class="nu0">4308241</span>-mettez-en-place-un-cadre-de-validation-croisee<span class="br0">&#93;</span><span class="br0">&#93;</span>
+&nbsp;
+<span class="sy0">====</span>La validation croisée<span class="sy0">====</span>
+&nbsp;
+<span class="br0">&#123;</span><span class="br0">&#123;</span> :cpp:validation_croisee.<span class="me1">png</span>?<span class="nu0">800</span> |<span class="br0">&#125;</span><span class="br0">&#125;</span>
+<span class="sy0">=====</span>Les erreurs de classification<span class="sy0">=====</span>
+&nbsp;
+La construction de ce score peut se faire en une ligne de <span class="kw3">code</span><span class="sy0">,</span> cependant il est important de comprendre ce qu<span class="st0">'il se passe derrière. La construction d'</span>une matrice de confusion et les notions de rappel et précision sont essantielles pour bien comprendre tous les aspects de score F1 c<span class="st0">'est pourquoi nous allons les aborder.
+&nbsp;
+====Les matrices de confusion====
+&nbsp;
+{{ :cpp:matricedeconfusion.png?600 |}}
+&nbsp;
+Plus la matrice est proche d'</span>une matrice diagonale et plus le modèle est bon.
+&nbsp;
+__En Python :__
+&nbsp;
+<span class="sy0">&lt;</span><span class="kw3">code</span> python<span class="sy0">&gt;</span>
+<span class="kw1">from</span> sklearn.<span class="me1">metrics</span> <span class="kw1">import</span> confusion_matrix
+data_Test <span class="sy0">=</span> pd.<span class="me1">read_csv</span><span class="br0">&#40;</span><span class="st0">&quot;test_Titanic_py.csv&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+data_train<span class="sy0">=</span> data_Test.<span class="me1">drop</span><span class="br0">&#40;</span><span class="st0">&quot;Survived&quot;</span><span class="sy0">,</span> axis <span class="sy0">=</span> <span class="nu0">1</span><span class="br0">&#41;</span>
+data_test <span class="sy0">=</span> data_Test.<span class="me1">Survived</span>
+&nbsp;
+prediction <span class="sy0">=</span> tree_clf.<span class="me1">predict</span><span class="br0">&#40;</span>data_train<span class="br0">&#41;</span>
+confusion_matrix<span class="br0">&#40;</span>prediction<span class="sy0">,</span> data_test<span class="br0">&#41;</span>

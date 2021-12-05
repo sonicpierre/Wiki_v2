@@ -1,0 +1,37 @@
+[[cpp:IA| Machine Learning]]
+
+======Pages en construction======
+
+{{ :cpp:pageconstruction.png?400 |}}
+
+=====Exploration des données=====
+
+  * [[cpp:Data exploration | Data exploration]]
+  * [[cpp:Manipuler les series temporelles | Manipuler les series temporelles]]
+  * [[cpp:Tendance et saisonnalité | Tendance et saisonnalité]]
+
+=====Evaluation modèle classification=====
+
+[[cpp:Evaluer son modele de classification | Evaluer son modèle de classification]]
+======Futures pages======
+{{ :cpp:futurepage.jpg?500 |}}
+=====Complément data exploration=====
+
+  * [[cpp:Les réductions de dimension | Les réductions de dimension]]
+
+=====Complément préparation de données=====
+
+  * [[cpp:Expention de données | Expention de données]]
+
+=====Complément régression=====
+
+  * [[cpp:Complément Reg | Complément régressions]]
+
+=====Les Support Vector Machine=====
+
+  * [[cpp:SVM classification | SVM classification]]
+  * [[cpp:SVM régression | SVM régression]]
+=====Calibration et mise en production=====
+
+  * [[cpp:Calibrer les hyperparamètres| Calibrer les hyper-paramètres]]
+  * [[cpp:Mettre en production le modèle| Mettre en production le modèle]]

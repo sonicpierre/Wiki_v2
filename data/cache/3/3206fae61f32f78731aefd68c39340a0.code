@@ -1,0 +1,2 @@
+region <span class="sy0">=</span> dbReadTable<span class="br0">&#40;</span>con<span class="sy0">,</span> <span class="st0">&quot;Region&quot;</span><span class="br0">&#41;</span>
+data.<span class="me1">frame</span><span class="br0">&#40;</span>region<span class="br0">&#41;</span>

@@ -1,0 +1,7 @@
+library<span class="br0">&#40;</span>ggplot2<span class="br0">&#41;</span>  
+library<span class="br0">&#40;</span>reshape2<span class="br0">&#41;</span>
+data <span class="sy0">&lt;</span>- iris<span class="br0">&#91;</span><span class="sy0">,</span> c<span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">2</span><span class="sy0">,</span><span class="nu0">3</span><span class="sy0">,</span><span class="nu0">4</span><span class="br0">&#41;</span><span class="br0">&#93;</span> <span class="co1"># Sélection des variables à analyser</span>
+matrice_cor <span class="sy0">&lt;</span>- <span class="kw2">round</span><span class="br0">&#40;</span>cor<span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1"># Calcul de la matrice de corrélation en arrondissant les valeurs</span>
+melt_data <span class="sy0">&lt;</span>- melt<span class="br0">&#40;</span>matrice_cor<span class="br0">&#41;</span><span class="co1"># Transformation des données pour correspondre au format de représentation</span>
+ggplot<span class="br0">&#40;</span>data <span class="sy0">=</span> melt_data<span class="sy0">,</span> aes<span class="br0">&#40;</span>x<span class="sy0">=</span>Var1<span class="sy0">,</span> y<span class="sy0">=</span>Var2<span class="sy0">,</span> fill<span class="sy0">=</span>value<span class="br0">&#41;</span><span class="br0">&#41;</span> + <span class="co1"># Création du graphique</span>
+  geom_tile<span class="br0">&#40;</span><span class="br0">&#41;</span>

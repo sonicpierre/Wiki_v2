@@ -1,0 +1,6 @@
+<span class="co1">%Coefficients secondaires à 0</span>
+<span class="kw1">for</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>=<span class="nu0">1</span>:<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tab<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+    <span class="kw1">if</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>!=indiceVarSortante
+        tab<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>,:<span class="br0">&#41;</span>-=tab<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>,indiceVarEntrante<span class="br0">&#41;</span>*tab<span class="br0">&#40;</span>indiceVarSortante,:<span class="br0">&#41;</span>
+    endif
+endfor

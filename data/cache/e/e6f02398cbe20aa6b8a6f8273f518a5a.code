@@ -1,0 +1,1 @@
+target_compile_features<span class="sy0">(</span><span class="re0">${CMAKE_PROJECT_NAME}</span> PUBLIC std_cxx_17<span class="sy0">)</span>

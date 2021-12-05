@@ -1,0 +1,545 @@
+
+<p>
+<a href="/doku.php?id=cpp:ia" class="wikilink1" title="cpp:ia"> Machine Learning</a>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_regularisee&amp;media=cpp:regressionpolynomiale.png" class="media" title="cpp:regressionpolynomiale.png"><img src="/lib/exe/fetch.php?w=550&amp;tok=d2d4b0&amp;media=cpp:regressionpolynomiale.png" class="media" alt="" width="550" /></a>
+</p>
+
+<h2 class="sectionedit1" id="la_regression_polynomiale">La régression polynomiale</h2>
+<div class="level2">
+
+<p>
+Les données ne sont pas toujours modélisables par une droite, ce qui nécessite l&#039;utilisation de fonctions polynomiales qui permettent de faire de meilleures prédictions.
+</p>
+
+</div>
+
+<h5 id="generer_les_points_de_l_exemple">Générer les points de l&#039;exemple</h5>
+<div class="level5">
+
+<p>
+Comme pour la page sur la <a href="/doku.php?id=cpp:regression_supervisee" class="wikilink1" title="cpp:regression_supervisee">régression supervisée</a> nous allons générer des points pour pouvoir entraîner notre modèle dessus. Il s&#039;agit de données non linéaires qui nous permettront d&#039;évaluer l&#039;efficacité de l&#039;algorithme sur ce set de données artificielles.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> numpy <span class="kw1">as</span> np
+m <span class="sy0">=</span> <span class="nu0">100</span><span class="co1">#Définition du nombre de points à représenter</span>
+X <span class="sy0">=</span> np.<span class="me1">linspace</span><span class="br0">&#40;</span>-<span class="nu0">15</span><span class="sy0">,</span> <span class="nu0">15</span><span class="sy0">,</span> m<span class="br0">&#41;</span>.<span class="me1">reshape</span><span class="br0">&#40;</span><span class="br0">&#40;</span>m<span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Création des données X (linéaires) en y ajoutant un aléatoire</span>
+y <span class="sy0">=</span> <span class="nu0">0.11</span> * X**<span class="nu0">2</span> + X + <span class="nu0">2</span> + np.<span class="kw3">random</span>.<span class="me1">randn</span><span class="br0">&#40;</span>m<span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="co1">#Création des données polynomiales y </span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>pracma<span class="br0">&#41;</span>
+&nbsp;
+m <span class="sy0">=</span> <span class="nu0">100</span><span class="co1">#Définition du nombre de points à générer</span>
+X <span class="sy0">=</span> linspace<span class="br0">&#40;</span>-<span class="nu0">15</span><span class="sy0">,</span> <span class="nu0">15</span><span class="sy0">,</span> m<span class="br0">&#41;</span><span class="co1">#Génération des points</span>
+y <span class="sy0">=</span> <span class="nu0">0.11</span> * X**<span class="nu0">2</span> + X + <span class="nu0">2</span> +  rnorm<span class="br0">&#40;</span>m<span class="br0">&#41;</span><span class="co1">#Création des données polynomiales y</span></pre>
+
+<p>
+<strong>Observations :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_regularisee&amp;media=cpp:droite_regression_donnee_poly.png" class="media" title="cpp:droite_regression_donnee_poly.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=2e29e8&amp;media=cpp:droite_regression_donnee_poly.png" class="mediacenter" title="Droite de régression linéaire sur des données polynomiales" alt="Droite de régression linéaire sur des données polynomiales" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 1 :</strong> Droite de régression linéaire sur des données polynomiales</p><!--divalign-->
+
+</div>
+
+<h5 id="creer_les_donnees_polynomiales">Créer les données polynomiales</h5>
+<div class="level5">
+
+<p>
+Il est certain que la droite de régression linéaire n&#039;ajustera jamais les données fournies. Commençons alors par transformer les données d&#039;apprentissage en rajoutant à chacune son carré (puisque y est de la forme d&#039;un polynôme de degré 2).
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">preprocessing</span> <span class="kw1">import</span> PolynomialFeatures
+&nbsp;
+poly_feature <span class="sy0">=</span> PolynomialFeatures<span class="br0">&#40;</span>degree <span class="sy0">=</span> <span class="nu0">2</span><span class="sy0">,</span> include_bias <span class="sy0">=</span> <span class="kw2">False</span><span class="br0">&#41;</span><span class="co1">#Création des polynômes de degré 2 pour les données d'apprentissage</span>
+X_poly <span class="sy0">=</span> poly_feature.<span class="me1">fit_transform</span><span class="br0">&#40;</span>X<span class="br0">&#41;</span><span class="co1">#Application de la création de polynômes aux données</span></pre>
+
+<p>
+<div class='alert alert-info'>Il n&#039;existe pas de fonction <strong>PolynomialFeatures</strong> sur R. Les coefficients polynomiaux sont générés directement dans le modèle polynomial.
+</div>
+</p>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_regularisee&amp;media=cpp:donnees_mise_au_carre.png" class="media" title="cpp:donnees_mise_au_carre.png"><img src="/lib/exe/fetch.php?w=300&amp;tok=7ae7fc&amp;media=cpp:donnees_mise_au_carre.png" class="mediacenter" title="Résultat avant-après transformation" alt="Résultat avant-après transformation" width="300" /></a>
+</p>
+
+</div>
+
+<h5 id="entrainement_du_modele">Entrainement du modèle</h5>
+<div class="level5">
+
+<p>
+On entraine ensuite le modèle à partir des données transformées :
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">linear_model</span> <span class="kw1">import</span> LinearRegression
+model <span class="sy0">=</span> LinearRegression<span class="br0">&#40;</span><span class="br0">&#41;</span>
+model.<span class="me1">fit</span><span class="br0">&#40;</span>X_poly<span class="sy0">,</span> y<span class="br0">&#41;</span>
+<span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;Coefficient constant :&quot;</span><span class="sy0">,</span> model.<span class="me1">intercept_</span><span class="br0">&#41;</span>
+<span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;Coefficient X et X^2 : &quot;</span><span class="sy0">,</span> model.<span class="me1">coef_</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code Python">model <span class="sy0">&lt;</span>- lm<span class="br0">&#40;</span>y<span class="sy0">~</span>poly<span class="br0">&#40;</span>X<span class="sy0">,</span> <span class="nu0">2</span><span class="sy0">,</span> raw <span class="sy0">=</span> T<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Création du modèle polynomial.</span>
+&nbsp;
+model$coefficients<span class="co1">#Affichage des coefficients estimés par le modèle.</span>
+&nbsp;
+<span class="co1">#Lorsque vous utilisez des dataframe, il est nécessaire de mentionner le nom du set de données </span>
+<span class="co1">#model &lt;- lm(y~poly(X, 2, raw = T), data = DataFrame)</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_regularisee&amp;media=cpp:resultat_coefs.png" class="media" title="cpp:resultat_coefs.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=bd4df7&amp;media=cpp:resultat_coefs.png" class="mediacenter" title="Coefficients estimés du polynôme" alt="Coefficients estimés du polynôme" width="400" /></a>
+</p>
+
+<p>
+Le modèle estime que notre fonction est de la forme <span style="color:#fa8072;">$y = 0.10 X^2 + 0.97  X + 1.96$</span> alors qu&#039;elle est de la forme <span style="color:#fa8072;">$y = 0.11 X^2 + X + 2$</span>, ce qui est un bon résultat. Visualisons maintenant le résultat sur un graphique pour voir s’il est cohérent.
+</p>
+
+<p>
+<strong>Observations :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_regularisee&amp;media=cpp:donnee_ajustee.png" class="media" title="cpp:donnee_ajustee.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=501250&amp;media=cpp:donnee_ajustee.png" class="mediacenter" title="Ajustement après transformation des données" alt="Ajustement après transformation des données" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 2 :</strong> Ajustement des données après leur transformation</p><!--divalign-->
+
+<p>
+<div class='alert alert-danger'><strong>Danger :</strong> Il est important de bien fixer le degré de la fonction recherchée. Si le degré est trop bas, l&#039;algorithme va faire de l&#039;under-fitting et s&#039;il est trop haut il fera de l&#039;over-fitting. Dans tous les cas les prédictions seront mauvaises.</div>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_regularisee&amp;media=cpp:underfitting.png" class="media" title="cpp:underfitting.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=e2ec72&amp;media=cpp:underfitting.png" class="media" title="Under-fitting" alt="Under-fitting" width="400" /></a> <a href="/lib/exe/detail.php?id=cpp%3Aregression_regularisee&amp;media=cpp:overfittingpolynomial.png" class="media" title="cpp:overfittingpolynomial.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=121aad&amp;media=cpp:overfittingpolynomial.png" class="media" title="Over-fitting" alt="Over-fitting" width="400" /></a>
+</p>
+
+</div>
+
+<h5 id="sources">Sources</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> Machine Learning avec Scikit-Learn, Aurélien Géron, 2e édition</div>
+</li>
+<li class="level1"><div class="li"> Data science : fondamentaux et études de cas, Eric Biernat et Michel Lutz</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La r\u00e9gression polynomiale&quot;,&quot;hid&quot;:&quot;la_regression_polynomiale&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;71-4001&quot;} -->
+<h2 class="sectionedit2" id="les_modeles_regularises">Les modèles régularisés</h2>
+<div class="level2">
+
+<p>
+Les modèles régularisés sont des modèles de régression linéaire dans lesquelles on supprime ou amoindri une partie des variables qui le composent. On a ainsi des modèles qui permettent de gérer l&#039;over-fitting.
+</p>
+
+<p>
+<div class='alert alert-info'><strong><span style="font-size:large;">Remarque :</span></strong>  Avant d&#039;effectuer une régression régularisée, il est nécessaire de normaliser les données, lorsqu&#039;elles présentent des valeurs à échelles trop éloignées.</div>
+</p>
+
+<p>
+Par la suite on utilisera le data sur les performances scolaires d&#039;élèves, disponible <a href="https://github.com/LlamasPartan/Ressource-Wiki/tree/master/Intelligence%20Artificielle/Machine%20Learning/R%C3%A9gression/R%C3%A9gression%20polynomiale%20et%20r%C3%A9gularis%C3%A9es" class="urlextern" title="https://github.com/LlamasPartan/Ressource-Wiki/tree/master/Intelligence%20Artificielle/Machine%20Learning/R%C3%A9gression/R%C3%A9gression%20polynomiale%20et%20r%C3%A9gularis%C3%A9es" rel="nofollow"> ici</a>.
+Vous trouverez également l&#039;ensemble des codes Python présentés dans cette partie.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_regularisee&amp;media=cpp:shinkage.png" class="media" title="cpp:shinkage.png"><img src="/lib/exe/fetch.php?w=750&amp;tok=2817ac&amp;media=cpp:shinkage.png" class="mediacenter" title="Fonctionnement des modèles régularisés" alt="Fonctionnement des modèles régularisés" width="750" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les mod\u00e8les r\u00e9gularis\u00e9s&quot;,&quot;hid&quot;:&quot;les_modeles_regularises&quot;,&quot;codeblockOffset&quot;:5,&quot;secid&quot;:2,&quot;range&quot;:&quot;4002-4910&quot;} -->
+<h3 class="sectionedit3" id="le_modele_ridge">Le modèle Ridge</h3>
+<div class="level3">
+
+<p>
+La régression Ridge est une version régularisée de la régression linéaire. Elle amoindri le poids de certaines variables, en minimisant la fonction $J(\Theta)$.
+</p>
+
+</div>
+
+<h5 id="theorie">Théorie</h5>
+<div class="level5">
+
+<p>
+$$
+J(\Theta) = \underbrace{MSE(\Theta)}_{\text{Fonction coût}}  + \underbrace{\alpha \frac{1}{2} \sum_{i = 1}^{n} \Theta_{i}^{2}}_{\text{Terme de régularisation}}
+$$
+</p>
+<div class="table sectionedit4"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">      Paramètre        </th><th class="col1"> Signification</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  MSE  </td><td class="col1"> Erreur quadratique moyenne </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">   $\alpha$     </td><td class="col1"> Constante contrôlant la quantité de régularisation (*)</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">    $\Theta$     </td><td class="col1"> Coefficient de régression linéaire </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:4,&quot;range&quot;:&quot;5289-5506&quot;} -->
+<p>
+(*) Plus $\alpha$ est proche de zéro, plus on se rapproche d&#039;une régression linéaire non régularisée. Inversement, plus on augmente $\alpha$, plus les coefficients de pondération (valeurs des variables), auront des valeurs proches de zéro.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="co1">#Librairies </span>
+<span class="kw1">from</span> sklearn.<span class="me1">metrics</span> <span class="kw1">import</span> mean_squared_error<span class="co1">#Mesure de précision</span>
+<span class="kw1">from</span> sklearn.<span class="me1">linear_model</span> <span class="kw1">import</span> Ridge<span class="co1">#Régression Ridge</span>
+&nbsp;
+data <span class="sy0">=</span> data.<span class="me1">select_dtypes</span><span class="br0">&#40;</span>exclude<span class="sy0">=</span><span class="br0">&#91;</span><span class="st0">'object'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="co1">#Filtration des variables qualitatives</span>
+&nbsp;
+y <span class="sy0">=</span> data<span class="br0">&#91;</span><span class="st0">'G3'</span><span class="br0">&#93;</span><span class="co1">#Variable cible</span>
+X <span class="sy0">=</span> data.<span class="me1">drop</span><span class="br0">&#40;</span>columns<span class="sy0">=</span><span class="br0">&#91;</span><span class="st0">'G3'</span><span class="br0">&#93;</span><span class="sy0">,</span> axis<span class="sy0">=</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="co1">#Variables explicatives</span>
+&nbsp;
+ridge <span class="sy0">=</span> Ridge<span class="br0">&#40;</span>alpha<span class="sy0">=</span><span class="nu0">1</span><span class="sy0">,</span> solver<span class="sy0">=</span><span class="st0">&quot;auto&quot;</span><span class="br0">&#41;</span><span class="co1">#Algorithme Ridge, avec alpha = 1 et un choix de solveur automatique, qui s'adaptera en fonction des données</span>
+&nbsp;
+ridge.<span class="me1">fit</span><span class="br0">&#40;</span>X_train<span class="sy0">,</span> y_train<span class="br0">&#41;</span><span class="co1">#Entrainement du modèle</span>
+ridge_pre <span class="sy0">=</span> ridge.<span class="me1">predict</span><span class="br0">&#40;</span>X_test<span class="br0">&#41;</span><span class="co1">#Prédictions</span>
+mean_squared_error<span class="br0">&#40;</span>y_test<span class="sy0">,</span> ridge_pre<span class="br0">&#41;</span><span class="co1">#Résultat de performance</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong> Il est nécessaire de convertir les données X de test et d&#039;entrainement en matrices.</div>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>Metrics<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>glmnet<span class="br0">&#41;</span>
+&nbsp;
+data <span class="sy0">&lt;</span>- Filter<span class="br0">&#40;</span><span class="kw1">is</span>.<span class="me1">numeric</span><span class="sy0">,</span> data<span class="br0">&#41;</span><span class="co1">#Filtre des variables numériques</span>
+&nbsp;
+ridge <span class="sy0">&lt;</span>- glmnet<span class="br0">&#40;</span>X_train<span class="sy0">,</span> y_train<span class="sy0">,</span> alpha <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">,</span> <span class="kw1">lambda</span> <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">,</span> standardize <span class="sy0">=</span> F<span class="br0">&#41;</span><span class="co1">#Définition du modèle de régression Ridge</span>
+<span class="co1">#Le paramètre alpha = 0 définit la régression Ridge, lambda = 1 est la constante de contrôle de la quantité de régularisation et standardize = F </span>
+<span class="co1">#définit si les données doivent être normalisées (ici c'est non car elles sont toutes à la même échelle).</span>
+&nbsp;
+ridge_pred <span class="sy0">&lt;</span>- predict<span class="br0">&#40;</span>ridge<span class="sy0">,</span> s <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">,</span> newx <span class="sy0">=</span> X_test<span class="br0">&#41;</span><span class="co1">#Prédictions</span>
+mse<span class="br0">&#40;</span>y_test<span class="sy0">,</span> ridge_pred<span class="br0">&#41;</span><span class="co1">#Evaluation du modèle</span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_regularisee&amp;media=cpp:resultat_ridge.png" class="media" title="cpp:resultat_ridge.png"><img src="/lib/exe/fetch.php?media=cpp:resultat_ridge.png" class="mediacenter" title="Résultat évaluation Ridge" alt="Résultat évaluation Ridge" /></a>
+</p>
+
+<p>
+Cela signifie qu&#039;avec la régression Ridge, en moyenne, il y a une différence de +/- 2.2 entre les valeurs prédites et les valeurs réelles.
+</p>
+
+</div>
+
+<h5 id="sources1">Sources</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> Machine Learning avec Scikit-Learn, 2e édition, Aurélien Géron</div>
+</li>
+<li class="level1"><div class="li"> <a href="https://rstatisticsblog.com/data-science-in-action/machine-learning/ridge-regression-in-r/" class="urlextern" title="https://rstatisticsblog.com/data-science-in-action/machine-learning/ridge-regression-in-r/" rel="nofollow">R Statistics</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le mod\u00e8le Ridge&quot;,&quot;hid&quot;:&quot;le_modele_ridge&quot;,&quot;codeblockOffset&quot;:5,&quot;secid&quot;:3,&quot;range&quot;:&quot;4911-7588&quot;} -->
+<h3 class="sectionedit5" id="le_modele_lasso">Le modèle Lasso</h3>
+<div class="level3">
+
+<p>
+La régularisation Lasso fonctionne de manière analogue à la précédente. A la place de la normale $l_{2}$ , elle ajoute la norme $l_{1}$ à la fonction de coût.
+</p>
+
+</div>
+
+<h5 id="theorie1">Théorie</h5>
+<div class="level5">
+
+<p>
+$$
+J(\Theta) = \underbrace{MSE(\Theta)}_{\text{Fonction coût}}  + \underbrace{\alpha \sum_{i = 1}^{n} \lvert\Theta_{i} \rvert}_{\text{Terme de régularisation}}
+$$
+</p>
+<div class="table sectionedit6"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">      Paramètre        </th><th class="col1"> Signification</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  MSE  </td><td class="col1"> Erreur quadratique moyenne </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">   $\alpha$     </td><td class="col1"> Constante contrôlant la quantité de régularisation </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">    $\Theta$     </td><td class="col1"> Coefficient de régression linéaire </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:6,&quot;range&quot;:&quot;7962-8176&quot;} -->
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">metrics</span> <span class="kw1">import</span> mean_squared_error
+<span class="kw1">from</span> sklearn.<span class="me1">linear_model</span> <span class="kw1">import</span> Lasso
+&nbsp;
+data <span class="sy0">=</span> data.<span class="me1">select_dtypes</span><span class="br0">&#40;</span>exclude<span class="sy0">=</span><span class="br0">&#91;</span><span class="st0">'object'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="co1">#Sélection des variables quantitatives</span>
+&nbsp;
+y <span class="sy0">=</span> data<span class="br0">&#91;</span><span class="st0">'G3'</span><span class="br0">&#93;</span><span class="co1">#Définition variable cible</span>
+X <span class="sy0">=</span> data.<span class="me1">drop</span><span class="br0">&#40;</span>columns<span class="sy0">=</span><span class="br0">&#91;</span><span class="st0">'G3'</span><span class="br0">&#93;</span><span class="sy0">,</span> axis<span class="sy0">=</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="co1">#Variables explicatives</span>
+&nbsp;
+lasso <span class="sy0">=</span> Lasso<span class="br0">&#40;</span>alpha<span class="sy0">=</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="co1">#Appel de la fonction avec alpha = 1</span>
+lasso.<span class="me1">fit</span><span class="br0">&#40;</span>X_train<span class="sy0">,</span> y_train<span class="br0">&#41;</span><span class="co1">#Entraienement sur les données</span>
+lasso_pre <span class="sy0">=</span> lasso.<span class="me1">predict</span><span class="br0">&#40;</span>X_test<span class="br0">&#41;</span><span class="co1">#Prédiction sur les données tests</span>
+mean_squared_error<span class="br0">&#40;</span>y_test<span class="sy0">,</span> lasso_pre<span class="br0">&#41;</span><span class="co1">#Evaluation du modèle</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong> Il est nécessaire de convertir les données X de test et d&#039;entrainement en matrices.</div>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>Metrics<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>glmnet<span class="br0">&#41;</span>
+&nbsp;
+data <span class="sy0">&lt;</span>- Filter<span class="br0">&#40;</span><span class="kw1">is</span>.<span class="me1">numeric</span><span class="sy0">,</span> data<span class="br0">&#41;</span><span class="co1">#Filtre des variables numériques</span>
+&nbsp;
+lasso <span class="sy0">&lt;</span>- glmnet<span class="br0">&#40;</span>X_train<span class="sy0">,</span> y_train<span class="sy0">,</span> alpha <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">,</span> <span class="kw1">lambda</span> <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">,</span> standardize <span class="sy0">=</span> F<span class="br0">&#41;</span><span class="co1">#Définition du modèle de régression Lasso</span>
+<span class="co1">#Le paramètre alpha = 1 définit la régression Lasso, et lambda = 1 est la constante de contrôle de la quantité de régularisation</span>
+&nbsp;
+lasso_pred <span class="sy0">&lt;</span>- predict<span class="br0">&#40;</span>lasso <span class="sy0">,</span> s <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">,</span> newx <span class="sy0">=</span> X_test<span class="br0">&#41;</span><span class="co1">#Prédictions</span>
+mse<span class="br0">&#40;</span>y_test<span class="sy0">,</span> lasso_pred<span class="br0">&#41;</span><span class="co1">#Evaluation du modèle</span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_regularisee&amp;media=cpp:lasso.png" class="media" title="cpp:lasso.png"><img src="/lib/exe/fetch.php?media=cpp:lasso.png" class="mediacenter" title="Résultat régression Lasso" alt="Résultat régression Lasso" /></a>
+</p>
+
+<p>
+Cela signifie qu&#039;avec la régression Lasso, en moyenne, il y a une différence de +/- 1.9 entre les valeurs prédites et les valeurs réelles.
+</p>
+
+</div>
+
+<h5 id="selection_de_variables_avec_lasso">Sélection de variables avec Lasso</h5>
+<div class="level5">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_regularisee&amp;media=cpp:selected_variables.png" class="media" title="cpp:selected_variables.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=74ae4e&amp;media=cpp:selected_variables.png" class="mediacenter" title="Sélection de variables de la régression Lasso" alt="Sélection de variables de la régression Lasso" width="600" /></a>
+</p>
+
+<p>
+Un point important de la régularisation Lasso est qu&#039;elle élimine le poids des variables les moins importantes en leur donnant la valeur zéro. Cela permet de rendre le modèle moins complexe en sélectionnant des variables les plus significatives.
+</p>
+
+<p>
+Il est possible de voir combien de variables ont été utilisées par le modèle en regardant le coefficient attribué à chaque variable.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">lasso.<span class="me1">coef_</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">lasso$beta</pre>
+
+<p>
+Ensuite on récupère le nom des variables conservées.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">feature_selection</span> <span class="kw1">import</span> SelectFromModel<span class="co1">#Importation du selecteur de variable en fonction de leur poids</span>
+&nbsp;
+selection <span class="sy0">=</span> SelectFromModel<span class="br0">&#40;</span>lasso<span class="sy0">,</span> prefit<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span><span class="co1">#Création du modèle de sélection </span>
+X_selected <span class="sy0">=</span> selection.<span class="me1">transform</span><span class="br0">&#40;</span>X_train<span class="br0">&#41;</span><span class="co1">#Application du modèle sur les données</span>
+&nbsp;
+<span class="co1">#On crée le dataframe avec la transformation des variables</span>
+selected_features <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>selection.<span class="me1">inverse_transform</span><span class="br0">&#40;</span>X_selected<span class="br0">&#41;</span><span class="sy0">,</span>
+                                 index<span class="sy0">=</span>X_train.<span class="me1">index</span><span class="sy0">,</span>
+                                 columns<span class="sy0">=</span>X_train.<span class="me1">columns</span><span class="br0">&#41;</span>
+&nbsp;
+selected_columns <span class="sy0">=</span> selected_features.<span class="me1">columns</span><span class="br0">&#91;</span>selected_features.<span class="me1">var</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy0">!=</span> <span class="nu0">0</span><span class="br0">&#93;</span><span class="co1">#On garde uniquement les variables les plus importantes, dont le coefficient est différent de zéro.</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">lasso$beta</pre>
+
+<p>
+<strong>Observations</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_regularisee&amp;media=cpp:selected_features.png" class="media" title="cpp:selected_features.png"><img src="/lib/exe/fetch.php?media=cpp:selected_features.png" class="mediacenter" title="Variables sélectionnées" alt="Variables sélectionnées" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 4 :</strong> Répartition des variables selon leur importance dans le modèle</p><!--divalign-->
+
+</div>
+
+<h5 id="sources2">Sources</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> Machine Learning avec Scikit-Learn, 2e édition, Aurélien Géron</div>
+</li>
+<li class="level1"><div class="li"> <a href="https://rstatisticsblog.com/data-science-in-action/machine-learning/lasso-regression/" class="urlextern" title="https://rstatisticsblog.com/data-science-in-action/machine-learning/lasso-regression/" rel="nofollow">R Statistics</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le mod\u00e8le Lasso&quot;,&quot;hid&quot;:&quot;le_modele_lasso&quot;,&quot;codeblockOffset&quot;:7,&quot;secid&quot;:5,&quot;range&quot;:&quot;7589-11401&quot;} -->
+<h3 class="sectionedit7" id="le_modele_elastic_net">Le modèle Elastic net</h3>
+<div class="level3">
+
+<p>
+Il s&#039;agit d&#039;un compromis entre les modèles Lasso et Ridge et sa fonction de coût est simplement un mélange des termes de régularisation des deux régressions.
+</p>
+
+</div>
+
+<h5 id="theorie2">Théorie</h5>
+<div class="level5">
+
+<p>
+$$
+J(\Theta) = \underbrace{MSE(\Theta)}_{\text{Fonction coût}}  + \underbrace{\alpha r\sum_{i = 1}^{n} \lvert\Theta_{i} \rvert}_{\text{Terme de régularisation Lasso}} +  \underbrace{\alpha\frac{1 - r}{2} \sum_{i = 1}^{n} \Theta_{i}^{2}}_{\text{Terme de régularisation Ridge}}
+$$
+</p>
+<div class="table sectionedit8"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">      Paramètre        </th><th class="col1"> Signification</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  MSE  </td><td class="col1"> Erreur quadratique moyenne </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">   $\alpha$     </td><td class="col1"> Constante contrôlant la quantité de régularisation </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">    $\Theta$     </td><td class="col1"> Coefficient de régression linéaire </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">    r     </td><td class="col1"> Ratio de mélange (r = 0 ⇔ Ridge et r = 1 ⇔ Lasso) </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table2&quot;,&quot;secid&quot;:8,&quot;range&quot;:&quot;11895-12179&quot;} -->
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">metrics</span> <span class="kw1">import</span> mean_squared_error
+<span class="kw1">from</span> sklearn.<span class="me1">linear_model</span> <span class="kw1">import</span> ElasticNet
+&nbsp;
+data <span class="sy0">=</span> data.<span class="me1">select_dtypes</span><span class="br0">&#40;</span>exclude<span class="sy0">=</span><span class="br0">&#91;</span><span class="st0">'object'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="co1">#Sélection des variables quantitatives</span>
+&nbsp;
+y <span class="sy0">=</span> data<span class="br0">&#91;</span><span class="st0">'G3'</span><span class="br0">&#93;</span><span class="co1">#Définition variable cible</span>
+X <span class="sy0">=</span> data.<span class="me1">drop</span><span class="br0">&#40;</span>columns<span class="sy0">=</span><span class="br0">&#91;</span><span class="st0">'G3'</span><span class="br0">&#93;</span><span class="sy0">,</span> axis<span class="sy0">=</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="co1">#Variables explicatives</span>
+&nbsp;
+elastic <span class="sy0">=</span> ElasticNet<span class="br0">&#40;</span>alpha<span class="sy0">=</span><span class="nu0">1</span><span class="sy0">,</span> l1_ratio<span class="sy0">=</span><span class="nu0">0.5</span><span class="br0">&#41;</span><span class="co1">#Appel de la fonction avec alpha = 1 et le ration de mélange r = 0.5</span>
+elastic.<span class="me1">fit</span><span class="br0">&#40;</span>X_train<span class="sy0">,</span> y_train<span class="br0">&#41;</span><span class="co1">#Entraienement sur les données</span>
+elastic_pre <span class="sy0">=</span> elastic.<span class="me1">predict</span><span class="br0">&#40;</span>X_test<span class="br0">&#41;</span><span class="co1">#Prédiction sur les données tests</span>
+mean_squared_error<span class="br0">&#40;</span>y_test<span class="sy0">,</span> elastic_pre<span class="br0">&#41;</span><span class="co1">#Evaluation du modèle</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong> Il est nécessaire de convertir les données X de test et d&#039;entrainement en matrices.</div>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>Metrics<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>glmnet<span class="br0">&#41;</span>
+&nbsp;
+data <span class="sy0">&lt;</span>- Filter<span class="br0">&#40;</span><span class="kw1">is</span>.<span class="me1">numeric</span><span class="sy0">,</span> data<span class="br0">&#41;</span><span class="co1">#Filtre des variables numériques</span>
+&nbsp;
+elastic<span class="sy0">&lt;</span>- glmnet<span class="br0">&#40;</span>X_train<span class="sy0">,</span> y_train<span class="sy0">,</span> alpha <span class="sy0">=</span> <span class="nu0">.5</span><span class="sy0">,</span> <span class="kw1">lambda</span> <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">,</span> standardize <span class="sy0">=</span> F<span class="br0">&#41;</span><span class="co1">#Définition du modèle de régression Elasticnet</span>
+<span class="co1">#Le paramètre alpha = 0.5 définit la régression Elasticnet, et lambda = 1 est la constante de contrôle de la quantité de régularisation</span>
+&nbsp;
+elastic_pred <span class="sy0">&lt;</span>- predict<span class="br0">&#40;</span>elastic<span class="sy0">,</span> s <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">,</span> newx <span class="sy0">=</span> X_test<span class="br0">&#41;</span><span class="co1">#Prédictions</span>
+mse<span class="br0">&#40;</span>y_test<span class="sy0">,</span> elastic_pred<span class="br0">&#41;</span><span class="co1">#Evaluation du modèle</span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_regularisee&amp;media=cpp:elasticnet_evaluation.png" class="media" title="cpp:elasticnet_evaluation.png"><img src="/lib/exe/fetch.php?media=cpp:elasticnet_evaluation.png" class="mediacenter" title="Résultat d&#039;évaluation" alt="Résultat d&#039;évaluation" /></a>
+</p>
+
+<p>
+Cela signifie qu&#039;avec la régression Elastic net, en moyenne, il y a une différence de +/- 1.9 entre les valeurs prédites et les valeurs réelles.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le mod\u00e8le Elastic net&quot;,&quot;hid&quot;:&quot;le_modele_elastic_net&quot;,&quot;codeblockOffset&quot;:13,&quot;secid&quot;:7,&quot;range&quot;:&quot;11402-13682&quot;} -->
+<h2 class="sectionedit9" id="lequel_choisir">Lequel choisir ?</h2>
+<div class="level2">
+
+<p>
+<div class='alert alert-info'><strong><span style="font-size:large;">Remarque :</span></strong> Il est préférable de toujours utiliser un modèle régularisé, à la place d&#039;une simple régression linéaire. L&#039;over-fitting étant un problème récurrent en data science, utiliser ce type de modèle permet de mieux gérer cela.
+</div>
+</p>
+<div class="table sectionedit10"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0 leftalign">              </td><th class="col1"> Fonctionnement </th><th class="col2 leftalign"> Quand utiliser ?        </th><th class="col3">Remarques </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 leftalign"> Ridge       </th><td class="col1 leftalign"> Utilise le carré de la norme L2.   </td><td class="col2">Lorsque toutes les variables sont importantes. </td><td class="col3"> Il peut être le choix par défaut face à une simple régression linéaire.</td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 leftalign"> Lasso    </th><td class="col1 leftalign"> Utilise la norme L1.      </td><td class="col2">Lorsque vous soupçonnez la présence de variables inutiles. </td><td class="col3">Lorsque des variables sont fortement corrélées, elle peut en privilégier une au détriment des autres.</td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 leftalign"> Elastic net    </th><td class="col1 leftalign">Combinaison des régularisations Ridge et Lasso.  </td><td class="col2">Idem que pour la régression Lasso.</td><td class="col3"> Est préférée à Lasso car plus stable.</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table3&quot;,&quot;secid&quot;:10,&quot;range&quot;:&quot;13997-14605&quot;} -->
+</div>
+
+<h5 id="sources3">Sources</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> Machine Learning avec Scikit-Learn, 2e édition, Aurélien Géron</div>
+</li>
+<li class="level1"><div class="li"> Data science : fondamentaux et études de cas, Eric Biernat et Michel Lutz</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Lequel choisir ?&quot;,&quot;hid&quot;:&quot;lequel_choisir&quot;,&quot;codeblockOffset&quot;:15,&quot;secid&quot;:9,&quot;range&quot;:&quot;13683-&quot;} -->

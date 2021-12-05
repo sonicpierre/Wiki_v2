@@ -1,0 +1,6 @@
+<span class="kw1">from</span> sklearn.<span class="me1">feature_selection</span> <span class="kw1">import</span> SelectKBest<span class="sy0">,</span> f_classif
+&nbsp;
+X <span class="sy0">=</span> data.<span class="me1">drop</span><span class="br0">&#40;</span>columns<span class="sy0">=</span><span class="br0">&#91;</span><span class="st0">'1-Octanol'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="co1">#Définition des variables explicatives</span>
+y <span class="sy0">=</span> data<span class="br0">&#91;</span><span class="st0">'1-Octanol'</span><span class="br0">&#93;</span><span class="co1">#Définition de la variable cible</span>
+&nbsp;
+f_classif<span class="br0">&#40;</span>X<span class="sy0">,</span> y<span class="br0">&#41;</span><span class="co1">#Test de dépendance</span>

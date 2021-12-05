@@ -1,0 +1,93 @@
+
+<h1 class="sectionedit1" id="godot">Godot</h1>
+<div class="level1">
+
+<p>
+Ce wiki est pour les utilisateurs de Godot utilisant le C#. Il est basé sur la documentation “Your first game” de Godot Engine. Il s&#039;agit ici d&#039;une première ébauche pour les jeux 2D. 
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Godot&quot;,&quot;hid&quot;:&quot;godot&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-207&quot;} -->
+<h3 class="sectionedit2" id="travailler_sur_les_scene">Travailler sur les scène</h3>
+<div class="level3">
+
+<p>
+Godot est basé sur le même principe que JavaFX, il y a des noeuds et des scènes. On fait plusieurs scènes et on les lie entre elles et on peut les superposer. Par exemples, il y a une scène Joueur, une scène Enemie et ainsi de suite. Chaque scène a ces différents noeuds et un script associé. Les éléments comme la gravaité sont codé par desfauts.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Travailler sur les sc\u00e8ne&quot;,&quot;hid&quot;:&quot;travailler_sur_les_scene&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;208-605&quot;} -->
+<h3 class="sectionedit3" id="les_differents_noeuds">Les différents noeuds</h3>
+<div class="level3">
+
+<p>
+Le moteur met à disposition beaucoup, beaucoup de noeuds pour nous donner un maximaum de liberté je vais essayer de décrire les plus importants :
+</p>
+<ul>
+<li class="level1"><div class="li"> Animated Sprite, il s&#039;agit d&#039;un noeud majeur qui permet d&#039;insérer une image animée dans la scène. Elle nécessite obligatoirement une texture associé mais aussi une autre noeud <strong>CollisionShape2D</strong> comme sont nom l&#039;indique il s&#039;agit de décrire une forme de collision. Là aussi, il faut lui indiquer une shape capsule, new rectangle…Si on veut que les énemis soient insensible aux collision entre eux il faut changer le masque. En cliquant sur animated sprite vous aurez la posibilité de créer différentes animation qui seront joué en boucle. Dans le cas d&#039;un joueur, il est pertinent de faire une animation en vertivale et horizontale puis avec le système de miroir et de rotation on aura toutes les animations. Il suffira ensuite dans le code d&#039;écrire un .Play() ou . Stop().</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> VisibilityNotifier2D, ce noeud est particulièrement pratique pour savoir quand un énemis n&#039;est plus visible pour le supprimer et ne pas ralentir le jeux.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Timer, il s&#039;agit du noeud permettant de gérer le temps. il envoie un signal à chaque fois que le temps défini est passé et peut tourner en boucle ou en onshot.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> CanvasLayer, ce noeud est particulièrement pratique pour gérer tout ce qui est menu d&#039;acceuil et contient des éléments comme <strong>Label</strong>, <strong>Button</strong> qui permettent d&#039;avoir le contrôle sur le lancement du jeu.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Path2D avec comme enfant PathFollow2D permettent de déterminer un chemin que les énemis peuvent suivre ou un chemin sur lequel les énemis peuvent apparaître.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> AudioStreamPlayer permet de gérer tout ce qui est lecture de son de façon intéractive.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les diff\u00e9rents noeuds&quot;,&quot;hid&quot;:&quot;les_differents_noeuds&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;606-2396&quot;} -->
+<h3 class="sectionedit4" id="les_facon_de_faire_le_script">Les façon de faire le script</h3>
+<div class="level3">
+
+<p>
+Il y a une méthode qui s&#039;exécute au lancement de la scène où on récupère nos objets de la scène pour cela on utilisera leur nom. On est obligé de recaster quand on travaille sur Visual Studio Code.
+</p>
+<pre class="code csharp">  <span class="kw1">public</span> <span class="kw1">override</span> <span class="kw4">void</span> _Ready<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#123;</span>
+  	animatedSprite <span class="sy0">=</span> <span class="br0">&#40;</span>AnimatedSprite<span class="br0">&#41;</span> GetNode<span class="br0">&#40;</span><span class="st0">&quot;AnimatedSprite&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+	collisionShape <span class="sy0">=</span> <span class="br0">&#40;</span>CollisionShape2D<span class="br0">&#41;</span> GetNode<span class="br0">&#40;</span><span class="st0">&quot;CollisionShape2D&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+	particle2D <span class="sy0">=</span> <span class="br0">&#40;</span>Particles2D<span class="br0">&#41;</span> GetNode<span class="br0">&#40;</span><span class="st0">&quot;Particles2D&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span></pre>
+
+<p>
+Il y a aussi une méthode qui s&#039;execute à chacune des frames : 
+</p>
+<pre class="code csharp">  <span class="co1">//delta permet d'avoir le jeux et les frames adaptées aux performances du PC qui le fait tourner</span>
+  <span class="kw1">public</span> <span class="kw1">override</span> <span class="kw4">void</span> _Process<span class="br0">&#40;</span><span class="kw4">float</span> delta<span class="br0">&#41;</span><span class="br0">&#123;</span><span class="br0">&#125;</span></pre>
+
+<p>
+Il est souvent intéressant de connecter les éléments de la scène avec des méthodes. Elles sont alors exécuté lorsque l&#039;objet émet un certain signal.
+</p>
+<pre class="code csharp">       ennemiTimer<span class="sy0">.</span><span class="me1">Connect</span><span class="br0">&#40;</span><span class="st0">&quot;timeout&quot;</span>, <span class="kw1">this</span>, <a href="http://www.google.com/search?q=nameof+msdn.microsoft.com"><span class="kw3">nameof</span></a><span class="br0">&#40;</span>OnEnemiSpawn<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+       <span class="co1">//.....</span>
+       <span class="kw1">private</span> <span class="kw4">void</span> OnEnemiSpawn<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#123;</span><span class="br0">&#125;</span></pre>
+
+<p>
+Il faut bien comprendre que tout fonctionne avec des signaux. Pour faire communiquer deux scènes on va demander à une des deux d&#039;émettre un signal, on le récupérera dans l&#039;autre scène et on agira en concéquence.
+</p>
+<pre class="code csharp">       	Connect<span class="br0">&#40;</span><span class="st0">&quot;body_entered&quot;</span>, <span class="kw1">this</span>, <a href="http://www.google.com/search?q=nameof+msdn.microsoft.com"><span class="kw3">nameof</span></a><span class="br0">&#40;</span>OnBodyEnterred<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+	AddUserSignal<span class="br0">&#40;</span><span class="st0">&quot;hit&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        <span class="co1">//......</span>
+        <span class="kw4">void</span> OnBodyEnterred<span class="br0">&#40;</span>PhysicsBody2D body<span class="br0">&#41;</span><span class="br0">&#123;</span>
+	   EmitSignal<span class="br0">&#40;</span><span class="st0">&quot;hit&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+	<span class="br0">&#125;</span></pre>
+
+<p>
+Penser aussi que tout les éléments du C# sont disponible en particulier pour tout ce qui est aléatoire. Tag pour rendre une méthode asynchrone….
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les fa\u00e7on de faire le script&quot;,&quot;hid&quot;:&quot;les_facon_de_faire_le_script&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;2397-&quot;} -->

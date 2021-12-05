@@ -1,0 +1,4 @@
+<span class="co1">#On regarde si on peut passer à la seconde phase</span>
+<span class="kw1">if</span> tabDelta<span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span>-<span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">&gt;</span><span class="nu0">0</span>:
+    <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;Le problème n'a pas d'optimum&quot;</span><span class="br0">&#41;</span>
+    exit<span class="br0">&#40;</span><span class="br0">&#41;</span>

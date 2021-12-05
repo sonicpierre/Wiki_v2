@@ -1,0 +1,5 @@
+ <span class="co1">#Récupérer la colonne price</span>
+data %<span class="sy0">&gt;</span>%
+        <span class="kw3">select</span><span class="br0">&#40;</span>price<span class="br0">&#41;</span>
+data %<span class="sy0">&gt;</span>%
+        arrange<span class="br0">&#40;</span>desc<span class="br0">&#40;</span>price<span class="br0">&#41;</span><span class="br0">&#41;</span>

@@ -1,0 +1,319 @@
+[[cpp:Commande système| Commandes système]]
+
+=====Naviguer dans le système de fichiers=====
+
+Dans cette partie nous verrons comment on peut **visualiser** <fc #008000>**les dossiers et fichiers**</fc> présents sur l'ordinateur, les **modifier**, en créer ou en **rechercher** des particuliers. Certaines de ces actions sont tout à fait réalisables avec l'explorateur de fichier mais nous nous intéressons à le faire par la console pour plusieurs raisons :
+  * Dans certaines situations, comme pour la recherche de fichiers ou dossiers, il est <fc #ff0000>**plus rapide**</fc> de procéder par lignes de commande. Dans d'autres, c'est même nécessaire.
+  * C'est intéressant d'un point de vue technique d'utiliser les méthodes les plus basiques sans passer par des <color #ed1c24>**logiciel tiers**</color>.
+  * Vous pouvez faire comme si vous étiez un <color #ed1c24>**hacker**</color> à taper vite dans la console.
+Les deux derniers points ne sont peut être pas essentiels mais le premier suffit à motiver l'apprentissage des commandes console qui reste très rapide.
+Pour donner un <fc #ff0000>**fil rouge**</fc> à ce que l'on fera dans cette partie on va se donner le but de créer un dossier <fc #ffa500>**Valhalla**</fc> contenant quelques <fc #fa8072>**Valkyries**</fc>.
+
+;#;
+{{:cpp:arborescence.png?200|}}
+;#;
+
+**Note :** Vous remarquerez que parfois je ne <fc #ff0000>**préciserai pas**</fc> si la commande est à utiliser sur Windows ou Linux. Si c'est le cas cela signifie que la commande est <fc #ff0000>**la même pour tous les systèmes d'exploitation**</fc> !
+====Visualiser l'arborescence====
+
+Maintenant qu'on a vu les **commandes de base**, progressons vers notre objectif : le <fc #ffa500>**Valhalla**</fc>.
+Les fichiers de l'ordinateur sont organisés comme <fc #008000>**les branches d'un arbre**</fc> : il y a des dossiers à la racine de l'ordinateur remplis de dossiers qui sont eux même remplis de dossiers etc...
+Une bonne façon de le visualiser est d'utiliser la commande
+<code>tree</code>
+qui donne sur Windows quelque chose un peu comme ça :
+
+{{:cpp:tree.png?1000|}}
+
+On ne voit pas grand chose mais c'est parce qu'on est dans **/home/user** par défaut (Linux) ou **C:\Users\user** (Windows) et qu'il y a beaucoup de choses ici. Pour commencer, on va travailler dans <fc #008000>**un espace moins fourni**</fc>.
+
+====Créer un dossier====
+
+Pour ça on va créer un dossier <fc #008000>**entièrement par ligne de commande**</fc>. Oui, on ne va pas ouvrir l'explorateur de fichier et faire Clic droit > Nouveau > Dossier, on va tout faire dans la console.
+Pour ça, on utilise <code>mkdir Valhalla</code>
+Allons-y, créons le dossier <fc #ffa500>**Valhalla**</fc>. C'est bon ? Si vous avez du courage, vous pouvez réafficher l'arborescence des dossiers pour vérifier que <fc #ffa500>**Valhalla**</fc> a bien été créé, mais on va essayer d'être malin. On va donc demander à l'ordinateur de nous placer dans le dossier <fc #ffa500>**Valhalla**</fc>. 
+
+====Se déplacer dans l'arborescence====
+
+Pour cela on utilise <code>cd Valhalla</code> Si tout se passe bien, on devrait être dans le dossier <fc #ffa500>**Valhalla**</fc>. Si vous voulez vous pouvez chercher le dossier en passant par l'explorateur de fichiers, il sera bien là. La commande <fc #800000>**cd**</fc> prend comme argument le <fc #008000>**nom d'un dossier fils**</fc> du répertoire où vous vous trouvez actuellement mais vous pouvez aussi donner un <fc #008000>**chemin absolu**</fc>, c'est à dire partant de la **racine**. Par exemple, pour<fc #ff0000> **remonter**</fc> dans l'arborescence au dossier où vous étiez avant vous pouvez faire (mettez votre nom d'utilisateur et pas user hein) :
+
+^Linux^Windows^^
+|cd /home/user|cd \Users\user||
+
+Ou plus simplement pour revenir en arrière dans l'arborescence d'un cran <code> cd ..</code>
+
+====Afficher dossiers et fichiers====
+
+Je vous ai montré <fc #800000>**tree**</fc> tout à l'heure pour afficher le contenu d'un dossier mais ce n'est pas la commande qu'on utilise la plupart du temps.
+^Linux^Windows^^
+|ls|dir||
+sont bien plus souvent utilisées car plus sobres et plus claires que <fc #800000>**tree**</fc>. En plus on peut rajouter plein d'<fc #ff0000>**arguments**</fc> pour afficher ce qui nous intéresse précisément.
+
+^ls^dir^Utilité^^
+|  -a  |/a|Affiche aussi les fichiers système et les fichiers cachés||
+|  -l  |-|Affiche plus de détails comme les droits d'écriture, lecture et exécution ainsi que la date de la dernière modification (affichage par défaut pour dir)||
+|  -  |/d|Affiche moins de détails (affichage par défaut pour ls)||
+|  -R  |-|Affiche récursivement le contenu du répertoire courant||
+|  -t  |/od|Trie par ordre de plus récente modification||
+
+**Note :** les fichiers cachés sont généralement des fichiers systèmes et ne sont pas visibles pour l'utilisateur sauf par demande explicite.
+
+====Créer des dossiers imbriqués====
+
+Maintenant, un petit retour sur la création de dossiers. Imaginons vous vouliez créer un dossier <fc #fa8072>**Valkyries**</fc> dans le dossier <fc #ffa500>**Valhalla**</fc>. Pour ce faire, vous pourriez vous placer dans ce dernier et faire comme nous avons fait pour créer <fc #ffa500>**Valhalla**</fc>. Cependant, il est possible de le faire à partir du répertoire où se trouve <fc #ffa500>**Valhalla**</fc> directement. Il suffit de <fc #ff0000>**donner le chemin en paramètre**</fc> au lieu d'uniquement le nom du dossier. Essayez en étant là où est Valhalla : 
+^Linux^Windows^^
+|mkdir Valhalla/Valkyries|mkdir Valhalla\Valkyries||
+
+**Resultat :**
+<code>
+Valhalla
+└── Valkyries
+</code>
+
+**Note :** Il est aussi possible de créer plusieurs dossiers <fc #008000>**imbriqués**</fc> de cette manière en faisant par exemple :
+^Linux^Windows^^
+|mkdir -p a/b/c/d|mkdir \a\b\c\d||
+Remarquez qu'il faut rajouter **-p** sur Linux pour ne pas créer à la place le dossier nommé a/b/c/d au lieu de d dans c dans b dans a.
+
+====Créer un fichier====
+
+Nous allons maintenant nous intéresser à la <fc #008000>**copie**</fc>, au <fc #008000>**déplacement**</fc> et au <fc #008000>**renommage**</fc> des fichiers.
+Pour cela, créons un **fichier vierge** avec lequel travailler pour remplir notre <fc #ffa500>**Valhalla**</fc> avec des <fc #fa8072>**Valkyries**</fc>. Placez vous dans le dossier <fc #ffa500>**Valhalla**</fc> puis :
+^Linux^Windows^^
+|touch Brunhilde.txt|echo.>Brunhilde.txt||
+
+**Résultat :**
+<code>
+Valhalla
+├── Brunhilde.txt
+└── Valkyries
+</code>
+
+====Copier====
+
+Créons une <fc #008000>**copie**</fc> de notre valkyrie directement dans le dossier <fc #fa8072>**Valkyries**</fc>. Pour cela entrez :
+^Linux^Windows^^
+|cp Brunhilde.txt Valkyries|copy Brunhilde.txt Valkyries||
+On peut aller vérifier que tout s'est bien passé avec <fc #800000>**cd**</fc> et <fc #800000>**dir/ls**</fc> mais bon j'imagine que vous commencez à comprendre le truc =).
+
+**Résultat :**
+<code>
+Valhalla
+├── Brunhilde.txt
+└── Valkyries
+    └── Brunhilde.txt
+</code>
+
+====Renommer====
+
+Nous avons donc une **Brunhilde.txt** dans <fc #ffa500>**Valhalla**</fc> et une dans **<fc #fa8072>Valkyries</fc>**. On va renommer la **Brunhilde.txt** de <fc #ffa500>**Valhalla**</fc> en **Hrist.txt** pour l'envoyer par la suite rejoindre **Brunhilde.txt** dans <fc #fa8072>**Valkyries**</fc>. Vous suivez toujours ? Placez vous dans <fc #ffa500>**Valhalla**</fc> et tapez :
+^Linux^Windows^^
+|mv Brunhilde.txt Hrist.txt|move Brunhilde.txt Hrist.txt||
+Et voilà ! Une nouvelle valkyrie ! Attention, si vous renommez un fichier en un nom qui existe déjà dans le répertoire <fc #ff0000>**l'ancien fichier sera écrasé**</fc> par le nouveau fichier renommé.
+
+**Résultat :**
+<code>
+Valhalla
+├── Hrist.txt
+└── Valkyries
+    └── Brunhilde.txt
+</code>
+
+====Déplacer====
+
+Envoyons donc **Hrist.txt** dans le dossier <fc #fa8072>**Valkyries**</fc>. Pour cela, vous verrez qu'on utilise à nouveau **<fc #800000>mv</fc>/<fc #800000>move</fc>**, mais qu'on donne cette fois un dossier en second argument au lieu d'un nom. Faites attention ou vous finirez un jour par <fc #ff0000>**renommer**</fc> un dossier au lieu de le <fc #ff0000>**déplacer**</fc> !
+^Linux^Windows^^
+|mv Hrist.txt Valkyries|move Hrist.txt Valkyries||
+Encore une fois, si on déplace un fichier à un endroit où il y en a un autre du même nom <fc #ff0000>**le fichier déplacé écrasera l'autre**</fc>.
+
+**Résultat :**
+<code>
+Valhalla
+└── Valkyries
+    ├── Hrist.txt
+    └── Brunhilde.txt
+</code>
+
+====Supprimer====
+
+Supposons maintenant que vous avez perdu la raison et que vous décidez de <fc #ff0000>**supprimer**</fc> un fichier valkyrie ou un des dossiers que vous avez créé. Attention, ces suppressions sont <fc #ff0000>**définitives**</fc>, vous ne retrouverez <fc #ff0000>**pas de fichiers dans votre corbeille**</fc> !
+
+^Linux^Windows^Utilité^^
+|rm|del|Supprime le fichier passé en paramètre||
+|rm -d|rmdir|Supprime le dossier **vide** passé en paramètre||
+|rm -r|rmdir /s|Supprime le dossier passé en paramètre ainsi que tout son contenu||
+
+====Les permissions====
+
+===Linux===
+
+Les utilisateurs ont tous des droits particuliers de <fc #008000>**visualisation**</fc>, <fc #008000>**exécution**</fc> et <fc #008000>**modification**</fc> des différents fichiers et dossiers du système. On peut notamment visualiser les droits avec la commande <code>ls -l</code> et les modifier avec <code>chmod</code> suivi de deux paramètres. Le second paramètre est la cible à modifier (on peut mettre * pour appliquer notre modification à tous les éléments du répertoire où l'on se trouve).
+Le premier paramètre est composé de <fc #ff0000>**trois chiffres**</fc> indiquant les permissions pour l'<fc #9400d3>**utilisateur**</fc>, les <fc #9400d3>**membres du groupe**</fc> et le <fc #9400d3>**reste du monde**</fc> respectivement.
+
+^Permission^Poids^^
+|Exécution|1||
+|Lecture|2||
+|Ecriture|4||
+
+Pour savoir la valeur du chiffre indiquant les permissions à accorder il faut faire <fc #008000>**la somme des poids**</fc> des permissions que l'on veut accorder.
+Cette commande est particulièrement utile quand vous voulez exécuter votre code et que pour une raison obscure vous n'avez pas les droits requis pour le faire.
+
+__Exemples__
+
+Accorder toutes les permissions à tout le monde sur tous les éléments du répertoire actuel :<code>chmod 777 *</code>
+
+Accorder tout à l'utilisateur, la lecture et l'exécution aux membres du groupe et l'exécution seule au reste du monde pour le fichier **Brunhilde.txt** (en étant dans le répertoire <fc #fa8072>**Valkyries**</fc>) :<code>chmod 731 Brunhilde.txt</code>
+
+**Note :** il est aussi possible de <fc #008000>**rajouter**</fc> ou d'<fc #008000>**enlever**</fc> des permissions par rapport aux permissions existantes en indiquant la cible suivie  de + ou - faisant référence à l'ajout ou la suppression de la permission donnée par son initiale (c'est une façon de faire différente mais qui amène aux mêmes résultats).
+
+^Cible^Initiale^^
+|utilisateur|u||
+|groupe|g||
+|autres|o||
+|tous|a||
+
+^Permission^Initiale^^
+|Exécution|x||
+|Lecture|r||
+|Ecriture|w||
+
+__Exemple__
+
+Ajouter à tous la permission d'écriture pour le fichier **Brunhilde.txt** <code>chmod a+w Brunhilde.txt</code>
+
+Retirer les permissions de lecture et écriture et ajouter les permissions d'exécution aux autres sur le répertoire courant <code>chmod o-wr+x *</code>
+
+===Windows===
+
+Maintenant, pour ce qui en est de Windows, on utilise la commande <code>icacls</code>
+Pour afficher les permissions accordées sur **Brunhilde.txt** il suffit d'écrire <code>icacls Brunhilde.txt</code> Vous serez alors face à une liste détaillée des différents <fc #008000>**droits**</fc> de tous les utilisateurs sur le fichier. Je ne vais pas tout détailler ce que veulent dire les initiales de permissions et je vous invite à consulter le manuel de la commande, mais voici les principales :
+^Initiale^Sens^^
+|N|Aucun accès||
+|F|Accès complet||
+|M|Accès en modification||
+|RX|Accès en lecture et exécution||
+|R|Accès en lecture seule||
+|W|Accès en écriture seule||
+|D|Accès en suppression||
+
+Ensuite pour <fc #008000>**ajouter**</fc> ou <fc #008000>**supprimer**</fc> des permissions on passe par les arguments <fc #800000>**/grant**</fc> et <fc #800000>**/deny**</fc> suivi de nom de l'utilisateur à qui modifier les privilèges:les initiales des privilèges. On comprend toujours mieux avec un exemple alors en voilà quelques uns :
+
+<code>icacls Brunhilde.txt /grant Siegfried:F</code>
+Donne tous les privilèges à l'utilisateur **Siegfried** sur le fichier **Brunhilde.txt**
+<code>icacls Brunhilde.txt /deny Siegfried:(M,RX)</code>
+Retire le droit de modification ainsi que de lecture et exécution du fichier **Brunhilde.txt** à l'utilisateur **Siegfried**
+
+**Note :** on peut aussi donner un nom de dossier en paramètre et ajouter <fc #800000>**/t**</fc> pour appliquer les modifications des permissions sur le dossier et tous ses enfants.
+
+====La recherche de fichiers====
+
+Il s'agit sans doute du domaine où <fc #008000>**le terminal brille le plus**</fc>. Les options de recherche dans les explorateurs de fichiers se limitent généralement aux noms mais on peut dans la console aller bien plus loin.
+
+Les commandes de recherche de fichiers fonctionnent <fc #ff0000>**récursivement**</fc> à partir du répertoire courant, c'est à dire que le terminal ne cherchera que dans les dossiers fils du dossier actuel. Pour avoir des recherches plus rapide, il peut donc être assez malin de <fc #008000>**se placer à un endroit général**</fc> où vous savez où ce que vous cherchez se trouve. Pour rechercher **Brunhilde.txt**, je peux me placer au répertoire par défaut mais je peux aussi me placer directement dans le répertoire <fc #ffa500>**Valhalla**</fc> pour une recherche plus rapide. Logique. Pour faire une recherche par nom :
+^Linux^Windows^^
+|find -name Brunhilde.txt|dir /s Brunhilde.txt||
+
+Il est aussi possible de rechercher des fichiers et dossiers à partir de fragments de nom. On utilise pour cela **le caractère passe-partout** **<fc #800000>*</fc>** pour faire référence à plusieurs caractères quelconques. Pour chercher tous les dossiers et fichiers commençant par Valk (il fera donc apparaître <fc #fa8072>**Valkyries**</fc>) :
+^Linux^Windows^^
+|find -name Valk*|dir /s Valk*||
+Ce mode de recherche est très utilisé pour par exemple afficher tous les fichiers ayant la même extension.
+
+La commande <fc #800000>**find**</fc> de Linux peut de plus être accompagnée d'**attributs** intéressants pour <fc #008000>**préciser**</fc> la recherche ou <fc #008000>**exécuter une commande**</fc> sur les éléments trouvés par exemple.
+
+Pour limiter la recherche aux fichiers (f) ou dossiers (d) on peut rajouter <fc #800000>**-type**</fc>
+<code>find -type f -name "Brunhilde.txt"</code>
+Recherche tous les **fichiers** nommés **Brunhilde.txt** à partir du répertoire courant.
+
+Si on veut <fc #008000>**supprimer**</fc> tous les fichiers trouvés par la commande on peut utiliser <fc #800000>**-delete**</fc> (attention tout sera <fc #ff0000>**supprimé définitivement**</fc> sans demande de confirmation !)
+<code>find -name "*.mp3" -delete</code>
+Supprime tous les fichiers **mp3** à partir du répertoire courant (pourquoi il vous viendrait à l'idée de faire ça est une autre histoire).
+
+Maintenant si on veut plus généralement exécuter une commande sur les fichiers trouvés on ajoute <fc #800000>**-exec**</fc>. Attention la syntaxe est particulière !
+<code>find -name "*.exe" -exec chmod a+x {} \;</code>
+Donne à tout le monde les privilèges d'exécution des fichiers **.exe**. Bien sûr, on peut utiliser d'autres commandes que <fc #800000>**chmod**</fc>.
+
+=====Afficher, modifier ou filtrer le contenu d'un fichier texte=====
+
+====Afficher et modifier====
+
+Tout à l'heure, nous avons créé des fichiers textes au nom de <fc #f4a460>**valkyries**</fc> illustres. Cependant, qu'en est-il de leur contenu ? Pour afficher le contenu d'un fichier dans la console on fait :
+^Linux^Windows^^
+|cat Brunhilde.txt|type Brunhilde.txt||
+Si vous exécutez la commande, vous remarquerez alors ... rien. En effet, nous avons créé des fichiers vides. Il est donc temps de les remplir un peu.
+
+Je ne vais pas mentir, je trouve que les éditeurs de texte dans la console ne sont pas le meilleur moyen de remplir un fichier texte. Des applications comme <fc #ffa500>**Sublime**</fc>, <fc #ffa500>**Atom**</fc> ou plus simplement <fc #ffa500>**Notepad++**</fc> sont pour beaucoup bien mieux adaptées à l'édition de texte.
+
+Pour ce qui en est d'éditer du texte à partir de de la console, <fc #9400d3>**Linux**</fc> a normalement par défaut la commande <fc #800000>**vi**</fc> mais si elle ne fonctionne pas (ou que vous êtes sur Mac) vous pouvez utiliser un <code>sudo apt install vim</code> et utiliser <fc #800000>**vim**</fc>.
+
+Si vous êtes sur <fc #9400d3>**Windows**</fc>, téléchargez [[https://www.vim.org/|vim]] puis
+
+**Panneau de configuration>Système et Sécurité>Système>Modifier les paramètres>Paramètres système avancés>Variables d'environnement>Path>Modifier>Nouveau>//chemin vers <fc #800000>vim</fc> (pour moi c'est C:\\Program Files (x86)\Vim\vim82//)**
+
+et vous aurez accès à <fc #800000>**vim**</fc> dans la console.
+
+Pour éditer un fichier texte, c'est :
+^Vi^Vim^^
+|vi Brunhilde.txt|vim Brunhilde.txt||
+Ensuite, vous appuyez sur <fc #008080>**i**</fc> pour rentrer en mode insertion, vous écrivez ce qui vous chante et vous sauvegardez et quittez avec <fc #008080>**Echap**</fc> puis <fc #008080>**:wq**</fc>.
+
+**Note :** il existe d'autres alternatives à <fc #800000>**vi/vim**</fc> sous le nom de <fc #800000>**nano**</fc>, <fc #800000>**neovim**</fc> ou <fc #800000>**emacs**</fc> qui fonctionnent aussi très bien ;). Ces éditeurs de texte dans la console sont <fc #008000>**très largement customisables**</fc> et certains pourront peut être les préférer aux autres éditeurs avec interface graphique.
+
+Si vous essayez de lire <fc #008000>**des fichiers textes bien remplis**</fc> dans votre teminal, le résultat sera parfois illisible et vous devrez scroller longtemps pour remonter en haut du fichier. Dans ces conditions, <code>more Brunhilde.txt</code> sera plus adapté car le texte s'affichera petit à petit.
+
+====Filtrer====
+
+On va rajouter un peu de texte dans **Brunhilde.txt** pour avoir un support d'exemple dans cette partie. Utilisez vi/vim ou un logiciel tiers et insérez :
+<code>
+naguere
+naGuere
+la Guerrrrrre
+Guerre
+Guerrrrrrrette
+Lame
+arMure
+epee
+quel joli cheval
+la vache moche
+</code>
+
+Maintenant, nous allons voir <fc #ff0000>**une commande très utilisée**</fc> en tandem avec le pipe | (voir la partie sur les flux) qui est la commande pour <fc #008000>**rechercher**</fc> dans un fichier texte ou, plus généralement, dans une entée texte. La commande que nous allons utiliser permet d'<fc #008000>**afficher**</fc> seulement les lignes d'un texte qui vérifient les <fc #008000>**conditions**</fc> spécifiées en paramètre. Par exemple, pour afficher toutes les lignes du fichier **Brunhilde.txt** contenant la lettre **r** on ferait :
+^Linux^Windows^^
+|grep r Brunhilde.txt|find "r" Brunhilde.txt||
+Résultats de la recherche : naguere, naGuere, la Guerrrrrre, Guerre, Guerrrrrrette, arMure
+
+Cette commande propose un certain nombre d'<fc #800000>**arguments**</fc> pour augmenter les options de filtrage.
+
+^grep^find^Utilité^^
+|-v|/v|Affiche les lignes ne vérifiant pas les conditions mises en paramètre||
+|-c|/c|Affiche le nombre de lignes au lieu des lignes elles-même||
+|-n|/n|Numérote les lignes||
+|-i|/i|Ignore la casse||
+|-r|-|Rechercher récursivement dans le répertoire donné en paramètre (répertoire courant si rien n'est donné)||
+
+Note : la commande <fc #800000>**grep**</fc> de Linux est bien plus avancée que le <fc #800000>**find**</fc> de Windows car elle reconnaît <fc #008000>**les expressions régulières**</fc>. Il s'agit de caractères permettant de préciser une recherche. En fait, vous avez déjà utilisé une expression régulière ! Eh oui ! Souvenez vous, dans la partie sur la recherche de fichiers par nom, nous avons utilisé **"*.txt"** pour faire référence aux fichiers **.txt**. Voici quelques autres expressions régulières sur Linux :
+
+^Symbole^Signification^^
+|.|Caractère quelconque||
+|<nowiki>^</nowiki>|Début de ligne||
+|<nowiki>$</nowiki>|Fin de ligne||
+|[]|Caractère au choix||
+|?|Caractère précédent présent 0 ou 1 fois||
+|*|Caractère précédent présent 0 ou plusieurs fois||
+|+|Caractère précédent présent 1 ou plusieurs fois||
+
+Pour utiliser les expressions régulières il faut utiliser l'argument <fc #800000>**-E**</fc>.
+
+__Exemples__
+
+Affiche toutes les lignes contenant Gue suivi d'un nombre variable de r et se terminant par e. 
+<code>grep -E Guer+e$ Brunhilde.txt</code>
+
+**Résultats :** 
+naGuere, la Guerrrrrre, Guerre.
+
+Affiche toutes les lignes comprenant une lettre quelconque suivie d'une voyelle elle-même suivie d'une lettre quelconque suivie à son tour par une voyelle. 
+<code>grep -E .[aeiouy].[aeiouy] Brunhilde.txt</code>
+
+**Résultats :** 
+naguere, naGuere, Lame, arMure, quel joli cheval.
+
+[[cpp:Les flux et les processus| Les flux et les processus]]

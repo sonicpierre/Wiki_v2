@@ -1,0 +1,2 @@
+library<span class="br0">&#40;</span>lmtest<span class="br0">&#41;</span>
+acf<span class="br0">&#40;</span>residuals<span class="br0">&#40;</span>reg_lin<span class="br0">&#41;</span><span class="sy0">,</span> main<span class="sy0">=</span><span class="st0">&quot;Corrélation des résidus&quot;</span><span class="sy0">,</span> ci<span class="sy0">=</span><span class="nu0">0.95</span><span class="br0">&#41;</span>

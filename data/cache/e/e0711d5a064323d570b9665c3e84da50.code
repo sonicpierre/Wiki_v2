@@ -1,0 +1,9 @@
+<span class="co1">%Intégration utilisant la méthode de Simpson</span>
+<span class="kw1">function</span> S = Simpson<span class="br0">&#40;</span>f,a,b,N<span class="br0">&#41;</span>
+  h = <span class="br0">&#40;</span>b-a<span class="br0">&#41;</span>/N
+  pivots_ext = a + h*<span class="br0">&#91;</span><span class="nu0">1</span>:N-<span class="nu0">1</span><span class="br0">&#93;</span>
+  pivots_mil = a + <span class="nu0">0.5</span>*h*<span class="br0">&#40;</span><span class="nu0">2</span>*<span class="br0">&#91;</span><span class="nu0">1</span>:N<span class="br0">&#93;</span>-<span class="nu0">1</span><span class="br0">&#41;</span>
+  S = <span class="br0">&#40;</span>h/<span class="nu0">6</span><span class="br0">&#41;</span>*<span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>+f<span class="br0">&#40;</span>b<span class="br0">&#41;</span>+<span class="nu0">2</span>*<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/sum.html"><span class="kw2">sum</span></a><span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/feval.html"><span class="kw2">feval</span></a><span class="br0">&#40;</span>pivots_ext,f<span class="br0">&#41;</span><span class="br0">&#41;</span>+<span class="nu0">4</span>*<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/sum.html"><span class="kw2">sum</span></a><span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/feval.html"><span class="kw2">feval</span></a><span class="br0">&#40;</span>pivots_mil,f<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+endfunction
+<span class="co1">%Intégration quad</span>
+<span class="br0">&#91;</span>v, err<span class="br0">&#93;</span> = intg<span class="br0">&#40;</span>-<span class="nu0">10</span>, <span class="nu0">10</span>, P<span class="br0">&#41;</span>

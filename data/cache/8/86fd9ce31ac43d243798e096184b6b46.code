@@ -1,0 +1,13 @@
+library<span class="br0">&#40;</span>dplyr<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>janeaustenr<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>tidytext<span class="br0">&#41;</span>
+&nbsp;
+book_words <span class="sy0">&lt;</span>- austen_books<span class="br0">&#40;</span><span class="br0">&#41;</span> %<span class="sy0">&gt;</span>%
+  unnest_tokens<span class="br0">&#40;</span>word<span class="sy0">,</span> text<span class="br0">&#41;</span> %<span class="sy0">&gt;</span>%
+  count<span class="br0">&#40;</span>book<span class="sy0">,</span> word<span class="sy0">,</span> sort <span class="sy0">=</span> TRUE<span class="br0">&#41;</span>
+&nbsp;
+total_words <span class="sy0">&lt;</span>- book_words %<span class="sy0">&gt;</span>% 
+  group_by<span class="br0">&#40;</span>book<span class="br0">&#41;</span> %<span class="sy0">&gt;</span>% 
+  summarize<span class="br0">&#40;</span>total <span class="sy0">=</span> <span class="kw2">sum</span><span class="br0">&#40;</span>n<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+book_words <span class="sy0">&lt;</span>- left_join<span class="br0">&#40;</span>book_words<span class="sy0">,</span> total_words<span class="br0">&#41;</span>

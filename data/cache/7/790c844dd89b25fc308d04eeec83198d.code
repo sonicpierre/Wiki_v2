@@ -1,0 +1,5 @@
+library<span class="br0">&#40;</span>rsvd<span class="br0">&#41;</span>
+&nbsp;
+decomposition_svd <span class="sy0">&lt;</span>- svd<span class="br0">&#40;</span>img<span class="br0">&#41;</span><span class="co1">#Décomposition en valeur singulière</span>
+composantes_pr <span class="sy0">&lt;</span>- <span class="nu0">150</span><span class="co1">#Définition du nombre de composantes principales à conserver</span>
+img.<span class="me1">svd</span> <span class="sy0">&lt;</span>- decomposition_svd$u<span class="br0">&#91;</span><span class="sy0">,</span><span class="nu0">1</span>:composantes_pr<span class="br0">&#93;</span> %*% diag<span class="br0">&#40;</span>decomposition_svd$d<span class="br0">&#91;</span><span class="nu0">1</span>:composantes_pr<span class="br0">&#93;</span><span class="br0">&#41;</span> %*% t<span class="br0">&#40;</span>decomposition_svd$v<span class="br0">&#91;</span><span class="sy0">,</span><span class="nu0">1</span>:composantes_pr<span class="br0">&#93;</span><span class="br0">&#41;</span><span class="co1">#Produit matriciel</span>

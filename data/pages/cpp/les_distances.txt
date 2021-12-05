@@ -1,0 +1,163 @@
+{{ :cpp:mesurer.jpg?400 |}}
+
+=====Quelle distance choisir en Machine Learning ?=====
+
+Il est parfois nécessaire d'adapter la distance pour calculer l'éloignement aux centres de gravité. Il en existe plusieurs et nous allons décrire ici les principales.
+^  Manhattan et Euclidien  ^  Cosine et Euclidien  ^
+|  {{ :cpp:manhattan_distance.svg.png?300 |}}  |  {{ :cpp:cosine_euclidien.png?400 |}}  |
+
+====Distance Euclidienne====
+
+  * <color #ed1c24>**Signification :**</color> Il s'agit ici de la distance classique entre 2 points à vol d'oiseau.
+  * <color #ed1c24>**Formule :**</color> $$\sum_{i=1}^{n} \sqrt{(x_{i} - y_{i})^2}$$
+  * <color #ed1c24>**Utilisation :**</color> Cette mesure est la plus utilisée car elle permet de gérer à la fois les valeurs faibles mais aussi les fortes valeurs.
+====Distance Manhattan====
+
+  * <color #ed1c24>**Signification :**</color> Cette mesure est aussi appelé "distance en taxi", il s'agit de se déplacer d'un point A à B en respectant un quadrillage. Vous remarquerez surement que quel que soit le chemin emprunter la distance sera la même (quand on va dans le sens inverse, on soustrait). 
+  * <color #ed1c24>**Formule :**</color> $$\sum_{i=1}^{k=1}|x_{i}-y_{i}|$$
+  * <color #ed1c24>**Utilisation :**</color> Il est préférable d'utiliser cette mesure quand vos vecteurs ont plus de 20 dimensions. De plus elle n'accorde que peu d'importance aux grandes variations entre les composantes d'un vecteur.
+
+**Source :**
+  * [[https://fr.wikipedia.org/wiki/Distance_de_Manhattan#/media/Fichier:Manhattan_distance.svg]]
+  * [[https://penseeartificielle.fr/choisir-distance-machine-learning/]]
+
+====Distance Minkowski, Tchebychev et fractionnaire====
+
+{{ :cpp:mincowsky.png?800 |}}
+
+  * <color #ed1c24>**Signification :**</color> Il s'agit de généralisations des distances de Manhattan et Euclidienne. On a dessiné ci-dessus le cercle unitaire en utilisant la distance de Minkowsky en faisant varier le paramètre p. 
+  * <color #ed1c24>**Formule :**</color>$$\sqrt[x]{\sum_{i=1}^{n} |x_{i} - y{i}|^x}$$
+
+Toute la différence entre Minkowski, Tchebychev et fractionnaire est dans la définition du x :
+
+  * Si x est égale à la dimension des vecteurs ($L^{x}$) alors il s'agit de la distance de Minkowski
+  * Si x tend vers $+\infty$ alors il s'agit de la distance de Tchebychev
+  * Si x vaut l'inverse de la dimension du vecteur ($\frac{1}{p}$) alors il s'agit de la distance fractionnaire
+
+Il est intéressant de remarquer que si $x=1$ il s'agit de la distance de Mannathan et si $x=2$ il s'agit de la distance Euclidienne.
+\\
+  * <color #ed1c24>**Utilisation Minkowski et Tchebychev:**</color> On utilise ces distances quand on veut donner de l'importance aux valeurs élevées par rapport aux autres.
+  * <color #ed1c24>**Utilisation distance fractionnaire:**</color> Cette mesure n'est pas souvent utilisée, elle favorisera les données à valeur faibles. On remarquera aussi que dans les espaces au nombre de dimension élevé elle rend la convergence des algorithmes plus élevée. 
+
+**Source **
+  * [[https://fr.qwe.wiki/wiki/Minkowski_distance]]
+
+====Distance Haversine====
+
+  * <color #ed1c24>**Signification :**</color> Cette distance est utilisée quand on veut savoir la distance entre deux points placés sur une sphère.
+  * <color #ed1c24>**Formule :**</color> $$d = 2r\, arcsin(\sqrt{hav(\varphi_{1} - \varphi_{2}) + cos(\varphi_{1})  cos(\varphi_{2}) hav(\lambda_{1} - \lambda_{2})})$$ 
+
+^  Théorie  ^  Signification  ^
+|  $\varphi_{1},\varphi_{2}$  |  Longitude du point 1 et 2  |
+|  $\lambda_{1},\lambda_{2}$  |  Latitude du point 1 et 2  |
+|  $r$  |  Rayon de la sphère (Terre 6371 km)  |
+|  $hav(\theta)$  |  $sin^{2}(\frac{\theta}{2})$  |
+
+La formule de harvesine est une généralisation de la trigonométrie sphérique.
+
+  * <color #ed1c24>**Utilisation :**</color> Il est toujours intéressant d'avoir une idée globale des distances entre les villes pour permettre des regroupements.
+
+**Source :**
+  * [[https://fr.wikipedia.org/wiki/Formule_de_haversine]]
+  * [[https://pypi.org/project/haversine/]]
+
+====Distance de Bower====
+
+**<color #ed1c24>Signification :</color>** La distance de Bower va permettre de calculer les distances entre les variables qu'elles soient quantitatives ou qualitatives.
+
+**<color #ed1c24>Formules :</color>** Il est necessaire de calculer la similarité de Gower
+
+$$S_{g}(x_{1}, x_{2}) = \frac{1}{p}\sum_{j = 1}^{p} s_{12j}$$
+
+avec $p$ le nombre total de variables et $s_{12}$ défini comme suit dans le cas d'une variable qualitative :
+
+$$
+s_{12j qualitatif }(x_{1}, x_{2}) = \left\{
+    \begin{array}{ll}
+        1 & \mbox{si } x_{1j} = x_{2j} \\
+        0 & \mbox{sinon.}
+    \end{array}
+\right.
+$$
+
+<alert warning>**Remarque :** Si il n'y a que des variables qualitative, l'indice sera juste la proportion de caractère en commun entre les individus.</alert>
+
+ou $s_{12}$ défini comme suit dans le cas d'une variable quantitative : 
+
+$$s_{12j quantitatif}(x_{1}, x_{2}) =  1 - \frac{|y_{1j} - y_{2j}|} {R_{j}} \, avec \, R_{j} = |\max(y_{j}) - \min(y_{j})|$$
+
+On en déduit la distance de Gower :
+
+$$D_{g} = 1 - S_{g}$$
+
+<alert warning>**Remarque :** Cette distance ne permet pas de gérer les valeurs manquantes.</alert>
+
+**<color #ed1c24>Utilisation :</color>** Cette mesure est très intuitive et permet d'obtenir des réultats rapides quand le dataset comporte des variables quantitatives et qualitatives. Cependant, il ne s'agit pas d'une méthode très utilisé pour le clustering mais plus pour de la visualisation de données.
+
+**<color #ed1c24>Librairie :</color>** Vous pourrez construire la matrice de distance grace à la librairie gower en [[https://www.rdocumentation.org/packages/gower/versions/0.2.2| R]] et en [[https://pypi.org/project/gower/| Python]].
+
+**Source :**
+  * [[http://www.few.vu.nl/~sbhulai/papers/thesis-vandenhoven.pdf]]
+  * [[https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5705083/#pone.0188274.ref008]]
+====Distance du $\chi^{2}$====
+
+**<color #ed1c24>Signification :</color>** Il s'agit ici de calculer la distance entre 2 variables qualitatives ou entre 2 attributs d'une même variable.
+
+**<color #ed1c24>Forme des données nécessaire :</color>** Il est nécessaire de transformer ses donner en un tableau <color #ed1c24>**disjonctif complet**</color>. On transforme ainsi les données comme ci-dessous :
+
+**Avant :**
+
+^  Voiture  ^  Couleur  ^  Taille  ^
+|  Cahier 1  |  bleu  |  grand  |
+|  Cahier 2  |  vert  |  grand  |
+|  Cahier 3  |  vert  |  petit  |
+|  Cahier 4  |  gris  |  moyen  |
+|  Cahier 5  |  vert  |  moyen  |
+
+**Après :**
+
+^  Voiture  ^  bleu  ^  vert  ^  gris  ^  grand  ^  moyen  ^  petit  ^
+|  Cahier 1  |  1  |  0  |  0  |  1  |  0  |  0  |
+|  Cahier 2  |  0  |  1  |  0  |  1  |  0  |  0  |
+|  Cahier 3  |  0  |  1  |  0  |  0  |  0  |  1  |
+|  Cahier 4  |  0  |  0  |  1  |  0  |  1  |  0  |
+|  Cahier 5  |  0  |  1  |  0  |  0  |  1  |  0  |
+
+<alert info>**Info :** Vous trouverez les codes permettant d'encoder les données de cette manière [[cpp:Preprocessing et encodage | ici]].</alert>
+
+Par la suite nous appellerons **Couleur** une variable et **Vert** une modalité.
+
+**<color #ed1c24>Formule :</color>** Présentons tout d'abord la formule permettant de comparer 2 individus quand les modalités ne sont pas pondérées :
+
+$$d^{2}(i, i') = \sum_{k = 1}^{M} \frac{n * p}{n_{k}} \left(\frac{x_{ik}}{p} - \frac{x_{i'k}}{p} \right)^2$$
+
+^  Théorie  ^  Signification  ^
+|  $i, i'$  |  Individu 1 et 2  |
+|  $M$  |  Nombre total d'attribus  |
+|  $n$  |  Nombre d'observations dans le dataset  |
+|  $n_{k}$  |  Nombre d'observations ayant la modalité k  |
+|  $p$  |  Nombre de modalité présentes pour une observation  |
+
+Dans notre cas de cahier nous avons donc $M = 6$, $n = 5$, $p = 2$ ce qui nous donnera :
+
+$$d^{2}(Cahier 1, Cahier 2) = \frac{5 * 2}{1} \left (\frac{1}{2} - \frac{0}{2} \right )^2 + \frac{5 * 2}{3} \left (\frac{0}{2} - \frac{1}{2} \right )^2 + ... + \frac{5 * 2}{1} \left (\frac{0}{2} - \frac{0}{2} \right )^2$$
+
+<alert warning> **Attention :** Il est nécessaire de bien vérifier que chacun des attribus n'est pas sous représenté, cette mesure y est très sensible. </alert>
+
+**<color #ed1c24>Utilisation :</color>** Cette mesure est principalement utilisée pour <color #ed1c24>**faire des ACM**</color> (Analyse des Correspondances Multiples). Les individus présentant des <color #ed1c24>**caractéristiques rares**</color> dans la population vont <color #ed1c24>**se retrouver éloignés**</color> des individus présentant des caractéristiques fortement représentées. On utilisera cette distance principalement en <color #ed1c24>**science sociale**</color>.
+
+**Source :**
+  * [[http://larmarange.github.io/analyse-R/classification-ascendante-hierarchique.html#distance-de-gower]]
+  * [[http://www.jybaudot.fr/Analdonnees/acm.html]]
+  * [[http://eric.univ-lyon2.fr/~ricco/cours/slides/ACM.pdf]]
+
+=====Quelle distance choisir en NLP ?=====
+
+====Distance Cosine====
+
+  * <color #ed1c24>**Signification :**</color> Il s'agit de calculer le cosinus de l'angle entre les deux vecteurs grace aux formules de trigonométrie.
+  * <color #ed1c24>**Formule :**</color> $$\frac{\sum_{i=1}^{k} A_{i}B_{i}} {\sqrt{\sum_{i=1}^{k} A_{i}^2}\, \sqrt{\sum_{i=1}^{k} B_{i}^2}}$$
+  * <color #ed1c24>**Utilisation :**</color> Cette distance est souvent utilisée en Natural Langage Processing. Elle permet entre autre de comparer le nombre d'apparition d'un mot dans deux textes sans se soucier des différences de taille.
+
+**Source :**
+  * [[https://cmry.github.io/notes/euclidean-v-cosine]]

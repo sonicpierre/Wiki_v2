@@ -1,0 +1,90 @@
+
+<p>
+<a href="/doku.php?id=cpp:data_exploration" class="wikilink1" title="cpp:data_exploration"> Data exploration</a>
+</p>
+
+<p>
+Le fléau de la dimension est un problème qui complexifie inutilement un jeu de données. 
+</p>
+
+<p>
+L&#039;ACP permet de réduire le nombre de dimensions d&#039;un problème, en exprimant l&#039;ensemble des données selon des axes, qui sont des combinaisons linéaires de toutes les autres variables. Ainsi chaque variable exprime un pourcentage de l&#039;information totale ou variance totale (inertie), et l&#039;objectif est de maximiser cette inertie pour gagner de l&#039;information. 
+</p>
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong> On utilisera le dataset de mesures de gaz contenus dans l&#039;alcool, disponible <a href="https://archive.ics.uci.edu/ml/datasets/Alcohol+QCM+Sensor+Dataset" class="urlextern" title="https://archive.ics.uci.edu/ml/datasets/Alcohol+QCM+Sensor+Dataset" rel="nofollow">ici</a>. On considérera le premier relevé.</div>
+<br/>
+
+<br/>
+
+</p>
+<div class="table sectionedit1"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Mauvais point de vue  </th><th class="col1 centeralign">  Bon point de vue  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  <a href="/lib/exe/detail.php?id=cpp%3Aacp&amp;media=cpp:lamaface.jpg" class="media" title="cpp:lamaface.jpg"><img src="/lib/exe/fetch.php?w=270&amp;tok=414a55&amp;media=cpp:lamaface.jpg" class="media" alt="" width="270" /></a>  </td><td class="col1 centeralign">  <a href="/lib/exe/detail.php?id=cpp%3Aacp&amp;media=cpp:lamaprofil.jpg" class="media" title="cpp:lamaprofil.jpg"><img src="/lib/exe/fetch.php?w=400&amp;tok=8ecdd6&amp;media=cpp:lamaprofil.jpg" class="media" alt="" width="400" /></a>  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:1,&quot;range&quot;:&quot;733-846&quot;} -->
+<p>
+<br/>
+
+<br/>
+
+L&#039;idée est de trouver le bon point de vue ou la variance du dataset sera maximisée. Ainsi, il y a un gain d&#039;information et l&#039;entrainement du modèle n&#039;en sera que meilleur.
+</p>
+
+<h4 id="construction_du_modele_de_reduction">Construction du modèle de réduction</h4>
+<div class="level4">
+
+<p>
+On commence tout d&#039;abord par regarder quelle part de l&#039;information est expliquée par chaque variable et combien de variables il nous faut pour expliquer 95 % de l&#039;information.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">decomposition</span> <span class="kw1">import</span> PCA
+&nbsp;
+model <span class="sy0">=</span> PCA<span class="br0">&#40;</span>n_components <span class="sy0">=</span> <span class="nu0">15</span><span class="br0">&#41;</span><span class="co1">#Création du modèle de réduction sur toutes les variables du dataset</span>
+X_reduced <span class="sy0">=</span> model.<span class="me1">fit_transform</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="co1">#Application de la réduction aux données d'entrainement</span>
+np.<span class="me1">argmax</span><span class="br0">&#40;</span>np.<span class="me1">cumsum</span><span class="br0">&#40;</span>model.<span class="me1">explained_variance_ratio_</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy0">&gt;</span> <span class="nu0">0.95</span><span class="co1">#Détermination des variables </span>
+&nbsp;
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">12</span><span class="sy0">,</span><span class="nu0">6</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Définition de la taille du graphique</span>
+plt.<span class="me1">plot</span><span class="br0">&#40;</span>np.<span class="me1">cumsum</span><span class="br0">&#40;</span>model.<span class="me1">explained_variance_ratio_</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Affichage des variances expliquées en fonction du nombre de variables</span>
+&nbsp;
+plt.<span class="me1">xlabel</span><span class="br0">&#40;</span><span class="st0">&quot;Nombres de variables&quot;</span><span class="br0">&#41;</span>
+plt.<span class="me1">ylabel</span><span class="br0">&#40;</span><span class="st0">&quot;Variance expliquée&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>explor<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>factoMineR<span class="br0">&#41;</span>
+&nbsp;
+res.<span class="me1">PCA</span> <span class="sy0">=</span> PCA<span class="br0">&#40;</span>scale<span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Création du modèle de réduction</span>
+explor<span class="br0">&#40;</span>res.<span class="me1">PCA</span><span class="br0">&#41;</span><span class="co1">#Ouverture d'une fenêtre permettant de visualiser les variables importantes</span></pre>
+
+</div>
+
+<h5 id="resultat">Résultat</h5>
+<div class="level5">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aacp&amp;media=cpp:variance_expliquee.png" class="media" title="cpp:variance_expliquee.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=4bed15&amp;media=cpp:variance_expliquee.png" class="mediacenter" title="Variance expliquée en fonction du nombre de variables du jeu de données" alt="Variance expliquée en fonction du nombre de variables du jeu de données" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 5 :</strong> Variance expliquée en fonction du nombre de variables du jeu de données</p><!--divalign-->
+
+</div>
+
+<h5 id="source">Source</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.youtube.com/watch?v=FTtzd31IAOw&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=28" class="urlextern" title="https://www.youtube.com/watch?v=FTtzd31IAOw&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=28" rel="nofollow"> Machine Learnia par Guillaume Saint-Cirgue</a></div>
+</li>
+</ul>
+
+</div>

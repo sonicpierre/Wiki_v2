@@ -1,0 +1,18 @@
+<span class="co1">#On calcule la moyenne mobile d'ordre 12</span>
+moyenne_mobile <span class="sy0">=</span> data_sans_tendance.<span class="me1">rolling</span><span class="br0">&#40;</span><span class="nu0">12</span><span class="br0">&#41;</span>.<span class="me1">mean</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#On enlève les valeurs manquantes</span>
+soustraction <span class="sy0">=</span> soustraction.<span class="me1">dropna</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#On calcule les coefficients saisonniers</span>
+coeff_saisonnier <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+<span class="kw1">for</span> a <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">12</span><span class="br0">&#41;</span>:
+    total <span class="sy0">=</span> <span class="nu0">0</span>
+    compteur <span class="sy0">=</span> <span class="nu0">0</span>
+    <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>soustraction.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>:
+        <span class="kw1">if</span><span class="br0">&#40;</span>i % <span class="nu0">12</span> <span class="sy0">==</span> a<span class="br0">&#41;</span>:          
+            total +<span class="sy0">=</span> soustraction.<span class="me1">iloc</span><span class="br0">&#91;</span>i<span class="br0">&#93;</span>
+            compteur +<span class="sy0">=</span> <span class="nu0">1</span>
+    coeff_saisonnier.<span class="me1">append</span><span class="br0">&#40;</span>total/compteur<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#On obtient la série sans saisonnalité</span>

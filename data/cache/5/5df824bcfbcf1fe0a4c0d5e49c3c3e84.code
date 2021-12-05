@@ -1,0 +1,8 @@
+sf<span class="sy4">::</span><span class="me2">Event</span> event<span class="sy4">;</span>
+<span class="kw1">while</span> <span class="br0">&#40;</span>window.<span class="me1">pollEvent</span><span class="br0">&#40;</span>event<span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span>event.<span class="me1">type</span> <span class="sy1">==</span> sf<span class="sy4">::</span><span class="me2">Event</span><span class="sy4">::</span><span class="me2">Closed</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        window.<span class="me1">close</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy4">;</span>
+    <span class="br0">&#125;</span>
+<span class="br0">&#125;</span>

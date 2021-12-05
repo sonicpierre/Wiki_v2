@@ -1,0 +1,343 @@
+[[cpp:IA| Machine Learning]]
+\\
+{{ :cpp:donneesinternet.png?500 |}}
+
+Dans cette partie, nous allons apprendre à récupérer des données directement depuis le web.
+
+
+^ Librairies Python ^ Librairie R ^ Utilisation ^
+| BeautifulSoup | xml2,  rvest | Récupérer des données depuis une page web |
+| request | request | Effectuer des requêtes pour récupérer des données |
+
+=====Savoir utiliser un URL=====
+
+Il est souvent utile de passer par un URL pour récupérer les données. Il faut alors savoir comment faire la requête et comment récupérer le résultat.
+
+====Récupérer et ranger les données Kaggle ou autre====
+
+Il existe plusieurs sites qui permettent d'accéder à des données gratuitement. Citons par exemple : [[https://www.kaggle.com/| Kaggle]], [[https://github.com/| GitHub]], [[https://www.data.gov/| dataGov]].
+
+On commence par importer les librairies nécessaires :
+
+__En Python :__
+
+<code python>
+import os
+import tarfile
+import pandas as pd
+import urllib.request
+</code>
+
+__En R :__
+
+<code python>
+setwd("~/TesteR") #Permet de set son environnement de travail
+</code>
+
+On découpe ensuite le chemin local et l'URL pour avoir plus de contrôle sur ces deux éléments : 
+
+__En Python :__
+
+<code python>
+CHEMIN_DE_TELECHARGEMENT_GLOBAL = "https://raw.githubusercontent.com/ageron/handson-ml/master/"
+CHEMIN_DE_DEPOT = os.path.join("datasets", "housing")
+CHEMIN_DE_TELECHARGEMENT_COMPLET = CHEMIN_DE_TELECHARGEMENT_GLOBAL + "datasets/housing/housing.tgz"
+</code>
+
+__En R :__
+
+<code python>
+CHEMIN_DE_TELECHARGEMENT_GLOBAL <- "https://raw.githubusercontent.com/ageron/handson-ml/master/"
+CHEMIN_DE_DEPOT <- paste(getwd(), file.path("/datasets", "housing"), sep="")
+CHEMIN_DE_TELECHARGEMENT_COMPLET <- paste(CHEMIN_DE_TELECHARGEMENT_GLOBAL, "datasets/housing/housing.tgz", sep="")
+</code>
+
+Ensuite, on peut importer les données et les ranger automatiquement dans le dossier approprié :
+
+__En Python :__
+
+<code python>
+def RecuperationDesDonnees(housing_url=CHEMIN_DE_TELECHARGEMENT_COMPLET, housing_path=CHEMIN_DE_DEPOT): #On a mis des valeurs par desfaut si aucunes ne sont données à la fonction
+    if not os.path.isdir(housing_path): #On vérifie si le dossier existe et on le crée sinon
+        os.makedirs(housing_path)
+    #On crée le chemin où sera l'archive
+    tgz_path = os.path.join(housing_path, "housing.tgz")
+    #On récupère sur le site les données
+    urllib.request.urlretrieve(housing_url, tgz_path)
+    #On ouvre l'archive
+    housing_tgz = tarfile.open(tgz_path)
+    #On la décompresse
+    housing_tgz.extractall(path=housing_path)
+    #On refer le tout
+    housing_tgz.close()
+</code>
+
+__En R :__
+
+<code python>
+
+RecupertionDesDonnees <- function(cheminComplet, cheminArrivee){
+     if(!dir.exists(cheminArrivee)){
+         dir.create(cheminArrivee, recursive = TRUE)
+     }
+     tgz_path = file.path(cheminArrivee, "housing.tgz")
+     download.file(url=cheminComplet, destfile = tgz_path)
+     untar(tarfile = tgz_path, exdir = cheminArrivee)
+}
+
+</code>
+
+On peut ensuite utiliser la fonction avec ou sans les arguments, tout dépend du fait qu'on les ait définis au-dessus ou non. On peut ensuite lire le fichier et créer ainsi son DataFrame. Il existe des lecteurs pour tous les types de fichiers, dans notre cas précis, il s'agit d'un CSV.
+
+__En Python :__
+
+<code python>
+RecuperationDesDonnees()
+data = pd.read_csv(CHEMIN_DE_DEPOT + '/housing.csv')
+</code>
+
+__En R :__
+
+<code python>
+RecupertionDesDonnees(CHEMIN_DE_TELECHARGEMENT_COMPLET, CHEMIN_DE_DEPOT)
+data = read.csv(file.path(CHEMIN_DE_DEPOT, "housing.csv"))
+</code>
+
+**Résultat**
+
+<code>
+DossierDeTravail
+├── scriptPython
+└── datasets
+        └── houssing
+                ├── housing.tgz
+                └── housing.csv
+ </code>
+
+<alert info><fs large> **Note  : **</fs>pour adapter ce code, il suffit de changer le lien et le type de fichier à extraire dans la fonction. Il est fortement recommandé d'ordonner ses données pour éviter de se perdre.</alert>
+
+**Source :**
+  * [[http://edutechwiki.unige.ch/fr/Importer_des_donn%C3%A9es_dans_R]]
+
+====Faire une requête plus élaborée====
+
+Notre exemple utilise un URL issu d'une entreprise et nous vous invitons à adapter ce code pour vous entraîner en utilisant cette [[http://httpbin.org/#/|page]] qui est faite pour.
+
+{{ :cpp:requests.jpg?300 |}}
+
+__En Python : __
+
+<code python>
+#Paramètre dans l'URL
+parametre = {'page' : 2}
+r = requests.get('https://graphcomment.com/api/moderation/ai', params=parametre, timeout= 2, auth=('ai', 'Rtafg8956xfdx2fsdfimAZ6bdxff956x1'))
+#Permet d'avoir un boolean indiquant si la requête c'est bien passée
+r.ok
+</code>
+
+Voici une description rapide des paramètres utiles mais optionnels :
+
+  * **auth** : pour accéder aux données propres à une entreprise qui sont bien souvent protégées, la requête nécessite un identifiant et un mot de passe.
+  * **timeout** : fixe un timing pour récupérer les données liées à l'URL
+  * **params** : permet de rajouter des paramètres comme le numéro de page. Cette information sera directement utilisée pour construire l'URL.
+
+**Source :**
+  * https://requests.readthedocs.io/en/master/
+  * https://www.youtube.com/watch?v=tb8gHvYlCFs
+Si la requête ne fonctionne pas,  il peut être intéressant de savoir pourquoi. Il faut donc, bien souvent, regarder le code erreur et agir en conséquence.
+
+__En Python :__
+
+<code python>
+r.status_code
+</code>
+
+^ Code ^ Signification ^
+| 2xx | Succès de la requête |
+| 3xx | Redirection |
+| 4xx | Erreur due à la partie client |
+| 5xx | Erreur due à la partie serveur |
+
+Une fois les données récupérées, vous n'avez plus qu'à les stocker dans une variable. Il est possible de les stocker sous différents formats. Prenons, par exemple, le format JSON.
+
+__En Python :__
+
+<code python>
+mon_Dict = r.json()
+</code>
+
+La variable mon_Dict est alors un dictionnaire classique à partir duquel on peut accéder à chaque valeur grâce à sa clé.
+=====Le scrapping=====
+
+{{ :cpp:scrappingpres.jpg?550 | Scrapping de données}}
+\\
+<alert danger><fs large> **Attention :**</fs> quand on récupère des données depuis une page web, il faut s'assurer qu'il n'y ait pas de droits d'auteur. Il faut donc regarder le CGU ou la licence associés.</alert>
+
+====Scrapping de données quantitatives====
+
+Il est possible de récupérer des données dans des tableaux  qui ne sont pas directement dans un fichier. Prenons comme exemple cette [[https://fr.wikipedia.org/wiki/%C3%89tats_des_%C3%89tats-Unis_par_population|page]] et essayons de récupérer les données du tableau. 
+
+Comme pour les données textuelles, il faut commencer par importer les bonnes librairies et parser la page web :
+
+__En Python :__
+<code python>
+import requests
+import urllib.request
+from bs4 import BeautifulSoup
+import pandas as pd
+from urllib.request import urlopen
+url = 'https://fr.wikipedia.org/wiki/%C3%89tats_des_%C3%89tats-Unis_par_population'
+html = urlopen(url)
+soup = BeautifulSoup(html, 'html.parser')
+</code>
+
+
+__En R :__
+<code python>
+library(xml2)
+library(rvest)
+page <- xml2::read_html("https://fr.wikipedia.org/wiki/%C3%89tats_des_%C3%89tats-Unis_par_population", encoding = "UTF-8")
+</code>
+
+Ensuite, on récupère précisément le tableau dont on aura besoin et on l'affecte à une variable pour pouvoir le traiter plus tard :
+
+__En Python :__
+
+<code python>
+tableau = soup.find_all('table')[0]
+</code>
+
+__En R :__
+<code python>
+tableau = html_nodes(page, "table")[1]
+</code>
+
+On transforme le tableau en liste pour avoir le contrôle dessus : 
+
+__En Python :__
+
+<code python>
+pd.read_html(tableau.prettify(),skiprows=2, flavor='bs4')
+</code>
+
+__En R :__
+<code python>
+tableauTraite = html_table(tableau, header = TRUE, trim = TRUE, fill = FALSE, dec = ".")
+</code>
+
+On peut régler les hyperparamètres pour être sûr d'avoir le résultat attendu :
+
+^ Hyper-paramètre ^ Utilité ^
+| header | Permet de savoir si la première ligne définit les colonnes |
+| trim | Permet de savoir si on supprime les éventuels espaces avant et après les données |
+| fill | Permet de remplir avec des valeurs nulles s’il y a des tableaux de tailles différentes |
+| dec | Définit le séparateur entre les données |
+
+Enfin, on rentre le tout dans un DataFrame :
+
+__En Python :__
+
+<code python>
+tableauCorrectLu = pd.read_html(tableau.prettify(),skiprows=2, flavor='bs4')
+tableauCorrectLu[0]
+</code>
+
+__En R :__
+
+<code python>
+data.frame(tableauTraite)
+</code>
+
+**Source :**
+  * [[http://edutechwiki.unige.ch/fr/Web_scraping_avec_R]]
+====Scrapping de données textuelles====
+
+Pour ce faire, nous allons essayer de récupérer le contenu de cette [[https://fr.wikipedia.org/wiki/Dinde|page]].
+
+Il s'agit d'un exemple qui n'est pas anodin.  Beaucoup de modèles de Machine Learning sont entrainés sur ces textes qui traitent de sujets précis et permettent ainsi un étiquetage optimal.
+On commence par récupérer l'ensemble de la page HTML et la parser :
+
+__En Python :__
+
+<code python>
+import requests
+import urllib.request
+import time
+from bs4 import BeautifulSoup
+import numpy as np
+import pandas as pd
+from urllib.request import urlopen
+url = 'https://fr.wikipedia.org/wiki/Dinde'
+html = urlopen(url) 
+soup = BeautifulSoup(html, 'html.parser')
+</code>
+
+__En R : __
+
+<code python>
+library(xml2)
+library(rvest)
+soup <- xml2::read_html("https://fr.wikipedia.org/wiki/Dinde", encoding = "UTF-8")
+</code>
+
+Une fois la page parsée **en Python**, vous devrez rajouter le code ci-dessous pour mettre en forme votre texte 
+
+<code python>
+print(soup.prettify())
+</code>
+
+Le système de scrapping fonctionne avec des balises. Il est nécessaire d'aller voir sur la page entre quelles balises le texte est ancré. Il faut réussir à sélectionner des balises assez générales qui vont se retrouver dans les mêmes types d'articles. Ceci sera possible grâce aux normes qui sont imposées pour publier une page web. Pour connaître le cadre de publication du texte choisi, on sélectionne le texte on fait clic droit et "Inspect".  
+
+**Récupérer le contenu entre les balises**
+
+On cible donc une balise assez générale puis on récupère le contenu :
+
+__En Python :__
+
+<code python>
+soup.p #Récupére le contenu de la première balise p
+#Résultat : <p>Vous pouvez partager vos connaissances en l’améliorant .... </p>
+soup.p.text #Permet de mettre en forme ce texte
+#Résultat : Vous pouvez partager vos connaissances en l’améliorant (comment\xa0?) selon les recommandations du projet ornithologie.\n'
+soup.find("div", {"class": "mw-parser-output"}) #Récupérer le contenu de la balise div avec une certaine classe
+#Résultat : <div class="mw-parser-output"><div class="bandeau-container bandeau-article bandeau-niveau-.....
+soup.find(id="toc") #Récupérer le contenu avec un certain id
+#Resultat : Même que si dessus
+soup.find_all('p') #Récupérer le contenu sous forme de liste avec toutes balises p
+</code>
+
+__En R :__
+
+<code python>
+html_nodes(soup, "p") #Récupére de toutes les balises p sous forme de liste
+# Résultat : {xml_nodeset (26)}
+# [1] <p>Vous pouvez partager vos connaissances en l’améliorant ...
+html_text(html_nodes(soup, "p")) #Permet de mettre en forme ce texte
+#Résultat : [1] Vous pouvez partager vos connaissances en l’améliorant (comment\xa0?) selon les recommandations du projet ornithologie.\n'
+html_nodes(soup, ".mw-parser-output") #Récupérer le contenu de la balise div avec une certaine classe
+#Résultat :{xml_nodeset (1)}
+#[1] <div class="mw-parser-output">\n<div class="bandeau-container band
+html_nodes(soup, ".toc") #Récupérer le contenu avec un certain id
+</code>
+
+**Travailler sur le contenu**
+
+Dans un second temps, il est possible, en affectant une variable à la première sélection, d'itérer le processus afin de pouvoir réaliser les autres sélections. Ainsi, on peut facilement naviguer dans le contenu de la page Web et récupérer des données. 
+
+**Remarque :**
+en Python, il y a parfois des caractères qui passent à travers le parsing et qu'il est utile de remplacer. Prenons, par exemple, le caractère \xa0.
+
+<code python>
+texte.replace(u'\xa0', u' ') #Va permettre d'enlever les \xa0.
+#Resultat : 'Vous pouvez partager vos connaissances en l’améliorant (comment ?) selon les
+</code>
+
+**Source :**
+  * [[http://perso.ens-lyon.fr/lise.vaudor/Descriptoire/_book/web-scraping.html#extraire-certains-elements-dune-page-html]]
+  * [[https://www.scrapingbee.com/blog/web-scraping-r/]]
+
+
+
+=====Conclusion=====
+
+Le web est une source de données presque inépuisable, il faut cependant apprendre à ranger cette "matière première" et l'organiser pour la rendre exploitable et c'est là que se situe tout le défi. Gardez en tête qu'améliorer la qualité de ses données c'est améliorer la  qualité de son futur modèle.

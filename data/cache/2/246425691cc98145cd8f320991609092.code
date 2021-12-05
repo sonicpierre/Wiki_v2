@@ -1,0 +1,7 @@
+Game
+├── bin
+└── src
+    ├── fr
+    │   └── game
+    │       └── Main.java
+    └── module-info.java

@@ -1,0 +1,88 @@
+{{:cpp:game_engine.jpg?direct&550|}}
+
+\\
+
+==== Qu'est-ce qu'un Game Engine ? ====
+
+Un Game Engine ou moteur de jeu est un logiciel <fc #800000>**regroupant différents composants logiciels**</fc> permettant d'effectuer plusieurs <fc #800000>**tâches complexes**</fc> : 
+  * Affichage de modèles 3D (un personnage par exemple) => **<fc #ff0000>Rendu Graphique</fc>**
+  * Appliquer de la gravité (à un personnage par exemple) => **<fc #ff0000>Calcul de la Physique</fc>**
+  * Déplacement => **<fc #ff0000>Récupération des entrées</fc>** (manettes, claviers, souris ...)
+  * Mettre un bruitage => **<fc #ff0000>Gestion de l'audio</fc>**
+
+
+Un moteur de jeu permet évidemment de créer des jeux, mais on peut aussi l'utiliser pour d'autres tâches (simulation de crash test pour une voiture,  essai d'une intelligence artificielle avant de l'utiliser dans la vraie vie ...) 
+
+Le tout est fait en **temps réel** et permet de simuler le monde que l'on souhaite créer. Ils ont été conçus dans le but de faciliter le développement d'un jeu. Cela permet de **<fc #008000>se concentrer sur le contenu</fc>**, comme la réflexion sur le game design ou la création de ressources (textures, sons ...) pour le jeu.
+
+\\
+{{ :cpp:moteurgrapheres.png?700 |}}
+
+Ce shéma résume rapidement comment fonctionne un moteur de jeux. En réalité, plus de composants rentres en compte.
+
+**Approfondir :**
+
+{{ :cpp:game_engine_calls.png?direct&600 |}}
+
+;#;Image 1  ([[https://fr.wikipedia.org/wiki/Moteur_de_jeu#/media/Fichier:Linux_kernel_and_OpenGL_video_games.svg |Wikipedia]])
+;#;
+
+\\
+
+
+
+Ceci n'est qu'un exemple, car dans la réalité un moteur de jeu va lui même **<fc #ff0000>__faire appel à d'autres moteurs__</fc>**. \\
+Par exemple, Unity utilise un moteur physique PhysX réalisé par Nvidia. Godot lui utilise un moteur physique créé par leurs propres équipes pour la 2D et utilise le Bullet Engine pour la 3D. \\
+De ce fait, <fc #800000>**certains moteurs de jeu vont être plus orientés pour un type de jeu**</fc> tel que Godot qui est très performant pour les jeux 2D, du fait qu'ils ont créés leur propre moteur pour la 2D.
+
+\\
+
+==== Comment est créé un moteur de jeu ? ==== 
+
+Un moteur de jeu n'est pas qu'un assemblage de différent moteurs. En effet il faut un "socle" pour tous les réunir. Pour cela **la plupart des moteurs sont écrits avec les langages de programmation C et C++**. Ils permettent d'avoir une bonne proximité avec la mémoire de l'ordinateur et d'offrir ce qu'il faut pour la gérer. \\ 
+Cependant, **<fc #800000>d'autres technologies sont utilisables</fc>**,  comme des technologies web (JavaScript) pour exécuter des jeux dans un navigateur internet. \\
+
+<alertwarning>**Attention** : Il est aussi possible de trouver des moteurs de jeu en Java. Cependant ils sont moins présents car le C et le C++ permettent d'être sûr du fonctionnement de notre programme au niveau de la mémoire et de la contrôler parfaitement. Avec du Java, cela fonctionnerait aussi, mais nous ne pouvons pas être sûr à 100% de comment est géré la mémoire.</alert>
+
+__Google a créé un moteur de jeu pour la pédagogie__ que l'on peut retrouver sur cette  [[https://code.google.com/archive/p/gqe/ | page]]. Il n'est plus mis à jour depuis 2014 mais il peut vous offrir une bonne vision et compréhension des moteurs de jeu "from scratch".
+
+\\
+
+{{ :cpp:socle_game_engine.png?direct&400 | Les différents composants d'un moteur de jeu}}
+;#;
+Schéma des composants d'un moteur de jeu
+;#;
+
+\\
+
+La communication entre le cœur et les autres moteurs se fera par une API (**<fc #ff0000>interface de programmation permettant d'utiliser les fonctionnalités du moteur</fc>**) fournie par les créateurs du moteur. Si l'API fournie ne convient pas aux besoins, il faudra créer votre propre interface avec le moteur.
+
+\\ 
+
+==== Moteur public VS moteur propriétaire ====
+
+Unity est un moteur propriétaire, à la différence de Godot qui est un moteur public. Cela signifie que pour Godot, **<fc #800000>le code est disponible </fc>** sur [[https://github.com/godotengine/godot | Github]]  et il est possible de proposer des modifications.  \\
+
+
+Pour Unity,  **<fc #800000>on ne peut pas voir le code source</fc>** à part une petite partie disponible sur [[https://github.com/Unity-Technologies/UnityCsReference| Github]], où l'on peut seulement voir la partie en C# et on ne peut pas proposer de modifications. \\
+**L'avantage d'un moteur public** est que l'on peut voir comment il est réalisé et **<fc #008000>la communauté peut le faire avancer</fc>** et corriger des problèmes sans attendre que les développeurs du moteur le fassent. \\
+**Pour un moteur propriétaire**, la ligne directrice est claire, les améliorations sont planifiées à l'avance. 
+
+<alert warning>**Attention licences** :  Chaque moteur de jeu gère ses licences au cas par cas, si vous souhaitez vendre votre création, il faut regarder sur leur site  ([[https://support.unity3d.com/hc/en-us/categories/201268913-Licenses|Unity]] | [[https://godotengine.org/license|Godot]] ). Certains moteurs vont demander une rémunération lors de la vente de votre jeu.</alert>
+
+\\
+
+==== Les moteurs de jeu les plus connus ====
+
+Nous allons voir certains moteurs de jeu et vers quoi il s'oriente (plutôt 2D, 3D etc ...), mais aussi des jeux réalisés avec pour vous donnez une idée de ce qui est réalisable. Un comparatif plus poussé est disponible [[http://wiki.gagoi.fr/doku.php?id=cpp:unitygodotintrocomparatif | sur cette page du wiki]]
+
+<fs>**Attention :** Utilisations principales ne signifie pas que dans un autre domaine non cité le moteur de jeu n'est pas du tout bon ! Il peut aussi être très performant. Il faut regarder la documentation du moteur de jeu pour voir s'il est adapté à votre besoin.</fs>
+
+^ Moteurs ^ Utilisations principales ^ Jeux ^
+| Unity | 3D, XR* | Hearthstone, Pokemon GO |
+| Godot | 2D | Ultimo Carnaval, The mystery team |
+| Unreal Engine | 3D, XR* | Fortnite, Dragon Quest XI |
+| CryEngine | 3D | Crysis, Wolcen |
+| RpgMaker | 2D RPG | To the Moon, Eternal Eden |
+
+* Le terme XR signifie tous les termes suivant : Augmented / Virtual / Mixed Reality

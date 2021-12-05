@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generator="FeedCreator 1.8" -->
+<?xml-stylesheet href="https://llamaspartan.fr/lib/exe/css.php?s=feed" type="text/css"?>
+<rdf:RDF
+    xmlns="http://purl.org/rss/1.0/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel rdf:about="https://llamaspartan.fr/feed.php">
+        <title>Llamas'Partan playground</title>
+        <description></description>
+        <link>https://llamaspartan.fr/</link>
+        <image rdf:resource="https://llamaspartan.fr/lib/tpl/flat/images/favicon.ico" />
+       <dc:date>2020-10-23T17:42:40+0200</dc:date>
+        <items>
+            <rdf:Seq>
+                <rdf:li rdf:resource="https://llamaspartan.fr/doku.php?id=playground:playground&amp;rev=1588329860&amp;do=diff"/>
+            </rdf:Seq>
+        </items>
+    </channel>
+    <image rdf:about="https://llamaspartan.fr/lib/tpl/flat/images/favicon.ico">
+        <title>Llamas'Partan</title>
+        <link>https://llamaspartan.fr/</link>
+        <url>https://llamaspartan.fr/lib/tpl/flat/images/favicon.ico</url>
+    </image>
+    <item rdf:about="https://llamaspartan.fr/doku.php?id=playground:playground&amp;rev=1588329860&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-05-01T12:44:20+0200</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>playground:playground</title>
+        <link>https://llamaspartan.fr/doku.php?id=playground:playground&amp;rev=1588329860&amp;do=diff</link>
+        <description>PlayGround</description>
+    </item>
+</rdf:RDF>

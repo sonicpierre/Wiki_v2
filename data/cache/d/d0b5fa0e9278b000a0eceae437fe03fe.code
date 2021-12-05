@@ -1,0 +1,2 @@
+<span class="kw1">from</span> nltk.<span class="me1">book</span> <span class="kw1">import</span> *
+<span class="co1">#Pour Python, il y a différents textes avec différents type de langages, nous continuerons avec ces textes</span>

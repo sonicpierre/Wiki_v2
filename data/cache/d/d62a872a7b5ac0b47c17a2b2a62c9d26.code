@@ -1,0 +1,10 @@
+{
+    &quot;name&quot;: &quot;Sort de test&quot;,
+    &quot;description&quot;: &quot;Le sort fait des dégats&quot;
+    &quot;targetEffect&quot;:
+    [
+        { Premier ensemble d'effets },
+        { Second ensemble d'effets },
+        ...
+    ]
+}

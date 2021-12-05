@@ -1,0 +1,4 @@
+<span class="kw2">slice</span><span class="br0">&#40;</span>data<span class="sy0">,</span> <span class="nu0">20</span>:<span class="nu0">50</span><span class="br0">&#41;</span> <span class="co1"># Permet de récupérer les lignes de 20 à 50 et toutes les colonnes</span>
+ <span class="co1"># Permet de récupérer les lignes de 20 à 50 et les deux colonnes d'indice 0 et 2</span>
+<span class="kw2">slice</span><span class="br0">&#40;</span>data<span class="sy0">,</span> <span class="nu0">20</span>:<span class="nu0">50</span><span class="br0">&#41;</span> %<span class="sy0">&gt;</span>%
+                    <span class="kw3">select</span><span class="br0">&#40;</span>datesold<span class="sy0">,</span> postcode<span class="br0">&#41;</span>

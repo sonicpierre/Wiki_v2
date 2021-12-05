@@ -1,0 +1,2 @@
+  mkdir <span class="st0">'C:\Program Files\Java'</span>
+  Expand<span class="sy0">-</span>Archive <span class="kw5">-Path</span> <span class="st0">'.\openjdk-14.0.2_windows-x64_bin (1).zip'</span> <span class="sy0">-</span>DestinationPath <span class="st0">'C:\Program Files\Java\'</span>

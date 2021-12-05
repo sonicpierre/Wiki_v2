@@ -1,0 +1,2 @@
+<span class="kw2">constexpr</span> <span class="kw4">int</span> WIDTH <span class="sy1">=</span> <span class="nu0">1280</span><span class="sy4">;</span>
+<span class="kw2">constexpr</span> <span class="kw4">int</span> HEIGHT <span class="sy1">=</span> <span class="nu0">720</span><span class="sy4">;</span>

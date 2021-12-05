@@ -1,0 +1,176 @@
+
+<h1 class="sectionedit1" id="programmation_orientee_objet">Programmation Orientée Objet</h1>
+<div class="level1">
+
+<p>
+La programmation orientée objet (POO) est un paradigme (manière d&#039;écrire le code) qui permet de créer des structures logiques (appelées objets) ayant des attributs et des méthodes :
+</p>
+<ul>
+<li class="level1"><div class="li"> attribut : caractéristique (ex : position, vitesse de déplacement, couleur).</div>
+</li>
+<li class="level1"><div class="li"> méthode : fonction permettant à l&#039;objet de réaliser une action (ex: se déplacer, attaquer).</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Programmation Orient\u00e9e Objet&quot;,&quot;hid&quot;:&quot;programmation_orientee_objet&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-417&quot;} -->
+<h2 class="sectionedit2" id="creation_d_un_objet">Création d&#039;un objet</h2>
+<div class="level2">
+
+<p>
+Dans les deux langages que l&#039;on voit ici, un objet ce caractérise via une classe. Dans la classe, on va définir tout ce que va contenir notre objet (le modèle). Pour comprendre le fonctionnement, on va implémenter un objet correspondant au personnage que l&#039;on incarne dans le jeu.
+</p>
+
+<p>
+Tout d&#039;abord notre personnage va avoir besoin de coordonnées 2D (x et y), ces coordonnées seront privées. On a aussi besoin d&#039;une méthode permettant de déplacer le personnage pour le moment d&#039;une vitesse constante. Cette méthode sera publique. On revient juste après sur “publique” et “privée”.
+</p>
+
+<p>
+<em class="u">En Java :</em>
+<br/>
+
+En Java, tout se fait dans un fichier qui porte le même nom que l&#039;objet. On a donc <strong>Joueur.class</strong>.
+</p>
+<pre class="code java"><span class="kw1">class</span> Joueur <span class="br0">&#123;</span>
+    <span class="kw1">public</span> <span class="kw1">static</span> <span class="kw1">final</span> <span class="kw4">float</span> VITESSE_X <span class="sy0">=</span> <span class="nu0">2</span><span class="sy0">;</span>
+    <span class="kw1">public</span> <span class="kw1">static</span> <span class="kw1">final</span> <span class="kw4">float</span> VITESSE_Y <span class="sy0">=</span> <span class="nu0">2</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">private</span> <span class="kw4">float</span> positionX<span class="sy0">;</span>
+    <span class="kw1">private</span> <span class="kw4">float</span> positionY<span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">public</span> <span class="kw4">void</span> seDeplacer<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+        positionX <span class="sy0">+=</span> VITESSE_X<span class="sy0">;</span>
+        positionY <span class="sy0">+=</span> VITESSE_Y<span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+
+<p>
+<em class="u">En C++ :</em>
+<br/>
+
+Contrairement au java, le C++ utilise 2 fichiers pour définir un objet. Dans le premier (appelé header, ou entête en français) on va déclarer tout ce qui le caractérise. Dans le second (fichier source), on définit l&#039;implémentation des méthodes.
+</p>
+
+<p>
+Le fichier d&#039;entête : <strong>joueur.hpp</strong>
+</p>
+<pre class="code cpp"><span class="kw2">class</span> Joueur
+<span class="br0">&#123;</span>
+<span class="kw2">public</span><span class="sy4">:</span>
+    <span class="kw4">static</span> <span class="kw2">constexpr</span> <span class="kw4">float</span> VITESSE_X <span class="sy1">=</span> <span class="nu0">2</span><span class="sy4">;</span>
+    <span class="kw4">static</span> <span class="kw2">constexpr</span> <span class="kw4">float</span> VITESSE_Y <span class="sy1">=</span> <span class="nu0">2</span><span class="sy4">;</span> 
+<span class="kw2">private</span><span class="sy4">:</span>
+    <span class="kw4">float</span> _positionX<span class="sy4">;</span>
+    <span class="kw4">float</span> _positionY<span class="sy4">;</span> 
+<span class="kw2">public</span><span class="sy4">:</span>
+    <span class="kw4">void</span> seDeplacer<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy4">;</span>
+<span class="br0">&#125;</span><span class="sy4">;</span></pre>
+
+<p>
+Le fichier d&#039;implémentation : <strong>joueur.cpp</strong>
+</p>
+<pre class="code cpp"><span class="co2">#include &quot;joueur.hpp&quot;</span>
+&nbsp;
+<span class="kw4">void</span> Joueur<span class="sy4">::</span><span class="me2">seDeplacer</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    _positionX <span class="sy2">+</span><span class="sy1">=</span> VITESSE_X<span class="sy4">;</span>
+    _positionY <span class="sy2">+</span><span class="sy1">=</span> VITESSE_Y<span class="sy4">;</span>
+<span class="br0">&#125;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Cr\u00e9ation d&#039;un objet&quot;,&quot;hid&quot;:&quot;creation_d_un_objet&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;418-2154&quot;} -->
+<h3 class="sectionedit3" id="encapsulation">Encapsulation</h3>
+<div class="level3">
+
+<p>
+ L&#039;intérêt de pouvoir configurer la visibilité d&#039;un élément est l&#039;encapsulation des informations. En programmation orientée objet, on veut qu&#039;un objet s&#039;occupe de lui-même et éviter au maximum qu&#039;un objet intervienne sur un autre.
+</p>
+
+<p>
+Voici une règle qui fonctionne dans la majoritée des cas : Mettre tout en <strong>private</strong>. Si  vos classes filles ont besoin d&#039;avoir des accès privilégiés on utilise des <strong>méthodes protected</strong>. Et si il faut donner des accès plus large, on peut utiliser le <strong>public</strong>. 
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Encapsulation&quot;,&quot;hid&quot;:&quot;encapsulation&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:3,&quot;range&quot;:&quot;2155-2692&quot;} -->
+<h3 class="sectionedit4" id="visibilite">Visibilité</h3>
+<div class="level3">
+
+<p>
+La visibilité des attributs et méthodes permet de configurer qui a accès à quel élément de l&#039;objet.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Acontroler_le_joueur&amp;media=cpp:visibilite.png" class="media" title="cpp:visibilite.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=c45b60&amp;media=cpp:visibilite.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+<div class="table sectionedit5"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Visibilité </th><th class="col1"> Accès depuis l&#039;extérieur </th><th class="col2"> Accès depuis les classes filles </th><th class="col3"> Accès depuis la classe uniquement </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0"> private </td><td class="col1"> </td><td class="col2"> </td><td class="col3"> X </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> protected </td><td class="col1 leftalign">  </td><td class="col2">X </td><td class="col3"> X</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> public </td><td class="col1"> X </td><td class="col2"> X </td><td class="col3"> X </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:5,&quot;range&quot;:&quot;2855-3036&quot;} -->
+<p>
+Ici on a rendu nos attributs privés et notre méthode publique. On ne peut donc pas accéder à nos attributs en dehors de notre classe. Cependant la méthode de déplacement est, elle, accessible depuis l&#039;extérieur.
+</p>
+
+<p>
+<div class='alert alert-info'><strong>Info :</strong> En Java, on peut ajouter la visibilité <strong>package</strong> qui s&#039;écrit sans mot clé. Cette dernière donne l&#039;accès à tous les fichiers dans le même package que votre classe. </div>
+</p>
+
+<p>
+<span style='color:#ed1c24; '>Comment avoir accés aux attributs ?</span>
+</p>
+
+<p>
+Les <strong>getters</strong> et les <strong>setters</strong> permettent respectivement de lire (get) et de modifier (set) un attribut. Ils ont toujours une visibilité plus large que l&#039;attribut auquel ils sont reliés.
+</p>
+
+<p>
+Ajoutons des getters publiques pour obtenir la position du joueur depuis l&#039;extérieur de la classe.
+</p>
+
+<p>
+<em class="u">En Java :</em>
+</p>
+<pre class="code java"><span class="kw1">public</span> <span class="kw4">float</span> getX<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">return</span> positionX<span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw1">public</span> <span class="kw4">float</span> getY<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="kw1">return</span> positionY<span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+
+<p>
+<em class="u">En C++ :</em>
+<br/>
+
+Dans le fichier d&#039;entête, on se place juste après la méthode de déplacement.
+</p>
+<pre class="code cpp"><span class="kw4">float</span> getX<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy4">;</span>
+<span class="kw4">float</span> getY<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy4">;</span></pre>
+
+<p>
+Dans le fichier d&#039;implémentation, on se place à la fin.
+</p>
+<pre class="code cpp"><span class="kw4">float</span> Joueur<span class="sy4">::</span><span class="me2">getX</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    <span class="kw1">return</span> _positionX<span class="sy4">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw4">float</span> Joueur<span class="sy4">::</span><span class="me2">getY</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    <span class="kw1">return</span> _positionY<span class="sy4">;</span>
+<span class="br0">&#125;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Visibilit\u00e9&quot;,&quot;hid&quot;:&quot;visibilite&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:4,&quot;range&quot;:&quot;2693-&quot;} -->

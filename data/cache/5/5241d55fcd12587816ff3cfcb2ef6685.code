@@ -1,0 +1,2 @@
+<span class="kw1">from</span> pymongo <span class="kw1">import</span> MongoClient
+client <span class="sy0">=</span> MongoClient<span class="br0">&#40;</span><span class="br0">&#41;</span>

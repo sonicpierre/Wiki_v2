@@ -1,0 +1,673 @@
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_logistique&amp;media=cpp:titre_reg_log.png" class="media" title="cpp:titre_reg_log.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=af51a7&amp;media=cpp:titre_reg_log.png" class="media" title="Régression logistique" alt="Régression logistique" width="500" /></a>
+</p>
+
+<h2 class="sectionedit1" id="la_regression_logistique">La régression logistique</h2>
+<div class="level2">
+
+<p>
+La régression logistique est utilisée pour estimer la probabilité, qu&#039;une observation appartienne à une classe
+donnée. Considérons pour cela un cas d&#039;application : l&#039;attribution de crédit bancaire.
+</p>
+
+<p>
+Le classificateur va retourner la probabilité que Marie, 65 ans et retraitée, obtienne un crédit. Dans le cas où cette probabilité est supérieure ou égale à 50 %, le modèle prédit que Marie aura son crédit. Sinon 
+elle ne l&#039;a pas.  Cet aspect explicatif rend la régression logistique très populaire dans les domaines de la santé, bancaire ou encore ingénierie.
+</p>
+
+<p>
+<div class='alert alert-warning'> <strong>Attention :</strong>  Malgré le fait qu&#039;elle soit appelée “régression”, la régression logistique est en réalité utilisée pour des travaux de classification.</div>
+</p>
+
+<p>
+Il existe deux extensions de la régression logistique, dont la particularité réside dans le nombre de classes à prédire :
+</p>
+<ul>
+<li class="level1"><div class="li"> <span style="color:#ff0000;"><strong>La régression multinomiale ou softmax : </strong></span> Cas de régression logistique où la variable cible a plus de deux classes non ordonnées  (<strong>Ex :</strong> Prédiction d&#039;un type de cancer).</div>
+</li>
+<li class="level1"><div class="li"> <span style="color:#ff0000;"><strong>La régression logistique ordinale :</strong></span> Cas de régression multinomiale où les classes sont reliées par une relation d&#039;ordre (<strong>Ex :</strong> Stades d&#039;avancement d&#039;une épidémie).</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La r\u00e9gression logistique&quot;,&quot;hid&quot;:&quot;la_regression_logistique&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;56-1389&quot;} -->
+<h3 class="sectionedit2" id="estimation_des_probabilites">Estimation des probabilités</h3>
+<div class="level3">
+
+<p>
+Le modèle de régression logistique estime la probabilité qu&#039;une observation $X_{i}$, appartienne à une classe particulière. Mais alors comment cela est-il fait ?
+</p>
+
+<p>
+L&#039;estimation se fait comme dans une régression linéaire, où le modèle calcule la somme pondérée des caractéristiques d&#039;entrée, mais au lieu de retourner une valeur continue comme en <a href="/doku.php?id=cpp:regression_supervisee#theorie" class="wikilink1" title="cpp:regression_supervisee">régression linéaire</a>, il fournit la logistique $p$ du résultat. C&#039;est-à-dire qu&#039;il passe l&#039;expression de la régression linéaire dans la fonction logistique, qui va renvoyer des valeurs entre 0 et 1 (interprétées comme des probabilités).
+</p>
+
+<p>
+$$p = h_{\theta}(x) = \sigma(\theta.X^{T})$$
+</p>
+
+<p>
+Avec :
+</p>
+<ul>
+<li class="level1"><div class="li"> $\theta$ le vecteur paramètre du modèle.</div>
+</li>
+<li class="level1"><div class="li"> $X$ les valeurs d&#039;entrainement.</div>
+</li>
+<li class="level1"><div class="li"> $\sigma$ une fonction sigmoïde. </div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Estimation des probabilit\u00e9s&quot;,&quot;hid&quot;:&quot;estimation_des_probabilites&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;1390-2240&quot;} -->
+<h3 class="sectionedit3" id="la_fonction_logistique">La fonction logistique</h3>
+<div class="level3">
+
+<p>
+La régression logistique est un estimateur probabiliste, dont la modélisation suit celle des fonctions mathématiques dites sigmoïdes, caractérisées par leur forme en “S”.  Toutefois dans le cadre d&#039;une régression logistique, la fonction sigmoïde utilisée est la <span style="color:#ff0000;"><strong>fonction logistique</strong></span>.
+</p>
+
+<p>
+Elle correspond à la fonction de répartition de la loi logistique, et est donnée par :
+</p>
+
+<p>
+$$\sigma(t) = \frac{1}{1 + e^{-t}}, \text{tel que } \sigma(t) \in [0, 1]$$
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_logistique&amp;media=cpp:logistic_fct_.png" class="media" title="cpp:logistic_fct_.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=aa27ea&amp;media=cpp:logistic_fct_.png" class="mediacenter" title="Fonction logistique" alt="Fonction logistique" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 1 :</strong>  Fonction logistique</p><!--divalign-->
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La fonction logistique&quot;,&quot;hid&quot;:&quot;la_fonction_logistique&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;2241-2855&quot;} -->
+<h3 class="sectionedit4" id="predictions">Prédictions</h3>
+<div class="level3">
+
+<p>
+Ainsi, dès lors que le modèle a estimé la probabilité p, qu&#039;une observation appartienne à la classe positive, il peut alors effectuer sa prédiction.
+\[ y  =
+\begin{cases}
+0 &amp; \text{si } p &lt; 0.5\\
+1 &amp;\text{si } p \ge 0.5
+\end{cases} \]
+</p>
+
+<p>
+Il est nécessaire d&#039;être vigilant, concernant les prédictions proches des frontières de décision. En effet, un léger ajustement du paramétrage peut faire
+passer une probabilité de 48 % à 51 %, ce qui altérera la décision. 
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Pr\u00e9dictions&quot;,&quot;hid&quot;:&quot;predictions&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;2856-3354&quot;} -->
+<h3 class="sectionedit5" id="fonction_de_cout_et_entrainement">Fonction de coût et entrainement</h3>
+<div class="level3">
+
+<p>
+L&#039;entrainement de la régression logistique se fait de façon à trouver le vecteur de paramètres $\theta$, qui permet de d&#039;estimer des 
+probabilités élevées pour les observations positives et des probabilités basses pour les observations négatives (<strong>cf Figure 1</strong>).  
+</p>
+
+<p>
+Sur l&#039;ensemble du jeu de données, cette fonction, aussi appelée <span style="color:#ff0000;"><strong>perte logistique</strong></span>, est le coût moyen sur l&#039;ensemble des observations, et est donnée par : 
+</p>
+
+<p>
+$$J(\theta) = - \frac{1}{m} \sum_{i = 1}^{m}[y^{(i)}log(p^{(i)}) + (1 - y^{(i)})log(1 - p^{(i)})]$$
+</p>
+<div class="table sectionedit6"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">      Paramètre        </th><th class="col1"> Signification</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">   $y^{(i)}$     </td><td class="col1"> Probabilité cible que l&#039;observation i appartienne à la classe positive. </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">    $m$     </td><td class="col1"> Nombre total d&#039;observations. </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">    $p^{(i)}$     </td><td class="col1"> Probabilité estimée que l&#039;observation i appartienne à la classe positive. </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:6,&quot;range&quot;:&quot;3956-4239&quot;} -->
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong> Il n&#039;existe pas de solution analytique pour résoudre $J(\Theta)$, mais cela reste possible numériquement grâce à une descente de gradient. Vous pouvez cliquer <a href="/doku.php?id=cpp:regression_supervisee" class="wikilink1" title="cpp:regression_supervisee">ici</a> pour plus 
+d&#039;informations sur cette méthode.</div>
+</p>
+
+<p>
+La dérivée partielle de la fonction de coût permet de calculer le vecteur gradient, à utiliser dans l&#039;algorithme de descente de gradient. Elle est donnée par : 
+</p>
+
+<p>
+$$\frac{\partial}{\partial \theta_{j}} J(\theta) = \frac{1}{m}\sum_{i = 1}^{m} \underbrace{ (\sigma(\theta^{T}X^{(i)})  - y^{(i)})}_{\text{Erreur de prédiction}} X^{(i)}_{j} $$
+</p>
+<div class="table sectionedit7"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">      Paramètre        </th><th class="col1"> Signification</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">   $y^{(i)}$     </td><td class="col1"> Probabilité cible que l&#039;observation i appartienne à la classe positive. </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">    $m$     </td><td class="col1"> Nombre total d&#039;observations. </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">    $X^{(i)}_{j}$     </td><td class="col1"> Valeur de la $j^{ième}$ observation. </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">    $\sigma(\theta^{T}X^{(i)})$     </td><td class="col1"> Probabilité estimée que l&#039;observation i appartienne à la classe positive. </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:7,&quot;range&quot;:&quot;4865-5231&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Fonction de co\u00fbt et entrainement&quot;,&quot;hid&quot;:&quot;fonction_de_cout_et_entrainement&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;3355-5232&quot;} -->
+<h3 class="sectionedit8" id="frontieres_de_decision">Frontières de décision</h3>
+<div class="level3">
+
+<p>
+<div class='alert alert-info'> <strong>Dataset :</strong>  On utilisera le dataset de détection de fraudes, pour un cabinet d&#039;audit, disponible sur <a href="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Classification/Data%20fraude%20bancaires" class="urlextern" title="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Classification/Data%20fraude%20bancaires" rel="nofollow"> ici</a>.</div>
+</p>
+
+<p>
+Le choix du classificateur de mettre une observation $X_{i}$ dans une classe précise, se fait à partir de la lecture des probabilités d&#039;appartenance.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_logistique&amp;media=cpp:decision_boudary.png" class="media" title="cpp:decision_boudary.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=2bce32&amp;media=cpp:decision_boudary.png" class="mediacenter" title="Frontières de décision" alt="Frontières de décision" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 2 :</strong>  Frontières de décision pour la détection de fraude et probabilités associées</p><!--divalign-->
+
+<p>
+Lorsque l&#039;audit de fraude est donnée par une valeur inférieure ou égale à 1, le classifieur estime avec de fortes probabilités que l&#039;observation décrit une situation normale.
+Au contraire, à partir d&#039;une valeur d&#039;audit de risque égale à 1.2, la probabilité d&#039;être dans un cas de fraude est de 60 %. La frontière de décision  se situe donc aux alentours d&#039;une valeur d&#039;audit de risque égale à 1.1.
+</p>
+
+</div>
+
+<h5 id="sources">Sources</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> Machine Learning avec Scikit-Learn, 2e édition, Aurélien Géron</div>
+</li>
+<li class="level1"><div class="li"> Data science : fondamentaux et études de cas, Eric Biernat et Michel Lutz</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Fronti\u00e8res de d\u00e9cision&quot;,&quot;hid&quot;:&quot;frontieres_de_decision&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;5233-6412&quot;} -->
+<h2 class="sectionedit9" id="modele_de_predictionregression_logistique">Modèle de prédiction : Régression logistique</h2>
+<div class="level2">
+
+<p>
+<div class='alert alert-info'> <strong>Dataset :</strong>  On utilisera le dataset de détection de fraudes, pour un cabinet d&#039;audit, disponible sur <a href="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Classification/Data%20fraude%20bancaires" class="urlextern" title="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Classification/Data%20fraude%20bancaires" rel="nofollow"> ici</a>.</div>
+</p>
+
+<p>
+Commençons par créer le classificateur pour la détection de fraude.
+</p>
+
+</div>
+
+<h4 id="estimateur">Estimateur</h4>
+<div class="level4">
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">linear_model</span> <span class="kw1">import</span> LogisticRegression
+&nbsp;
+model <span class="sy0">=</span> LogisticRegression<span class="br0">&#40;</span>solver<span class="sy0">=</span><span class="st0">'liblinear'</span><span class="br0">&#41;</span>.<span class="me1">fit</span><span class="br0">&#40;</span>X_train<span class="sy0">,</span>y_train<span class="br0">&#41;</span><span class="co1">#Entrainement de l'estimateur avec solver='liblinear' car il est plus adapté aux petits datasets</span>
+y_pred <span class="sy0">=</span> model.<span class="me1">predict</span><span class="br0">&#40;</span>X_test<span class="br0">&#41;</span><span class="co1">#Prédiction sur les données X</span>
+y_prob <span class="sy0">=</span> model.<span class="me1">predict_proba</span><span class="br0">&#40;</span>X_test<span class="br0">&#41;</span><span class="co1">#Prédiction des probabilités d'appartenance</span></pre>
+<div class="table sectionedit10"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Solveur  </th><th class="col1 centeralign">  Fonctionnement  </th><th class="col2"> Spécificités </th><th class="col3">Temps d&#039;exécution</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  newton-cg  </td><td class="col1 centeralign">  Utilise la matrice hessienne (matrice de dérivées partielles secondes) de la fonction de coût, dans la recherche des paramètres optimaux.  </td><td class="col2"> Fonctionne lentement avec les grands datasets. </td><td class="col3"> 1100 s</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  lbfgs  </td><td class="col1 centeralign">  Approxime la matrice hessienne de la fonction de coût, en évaluant les différents gradients successifs.   </td><td class="col2"> Solveur par défaut, il est très rapide avec les grands datasets. </td><td class="col3"> 13 s</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  liblinear  </td><td class="col1 leftalign"> Utilise une descente de coordonnées, pour minimiser la fonction de coût.   </td><td class="col2"> Fonctionne bien avec de petits jeux de données. </td><td class="col3">1578 s</td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">  sag  </td><td class="col1 centeralign">  Utilise la descente de gradient stochastique moyenne.  </td><td class="col2"> Rapide pour les grands jeux de données. </td><td class="col3">85 s</td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 centeralign">  saga  </td><td class="col1 centeralign">  Extension du solveur <strong>sag</strong>, qui permet l&#039;utilisation de la régularisation L1.  </td><td class="col2"> Rapide pour les grands datastes .</td><td class="col3">104 s</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table2&quot;,&quot;secid&quot;:10,&quot;range&quot;:&quot;7213-8105&quot;} -->
+<p>
+<span style="color:#ff0000;"><strong>N.B : </strong></span> Les temps d&#039;exécution ont été calculé en prenant en compte 30.000 observations du dataset MNIST.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_logistique&amp;media=cpp:solveurs.png" class="media" title="cpp:solveurs.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=935579&amp;media=cpp:solveurs.png" class="mediacenter" title="Spécificités des solveurs" alt="Spécificités des solveurs" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 3 :</strong>  Spécificités des solveurs</p><!--divalign-->
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong>  Sous R, certains solveurs ne sont pas implémentés. Vous n&#039;aurez donc la possibilité de n&#039;utiliser que la méthode de Newton.</div>
+</p>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>glmnet<span class="br0">&#41;</span>
+&nbsp;
+model <span class="sy0">&lt;</span>- glm<span class="br0">&#40;</span>Risk<span class="sy0">~</span>.<span class="sy0">,</span> family <span class="sy0">=</span> binomial<span class="br0">&#40;</span>logit<span class="br0">&#41;</span><span class="sy0">,</span> data <span class="sy0">=</span> data_train<span class="br0">&#41;</span><span class="co1">#Entrainement de l'estimateur, en précisant</span>
+<span class="co1">#family = binomial pour la régression logistique binaire</span>
+y_prob <span class="sy0">&lt;</span>- predict<span class="br0">&#40;</span>model<span class="sy0">,</span> newdata <span class="sy0">=</span> X_test<span class="sy0">,</span> <span class="kw2">type</span> <span class="sy0">=</span> <span class="st0">'response'</span><span class="br0">&#41;</span><span class="co1">#Calcul des probabilités d'appartenance à la classe positive, sur les données de test</span>
+y_pred <span class="sy0">&lt;</span>- ifelse<span class="br0">&#40;</span>y_prob <span class="sy0">&gt;</span> <span class="nu0">0.5</span><span class="sy0">,</span> <span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">0</span><span class="br0">&#41;</span><span class="co1">#Prédiction sur les données X de test</span></pre>
+
+</div>
+
+<h4 id="evaluation_de_l_estimation">Evaluation de l&#039;estimation</h4>
+<div class="level4">
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">metrics</span> <span class="kw1">import</span> classification_report<span class="sy0">,</span> confusion_matrix<span class="sy0">,</span> log_loss
+&nbsp;
+<span class="kw1">print</span><span class="br0">&#40;</span>confusion_matrix<span class="br0">&#40;</span>y_test<span class="sy0">,</span> y_pred<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Matrice de confusion</span>
+<span class="kw1">print</span><span class="br0">&#40;</span>classification_report<span class="br0">&#40;</span>y_test<span class="sy0">,</span> y_pred<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Résumé des résultats de classification</span>
+<span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">'Perte logistique :'</span><span class="sy0">,</span> log_loss<span class="br0">&#40;</span>y_test<span class="sy0">,</span> y_prob<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Calcul de la perte logistique, métrique importante de la régression logistique. Plus elle est petite, meilleure sont les prédictions</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>MLmetrics<span class="br0">&#41;</span>
+&nbsp;
+LogLoss<span class="br0">&#40;</span>y_pred<span class="sy0">,</span> y_test<span class="br0">&#41;</span><span class="co1">#Calcul de la perte logistique</span>
+table<span class="br0">&#40;</span>y_test<span class="sy0">,</span> y_pred<span class="br0">&#41;</span><span class="co1">#Construction de la matrice de confusion</span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong>  Pour plus d&#039;informations sur la matrice de confusion, consultez la page sur <a href="/doku.php?id=cpp:evaluer_son_modele_de_classification" class="wikilink1" title="cpp:evaluer_son_modele_de_classification">évaluation du modèle de classification</a>.</div>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_logistique&amp;media=cpp:report_.png" class="media" title="cpp:report_.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=87cb98&amp;media=cpp:report_.png" class="mediacenter" title="Résultats de classification" alt="Résultats de classification" width="500" /></a>
+</p>
+
+<p>
+Il en ressort que sur 102 observations de situations normales, l&#039;estimateur a réussi à toutes les identifier correctement. Pour les 54 observations de cas de fraudes, il est parvenu à en identifier correctement 52. 
+</p>
+
+</div>
+
+<h4 id="regularisation">Régularisation</h4>
+<div class="level4">
+
+<p>
+Il est nécessaire de réduire la variance du modèle afin d&#039;améliorer ses performances. C&#039;est pourquoi la régression logistique permet de définir un paramètre de régularisation, qui va permettre de pénaliser le modèle avec les normes L1 et L2.
+</p>
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong>  Consultez la page <a href="/doku.php?id=cpp:regression_regularisee" class="wikilink1" title="cpp:regression_regularisee">régression polynomiale et régressions régularisées</a>, pour plus d&#039;informations sur la régularisation.</div>
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">model <span class="sy0">=</span> LogisticRegression<span class="br0">&#40;</span>solver<span class="sy0">=</span><span class="st0">'liblinear'</span><span class="sy0">,</span>C<span class="sy0">=</span><span class="nu0">.05</span><span class="sy0">,</span> penalty<span class="sy0">=</span><span class="st0">'l2'</span><span class="br0">&#41;</span>.<span class="me1">fit</span><span class="br0">&#40;</span>X_train<span class="sy0">,</span>y_train<span class="br0">&#41;</span><span class="co1">#Entrainement de l'estimateur en définissant un coefficient de régularisation C, et le type de régularisation utilisée</span>
+y_pred <span class="sy0">=</span> model.<span class="me1">predict</span><span class="br0">&#40;</span>X_test<span class="br0">&#41;</span><span class="co1">#Prédiction sur les données X</span>
+y_prob <span class="sy0">=</span> model.<span class="me1">predict_proba</span><span class="br0">&#40;</span>X_test<span class="br0">&#41;</span><span class="co1">#Prédiction des probabilités d'appartenance</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong> Il est nécessaire de convertir les données X de test et d&#039;entrainement en matrices.</div>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>glmnet<span class="br0">&#41;</span>
+&nbsp;
+model <span class="sy0">&lt;</span>- glmnet<span class="br0">&#40;</span>X_train<span class="sy0">,</span> y_train<span class="sy0">,</span> family <span class="sy0">=</span> <span class="st0">'binomial'</span><span class="sy0">,</span> alpha <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">,</span> <span class="kw1">lambda</span> <span class="sy0">=</span> <span class="nu0">0.05</span><span class="br0">&#41;</span><span class="co1">#Entrainement du classificateur avec </span>
+<span class="co1">#une régularisation L2 avec alpha = 0, un coefficient de régularisation lambda et family qui définit la régression logistique</span>
+y_prob <span class="sy0">&lt;</span>- predict<span class="br0">&#40;</span>model<span class="sy0">,</span> newx <span class="sy0">=</span> X_test<span class="sy0">,</span> <span class="kw2">type</span> <span class="sy0">=</span> <span class="st0">'response'</span><span class="br0">&#41;</span><span class="co1">#Prédiction des probabilités sur les données de test</span>
+y_pred <span class="sy0">&lt;</span>- ifelse<span class="br0">&#40;</span>y_prob <span class="sy0">&gt;</span> <span class="nu0">0.5</span><span class="sy0">,</span> <span class="nu0">1</span><span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#41;</span><span class="co1">#Prédiction de l'état de la fraude</span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_logistique&amp;media=cpp:regularized_report.png" class="media" title="cpp:regularized_report.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=2756cc&amp;media=cpp:regularized_report.png" class="mediacenter" title="Résultat après régularisation" alt="Résultat après régularisation" width="500" /></a>
+</p>
+
+<p>
+L&#039;interprétation de la matrice de confusion est la même que dans le cas précédent. On remarque tout de même une légère perte de précision au niveau de la perte logistique.
+</p>
+
+</div>
+
+<h5 id="sources1">Sources</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html" class="urlextern" title="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html" rel="nofollow">Documentation Sklearn</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.r-bloggers.com/how-to-perform-a-logistic-regression-in-r/" class="urlextern" title="https://www.r-bloggers.com/how-to-perform-a-logistic-regression-in-r/" rel="nofollow">R-bloggers</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://towardsdatascience.com/dont-sweat-the-solver-stuff-aea7cddc3451" class="urlextern" title="https://towardsdatascience.com/dont-sweat-the-solver-stuff-aea7cddc3451" rel="nofollow">TowardDataScience</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.sthda.com/english/articles/36-classification-methods-essentials/149-penalized-logistic-regression-essentials-in-r-ridge-lasso-and-elastic-net/" class="urlextern" title="http://www.sthda.com/english/articles/36-classification-methods-essentials/149-penalized-logistic-regression-essentials-in-r-ridge-lasso-and-elastic-net/" rel="nofollow">STHDA</a></div>
+</li>
+<li class="level1"><div class="li"> Machine Learning avec Scikit-Learn, 2e édition,  Aurélien Géron</div>
+</li>
+<li class="level1"><div class="li"> Data science : fondamentaux et études de cas, Eric Biernat et Michel Lutz</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Mod\u00e8le de pr\u00e9diction : R\u00e9gression logistique&quot;,&quot;hid&quot;:&quot;modele_de_predictionregression_logistique&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:9,&quot;range&quot;:&quot;6413-12490&quot;} -->
+<h2 class="sectionedit11" id="la_regression_softmax">La régression softmax</h2>
+<div class="level2">
+
+<p>
+Il s&#039;agit du cas où le modèle de régression logistique cherche à prédire plus de deux classes non ordonnées. De plus, elle ne doit être utilisée que pour des classes qui ne peuvent survenir en même temps, par exemple plusieurs variétés d&#039;une même plante.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La r\u00e9gression softmax&quot;,&quot;hid&quot;:&quot;la_regression_softmax&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:11,&quot;range&quot;:&quot;12491-12792&quot;} -->
+<h3 class="sectionedit12" id="estimation_des_probabilites1">Estimation des probabilités</h3>
+<div class="level3">
+
+<p>
+Le fonctionnement de la régression softmax repose sur une fonction : la fonction softmax. 
+Commençons par considérer une observation $\bf{x}$, pour laquelle le modèle softmax va d&#039;abord calculer un score $S_{k}(\bf{x})$, pour chaque
+classe k.
+</p>
+
+<p>
+$$S_{k}(\bf{x}) = (\theta^{(k)})^{T}x$$
+</p>
+<div class="table sectionedit13"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">      Paramètre        </th><th class="col1"> Signification</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">   $\bf{x}$     </td><td class="col1"> Observation d&#039;une variable. </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">   $k$     </td><td class="col1"> Entier définissant la k-ième classe. </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">    $\Theta$     </td><td class="col1"> Vecteur de paramètres, regroupant à la fois le terme constant $\theta_{0}$ et les coefficients de pondération $\theta_{1}$ à $\theta_{n}$. </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table3&quot;,&quot;secid&quot;:13,&quot;range&quot;:&quot;13120-13430&quot;} -->
+<p>
+Une fois que le score de chaque classe a été calculé pour l&#039;observation $\bf{x}$, il est alors possible d&#039;estimer la probabilité $P_{k}$,  que l&#039;observation appartienne à la classe k. Cela se fait en transformant les scores par la <span style="color:#ff0000;"><strong>fonction softmax</strong></span>.
+</p>
+
+<p>
+$$P_{k} = \sigma(S(\bf{x}))_{k} = \frac{exp(S_{k}(\bf{x}))}{\sum_{j = 1}^{K}exp(S_{j}(\bf{x}))}$$
+</p>
+<div class="table sectionedit14"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">      Paramètre        </th><th class="col1"> Signification</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">   $K$     </td><td class="col1"> Nombre de classes. </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">   $S(\bf{x})$     </td><td class="col1"> Vecteur des scores de chaque classe pour l&#039;observation $\bf{x}$. </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">    $\sigma(S(\bf{x}))_{k}$     </td><td class="col1"> Probabilité estimée que $\bf{x}$ $\in$ k, en considérant les scores de chaque classe pour l&#039;observation $\bf{x}$ .</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table4&quot;,&quot;secid&quot;:14,&quot;range&quot;:&quot;13807-14126&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Estimation des probabilit\u00e9s&quot;,&quot;hid&quot;:&quot;estimation_des_probabilites1&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:12,&quot;range&quot;:&quot;12793-14127&quot;} -->
+<h3 class="sectionedit15" id="predictions1">Prédictions</h3>
+<div class="level3">
+
+<p>
+Et tout comme la régression logistique, la régression softmax prédit la classe qui a la plus forte probabilité estimée.
+</p>
+
+<p>
+$$ \text{y = argmax}_{k}^{} P_{k}$$
+</p>
+
+<p>
+On retourne ainsi la valeur de la variable k, qui maximise la fonction $P_{k}$.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Pr\u00e9dictions&quot;,&quot;hid&quot;:&quot;predictions1&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:15,&quot;range&quot;:&quot;14128-14393&quot;} -->
+<h3 class="sectionedit16" id="entrainement_et_fonction_de_cout">Entrainement et fonction de coût</h3>
+<div class="level3">
+
+<p>
+L&#039;objectif de l&#039;entrainement du modèle softmax, est de d&#039;estimer une probabilité importante pour la classe cible, et donc des probabilités faibles pour les autres.
+</p>
+
+<p>
+Il s&#039;agira donc de minimiser une fonction coût appelée <span style="color:#ff0000;"><strong>entropie croisée</strong></span>, qui pénalise le modèle lorsqu&#039;il estime une probabilité faible pour la classe cible.
+</p>
+
+<p>
+$$J(\Theta) = -\frac{1}{m}\sum_{i = 1}^{m}\sum_{k = 1}^{K}y_{k}^{(i)}log(p_{k}^{(i)})$$
+</p>
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong> L&#039;entropie croisée est couramment utilisée pour mesurer la cohérence entre un ensemble de probabilités estimées d&#039;appartenance à des classes et les classes ciblées. </div>
+</p>
+<div class="table sectionedit17"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">      Paramètre        </th><th class="col1"> Signification</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">   $y_{k}^{(i)}$     </td><td class="col1"> Probabilité cible que la classe i appartienne à la classe k. </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">   $K$     </td><td class="col1"> Nombre total de classes. </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">    $p_{k}^{(i)}$     </td><td class="col1"> Probabilité estimée que la classe i appartienne effectivement à la classe k.</td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">    $m$     </td><td class="col1"> Nombre total d&#039;observations. </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table5&quot;,&quot;secid&quot;:17,&quot;range&quot;:&quot;15090-15413&quot;} -->
+<p>
+Le vecteur gradient de l&#039;entropie croisée permet d&#039;utiliser une descente de gradient pour trouver la matrice $\theta$ qui minimise la fonction de coût. Il est donné par :
+</p>
+
+<p>
+$$\nabla_{\theta^{k}}J(\theta) = \frac{1}{m} \sum_{i = 1}^{m} (p_{k}^{(i)} - y^{(i)}_{k}) X^{(i)} $$
+</p>
+<div class="table sectionedit18"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">      Paramètre        </th><th class="col1"> Signification</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">   $y_{k}^{(i)}$     </td><td class="col1"> Probabilité cible que la classe i appartienne à la classe k. </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">   $X^{(i)}$     </td><td class="col1"> Valeur de la $i^{ième}$ observation. </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">    $p_{k}^{(i)}$     </td><td class="col1"> Probabilité estimée que la classe i appartienne effectivement à la classe k.</td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">    $m$     </td><td class="col1"> Nombre total d&#039;observations. </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table6&quot;,&quot;secid&quot;:18,&quot;range&quot;:&quot;15693-16035&quot;} -->
+</div>
+
+<h5 id="source">Source</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> Machine Learning avec Scikit-Learn, 2e édition, Aurélien Géron</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Entrainement et fonction de co\u00fbt&quot;,&quot;hid&quot;:&quot;entrainement_et_fonction_de_cout&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:16,&quot;range&quot;:&quot;14394-16120&quot;} -->
+<h2 class="sectionedit19" id="modele_de_predictionregression_softmax">Modèle de prédiction : Régression softmax</h2>
+<div class="level2">
+
+<p>
+Par défaut, la classe LogisticRegression de Scikit-Learn utilise la méthode <span style="color:#ff0000;"><strong>one-vs-the-rest</strong></span> lors de la prédiction sur plus de deux classes. Néanmoins, pour la transformer en régression softmax, il est nécessaire d&#039;initialiser l&#039;hyper-paramètre <span style="color:#ff0000;"><strong>multi_class</strong></span>. 
+</p>
+
+<p>
+<div class='alert alert-info'> <strong>Dataset :</strong>  On utilisera le dataset de qualité de vin, disponible sur <a href="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Classification/Data%20vin" class="urlextern" title="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Classification/Data%20vin" rel="nofollow"> ici</a>.</div>
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">model <span class="sy0">=</span> LogisticRegression<span class="br0">&#40;</span>solver <span class="sy0">=</span> <span class="st0">'newton-cg'</span><span class="sy0">,</span>multi_class <span class="sy0">=</span> <span class="st0">&quot;multinomial&quot;</span><span class="sy0">,</span> penalty <span class="sy0">=</span> <span class="st0">'l2'</span><span class="sy0">,</span> C <span class="sy0">=</span> <span class="nu0">0.6000000000000001</span><span class="br0">&#41;</span>.<span class="me1">fit</span><span class="br0">&#40;</span>X_train<span class="sy0">,</span>y_train<span class="br0">&#41;</span><span class="co1">#Entrainement de l'estimateur</span>
+y_pred <span class="sy0">=</span> model.<span class="me1">predict</span><span class="br0">&#40;</span>X_test<span class="br0">&#41;</span><span class="co1">#Prédiction sur les données X</span>
+y_prob <span class="sy0">=</span> model.<span class="me1">predict_proba</span><span class="br0">&#40;</span>X_test<span class="br0">&#41;</span><span class="co1">#Prédiction des probabilités d'appartenance</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">model <span class="sy0">&lt;</span>- glmnet<span class="br0">&#40;</span>X_train<span class="sy0">,</span> y_train<span class="sy0">,</span> family <span class="sy0">=</span> <span class="st0">'multinomial'</span><span class="sy0">,</span>  <span class="kw2">type</span>.<span class="me1">logistic</span> <span class="sy0">=</span> <span class="st0">&quot;Newton&quot;</span><span class="sy0">,</span> alpha <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">,</span> <span class="kw1">lambda</span> <span class="sy0">=</span> <span class="nu0">0.6000000000000001</span><span class="br0">&#41;</span><span class="co1">#Entrainement de l'estimateur</span>
+y_pred <span class="sy0">&lt;</span>- predict<span class="br0">&#40;</span>model<span class="sy0">,</span> newx <span class="sy0">=</span> X_test<span class="sy0">,</span> <span class="kw2">type</span> <span class="sy0">=</span> <span class="st0">'class'</span><span class="br0">&#41;</span><span class="co1">#Prédiction des classes </span>
+y_prob <span class="sy0">&lt;</span>- predict<span class="br0">&#40;</span>model<span class="sy0">,</span> newx <span class="sy0">=</span> X_test<span class="sy0">,</span> <span class="kw2">type</span> <span class="sy0">=</span> <span class="st0">'response'</span><span class="br0">&#41;</span><span class="co1">#Prédiction des probabilités d'appartenance</span></pre>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_logistique&amp;media=cpp:multinomial_data.png" class="media" title="cpp:multinomial_data.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=4d3ecf&amp;media=cpp:multinomial_data.png" class="mediacenter" title="Résultat de classification multinomiale" alt="Résultat de classification multinomiale" width="500" /></a>
+</p>
+
+<p>
+Il en ressort que pour 7 observations de classe “1”, le classifieur a réussi à toutes les déterminer. Il en est de même pour les 17 observations de classe “2”.
+Enfin pour les 12 observations de classe “3”, le modèle a réussi à en déterminer 11, en classant une observation appartenant à la classe “2”.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Mod\u00e8le de pr\u00e9diction : R\u00e9gression softmax&quot;,&quot;hid&quot;:&quot;modele_de_predictionregression_softmax&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:19,&quot;range&quot;:&quot;16121-17803&quot;} -->
+<h2 class="sectionedit20" id="regression_logistique_ordinale">Régression logistique ordinale</h2>
+<div class="level2">
+
+<p>
+Ce type de régression logistique s&#039;applique lorsque la variable cible contient plus de deux classes, liées par une relation d&#039;ordre. 
+</p>
+
+<p>
+<div class='alert alert-info'> <strong>Dataset :</strong>  On reprend le dataset de qualité de vin, disponible sur <a href="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Classification/Data%20vin" class="urlextern" title="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Classification/Data%20vin" rel="nofollow"> ici</a>. La méthode restera 
+la même pour des données ayant une vraie relation d&#039;ordre entre les classes de la variable cible.</div>
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> mord <span class="kw1">as</span> md
+&nbsp;
+model <span class="sy0">=</span> md.<span class="me1">LogisticAT</span><span class="br0">&#40;</span>alpha<span class="sy0">=</span><span class="nu0">0</span><span class="br0">&#41;</span>.<span class="me1">fit</span><span class="br0">&#40;</span>X_train<span class="sy0">,</span> y_train<span class="br0">&#41;</span><span class="co1">#Entrainement du modèle, en précisant alpha=0 pour ne pas inclure de régularisation</span>
+y_pred <span class="sy0">=</span> model.<span class="me1">predict</span><span class="br0">&#40;</span>X_test<span class="br0">&#41;</span><span class="co1">#Prédiction sur les données X</span>
+y_prob <span class="sy0">=</span> model.<span class="me1">predict_proba</span><span class="br0">&#40;</span>X_test<span class="br0">&#41;</span><span class="co1">#Prédiction des probabilités d'appartenance </span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+
+<p>
+Il est nécessaire à cette étape d&#039;avoir choisi les variables les plus importantes pour le modèle, afin de le faire fonctionner.
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>MASS<span class="br0">&#41;</span>
+&nbsp;
+model <span class="sy0">&lt;</span>- polr<span class="br0">&#40;</span><span class="kw1">as</span>.<span class="me1">factor</span><span class="br0">&#40;</span>Wine<span class="br0">&#41;</span><span class="sy0">~</span> Alcohol + Malic.<span class="me1">acid</span> + Ash + Acl + Mg<span class="sy0">,</span> data <span class="sy0">=</span> data_test<span class="sy0">,</span> method <span class="sy0">=</span> <span class="st0">'logistic'</span><span class="br0">&#41;</span><span class="co1">#Entrainement du modèle</span>
+y_pred <span class="sy0">&lt;</span>- predict<span class="br0">&#40;</span>model<span class="sy0">,</span> X_test<span class="br0">&#41;</span><span class="co1">#Prédiction sur les données X</span>
+y_prob <span class="sy0">&lt;</span>- predict<span class="br0">&#40;</span>model<span class="sy0">,</span> X_test<span class="sy0">,</span> <span class="kw2">type</span><span class="sy0">=</span><span class="st0">'p'</span><span class="br0">&#41;</span><span class="co1">#Prédiction des probabilités d'appartenance</span></pre>
+
+<p>
+Maintenant on affiche les résultats de prédiction.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">print</span><span class="br0">&#40;</span>confusion_matrix<span class="br0">&#40;</span>y_test<span class="sy0">,</span> y_pred<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Matrice de confusion</span>
+<span class="kw1">print</span><span class="br0">&#40;</span>classification_report<span class="br0">&#40;</span>y_test<span class="sy0">,</span> y_pred<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Résumé des résultats de classification</span>
+<span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">'Perte logistique :'</span><span class="sy0">,</span> log_loss<span class="br0">&#40;</span>y_test<span class="sy0">,</span> y_prob<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Calcul de la perte logistique, métrique importante de la régression logistique. Plus elle est petite, meilleure sont les prédictions</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_logistique&amp;media=cpp:resultat_ordinal.png" class="media" title="cpp:resultat_ordinal.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=09eaff&amp;media=cpp:resultat_ordinal.png" class="mediacenter" title="Résultat de prédiction" alt="Résultat de prédiction" width="500" /></a>
+</p>
+
+<p>
+Notre classifieur prédit globalement très bien le résultat de chaque classe, et cela peut se confirmer avec une perte logistique très faible.
+</p>
+
+</div>
+
+<h5 id="source1">Source</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <a href="https://pythonhosted.org/mord/reference.html#mord.MulticlassLogistic" class="urlextern" title="https://pythonhosted.org/mord/reference.html#mord.MulticlassLogistic" rel="nofollow">Mord Documentation</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://r-statistics.co/Ordinal-Logistic-Regression-With-R.html#:~:text=r%2Dstatistics.co%20by%20Selva%20Prabhakaran&amp;text=Ordinal%20logistic%20regression%20can%20be,of%20multi%2Dclass%20ordered%20variables." class="urlextern" title="http://r-statistics.co/Ordinal-Logistic-Regression-With-R.html#:~:text=r%2Dstatistics.co%20by%20Selva%20Prabhakaran&amp;text=Ordinal%20logistic%20regression%20can%20be,of%20multi%2Dclass%20ordered%20variables." rel="nofollow">R-Statistic</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;R\u00e9gression logistique ordinale&quot;,&quot;hid&quot;:&quot;regression_logistique_ordinale&quot;,&quot;codeblockOffset&quot;:8,&quot;secid&quot;:20,&quot;range&quot;:&quot;17804-20118&quot;} -->
+<h2 class="sectionedit21" id="regression_logistiqueavantages_inconvenients">Régression logistique : Avantages &amp; inconvénients</h2>
+<div class="level2">
+<div class="table sectionedit22"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">      Avantages        </th><th class="col1"> Inconvénients </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">   Explicabilité des résultats obtenus.   </td><td class="col1"> L&#039;hypothèse de linéarité du score, compromet les relations complexes entre variables. </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">   Modèle peu susceptible d&#039;être en situation d&#039;over-fitting, du fait de la simplicité de l&#039;algorithme.     </td><td class="col1"> Très bonnes performances pour une classification binaire, mais plus il y a de classes à prédire, moins bonne sera la qualité de l&#039;algorithme.</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table7&quot;,&quot;secid&quot;:22,&quot;range&quot;:&quot;20182-20623&quot;} -->
+</div>
+
+<h5 id="source2">Source</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> Big Data et Machine Learning, Manuel du data scientist, P. Lemberger, M. Batty, M. Morel, JL. Raffaelli</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;R\u00e9gression logistique : Avantages &amp; inconv\u00e9nients&quot;,&quot;hid&quot;:&quot;regression_logistiqueavantages_inconvenients&quot;,&quot;codeblockOffset&quot;:11,&quot;secid&quot;:21,&quot;range&quot;:&quot;20119-&quot;} -->

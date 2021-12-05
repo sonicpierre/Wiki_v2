@@ -1,0 +1,228 @@
+[[cpp:Le Clustering | Le Clustering]]
+\\
+\\
+{{  :cpp:regrouper_pour_regner.png?550  |}}
+\\
+\\
+<alert info>**DataSet :** on va utiliser, pour notre exemple, un dataset sur les différents fromages français. Vous le trouverez [[https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Exploration%20des%20donnees/Data%20fromage| ici]] et il sera stoqué dans la variable data.</alert>
+
+=====L'algorithme CAH=====
+
+Au début de l'algorithme, <color #ed1c24>**chaque individu forme une classe**</color>.
+
+  * À chaque itération, on <color #ed1c24>**regroupe les individus**</color> les plus <color #ed1c24>**proches**</color> et on observe la perte d'information sous la forme d'un <color #ed1c24>**dendrogramme**</color>.
+{{  :cpp:cah.gif?600  |}}
+  * À partir de ce graphique, on choisit finalement <color #ed1c24>**combien de clusters**</color> on décide de <color #ed1c24>**garder**</color>.
+  * On entraîne l'algorithme avec le nombre de <color #ed1c24>**clusters optimaux**</color>.
+
+<alert success>**Approfondir :** il existe un autre algorithme nommé DIANA qui commence avec un seul cluster contenant toutes les observations et qui divise petit à petit jusqu'à avoir un cluster par observation.</alert>
+
+**Animation :** [[dashee87.github.io]]
+====Distance et méthode de regroupement====
+
+L'algorithme <color #ed1c24>**CAH**</color> met en avant la notion de <color #ed1c24>**distance**</color> comme celle de <color #ed1c24>**regroupement**</color> c'est pourquoi il est important de <color #ed1c24>**savoir les choisir**</color> avec soin. 
+
+**Distance :**
+
+La distance permet, entre autres, de traiter sans problème des variables <color #ed1c24>**quantitatives ou qualitatives**</color>. Il en existe beaucoup en fonction des différents datasets. La distance <color #ed1c24>**euclidienne**</color> restera souvent un <color #ed1c24>**bon choix**</color> quand vous avez des données <color #ed1c24>**quantitatives**</color>. Cependant, pour plus d'informations, nous avons regroupé et détaillé pour vous les distances les plus utilisées en Machine Learning [[cpp:Les distances | ici]].
+
+**Méthodes de regroupement :**
+
+{{ :cpp:regroupementdonnee.png?600 |}}
+
+Je vais tout d'abord décrire la méthode de regroupement <color #ed1c24>**Ward**</color> car elle reste la plus <color #ed1c24>**utilisée**</color> et donne de <color #ed1c24>**bonnes performances**</color>. Il s'agit de regrouper les 2 clusters dont la <color #ed1c24>**distance**</color> de Ward est la plus <color #ed1c24>**faible**</color>. 
+
+On définit la distance de Ward comme suit :
+
+$$D_{C_{1}, C_{2}} = \frac{||G_{1} - G_{2}||^2}{\frac{1}{n_{1}} + \frac{1}{n_{2}}}$$
+
+^  Théorie  ^  Signification  ^
+|  $G_{1}, G_{2}$  |  Il s'agit des barycentres des clusters 1 et 2  |
+|  $n_{1}, n_{2}$  |  Il s'agit des effectifs des clusters 1 et 2  |
+
+Cette méthode permet de <color #ed1c24>**minimiser**</color> la variance <color #ed1c24>**intra-cluster**</color> et <color #ed1c24>**maximiser**</color> la variance <color #ed1c24>**inter-cluster**</color>. En d'autres termes, augmenter les ressemblances dans un même cluster et augmenter les différences inter- clusters. Cependant, un des problèmes liés à cette méthode est qu'elle <color #ed1c24>**gère mal les outliers**</color> et les clusters étirés c'est pourquoi il existe d'autres méthodes que nous allons décrire ci-dessous :
+
+^  Nom  ^  Principe  ^  Contexte d'utilisation et performances  ^
+|  Regroupement valeurs minimales  |  On calcule l'ensemble des distances et on garde la distance minimale. On fusionne ensuite les groupes de données correspondants pour créer le nouveau cluster   |  Cette méthode permet de gérer des clusters ovales. Cependant 2 classes éloignées mais dont un nombre minime d'observations sont proches se trouveront rassemblées.  |
+|  Regroupement valeurs maximales  |  Idem mais en prenant la distance maximale  |  Ce type de regroupement est beaucoup moins utilisé car il est sensible aux valeurs aberrantes. Il permet cependant la création de clusters de taille similaire  |
+|  Regroupement valeur moyenne  |  On calcule la moyenne des distances entre les différents groupes. Les deux groupes ayant la moyenne la plus faible seront fusionnés  |  Cette méthode permet de créer des clusters quasiment identiques. Par ailleurs, elle est  moins sensible au bruit.  |
+|  Regroupement valeur mediane  |  Idem mais cette fois il faut calculer la valeur médiane  |  Cette méthode permet de bien gérer les différents outliers. Cependant, elle reste très peu utilisée pour appliquer l'algorithme CAH.  |
+|  Regroupement par barycentre  |  On calcule la distance entre les différents barycentres et on prend la distance minimale.  |  Cette technique est assez robuste face aux outliers mais reste moins efficace que les autres méthodes classiques  |
+
+<alert success>**Approfondir : **il est possible d'utiliser d'autres méthodes comme celle de McQuitty ou celle du maximum de vraisemblance qui sont aussi efficaces.</alert>
+
+**Application dans le code :**
+
+__Code Python__
+
+<code python>
+from scipy.cluster import hierarchy
+
+Z = hierarchy.linkage(data, method='ward', metric='euclidean')#Définition de la méthode de calcul des distances
+</code>
+
+__Code R__
+
+<code python>
+distance = dist(data, "euclidean") #crée une structure de distance entre les individus
+</code>
+
+**Source :**
+  * [[http://larmarange.github.io/analyse-R/classification-ascendante-hierarchique.html]]
+  * [[https://support.minitab.com/fr-fr/minitab/18/help-and-how-to/modeling-statistics/multivariate/how-to/cluster-variables/methods-and-formulas/linkage-methods/]]
+  * [[http://mlpy.sourceforge.net/docs/3.1/cluster.html]]
+====Construire le dendrogramme====
+
+On peut ensuite <color #ed1c24>**dessiner le dendrogramme**</color> pour mieux visualiser les clusters qui permettent de faire les regroupements en <color #ed1c24>**limitant**</color> au maximum la <color #ed1c24>**perte d'information**</color>. Testons différentes façons de <color #ed1c24>**regrouper les données**</color> pour voir comment la méthode choisie <color #ed1c24>**modifie le dendrogramme**</color> construit :
+
+__Code Python__ 
+
+<code python>
+plt.figure(figsize=(12,6))#Définition de la taille du graphique
+
+dendrogramme = hierarchy.dendrogram(Z)#Contruction du dendrogramme selon les paramètres fournis
+
+plt.xlabel('Taille du cluster')
+plt.ylabel('Distance')
+</code>
+
+__Code R__
+
+<code python>
+h = hclust(distance, "ward.D2")#Création des paramètres du dendroramme
+plot(h)#Création du dendrogramme
+</code>
+
+**Résultat**
+
+^  Ward  ^  Minimale  ^
+|  {{ :cpp:dendrogramme.png?400 |Dendrogramme Ward}}  |  {{ :cpp:dendrodistancemin.png?400 |}}  |
+^  Maximale  ^  McQuitty  ^
+|  {{ :cpp:dedrogrammax.png?400 |}}  |  {{ :cpp:dendromcquitty.png?400 |}}  |
+
+En observant les graphiques, on coupe l'arbre au moment où la perte d'information est la plus grande entre 2 regroupements de clusters. Ainsi, en regardant le regroupement utilisant la méthode de **McQuitty** on conserve 3 clusters.
+
+**Sources**
+
+  * [[https://www.youtube.com/watch?v=JcfIeaGzF8A|TheEngineeringWorld]]
+  * [[https://larevueia.fr/clustering-les-3-methodes-a-connaitre/| La revue IA]]
+
+====Entraîner le bon modèle====
+
+Maintenant que vous avez choisi votre nombre idéal de clusters, il suffit de préciser à l'algorithme le nombre choisi pour qu'il arrête les regroupements au moment opportun.
+
+__En Python :__
+
+<code python>
+from sklearn.cluster import AgglomerativeClustering
+
+model = AgglomerativeClustering(n_clusters=3).fit(data)
+
+</code>
+<alert warning>**Remarque :** en Python, l'utilisation de méthodes de regroupement moins classiques se fera via le package [[http://mlpy.sourceforge.net/| mlpy]].</alert>
+
+__En R :__
+
+<code python>
+c = cutree(h, k=3)#Création des différentes classes
+</code>
+
+**Source :**
+  * [[https://stackabuse.com/hierarchical-clustering-with-python-and-scikit-learn/]]
+  * [[https://lemakistatheux.wordpress.com/2016/06/23/la-classification-ascendante-hierarchique/]]
+  * [[https://pbil.univ-lyon1.fr/R/pdf/stage7.pdf]]
+
+<alert info>**Info :** les méthodes d'évaluation de clusters sont les mêmes que présenté dans la page précédente [[cpp: Le K-Means | ici]] à la différence qu'ici elles ne servent pas à déterminer le nombre de clusters optimaux.</alert>
+
+====Les limites du CAH====
+
+La CAH est une méthode qui donne de <color #ed1c24>**très bons résultats**</color> cependant elle présente quelques inconvénients :
+  * Si le dataset devient conséquent, <color #ed1c24>**le temps**</color> de calcul devient <color #ed1c24>**trop long**</color>.
+  * Le nombre de distances ainsi que le nombre de façons de regrouper les données peut rendre l'algorithme <color #ed1c24>**difficile à paramétrer**</color>.
+
+<alert info>**Info :** une des solutions pour limiter le temps de calcul serait de commencer par faire un premier regroupement avec les K-means puis de travailler sur les centres de clusters trouvés pour faire un second traitement avec le CAH.</alert>
+
+**Source :**
+  * [[https://lovelyanalytics.com/2017/11/18/cah-methode-mixte/]]
+
+=====L'algorithme des Mean Shift=====
+
+Mean Shift est un algorithme de 1975 présenté par Fukunaga et Hostetler. Il s'agit d'un algorithme qui ne prend que peu voire pas de paramètres en entrée. Il est donc intéressant de l'utiliser dans le cadre de l'exploration de données.
+
+====L'algorithme====
+
+{{ :cpp:mean_shift.png?800 |}}
+
+Au démarrage, <color #ed1c24>**chacune des observations**</color> est considérée comme un <color #ed1c24>**centre de cluster**</color>. On définit un <color #ed1c24>**rayon ou (bandwidth)**</color> qui permettra de construire le cercle rouge. 
+
+  * Pour démarrer, on prend une observation au <color #ed1c24>**hasard**</color> et on trace le <color #ed1c24>**"cercle" autour**</color>.
+
+  * Ensuite, on regarde les observations qui sont dans ce cercle. On <color #ed1c24>**construit un centre**</color> qui est la <color #ed1c24>**moyenne**</color> des positions des observations du <color #ed1c24>**cercle précédent**</color>.
+
+  * On <color #ed1c24>**retrace un cercle**</color> qui prend comme origine le <color #ed1c24>**centre construit**</color> et on regarde s'il y a de <color #ed1c24>**nouvelles observations**</color> à l'intérieur. S' il n'y en a pas, l'algorithme peut s'<color #ed1c24>**arrêter**</color> ou aller sur une <color #ed1c24>**autre observation non classifiée**</color>. Sinon, on <color #ed1c24>**réitère**</color> autant de fois que nécessaire.
+
+Si l'algorithme repart d'un point appartenant déjà à un cluster, il construira exactement le même centre de cluster car il y a convergence.
+
+<alert info>**Info :** il est possible que l'algorithme trouve seul son propre rayon cependant il le trouve en un temps quadratique. Il sera donc préférable de l'indiquer à la main dans des grands datasets.</alert>
+
+__En Python :__
+
+<code python>
+from sklearn.cluster import MeanShift
+meanShift = MeanShift()
+meanShift.fit(data)
+</code>
+
+__En R :__
+
+Alors il s'agit d'une bonne occasion pour apprendre à installer un package depuis une source locale car le package n'est plus disponible sur CRAN. Il faut tout d'abord se rendre  [[https://cran.r-project.org/src/contrib/Archive/MeanShift/| ici]] et télécharger la dernière version du package. Placez l'archive (.tar) à un endroit connu. 
+
+<code python>
+install.packages(chemin_de_votre_archive, repos = NULL, type="source")
+</code>
+
+<alert warning>**Remarque :** si vous avez des problèmes de dépendance **dependency 'wavethresh'**, installez le package manquant, dans ce cas précis wavethresh par exemple.</alert>
+
+Maintenant, nous pouvons procéder comme avec une librairie standard et entraîner notre algorithme MeanShift :
+
+<code python>
+library("MeanShift")
+data = data.frame(t(data)) #Les fromages doivent être placés sur les colonnes et les caractéristiques dans les lignes
+model = msClustering(data)
+</code>
+
+Le paramètre bandwidth est le paramètre h.
+
+**Source :**
+  * [[https://www.youtube.com/watch?v=3ERPpzrDkVg]]
+
+====Comparaison des résultats====
+
+Regardons, dans un premier temps, combien de centres a trouvé l'algorithme Mean Shift afin de voir s'il y a  cohérence avec l'algorithme CAH.
+
+__En Python :__
+
+<code python>
+len(meanShift.cluster_centers_)
+</code>
+
+__En R :__
+
+<code python>
+meanShift$components #Permet de trouver les centres
+</code>
+
+Il n'est pas forcément évident de savoir si le clustering a été efficace ou non quand on ne peut pas visualiser les résultats c'est pourquoi il est préférable de réduire le nombre de dimensions au préalable afin de bien visualiser les clusters construits. 
+
+Dans notre cas, ce n'est pas possible. Nous allons donc nous baser sur l'indice de Davies-Bouldin pour estimer la qualité du clustering. Vous trouverez les informations sur cet indice [[cpp: Le K-Means | ici]].
+
+|              ^  Mean Shift  ^  CAH  ^  KMeans   ^
+^  Davies-Bouldin  indice  |  0.529  |  0.878  |  0.881  |
+
+On remarque que l'algorithme Mean Shift est plus efficace dans ce cas.
+
+**Source :**
+  * [[https://mran.microsoft.com/snapshot/2017-12-11/web/packages/MeanShift/vignettes/MeanShift-clustering.html]]
+====Les limites de MeanShift====
+
+Cette approche est intéressante mais trouve encore <color #ed1c24>**quelques limites**</color>... Il n'est pas facile de connaitre le paramètre **bandwidth** et ce choix fera varier grandement les résultats obtenus à la sortie. Il est certes possible de ne <color #ed1c24>**pas le définir**</color> mais la complexité en sera augmentée et il ne sera <color #ed1c24>**plus efficace sur les grands datasets**</color>.

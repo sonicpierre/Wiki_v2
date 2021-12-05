@@ -1,0 +1,202 @@
+
+<h1 class="sectionedit1" id="creation_d_un_sort_dans_le_json_d_un_personnage">Création d&#039;un sort dans le JSON d&#039;un personnage</h1>
+<div class="level1">
+
+<p>
+Cet article réfère à la page de <a href="/doku.php?id=lambda:start" class="wikilink1" title="lambda:start"> Configuration d&#039;un personnage avec le JSON</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Cr\u00e9ation d&#039;un sort dans le JSON d&#039;un personnage&quot;,&quot;hid&quot;:&quot;creation_d_un_sort_dans_le_json_d_un_personnage&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-161&quot;} -->
+<h2 class="sectionedit2" id="contexte">Contexte</h2>
+<div class="level2">
+
+<p>
+Pour remettre le contexte, un sort va être décrit au sein d&#039;accolades dans le tableau du champ <strong>spells</strong> d&#039;un personnage.
+</p>
+<pre class="code json">{
+    #Autre attributs du personnage
+    &quot;spells&quot;:
+    [
+        { Sort n°0 },
+        { Sort n°1 },
+        ...
+    ]
+}</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Contexte&quot;,&quot;hid&quot;:&quot;contexte&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;162-452&quot;} -->
+<h2 class="sectionedit3" id="creation_d_un_sort">Création d&#039;un sort</h2>
+<div class="level2">
+
+<p>
+Un sort possède obligatoirement les champs suivants:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>name</strong> : Le nom du sort</div>
+</li>
+<li class="level1"><div class="li"> <strong>description</strong> : La description du sort</div>
+</li>
+<li class="level1"><div class="li"> <strong>targetEffects</strong> : Un tableau d&#039;ensembles d&#039;effets appliqué sur une même cibles</div>
+</li>
+</ul>
+<pre class="code json">{
+    &quot;name&quot;: &quot;Sort de test&quot;,
+    &quot;description&quot;: &quot;Le sort fait des dégats&quot;
+    &quot;targetEffects&quot;:
+    [
+        { Premier ensemble d'effets },
+        { Second ensemble d'effets },
+        ...
+    ]
+}</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Cr\u00e9ation d&#039;un sort&quot;,&quot;hid&quot;:&quot;creation_d_un_sort&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:3,&quot;range&quot;:&quot;453-923&quot;} -->
+<h3 class="sectionedit4" id="les_ensembles_d_effettargeteffects">Les ensembles d&#039;effet : targetEffects</h3>
+<div class="level3">
+
+<p>
+Un ensemble d&#039;effets est un objet composé des éléments suivants :
+</p>
+<ul>
+<li class="level1"><div class="li"> “typeOfTarget”, contient une des 3 valeurs {“absolute”, “relative”, “selection”} et représente comment est-ce que les effets vont choisir leur cible. Ce choix changera la façon d&#039;interpréter le champs “target” d&#039;un effet.</div>
+</li>
+<li class="level1"><div class="li"> “targetAvailable”, contient 1 des 3 valeurs {“ally”, “enemy”, “all”} ou aucune. Ce champs représente les cibles possibles des effets.</div>
+</li>
+<li class="level1"><div class="li"> “effects”, tableau des effets</div>
+</li>
+</ul>
+
+<p>
+Un effet est simplement un changement de statistiques sur un personnage. Il est représenté en JSon avec les champs suivants :
+</p>
+<ul>
+<li class="level1"><div class="li"> “target”</div>
+</li>
+<li class="level1"><div class="li"> “stats”, la statistique modifiée</div>
+</li>
+<li class="level1"><div class="li"> “type”, comment la statistique est modifiée (set → “=”, buff → “+”, debuff → “-”, reset → “”)</div>
+</li>
+<li class="level1"><div class="li"> “value”</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les ensembles d&#039;effet : targetEffects&quot;,&quot;hid&quot;:&quot;les_ensembles_d_effettargeteffects&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:4,&quot;range&quot;:&quot;924-1738&quot;} -->
+<h3 class="sectionedit5" id="le_champs_target">Le champs &quot;target&quot;</h3>
+<div class="level3">
+
+<p>
+Ce champs détermine la cible sur laquelle s&#039;appliquera l&#039;effet. Il dépend également du champs “typeOfTarget” et “targetAvailable” vu au dessus.
+</p>
+
+</div>
+
+<h4 id="er_cas_de_figure_typeoftargetabsolute">1er cas de figure, &quot;typeOfTarget&quot;: &quot;absolute&quot;</h4>
+<div class="level4">
+
+<p>
+Dans ce cas, le champs “target” est le numéro du personnage qui correspond au “targetAvailable”. Ce numéro peut être 0, 1 ou 2 si le “targetAvailable” est “ally” ou “enemy”, et peut être 0, 1, 2, 3, 4 ou 5 si le “targetAvailable” est “all”.
+</p>
+
+</div>
+
+<h4 id="eme_cas_de_figure_typeoftargetrelative">2ème cas de figure, &quot;typeOfTarget&quot;: &quot;relative&quot;</h4>
+<div class="level4">
+
+<p>
+Dans ce cas, le champs “target” est le numéro d&#039;un personnage <strong>en fonction du personnage qui lance le sort</strong>. Si le “targetAvailable” est “ally”, 0 correspond au personnage qui a lancé le sort, -1 correspond au personnage allié à sa gauche, 1 au personnage allié à sa droite.
+</p>
+
+<p>
+Si le “targetAvailable” est “enemy”, 0 correspond au personnage ennemi en face du personnage qui lance le sort, -1 correspond au personnage ennemi à sa gauche et 1 au personnage ennemi à sa droite. 
+</p>
+
+</div>
+
+<h4 id="eme_cas_de_figure_typeoftargetselection">3ème cas de figure, &quot;typeOfTarget&quot;: &quot;selection&quot;</h4>
+<div class="level4">
+
+<p>
+Dans ce cas, le joueur doit sélectionner une cible, et ne peut sélectionner seulement le type de cible donné par “targetAvailable”. Une fois une cible choisie, le champs “target” représente le personnage relatif par rapport à celui sélectionné. 0 le cible lui, -1 cible celui à sa gauche, 1 celui à sa droite.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le champs \&quot;target\&quot;&quot;,&quot;hid&quot;:&quot;le_champs_target&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:5,&quot;range&quot;:&quot;1739-3134&quot;} -->
+<h3 class="sectionedit6" id="le_champs_value">Le champs &quot;value&quot;</h3>
+<div class="level3">
+
+<p>
+Ce champs contient les valeurs pour calculer les dégâts / soins / tours qu&#039;inflige le sort. Il contient un objet JSon avec :
+</p>
+<ul>
+<li class="level1"><div class="li"> “type”, type du sort (physique, magique, brute)</div>
+</li>
+<li class="level1"><div class="li"> “style”, style du sort (projectile, melé, …)</div>
+</li>
+<li class="level1"><div class="li"> “formula”, un autre objet JSon contenant les degâts bruts et les multiplicateurs</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le champs \&quot;value\&quot;&quot;,&quot;hid&quot;:&quot;le_champs_value&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:6,&quot;range&quot;:&quot;3135-3480&quot;} -->
+<h2 class="sectionedit7" id="exemple_complet">Exemple complet</h2>
+<div class="level2">
+
+<p>
+Dans cet exemple, le joueur executant ce code doit sélectionner un ennemi, et celui-ci ainsi que le personnage à sa gauche subissent des dégâts.
+</p>
+<pre class="code json">&quot;spells&quot;:
+[
+    {
+        &quot;name&quot;: &quot;Nom de sort&quot;
+        &quot;targetEffect&quot;:
+        [
+            {
+                &quot;typeOfTarget&quot;: &quot;selection&quot;
+                &quot;targetAvailable&quot;: &quot;enemy&quot;
+                &quot;effects&quot;:
+                [
+                    {
+                        &quot;target&quot;: 0 
+                        &quot;stats&quot;:&quot;life&quot;
+                        &quot;type&quot;:&quot;-&quot;
+                        &quot;value&quot;:
+                        {
+                            &quot;type&quot;: &quot;physical&quot;,
+                            &quot;style&quot;: &quot;projectil&quot;,
+                            &quot;formula&quot;:
+                            {
+                                &quot;base&quot;: 150,
+                                &quot;str&quot;: 0.5
+                            }
+                        }
+                    },
+                    {
+                        &quot;target&quot;: -1 
+                        &quot;stats&quot;:&quot;life&quot;
+                        &quot;type&quot;:&quot;-&quot;
+                        &quot;value&quot;:
+                        {
+                            &quot;type&quot;: &quot;physical&quot;,
+                            &quot;style&quot;: &quot;melea&quot;
+                            &quot;formula&quot;:
+                            {
+                                &quot;base&quot;: 150,
+                                &quot;str&quot;: 0.5
+                            }
+                        }
+                    },
+                ]
+&nbsp;
+            },
+            {
+                ...
+            }
+        ]
+    }
+]</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Exemple complet&quot;,&quot;hid&quot;:&quot;exemple_complet&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:7,&quot;range&quot;:&quot;3481-&quot;} -->

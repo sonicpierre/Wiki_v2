@@ -1,0 +1,4 @@
+library(cluster)
+model = kmeans(x,center=4, nstart=5)
+plot(x, col = model$cluster)
+points(model$centers, col = 1:2, pch = 8, cex = 2)

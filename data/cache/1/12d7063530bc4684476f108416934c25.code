@@ -1,0 +1,7 @@
+<span class="kw1">import</span> numpy <span class="kw1">as</span> np
+<span class="kw1">import</span> matplotlib.<span class="me1">pyplot</span> <span class="kw1">as</span> plt
+&nbsp;
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">8</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+x <span class="sy0">=</span> np.<span class="me1">linspace</span><span class="br0">&#40;</span>-<span class="nu0">5</span><span class="sy0">,</span> <span class="nu0">5</span><span class="sy0">,</span> <span class="nu0">1000</span><span class="br0">&#41;</span>
+y <span class="sy0">=</span> x**<span class="nu0">3</span>
+plt.<span class="me1">plot</span><span class="br0">&#40;</span>x<span class="sy0">,</span>y<span class="br0">&#41;</span>

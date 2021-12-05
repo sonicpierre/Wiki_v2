@@ -1,0 +1,4 @@
+y <span class="sy0">&lt;</span>- data$X1.<span class="me1">Octanol</span>
+X <span class="sy0">&lt;</span>- data<span class="br0">&#91;</span><span class="sy0">,</span> -c<span class="br0">&#40;</span><span class="nu0">11</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+&nbsp;
+aov<span class="br0">&#40;</span>y <span class="sy0">~</span>.<span class="sy0">,</span> data <span class="sy0">=</span> data<span class="br0">&#41;</span>

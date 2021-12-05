@@ -1,0 +1,1 @@
+target_compile_features<span class="sy0">(</span><span class="re0">${CMAKE_PROJECT_NAME}</span> PUBLIC cxx_std_17<span class="sy0">)</span> <span class="co1">#On passe ici à la version 17 du standard C++</span>

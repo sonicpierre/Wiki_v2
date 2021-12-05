@@ -1,0 +1,1 @@
+model <span class="sy0">&lt;</span>- C5.0<span class="br0">&#40;</span>vote3<span class="sy0">~</span>.<span class="sy0">,</span> data.<span class="me1">train</span><span class="br0">&#41;</span>

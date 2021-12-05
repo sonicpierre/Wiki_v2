@@ -1,0 +1,7 @@
+<span class="co1">%Recherche de la variable sortante</span>
+indiceLigneVariableSortante=<span class="nu0">2</span>
+<span class="kw1">for</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>=<span class="nu0">3</span>:<span class="nu0">4</span>
+    <span class="kw1">if</span> tab<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>,<span class="nu0">6</span><span class="br0">&#41;</span>/tab<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>,indiceLigneVariableEntrante<span class="br0">&#41;</span>&lt;tab<span class="br0">&#40;</span>indiceLigneVariableSortante,<span class="nu0">6</span><span class="br0">&#41;</span>/tab<span class="br0">&#40;</span>indiceLigneVariableSortante,indiceLigneVariableEntrante<span class="br0">&#41;</span>
+        indiceLigneVariableSortante=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>
+    endif
+endfor

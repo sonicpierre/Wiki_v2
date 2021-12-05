@@ -1,0 +1,3 @@
+library<span class="br0">&#40;</span>opticskxi<span class="br0">&#41;</span>
+xi_gauss <span class="sy0">&lt;</span>- dbscan::extractXi<span class="br0">&#40;</span>optic_model<span class="sy0">,</span> xi <span class="sy0">=</span> <span class="nu0">0.023</span><span class="br0">&#41;</span>
+ggplot_optics<span class="br0">&#40;</span>optic_model<span class="sy0">,</span> groups <span class="sy0">=</span> xi_gauss$cluster<span class="br0">&#41;</span>

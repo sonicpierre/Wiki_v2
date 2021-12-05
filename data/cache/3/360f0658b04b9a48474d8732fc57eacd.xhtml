@@ -1,0 +1,420 @@
+
+<p>
+<a href="/doku.php?id=cpp:le_clustering" class="wikilink1" title="cpp:le_clustering"> Le Clustering</a>
+<br/>
+
+<br/>
+
+<a href="/lib/exe/detail.php?id=cpp%3Ale_cah&amp;media=cpp:regrouper_pour_regner.png" class="media" title="cpp:regrouper_pour_regner.png"><img src="/lib/exe/fetch.php?w=550&amp;tok=7b0be9&amp;media=cpp:regrouper_pour_regner.png" class="mediacenter" alt="" width="550" /></a>
+<br/>
+
+<br/>
+
+<div class='alert alert-info'><strong>DataSet :</strong> on va utiliser, pour notre exemple, un dataset sur les différents fromages français. Vous le trouverez <a href="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Exploration%20des%20donnees/Data%20fromage" class="urlextern" title="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Exploration%20des%20donnees/Data%20fromage" rel="nofollow"> ici</a> et il sera stoqué dans la variable data.</div>
+</p>
+
+<h2 class="sectionedit1" id="l_algorithme_cah">L&#039;algorithme CAH</h2>
+<div class="level2">
+
+<p>
+Au début de l&#039;algorithme, <span style='color:#ed1c24; '><strong>chaque individu forme une classe</strong></span>.
+</p>
+<ul>
+<li class="level1"><div class="li"> À chaque itération, on <span style='color:#ed1c24; '><strong>regroupe les individus</strong></span> les plus <span style='color:#ed1c24; '><strong>proches</strong></span> et on observe la perte d&#039;information sous la forme d&#039;un <span style='color:#ed1c24; '><strong>dendrogramme</strong></span>.</div>
+</li>
+</ul>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_cah&amp;media=cpp:cah.gif" class="media" title="cpp:cah.gif"><img src="/lib/exe/fetch.php?w=600&amp;tok=938d9f&amp;media=cpp:cah.gif" class="mediacenter" alt="" width="600" /></a>
+</p>
+<ul>
+<li class="level1"><div class="li"> À partir de ce graphique, on choisit finalement <span style='color:#ed1c24; '><strong>combien de clusters</strong></span> on décide de <span style='color:#ed1c24; '><strong>garder</strong></span>.</div>
+</li>
+<li class="level1"><div class="li"> On entraîne l&#039;algorithme avec le nombre de <span style='color:#ed1c24; '><strong>clusters optimaux</strong></span>.</div>
+</li>
+</ul>
+
+<p>
+<div class='alert alert-success'><strong>Approfondir :</strong> il existe un autre algorithme nommé DIANA qui commence avec un seul cluster contenant toutes les observations et qui divise petit à petit jusqu&#039;à avoir un cluster par observation.</div>
+</p>
+
+<p>
+<strong>Animation :</strong> <a href="/doku.php?id=cpp:dashee87.github.io" class="wikilink2" title="cpp:dashee87.github.io" rel="nofollow">dashee87.github.io</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;L&#039;algorithme CAH&quot;,&quot;hid&quot;:&quot;l_algorithme_cah&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;400-1270&quot;} -->
+<h3 class="sectionedit2" id="distance_et_methode_de_regroupement">Distance et méthode de regroupement</h3>
+<div class="level3">
+
+<p>
+L&#039;algorithme <span style='color:#ed1c24; '><strong>CAH</strong></span> met en avant la notion de <span style='color:#ed1c24; '><strong>distance</strong></span> comme celle de <span style='color:#ed1c24; '><strong>regroupement</strong></span> c&#039;est pourquoi il est important de <span style='color:#ed1c24; '><strong>savoir les choisir</strong></span> avec soin. 
+</p>
+
+<p>
+<strong>Distance :</strong>
+</p>
+
+<p>
+La distance permet, entre autres, de traiter sans problème des variables <span style='color:#ed1c24; '><strong>quantitatives ou qualitatives</strong></span>. Il en existe beaucoup en fonction des différents datasets. La distance <span style='color:#ed1c24; '><strong>euclidienne</strong></span> restera souvent un <span style='color:#ed1c24; '><strong>bon choix</strong></span> quand vous avez des données <span style='color:#ed1c24; '><strong>quantitatives</strong></span>. Cependant, pour plus d&#039;informations, nous avons regroupé et détaillé pour vous les distances les plus utilisées en Machine Learning <a href="/doku.php?id=cpp:les_distances" class="wikilink1" title="cpp:les_distances"> ici</a>.
+</p>
+
+<p>
+<strong>Méthodes de regroupement :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_cah&amp;media=cpp:regroupementdonnee.png" class="media" title="cpp:regroupementdonnee.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=0abcbf&amp;media=cpp:regroupementdonnee.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+<p>
+Je vais tout d&#039;abord décrire la méthode de regroupement <span style='color:#ed1c24; '><strong>Ward</strong></span> car elle reste la plus <span style='color:#ed1c24; '><strong>utilisée</strong></span> et donne de <span style='color:#ed1c24; '><strong>bonnes performances</strong></span>. Il s&#039;agit de regrouper les 2 clusters dont la <span style='color:#ed1c24; '><strong>distance</strong></span> de Ward est la plus <span style='color:#ed1c24; '><strong>faible</strong></span>. 
+</p>
+
+<p>
+On définit la distance de Ward comme suit :
+</p>
+
+<p>
+$$D_{C_{1}, C_{2}} = \frac{||G_{1} - G_{2}||^2}{\frac{1}{n_{1}} + \frac{1}{n_{2}}}$$
+</p>
+<div class="table sectionedit3"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Théorie  </th><th class="col1 centeralign">  Signification  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  $G_{1}, G_{2}$  </td><td class="col1 centeralign">  Il s&#039;agit des barycentres des clusters 1 et 2  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  $n_{1}, n_{2}$  </td><td class="col1 centeralign">  Il s&#039;agit des effectifs des clusters 1 et 2  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:3,&quot;range&quot;:&quot;2678-2850&quot;} -->
+<p>
+Cette méthode permet de <span style='color:#ed1c24; '><strong>minimiser</strong></span> la variance <span style='color:#ed1c24; '><strong>intra-cluster</strong></span> et <span style='color:#ed1c24; '><strong>maximiser</strong></span> la variance <span style='color:#ed1c24; '><strong>inter-cluster</strong></span>. En d&#039;autres termes, augmenter les ressemblances dans un même cluster et augmenter les différences inter- clusters. Cependant, un des problèmes liés à cette méthode est qu&#039;elle <span style='color:#ed1c24; '><strong>gère mal les outliers</strong></span> et les clusters étirés c&#039;est pourquoi il existe d&#039;autres méthodes que nous allons décrire ci-dessous :
+</p>
+<div class="table sectionedit4"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Nom  </th><th class="col1 centeralign">  Principe  </th><th class="col2 centeralign">  Contexte d&#039;utilisation et performances  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  Regroupement valeurs minimales  </td><td class="col1 centeralign">  On calcule l&#039;ensemble des distances et on garde la distance minimale. On fusionne ensuite les groupes de données correspondants pour créer le nouveau cluster   </td><td class="col2 centeralign">  Cette méthode permet de gérer des clusters ovales. Cependant 2 classes éloignées mais dont un nombre minime d&#039;observations sont proches se trouveront rassemblées.  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  Regroupement valeurs maximales  </td><td class="col1 centeralign">  Idem mais en prenant la distance maximale  </td><td class="col2 centeralign">  Ce type de regroupement est beaucoup moins utilisé car il est sensible aux valeurs aberrantes. Il permet cependant la création de clusters de taille similaire  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  Regroupement valeur moyenne  </td><td class="col1 centeralign">  On calcule la moyenne des distances entre les différents groupes. Les deux groupes ayant la moyenne la plus faible seront fusionnés  </td><td class="col2 centeralign">  Cette méthode permet de créer des clusters quasiment identiques. Par ailleurs, elle est  moins sensible au bruit.  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">  Regroupement valeur mediane  </td><td class="col1 centeralign">  Idem mais cette fois il faut calculer la valeur médiane  </td><td class="col2 centeralign">  Cette méthode permet de bien gérer les différents outliers. Cependant, elle reste très peu utilisée pour appliquer l&#039;algorithme CAH.  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 centeralign">  Regroupement par barycentre  </td><td class="col1 centeralign">  On calcule la distance entre les différents barycentres et on prend la distance minimale.  </td><td class="col2 centeralign">  Cette technique est assez robuste face aux outliers mais reste moins efficace que les autres méthodes classiques  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:4,&quot;range&quot;:&quot;3401-4864&quot;} -->
+<p>
+<div class='alert alert-success'><strong>Approfondir : </strong>il est possible d&#039;utiliser d&#039;autres méthodes comme celle de McQuitty ou celle du maximum de vraisemblance qui sont aussi efficaces.</div>
+</p>
+
+<p>
+<strong>Application dans le code :</strong>
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> scipy.<span class="me1">cluster</span> <span class="kw1">import</span> hierarchy
+&nbsp;
+Z <span class="sy0">=</span> hierarchy.<span class="me1">linkage</span><span class="br0">&#40;</span>data<span class="sy0">,</span> method<span class="sy0">=</span><span class="st0">'ward'</span><span class="sy0">,</span> metric<span class="sy0">=</span><span class="st0">'euclidean'</span><span class="br0">&#41;</span><span class="co1">#Définition de la méthode de calcul des distances</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">distance <span class="sy0">=</span> dist<span class="br0">&#40;</span>data<span class="sy0">,</span> <span class="st0">&quot;euclidean&quot;</span><span class="br0">&#41;</span> <span class="co1">#crée une structure de distance entre les individus</span></pre>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://larmarange.github.io/analyse-R/classification-ascendante-hierarchique.html" class="urlextern" title="http://larmarange.github.io/analyse-R/classification-ascendante-hierarchique.html" rel="nofollow">http://larmarange.github.io/analyse-R/classification-ascendante-hierarchique.html</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://support.minitab.com/fr-fr/minitab/18/help-and-how-to/modeling-statistics/multivariate/how-to/cluster-variables/methods-and-formulas/linkage-methods/" class="urlextern" title="https://support.minitab.com/fr-fr/minitab/18/help-and-how-to/modeling-statistics/multivariate/how-to/cluster-variables/methods-and-formulas/linkage-methods/" rel="nofollow">https://support.minitab.com/fr-fr/minitab/18/help-and-how-to/modeling-statistics/multivariate/how-to/cluster-variables/methods-and-formulas/linkage-methods/</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://mlpy.sourceforge.net/docs/3.1/cluster.html" class="urlextern" title="http://mlpy.sourceforge.net/docs/3.1/cluster.html" rel="nofollow">http://mlpy.sourceforge.net/docs/3.1/cluster.html</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Distance et m\u00e9thode de regroupement&quot;,&quot;hid&quot;:&quot;distance_et_methode_de_regroupement&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;1271-5712&quot;} -->
+<h3 class="sectionedit5" id="construire_le_dendrogramme">Construire le dendrogramme</h3>
+<div class="level3">
+
+<p>
+On peut ensuite <span style='color:#ed1c24; '><strong>dessiner le dendrogramme</strong></span> pour mieux visualiser les clusters qui permettent de faire les regroupements en <span style='color:#ed1c24; '><strong>limitant</strong></span> au maximum la <span style='color:#ed1c24; '><strong>perte d&#039;information</strong></span>. Testons différentes façons de <span style='color:#ed1c24; '><strong>regrouper les données</strong></span> pour voir comment la méthode choisie <span style='color:#ed1c24; '><strong>modifie le dendrogramme</strong></span> construit :
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">12</span><span class="sy0">,</span><span class="nu0">6</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Définition de la taille du graphique</span>
+&nbsp;
+dendrogramme <span class="sy0">=</span> hierarchy.<span class="me1">dendrogram</span><span class="br0">&#40;</span>Z<span class="br0">&#41;</span><span class="co1">#Contruction du dendrogramme selon les paramètres fournis</span>
+&nbsp;
+plt.<span class="me1">xlabel</span><span class="br0">&#40;</span><span class="st0">'Taille du cluster'</span><span class="br0">&#41;</span>
+plt.<span class="me1">ylabel</span><span class="br0">&#40;</span><span class="st0">'Distance'</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">h <span class="sy0">=</span> hclust<span class="br0">&#40;</span>distance<span class="sy0">,</span> <span class="st0">&quot;ward.D2&quot;</span><span class="br0">&#41;</span><span class="co1">#Création des paramètres du dendroramme</span>
+plot<span class="br0">&#40;</span>h<span class="br0">&#41;</span><span class="co1">#Création du dendrogramme</span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+<div class="table sectionedit6"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Ward  </th><th class="col1 centeralign">  Minimale  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  <a href="/lib/exe/detail.php?id=cpp%3Ale_cah&amp;media=cpp:dendrogramme.png" class="media" title="cpp:dendrogramme.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=fbb47a&amp;media=cpp:dendrogramme.png" class="mediacenter" title="Dendrogramme Ward" alt="Dendrogramme Ward" width="400" /></a>  </td><td class="col1 centeralign">  <a href="/lib/exe/detail.php?id=cpp%3Ale_cah&amp;media=cpp:dendrodistancemin.png" class="media" title="cpp:dendrodistancemin.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=9c9934&amp;media=cpp:dendrodistancemin.png" class="mediacenter" alt="" width="400" /></a>  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  Maximale  </th><th class="col1 centeralign">  McQuitty  </th>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  <a href="/lib/exe/detail.php?id=cpp%3Ale_cah&amp;media=cpp:dedrogrammax.png" class="media" title="cpp:dedrogrammax.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=5ecbc8&amp;media=cpp:dedrogrammax.png" class="mediacenter" alt="" width="400" /></a>  </td><td class="col1 centeralign">  <a href="/lib/exe/detail.php?id=cpp%3Ale_cah&amp;media=cpp:dendromcquitty.png" class="media" title="cpp:dendromcquitty.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=0a39f8&amp;media=cpp:dendromcquitty.png" class="mediacenter" alt="" width="400" /></a>  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table2&quot;,&quot;secid&quot;:6,&quot;range&quot;:&quot;6596-6823&quot;} -->
+<p>
+En observant les graphiques, on coupe l&#039;arbre au moment où la perte d&#039;information est la plus grande entre 2 regroupements de clusters. Ainsi, en regardant le regroupement utilisant la méthode de <strong>McQuitty</strong> on conserve 3 clusters.
+</p>
+
+<p>
+<strong>Sources</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.youtube.com/watch?v=JcfIeaGzF8A" class="urlextern" title="https://www.youtube.com/watch?v=JcfIeaGzF8A" rel="nofollow">TheEngineeringWorld</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://larevueia.fr/clustering-les-3-methodes-a-connaitre/" class="urlextern" title="https://larevueia.fr/clustering-les-3-methodes-a-connaitre/" rel="nofollow"> La revue IA</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Construire le dendrogramme&quot;,&quot;hid&quot;:&quot;construire_le_dendrogramme&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:5,&quot;range&quot;:&quot;5713-7227&quot;} -->
+<h3 class="sectionedit7" id="entrainer_le_bon_modele">Entraîner le bon modèle</h3>
+<div class="level3">
+
+<p>
+Maintenant que vous avez choisi votre nombre idéal de clusters, il suffit de préciser à l&#039;algorithme le nombre choisi pour qu&#039;il arrête les regroupements au moment opportun.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">cluster</span> <span class="kw1">import</span> AgglomerativeClustering
+&nbsp;
+model <span class="sy0">=</span> AgglomerativeClustering<span class="br0">&#40;</span>n_clusters<span class="sy0">=</span><span class="nu0">3</span><span class="br0">&#41;</span>.<span class="me1">fit</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span></pre>
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> en Python, l&#039;utilisation de méthodes de regroupement moins classiques se fera via le package <a href="http://mlpy.sourceforge.net/" class="urlextern" title="http://mlpy.sourceforge.net/" rel="nofollow"> mlpy</a>.</div>
+</p>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">c <span class="sy0">=</span> cutree<span class="br0">&#40;</span>h<span class="sy0">,</span> k<span class="sy0">=</span><span class="nu0">3</span><span class="br0">&#41;</span><span class="co1">#Création des différentes classes</span></pre>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://stackabuse.com/hierarchical-clustering-with-python-and-scikit-learn/" class="urlextern" title="https://stackabuse.com/hierarchical-clustering-with-python-and-scikit-learn/" rel="nofollow">https://stackabuse.com/hierarchical-clustering-with-python-and-scikit-learn/</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://lemakistatheux.wordpress.com/2016/06/23/la-classification-ascendante-hierarchique/" class="urlextern" title="https://lemakistatheux.wordpress.com/2016/06/23/la-classification-ascendante-hierarchique/" rel="nofollow">https://lemakistatheux.wordpress.com/2016/06/23/la-classification-ascendante-hierarchique/</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://pbil.univ-lyon1.fr/R/pdf/stage7.pdf" class="urlextern" title="https://pbil.univ-lyon1.fr/R/pdf/stage7.pdf" rel="nofollow">https://pbil.univ-lyon1.fr/R/pdf/stage7.pdf</a></div>
+</li>
+</ul>
+
+<p>
+<div class='alert alert-info'><strong>Info :</strong> les méthodes d&#039;évaluation de clusters sont les mêmes que présenté dans la page précédente <a href="/doku.php?id=cpp:le_k-means" class="wikilink1" title="cpp:le_k-means"> ici</a> à la différence qu&#039;ici elles ne servent pas à déterminer le nombre de clusters optimaux.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Entra\u00eener le bon mod\u00e8le&quot;,&quot;hid&quot;:&quot;entrainer_le_bon_modele&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:7,&quot;range&quot;:&quot;7228-8350&quot;} -->
+<h3 class="sectionedit8" id="les_limites_du_cah">Les limites du CAH</h3>
+<div class="level3">
+
+<p>
+La CAH est une méthode qui donne de <span style='color:#ed1c24; '><strong>très bons résultats</strong></span> cependant elle présente quelques inconvénients :
+</p>
+<ul>
+<li class="level1"><div class="li"> Si le dataset devient conséquent, <span style='color:#ed1c24; '><strong>le temps</strong></span> de calcul devient <span style='color:#ed1c24; '><strong>trop long</strong></span>.</div>
+</li>
+<li class="level1"><div class="li"> Le nombre de distances ainsi que le nombre de façons de regrouper les données peut rendre l&#039;algorithme <span style='color:#ed1c24; '><strong>difficile à paramétrer</strong></span>.</div>
+</li>
+</ul>
+
+<p>
+<div class='alert alert-info'><strong>Info :</strong> une des solutions pour limiter le temps de calcul serait de commencer par faire un premier regroupement avec les K-means puis de travailler sur les centres de clusters trouvés pour faire un second traitement avec le CAH.</div>
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://lovelyanalytics.com/2017/11/18/cah-methode-mixte/" class="urlextern" title="https://lovelyanalytics.com/2017/11/18/cah-methode-mixte/" rel="nofollow">https://lovelyanalytics.com/2017/11/18/cah-methode-mixte/</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les limites du CAH&quot;,&quot;hid&quot;:&quot;les_limites_du_cah&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:8,&quot;range&quot;:&quot;8351-9143&quot;} -->
+<h2 class="sectionedit9" id="l_algorithme_des_mean_shift">L&#039;algorithme des Mean Shift</h2>
+<div class="level2">
+
+<p>
+Mean Shift est un algorithme de 1975 présenté par Fukunaga et Hostetler. Il s&#039;agit d&#039;un algorithme qui ne prend que peu voire pas de paramètres en entrée. Il est donc intéressant de l&#039;utiliser dans le cadre de l&#039;exploration de données.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;L&#039;algorithme des Mean Shift&quot;,&quot;hid&quot;:&quot;l_algorithme_des_mean_shift&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:9,&quot;range&quot;:&quot;9144-9425&quot;} -->
+<h3 class="sectionedit10" id="l_algorithme">L&#039;algorithme</h3>
+<div class="level3">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_cah&amp;media=cpp:mean_shift.png" class="media" title="cpp:mean_shift.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=6f87b0&amp;media=cpp:mean_shift.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+
+<p>
+Au démarrage, <span style='color:#ed1c24; '><strong>chacune des observations</strong></span> est considérée comme un <span style='color:#ed1c24; '><strong>centre de cluster</strong></span>. On définit un <span style='color:#ed1c24; '><strong>rayon ou (bandwidth)</strong></span> qui permettra de construire le cercle rouge. 
+</p>
+<ul>
+<li class="level1"><div class="li"> Pour démarrer, on prend une observation au <span style='color:#ed1c24; '><strong>hasard</strong></span> et on trace le <span style='color:#ed1c24; '><strong>“cercle” autour</strong></span>.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Ensuite, on regarde les observations qui sont dans ce cercle. On <span style='color:#ed1c24; '><strong>construit un centre</strong></span> qui est la <span style='color:#ed1c24; '><strong>moyenne</strong></span> des positions des observations du <span style='color:#ed1c24; '><strong>cercle précédent</strong></span>.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> On <span style='color:#ed1c24; '><strong>retrace un cercle</strong></span> qui prend comme origine le <span style='color:#ed1c24; '><strong>centre construit</strong></span> et on regarde s&#039;il y a de <span style='color:#ed1c24; '><strong>nouvelles observations</strong></span> à l&#039;intérieur. S&#039; il n&#039;y en a pas, l&#039;algorithme peut s&#039;<span style='color:#ed1c24; '><strong>arrêter</strong></span> ou aller sur une <span style='color:#ed1c24; '><strong>autre observation non classifiée</strong></span>. Sinon, on <span style='color:#ed1c24; '><strong>réitère</strong></span> autant de fois que nécessaire.</div>
+</li>
+</ul>
+
+<p>
+Si l&#039;algorithme repart d&#039;un point appartenant déjà à un cluster, il construira exactement le même centre de cluster car il y a convergence.
+</p>
+
+<p>
+<div class='alert alert-info'><strong>Info :</strong> il est possible que l&#039;algorithme trouve seul son propre rayon cependant il le trouve en un temps quadratique. Il sera donc préférable de l&#039;indiquer à la main dans des grands datasets.</div>
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">cluster</span> <span class="kw1">import</span> MeanShift
+meanShift <span class="sy0">=</span> MeanShift<span class="br0">&#40;</span><span class="br0">&#41;</span>
+meanShift.<span class="me1">fit</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+
+<p>
+Alors il s&#039;agit d&#039;une bonne occasion pour apprendre à installer un package depuis une source locale car le package n&#039;est plus disponible sur CRAN. Il faut tout d&#039;abord se rendre  <a href="https://cran.r-project.org/src/contrib/Archive/MeanShift/" class="urlextern" title="https://cran.r-project.org/src/contrib/Archive/MeanShift/" rel="nofollow"> ici</a> et télécharger la dernière version du package. Placez l&#039;archive (.tar) à un endroit connu. 
+</p>
+<pre class="code python">install.<span class="me1">packages</span><span class="br0">&#40;</span>chemin_de_votre_archive<span class="sy0">,</span> repos <span class="sy0">=</span> NULL<span class="sy0">,</span> <span class="kw2">type</span><span class="sy0">=</span><span class="st0">&quot;source&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> si vous avez des problèmes de dépendance <strong>dependency &#039;wavethresh&#039;</strong>, installez le package manquant, dans ce cas précis wavethresh par exemple.</div>
+</p>
+
+<p>
+Maintenant, nous pouvons procéder comme avec une librairie standard et entraîner notre algorithme MeanShift :
+</p>
+<pre class="code python">library<span class="br0">&#40;</span><span class="st0">&quot;MeanShift&quot;</span><span class="br0">&#41;</span>
+data <span class="sy0">=</span> data.<span class="me1">frame</span><span class="br0">&#40;</span>t<span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="co1">#Les fromages doivent être placés sur les colonnes et les caractéristiques dans les lignes</span>
+model <span class="sy0">=</span> msClustering<span class="br0">&#40;</span>data<span class="br0">&#41;</span></pre>
+
+<p>
+Le paramètre bandwidth est le paramètre h.
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.youtube.com/watch?v=3ERPpzrDkVg" class="urlextern" title="https://www.youtube.com/watch?v=3ERPpzrDkVg" rel="nofollow">https://www.youtube.com/watch?v=3ERPpzrDkVg</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;L&#039;algorithme&quot;,&quot;hid&quot;:&quot;l_algorithme&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:10,&quot;range&quot;:&quot;9426-12104&quot;} -->
+<h3 class="sectionedit11" id="comparaison_des_resultats">Comparaison des résultats</h3>
+<div class="level3">
+
+<p>
+Regardons, dans un premier temps, combien de centres a trouvé l&#039;algorithme Mean Shift afin de voir s&#039;il y a  cohérence avec l&#039;algorithme CAH.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw2">len</span><span class="br0">&#40;</span>meanShift.<span class="me1">cluster_centers_</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">meanShift$components <span class="co1">#Permet de trouver les centres</span></pre>
+
+<p>
+Il n&#039;est pas forcément évident de savoir si le clustering a été efficace ou non quand on ne peut pas visualiser les résultats c&#039;est pourquoi il est préférable de réduire le nombre de dimensions au préalable afin de bien visualiser les clusters construits. 
+</p>
+
+<p>
+Dans notre cas, ce n&#039;est pas possible. Nous allons donc nous baser sur l&#039;indice de Davies-Bouldin pour estimer la qualité du clustering. Vous trouverez les informations sur cet indice <a href="/doku.php?id=cpp:le_k-means" class="wikilink1" title="cpp:le_k-means"> ici</a>.
+</p>
+<div class="table sectionedit12"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0 leftalign">              </td><th class="col1 centeralign">  Mean Shift  </th><th class="col2 centeralign">  CAH  </th><th class="col3 centeralign">  KMeans   </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 centeralign">  Davies-Bouldin  indice  </th><td class="col1 centeralign">  0.529  </td><td class="col2 centeralign">  0.878  </td><td class="col3 centeralign">  0.881  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table3&quot;,&quot;secid&quot;:12,&quot;range&quot;:&quot;12925-13035&quot;} -->
+<p>
+On remarque que l&#039;algorithme Mean Shift est plus efficace dans ce cas.
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://mran.microsoft.com/snapshot/2017-12-11/web/packages/MeanShift/vignettes/MeanShift-clustering.html" class="urlextern" title="https://mran.microsoft.com/snapshot/2017-12-11/web/packages/MeanShift/vignettes/MeanShift-clustering.html" rel="nofollow">https://mran.microsoft.com/snapshot/2017-12-11/web/packages/MeanShift/vignettes/MeanShift-clustering.html</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Comparaison des r\u00e9sultats&quot;,&quot;hid&quot;:&quot;comparaison_des_resultats&quot;,&quot;codeblockOffset&quot;:9,&quot;secid&quot;:11,&quot;range&quot;:&quot;12105-13235&quot;} -->
+<h3 class="sectionedit13" id="les_limites_de_meanshift">Les limites de MeanShift</h3>
+<div class="level3">
+
+<p>
+Cette approche est intéressante mais trouve encore <span style='color:#ed1c24; '><strong>quelques limites</strong></span>… Il n&#039;est pas facile de connaitre le paramètre <strong>bandwidth</strong> et ce choix fera varier grandement les résultats obtenus à la sortie. Il est certes possible de ne <span style='color:#ed1c24; '><strong>pas le définir</strong></span> mais la complexité en sera augmentée et il ne sera <span style='color:#ed1c24; '><strong>plus efficace sur les grands datasets</strong></span>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les limites de MeanShift&quot;,&quot;hid&quot;:&quot;les_limites_de_meanshift&quot;,&quot;codeblockOffset&quot;:11,&quot;secid&quot;:13,&quot;range&quot;:&quot;13236-&quot;} -->

@@ -1,0 +1,2 @@
+selecteur <span class="sy0">=</span> VarianceThreshold<span class="br0">&#40;</span>threshold<span class="sy0">=</span><span class="nu0">0.2</span><span class="br0">&#41;</span>
+selecteur.<span class="me1">fit_transform</span><span class="br0">&#40;</span>X<span class="br0">&#41;</span>

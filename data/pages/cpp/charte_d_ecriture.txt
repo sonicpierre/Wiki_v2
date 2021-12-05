@@ -1,0 +1,81 @@
+{{:cpp:chartepres.jpg?550|}}
+
+Bonjour et merci de prendre le temps de lire cette page. Elle est indispensable si vous souhaitez publier du contenu sur notre wiki.
+=====Objectif=====
+
+
+Aujourd'hui, nous avons un défi : rassembler une documentation la plus complète possible en gardant un contenu de bonne qualité, accessible à tous. Nous sommes de fervents défenseurs de la liberté mais des règles nous ont semblé nécessaires afin d'éviter la dévalorisation du contenu par maladresse ou manque de recherches. Nous avons donc mis en place une modération manuelle qui ne vous posera aucun problème si vous suivez les recommandations  définies dans cette page.
+
+{{ :cpp:surinfo.jpg?400 |}}
+=====Les différentes étapes=====
+
+Nous vous proposons ici un workflow de l'écriture qui nous paraît important de suivre afin de ne pas perdre le fil et rester motivé  jusqu'à la dernière ligne.
+====Introduction====
+
+Avant de se lancer dans l'écriture, il est essentiel d'avoir défini le type de la documentation proposée, le public cible, les prérequis indispensables, les systèmes d'exploitation adaptés et d'avoir estimé le temps théorique nécessaire à l'acquisition du nouveau concept. Chaque sujet débutera donc par une introduction répondant  au questionnement pratique du lecteur.
+
+{{ :cpp:introchartefin.png?900 |}}
+
+
+====Se documenter et faire son plan====
+
+Une fois le sujet défini, il est maintenant capital de se documenter correctement. Cette partie <color #ed1c24>**peut et doit prendre du temps.**</color>  Il est nécessaire que vous cheminiez par les étapes suivantes :
+
+  * Basez-vous, certes, sur les connaissances qui vous ont été enseignées mais approfondissez-les pour bien comprendre toute la complexité de votre sujet. Consultez les sites classiques, [[https://openclassrooms.com/fr/paths| open classeroom]], [[https://www.udemy.com/| udemy]], étudiez la bibliographie relative à ce domaine et visionnez les vidéos Youtube. À chaque fois, <color #ed1c24>**notez l'information**</color> qui en est ressortie et la source dont elle provient.
+  * Faites un tableau des bons et mauvais côtés de l'enseignement reçu dans cette matière. Essayez de pointer les difficultés que vos collègues ou vous- même avez pu rencontrer.
+  * Gardez en tête que vous rédigez une documentation novatrice principalement du fait du vecteur sur lequel elle s'appuie. Il faut essayer de penser un univers dans lequel va évoluer le lecteur, un exemple particulier qui fait office de fil conducteur ou encore un scénario de jeux.<color #ed1c24> **Soyez créatif**</color>.
+  * Commencez par établir <color #ed1c24>**le plan minimal**</color> de votre future publication avec seulement quelques pages regroupant les éléments essentiels.
+  * Définissez des <color #ed1c24>**pages bonus**</color> qui complèteront votre contenu.
+  * Enfin, <color #ed1c24>**parlez de votre travail **</color> dans l'association et adaptez le contenu en fonction des retours.
+
+====Écrire un premier contenu====
+
+Vous tenez maintenant votre plan et il est temps de se lancer dans l'écriture. Là encore, plusieurs étapes doivent être respectées pour être sûr d'obtenir un bon résultat :
+
+  * Tout d'abord, écrivez sans vous sentir limité par la formulation des phrases ou l'orthographe. Normalement, grâce au travail préliminaire, cette partie ne devrait pas prendre trop de temps.
+
+  * Ensuite vient la première relecture :
+\\
+
+{{ :cpp:travailcontenu.png?900 |}}
+
+Si la note ne dépasse pas 30/40 votre contenu montre encore des faiblesses et il faut l'améliorer jusqu'à l'obtention d'un score acceptable.
+====Compléter son contenu====
+
+Maintenant que votre premier contenu  vous semble de bonne qualité, il reste à le compléter. Il doit être consolidé pour être scientifiquement correcte.
+
+{{ :cpp:ameliorercontenu.png?900 |}}
+
+Une fois encore, notez chacune des questions sur 10 et essayez d'obtenir 30/40.
+
+=====Quelques normes d'écriture=====
+
+Il s'agit ici de préférences à suivre pour avoir une documentation <color #ed1c24>**unie et cohérente**</color> d'une page à l'autre. Plus nous serons nombreux, plus il y aura de styles d'écriture. La <color #ed1c24>**diversité**</color> ne doit cependant pas être synonyme de <color #ed1c24>**désordre**</color> c'est pourquoi il est nécessaire de respecter ces quelques <color #ed1c24>**règles**</color>.
+
+====Image====
+
+Il est préférable de commencer une page par une image illustrant la notion que vous allez aborder. Il est aussi intéressant de faire des schémas pour expliquer les concepts et les rendre plus accessibles. Il existe plusieurs outils : nous vous conseillons [[https://excalidraw.com/| Excalidraw]] pour faire les schémas;  pour les graphiques mathématiques nous utiliserons [[https://www.desmos.com/calculator?lang=fr|Desmos]].
+
+====Couleurs====
+
+<alert danger>**Danger : ** pour souligner un piège à éviter.</alert>
+<alert warning>**Remarque : ** pour donner un conseil, faire une remarque sur une notion.</alert>
+<alert info>**Info : ** pour apporter une information complémentaire. </alert>
+<alert success>**Approfondir : ** pour fournir des indications permettant d'approfondir une notion.</alert>
+
+====Code====
+
+Il est bien d'annoncer son code le plus souvent possible en soulignant le nom qui le caractérise.
+
+__En Python :__
+
+<code python>
+#Là vous mettez votre code
+</code>
+
+Gardez en tête qu'il est préférable d'avoir un code découpé en plusieurs tronçons plutôt que des blocs massifs qui seront plus difficiles à déchiffrer même s' ils sont commentés.
+=====Et après ?=====
+
+C'est bon, vous avez presque terminé. Maintenant votre page va passer entre les mains d'un modérateur qui va vérifier si vous avez respecté chaque étape. Par la suite, elle sera disponible pour la communauté et vous aurez des retours ou des remarques sur son contenu. Vous pourrez, bien évidemment, la faire évoluer pour la maintenir à jour. 
+
+<color #ed1c24><fs large>Merci de votre lecture et de votre implication.</fs></color>

@@ -1,0 +1,462 @@
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ascrapper_les_donnees&amp;media=cpp:donneesinternet.png" class="media" title="cpp:donneesinternet.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=cfe50b&amp;media=cpp:donneesinternet.png" class="media" alt="" width="500" /></a>
+</p>
+
+<p>
+Dans cette partie nous allons apprendre à récupérer des données directement depuis le web.
+</p>
+<div class="table sectionedit1"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0"> Librairies Python </th><th class="col1"> Librairie R </th><th class="col2"> Utilisation </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0"> BeautifulSoup </td><td class="col1"> xml2,  rvest </td><td class="col2"> Récupérer des données depuis une page web </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> request </td><td class="col1"> request </td><td class="col2"> Effectuer des requêtes pour récupérer des données </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:1,&quot;range&quot;:&quot;133-340&quot;} -->
+<h2 class="sectionedit2" id="savoir_utiliser_un_url">Savoir utiliser un URL</h2>
+<div class="level2">
+
+<p>
+Il est souvent utile de passer par un <abbr title="Uniform Resource Locator">URL</abbr> pour récupérer les données. Il faut alors savoir comment faire la requête et comment récupérer le résultat.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Savoir utiliser un URL&quot;,&quot;hid&quot;:&quot;savoir_utiliser_un_url&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;342-533&quot;} -->
+<h3 class="sectionedit3" id="recuperer_et_ranger_les_donnees_kaggle_ou_autre">Récupérer et ranger les données Kaggle ou autre</h3>
+<div class="level3">
+
+<p>
+Il existe plusieurs sites qui permettent d&#039;accéder à des données gratuitement citons par exemple : <a href="https://www.kaggle.com/" class="urlextern" title="https://www.kaggle.com/" rel="nofollow"> Kaggle</a>, <a href="https://github.com/" class="urlextern" title="https://github.com/" rel="nofollow"> GitHub</a>, <a href="https://www.data.gov/" class="urlextern" title="https://www.data.gov/" rel="nofollow"> dataGov</a>.
+</p>
+
+<p>
+On commence par importer les librairies nécessaires :.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> <span class="kw3">os</span>
+<span class="kw1">import</span> <span class="kw3">tarfile</span>
+<span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+<span class="kw1">import</span> <span class="kw3">urllib</span>.<span class="me1">request</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">setwd<span class="br0">&#40;</span><span class="st0">&quot;~/TesteR&quot;</span><span class="br0">&#41;</span> <span class="co1">#Permet de set son environnement de travail</span></pre>
+
+<p>
+On découpe ensuite le chemin local et l&#039;<abbr title="Uniform Resource Locator">URL</abbr> pour avoir plus de contrôle sur ceux-ci : 
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">CHEMIN_DE_TELECHARGEMENT_GLOBAL <span class="sy0">=</span> <span class="st0">&quot;https://raw.githubusercontent.com/ageron/handson-ml/master/&quot;</span>
+CHEMIN_DE_DEPOT <span class="sy0">=</span> <span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">join</span><span class="br0">&#40;</span><span class="st0">&quot;datasets&quot;</span><span class="sy0">,</span> <span class="st0">&quot;housing&quot;</span><span class="br0">&#41;</span>
+CHEMIN_DE_TELECHARGEMENT_COMPLET <span class="sy0">=</span> CHEMIN_DE_TELECHARGEMENT_GLOBAL + <span class="st0">&quot;datasets/housing/housing.tgz&quot;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">CHEMIN_DE_TELECHARGEMENT_GLOBAL <span class="sy0">&lt;</span>- <span class="st0">&quot;https://raw.githubusercontent.com/ageron/handson-ml/master/&quot;</span>
+CHEMIN_DE_DEPOT <span class="sy0">&lt;</span>- paste<span class="br0">&#40;</span>getwd<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw2">file</span>.<span class="me1">path</span><span class="br0">&#40;</span><span class="st0">&quot;/datasets&quot;</span><span class="sy0">,</span> <span class="st0">&quot;housing&quot;</span><span class="br0">&#41;</span><span class="sy0">,</span> sep<span class="sy0">=</span><span class="st0">&quot;&quot;</span><span class="br0">&#41;</span>
+CHEMIN_DE_TELECHARGEMENT_COMPLET <span class="sy0">&lt;</span>- paste<span class="br0">&#40;</span>CHEMIN_DE_TELECHARGEMENT_GLOBAL<span class="sy0">,</span> <span class="st0">&quot;datasets/housing/housing.tgz&quot;</span><span class="sy0">,</span> sep<span class="sy0">=</span><span class="st0">&quot;&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+Ensuite , on peut importer les données et les ranger automatiquement dans le dossier approprié :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">def</span> RecuperationDesDonnees<span class="br0">&#40;</span>housing_url<span class="sy0">=</span>CHEMIN_DE_TELECHARGEMENT_COMPLET<span class="sy0">,</span> housing_path<span class="sy0">=</span>CHEMIN_DE_DEPOT<span class="br0">&#41;</span>: <span class="co1">#On a mis des valeurs par desfaut si aucunes ne sont données à la fonction</span>
+    <span class="kw1">if</span> <span class="kw1">not</span> <span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">isdir</span><span class="br0">&#40;</span>housing_path<span class="br0">&#41;</span>: <span class="co1">#On vérifie si le dossier existe et on le crée sinon</span>
+        <span class="kw3">os</span>.<span class="me1">makedirs</span><span class="br0">&#40;</span>housing_path<span class="br0">&#41;</span>
+    <span class="co1">#On crée le chemin où sera l'archive</span>
+    tgz_path <span class="sy0">=</span> <span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">join</span><span class="br0">&#40;</span>housing_path<span class="sy0">,</span> <span class="st0">&quot;housing.tgz&quot;</span><span class="br0">&#41;</span>
+    <span class="co1">#On récupère sur le site les données</span>
+    <span class="kw3">urllib</span>.<span class="me1">request</span>.<span class="me1">urlretrieve</span><span class="br0">&#40;</span>housing_url<span class="sy0">,</span> tgz_path<span class="br0">&#41;</span>
+    <span class="co1">#On ouvre l'archive</span>
+    housing_tgz <span class="sy0">=</span> <span class="kw3">tarfile</span>.<span class="kw2">open</span><span class="br0">&#40;</span>tgz_path<span class="br0">&#41;</span>
+    <span class="co1">#On la décompresse</span>
+    housing_tgz.<span class="me1">extractall</span><span class="br0">&#40;</span>path<span class="sy0">=</span>housing_path<span class="br0">&#41;</span>
+    <span class="co1">#On refer le tout</span>
+    housing_tgz.<span class="me1">close</span><span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">RecupertionDesDonnees <span class="sy0">&lt;</span>- function<span class="br0">&#40;</span>cheminComplet<span class="sy0">,</span> cheminArrivee<span class="br0">&#41;</span><span class="br0">&#123;</span>
+     <span class="kw1">if</span><span class="br0">&#40;</span><span class="sy0">!</span><span class="kw2">dir</span>.<span class="me1">exists</span><span class="br0">&#40;</span>cheminArrivee<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#123;</span>
+         <span class="kw2">dir</span>.<span class="me1">create</span><span class="br0">&#40;</span>cheminArrivee<span class="sy0">,</span> recursive <span class="sy0">=</span> TRUE<span class="br0">&#41;</span>
+     <span class="br0">&#125;</span>
+     tgz_path <span class="sy0">=</span> <span class="kw2">file</span>.<span class="me1">path</span><span class="br0">&#40;</span>cheminArrivee<span class="sy0">,</span> <span class="st0">&quot;housing.tgz&quot;</span><span class="br0">&#41;</span>
+     download.<span class="kw2">file</span><span class="br0">&#40;</span>url<span class="sy0">=</span>cheminComplet<span class="sy0">,</span> destfile <span class="sy0">=</span> tgz_path<span class="br0">&#41;</span>
+     untar<span class="br0">&#40;</span><span class="kw3">tarfile</span> <span class="sy0">=</span> tgz_path<span class="sy0">,</span> exdir <span class="sy0">=</span> cheminArrivee<span class="br0">&#41;</span>
+<span class="br0">&#125;</span></pre>
+
+<p>
+On peut ensuite utiliser avec ou sans les arguments la fonction, tout dépend du fait qu&#039;on les ai défini au-dessus. On peut ensuite lire le fichier et ainsi créer son DataFrame. Il existe des lectures pour tous les types de fichiers, dans notre cas précis, il s&#039;agit d&#039;un CSV.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">RecuperationDesDonnees<span class="br0">&#40;</span><span class="br0">&#41;</span>
+data <span class="sy0">=</span> pd.<span class="me1">read_csv</span><span class="br0">&#40;</span>CHEMIN_DE_DEPOT + <span class="st0">'/housing.csv'</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">RecupertionDesDonnees<span class="br0">&#40;</span>CHEMIN_DE_TELECHARGEMENT_COMPLET<span class="sy0">,</span> CHEMIN_DE_DEPOT<span class="br0">&#41;</span>
+data <span class="sy0">=</span> read.<span class="kw3">csv</span><span class="br0">&#40;</span><span class="kw2">file</span>.<span class="me1">path</span><span class="br0">&#40;</span>CHEMIN_DE_DEPOT<span class="sy0">,</span> <span class="st0">&quot;housing.csv&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+<pre class="code">DossierDeTravail
+├── scriptPython
+└── datasets
+        └── houssing
+                ├── housing.tgz
+                └── housing.csv
+ </pre>
+
+<p>
+<div class='alert alert-info'><span style="font-size:large;"> <strong>Note :</strong></span>Pour adapter ce code il suffit de changer le lien et le type de fichier à extraire dans la fonction. Il est fortement recommandé d&#039;ordonner ses données pour éviter de se perdre.</div>
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://edutechwiki.unige.ch/fr/Importer_des_donn%C3%A9es_dans_R" class="urlextern" title="http://edutechwiki.unige.ch/fr/Importer_des_donn%C3%A9es_dans_R" rel="nofollow">http://edutechwiki.unige.ch/fr/Importer_des_donn%C3%A9es_dans_R</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;R\u00e9cup\u00e9rer et ranger les donn\u00e9es Kaggle ou autre&quot;,&quot;hid&quot;:&quot;recuperer_et_ranger_les_donnees_kaggle_ou_autre&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;534-4042&quot;} -->
+<h3 class="sectionedit4" id="faire_une_requete_plus_elaboree">Faire une requête plus élaborée</h3>
+<div class="level3">
+
+<p>
+Nous allons faire notre exemple avec un <abbr title="Uniform Resource Locator">URL</abbr> issu d&#039;une entreprise et nous vous invitons à adapter ce code pour vous entraîner en utilisant cette <a href="http://httpbin.org/#/" class="urlextern" title="http://httpbin.org/#/" rel="nofollow">page</a> qui est faite pour.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ascrapper_les_donnees&amp;media=cpp:requests.jpg" class="media" title="cpp:requests.jpg"><img src="/lib/exe/fetch.php?w=300&amp;tok=536562&amp;media=cpp:requests.jpg" class="mediacenter" alt="" width="300" /></a>
+</p>
+
+<p>
+<em class="u">En Python : </em>
+</p>
+<pre class="code python"><span class="co1">#Paramètre dans l'URL</span>
+parametre <span class="sy0">=</span> <span class="br0">&#123;</span><span class="st0">'page'</span> : <span class="nu0">2</span><span class="br0">&#125;</span>
+r <span class="sy0">=</span> requests.<span class="me1">get</span><span class="br0">&#40;</span><span class="st0">'https://graphcomment.com/api/moderation/ai'</span><span class="sy0">,</span> params<span class="sy0">=</span>parametre<span class="sy0">,</span> timeout<span class="sy0">=</span> <span class="nu0">2</span><span class="sy0">,</span> auth<span class="sy0">=</span><span class="br0">&#40;</span><span class="st0">'ai'</span><span class="sy0">,</span> <span class="st0">'Rtafg8956xfdx2fsdfimAZ6bdxff956x1'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="co1">#Permet d'avoir un boolean indiquant si la requête c'est bien passée</span>
+r.<span class="me1">ok</span></pre>
+
+<p>
+Ici, une description rapide des paramètres utiles mais optionnels :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>auth</strong> : Les requêtes habritant des données propre à une entreprise sont bien souvent protégées par un identifiant et un mot de passe qui permettent d&#039;accéder à la requête.</div>
+</li>
+<li class="level1"><div class="li"> <strong>timeout</strong> : Donne un temps pour récupérer les données liées à l&#039;<abbr title="Uniform Resource Locator">URL</abbr></div>
+</li>
+<li class="level1"><div class="li"> <strong>params</strong> : Permet de rajouter des paramètres comme le numéros de page. Cette information sera directement utilisée pour construire l&#039;<abbr title="Uniform Resource Locator">URL</abbr>.</div>
+</li>
+</ul>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://requests.readthedocs.io/en/master/" class="urlextern" title="https://requests.readthedocs.io/en/master/" rel="nofollow">https://requests.readthedocs.io/en/master/</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.youtube.com/watch?v=tb8gHvYlCFs" class="urlextern" title="https://www.youtube.com/watch?v=tb8gHvYlCFs" rel="nofollow">https://www.youtube.com/watch?v=tb8gHvYlCFs</a></div>
+</li>
+</ul>
+
+<p>
+Si la requête ne fonctionne pas il peut être intéressant de savoir pourquoi. Il faut donc bien souvent regarder le code erreur et agir en conséquence.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">r.<span class="me1">status_code</span></pre>
+<div class="table sectionedit5"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0"> Code </th><th class="col1"> Signification </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0"> 2xx </td><td class="col1"> Succés de la requête </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> 3xx </td><td class="col1"> Redirection </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> 4xx </td><td class="col1"> Erreur dû à la partie client </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0"> 5xx </td><td class="col1"> Erreur dû à la partie serveur </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:5,&quot;range&quot;:&quot;5427-5589&quot;} -->
+<p>
+Une fois les données récupéré vous n&#039;avez plus qu&#039;à les stoquer dans une variable. Il possible de les stoquer sous différents formats, prenons par exemple le format JSON.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">mon_Dict <span class="sy0">=</span> r.<span class="me1">json</span><span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+
+<p>
+La variable mon_Dict est alors un dictionnaire classique où on peut accéder à chaque valeur grace à sa clée.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Faire une requ\u00eate plus \u00e9labor\u00e9e&quot;,&quot;hid&quot;:&quot;faire_une_requete_plus_elaboree&quot;,&quot;codeblockOffset&quot;:9,&quot;secid&quot;:4,&quot;range&quot;:&quot;4043-5942&quot;} -->
+<h2 class="sectionedit6" id="le_scrapping">Le scrapping</h2>
+<div class="level2">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ascrapper_les_donnees&amp;media=cpp:scrappingpres.jpg" class="media" title="cpp:scrappingpres.jpg"><img src="/lib/exe/fetch.php?w=550&amp;tok=15f8f9&amp;media=cpp:scrappingpres.jpg" class="mediacenter" title=" Scrapping de données" alt=" Scrapping de données" width="550" /></a>
+<br/>
+
+<div class='alert alert-danger'><span style="font-size:large;"> <strong>Attention :</strong></span> Quand on récupère des données depuis une page web, il faut s&#039;assurer qu&#039;on ait les droits d&#039;auteur pour les récupérer. Il faut dans ce cas regarder le CGU ou la licence associée.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le scrapping&quot;,&quot;hid&quot;:&quot;le_scrapping&quot;,&quot;codeblockOffset&quot;:12,&quot;secid&quot;:6,&quot;range&quot;:&quot;5943-6265&quot;} -->
+<h3 class="sectionedit7" id="scrapping_de_donnees_quantitatives">Scrapping de données quantitatives</h3>
+<div class="level3">
+
+<p>
+Il est possible de récupérer des données dans des tableaux  qui ne sont pas directement dans un fichier. Prenons comme exemple cette <a href="https://fr.wikipedia.org/wiki/%C3%89tats_des_%C3%89tats-Unis_par_population" class="urlextern" title="https://fr.wikipedia.org/wiki/%C3%89tats_des_%C3%89tats-Unis_par_population" rel="nofollow">page</a> et essayons de récupérer les données du tableau. 
+</p>
+
+<p>
+Il faut comme pour les données textuelles commencer par importer les bonnes librairies et parser la page web :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> requests
+<span class="kw1">import</span> <span class="kw3">urllib</span>.<span class="me1">request</span>
+<span class="kw1">from</span> bs4 <span class="kw1">import</span> BeautifulSoup
+<span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+<span class="kw1">from</span> <span class="kw3">urllib</span>.<span class="me1">request</span> <span class="kw1">import</span> urlopen
+url <span class="sy0">=</span> <span class="st0">'https://fr.wikipedia.org/wiki/%C3%89tats_des_%C3%89tats-Unis_par_population'</span>
+html <span class="sy0">=</span> urlopen<span class="br0">&#40;</span>url<span class="br0">&#41;</span>
+soup <span class="sy0">=</span> BeautifulSoup<span class="br0">&#40;</span>html<span class="sy0">,</span> <span class="st0">'html.parser'</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>xml2<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>rvest<span class="br0">&#41;</span>
+page <span class="sy0">&lt;</span>- xml2::read_html<span class="br0">&#40;</span><span class="st0">&quot;https://fr.wikipedia.org/wiki/%C3%89tats_des_%C3%89tats-Unis_par_population&quot;</span><span class="sy0">,</span> encoding <span class="sy0">=</span> <span class="st0">&quot;UTF-8&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+Ensuite on récupère précisément le tableau dont on aura besoin et l&#039;affecter à une variable pour pouvoir le traiter plus tard :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">tableau <span class="sy0">=</span> soup.<span class="me1">find_all</span><span class="br0">&#40;</span><span class="st0">'table'</span><span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">tableau <span class="sy0">=</span> html_nodes<span class="br0">&#40;</span>page<span class="sy0">,</span> <span class="st0">&quot;table&quot;</span><span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span></pre>
+
+<p>
+On transforme le tableau en liste :pour avoir le contrôle dessus : 
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">pd.<span class="me1">read_html</span><span class="br0">&#40;</span>tableau.<span class="me1">prettify</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>skiprows<span class="sy0">=</span><span class="nu0">2</span><span class="sy0">,</span> flavor<span class="sy0">=</span><span class="st0">'bs4'</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">tableauTraite <span class="sy0">=</span> html_table<span class="br0">&#40;</span>tableau<span class="sy0">,</span> header <span class="sy0">=</span> TRUE<span class="sy0">,</span> trim <span class="sy0">=</span> TRUE<span class="sy0">,</span> fill <span class="sy0">=</span> FALSE<span class="sy0">,</span> dec <span class="sy0">=</span> <span class="st0">&quot;.&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+On peut régler les hyperparamètres pour être sûr d&#039;avoir le résultat attendu :
+</p>
+<div class="table sectionedit8"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0"> Hyper-paramètre </th><th class="col1"> Utilité </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0"> header </td><td class="col1"> Permet de savoir si la première ligne définit les colonnes </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> trim </td><td class="col1"> Permet de savoir si on supprime les éventuels espaces avant et après les données </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> fill </td><td class="col1"> Permet de remplir avec des valeurs nulles s’il y a des tableaux de taille différentes </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0"> dec </td><td class="col1"> Définit le séparateur entre les données </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table2&quot;,&quot;secid&quot;:8,&quot;range&quot;:&quot;7853-8206&quot;} -->
+<p>
+Enfin, on rentre le tout dans un DataFrame :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">tableauCorrectLu <span class="sy0">=</span> pd.<span class="me1">read_html</span><span class="br0">&#40;</span>tableau.<span class="me1">prettify</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>skiprows<span class="sy0">=</span><span class="nu0">2</span><span class="sy0">,</span> flavor<span class="sy0">=</span><span class="st0">'bs4'</span><span class="br0">&#41;</span>
+tableauCorrectLu<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">data.<span class="me1">frame</span><span class="br0">&#40;</span>tableauTraite<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://edutechwiki.unige.ch/fr/Web_scraping_avec_R" class="urlextern" title="http://edutechwiki.unige.ch/fr/Web_scraping_avec_R" rel="nofollow">http://edutechwiki.unige.ch/fr/Web_scraping_avec_R</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Scrapping de donn\u00e9es quantitatives&quot;,&quot;hid&quot;:&quot;scrapping_de_donnees_quantitatives&quot;,&quot;codeblockOffset&quot;:12,&quot;secid&quot;:7,&quot;range&quot;:&quot;6266-8523&quot;} -->
+<h3 class="sectionedit9" id="scrapping_de_donnees_textuelles">Scrapping de données textuelles</h3>
+<div class="level3">
+
+<p>
+Penchons nous maintenant, sur le sujet pour cela nous allons essayer de récupérer le contenu de cette <a href="https://fr.wikipedia.org/wiki/Dinde" class="urlextern" title="https://fr.wikipedia.org/wiki/Dinde" rel="nofollow">page</a>.
+</p>
+
+<p>
+Il s&#039;agit d&#039;un exemple qui n&#039;est pas anodin, beaucoup de modèles de Machine Learning sont entrainés sur ces textes qui sont associés à des sujets précis et permettent ainsi un étiquetage optimal.
+On commence par récupérer l&#039;ensemble de la page <abbr title="HyperText Markup Language">HTML</abbr> et de la parser :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> requests
+<span class="kw1">import</span> <span class="kw3">urllib</span>.<span class="me1">request</span>
+<span class="kw1">import</span> <span class="kw3">time</span>
+<span class="kw1">from</span> bs4 <span class="kw1">import</span> BeautifulSoup
+<span class="kw1">import</span> numpy <span class="kw1">as</span> np
+<span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+<span class="kw1">from</span> <span class="kw3">urllib</span>.<span class="me1">request</span> <span class="kw1">import</span> urlopen
+url <span class="sy0">=</span> <span class="st0">'https://fr.wikipedia.org/wiki/Dinde'</span>
+html <span class="sy0">=</span> urlopen<span class="br0">&#40;</span>url<span class="br0">&#41;</span> 
+soup <span class="sy0">=</span> BeautifulSoup<span class="br0">&#40;</span>html<span class="sy0">,</span> <span class="st0">'html.parser'</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R : </em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>xml2<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>rvest<span class="br0">&#41;</span>
+soup <span class="sy0">&lt;</span>- xml2::read_html<span class="br0">&#40;</span><span class="st0">&quot;https://fr.wikipedia.org/wiki/Dinde&quot;</span><span class="sy0">,</span> encoding <span class="sy0">=</span> <span class="st0">&quot;UTF-8&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+Une fois parsé <strong>en Python</strong> vous devrez rajouter le code ci-dessous pour mettre en forme votre texte 
+</p>
+<pre class="code python"><span class="kw1">print</span><span class="br0">&#40;</span>soup.<span class="me1">prettify</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+<p>
+Le système de scrapping fonctionne avec des balises. Il est nécessaire d&#039;aller voir sur la page dans quelles balises le texte est ancré. Il faut réussir à sélectionner des balises assez générales qui vont se retrouver dans les mêmes types d&#039;articles. Ceci sera possible grâce aux normes qui sont imposées pour publier une page web. Pour savoir par quoi est encadré le texte voulu, on sélectionne le texte on fait clique droit et “Inspect”.  
+</p>
+
+<p>
+<strong>Récupérer du contenu d&#039;une balise</strong>
+</p>
+
+<p>
+On cible donc une balise assez générale puis on récupère le contenu :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">soup.<span class="me1">p</span> <span class="co1">#Récupére le contenu de la première balise p</span>
+<span class="co1">#Résultat : &lt;p&gt;Vous pouvez partager vos connaissances en l’améliorant .... &lt;/p&gt;</span>
+soup.<span class="me1">p</span>.<span class="me1">text</span> <span class="co1">#Permet de mettre en forme ce texte</span>
+<span class="co1">#Résultat : Vous pouvez partager vos connaissances en l’améliorant (comment\xa0?) selon les recommandations du projet ornithologie.\n'</span>
+soup.<span class="me1">find</span><span class="br0">&#40;</span><span class="st0">&quot;div&quot;</span><span class="sy0">,</span> <span class="br0">&#123;</span><span class="st0">&quot;class&quot;</span>: <span class="st0">&quot;mw-parser-output&quot;</span><span class="br0">&#125;</span><span class="br0">&#41;</span> <span class="co1">#Récupérer le contenu de la balise div avec une certaine classe</span>
+<span class="co1">#Résultat : &lt;div class=&quot;mw-parser-output&quot;&gt;&lt;div class=&quot;bandeau-container bandeau-article bandeau-niveau-.....</span>
+soup.<span class="me1">find</span><span class="br0">&#40;</span><span class="kw2">id</span><span class="sy0">=</span><span class="st0">&quot;toc&quot;</span><span class="br0">&#41;</span> <span class="co1">#Récupérer le contenu avec un certain id</span>
+<span class="co1">#Resultat : Même que si dessus</span>
+soup.<span class="me1">find_all</span><span class="br0">&#40;</span><span class="st0">'p'</span><span class="br0">&#41;</span> <span class="co1">#Récupérer le contenu sous forme de liste avec toutes balises p</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">html_nodes<span class="br0">&#40;</span>soup<span class="sy0">,</span> <span class="st0">&quot;p&quot;</span><span class="br0">&#41;</span> <span class="co1">#Récupére de toutes les balises p sous forme de liste</span>
+<span class="co1"># Résultat : {xml_nodeset (26)}</span>
+<span class="co1"># [1] &lt;p&gt;Vous pouvez partager vos connaissances en l’améliorant ...</span>
+html_text<span class="br0">&#40;</span>html_nodes<span class="br0">&#40;</span>soup<span class="sy0">,</span> <span class="st0">&quot;p&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="co1">#Permet de mettre en forme ce texte</span>
+<span class="co1">#Résultat : [1] Vous pouvez partager vos connaissances en l’améliorant (comment\xa0?) selon les recommandations du projet ornithologie.\n'</span>
+html_nodes<span class="br0">&#40;</span>soup<span class="sy0">,</span> <span class="st0">&quot;.mw-parser-output&quot;</span><span class="br0">&#41;</span> <span class="co1">#Récupérer le contenu de la balise div avec une certaine classe</span>
+<span class="co1">#Résultat :{xml_nodeset (1)}</span>
+<span class="co1">#[1] &lt;div class=&quot;mw-parser-output&quot;&gt;\n&lt;div class=&quot;bandeau-container band</span>
+html_nodes<span class="br0">&#40;</span>soup<span class="sy0">,</span> <span class="st0">&quot;.toc&quot;</span><span class="br0">&#41;</span> <span class="co1">#Récupérer le contenu avec un certain id</span></pre>
+
+<p>
+<strong>Travailler sur le contenu</strong>
+</p>
+
+<p>
+Dans un second temps, il est possible en affectant une variable à la première sélection d&#039;itérer autant de fois que voulu les sélections. Ainsi on peut facilement naviguer dans le contenu de la page Web et récupérer le contenu voulu. 
+</p>
+
+<p>
+<strong>Remarque :</strong>
+En python, il y a parfois des caractères qui passes à travers le parsing et sont donc utiles de remplacer. Prenons par exemple le caractère \xa0
+</p>
+<pre class="code python">texte.<span class="me1">replace</span><span class="br0">&#40;</span>u<span class="st0">'<span class="es0">\x</span>a0'</span><span class="sy0">,</span> u<span class="st0">' '</span><span class="br0">&#41;</span> <span class="co1">#Va permettre d'enlever les \xa0</span>
+<span class="co1">#Resultat : 'Vous pouvez partager vos connaissances en l’améliorant (comment ?) selon les</span></pre>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://perso.ens-lyon.fr/lise.vaudor/Descriptoire/_book/web-scraping.html#extraire-certains-elements-dune-page-html" class="urlextern" title="http://perso.ens-lyon.fr/lise.vaudor/Descriptoire/_book/web-scraping.html#extraire-certains-elements-dune-page-html" rel="nofollow">http://perso.ens-lyon.fr/lise.vaudor/Descriptoire/_book/web-scraping.html#extraire-certains-elements-dune-page-html</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.scrapingbee.com/blog/web-scraping-r/" class="urlextern" title="https://www.scrapingbee.com/blog/web-scraping-r/" rel="nofollow">https://www.scrapingbee.com/blog/web-scraping-r/</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Scrapping de donn\u00e9es textuelles&quot;,&quot;hid&quot;:&quot;scrapping_de_donnees_textuelles&quot;,&quot;codeblockOffset&quot;:20,&quot;secid&quot;:9,&quot;range&quot;:&quot;8524-12450&quot;} -->
+<h2 class="sectionedit10" id="conclusion">Conclusion</h2>
+<div class="level2">
+
+<p>
+Le web est une source de données presque inépuisable, il faut cependant apprendre à ranger les données et les organiser pour les rendre exploitables et c&#039;est qu&#039;est tout le défis. Garder en tête qu&#039;améliorer la qualité de ses données c&#039;est améliorer la  qualité de son futur modèle.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Conclusion&quot;,&quot;hid&quot;:&quot;conclusion&quot;,&quot;codeblockOffset&quot;:26,&quot;secid&quot;:10,&quot;range&quot;:&quot;12451-&quot;} -->

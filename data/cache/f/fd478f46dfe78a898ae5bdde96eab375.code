@@ -1,0 +1,4 @@
+<span class="kw1">from</span> sklearn.<span class="me1">preprocessing</span> <span class="kw1">import</span> PolynomialFeatures
+&nbsp;
+poly_feature <span class="sy0">=</span> PolynomialFeatures<span class="br0">&#40;</span>degree <span class="sy0">=</span> <span class="nu0">2</span><span class="sy0">,</span> include_bias <span class="sy0">=</span> <span class="kw2">False</span><span class="br0">&#41;</span><span class="co1">#Création des polynômes de degré 2 pour les données d'apprentissage</span>
+X_poly <span class="sy0">=</span> poly_feature.<span class="me1">fit_transform</span><span class="br0">&#40;</span>X<span class="br0">&#41;</span><span class="co1">#Application de la création de polynômes aux données</span>

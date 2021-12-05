@@ -1,0 +1,8 @@
+<span class="kw1">from</span> mpl_toolkits.<span class="me1">mplot3d</span> <span class="kw1">import</span> Axes3D
+&nbsp;
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">12</span><span class="sy0">,</span><span class="nu0">6</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+ax <span class="sy0">=</span> plt.<span class="me1">axes</span><span class="br0">&#40;</span>projection<span class="sy0">=</span><span class="st0">'3d'</span><span class="br0">&#41;</span>
+ax.<span class="me1">scatter</span><span class="br0">&#40;</span>X<span class="br0">&#91;</span>:<span class="sy0">,</span> <span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span> X<span class="br0">&#91;</span>:<span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">,</span> X<span class="br0">&#91;</span>:<span class="sy0">,</span> <span class="nu0">2</span><span class="br0">&#93;</span><span class="sy0">,</span> c<span class="sy0">=</span>y<span class="sy0">,</span>  alpha<span class="sy0">=</span><span class="nu0">.65</span><span class="sy0">,</span> s<span class="sy0">=</span>X<span class="br0">&#91;</span>:<span class="sy0">,</span><span class="nu0">2</span><span class="br0">&#93;</span>*<span class="nu0">100</span><span class="br0">&#41;</span>
+&nbsp;
+plt.<span class="me1">xlabel</span><span class="br0">&#40;</span><span class="st0">&quot;Longueur sépal&quot;</span><span class="br0">&#41;</span>
+plt.<span class="me1">ylabel</span><span class="br0">&#40;</span><span class="st0">&quot;Largeur sépal&quot;</span><span class="br0">&#41;</span>

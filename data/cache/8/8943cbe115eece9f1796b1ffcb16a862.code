@@ -1,0 +1,4 @@
+install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;FSinR&quot;</span><span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>FSinR<span class="br0">&#41;</span>
+&nbsp;
+selectKBest<span class="br0">&#40;</span>iris<span class="sy0">,</span> <span class="st0">'Species'</span><span class="sy0">,</span>chiSquared<span class="sy0">,</span> <span class="nu0">3</span><span class="br0">&#41;</span>

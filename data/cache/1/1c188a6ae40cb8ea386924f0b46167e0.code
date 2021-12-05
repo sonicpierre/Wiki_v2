@@ -1,0 +1,7 @@
+model <span class="sy0">&lt;</span>- lm<span class="br0">&#40;</span>y<span class="sy0">~</span>poly<span class="br0">&#40;</span>X<span class="sy0">,</span> <span class="nu0">2</span><span class="sy0">,</span> raw <span class="sy0">=</span> T<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Si on passe raw = F, on rend le polynome orthogonal. Cela peut permettre de</span>
+<span class="co1">#fiabiliser les résultats de l'estimation.</span>
+&nbsp;
+model$coefficients<span class="co1">#Affichage des coefficients estimés par le modèle.</span>
+&nbsp;
+<span class="co1">#Lorsque vous utilisez des dataframe, il est nécessaire de mentionner le nom du set de données </span>
+<span class="co1">#model &lt;- lm(y~poly(X, 2, raw = T), data = DataFrame)</span>

@@ -1,0 +1,5 @@
+library<span class="br0">&#40;</span>pracma<span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>X<span class="sy0">,</span>y<span class="br0">&#41;</span>
+x <span class="sy0">=</span> linspace<span class="br0">&#40;</span>-<span class="nu0">3</span><span class="sy0">,</span><span class="nu0">30</span><span class="sy0">,</span><span class="nu0">1500</span><span class="br0">&#41;</span>
+yConstruit <span class="sy0">=</span> coef<span class="br0">&#40;</span>model<span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span> + coef<span class="br0">&#40;</span>model<span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span> * x
+lines<span class="br0">&#40;</span>yConstruit<span class="sy0">,</span> x<span class="br0">&#41;</span>

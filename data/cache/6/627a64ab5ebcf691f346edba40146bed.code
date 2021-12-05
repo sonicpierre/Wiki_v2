@@ -1,0 +1,48 @@
+&quot;spells&quot;:
+[
+    {
+        &quot;name&quot;: &quot;Nom de sort&quot;
+        &quot;targetEffect&quot;:
+        [
+            {
+                &quot;typeOfTarget&quot;: &quot;selection&quot;
+                &quot;targetAvailable&quot;: &quot;enemy&quot;
+                &quot;effects&quot;:
+                [
+                    {
+                        &quot;target&quot;: 0 
+                        &quot;stats&quot;:&quot;life&quot;
+                        &quot;type&quot;:&quot;-&quot;
+                        &quot;value&quot;:
+                        {
+                            &quot;type&quot;: &quot;physical&quot;,
+                            &quot;formula&quot;:
+                            {
+                                &quot;base&quot;: 150,
+                                &quot;str&quot;: 0.5
+                            }
+                        }
+                    },
+                    {
+                        &quot;target&quot;: -1 
+                        &quot;stats&quot;:&quot;life&quot;
+                        &quot;type&quot;:&quot;-&quot;
+                        &quot;value&quot;:
+                        {
+                            &quot;type&quot;: &quot;physical&quot;,
+                            &quot;formula&quot;:
+                            {
+                                &quot;base&quot;: 150,
+                                &quot;str&quot;: 0.5
+                            }
+                        }
+                    },
+                ]
+&nbsp;
+            },
+            {
+                ...
+            }
+        ]
+    }
+]

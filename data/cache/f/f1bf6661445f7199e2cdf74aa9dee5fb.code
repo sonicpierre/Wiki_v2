@@ -1,0 +1,2 @@
+<span class="kw1">def</span> euclidean_distance<span class="br0">&#40;</span>x<span class="sy0">,</span> y<span class="br0">&#41;</span>:   
+    <span class="kw1">return</span> np.<span class="me1">sqrt</span><span class="br0">&#40;</span>np.<span class="kw2">sum</span><span class="br0">&#40;</span><span class="br0">&#40;</span>x - y<span class="br0">&#41;</span> ** <span class="nu0">2</span><span class="br0">&#41;</span><span class="br0">&#41;</span>

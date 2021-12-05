@@ -1,0 +1,2 @@
+<span class="kw1">import</span> <span class="kw3">os</span>
+listeFichier <span class="sy0">=</span> <span class="kw3">os</span>.<span class="me1">listdir</span><span class="br0">&#40;</span><span class="st0">'Regrouper donnees Covid/*'</span><span class="br0">&#41;</span>

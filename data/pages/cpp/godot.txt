@@ -1,0 +1,65 @@
+======Godot======
+
+Ce wiki est pour les utilisateurs de Godot utilisant le C#. Il est basé sur la documentation "Your first game" de Godot Engine. Il s'agit ici d'une première ébauche pour les jeux 2D. 
+
+====Travailler sur les scène====
+
+Godot est basé sur le même principe que JavaFX, il y a des noeuds et des scènes. On fait plusieurs scènes et on les lie entre elles et on peut les superposer. Par exemples, il y a une scène Joueur, une scène Enemie et ainsi de suite. Chaque scène a ces différents noeuds et un script associé. Les éléments comme la gravaité sont codé par desfauts.
+
+
+====Les différents noeuds====
+  
+Le moteur met à disposition beaucoup, beaucoup de noeuds pour nous donner un maximaum de liberté je vais essayer de décrire les plus importants :
+
+  * Animated Sprite, il s'agit d'un noeud majeur qui permet d'insérer une image animée dans la scène. Elle nécessite obligatoirement une texture associé mais aussi une autre noeud **CollisionShape2D** comme sont nom l'indique il s'agit de décrire une forme de collision. Là aussi, il faut lui indiquer une shape capsule, new rectangle...Si on veut que les énemis soient insensible aux collision entre eux il faut changer le masque. En cliquant sur animated sprite vous aurez la posibilité de créer différentes animation qui seront joué en boucle. Dans le cas d'un joueur, il est pertinent de faire une animation en vertivale et horizontale puis avec le système de miroir et de rotation on aura toutes les animations. Il suffira ensuite dans le code d'écrire un .Play() ou . Stop().
+
+  * VisibilityNotifier2D, ce noeud est particulièrement pratique pour savoir quand un énemis n'est plus visible pour le supprimer et ne pas ralentir le jeux.
+
+  * Timer, il s'agit du noeud permettant de gérer le temps. il envoie un signal à chaque fois que le temps défini est passé et peut tourner en boucle ou en onshot.
+
+  * CanvasLayer, ce noeud est particulièrement pratique pour gérer tout ce qui est menu d'acceuil et contient des éléments comme **Label**, **Button** qui permettent d'avoir le contrôle sur le lancement du jeu.
+
+  * Path2D avec comme enfant PathFollow2D permettent de déterminer un chemin que les énemis peuvent suivre ou un chemin sur lequel les énemis peuvent apparaître.
+
+  * AudioStreamPlayer permet de gérer tout ce qui est lecture de son de façon intéractive.
+
+
+====Les façon de faire le script====
+  
+Il y a une méthode qui s'exécute au lancement de la scène où on récupère nos objets de la scène pour cela on utilisera leur nom. On est obligé de recaster quand on travaille sur Visual Studio Code.
+  
+<code csharp>
+  public override void _Ready(){
+  	animatedSprite = (AnimatedSprite) GetNode("AnimatedSprite");
+	collisionShape = (CollisionShape2D) GetNode("CollisionShape2D");
+	particle2D = (Particles2D) GetNode("Particles2D");
+  }
+</code>
+  
+Il y a aussi une méthode qui s'execute à chacune des frames : 
+  
+<code csharp>
+  //delta permet d'avoir le jeux et les frames adaptées aux performances du PC qui le fait tourner
+  public override void _Process(float delta){}
+</code>
+  
+Il est souvent intéressant de connecter les éléments de la scène avec des méthodes. Elles sont alors exécuté lorsque l'objet émet un certain signal.
+  
+<code csharp>
+       ennemiTimer.Connect("timeout", this, nameof(OnEnemiSpawn));
+       //.....
+       private void OnEnemiSpawn(){}
+</code>
+  
+Il faut bien comprendre que tout fonctionne avec des signaux. Pour faire communiquer deux scènes on va demander à une des deux d'émettre un signal, on le récupérera dans l'autre scène et on agira en concéquence.
+  
+<code csharp>
+       	Connect("body_entered", this, nameof(OnBodyEnterred));
+	AddUserSignal("hit");
+        //......
+        void OnBodyEnterred(PhysicsBody2D body){
+	   EmitSignal("hit");
+	}
+</code>
+
+Penser aussi que tout les éléments du C# sont disponible en particulier pour tout ce qui est aléatoire. Tag pour rendre une méthode asynchrone....

@@ -1,0 +1,252 @@
+[[cpp:IA| Machine Learning]]
+
+{{ :cpp:statistique.jpeg?460 |}}
+
+La régression linéaire n'est pas forcément utilisée pour faire des modèles de prédiction et on peut même dire que c'est rarement le cas.  En revanche elle est souvent prise pour faire une étude statistique et répondre à une question primordiale : 
+
+**Mes données sont-elles distribuées linéairement ?**
+
+La réponse sera bien entendu bien plus complexe que Oui/Non. Il sera nécessaire de bien comprendre et construire les conditions nécessaires pour appuyer nos conclusions sur la forme de la distribution de nos données.
+
+<color #ed1c24>Pourquoi voudrait-on savoir comment sont distribuées nos données ?</color>
+
+Des méthodes de Machine Learning et de réduction de dimensions comme l'ACP partent du principe que les données sont distribuées linéairement et donc cette étude permet de justifier son choix de méthode pour la suite de son étude.
+
+=====Rappels sur les tests statistiques=====
+
+Le but de cette partie n'est pas d'apprendre à construire un test statistique mais plutôt comprendre ce qu'il signifie et comment prendre une décision à partir des résultats de ce dernier. Par la suite nous utiliserons des tests déjà établis comme celui de Student, Ficher...
+
+{{ :cpp:test_state.png?790 |}}
+
+Quelques précisions sur le fonctionnement :
+  * $H_0$ est l'hypothèse qu'on cherche vérifier (hypothèse nulle).
+  * Le résultat du test se fait souvent en regardant des documents recensant  les différentes valeurs liées pour des risques différents.
+  * En général on prend un risque égale à 5% mais cela varie en fonction des exigences du client
+  * Il s'agit ici d'un test bivarié car il n'y a que 2 issues **Oui** ou **Non**.
+
+Nous allons expliquer comment décrire une régression linéaire puis comment évaluer ses résultats. On utilisera plusieurs tests statistiques permettant de mieux comprendre les résultats.
+
+<alert info> **Dataset :** On utilisera des données reliant le nombre de ventes et l’investissement dans différents médias. Vous les trouverez [[https://github.com/LlamasPartan/Machine_Learning_Ressource/blob/master/R%C3%A9gression/R%C3%A9gression%20Lin%C3%A9aire/Advertising.csv | ici]].</alert>
+=====Construire son modèle=====
+
+On commence par tracer notre régression linéaire en utilisant la Méthode des Moindres Carré (MCO). Par la suite on essaiera d'observer la répartition des ventes en fonction des informations sur les  différents moyens mis en œuvre pour le marketing.
+
+__Code Python__
+
+Sous python il est d'abord nécessaire de découper le dataset afin de distinguer variables explicatives **X** et variable cible **y**.
+
+<code python>
+import statsmodels.api as sm
+
+X = sm.add_constant(X)#Ajout de la constante aux données
+Regression_Lin = sm.OLS(y,X).fit()#Ajustement des données
+</code>
+
+__Code R__
+
+<code python>
+Regression_Lin = lm(Sales~., data = data_original)
+</code>
+
+<alert warning>**Attention :** Une fois le modèle entraîné, il est important de vérifier les hypothèses sur les résidus qui ont une importance fondamentale afin de construire un regard critique sur le modèle. Vous pouvez consulter cette  [[cpp:Régression lineaire interpret Pierre | page ]] pour bien assimiler ce principe. </alert>
+
+**Source :**
+
+  * Cours de Nisrine Fortin enseignante en Mathématiques à CY Tech 
+=====Décrire son modèle=====
+
+Pour avoir des informations sur notre modèle, de nombreux outils statistiques sont nécessaires. C'est pourquoi les différentes librairies en R comme en Python nous offrent un résumé permettant de mieux les analyser.
+
+__Code Python :__
+
+<code python>
+Regression_Lin.summary()
+</code>
+
+__Code R :__
+
+<code python>
+summary(Regression_Lin)
+</code>
+
+{{ :cpp:formule_utilisee.jpg?600 |}}
+
+;#;**Figure 1 :** Résultat d'ajustement du modèle
+;#;
+
+Les deux premiers blocs nous donnent des informations sur la formule utilisée et sur les résidus obtenus. Nous allons donc développer deux parties concernant la description du modèle. 
+
+====Les coefficients====
+
+**(1) Les estimations :** Il s'agit ici d'une estimation des différents coefficients composant la régression linéaire. On peut ainsi estimer à la main si on le souhaite les différentes valeurs de vente grâce à la formule :
+
+$$Vente = 3.005 - 0.0005 \times X + 0.0457  \times  TV + 0.1885  \times  Radio - 0.0012  \times  Newspaper$$
+
+**(2) Pr(>|t|) :** Permet de vérifier la pertinence de <fc #ff0000>l'Intercept</fc> et des <fc #ff0000>coefficients estimés</fc>. En effet, plus elle sera petite pour un paramètre (et avec plusieurs étoiles), plus ce dernier sera important et significatif. Il s'agit du test de Student avec les hypothèses :
+
+  * $H_0$ le coefficient est nul
+
+  * $H_1$ le coefficient est non nul
+
+Si la p-valeur est inférieure à un risque $\alpha$ alors on rejette $H_0$.  Ici on remarque que les variables X et Newspaper peuvent être mises de côté  avec un risque de 5% car elles ne sont pas utiles à la construction du modèle.
+====Les performances du modèle====
+
+**(3) Degrés de liberté :** On peut utiliser le degré de liberté (DDL) pour retrouver le nombre d'observations utilisées à la construction du modèle. Pour cela on reprend la définition :
+
+$$DDL = n - p - 1$$
+
+On obtient donc dans notre cas $195 + 4 + 1 = 200$ observations.
+
+**(4) $R^2$ :** Cette valeur permet de dire que 89% de la variance du prix de vente (**Sales**) est expliqué par les variables explicatives. <color #ed1c24>**Ce pourcentage ne permet pas de juger à lui seul de la qualité d'ajustement du modèle !**</color> Les données d'anscombe nous permettent de mettre en avant ce point.
+
+{{ :cpp:r_2_limites.png?600 |}}
+
+On comprend qu'il est important de prendre cette statistique avec des pincettes et dans le doute de l'ignorer. Il est plus intéressant de se baser sur le MSE pour comparer les modèles et les performances.
+
+**(5) p-value :** On cherche à savoir s’il y a une relation linéaire entre les différentes variables. Pour cela on va faire un test de Fischer avec les 2 hypothèses suivantes :
+
+  * $H_0$ tous les coefficients sont égaux à 0 (pas de relation)
+  * $H_1$ tous les coefficients ne sont pas égaux à 0
+
+Avec un risque de 5% on obtient une p-value très petite (2.2e-16 < 0.05) qui confirme que le modèle construit confirme une relation pertinente entre le prix de vente et les variables explicatives.
+
+<alert info>**Information :** On retrouvera en Python les mêmes indicateurs même s’ils sont disposés assez différemment.</alert>
+
+**Source :**
+
+  * [[https://delladata.fr/regression-lineaire-simple-le-r%C2%B2-info-ou-intox/|delladate.fr]]
+
+
+=====Le problème des variables corrélées=====
+
+Maintenant que nous avons pu critiquer notre régression nous allons essayer de l'améliorer. Pour cela, on peut voir comment simplifier le modèle et le rendre plus efficace. Mais tout d'abord qu'est-ce que la corrélation ?
+
+{{ :cpp:bateau_correlation.png?500 |}}
+
+Nous avons 4 bateaux A,B,C et D. Les bateaux C et D ne sont pas corrélés, ils n'ont rien à voir, l'un a un gouvernail et l'autre a des bouées. On peut dire par contre que les bateaux A et B sont corrélés car ils sont similaires à un coefficient multiplicatif prés. En effet si le bateau A grandit il va falloir que le bateau B aussi grandisse pour rester à l'équilibre.
+
+<color #ed1c24>Pourquoi doit-on supprimer les variables corrélées ?</color>
+
+Si une variable est corrélée avec une autre, elle est inutile dans la construction du modèle puisqu'elle le complexifie.
+
+<alert danger>**Danger :** Des variables colinéaires sont corrélées mais des variables corrélées ne sont pas forcément colinéaires. La colinéarité n'est qu'en quelque sorte la forme linéaire de la corrélation.</alert>
+====Le VIF====
+
+Le VIF (Variance Inflation Factor) est un des indicateurs les plus utilisées pour détecter des variables colinéaires. On utilise la formule :
+
+$$v_j = \frac{1}{1-R^2_j}$$
+
+Le coefficient $R^2_j$ correspond au $R^2$ sur $p-1$ variables. Une autre façon plus pratique de calculer le VIF est de calculer la matrice de corrélation et de l'inverser. On obtiendra les coefficients VIF sur la diagonale. 
+
+__Code Python :__
+
+<code python>
+from patsy import dmatrices
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+
+#Permet de bien séparer X et les étiquettes
+y, X = dmatrices('Sales ~ TV+Radio+Newspaper', data=data_original, return_type='dataframe')
+
+#Calcule du VIF
+vif = pd.DataFrame()
+vif['VIF'] = [variance_inflation_factor(X.values, i) for i in range(X.shape[1])]
+vif['variable'] = X.columns
+</code>
+
+__Code R :__
+
+<code python>
+library("car")
+vif(Regression_Lin)
+</code>
+
+**Résultat :**
+
+On obtient alors le tableau suivant :
+
+^  VIF  ^  Variables  ^
+|  6.85  |  Intercept  |
+|  1.00  |  TV  |
+|  1.14  |  Radio  |
+|  1.14  |  Newspaper  |
+
+Une des particularités de ce test et peut-être une de ses faiblesses et le manque de règle de décision claire. Certains prennent comme seuil 4 mais d'autre 6 ou 10. L'idée est de repérer une variable ou un groupe avec un VIF particulièrement élevé. À partir de là on peut reconstruire le modèle en enlevant les variables détectées.
+
+**Source :**
+
+  * [[http://larmarange.github.io/analyse-R/multicolinearite.html]]
+  * [[https://eric.univ-lyon2.fr/~ricco/cours/slides/Reg_Multiple_Colinearite_Selection_Variables.pdf]]
+  * [[https://www.statology.org/how-to-calculate-vif-in-python/]]
+
+====Règle de Klein et règle des signes====
+
+Ces deux règles sont basées entièrement sur la matrice de corrélation. Elles permettent aussi de détecter les variables corrélées et par conséquent confirmer la première analyse faite avec le VIF. On prend la matrice de corrélation et les coefficients correspondant aux variables TV, Radio, Newspaper. 
+\\
+\\
+$$
+CorrMatrice = \begin{pmatrix} 1.00 & 0.05 & 0.05 & 0.78 \\ 0.05 & 1.00 & 0.35 & 0.58 \\ 0.06 & 0.35 & 1.00 & 0.23 \\ 0.78 & 0.58 & 0.23 & 1.00 \end{pmatrix}
+
+Coeff = \begin{pmatrix}
+0.0457 \\
+0.1883 \\
+-0.0012
+\end{pmatrix}
+$$
+
+**Règle du signe**
+
+$$sgn(r_{Y,X_j}) = sgn(â_j)$$
+
+Dans notre cas précis ici on a bien le signe de 0.78 égale à celui de 0.58 comme celui de 0.58 et 0.18 mais le signe de 0.23 est différent de celui de -0.0012. On peut avoir un doute sur la variable Newspaper. 
+
+**Règle de Klein**
+
+$$r^2_{j_1, j_2} > R^2$$
+
+Dans notre exemple, on a $R^2 = 0.89$ donc on a aucune variable corrélée qui ressort clairement. Ce qui confirme notre première conclusion obtenue avec le VIF.
+
+=====L'entrainement pas à pas=====
+
+Il est aussi possible de faire une sélection des variables en utilisant le critère AIC ou BIC. Ce sont des valeurs à minimiser pour avoir le meilleur modèle qui permettent une comparaison avec d'autres régressions. 
+
+**Théorie :**
+
+Pour calculer les critères AIC et BIC on a besoin de calculer les SCR avec la formule suivante où ŷ représente les prédictions du modèle de régression linéaire :
+
+$$SCR = \sum^n_{i=1} (ŷ_i - y)$$
+
+On obtient ensuite le critère AIC et BIC de la manière suivante :
+
+$$AIC = n * ln(\frac{SCR}{n}) + 2 * (p +1)$$
+
+$$BIC = n * ln(\frac{SCR}{n}) + ln(n) * (p +1)$$
+
+On sait que le BIC a tendance à plus pénaliser les régressions utilisant beaucoup de variables. Maintenant que l'on sait calculer ces critères on peut appliquer l'algorithme de sélection de variables.
+
+{{ :cpp:algo_pas.png?800 |}}
+ 
+Il permet ainsi d'améliorer le modèle pas à pas, variable par variables jusqu'à ce que la suppression de variable n'améliore plus le modèle.
+
+__Code Python :__
+
+<code python>
+from sklearn.feature_selection import RFE
+from sklearn.linear_model import LinearRegression
+
+reg_lin = LinearRegression()
+modele_step = RFE(reg_lin,n_features_to_select=2, step=1)
+
+#Permet d'entraîner le modèle
+modele_step.fit(X,y)
+
+#Permet de savoir quelles sont les variables qui ont été gardé
+modele_step.support_
+</code>
+
+__Code R :__
+
+<code python>
+step(lm(Sales~., data = data_original))
+</code>
+
+On arrive ainsi à avoir une régression linéaire qui c'est construite en écartant les variables de moindre importance. Cette sélection peut être accompagnée d'une ACP et des tests de Student qui une fois encore pourront confirmer ou infirmer ce choix.

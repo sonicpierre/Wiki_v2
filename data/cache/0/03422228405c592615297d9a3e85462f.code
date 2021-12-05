@@ -1,0 +1,2 @@
+qqnorm<span class="br0">&#40;</span>data$Sales<span class="br0">&#41;</span><span class="co1">#TRAÇAGE DE LA COURBE DE DISTRIBUTION</span>
+qqline<span class="br0">&#40;</span>data$Sales<span class="br0">&#41;</span><span class="co1">#AJOUT DE LA DROITE SUR LE GRAPHIQUE</span>

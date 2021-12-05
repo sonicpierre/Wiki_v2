@@ -1,0 +1,6 @@
+ cursor <span class="sy0">=</span> connection.<span class="me1">cursor</span><span class="br0">&#40;</span><span class="br0">&#41;</span>    
+ sql <span class="sy0">=</span> <span class="st0">&quot;Delete from Region where nom = %s&quot;</span>
+&nbsp;
+ <span class="co1"># Exécutez sql et passez un paramètre</span>
+ rowCount <span class="sy0">=</span> cursor.<span class="me1">execute</span><span class="br0">&#40;</span>sql<span class="sy0">,</span> <span class="br0">&#40;</span> <span class="st0">&quot;Guadeloupe&quot;</span> <span class="br0">&#41;</span> <span class="br0">&#41;</span>    
+ connection.<span class="me1">commit</span><span class="br0">&#40;</span><span class="br0">&#41;</span> 

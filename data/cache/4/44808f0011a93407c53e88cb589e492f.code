@@ -1,0 +1,3 @@
+window.<span class="me1">clear</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy4">;</span> <span class="co1">// On efface l'image précédente</span>
+window.<span class="me1">draw</span><span class="br0">&#40;</span>rectangle<span class="br0">&#41;</span><span class="sy4">;</span> <span class="co1">// Affichage du rectangle</span>
+window.<span class="me1">draw</span><span class="br0">&#40;</span>circle<span class="br0">&#41;</span><span class="sy4">;</span> <span class="co1">// Affichage du cercle</span>

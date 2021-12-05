@@ -1,0 +1,7 @@
+pd.<span class="me1">read_csv</span><span class="br0">&#40;</span><span class="st0">&quot;Train_Titanic.csv&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+train_Var <span class="sy0">=</span> data.<span class="me1">drop</span><span class="br0">&#40;</span><span class="st0">&quot;Survived&quot;</span><span class="sy0">,</span> axis <span class="sy0">=</span> <span class="nu0">1</span><span class="br0">&#41;</span> <span class="co1">#On définit le jeux d'entrainement</span>
+etiquet_Train <span class="sy0">=</span> data<span class="br0">&#91;</span><span class="st0">&quot;Survived&quot;</span><span class="br0">&#93;</span> <span class="co1">#On définit les étiquettes pour entraîner le modèle</span>
+&nbsp;
+arbreFirst <span class="sy0">=</span> DecisionTreeClassifier<span class="br0">&#40;</span>min_samples_split<span class="sy0">=</span><span class="nu0">150</span><span class="sy0">,</span>min_samples_leaf<span class="sy0">=</span><span class="nu0">50</span><span class="br0">&#41;</span> <span class="co1">#Nous définissons l'arbre de décision</span>
+arbreFirst.<span class="me1">fit</span><span class="br0">&#40;</span>train_Var<span class="sy0">,</span> etiquet_Train<span class="br0">&#41;</span> <span class="co1">#On entraine le modèle</span>

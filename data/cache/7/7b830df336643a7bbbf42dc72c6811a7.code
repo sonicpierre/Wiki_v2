@@ -1,0 +1,35 @@
+fdjhjdh
+&lt;\code&gt;
+\\
+|              ^ Temps d'exécution                  ^ Complexité          ^ Nombre d'itérations ^
+^ Dichotomie Classique      |          <span class="nu0">0.0017</span> secondes           |                logarithmique <span class="br0">&#40;</span>$log_2<span class="br0">&#40;</span>b-a<span class="br0">&#41;</span><span class="br0">&#41;</span>$               |                 <span class="nu0">42</span> <span class="br0">&#40;</span>pour a=<span class="nu0">0</span>, b=<span class="nu0">4</span><span class="br0">&#41;</span>                    |
+=====Méthode de Newton-Raphson=====
+&nbsp;
+L'idée générale de cette méthode est de partir d'un point &quot;assez proche&quot; du zéro de notre fonction, que l'on note $x_0$ et de tracer la tangente à la courbe de $f$  en point.  
+<span class="me1">On</span> résout ensuite  l'équation $y_<span class="br0">&#123;</span>tangeante<span class="br0">&#125;</span> = <span class="nu0">0</span>$,. <span class="me1">On</span> obtient alors un nouveau point, $x_1$,  qui sera  plus proche de la racine que $x_0$. <span class="me1">On</span> réitère ce processus jusqu'à obtenir la précision voulue. 
+\\
+La théorie au fondement de cet algorithme est basée sur les <span class="br0">&#91;</span><span class="br0">&#91;</span>https://fr.<span class="me1">wikipedia</span>.<span class="me1">org</span>/wiki/Th<span class="co1">%C3%A9or%C3%A8me_de_Taylor|développement de Taylor au premier ordre]].</span>
+\\
+\\
+La méthode de Newton permet de résoudre le même <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/type.html"><span class="kw2">type</span></a> de problèmes que la dichotomie mais sa convergence est quadratiqu et non linéaire, ce qui en fait une méthode plus efficace.
+&nbsp;
+\\
+===Algorithme===
+&nbsp;
+&nbsp;
+Fonction newton<span class="br0">&#40;</span>Entrée/sortie réel x,Entrée/sortie entier nIter<span class="br0">&#41;</span>
+    Variables:
+        prec //réel : précision sur la solution
+&nbsp;
+&lt;code&gt;
+    Début
+        Initialisation:
+            lire prec
+            lire x
+&nbsp;
+        Traitement:
+            Tant que $|\frac<span class="br0">&#123;</span>f<span class="br0">&#40;</span>x<span class="br0">&#41;</span><span class="br0">&#125;</span><span class="br0">&#123;</span>f'<span class="br0">&#40;</span>x<span class="br0">&#41;</span><span class="br0">&#125;</span> &gt;prec |$ faire //condition d'arret
+                $x - \frac<span class="br0">&#123;</span>f<span class="br0">&#40;</span>x<span class="br0">&#41;</span><span class="br0">&#125;</span><span class="br0">&#123;</span>f'<span class="br0">&#40;</span>x<span class="br0">&#41;</span><span class="br0">&#125;</span> \to x$ //calcul terme suivant de x
+                $nIter +<span class="nu0">1</span> \to nIter$ //incrémentation de nIter
+            Fin tant que
+    Fin

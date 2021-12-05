@@ -1,0 +1,3 @@
+@Override
+<span class="kw1">public</span> <span class="kw4">void</span> start<span class="br0">&#40;</span>Stage primaryStage<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+<span class="br0">&#125;</span>

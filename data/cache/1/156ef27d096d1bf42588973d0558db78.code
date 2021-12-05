@@ -1,0 +1,1 @@
+distance <span class="sy0">=</span> dist<span class="br0">&#40;</span>x<span class="sy0">,</span> <span class="st0">&quot;euclidean&quot;</span><span class="br0">&#41;</span> <span class="co1">#crée une structure de distance entre les individus</span>

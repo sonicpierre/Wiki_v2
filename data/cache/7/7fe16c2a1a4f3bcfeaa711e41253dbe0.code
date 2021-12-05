@@ -1,0 +1,3 @@
+<span class="kw1">from</span> sklearn.<span class="me1">ensemble</span> <span class="kw1">import</span> RandomForestClassifier
+foret_mod <span class="sy0">=</span> RandomForestClassifier<span class="br0">&#40;</span>n_estimators<span class="sy0">=</span> <span class="nu0">500</span><span class="sy0">,</span>max_depth<span class="sy0">=</span> <span class="nu0">4</span><span class="sy0">,</span> n_jobs<span class="sy0">=</span>-<span class="nu0">1</span><span class="sy0">,</span> oob_score<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span>
+foret_mod.<span class="me1">fit</span><span class="br0">&#40;</span>data_train<span class="sy0">,</span> data_res<span class="br0">&#41;</span>

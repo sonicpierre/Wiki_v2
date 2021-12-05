@@ -1,0 +1,9 @@
+<span class="co1">#Librairies nécessaires pour faire une pipeline</span>
+library<span class="br0">&#40;</span>magrittr<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>dplyr<span class="br0">&#41;</span>
+&nbsp;
+encoder <span class="sy0">&lt;</span>- . %<span class="sy0">&gt;</span>% factor %<span class="sy0">&gt;</span>%
+            LabelEncoder.<span class="me1">fit</span> %<span class="sy0">&gt;</span>%
+            transform<span class="br0">&#40;</span>.<span class="sy0">,</span> data$Species<span class="br0">&#41;</span>
+&nbsp;
+data$Species <span class="sy0">=</span> encoder<span class="br0">&#40;</span>data$Species<span class="br0">&#41;</span>

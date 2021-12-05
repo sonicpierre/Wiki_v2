@@ -1,0 +1,413 @@
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Anewton_et_regula_falsi&amp;media=cpp:derive.jpg" class="media" title="cpp:derive.jpg"><img src="/lib/exe/fetch.php?w=500&amp;tok=bf6e7d&amp;media=cpp:derive.jpg" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+Nous allons ici traiter de 2 méthodes utilisant la dérivation pour trouver la valeur optimum de notre problème de bière.
+</p>
+
+<h2 class="sectionedit1" id="methode_de_newton-raphson">Méthode de Newton-Raphson</h2>
+<div class="level2">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Anewton_et_regula_falsi&amp;media=cpp:methode_newton.png" class="media" title="cpp:methode_newton.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=9c7389&amp;media=cpp:methode_newton.png" class="mediacenter" alt="" width="500" /></a>
+<br/>
+
+L&#039;idée générale de cette méthode est de partir d&#039;un point, que l&#039;on note $x_0$, “assez proche” du zéro de notre<span style='color:#ed1c24; '> fonction</span>, et de tracer <span style='color:#00a2e8; '>la tangente</span> à la courbe de $f$  en $x_0$.  
+On résout ensuite  l&#039;équation $y_{bleu} = 0$. On obtient alors un nouveau point, $x_1$,  qui sera  plus proche de la racine que $x_0$. 
+</p>
+
+<p>
+On réitère la méthode: on part de $x_1$, on trace <span style='color:#22b14c; '>la tangente</span> à $f$ en $x_1$, on résout $y_{vert}=0$, la solution de cette équation est $x_3$, et ainsi de suite jusqu&#039;à converger vers $\alpha$   . 
+<br/>
+
+<br/>
+
+La théorie au fondement de cet algorithme est basée sur les <a href="https://fr.wikipedia.org/wiki/Th%C3%A9or%C3%A8me_de_Taylor" class="urlextern" title="https://fr.wikipedia.org/wiki/Th%C3%A9or%C3%A8me_de_Taylor" rel="nofollow">développement de Taylor au premier ordre</a>. La méthode de Newton permet de résoudre le même type de problèmes que la dichotomie mais sa convergence est quadratique et non linéaire, ce qui en fait une méthode plus efficace.
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;M\u00e9thode de Newton-Raphson&quot;,&quot;hid&quot;:&quot;methode_de_newton-raphson&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;155-1190&quot;} -->
+<h3 class="sectionedit2" id="algorithme">Algorithme</h3>
+<div class="level3">
+<pre class="code">
+Fonction newton(Entrée/sortie réel x,Entrée/sortie entier nIter)
+
+    Preconditions: x_0 appartient au domaine de définition de f,  f est semi-lisse sur [a;b] et la dérivée de f ne s&#039;annule pas sur [a,b]
+    PostCondition: Renvoie la racine de f sur [a;b] à epsilon près
+    
+    Variables:
+        prec //réel : précision sur la solution
+
+    Début
+        Initialisation:
+            lire prec
+            lire x
+
+        Traitement:
+            Tant que f(x)/f&#039;(x) &gt;prec  faire //condition d&#039;arret
+                x &lt;- x - f(x)/f&#039;(x) //calcul terme suivant de x
+               nIter&lt;- nIter +1  //incrémentation de nIter
+            Fin tant que
+    Fin</pre>
+
+<p>
+<div class='alert alert-info'><strong>Info :</strong> Toute fonction convexe en x est semi-lisse en x. Vous pouvez approfondir le sujet sur les fonctions semi-lisses <a href="https://fr.wikipedia.org/wiki/Fonction_semi-lisse#:~:text=Une%20fonction%20convexe%20est%20aussi%20semi%2Dlisse.&amp;text=On%20peut%20aussi%20obtenir%20la,ses%20composantes%20sont%20semi%2Dlisses.&amp;text=La%20semi%2Dlissit%C3%A9%20est%20stable%20par%20composition." class="urlextern" title="https://fr.wikipedia.org/wiki/Fonction_semi-lisse#:~:text=Une%20fonction%20convexe%20est%20aussi%20semi%2Dlisse.&amp;text=On%20peut%20aussi%20obtenir%20la,ses%20composantes%20sont%20semi%2Dlisses.&amp;text=La%20semi%2Dlissit%C3%A9%20est%20stable%20par%20composition." rel="nofollow">ici</a></div>
+<br/>
+
+<a href="/lib/exe/detail.php?id=cpp%3Anewton_et_regula_falsi&amp;media=cpp:fractale.jpg" class="media" title="cpp:fractale.jpg"><img src="/lib/exe/fetch.php?w=350&amp;tok=8b5e80&amp;media=cpp:fractale.jpg" class="mediacenter" alt="" width="350" /></a>
+</p>
+
+<p>
+Ci-dessus une application de la méthode de newton dans le cas de la recherche des zéros complexes de $P(z) = z^3 -1$.
+Tous les points d&#039;une même couleur représentent, si le point de départ est choisi dans la zone, la convergence vers une des trois racine de $P(z)$. Par exemple, tous les points dans la zone rouge représentent la convergence vers la racine $z = 1$.
+</p>
+
+<p>
+<div class='alert alert-info'><strong>Info :</strong> On peut noter que cette figure est fractale, c’est-à-dire que le même motif se répète en boucle à l&#039;infini.</div>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Algorithme&quot;,&quot;hid&quot;:&quot;algorithme&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;1191-2861&quot;} -->
+<h3 class="sectionedit3" id="calcule_de_la_derivee">Calcule de la dérivée</h3>
+<div class="level3">
+
+<p>
+La dérivée n&#039;est pas toujours simple à calculer, c&#039;est pourquoi il existe des méthodes numériques pour les estimer.
+</p>
+
+<p>
+<em class="u">En Python:</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> scipy.<span class="me1">misc</span> <span class="kw1">import</span> derivative
+derivee <span class="sy0">=</span> <span class="kw1">lambda</span> x:  derivative<span class="br0">&#40;</span>f<span class="sy0">,</span> x<span class="sy0">,</span> <span class="nu0">0.01</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En Octave (avec le package optim):</em>
+</p>
+<pre class="code matlab"><span class="kw1">function</span> <span class="br0">&#91;</span>y<span class="br0">&#93;</span> = df<span class="br0">&#40;</span>x<span class="br0">&#41;</span>
+  y = deriv<span class="br0">&#40;</span>@<span class="br0">&#40;</span>x0<span class="br0">&#41;</span> x0**<span class="nu0">2</span>-<span class="nu0">10</span>, x<span class="br0">&#41;</span>;
+endfunction</pre>
+
+<p>
+<div class='alert alert-info'>La structure de la fonctin deriv est: 
+deriv(@(variable de dérivée) *fonction*, valeur d&#039;évaluation de la dérivée).
+Le @ sert donc à préciser la variable selon laquelle on va dériver la fonction</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Calcule de la d\u00e9riv\u00e9e&quot;,&quot;hid&quot;:&quot;calcule_de_la_derivee&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:3,&quot;range&quot;:&quot;2862-3479&quot;} -->
+<h3 class="sectionedit4" id="application_de_l_algorithme_de_newton">Application de l&#039;algorithme de Newton</h3>
+<div class="level3">
+
+<p>
+Maintenant que nous savons calculer la dérivée nous pouvons appliquer l&#039;algorithme de Newton.
+</p>
+
+<p>
+<em class="u">En Python:</em>
+<br/>
+
+</p>
+<pre class="code python"><span class="kw1">def</span> NewtonsMethod<span class="br0">&#40;</span>x<span class="sy0">,</span> epsilon<span class="br0">&#41;</span>:
+    dif <span class="sy0">=</span> <span class="nu0">2</span>*epsilon <span class="co1">#initialisation de la variable difference</span>
+    <span class="kw1">while</span> <span class="br0">&#40;</span>dif <span class="sy0">&gt;</span> epsilon<span class="br0">&#41;</span> :
+        x1 <span class="sy0">=</span> x - fonction<span class="br0">&#40;</span>x<span class="br0">&#41;</span> / derivee<span class="br0">&#40;</span>x<span class="br0">&#41;</span><span class="co1">#calcul recursif du prochain point</span>
+        dif <span class="sy0">=</span> <span class="kw2">abs</span><span class="br0">&#40;</span>x1 - x<span class="br0">&#41;</span>
+        x <span class="sy0">=</span> x1
+    <span class="kw1">return</span> x
+&nbsp;
+<span class="co1">#Affichage</span>
+<span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;Solution:&quot;</span> NewtonsMethod<span class="br0">&#40;</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">1e-12</span><span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+<p>
+Il existe une fonction pré-codé en Python pour cette méthode :
+</p>
+
+<p>
+<em class="u">Newton Précodé :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> scipy <span class="kw1">import</span> optimize
+<span class="kw1">import</span> matplotlib.<span class="me1">pyplot</span> <span class="kw1">as</span> plt
+&nbsp;
+<span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;Le zéro de notre fonction sur [a;b] est:&quot;</span><span class="sy0">,</span> optimize.<span class="me1">newton</span><span class="br0">&#40;</span>f<span class="sy0">,</span> <span class="nu0">1.5</span><span class="sy0">,</span> fprime<span class="sy0">=</span><span class="kw1">lambda</span> x: <span class="nu0">2</span> * x<span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En Matlab:</em>
+<br/>
+
+</p>
+<pre class="code matlab"><span class="kw1">function</span> <span class="br0">&#91;</span>x<span class="br0">&#93;</span> = newton<span class="br0">&#40;</span>x<span class="br0">&#41;</span>
+  <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a>=<span class="nu0">10</span>^<span class="br0">&#40;</span>-<span class="nu0">12</span><span class="br0">&#41;</span>;
+  dif=<span class="nu0">2</span>*<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a>;
+  x1 = <span class="nu0">0</span>;
+  <span class="kw1">while</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/abs.html"><span class="kw2">abs</span></a><span class="br0">&#40;</span>dif<span class="br0">&#41;</span>&gt;<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a> 
+      x1=x-f<span class="br0">&#40;</span>x<span class="br0">&#41;</span>/df<span class="br0">&#40;</span>x<span class="br0">&#41;</span>;
+      dif=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/abs.html"><span class="kw2">abs</span></a><span class="br0">&#40;</span>x1-x<span class="br0">&#41;</span>;
+      x= x1;
+  <span class="kw1">end</span>
+endfunction
+&nbsp;
+#Affichage
+<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="co2">' La solution en partant de x0=10 est : '</span>, <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/num2str.html"><span class="kw2">num2str</span></a><span class="br0">&#40;</span>newton<span class="br0">&#40;</span><span class="nu0">10</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>;</pre>
+
+<p>
+print(“Le zéro de notre fonction sur [a;b] est:”, optimize.newton(f, 10))
+&lt;/code&gt;
+<br/>
+
+</p>
+<div class="table sectionedit5"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0 leftalign">              </td><th class="col1 leftalign"> Temps d&#039;exécution                  </th><th class="col2 leftalign"> Convergence          </th><th class="col3"> Nombre d&#039;itérations </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 leftalign"> Newton     </th><td class="col1 centeralign">       0.0448 µs           </td><td class="col2 centeralign">              Quadratique                </td><td class="col3 centeralign">                      6 (pour $x_0=10$)             </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 leftalign"> Newton précodé    </th><td class="col1 centeralign">       669.7 µs          </td><td class="col2 centeralign">              Quadratique                </td><td class="col3 centeralign">                    ???          </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:5,&quot;range&quot;:&quot;4618-4984&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Application de l&#039;algorithme de Newton&quot;,&quot;hid&quot;:&quot;application_de_l_algorithme_de_newton&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:4,&quot;range&quot;:&quot;3480-4985&quot;} -->
+<h2 class="sectionedit6" id="regula_falsi">Regula Falsi</h2>
+<div class="level2">
+
+<p>
+On peut voir la méthode de Regula Falsi (fausse position) comme un mélange entre la méthode de newton et la méthode de la dichotomie. 
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Anewton_et_regula_falsi&amp;media=cpp:regula_image.png" class="media" title="cpp:regula_image.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=0af2f1&amp;media=cpp:regula_image.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+<div class="table sectionedit7"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Couleur et type de trait  </th><th class="col1 centeralign">  Signification  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  Courbe   pleine  </td><td class="col1 centeralign">  Borne $a$ initiale  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  <span style='color:#ed1c24; '>Trait plein gauche </span>  </td><td class="col1 centeralign">  Borne $a$ initiale  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  <span style='color:#ed1c24; '>Trait plein droit </span>  </td><td class="col1 centeralign">  Borne $b$ initiale  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">   <span style='color:#99d9ea; '>Trait pointillé</span>       </td><td class="col1 centeralign">  Borne $a$ itération 1  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 centeralign">  <span style='color:#b5e61d; '>Trait pointillé</span>   </td><td class="col1 centeralign">  Borne $a$ itération 2  </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 centeralign">  <span style='color:#c8bfe7; '>Trait pointillé</span>  </td><td class="col1 centeralign">  Borne $a$ itération 3  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:7,&quot;range&quot;:&quot;5184-5662&quot;} -->
+<p>
+En effet, cette méthode hérite du fonctionnement de la dichotomie : on applique du TVI entre deux points ($a$ et $b$) pour trouver un point (noté $c$ ou $m$) qui remplacera une des bornes de départ : ainsi le nouvel intervalle sera réduit tout en contenant à coup sûr notre zéro. Pour calculer cette borne on utilisera une formule qui vient de la méthode de newton : $m ← a -f(a)* \frac{(b-a)}{(f(b)-f(a))}$. On réitère cette méthode récursivement ou itérativement jusqu&#039;à obtenir le zéro de notre fonction. 
+</p>
+
+<p>
+<div class='alert alert-info'><strong>Info :</strong> On a remplacé la dérivée utilisée par la méthode de newton par <a href="https://ljk.imag.fr/membres/Bernard.Ycart/mel/dc/node3.html" class="urlextern" title="https://ljk.imag.fr/membres/Bernard.Ycart/mel/dc/node3.html" rel="nofollow">le taux d&#039;accroissement</a> de $f$ (plus facile à calculer). </div>
+</p>
+
+</div>
+
+<h4 id="algorithme1">Algorithme</h4>
+<div class="level4">
+<ul>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>Précondition</strong></span> : il existe un unique m, zéro de la fonction f, sur l&#039;intervalle [a,b]</div>
+</li>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>PostCondition</strong></span> : la fonction doit renvoyer ce zéro avec une précision epsilon</div>
+</li>
+</ul>
+<div class="table sectionedit8"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Algorithme classique    </th><th class="col1 centeralign">  Algorithme récursif  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 leftalign"><pre class="code">Variables
+
+   réel a //borne inf de départ
+   réel b //borne sup de départ
+   réel ε // précision
+
+Début
+ Tant que (abs(f(a)) &gt; ε)
+    m ← a -f(a)*(b-a)/(f(b)-f(a))
+    Si (f(a)*f(m) ≤ 0) alors
+       b ← m
+    sinon
+       a ← m
+    Fin Si
+ Fin Tant que
+Fin</pre>
+</td><td class="col1 leftalign"><pre class="code">Variables
+
+   réel a //borne inferieur
+   réel b //borne superieur
+   réel c //nouvelle borne
+   
+Début
+    Si (abs(f(a))&lt;=prec) alors 
+        Renvoyer (a -f(a)*(b-a)/(f(b)-f(a)))
+    Sinon     
+        c = a -f(a)*(b-a)/(f(b)-f(a)) 
+    Fin Si
+     
+    Si f(a)*f(c) &lt;= 0 alors
+        Renvoyer (regu_rec(f,a,c,prec))
+    Sinon    
+        Renvoyer (regu_rec(f,c,b,prec))
+    Fin si
+ Fin</pre>
+</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table2&quot;,&quot;secid&quot;:8,&quot;range&quot;:&quot;6663-7423&quot;} -->
+</div>
+
+<h4 id="mise_en_place_pratique">Mise en place pratique</h4>
+<div class="level4">
+
+<p>
+Maintenant que vous connaissez l&#039;algorithme, il n&#039;y a plus qu&#039;à le traduire avec les différents langages :
+</p>
+
+<p>
+<em class="u">En Python:</em>
+<br/>
+
+</p>
+<div class="table sectionedit9"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Python Classique  </th><th class="col1 centeralign">  Python récursif  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 leftalign"><pre class="code python"><span class="kw1">def</span> regula_falsi<span class="br0">&#40;</span>f<span class="sy0">,</span> a<span class="sy0">,</span> b<span class="sy0">,</span> epsilon<span class="br0">&#41;</span>:
+&nbsp;
+    <span class="kw1">if</span> f<span class="br0">&#40;</span>a<span class="br0">&#41;</span> * f<span class="br0">&#40;</span>b<span class="br0">&#41;</span> <span class="sy0">&gt;</span> <span class="nu0">0</span>:
+        <span class="kw1">return</span> <span class="kw2">None</span>
+    u<span class="sy0">,</span> v <span class="sy0">=</span> <span class="kw2">float</span><span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw2">float</span><span class="br0">&#40;</span>b<span class="br0">&#41;</span>
+    <span class="kw1">while</span> <span class="br0">&#40;</span><span class="kw2">abs</span><span class="br0">&#40;</span>f<span class="br0">&#40;</span>u<span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy0">&gt;</span> epsilon<span class="br0">&#41;</span>:
+        i <span class="sy0">=</span> i+<span class="nu0">1</span>
+        w <span class="sy0">=</span> u -f<span class="br0">&#40;</span>u<span class="br0">&#41;</span>*<span class="br0">&#40;</span>v-u<span class="br0">&#41;</span>/<span class="br0">&#40;</span>f<span class="br0">&#40;</span>v<span class="br0">&#41;</span>-f<span class="br0">&#40;</span>u<span class="br0">&#41;</span><span class="br0">&#41;</span>
+        <span class="kw1">if</span> f<span class="br0">&#40;</span>u<span class="br0">&#41;</span> * f<span class="br0">&#40;</span>w<span class="br0">&#41;</span> <span class="sy0">&lt;=</span> <span class="nu0">0</span>:
+            v <span class="sy0">=</span> w
+        <span class="kw1">else</span>:
+            u <span class="sy0">=</span> w
+    <span class="kw1">return</span> w</pre>
+</td><td class="col1 leftalign"><pre class="code python"><span class="kw1">def</span> regu_rec<span class="br0">&#40;</span>f<span class="sy0">,</span>a<span class="sy0">,</span> b<span class="sy0">,</span>prec<span class="br0">&#41;</span>:
+    a<span class="sy0">,</span> b <span class="sy0">=</span> <span class="kw2">float</span><span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw2">float</span><span class="br0">&#40;</span>b<span class="br0">&#41;</span>
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw2">abs</span><span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">&lt;=</span>prec<span class="br0">&#41;</span>:
+        <span class="kw1">return</span> a -f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>*<span class="br0">&#40;</span>b-a<span class="br0">&#41;</span>/<span class="br0">&#40;</span>f<span class="br0">&#40;</span>b<span class="br0">&#41;</span>-f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="kw1">else</span>:
+        c <span class="sy0">=</span> a -f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>*<span class="br0">&#40;</span>b-a<span class="br0">&#41;</span>/<span class="br0">&#40;</span>f<span class="br0">&#40;</span>b<span class="br0">&#41;</span>-f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="br0">&#41;</span> 
+&nbsp;
+    <span class="kw1">if</span> f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>*f<span class="br0">&#40;</span>c<span class="br0">&#41;</span> <span class="sy0">&lt;=</span> <span class="nu0">0</span>:
+        <span class="kw1">return</span> regu_rec<span class="br0">&#40;</span>f<span class="sy0">,</span>a<span class="sy0">,</span>c<span class="sy0">,</span>prec<span class="br0">&#41;</span>
+    <span class="kw1">else</span>: <span class="co1">#sinon c remplace b</span>
+        <span class="kw1">return</span> regu_rec<span class="br0">&#40;</span>f<span class="sy0">,</span>c<span class="sy0">,</span>b<span class="sy0">,</span>prec<span class="br0">&#41;</span> </pre>
+</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table3&quot;,&quot;secid&quot;:9,&quot;range&quot;:&quot;7584-8267&quot;} -->
+<p>
+<strong>Résultat :</strong>
+</p>
+<pre class="code python"><span class="co1">#Résultat classique</span>
+<span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;La valeur du zéro de cette fonction sur (a,b) est:&quot;</span><span class="sy0">,</span>regula_falsi<span class="br0">&#40;</span>f<span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">1e-12</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">&lt;</span>/<span class="kw3">code</span>
+&nbsp;
+<span class="co1"># Résultats récursif</span>
+<span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;La valeur du zéro de cette fonction sur (a,b) est:&quot;</span><span class="sy0">,</span>regula_falsi<span class="br0">&#40;</span>f<span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">1e-12</span><span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En Matlab:</em>
+<br/>
+
+</p>
+<div class="table sectionedit10"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Matlab Classique  </th><th class="col1 centeralign">  Matlab récurssif  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 leftalign"><pre class="code matlab"><span class="kw1">function</span> <span class="br0">&#91;</span>y<span class="br0">&#93;</span>=regula<span class="br0">&#40;</span>a, b, <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a><span class="br0">&#41;</span>
+&nbsp;
+  <span class="kw1">if</span> <span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>.*f<span class="br0">&#40;</span>b<span class="br0">&#41;</span>&gt;<span class="nu0">0</span><span class="br0">&#41;</span>
+    <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span><span class="co2">'TVI non applicable'</span><span class="br0">&#41;</span>;
+  <span class="kw1">else</span>
+    <span class="kw1">while</span> <span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/abs.html"><span class="kw2">abs</span></a><span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="br0">&#41;</span>&gt;<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a><span class="br0">&#41;</span> #condition d'arret
+      c = a - <span class="br0">&#40;</span><span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>*<span class="br0">&#40;</span>b-a<span class="br0">&#41;</span><span class="br0">&#41;</span>/<span class="br0">&#40;</span>f<span class="br0">&#40;</span>b<span class="br0">&#41;</span> - f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;
+      <span class="kw1">if</span> <span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>.*f<span class="br0">&#40;</span>c<span class="br0">&#41;</span> &lt;= <span class="nu0">0</span><span class="br0">&#41;</span> #c remplace b
+          b = c;
+      <span class="kw1">else</span> #c remplace a
+          a = c;
+      endif
+    endwhile
+    y = c;
+  endif
+endfunction</pre>
+</td><td class="col1 leftalign"><pre class="code matlab"><span class="kw1">function</span> <span class="br0">&#91;</span>y<span class="br0">&#93;</span>= regu_rec<span class="br0">&#40;</span>a,b,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a><span class="br0">&#41;</span>
+&nbsp;
+  c =  <span class="nu0">0</span>;
+  <span class="kw1">if</span> <span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/abs.html"><span class="kw2">abs</span></a><span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="br0">&#41;</span>&lt;<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a><span class="br0">&#41;</span>
+    y = a - <span class="br0">&#40;</span><span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>.*<span class="br0">&#40;</span>b-a<span class="br0">&#41;</span><span class="br0">&#41;</span>./<span class="br0">&#40;</span>f<span class="br0">&#40;</span>b<span class="br0">&#41;</span> - f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="kw1">else</span>
+    c =  a - <span class="br0">&#40;</span><span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>.*<span class="br0">&#40;</span>b-a<span class="br0">&#41;</span><span class="br0">&#41;</span>./<span class="br0">&#40;</span>f<span class="br0">&#40;</span>b<span class="br0">&#41;</span> - f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;
+    <span class="kw1">if</span> <span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>.*f<span class="br0">&#40;</span>c<span class="br0">&#41;</span>&lt;=<span class="nu0">0</span><span class="br0">&#41;</span>
+      y = regu_rec<span class="br0">&#40;</span>a,c, <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a><span class="br0">&#41;</span>;
+    <span class="kw1">else</span> 
+      y = regu_rec<span class="br0">&#40;</span>c,b,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a><span class="br0">&#41;</span>;
+    endif
+  endif
+endfunction</pre>
+</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table4&quot;,&quot;secid&quot;:10,&quot;range&quot;:&quot;8555-9267&quot;} -->
+<p>
+<strong>Résultat :</strong>
+</p>
+<pre class="code matlab">#Résultat classique
+<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="co2">' La solution en partant de a=0, b= 10 est : '</span>, <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/num2str.html"><span class="kw2">num2str</span></a><span class="br0">&#40;</span><span class="br0">&#40;</span>regula<span class="br0">&#40;</span><span class="nu0">0</span>, <span class="nu0">10</span>, 1e-12<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>;
+&nbsp;
+#Resultat récursif
+<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="co2">' La solution en partant de a=0, b= 10 est : '</span>, <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/num2str.html"><span class="kw2">num2str</span></a><span class="br0">&#40;</span><span class="br0">&#40;</span>regula_rec<span class="br0">&#40;</span><span class="nu0">0</span>, <span class="nu0">10</span>, 1e-12<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>;</pre>
+
+<p>
+<br/>
+
+</p>
+<div class="table sectionedit11"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0 leftalign">              </td><th class="col1 centeralign">  Temps d&#039;exécution  </th><th class="col2 centeralign">  Convergence  </th><th class="col3 centeralign">  Nombre d&#039;itérations  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 centeralign">  Regula falsi classique  </th><td class="col1 centeralign">  0.231799 ns (python)  </td><td class="col2 centeralign">  Superlinéaire( mais moins rapide que Newton)  </td><td class="col3 centeralign">  27  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  Regula falsi récursive  </th><td class="col1 centeralign">  0.1762  ns(python)  </td><td class="col2 centeralign">  Superlinéaire (plus rapide que dichotomie)  </td><td class="col3 centeralign">  27  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table5&quot;,&quot;secid&quot;:11,&quot;range&quot;:&quot;9535-9834&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Regula Falsi&quot;,&quot;hid&quot;:&quot;regula_falsi&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:6,&quot;range&quot;:&quot;4986-&quot;} -->

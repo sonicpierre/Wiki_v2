@@ -1,0 +1,2 @@
+selecteur <span class="sy0">=</span> SelectKBest<span class="br0">&#40;</span>f_classif<span class="sy0">,</span> k<span class="sy0">=</span><span class="nu0">11</span><span class="br0">&#41;</span>
+feature_conservees <span class="sy0">=</span> selecteur.<span class="me1">fit_transform</span><span class="br0">&#40;</span>X_train<span class="br0">&#91;</span>feature_col<span class="br0">&#93;</span><span class="sy0">,</span> y_train<span class="br0">&#41;</span>

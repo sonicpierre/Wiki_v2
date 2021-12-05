@@ -1,0 +1,2 @@
+<span class="kw1">def</span> pourcentage<span class="br0">&#40;</span>compte<span class="sy0">,</span> total<span class="br0">&#41;</span>:
+    <span class="kw1">return</span> <span class="nu0">100</span> * compte / total

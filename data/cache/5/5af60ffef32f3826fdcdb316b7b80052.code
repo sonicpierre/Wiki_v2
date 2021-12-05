@@ -1,0 +1,7 @@
+<span class="co1">#Re-index avec une mesure toutes les 2 semaines</span>
+weekly_dates <span class="sy0">=</span> pd.<span class="me1">date_range</span><span class="br0">&#40;</span>start <span class="sy0">=</span> <span class="st0">'2020-02-16'</span><span class="sy0">,</span> periods <span class="sy0">=</span> <span class="nu0">26</span><span class="sy0">,</span> freq <span class="sy0">=</span> <span class="st0">'2W'</span><span class="br0">&#41;</span>
+data.<span class="me1">reindex</span><span class="br0">&#40;</span>weekly_dates<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Re-index avec une mesure tout les 4 jours</span>
+index <span class="sy0">=</span> pd.<span class="me1">date_range</span><span class="br0">&#40;</span>start <span class="sy0">=</span><span class="st0">'2020-02-16'</span><span class="sy0">,</span> periods<span class="sy0">=</span> <span class="nu0">91</span><span class="sy0">,</span> freq <span class="sy0">=</span> <span class="st0">&quot;4D&quot;</span><span class="br0">&#41;</span>
+data.<span class="me1">reindex</span><span class="br0">&#40;</span>index<span class="sy0">,</span> method <span class="sy0">=</span> <span class="st0">'nearest'</span><span class="br0">&#41;</span>

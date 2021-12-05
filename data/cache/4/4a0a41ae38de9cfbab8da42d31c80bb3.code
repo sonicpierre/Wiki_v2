@@ -1,0 +1,3 @@
+library<span class="br0">&#40;</span>pracma<span class="br0">&#41;</span>
+<span class="co1">#Intégration quad</span>
+quad<span class="br0">&#40;</span>f<span class="sy0">,</span> -<span class="nu0">10</span><span class="sy0">,</span> <span class="nu0">10</span><span class="sy0">,</span> <span class="nu0">1e-4</span><span class="br0">&#41;</span>

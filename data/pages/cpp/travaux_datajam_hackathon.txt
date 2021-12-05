@@ -1,0 +1,8 @@
+====Hackathon février 2021====
+
+{{ :cpp:hackathon.jpg?400 |}}
+
+  * **Ecoles :** ISIMA et CY Tech
+  * **Nombre de participants :** 25 participants de bac+3 à bac +5
+  * **Sujet :** Le but du Hackathon est de proposer aux différentes équipes l'analyses de pièces composants les différents modèles industriels. Cette analyse est découper en 3 étapes, l'extraction des données leur analyse et la présentation des résultats. Le but est de manipuler et mieux comprendre les outils proposés par l'entreprise. Les étudiants sont invités pendant tout l'évènement à communiquer en anglais pour permettre aux ingénieurs anglophones de l'entreprise de mieux les comprendre.
+  * **Réflexion post évènement :** L'évènement c'est bien passé, les étudiants comme l'entreprise se sont beaucoup amusés et ont appris de nouvelles technologies. La communication en anglais n'a pas forcément était évidente mais ce travail a été formateur. Le nombre de participant était correct mais une communication plus approfondi nous permettra par la suite d'acceuillir plus d'étudiants. Il faudra dans tout les cas continuer à faire une préparation minucieuse avant chacun de ces évènements.

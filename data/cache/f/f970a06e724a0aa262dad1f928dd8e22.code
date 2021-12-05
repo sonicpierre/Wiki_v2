@@ -1,0 +1,9 @@
+library<span class="br0">&#40;</span>ggplot2<span class="br0">&#41;</span>
+kClusters <span class="sy0">&lt;</span>- <span class="nu0">12</span>
+kMeans <span class="sy0">&lt;</span>- kmeans<span class="br0">&#40;</span>imgRGB<span class="br0">&#91;</span><span class="sy0">,</span> c<span class="br0">&#40;</span><span class="st0">&quot;R&quot;</span><span class="sy0">,</span> <span class="st0">&quot;G&quot;</span><span class="sy0">,</span> <span class="st0">&quot;B&quot;</span><span class="br0">&#41;</span><span class="br0">&#93;</span><span class="sy0">,</span> centers <span class="sy0">=</span> kClusters<span class="br0">&#41;</span>
+kColours <span class="sy0">&lt;</span>- rgb<span class="br0">&#40;</span>kMeans$centers<span class="br0">&#91;</span>kMeans$cluster<span class="sy0">,</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+ggplot<span class="br0">&#40;</span>data <span class="sy0">=</span> imgRGB<span class="sy0">,</span> aes<span class="br0">&#40;</span>x <span class="sy0">=</span> x<span class="sy0">,</span> y <span class="sy0">=</span> y<span class="br0">&#41;</span><span class="br0">&#41;</span> + 
+    geom_point<span class="br0">&#40;</span>colour <span class="sy0">=</span> kColours<span class="br0">&#41;</span> +
+    labs<span class="br0">&#40;</span>title <span class="sy0">=</span> paste<span class="br0">&#40;</span><span class="st0">&quot;k-Means Clustering of&quot;</span><span class="sy0">,</span> kClusters<span class="sy0">,</span> <span class="st0">&quot;Colours&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> +
+    xlab<span class="br0">&#40;</span><span class="st0">&quot;x&quot;</span><span class="br0">&#41;</span> +
+    ylab<span class="br0">&#40;</span><span class="st0">&quot;y&quot;</span><span class="br0">&#41;</span>

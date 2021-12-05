@@ -1,0 +1,4 @@
+library<span class="br0">&#40;</span>MLmetrics<span class="br0">&#41;</span>
+&nbsp;
+LogLoss<span class="br0">&#40;</span>y_pred<span class="sy0">,</span> y_test<span class="br0">&#41;</span><span class="co1">#Calcul de la perte logistique</span>
+table<span class="br0">&#40;</span>y_test<span class="sy0">,</span> y_pred<span class="br0">&#41;</span><span class="co1">#Construction de la matrice de confusion</span>

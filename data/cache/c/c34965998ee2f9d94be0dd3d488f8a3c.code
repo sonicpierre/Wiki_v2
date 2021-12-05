@@ -1,0 +1,1 @@
+<span class="kw1">print</span><span class="br0">&#40;</span>soup.<span class="me1">prettify</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>

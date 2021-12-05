@@ -1,0 +1,31 @@
+====Article 1 : Top 7 de l'utilisation du Machine Learning en finance====
+
+Ces dernières années les data scientistes ceux sont largement invité dans les secteurs financiers pour des tâches diverses. Nous allons ici décrire rapidement quelques domaines qui en découlent :
+
+===Automatisation de la gestion des risques===
+
+La gestion des risques a toujours été un domaine immense dans le monde de la finance. Cependant, avec l'arrivé du Machine Learning, elle a changé considérablement. En effet, le nombre de variables particulièrement élevé définissant les risques a rendu les modèles d'IA de plus en plus intéressants. Avec un nombre de donnés suffisants ils sont relativement fiables, facilement évaluables et mis à jours. Enfin avec la vague de digitalisation, les entreprises sont enclines à faire des efforts dans ce sens et à évoluer car les profits sont directement au rendez-vous.
+
+===Analyse prédictive===
+
+Il s'agit d'analyser les données pour voir si on retrouve des structures qui seraient annonciatrices d'un évènement pour l'anticiper ou par la suite mieux le gérer.
+
+===Détection de fraudes===
+
+La détection de fraudes est un domaine prépondérant aux services de sécurité dans le domaine bancaire. Seul les data scientists et leur modèle peuvent détecter automatiquement des anomalies et construire des modèles qui s'adapte à la créativité des fraudeurs rapidement.
+
+===Analyse des consommateurs===
+
+L'analyse des consommateurs à des fins de marketing est un domaine croissant en data science. Citons par exemple l'analyse des sentiments et des profils qui correctement exploités pourraientt améliorer l'efficacité des publicités ciblées.
+
+===Trading===
+
+Le trading est le domaine qui a fait le plus évoluer l'analyse de données en temps réels. En effet, les données ayant une durée de vie assez courte et étant source de décision importante à court terme, elles ont données place à des modèles d'IA puissants. De plus, les données viennent de plusieurs sources en masse télé, tweet, journaux... Les technologies comme Hadoop, NoSQL et Storm ceux sont annoncés comme les plus fiables pour les traitements. Ces technologies changent radicalement le visage du trading traditionnel.
+
+===Personnalisation profonde virtuelle===
+
+Il s'agit de modifier l'expérience utilisateur en fonction des données qu'on collecte sur lui. L'interface graphique se personnalise et les conseils financiers sont adaptés à la personne qui les consultent de façon automatique.
+
+Conclusion : Il en ressort que la finance est un lieu où les data scientists ont de plus en plus leur place et qu'il y a de nombreux autres domaine même si nous nous sommes focalisé que sur quelques-uns.
+
+[[https://www.datasciencecentral.com/profiles/blogs/top-7-data-science-use-cases-in-finance?fbclid=IwAR0LHCjgR-b-X9ElpJqG-smIKrf_1xLutZC_vg23eBYWaLO1tqHKYEYedRc]]

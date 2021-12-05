@@ -1,0 +1,6 @@
+{
+    &quot;name&quot;: &quot;Testi&quot;,
+    &quot;description&quot;: &quot;The Test Hero&quot;,
+    &quot;stats&quot;: { ... },
+    &quot;spells&quot;: [ ... ]
+}

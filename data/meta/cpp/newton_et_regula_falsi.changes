@@ -1,0 +1,88 @@
+1597180198	82.64.124.27	C	cpp:newton_et_regula_falsi	pierrevirgaux	créée		7131
+1597184956	82.64.124.27	E	cpp:newton_et_regula_falsi	pierrevirgaux			154
+1597184973	82.64.124.27	E	cpp:newton_et_regula_falsi	pierrevirgaux			0
+1597267215	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Méthode Classique] 		-244
+1597267283	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Méthode Classique] 		59
+1597267363	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Méthode Récursive] 		290
+1597267397	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Méthode Récursive] 		91
+1597267511	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Méthode Récursive] 		61
+1597267538	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Méthode Récursive] 		2
+1597267609	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Méthode Classique] 		65
+1597267807	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Méthode Classique] 		-1
+1597267854	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Méthode Récursive] 		0
+1597267866	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Méthode Classique] 		3
+1597602128	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Méthode Récursive] 		563
+1597602671	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Regula Falsi] 		183
+1597602848	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Regula Falsi] 		82
+1597616501	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Regula Falsi] 		32
+1597616549	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Application de l'algorithme de Newton] 		-949
+1597616558	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Regula Falsi] 		950
+1597616623	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Regula Falsi] 		3
+1597617318	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Regula Falsi] 		596
+1597617359	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Regula Falsi] 		0
+1597617422	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Regula Falsi] 		76
+1597665559	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Regula Falsi] 		-157
+1597666119	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Méthode Récursive] 		-103
+1597666733	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Regula Falsi] 		0
+1597666825	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Application de l'algorithme de Newton] 		-23
+1597667034	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Méthode Classique] 		-1
+1597667528	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Application de l'algorithme de Newton] 		-2
+1597669385	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Méthode Classique] 		101
+1597669408	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Méthode Récursive] 		-443
+1597669817	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Méthode Classique] 		373
+1597669941	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Calcule de la dérivée] 		142
+1597670350	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Algorithme] 		409
+1597671595	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Application de l'algorithme de Newton] 		156
+1597671730	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Application de l'algorithme de Newton] 		125
+1597686626	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Application de l'algorithme de Newton] 		68
+1597686664	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Méthode Récursive] 		-17
+1597686835	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Méthode Classique] 		-2
+1597687615	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Méthode Classique] 		151
+1597687637	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Méthode Récursive] 		-437
+1597688025	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Méthode Classique] 		158
+1597688064	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Méthode Récursive] 		-129
+1597688135	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Méthode Classique] 		134
+1597688275	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Application de l'algorithme de Newton] 		8
+1597688512	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Méthode Classique] 		-52
+1597688538	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Méthode Récursive] 		-282
+1597688587	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Méthode Classique] 		107
+1597689207	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Méthode Classique] 		84
+1597693325	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Méthode Classique] 		-15
+1597693357	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Méthode Récursive] 		-283
+1597693435	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Méthode Classique] 		286
+1597693456	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Méthode Récursive] 		-170
+1597693491	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Méthode Classique] 		126
+1597693516	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Méthode Classique] 		-1
+1597693646	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Regula Falsi] 		-63
+1597693970	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Méthode Classique] 		1
+1597694247	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Regula Falsi] 		110
+1597694297	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Regula Falsi] 		1
+1597694351	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Regula Falsi] 		3
+1597696236	91.69.217.178	E	cpp:newton_et_regula_falsi	danilouchouchou			7
+1597701917	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Application de l'algorithme de Newton] 		100
+1597702206	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Calcule de la dérivée] 		135
+1597702243	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Calcule de la dérivée] 		82
+1597702253	91.160.167.245	E	cpp:newton_et_regula_falsi	matheo.bolland	[Calcule de la dérivée] 		1
+1604412413	88.124.10.73	E	cpp:newton_et_regula_falsi	malama			-4
+1604412493	88.124.10.73	E	cpp:newton_et_regula_falsi	malama	[Méthode de Newton-Raphson] 		-1
+1604412551	88.124.10.73	E	cpp:newton_et_regula_falsi	malama	[Méthode de Newton-Raphson] 		-1
+1604412722	88.124.10.73	E	cpp:newton_et_regula_falsi	malama	[Méthode de Newton-Raphson] 		-6
+1604412754	88.124.10.73	E	cpp:newton_et_regula_falsi	malama	[Méthode de Newton-Raphson] 		-1
+1604412887	88.124.10.73	E	cpp:newton_et_regula_falsi	malama	[Algorithme] 		0
+1604412981	88.124.10.73	E	cpp:newton_et_regula_falsi	malama	[Algorithme] 		2
+1604413106	88.124.10.73	E	cpp:newton_et_regula_falsi	malama	[Algorithme] 		0
+1604413168	88.124.10.73	E	cpp:newton_et_regula_falsi	malama	[Calcule de la dérivée] 		-3
+1604413216	88.124.10.73	E	cpp:newton_et_regula_falsi	malama	[Calcule de la dérivée] 		1
+1604413244	88.124.10.73	E	cpp:newton_et_regula_falsi	malama	[Calcule de la dérivée] 		0
+1604413304	88.124.10.73	E	cpp:newton_et_regula_falsi	malama	[Application de l'algorithme de Newton] 		1
+1604413383	88.124.10.73	E	cpp:newton_et_regula_falsi	malama	[Application de l'algorithme de Newton] 		0
+1604413460	88.124.10.73	E	cpp:newton_et_regula_falsi	malama	[Regula Falsi] 		0
+1604413721	88.124.10.73	E	cpp:newton_et_regula_falsi	malama	[Regula Falsi] 		2
+1604413775	88.124.10.73	E	cpp:newton_et_regula_falsi	malama	[Regula Falsi] 		0
+1604413862	88.124.10.73	E	cpp:newton_et_regula_falsi	malama	[Regula Falsi] 		2
+1604413943	88.124.10.73	E	cpp:newton_et_regula_falsi	malama	[Regula Falsi] 		0
+1604830130	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Algorithme] 		0
+1604830498	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Algorithme] 		-49
+1604830597	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Calcule de la dérivée] 		2
+1604830691	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Regula Falsi] 		0
+1604830746	88.124.10.73	E	cpp:newton_et_regula_falsi	pierrevirgaux	[Regula Falsi] 		0

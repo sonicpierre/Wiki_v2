@@ -1,0 +1,12 @@
+<span class="co1">#Déclaration de la fonction</span>
+<span class="kw1">def</span> maFonction<span class="br0">&#40;</span>x<span class="sy0">,</span>y<span class="br0">&#41;</span>:
+    <span class="co1">#Utilisation fréquente du for pour les boucles</span>
+    <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>y<span class="br0">&#41;</span>:
+        <span class="co1">#On écrit une condition</span>
+        <span class="kw1">if</span><span class="br0">&#40;</span>i<span class="sy0">!=</span><span class="nu0">3</span><span class="br0">&#41;</span>:
+            <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;Vive l'Auvergne !&quot;</span><span class="br0">&#41;</span>
+        <span class="kw1">else</span>:
+            <span class="kw1">return</span><span class="br0">&#40;</span>x+<span class="nu0">5</span><span class="br0">&#41;</span> <span class="co1">#return va mettre un terme à la boucle et renvoyer une valeur</span>
+<span class="co1">#Appel de la fonction</span>
+Resultat <span class="sy0">=</span> maFonction<span class="br0">&#40;</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">20</span><span class="br0">&#41;</span>
+<span class="co1"># Resultat aura la valeur 5 dans ce cas</span>

@@ -1,0 +1,4 @@
+<span class="kw1">from</span> sklearn.<span class="me1">metrics</span> <span class="kw1">import</span> classification_report<span class="sy0">,</span> confusion_matrix
+&nbsp;
+<span class="kw1">print</span><span class="br0">&#40;</span>confusion_matrix<span class="br0">&#40;</span>y_test<span class="sy0">,</span> Predict<span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="kw1">print</span><span class="br0">&#40;</span>classification_report<span class="br0">&#40;</span>y_test<span class="sy0">,</span> Predict<span class="br0">&#41;</span><span class="br0">&#41;</span>

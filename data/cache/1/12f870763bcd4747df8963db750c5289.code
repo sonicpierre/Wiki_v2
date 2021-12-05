@@ -1,0 +1,7 @@
+<span class="kw1">from</span> scipy.<span class="me1">spatial</span> <span class="kw1">import</span> Voronoi<span class="sy0">,</span> voronoi_plot_2d
+y_kmeans <span class="sy0">=</span> model.<span class="me1">predict</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span>
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">10</span><span class="sy0">,</span> <span class="nu0">10</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+ax <span class="sy0">=</span> plt.<span class="me1">gca</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+vor <span class="sy0">=</span> Voronoi<span class="br0">&#40;</span>CoorCentreVoulu<span class="br0">&#41;</span>
+voronoi_plot_2d<span class="br0">&#40;</span>vor<span class="sy0">,</span> ax<span class="sy0">,</span> point_size <span class="sy0">=</span> <span class="nu0">1</span><span class="br0">&#41;</span>
+plt.<span class="me1">scatter</span><span class="br0">&#40;</span>data<span class="br0">&#91;</span><span class="st0">'0.799_0.201'</span><span class="br0">&#93;</span><span class="sy0">,</span> data<span class="br0">&#91;</span><span class="st0">'0.799_0.201.1'</span><span class="br0">&#93;</span><span class="sy0">,</span> c<span class="sy0">=</span>y_kmeans<span class="sy0">,</span> s<span class="sy0">=</span><span class="nu0">15</span><span class="sy0">,</span> cmap<span class="sy0">=</span><span class="st0">'summer'</span><span class="br0">&#41;</span>

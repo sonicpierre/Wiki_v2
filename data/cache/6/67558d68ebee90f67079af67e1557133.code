@@ -1,0 +1,6 @@
+<span class="kw1">lambda</span> <span class="sy0">&lt;</span>- <span class="nu0">.8</span><span class="co1">#Lambda</span>
+n <span class="sy0">&lt;</span>- <span class="nu0">10000</span><span class="co1">#DTaille de l'échantillon</span>
+&nbsp;
+ech <span class="sy0">&lt;</span>- rpois<span class="br0">&#40;</span>n<span class="sy0">,</span> <span class="kw1">lambda</span><span class="br0">&#41;</span><span class="co1">#Loi de Poisson</span>
+&nbsp;
+barplot<span class="br0">&#40;</span>table<span class="br0">&#40;</span>ech<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Représentation graphique</span>

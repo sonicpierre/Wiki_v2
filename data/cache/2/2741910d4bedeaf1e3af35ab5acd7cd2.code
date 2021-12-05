@@ -1,0 +1,4 @@
+install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;partykit&quot;</span><span class="br0">&#41;</span>
+install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;CHAID&quot;</span><span class="sy0">,</span> repos<span class="sy0">=</span><span class="st0">&quot;http://R-Forge.R-project.org&quot;</span><span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>CHAID<span class="br0">&#41;</span>
+tree <span class="sy0">=</span> chaid<span class="br0">&#40;</span>vote3<span class="sy0">~</span>.<span class="sy0">,</span> USvote<span class="sy0">,</span> control <span class="sy0">=</span> control_tree<span class="br0">&#41;</span>

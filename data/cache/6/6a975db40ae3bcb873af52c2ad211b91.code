@@ -1,0 +1,3 @@
+<span class="kw1">from</span> scipy <span class="kw1">import</span> integrate
+x <span class="sy0">=</span> np.<span class="me1">linspace</span><span class="br0">&#40;</span>-<span class="nu0">10</span><span class="sy0">,</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">10000</span><span class="br0">&#41;</span>
+integrate.<span class="me1">simps</span><span class="br0">&#40;</span>f<span class="br0">&#40;</span>x<span class="br0">&#41;</span><span class="sy0">,</span> x<span class="br0">&#41;</span>

@@ -1,0 +1,1 @@
+<a href="http://www.cmake.org/cmake/help/cmake2.6docs.html#command:project"><span class="kw1">project</span></a><span class="sy0">(</span>cmaketuto C CXX<span class="sy0">)</span>

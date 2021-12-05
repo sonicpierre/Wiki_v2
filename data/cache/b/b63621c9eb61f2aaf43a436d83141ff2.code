@@ -1,0 +1,27 @@
+<span class="co1"># Résultats</span>
+<span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;La valeur du zéro de cette fonction sur (a,b) est:&quot;</span><span class="sy0">,</span>regula_falsi<span class="br0">&#40;</span>f<span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">1e-12</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">&lt;</span>/<span class="kw3">code</span>
+&nbsp;
+&nbsp;
+__En Matlab:__
+\\
+&nbsp;
+<span class="sy0">&lt;</span><span class="kw3">code</span> matlab<span class="sy0">&gt;</span>
+function <span class="br0">&#91;</span>y<span class="br0">&#93;</span><span class="sy0">=</span>regula<span class="br0">&#40;</span>a<span class="sy0">,</span> b<span class="sy0">,</span> eps<span class="br0">&#41;</span>
+&nbsp;
+  <span class="kw1">if</span> <span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>.*f<span class="br0">&#40;</span>b<span class="br0">&#41;</span><span class="sy0">&gt;</span><span class="nu0">0</span><span class="br0">&#41;</span>
+    disp<span class="br0">&#40;</span><span class="st0">'TVI non applicable'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="kw1">else</span>
+    <span class="kw1">while</span> <span class="br0">&#40;</span><span class="kw2">abs</span><span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">&gt;</span>eps<span class="br0">&#41;</span> <span class="co1">#condition d'arret</span>
+      c <span class="sy0">=</span> a - <span class="br0">&#40;</span><span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>*<span class="br0">&#40;</span>b-a<span class="br0">&#41;</span><span class="br0">&#41;</span>/<span class="br0">&#40;</span>f<span class="br0">&#40;</span>b<span class="br0">&#41;</span> - f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+      <span class="kw1">if</span> <span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>.*f<span class="br0">&#40;</span>c<span class="br0">&#41;</span> <span class="sy0">&lt;=</span> <span class="nu0">0</span><span class="br0">&#41;</span> <span class="co1">#c remplace b</span>
+          b <span class="sy0">=</span> c<span class="sy0">;</span>
+      <span class="kw1">else</span> <span class="co1">#c remplace a</span>
+          a <span class="sy0">=</span> c<span class="sy0">;</span>
+      endif
+    endwhile
+    y <span class="sy0">=</span> c<span class="sy0">;</span>
+  endif
+endfunction
+&nbsp;
+<span class="co1">#Script:</span>
+disp<span class="br0">&#40;</span><span class="br0">&#91;</span><span class="st0">' La solution en partant de a=0, b= 10 est : '</span><span class="sy0">,</span> num2str<span class="br0">&#40;</span><span class="br0">&#40;</span>regula<span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">10</span><span class="sy0">,</span> <span class="nu0">1e-12</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>

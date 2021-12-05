@@ -1,0 +1,5 @@
+<span class="kw1">from</span> sklearn.<span class="me1">linear_model</span> <span class="kw1">import</span> SGDRegressor
+<span class="co1">#eta est le taux d'apprentissage</span>
+<span class="co1">#tol est la précision visée</span>
+sgd_reg <span class="sy0">=</span> SGDRegressor<span class="br0">&#40;</span>max_iter <span class="sy0">=</span> <span class="nu0">1000</span><span class="sy0">,</span> tol<span class="sy0">=</span><span class="nu0">1e-3</span><span class="sy0">,</span> penalty<span class="sy0">=</span><span class="kw2">None</span><span class="sy0">,</span> eta<span class="sy0">=</span><span class="nu0">0.1</span><span class="br0">&#41;</span>
+sgd_reg.<span class="me1">fit</span><span class="br0">&#40;</span>X<span class="sy0">,</span> y.<span class="me1">ravel</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="co1">#ravel permet de tout mettre dans une liste à une dimension</span>

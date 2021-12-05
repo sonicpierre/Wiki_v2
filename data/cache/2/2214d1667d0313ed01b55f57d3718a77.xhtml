@@ -1,0 +1,342 @@
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Atendance_et_saisonnalite&amp;media=cpp:illustration_serie_temp.jpg" class="media" title="cpp:illustration_serie_temp.jpg"><img src="/lib/exe/fetch.php?w=500&amp;tok=16e01d&amp;media=cpp:illustration_serie_temp.jpg" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+Savoir manipuler les séries temporelles est fort utile mais savoir prévoir les fluctuations futures est d&#039;autant plus important. Nous allons ici décrire des notions propres aux séries temporelles qui permettront par la suite de développer les modèles spécifiques. Il existe principalement 2 types de modèles, les <span style='color:#ed1c24; '><strong>modèles déterministe</strong></span> que nous allons aborder ici et les <span style='color:#ed1c24; '><strong>modèles stochastique</strong></span> que nous aborderons ultérieurement. 
+</p>
+
+<h2 class="sectionedit1" id="modeles_additif_et_multiplicatif">Modèles additif et multiplicatif</h2>
+<div class="level2">
+
+<p>
+Nous allons étudier 2 modèles déterministes : le modèle additif et le modèle multiplicatif.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Atendance_et_saisonnalite&amp;media=cpp:modele_additif_multiplicatif.png" class="media" title="cpp:modele_additif_multiplicatif.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=ec80eb&amp;media=cpp:modele_additif_multiplicatif.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+
+<p>
+On remarque tout de suite une différence significative dans la représentation de ces deux types de modèles. Cette différence se retrouvera bien entendu dans les  relations mathématiques permettant de les modéliser :
+</p>
+<div class="table sectionedit2"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Modèle additif  </th><th class="col1 centeralign">  Modèle multiplicatif  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  $X_t = Z_t + S_t + \epsilon_t$  </td><td class="col1 centeralign">  $ X_t = Z_t  (1 + S_t) (1 + \epsilon_t)$  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:2,&quot;range&quot;:&quot;956-1085&quot;} -->
+<p>
+avec $Z_t$ représentant la tendance, $S_t$ la saisonnalité et $\epsilon_t$ le bruit. Le bruit est la composante aléatoire qui n&#039;est pas modéliser par les deux autres composantes.
+</p>
+
+<p>
+<span style='color:#ed1c24; '>Mais comment choisir le bon modèle ?</span>
+</p>
+
+<p>
+Il existe trois méthodes qui permettent de savoir quel est le modèle le plus adapté, il est important de toutes les tester et comparer leurs résultats pour avoir les bonnes conclusions.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Atendance_et_saisonnalite&amp;media=cpp:methode_bande.png" class="media" title="cpp:methode_bande.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=f9390e&amp;media=cpp:methode_bande.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+
+<p>
+<strong>Technique :</strong> On trace 2 droites passant respectivement par les maximas et minimas.
+</p>
+
+<p>
+<strong>Règle de décision :</strong> Si les droites sont parallèle alors le modèle est aditif sinon il est multiplicatif.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Atendance_et_saisonnalite&amp;media=cpp:methode_profil.png" class="media" title="cpp:methode_profil.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=078189&amp;media=cpp:methode_profil.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+
+<p>
+<strong>Technique :</strong> On découpe la série temporelle par période observée et on superpose les différents morceaux.
+</p>
+
+<p>
+<strong>Règle de décision :</strong> Si on observe des courbes globalement similaires avec un simple décalage de valeur on est avec un modèle aditif sinon on est avec un modèle multiplicatif.
+</p>
+
+<p>
+<strong>Méthode analytique :</strong> On calcule les moyenne et écarts types des différentes périodes. On construit ensuite la régression linéaire tels que :
+</p>
+
+<p>
+$$\sigma = a \bar{x} + b$$
+</p>
+
+<p>
+<strong>Règle de décision :</strong> Si a est nul alors le modèle est additif sinon il est multiplicatif.
+</p>
+
+<p>
+Il est conseillé d&#039;utiliser une simple feuille de calcule avec Libre Office ou Excel pour trouver le type de modèle. L&#039;utilisation de Python ou R ici n&#039;ajoutera que des difficultés inutiles. Il est important de baser son choix sur les 3 méthodes pour être sûr de choisir le bon modèle.
+</p>
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> Ces notions ne sont pas propres aux modèles déterministes nous les retrouverons dans la construction de modèle stochastiques.</div>
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.math.univ-toulouse.fr/~lagnoux/Poly_SC.pdf" class="urlextern" title="https://www.math.univ-toulouse.fr/~lagnoux/Poly_SC.pdf" rel="nofollow">https://www.math.univ-toulouse.fr/~lagnoux/Poly_SC.pdf</a></div>
+</li>
+</ul>
+
+<p>
+Nous avons choisi notre modèle maintenant il est temps de reprendre chaque élément qui compose la série temporelle et essayer de le déterminer.
+</p>
+
+<p>
+<div class='alert alert-info'><strong>Info :</strong> Nous utiliserons des données simulées présentent ici.</div>
+</p>
+
+<p>
+Supposons que vous ayez cette série temporelle et que vous vouliez comprendre comment elle est construite pour pouvoir par la suite la simuler dans le temps et faire des prédictions.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Mod\u00e8les additif et multiplicatif&quot;,&quot;hid&quot;:&quot;modeles_additif_et_multiplicatif&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;540-3338&quot;} -->
+<h2 class="sectionedit3" id="tendance">Tendance</h2>
+<div class="level2">
+
+<p>
+Une façon de transformer la série temporelle est de la supposer sans composante saisonnière. On arrive donc à la formule suivante :
+</p>
+
+<p>
+$$X_t = m_t + \epsilon_t$$
+</p>
+
+<p>
+L&#039;expression de m_t peut varier allant du simple cas linéaire avec $m_t = \beta_0 + \beta_1 t$ à des expressions polynomiales d&#039;ordre supérieur $m_t =  \beta_0 + \beta_1 t + \beta_2 t^2 + \ldots + \beta_n t^n$ ou encore des expressions faisant appels à des coefficients exponentielles. 
+</p>
+
+<p>
+Dans le cas “simple” où il faut estimer $\beta_0$ et $\beta_1$ on utilise la méthode des Moindres Carrés Ordinaires qui a été développé plus en détail <a href="/doku.php?id=cpp:regression_lineaire_interpret_daniel" class="wikilink1" title="cpp:regression_lineaire_interpret_daniel"> ici</a>. On arrive alors aux formules suivantes :
+</p>
+
+<p>
+$$\beta_0 = \bar{X} - \beta_1 \bar{t} \,\,\,\;\; \beta_1 = \frac{Cov(t,X)}{Var(t)}$$
+</p>
+
+<p>
+Dans notre cas particulier nous pouvons dire que $Var(t) = \frac{n^2 -1}{12}$ et $Cov(t,X) = \frac{1}{n}\sum^n_{t=1}t*X_t - \bar{t} *\bar{X}$. Nous allons commencer par déterminer la tendance sans l&#039;aide de librairies spécifiques au calcul de la tendance.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+<span class="kw1">from</span> sklearn.<span class="me1">linear_model</span> <span class="kw1">import</span> LinearRegression
+&nbsp;
+<span class="co1">#On crée une colonne de temps discret</span>
+data<span class="br0">&#91;</span><span class="st0">&quot;Temps&quot;</span><span class="br0">&#93;</span> <span class="sy0">=</span> np.<span class="me1">linspace</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">100</span><span class="sy0">,</span><span class="nu0">100</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#On entraîne une  régression linéaire et on fait les prédictions</span>
+linear_reg <span class="sy0">=</span> LinearRegression<span class="br0">&#40;</span><span class="br0">&#41;</span>.<span class="me1">fit</span><span class="br0">&#40;</span>np.<span class="kw3">array</span><span class="br0">&#40;</span>data<span class="br0">&#91;</span><span class="st0">&quot;Temps&quot;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>.<span class="me1">reshape</span><span class="br0">&#40;</span>-<span class="nu0">1</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="sy0">,</span> np.<span class="kw3">array</span><span class="br0">&#40;</span>data<span class="br0">&#91;</span><span class="st0">&quot;Valeurs&quot;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>.<span class="me1">reshape</span><span class="br0">&#40;</span>-<span class="nu0">1</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+data<span class="br0">&#91;</span><span class="st0">&quot;Tendance&quot;</span><span class="br0">&#93;</span> <span class="sy0">=</span> linear_reg.<span class="me1">predict</span><span class="br0">&#40;</span>np.<span class="kw3">array</span><span class="br0">&#40;</span>data<span class="br0">&#91;</span><span class="st0">&quot;Temps&quot;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>.<span class="me1">reshape</span><span class="br0">&#40;</span>-<span class="nu0">1</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#On récupère la série sans tendance</span>
+data<span class="br0">&#91;</span><span class="st0">&quot;Valeur sans tendance&quot;</span><span class="br0">&#93;</span> <span class="sy0">=</span> data<span class="br0">&#91;</span><span class="st0">&quot;Valeurs&quot;</span><span class="br0">&#93;</span>.<span class="me1">sub</span><span class="br0">&#40;</span>data<span class="br0">&#91;</span><span class="st0">&quot;Tendance&quot;</span><span class="br0">&#93;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">&nbsp;</pre>
+
+<p>
+On peut aussi utiliser les librairies spécifiques pour ce traitement.
+</p>
+<pre class="code python"><span class="kw1">from</span> statsmodels.<span class="me1">tsa</span>.<span class="me1">tsatools</span> <span class="kw1">import</span> detrend
+data<span class="br0">&#91;</span><span class="st0">&quot;Valeur sans tendance&quot;</span><span class="br0">&#93;</span> <span class="sy0">=</span> detrend<span class="br0">&#40;</span>data<span class="br0">&#91;</span><span class="st0">&quot;Valeurs&quot;</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultats :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Atendance_et_saisonnalite&amp;media=cpp:tendance_serie_temp.png" class="media" title="cpp:tendance_serie_temp.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=e1aa63&amp;media=cpp:tendance_serie_temp.png" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+En regardant les coefficients de la régression linéaire on arrive à exprimer la tendance comme $T = 5.08 * t - 2.20$.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Tendance&quot;,&quot;hid&quot;:&quot;tendance&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;3339-5390&quot;} -->
+<h2 class="sectionedit4" id="saisonalite_dans_la_serie">Saisonalité dans la série</h2>
+<div class="level2">
+
+<p>
+Quelle est une des différences principales entre une série temporelle et un dataframe classique ? Les données liées au temps ont un ordre qui fait toute la différence. Les mesures faites d&#039;aujourd&#039;hui sont peut-être liées à celles de hier ou à celles de la saison dernière. Il a peut-être une périodicité (saisonnalité) qui permettrait de mieux comprendre la série pour à terme faire des prédictions concernant les futures fluctuations.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Saisonalit\u00e9 dans la s\u00e9rie&quot;,&quot;hid&quot;:&quot;saisonalite_dans_la_serie&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:4,&quot;range&quot;:&quot;5391-5884&quot;} -->
+<h3 class="sectionedit5" id="detecter_la_saisonnalite">Détecter la saisonnalité</h3>
+<div class="level3">
+
+<p>
+Il est possible de détecter la saisonnalité en regardant le graphique et en essayant de repérer un pattern qui se répèterait. Prenons par exemple l&#039;ensoleillement par moyen par jour.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Atendance_et_saisonnalite&amp;media=cpp:saisonalite.jpg" class="media" title="cpp:saisonalite.jpg"><img src="/lib/exe/fetch.php?w=600&amp;tok=16fb52&amp;media=cpp:saisonalite.jpg" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+<p>
+On remarque ici en regardant le graphique que la fréquence de la saisonnalité n&#039;est pas évidente du plus elle est difficile à quantifier. C&#039;est pourquoi il existe des techniques analytiques pour reconnaître la saisonnalité. Il s&#039;agit du test ACF qui permet de calculer l&#039;auto corrélation avec un décalage donné dans le temps.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> statsmodels.<span class="me1">tsa</span>.<span class="me1">stattools</span> <span class="kw1">as</span> st
+<span class="kw1">import</span> statsmodels.<span class="me1">graphics</span>.<span class="me1">tsaplots</span> <span class="kw1">as</span> stplot
+&nbsp;
+n<span class="sy0">,</span> m <span class="sy0">=</span> <span class="nu0">12</span><span class="sy0">,</span> <span class="nu0">8</span>
+&nbsp;
+<span class="kw1">with</span> plt.<span class="me1">rc_context</span><span class="br0">&#40;</span><span class="br0">&#41;</span>:
+    plt.<span class="me1">rc</span><span class="br0">&#40;</span><span class="st0">&quot;figure&quot;</span><span class="sy0">,</span> figsize<span class="sy0">=</span><span class="br0">&#40;</span>n<span class="sy0">,</span>m<span class="br0">&#41;</span><span class="br0">&#41;</span>
+    stplot.<span class="me1">plot_acf</span><span class="br0">&#40;</span>sun_rate<span class="sy0">,</span> lags <span class="sy0">=</span> <span class="nu0">500</span><span class="sy0">,</span> title <span class="sy0">=</span> <span class="st0">&quot;ACF pour contrôler la saisonnalité&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">&nbsp;</pre>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Atendance_et_saisonnalite&amp;media=cpp:acf.png" class="media" title="cpp:acf.png"><img src="/lib/exe/fetch.php?w=700&amp;tok=20238b&amp;media=cpp:acf.png" class="mediacenter" alt="" width="700" /></a>
+</p>
+
+<p>
+On voit tout de suite la présence d&#039;une saisonnalité qui se détecte à chaque fois que la courbe passe de croissante à décroissante et inversement. On peut même quantifier cette saisonnalité par lecture graphique on optient environ 80 mois donc environ 7 ans. Essayez de trouver la saisonnalité de la série que l&#039;on essaie de décomposer.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;D\u00e9tecter la saisonnalit\u00e9&quot;,&quot;hid&quot;:&quot;detecter_la_saisonnalite&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:5,&quot;range&quot;:&quot;5885-7178&quot;} -->
+<h3 class="sectionedit6" id="desaisonnaliser">Désaisonnaliser</h3>
+<div class="level3">
+
+<p>
+Il existe plusieurs méthodes pour désaisonaliser une série, la plus connue est celle par moyenne mobile.
+</p>
+
+<p>
+Commençons par une explication intuitive afin de mieux comprendre le principe et le calcul de la moyenne mobile.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Atendance_et_saisonnalite&amp;media=cpp:moyenne_mobile_5.png" class="media" title="cpp:moyenne_mobile_5.png"><img src="/lib/exe/fetch.php?w=900&amp;tok=d53daf&amp;media=cpp:moyenne_mobile_5.png" class="mediacenter" alt="" width="900" /></a>
+</p>
+
+<p>
+On peut exprimer d&#039;un point de vue mathématiques la moyenne mobile tout d&#039;abord quand l&#039;ordre est paire :
+</p>
+
+<p>
+$$y_t = \frac{1}{2m} \biggl(\frac{1}{2} x_{t-m} + \sum^{m-1}_{i = -m + 1} x_{t + i} + \frac{1}{2} x_{t+m} \biggr) $$
+</p>
+
+<p>
+On a ici $m$ qui est l&#039;ordre de la moyenne voulu et $t$ l&#039;indice voulu. Dans le cas d&#039;un ordre impaire on aurait :
+</p>
+
+<p>
+$$y_t = \frac{1}{2m + 1} \sum^{m}_{i = -m} x_{t+i}$$
+</p>
+
+<p>
+Une fois le calcul de la moyenne mobile fait, il est possible de calculer des coefficients saisonniers correspondant à chacune des périodes. Pour cela, on fait la moyenne des mois de janvier puis ceux de février et ainsi de suite si la périodicité est le mois ou la moyenne des trimestres 1 puis des trimestres 2 si la périodicité est trimestrielle. Dans notre cas précis on optient 12 coefficients saisonniers correspondant à chacune des périodes.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#On calcule la moyenne mobile d'ordre 12</span>
+moyenne_mobile <span class="sy0">=</span> data_sans_tendance.<span class="me1">rolling</span><span class="br0">&#40;</span><span class="nu0">12</span><span class="br0">&#41;</span>.<span class="me1">mean</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#On enlève les valeurs manquantes</span>
+soustraction <span class="sy0">=</span> soustraction.<span class="me1">dropna</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#On calcule les coefficients saisonniers</span>
+coeff_saisonnier <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+<span class="kw1">for</span> a <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">12</span><span class="br0">&#41;</span>:
+    total <span class="sy0">=</span> <span class="nu0">0</span>
+    compteur <span class="sy0">=</span> <span class="nu0">0</span>
+    <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>soustraction.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>:
+        <span class="kw1">if</span><span class="br0">&#40;</span>i % <span class="nu0">12</span> <span class="sy0">==</span> a<span class="br0">&#41;</span>:          
+            total +<span class="sy0">=</span> soustraction.<span class="me1">iloc</span><span class="br0">&#91;</span>i<span class="br0">&#93;</span>
+            compteur +<span class="sy0">=</span> <span class="nu0">1</span>
+    coeff_saisonnier.<span class="me1">append</span><span class="br0">&#40;</span>total/compteur<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">&nbsp;</pre>
+
+<p>
+<strong>Souce :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://rpubs.com/brodseba/timeserie" class="urlextern" title="https://rpubs.com/brodseba/timeserie" rel="nofollow">https://rpubs.com/brodseba/timeserie</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.xavierdupre.fr/app/ensae_teaching_cs/helpsphinx/notebooks/td2a_timeseries.html" class="urlextern" title="http://www.xavierdupre.fr/app/ensae_teaching_cs/helpsphinx/notebooks/td2a_timeseries.html" rel="nofollow">http://www.xavierdupre.fr/app/ensae_teaching_cs/helpsphinx/notebooks/td2a_timeseries.html</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.dataquest.io/blog/tutorial-time-series-analysis-with-pandas/" class="urlextern" title="https://www.dataquest.io/blog/tutorial-time-series-analysis-with-pandas/" rel="nofollow">https://www.dataquest.io/blog/tutorial-time-series-analysis-with-pandas/</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;D\u00e9saisonnaliser&quot;,&quot;hid&quot;:&quot;desaisonnaliser&quot;,&quot;codeblockOffset&quot;:5,&quot;secid&quot;:6,&quot;range&quot;:&quot;7179-9112&quot;} -->
+<h2 class="sectionedit7" id="recomposer_la_serie">Recomposer la série</h2>
+<div class="level2">
+
+<p>
+Nous allons ici présenter les outils pour faire chacune de ces étapes automatiquement. Ceci vous simplifiera grandement la vie et permettra de gagner du temps sur des études parfois longues à effectuer from scratch. 
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> statsmodels.<span class="me1">tsa</span>.<span class="me1">seasonal</span> <span class="kw1">import</span> seasonal_decompose
+&nbsp;
+n<span class="sy0">,</span> m <span class="sy0">=</span> <span class="nu0">12</span><span class="sy0">,</span> <span class="nu0">8</span>
+&nbsp;
+<span class="kw1">with</span> plt.<span class="me1">rc_context</span><span class="br0">&#40;</span><span class="br0">&#41;</span>:
+    plt.<span class="me1">rc</span><span class="br0">&#40;</span><span class="st0">&quot;figure&quot;</span><span class="sy0">,</span> figsize<span class="sy0">=</span><span class="br0">&#40;</span>n<span class="sy0">,</span>m<span class="br0">&#41;</span><span class="br0">&#41;</span>
+    seasonal_decompose<span class="br0">&#40;</span>data<span class="sy0">,</span> period <span class="sy0">=</span> <span class="nu0">12</span><span class="sy0">,</span> model <span class="sy0">=</span> <span class="st0">&quot;multiplicatif&quot;</span><span class="br0">&#41;</span>.<span class="me1">plot</span><span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">&nbsp;</pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Atendance_et_saisonnalite&amp;media=cpp:decomposition_total.png" class="media" title="cpp:decomposition_total.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=c72a98&amp;media=cpp:decomposition_total.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+<p>
+On voit donc ici clairement que la série temporelle a été correctement décomposé. Dans ce cas précis où la série semble bien réagir à la décomposition on peut utiliser ce travail pour faire des prédictions et prévoir les fluctuations futures.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Recomposer la s\u00e9rie&quot;,&quot;hid&quot;:&quot;recomposer_la_serie&quot;,&quot;codeblockOffset&quot;:7,&quot;secid&quot;:7,&quot;range&quot;:&quot;9113-&quot;} -->

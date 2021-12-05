@@ -1,0 +1,2 @@
+lm.<span class="me1">polynomial</span> <span class="sy0">=</span> lm<span class="br0">&#40;</span>y<span class="sy0">~</span>X+I<span class="br0">&#40;</span>X^<span class="nu0">2</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Définition du modèle linéaire polynomial</span>
+lm.<span class="me1">polynomial</span>$coefficients<span class="co1">#Affichage des coefficients prédis par le modèle</span>

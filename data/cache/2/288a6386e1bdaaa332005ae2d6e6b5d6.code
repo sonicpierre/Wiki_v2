@@ -1,0 +1,2 @@
+<span class="kw1">from</span> sklearn.<span class="me1">cluster</span> <span class="kw1">import</span> OPTICS
+model <span class="sy0">=</span> OPTICS<span class="br0">&#40;</span>min_samples<span class="sy0">=</span><span class="nu0">50</span><span class="sy0">,</span> xi<span class="sy0">=</span><span class="nu0">.05</span><span class="sy0">,</span> min_cluster_size<span class="sy0">=</span><span class="nu0">.05</span><span class="br0">&#41;</span>.<span class="me1">fit</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span>

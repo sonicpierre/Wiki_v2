@@ -1,0 +1,9 @@
+<span class="kw1">from</span> sklearn.<span class="me1">ensemble</span> <span class="kw1">import</span> RandomForestClassifier
+<span class="kw1">from</span> sklearn.<span class="me1">ensemble</span> <span class="kw1">import</span> VotingClassifier
+<span class="kw1">from</span> sklearn.<span class="me1">linear_model</span> <span class="kw1">import</span> LogisticRegression
+<span class="kw1">from</span> sklearn.<span class="me1">svm</span> <span class="kw1">import</span> SVC
+&nbsp;
+<span class="co1">#On déclare les différents modèles</span>
+log_clf <span class="sy0">=</span> LogisticRegression<span class="br0">&#40;</span><span class="br0">&#41;</span>
+rnd_clf <span class="sy0">=</span> RandomForestClassifier<span class="br0">&#40;</span><span class="br0">&#41;</span>
+svm_clf <span class="sy0">=</span> SVC<span class="br0">&#40;</span>probability <span class="sy0">=</span> <span class="kw2">True</span><span class="br0">&#41;</span>

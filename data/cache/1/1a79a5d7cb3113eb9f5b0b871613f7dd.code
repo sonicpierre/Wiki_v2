@@ -1,0 +1,3 @@
+install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;VIM&quot;</span><span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>VIM<span class="br0">&#41;</span>
+data <span class="sy0">&lt;</span>- kNN<span class="br0">&#40;</span>data<span class="sy0">,</span> k<span class="sy0">=</span><span class="nu0">1</span><span class="sy0">,</span> imp_var<span class="sy0">=</span>FALSE<span class="br0">&#41;</span><span class="co1">#L'argument imp_var indique si on affiche ou non l'état d'imputation.</span>

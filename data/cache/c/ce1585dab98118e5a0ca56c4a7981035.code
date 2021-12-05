@@ -1,0 +1,12 @@
+<span class="kw1">class</span> Joueur <span class="br0">&#123;</span>
+    <span class="kw1">public</span> <span class="kw1">static</span> <span class="kw1">final</span> <span class="kw4">float</span> VITESSE_X <span class="sy0">=</span> <span class="nu0">2</span><span class="sy0">;</span>
+    <span class="kw1">public</span> <span class="kw1">static</span> <span class="kw1">final</span> <span class="kw4">float</span> VITESSE_Y <span class="sy0">=</span> <span class="nu0">2</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">private</span> <span class="kw4">float</span> positionX<span class="sy0">;</span>
+    <span class="kw1">private</span> <span class="kw4">float</span> positionY<span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">public</span> <span class="kw4">void</span> seDeplacer<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+        positionX <span class="sy0">+=</span> VITESSE_X<span class="sy0">;</span>
+        positionY <span class="sy0">+=</span> VITESSE_Y<span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+<span class="br0">&#125;</span>

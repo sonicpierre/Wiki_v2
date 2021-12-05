@@ -1,0 +1,3 @@
+library<span class="br0">&#40;</span>explor<span class="br0">&#41;</span>
+&nbsp;
+explor<span class="br0">&#40;</span>res.<span class="me1">PCA</span><span class="br0">&#41;</span><span class="co1">#Ouverture d'une fenêtre permettant de visualiser les variables importantes</span>

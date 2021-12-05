@@ -1,0 +1,2 @@
+<span class="kw1">from</span> sklearn.<span class="me1">mixture</span> <span class="kw1">import</span> GaussianMixture
+GMM <span class="sy0">=</span> GaussianMixture<span class="br0">&#40;</span><span class="nu0">6</span><span class="sy0">,</span> covariance_type<span class="sy0">=</span><span class="st0">'full'</span><span class="sy0">,</span> random_state<span class="sy0">=</span><span class="nu0">0</span><span class="br0">&#41;</span>.<span class="me1">fit</span><span class="br0">&#40;</span>Xmoon<span class="br0">&#41;</span>

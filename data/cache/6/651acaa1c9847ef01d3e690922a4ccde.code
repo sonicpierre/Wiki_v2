@@ -1,0 +1,1 @@
+Regression_Lin <span class="sy0">&lt;</span>- lm<span class="br0">&#40;</span>Sales<span class="sy0">~</span>.<span class="sy0">,</span> data <span class="sy0">=</span> echantillon<span class="br0">&#41;</span><span class="co1">#Ajustement des données</span>

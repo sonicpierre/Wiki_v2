@@ -1,0 +1,15 @@
+<span class="kw1">while</span> <span class="br0">&#40;</span><span class="br0">&#40;</span>r_old <span class="sy0">!=</span> np.<span class="me1">zeros</span><span class="br0">&#40;</span><span class="kw2">len</span><span class="br0">&#40;</span>b<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>.<span class="kw2">all</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>:
+&nbsp;
+    Apk <span class="sy0">=</span> np.<span class="me1">dot</span><span class="br0">&#40;</span>A<span class="sy0">,</span> p_old<span class="br0">&#41;</span>
+    alpha <span class="sy0">=</span> -np.<span class="me1">dot</span><span class="br0">&#40;</span>np.<span class="me1">transpose</span><span class="br0">&#40;</span>r_old<span class="br0">&#41;</span><span class="sy0">,</span>p_old<span class="br0">&#41;</span>/np.<span class="me1">dot</span><span class="br0">&#40;</span>np.<span class="me1">transpose</span><span class="br0">&#40;</span>p_old<span class="br0">&#41;</span><span class="sy0">,</span> Apk<span class="br0">&#41;</span> 
+&nbsp;
+    x <span class="sy0">=</span> x + np.<span class="me1">dot</span><span class="br0">&#40;</span>alpha<span class="sy0">,</span> p_old<span class="br0">&#41;</span>
+    r_new <span class="sy0">=</span> np.<span class="me1">dot</span><span class="br0">&#40;</span>A<span class="sy0">,</span> x<span class="br0">&#41;</span> - b 
+&nbsp;
+    beta <span class="sy0">=</span> np.<span class="me1">dot</span><span class="br0">&#40;</span>np.<span class="me1">transpose</span><span class="br0">&#40;</span>r_new<span class="br0">&#41;</span><span class="sy0">,</span>Apk<span class="br0">&#41;</span> / np.<span class="me1">dot</span><span class="br0">&#40;</span>np.<span class="me1">transpose</span><span class="br0">&#40;</span>p_old<span class="br0">&#41;</span><span class="sy0">,</span> Apk<span class="br0">&#41;</span>
+&nbsp;
+    p_new <span class="sy0">=</span> -r_new + np.<span class="me1">dot</span><span class="br0">&#40;</span>beta<span class="sy0">,</span> p_old<span class="br0">&#41;</span>
+&nbsp;
+    %k <span class="sy0">=</span> k+ <span class="nu0">1</span>
+    r_old <span class="sy0">=</span> r_new
+    p_old <span class="sy0">=</span> p_new

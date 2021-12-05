@@ -1,0 +1,2 @@
+<span class="kw2">sudo</span> apt <span class="kw2">install</span> <span class="kw2">unzip</span> <span class="co0"># Si pas déjà installé</span>
+<span class="kw2">unzip</span> openjfx-14.0.1_linux-x64_bin-sdk.zip

@@ -1,0 +1,5 @@
+<span class="co1">#Résultat classique</span>
+<span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;La valeur du zéro de cette fonction sur (a,b) est:&quot;</span><span class="sy0">,</span>regula_falsi<span class="br0">&#40;</span>f<span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">1e-12</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">&lt;</span>/<span class="kw3">code</span>
+&nbsp;
+<span class="co1"># Résultats récursif</span>
+<span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;La valeur du zéro de cette fonction sur (a,b) est:&quot;</span><span class="sy0">,</span>regula_falsi<span class="br0">&#40;</span>f<span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">1e-12</span><span class="br0">&#41;</span><span class="br0">&#41;</span>

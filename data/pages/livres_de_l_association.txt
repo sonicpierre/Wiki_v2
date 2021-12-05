@@ -1,0 +1,33 @@
+{{ :bibliotheque.jpg?500 |}}
+
+=====La bibliothèque Lama=====
+
+Dans le but d'améliorer et rendre le savoir accessible à moindre coût dans les domaines très spécialisés, l'association a décidé d'investir dans des livres et vous les rendre disponibles. Ils pourront être utilisés par les étudiants mais aussi les professeurs pour de la documentation personnelle ou pour l'écriture de pages dans notre association.
+====Les règles====
+
+L'emprunt des livres se fait avec certaines règles qu'il est nécessaire de respecter pour le bon fonctionnement. Les livres seront délivrés pour une période d'un mois et demi sous présentation d'une carte étudiante et d'une caution égale à la 1/4 du prix actuel du livre. Pour faire une demande d'emprunt, il faudra contacter M Daniel Atangana sur Pau ou M Zangla Jérémy sur Clermont-Ferrand. En cas d'indisponibilité vous pouvez contacter l'association directement à l'adresse llamaspartan@gmail.com.
+====Dégradation, retard ou vole des livres====
+
+Dans le cas où le livre serait fortement dégradé ou volé la caution sera bien évidemment retiré et l'élève ne pourra plus emprunter. Si le problème survient avec un second étudiant de la même école nous arrêterons de prêter les livres dans cette école. En cas de retard, la caution sera divisé par le nombre de semaine et au bout d'un moi de de retard le livre sera concidéré volé.
+=====Data Science=====
+
+^  Livre  ^  Information  ^  Accessibilité  ^
+|  {{ :tensor_flow.jpg?150 |}}  |  **Titre :** TensorFlow pour le deep learning  |  **Ville :** Pau <color #22b14c>**Disponible**</color>  |
+|  {{ :deep_learning_tensor.jpg?150 |}}  |  **Titre :** Deep Learning avec Keras et TensorFlow  |  **Ville :** Pau <color #ffc90e>**Indisponible**</color>  |
+|  {{ :machine_learning_t_s.jpg?150 |}}  |  **Titre :**Hands-on Machine Learning with Sckit-Learn, Keras & TensorFlow   |  **Ville :** Pau <color #22b14c>**Disponible**</color>  |
+|  {{ :nlp_python.jpg?150 |}}  |  **Titre :** Natural Language Processing with Python  |  **Ville :** Pau <color #22b14c>**Disponible**</color>  |
+|  {{ :python_machine.jpg?150 |}}  |  **Titre :** Le Machine Learning avec Python  |  **Ville :** Pau <color #22b14c>**Disponible**</color>  |
+|  {{ :renforcement_deep.jpg?150 |}}  |  **Titre :** Deep Reinforcement Learning Hands-On  |  **Ville :** Pau <color #22b14c>**Disponible**</color>  |
+|  {{ :java_ml.jpg?150 |}}  |  **Titre :** Data Science with Java   |  **Ville :** Pau <color #22b14c>**Disponible**</color>  |
+=====Informatique=====
+
+^  Livre  ^  Information  ^  Accessibilité  ^
+|  {{ :spark.jpeg?200 |}}  |  **Titre :** SPARK  |  **Ville :** Pau <color #22b14c>**Disponible**</color>  |
+|  {{ :unity_2d.jpg?150 |}}  |  **Titre :** Developing 2D Games with Unity  |  **Ville :** Clermont-Ferrand <color #22b14c>**Disponible**</color>  |
+|  {{ :scala.jpg?150 |}}  |  **Titre :** Programming Scala  |  **Ville :** Clermont-Ferrand <color #22b14c>**Disponible**</color>  |
+|  {{ :scala_pas.jpg?150 |}}  |  **Titre :** Scala Pas à Pas  |  **Ville :** Pau <color #22b14c>**Disponible**</color>  |
+|  {{ :node_mongo.jpg?150 |}}  |  **Titre :** Programmation avec Node.js Express.js et MongoDB  |  **Ville :** Clermont-Ferrand <color #22b14c>**Disponible**</color>  |
+|  {{ :kotlin.jpg?150 |}}  |  **Titre :** Kotlin  |  **Ville :** Clermont-Ferrand <color #22b14c>**Disponible**</color>  |
+|  {{ :java_effective.jpg?150 |}}  |  **Titre :** Effective Java  |  **Ville :** Clermont-Ferrand <color #22b14c>**Disponible**</color>  |
+|  {{ :c_.jpg?150 |}}  |  **Titre :** C# 8  |  **Ville :** Clermont-Ferrand <color #22b14c>**Disponible**</color>  |
+|  {{ :c_effective.jpg?150 |}}  |  **Titre :** Programmer en C++ moderne  |  **Ville :** Clermont-Ferrand <color #22b14c>**Disponible**</color>  |

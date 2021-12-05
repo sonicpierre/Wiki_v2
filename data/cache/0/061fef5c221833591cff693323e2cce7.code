@@ -1,0 +1,4 @@
+install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;useful&quot;</span><span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>useful<span class="br0">&#41;</span>
+&nbsp;
+simple.<span class="me1">impute</span><span class="br0">&#40;</span>data <span class="sy0">,</span>  fun <span class="sy0">=</span> mean<span class="br0">&#41;</span>

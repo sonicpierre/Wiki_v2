@@ -1,0 +1,5 @@
+<span class="co1">#Python</span>
+data.<span class="me1">plot</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#R</span>
+plot<span class="br0">&#40;</span>time_series<span class="br0">&#41;</span>

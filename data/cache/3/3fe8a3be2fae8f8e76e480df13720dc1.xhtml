@@ -1,0 +1,204 @@
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ales_tests_statistiques&amp;media=cpp:selection_var.png" class="media" title="cpp:selection_var.png"><img src="/lib/exe/fetch.php?w=580&amp;tok=1cdc9b&amp;media=cpp:selection_var.png" class="media" alt="" width="580" /></a>
+</p>
+
+<p>
+Il s&#039;agit d&#039;une étape importante dans le nettoyage des données. Après le travail d&#039;encodage, un nombre trop élevé de variables peut entrainer deux problèmes :
+</p>
+<ul>
+<li class="level1"><div class="li"> Un <strong>sur-apprentissage (over-fitting)</strong> de votre modèle de prédiction sur les données d&#039;entrainement et de validation. Ce qui dégrade considérablement les performances de vote modèle lors de la généralisation sur de nouvelles données. </div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li">  <strong>L&#039;augmentation du temps d&#039;apprentissage et de calibration des hyper-paramètres</strong> de vote modèle. Ce qui peut être un problème lors du déploiement du modèle pour un client. </div>
+</li>
+</ul>
+
+<p>
+Pour éviter ces problèmes il vous faudra donc utiliser des méthodes de sélection de variables, pour ne garder que celles qui apportent le plus d&#039;informations à votre modèle.
+</p>
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong> On utilisera de nouveau, le dataset de mesures de gaz contenus dans l&#039;alcool, disponible <a href="https://archive.ics.uci.edu/ml/datasets/Alcohol+QCM+Sensor+Dataset" class="urlextern" title="https://archive.ics.uci.edu/ml/datasets/Alcohol+QCM+Sensor+Dataset" rel="nofollow">ici</a>. On considérera le premier relevé.</div>
+</p>
+
+<h2 class="sectionedit1" id="les_tests_de_dependances">Les tests de dépendances</h2>
+<div class="level2">
+
+<p>
+Les tests statistiques sélectionnent les K variables explicatives, dont les scores de dépendance avec la variable cible sont les plus élevés.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les tests de d\u00e9pendances&quot;,&quot;hid&quot;:&quot;les_tests_de_dependances&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1057-1240&quot;} -->
+<h3 class="sectionedit2" id="le_test_de_anova">Le test de ANOVA</h3>
+<div class="level3">
+
+<p>
+Visualisation des scores de dépendances selon le test de ANOVA. Le résultat de ce test retourne deux tableaux : les scores de dépendances et la probabilité de rejeter l&#039;hypothèse de dépendance alors qu&#039;elle est vraie (p-valeur).
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">feature_selection</span> <span class="kw1">import</span> SelectKBest<span class="sy0">,</span> f_regression
+&nbsp;
+X <span class="sy0">=</span> data.<span class="me1">drop</span><span class="br0">&#40;</span>columns<span class="sy0">=</span><span class="br0">&#91;</span><span class="st0">'1-Octanol'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="co1">#Définition des variables explicatives</span>
+y <span class="sy0">=</span> data<span class="br0">&#91;</span><span class="st0">'1-Octanol'</span><span class="br0">&#93;</span><span class="co1">#Définition de la variable cible</span>
+&nbsp;
+f_regression<span class="br0">&#40;</span>X<span class="sy0">,</span> y<span class="br0">&#41;</span><span class="co1">#Test de dépendance</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">y <span class="sy0">&lt;</span>- data$X1.<span class="me1">Octanol</span>
+X <span class="sy0">&lt;</span>- data<span class="br0">&#91;</span><span class="sy0">,</span> -c<span class="br0">&#40;</span><span class="nu0">11</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+&nbsp;
+aov<span class="br0">&#40;</span>y <span class="sy0">~</span>.<span class="sy0">,</span> data <span class="sy0">=</span> data<span class="br0">&#41;</span></pre>
+
+</div>
+
+<h5 id="variables_selectionnees">Variables sélectionnées</h5>
+<div class="level5">
+
+<p>
+On sélectionne alors les k=5 variables ayant les scores les plus élevés selon le test de ANOVA, on applique la sélection sur l&#039;ensemble des données puis on récupère les variables sélectionnées.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">selecteur <span class="sy0">=</span> SelectKBest<span class="br0">&#40;</span>f_regression<span class="sy0">,</span> k<span class="sy0">=</span><span class="nu0">5</span><span class="br0">&#41;</span><span class="co1">#Initialisation du selecteur</span>
+selecteur.<span class="me1">fit_transform</span><span class="br0">&#40;</span>X<span class="sy0">,</span> y<span class="br0">&#41;</span><span class="co1">#Application aux données </span>
+np.<span class="kw3">array</span><span class="br0">&#40;</span>X.<span class="me1">columns</span><span class="br0">&#41;</span><span class="br0">&#91;</span>selecteur.<span class="me1">get_support</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#93;</span><span class="co1">#Récupération des variables conservées</span></pre>
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong> Il existe une méthode selectKBest sous R, toutefois son implémentation avec la sélection par ANOVA impose des conditions particulières.</div>
+</p>
+
+<p>
+Vous pouvez néanmoins sélectionner les variables les plus importantes en observant les F-valeur associées à chaque variable explicative, par rapport à la variable cible.
+</p>
+<pre class="code python">summary.<span class="me1">aov</span><span class="br0">&#40;</span>aov<span class="br0">&#40;</span>y <span class="sy0">~</span>.<span class="sy0">,</span> data <span class="sy0">=</span> data<span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le test de ANOVA&quot;,&quot;hid&quot;:&quot;le_test_de_anova&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;1241-2780&quot;} -->
+<h3 class="sectionedit3" id="comparaison_anova_et_pearson">Comparaison ANOVA et Pearson</h3>
+<div class="level3">
+<div class="table sectionedit4"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 leftalign"> Chi2    </th><th class="col2 leftalign"> ANOVA    </th><th class="col3"> Corrélation de Pearson</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 leftalign"> Caractéristiques      </th><td class="col1 leftalign"> Mesure la dépendance variable cible/explicatives et requiert <strong>obligatoirement</strong> des données positives.            </td><td class="col2 leftalign"> Vérifie s&#039;il y a une différence significative entre plusieurs sous-échantillons (modalités) d&#039;une même variable quantitative (le test compare des moyennes).          </td><td class="col3">Reflète la relation linéaire entre deux variables continues. </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 leftalign"> Evaluation ​    </th><td class="col1">Plus le score de dépendance sera élevé, plus la variable dépendra de la variable cible.</td><td class="col2 leftalign"> Idem que pour le test du chi2.          </td><td class="col3 leftalign"> Compris entre [-1;1] avec -1 corrélation négative (respectivement 1 pour positif) et 0 absence de corrélation.	</td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 leftalign"> Utilisation ​    </th><td class="col1">Classification</td><td class="col2 leftalign"> Classification et régression          </td><td class="col3">Régression </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:4,&quot;range&quot;:&quot;2819-3615&quot;} -->
+<p>
+<strong>Sources</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://​math.univ-lyon1.fr/​~duheille/​MASS42_anova.pdf" class="urlextern" title="http://​math.univ-lyon1.fr/​~duheille/​MASS42_anova.pdf" rel="nofollow">Université de Lyon, département de mathématiques</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://​pagesped.cahuntsic.ca/​sc_sociales/​psy/​methosite/​consignes/​variance.htm#​quand" class="urlextern" title="http://​pagesped.cahuntsic.ca/​sc_sociales/​psy/​methosite/​consignes/​variance.htm#​quand" rel="nofollow">​pagesped</a> </div>
+</li>
+<li class="level1"><div class="li"> <a href="https://​www.statisticshowto.com/​probability-and-statistics/​f-statistic-value-test/​" class="urlextern" title="https://​www.statisticshowto.com/​probability-and-statistics/​f-statistic-value-test/​" rel="nofollow">statisticshowto</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.youtube.com/watch?v=T4nZDuakYlU&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=27" class="urlextern" title="https://www.youtube.com/watch?v=T4nZDuakYlU&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=27" rel="nofollow">Machine Learnia, par Guillaume Saint-Cirgue</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Comparaison ANOVA et Pearson&quot;,&quot;hid&quot;:&quot;comparaison_anova_et_pearson&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:3,&quot;range&quot;:&quot;2781-4144&quot;} -->
+<h2 class="sectionedit5" id="selection_via_estimateur">Sélection via estimateur</h2>
+<div class="level2">
+
+<p>
+Cette méthode permet de sélectionner les variables de façon récursive, pour un estimateur particulier. Cela passe par plusieurs entrainements de l&#039;estimateur, au cours desquels les variables les moins utiles sont à chaque fois éliminées.
+</p>
+
+<p>
+<div class='alert alert-info'> <strong>Remarque</strong> : Cette façon de faire nécessite la connaissance du principe de validation croisée, expliqué <a href="https://www.kaggle.com/alexisbcook/cross-validation" class="urlextern" title="https://www.kaggle.com/alexisbcook/cross-validation" rel="nofollow">ici</a>. On considérera le même dataset que les parties précédentes. </div>
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">feature_selection</span> <span class="kw1">import</span> RFECV
+<span class="kw1">from</span> sklearn.<span class="me1">ensemble</span> <span class="kw1">import</span> RandomForestRegressor
+&nbsp;
+selector <span class="sy0">=</span> RFECV<span class="br0">&#40;</span>RandomForestRegressor<span class="br0">&#40;</span>random_state<span class="sy0">=</span><span class="nu0">0</span><span class="br0">&#41;</span><span class="sy0">,</span> step <span class="sy0">=</span> <span class="nu0">2</span><span class="sy0">,</span> min_features_to_select <span class="sy0">=</span> <span class="nu0">5</span><span class="sy0">,</span> cv<span class="sy0">=</span><span class="nu0">5</span><span class="br0">&#41;</span><span class="co1">#On définit l'estimateur à tester, le nombre de variables à supprimer à chaque</span>
+<span class="co1">#itérations (step), le nombre minimal de variables à garder à la fin et enfin le nombre de validation croisées à effectuer.</span>
+selector.<span class="me1">fit</span><span class="br0">&#40;</span>X<span class="sy0">,</span> y<span class="br0">&#41;</span><span class="co1">#Entraienement de l'estimateur</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>caret<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>randomForest<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>e1071<span class="br0">&#41;</span>
+&nbsp;
+&nbsp;
+y <span class="sy0">&lt;</span>- data$X1.<span class="me1">Octanol</span><span class="co1">#Variable cible</span>
+y <span class="sy0">&lt;</span>- <span class="kw1">as</span>.<span class="me1">factor</span><span class="br0">&#40;</span>y<span class="br0">&#41;</span><span class="co1">#Transformation de la variable cible en facteur</span>
+X <span class="sy0">&lt;</span>- data<span class="br0">&#91;</span><span class="sy0">,</span> -c<span class="br0">&#40;</span><span class="nu0">11</span><span class="br0">&#41;</span><span class="br0">&#93;</span><span class="co1">#Variables explicatives</span>
+&nbsp;
+<span class="kw2">set</span>.<span class="me1">seed</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="br0">&#41;</span><span class="co1">#On initialise l'aléatoire pour la répétabilité </span>
+selector <span class="sy0">&lt;</span>- rfeControl<span class="br0">&#40;</span>functions <span class="sy0">=</span> rfFuncs<span class="sy0">,</span> method <span class="sy0">=</span> <span class="st0">'cv'</span><span class="sy0">,</span> repeats <span class="sy0">=</span> <span class="nu0">5</span><span class="br0">&#41;</span><span class="co1">#Définition des paramètres de controle de la sélection</span>
+<span class="kw3">select</span> <span class="sy0">&lt;</span>- rfe<span class="br0">&#40;</span>X<span class="sy0">,</span> y<span class="sy0">,</span> sizes <span class="sy0">=</span> c<span class="br0">&#40;</span><span class="nu0">5</span><span class="br0">&#41;</span><span class="sy0">,</span> rfeControl <span class="sy0">=</span> selector<span class="br0">&#41;</span><span class="co1">#Sélection des variables</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;S\u00e9lection via estimateur&quot;,&quot;hid&quot;:&quot;selection_via_estimateur&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:5,&quot;range&quot;:&quot;4145-5690&quot;} -->
+<h3 class="sectionedit6" id="variables_selectionnees1">Variables sélectionnées</h3>
+<div class="level3">
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">selector.<span class="me1">ranking_</span><span class="co1">#Classement final des variables par ordre d'importance</span>
+selector.<span class="me1">grid_scores_</span><span class="co1">#Score de l'estimateur à chaque itération de l'algorithme</span>
+np.<span class="kw3">array</span><span class="br0">&#40;</span>X.<span class="me1">columns</span><span class="br0">&#41;</span><span class="br0">&#91;</span>selector.<span class="me1">get_support</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#93;</span><span class="co1">#Affichage des variables conservées</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python"><span class="kw3">select</span>$optVariables<span class="co1">#Variables conservées</span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ales_tests_statistiques&amp;media=cpp:rfecv.png" class="media" title="cpp:rfecv.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=fcc580&amp;media=cpp:rfecv.png" class="mediacenter" title="Résultat de sélection" alt="Résultat de sélection" width="600" /></a>
+</p>
+
+<p>
+Pour cet estimateur, la première variable est 3e dans le classement d&#039;importance, tandis que les deuxième, troisième et quatrième variables sont parmi les premières plus importantes.
+</p>
+
+<p>
+On voit aussi qu&#039;à la première itération, le score de validation de 60 %, puis est passé à 80 % lorsqu&#039;on supprime les deux variables les plus inutiles. Le score ne change pas 
+après suppression de quatre autres variables, mais on voit une perte de qualité lorsqu&#039;on veut en supprimer huit. C&#039;est pourquoi finalement on a six variables en première position.
+</p>
+
+<p>
+<strong>Sources</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.kaggle.com/alexisbcook/cross-validation" class="urlextern" title="https://www.kaggle.com/alexisbcook/cross-validation" rel="nofollow">Kaggle</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.youtube.com/watch?v=T4nZDuakYlU&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=27" class="urlextern" title="https://www.youtube.com/watch?v=T4nZDuakYlU&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=27" rel="nofollow">Machine Learnia, par Guillaume Saint-Cirgue</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Variables s\u00e9lectionn\u00e9es&quot;,&quot;hid&quot;:&quot;variables_selectionnees1&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:6,&quot;range&quot;:&quot;5691-&quot;} -->

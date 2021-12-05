@@ -1,0 +1,806 @@
+
+<p>
+<a href="/doku.php?id=cpp:simplexe" class="wikilink1" title="cpp:simplexe">Méthode du simplexe</a>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Asimplexephase&amp;media=cpp:phase.jpg" class="media" title="cpp:phase.jpg"><img src="/lib/exe/fetch.php?w=500&amp;tok=53904d&amp;media=cpp:phase.jpg" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+<div class='alert alert-info'>Vous trouverez le code complet <a href="https://github.com/LlamasPartan/Optimisation/tree/master/Simplexe/M%C3%A9thode%20des%20phases" class="urlextern" title="https://github.com/LlamasPartan/Optimisation/tree/master/Simplexe/M%C3%A9thode%20des%20phases" rel="nofollow">ici</a>.</div>
+</p>
+
+<p>
+Je vous ai dit, un peu plus tôt dans le cours, que la méthode du <strong>simplexe</strong> consistait à itérer de <strong><span style="color:#008000;">sommet en sommet</span></strong> en partant de l&#039;origine jusqu&#039;à ce que l&#039;on trouve le sommet <strong><span style="color:#ff0000;">optimal</span></strong>. 
+Seulement voilà : on est partis du principe que l&#039;<strong>origine</strong> se trouvait dans le domaine des contraintes mais ce <strong><span style="color:#ff0000;">n&#039;est pas</span></strong> forcément le cas.
+</p>
+
+<p>
+Considérons le problème d&#039;optimisation suivant :
+</p>
+<p class="divalign-center">$\begin{cases} \underset{x}{max}(x_1+2x_2) \\ -x_1+3x_2 \le 10 \\ 5x_1-4x_2 \le 1 \\ -3x_1+x_2 \le -1 \\ x_1,x_2 \ge 0\end{cases}$</p><!--divalign-->
+
+<p>
+Comme vous pouvez le voir, $(0,0)$ <strong><span style="color:#ff0000;">ne fait pas</span></strong> partie du domaine des contraintes (la troisième <strong>contrainte</strong> n&#039;est pas respectée) :
+</p>
+<p class="divalign-center"><a href="/lib/exe/detail.php?id=cpp%3Asimplexephase&amp;media=cpp:grapheoptiphase.png" class="media" title="cpp:grapheoptiphase.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=ca16fe&amp;media=cpp:grapheoptiphase.png" class="media" alt="" width="400" /></a></p><!--divalign-->
+
+<p>
+Vous remarquez aussi que nous avons une variable ($y_3$) <strong><span style="color:#008000;">négative</span></strong> ce qui est <strong><span style="color:#ff0000;">interdit</span></strong> (cela signifie que nous avons dépassé les contraintes) :
+</p>
+<div class="table sectionedit1"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  2  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  -1  </td><td class="col2 centeralign">  3  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  10  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  5  </td><td class="col2 centeralign">  -4  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  1  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  -3  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  -1  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:1,&quot;range&quot;:&quot;1200-1450&quot;} -->
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">tab<span class="sy0">=</span>np.<span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#91;</span>
+<span class="br0">&#91;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">2</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span>
+<span class="br0">&#91;</span>-<span class="nu0">1</span><span class="sy0">,</span><span class="nu0">3</span><span class="sy0">,</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">10</span><span class="br0">&#93;</span><span class="sy0">,</span>
+<span class="br0">&#91;</span><span class="nu0">5</span><span class="sy0">,</span>-<span class="nu0">4</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">,</span>
+<span class="br0">&#91;</span>-<span class="nu0">3</span><span class="sy0">,</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">1</span><span class="sy0">,</span>-<span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#93;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab">tab=<span class="br0">&#91;</span>
+<span class="nu0">1</span>,<span class="nu0">2</span>,<span class="nu0">0</span>,<span class="nu0">0</span>,<span class="nu0">0</span>,<span class="nu0">0</span>;
+-<span class="nu0">1</span>,<span class="nu0">3</span>,<span class="nu0">1</span>,<span class="nu0">0</span>,<span class="nu0">0</span>,<span class="nu0">10</span>;
+<span class="nu0">5</span>,-<span class="nu0">4</span>,<span class="nu0">0</span>,<span class="nu0">1</span>,<span class="nu0">0</span>,<span class="nu0">1</span>;
+-<span class="nu0">3</span>,<span class="nu0">1</span>,<span class="nu0">0</span>,<span class="nu0">0</span>,<span class="nu0">1</span>,-<span class="nu0">1</span><span class="br0">&#93;</span></pre>
+
+<h2 class="sectionedit2" id="le_probleme_auxiliaire">Le problème auxiliaire</h2>
+<div class="level2">
+
+<p>
+Nous allons résoudre un problème <strong><span style="color:#008000;">auxiliaire</span></strong> au problème actuel pour <strong>générer</strong> un sommet dans le domaine des contraintes. Il nous servira de point  de départ pour la méthode classique des tableaux. Ainsi, un problème de forme :
+</p>
+<p class="divalign-center">$\begin{cases} \underset{x}{max}(c|x) \\ Ax \le b, x \ge 0 \end{cases}$</p><!--divalign-->
+
+<p>
+devient :
+</p>
+<p class="divalign-center">$\begin{cases} \underset{x}{max}(0|x)-\delta \\ Ax-\delta e \le b \\ x,\delta \ge 0 \end{cases}$</p><!--divalign-->
+
+<p>
+avec $e$ vecteur unité
+</p>
+
+<p>
+Notre problème du début devient alors :
+</p>
+<p class="divalign-center">$\begin{cases} \underset{x}{max}(0x_1+0x_2-\delta) \\ -x_1+3x_2-\delta \le 10 \\ 5x_1-4x_2-\delta \le 1 \\ -3x_1+x_2-\delta \le -1 \\ x_1,x_2,\delta \ge 0\end{cases}$</p><!--divalign-->
+<div class="table sectionedit3"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $\delta$  </th><th class="col4 centeralign">  $y_1$  </th><th class="col5 centeralign">  $y_2$  </th><th class="col6 centeralign">  $y_3$  </th><td class="col7"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  0  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  -1  </td><td class="col2 centeralign">  3  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  10  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  5  </td><td class="col2 centeralign">  -4  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  1  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  -3  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  1  </td><td class="col7 centeralign">  -1  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:3,&quot;range&quot;:&quot;2405-2696&quot;} -->
+<p>
+<div class='alert alert-info'>La méthode des phases ne peut pas être assimilée à  une nouvelle méthode de résolution. La méthode des phases sert à <strong>transformer</strong> un tableau insoluble par la méthode standard en un tableau <strong>résoluble</strong>. Nous implémenterons donc le code de cette page dans le code de la page <strong>précédente</strong> qui récupèrera le tableau <strong>transformé</strong> pour le résoudre de façon <strong>standard</strong>.</div>
+</p>
+
+<p>
+<div class='alert alert-warning'>Pour plus de clarté, on décomposera le code de cette page fonction par fonction. Puis, on les appellera toutes à la suite dans une fonction <code>simplexePhases</code>.</div>
+</p>
+
+<p>
+On va donc devoir <strong>construire</strong> ce tableau. On le <strong><span style="color:#008000;">décomposera</span></strong> temporairement en trois parties (les colonnes des différentes variables, la colonne de delta et la dernière colonne) pour bien comprendre comment on le construit. Pour des raisons pratiques, on placera la colonne de $\delta$ après les variables $y$. Cela n&#039;aura <strong><span style="color:#ff0000;">aucune</span></strong> conséquence sur le résultat.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">def</span> auxiliaire<span class="br0">&#40;</span>tab<span class="br0">&#41;</span>:
+    tabDelta<span class="sy0">=</span>tab.<span class="kw3">copy</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    tabDelta<span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span>:<span class="br0">&#93;</span>*<span class="sy0">=</span><span class="nu0">0</span>
+    tabGauche<span class="sy0">=</span>tabDelta<span class="br0">&#91;</span>:<span class="sy0">,</span>:-<span class="nu0">1</span><span class="br0">&#93;</span>
+    tabMilieu<span class="sy0">=</span>-np.<span class="me1">ones</span><span class="br0">&#40;</span><span class="br0">&#40;</span>tabDelta.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    tabDroite<span class="sy0">=</span>tabDelta<span class="br0">&#91;</span>:<span class="sy0">,</span>-<span class="nu0">1</span>:<span class="br0">&#93;</span>
+    tabDelta<span class="sy0">=</span>np.<span class="me1">concatenate</span><span class="br0">&#40;</span><span class="br0">&#40;</span>tabGauche<span class="sy0">,</span>tabMilieu<span class="sy0">,</span>tabDroite<span class="br0">&#41;</span><span class="sy0">,</span>axis<span class="sy0">=</span><span class="nu0">1</span><span class="br0">&#41;</span>
+    <span class="kw1">return</span><span class="br0">&#40;</span>tabDelta<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab"><span class="kw1">function</span> tabDelta=auxiliaire<span class="br0">&#40;</span>tab<span class="br0">&#41;</span>
+    tabDelta=tab
+    tabDelta<span class="br0">&#40;</span><span class="nu0">1</span>,:<span class="br0">&#41;</span>*=<span class="nu0">0</span>
+    tabGauche=tabDelta<span class="br0">&#40;</span>:,<span class="nu0">1</span>:end-<span class="nu0">1</span><span class="br0">&#41;</span>
+    tabMilieu=-<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/ones.html"><span class="kw2">ones</span></a><span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tabDelta<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>,<span class="nu0">1</span><span class="br0">&#41;</span>
+    tabDroite=tabDelta<span class="br0">&#40;</span>:,<span class="kw1">end</span><span class="br0">&#41;</span>
+    tabDelta=<span class="br0">&#91;</span>tabGauche,tabMilieu,tabDroite<span class="br0">&#93;</span>
+endfunction</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le probl\u00e8me auxiliaire&quot;,&quot;hid&quot;:&quot;le_probleme_auxiliaire&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:2,&quot;range&quot;:&quot;1674-4279&quot;} -->
+<h2 class="sectionedit4" id="premiere_phase">Première phase</h2>
+<div class="level2">
+
+<p>
+On résout le problème <strong>presque</strong> comme on en a l&#039;habitude avec la méthode des tableaux.
+</p>
+
+<p>
+Nous utilisons le même <code>x</code> que dans la page précédente, c&#039;est- à -dire un vecteur dont l&#039;i-ème élément est l&#039;indice de la variable à laquelle correspond la ligne i+1 du tableau. Ce vecteur est créé dans <code>simplexeStandard</code>.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">def</span> phase1<span class="br0">&#40;</span>tabDelta<span class="sy0">,</span>x<span class="br0">&#41;</span>:</pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab"><span class="kw1">function</span> <span class="br0">&#91;</span>tabDelta,x<span class="br0">&#93;</span>=phase1<span class="br0">&#40;</span>tabDelta,x<span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Premi\u00e8re phase&quot;,&quot;hid&quot;:&quot;premiere_phase&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:4,&quot;range&quot;:&quot;4280-4779&quot;} -->
+<h3 class="sectionedit5" id="choix_de_la_variable_entrante">Choix de la variable entrante</h3>
+<div class="level3">
+
+<p>
+Il ne vous aura pas échappé que toutes les variables de la première ligne sont <strong><span style="color:#008000;">négatives</span></strong> ou <strong><span style="color:#008000;">nulles</span></strong>. Lors de la <strong><span style="color:#ff0000;">première</span></strong> itération, la variable <strong><span style="color:#008000;">entrante</span></strong> est <strong><span style="color:#ff0000;">toujours</span></strong> $\delta$.
+</p>
+<div class="table sectionedit6"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  <span style="color:#ff0000;">$\delta$</span>  </th><th class="col4 centeralign">  $y_1$  </th><th class="col5 centeralign">  $y_2$  </th><th class="col6 centeralign">  $y_3$  </th><td class="col7"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  0  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  -1  </td><td class="col2 centeralign">  3  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  10  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  5  </td><td class="col2 centeralign">  -4  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  1  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  -3  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  1  </td><td class="col7 centeralign">  -1  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table2&quot;,&quot;secid&quot;:6,&quot;range&quot;:&quot;5105-5413&quot;} -->
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#Choix de la variable entrante (delta)</span>
+indiceVarEntrante<span class="sy0">=</span>tabDelta.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>-<span class="nu0">2</span></pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab"><span class="co1">%Choix de la variable entrante (delta)</span>
+indiceVarEntrante=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tabDelta<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="br0">&#41;</span>-<span class="nu0">1</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Choix de la variable entrante&quot;,&quot;hid&quot;:&quot;choix_de_la_variable_entrante&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:5,&quot;range&quot;:&quot;4780-5645&quot;} -->
+<h3 class="sectionedit7" id="choix_de_la_variable_sortante">Choix de la variable sortante</h3>
+<div class="level3">
+
+<p>
+On prend comme variable <strong><span style="color:#008000;">sortante</span></strong> la plus <strong><span style="color:#ff0000;">petite</span></strong> variable de la dernière colonne (pas de rapports à faire).
+</p>
+<div class="table sectionedit8"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $\delta$  </th><th class="col4 centeralign">  $y_1$  </th><th class="col5 centeralign">  $y_2$  </th><th class="col6 centeralign">  $y_3$  </th><td class="col7"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  0  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  -1  </td><td class="col2 centeralign">  3  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  10  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  5  </td><td class="col2 centeralign">  -4  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  1  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  <span style="color:#ff0000;">$\delta$</span>  </th><td class="col1 centeralign">  -3  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  1  </td><td class="col7 centeralign">  <span style="color:#ff0000;">-1</span>  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table3&quot;,&quot;secid&quot;:8,&quot;range&quot;:&quot;5836-6164&quot;} -->
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#Recherche de la variable sortante (la plus petite)</span>
+indiceVarSortante<span class="sy0">=</span><span class="nu0">1</span>
+<span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="sy0">,</span>tabDelta.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>:
+    <span class="kw1">if</span> tabDelta<span class="br0">&#91;</span>i<span class="sy0">,</span>-<span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">&lt;</span>tabDelta<span class="br0">&#91;</span>indiceVarSortante<span class="sy0">,</span>-<span class="nu0">1</span><span class="br0">&#93;</span>:
+        indiceVarSortante<span class="sy0">=</span>i</pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab"><span class="co1">%Recherche de la variable sortante (la plus petite)</span>
+indiceVarSortante=<span class="nu0">2</span>
+<span class="kw1">for</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>=<span class="nu0">2</span>:<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tabDelta<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+    <span class="kw1">if</span> tabDelta<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>,<span class="kw1">end</span><span class="br0">&#41;</span>&lt;tabDelta<span class="br0">&#40;</span>indiceVarSortante,<span class="kw1">end</span><span class="br0">&#41;</span>
+        indiceVarSortante=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>
+    endif
+endfor</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Choix de la variable sortante&quot;,&quot;hid&quot;:&quot;choix_de_la_variable_sortante&quot;,&quot;codeblockOffset&quot;:8,&quot;secid&quot;:7,&quot;range&quot;:&quot;5646-6631&quot;} -->
+<h3 class="sectionedit9" id="le_coefficient_principal">Le coefficient principal</h3>
+<div class="level3">
+
+<p>
+On ramène le coefficient <strong>principal</strong> à 1.
+</p>
+
+<p>
+$L_3=-1*L_3$
+</p>
+<div class="table sectionedit10"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $\delta$  </th><th class="col4 centeralign">  $y_1$  </th><th class="col5 centeralign">  $y_2$  </th><th class="col6 centeralign">  $y_3$  </th><td class="col7"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  0  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  -1  </td><td class="col2 centeralign">  3  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  10  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  5  </td><td class="col2 centeralign">  -4  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  1  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $\delta$  </th><td class="col1 centeralign">  <span style="color:#ff0000;">3</span>  </td><td class="col2 centeralign">  <span style="color:#ff0000;">-1</span>  </td><td class="col3 centeralign">  <span style="color:#ff0000;">1</span>  </td><td class="col4 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col5 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col6 centeralign">  <span style="color:#ff0000;">-1</span>  </td><td class="col7 centeralign">  <span style="color:#ff0000;">1</span>  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table4&quot;,&quot;secid&quot;:10,&quot;range&quot;:&quot;6726-7138&quot;} -->
+<p>
+On réutilise, bien sûr, notre fonction de normalisation de la partie précédente.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#Coefficient principal à 1 et coefficients secondaires à 0</span>
+normalisation<span class="br0">&#40;</span>tabDelta<span class="sy0">,</span>indiceVarEntrante<span class="sy0">,</span>indiceVarSortante<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab"><span class="co1">%Coefficient principal à 1 et coefficients secondaires à 0</span>
+tabDelta=normalisation<span class="br0">&#40;</span>tabDelta,indiceVarEntrante,indiceVarSortante<span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le coefficient principal&quot;,&quot;hid&quot;:&quot;le_coefficient_principal&quot;,&quot;codeblockOffset&quot;:10,&quot;secid&quot;:9,&quot;range&quot;:&quot;6632-7553&quot;} -->
+<h3 class="sectionedit11" id="les_coefficients_secondaires">Les coefficients secondaires</h3>
+<div class="level3">
+
+<p>
+On ramène les coefficients <strong>secondaires</strong> à 0.
+</p>
+
+<p>
+$L_f=L_f+L_3$
+</p>
+
+<p>
+$L_1=L_1+L_3$
+</p>
+
+<p>
+$L_2=L_2+L_3$
+</p>
+<div class="table sectionedit12"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $\delta$  </th><th class="col4 centeralign">  $y_1$  </th><th class="col5 centeralign">  $y_2$  </th><th class="col6 centeralign">  $y_3$  </th><td class="col7"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  <span style="color:#ff0000;">3</span>  </td><td class="col2 centeralign">  <span style="color:#ff0000;">-1</span>  </td><td class="col3 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col4 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col5 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col6 centeralign">  <span style="color:#ff0000;">-1</span>  </td><td class="col7 centeralign">  <span style="color:#ff0000;">1</span>  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  <span style="color:#ff0000;">2</span>  </td><td class="col2 centeralign">  <span style="color:#ff0000;">2</span>  </td><td class="col3 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col4 centeralign">  <span style="color:#ff0000;">1</span>  </td><td class="col5 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col6 centeralign">  <span style="color:#ff0000;">-1</span>  </td><td class="col7 centeralign">  <span style="color:#ff0000;">11</span>  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  <span style="color:#ff0000;">8</span>  </td><td class="col2 centeralign">  <span style="color:#ff0000;">-5</span>  </td><td class="col3 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col4 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col5 centeralign">  <span style="color:#ff0000;">1</span>  </td><td class="col6 centeralign">  <span style="color:#ff0000;">-1</span>  </td><td class="col7 centeralign">  <span style="color:#ff0000;">2</span>  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $\delta$  </th><td class="col1 centeralign">  3  </td><td class="col2 centeralign">  -1  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  -1  </td><td class="col7 centeralign">  1  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table5&quot;,&quot;secid&quot;:12,&quot;range&quot;:&quot;7687-8337&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les coefficients secondaires&quot;,&quot;hid&quot;:&quot;les_coefficients_secondaires&quot;,&quot;codeblockOffset&quot;:12,&quot;secid&quot;:11,&quot;range&quot;:&quot;7554-8337&quot;} -->
+<h3 class="sectionedit13" id="seconde_iteration">Seconde itération</h3>
+<div class="level3">
+
+<p>
+Seule la première itération suit un algorithme particulier. On continue la résolution de tableau par la méthode <strong>standard</strong> en <strong><span style="color:#ff0000;">privilégiant</span></strong> $\delta$ comme variable <strong><span style="color:#008000;">sortante</span></strong> en cas d&#039;égalité de rapport de coefficient.
+</p>
+
+<p>
+<div class='alert alert-warning'>Seule la première itération est sensiblement différente des autres.</div>
+</p>
+
+<p>
+Choix des variables <strong>entrante</strong> et <strong>sortante</strong> :
+</p>
+<div class="table sectionedit14"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  <span style="color:#ff0000;">$x_1$</span>  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $\delta$  </th><th class="col4 centeralign">  $y_1$  </th><th class="col5 centeralign">  $y_2$  </th><th class="col6 centeralign">  $y_3$  </th><td class="col7"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  3  </td><td class="col2 centeralign">  -1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  -1  </td><td class="col7 centeralign">  1  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  2  </td><td class="col2 centeralign">  2  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  -1  </td><td class="col7 centeralign">  11  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  <span style="color:#ff0000;">$y_2$</span>  </th><td class="col1 centeralign">  8  </td><td class="col2 centeralign">  -5  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  -1  </td><td class="col7 centeralign">  2  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $\delta$  </th><td class="col1 centeralign">  3  </td><td class="col2 centeralign">  -1  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  -1  </td><td class="col7 centeralign">  1  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table6&quot;,&quot;secid&quot;:14,&quot;range&quot;:&quot;8780-9107&quot;} -->
+<p>
+On ramène le coefficient <strong>principal</strong> à 1 et les coefficients <strong>secondaires</strong> à 0 :
+</p>
+<div class="table sectionedit15"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $\delta$  </th><th class="col4 centeralign">  $y_1$  </th><th class="col5 centeralign">  $y_2$  </th><th class="col6 centeralign">  $y_3$  </th><td class="col7"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  $\frac{7}{8}$  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  -$\frac{3}{8}$  </td><td class="col6 centeralign">  -$\frac{5}{8}$  </td><td class="col7 centeralign">  $\frac{1}{4}$  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  $\frac{13}{4}$  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  -$\frac{1}{4}$  </td><td class="col6 centeralign">  -$\frac{3}{4}$  </td><td class="col7 centeralign">  $\frac{21}{2}$  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $x_1$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  -$\frac{5}{8}$  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  $\frac{1}{8}$  </td><td class="col6 centeralign">  -$\frac{1}{8}$  </td><td class="col7 centeralign">  $\frac{1}{4}$  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $\delta$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  $\frac{7}{8}$  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  -$\frac{3}{8}$  </td><td class="col6 centeralign">  -$\frac{5}{8}$  </td><td class="col7 centeralign">  $\frac{1}{4}$  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table7&quot;,&quot;secid&quot;:15,&quot;range&quot;:&quot;9197-9684&quot;} -->
+<p>
+Le code est alors <strong><span style="color:#ff0000;">très</span></strong> similaire à celui de la méthode standard, le seul changement étant le traitement spécial de $\delta$ en tant que variable sortante. Vous remarquerez que j&#039;introduis $x$ dans le code : il s&#039;agit d&#039;un vecteur servant à stocker l&#039;appariement de chaque variable à une ligne du tableau (pour savoir que la dernière ligne c&#039;est $\delta$ par exemple).
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#Stockage de la position des différentes variables</span>
+x<span class="br0">&#91;</span>indiceVarSortante-<span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">=</span>indiceVarEntrante
+<span class="co1">#Tant que les coefficients de Lf sont positifs</span>
+<span class="kw1">while</span> <span class="br0">&#40;</span>tabDelta<span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span>:-<span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">&gt;</span>np.<span class="me1">zeros</span><span class="br0">&#40;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span>tabDelta.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>-<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>.<span class="kw2">any</span><span class="br0">&#40;</span><span class="br0">&#41;</span>:
+    <span class="co1">#Recherche de la variable entrante</span>
+    indiceVarEntrante<span class="sy0">=</span>variableEntrante<span class="br0">&#40;</span>tabDelta<span class="br0">&#41;</span>
+    <span class="co1">#Recherche de la variable sortante</span>
+    indiceVarSortante<span class="sy0">=</span><span class="nu0">0</span>
+    rapportMin<span class="sy0">=</span>np.<span class="me1">inf</span>
+    <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span>tabDelta.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>:
+        <span class="kw1">if</span> tabDelta<span class="br0">&#91;</span>i<span class="sy0">,</span>indiceVarEntrante<span class="br0">&#93;</span><span class="sy0">&gt;</span><span class="nu0">0</span>:
+            rapport<span class="sy0">=</span>tabDelta<span class="br0">&#91;</span>i<span class="sy0">,</span>tabDelta.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>-<span class="nu0">1</span><span class="br0">&#93;</span>/tabDelta<span class="br0">&#91;</span>i<span class="sy0">,</span>indiceVarEntrante<span class="br0">&#93;</span>
+            <span class="co1">#On privilégie delta en cas d'égalité</span>
+            <span class="kw1">if</span> rapport<span class="sy0">==</span>rapportMin <span class="kw1">and</span> x<span class="br0">&#91;</span>i<span class="br0">&#93;</span><span class="sy0">==</span>tabDelta.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>-<span class="nu0">2</span>:
+                indiceVarSortante<span class="sy0">=</span>i
+                rapportMin<span class="sy0">=</span>rapport
+            <span class="kw1">if</span> rapport<span class="sy0">&lt;</span>rapportMin <span class="kw1">and</span> rapport<span class="sy0">&gt;=</span><span class="nu0">0</span>:
+                indiceVarSortante<span class="sy0">=</span>i
+                rapportMin<span class="sy0">=</span>rapport
+    <span class="kw1">if</span> indiceVarSortante<span class="sy0">==</span><span class="nu0">0</span>:
+        <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;Pas de variable sortante&quot;</span><span class="br0">&#41;</span>
+        exit<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="co1">#Coefficient principal à 1 et coefficients secondaires à 0</span>
+    normalisation<span class="br0">&#40;</span>tabDelta<span class="sy0">,</span>indiceVarEntrante<span class="sy0">,</span>indiceVarSortante<span class="br0">&#41;</span>
+    <span class="co1">#Stockage de la position des différentes variables</span>
+    x<span class="br0">&#91;</span>indiceVarSortante-<span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">=</span>indiceVarEntrante</pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab"><span class="co1">%Stockage de la position des différentes variables</span>
+x<span class="br0">&#40;</span>indiceVarSortante-<span class="nu0">1</span><span class="br0">&#41;</span>=indiceVarEntrante
+<span class="co1">%Tant que les coefficients de Lf dont positifs</span>
+<span class="kw1">while</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/sum.html"><span class="kw2">sum</span></a><span class="br0">&#40;</span>tabDelta<span class="br0">&#40;</span><span class="nu0">1</span>,<span class="nu0">1</span>:end-<span class="nu0">1</span><span class="br0">&#41;</span>&gt;<span class="nu0">0</span><span class="br0">&#41;</span>&gt;<span class="nu0">0</span>
+    <span class="co1">%Recherche de la variable entrante</span>
+    indiceVarEntrante=variableEntrante<span class="br0">&#40;</span>tabDelta<span class="br0">&#41;</span>
+    <span class="co1">%Recherche de la variable sortante en privilégiant delta</span>
+    indiceVarSortante=<span class="nu0">1</span>
+    rapportMin=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/inf.html"><span class="kw2">Inf</span></a>
+    <span class="kw1">for</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>=<span class="nu0">2</span>:<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tabDelta<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+        <span class="kw1">if</span> tabDelta<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>,indiceVarEntrante<span class="br0">&#41;</span>&gt;<span class="nu0">0</span>
+            rapport=tabDelta<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tabDelta<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="br0">&#41;</span><span class="br0">&#41;</span>/tabDelta<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>,indiceVarEntrante<span class="br0">&#41;</span>
+            #On privilégie delta en cas d'égalité
+            <span class="kw1">if</span> x<span class="br0">&#40;</span><span class="re0">i</span>-<span class="nu0">1</span><span class="br0">&#41;</span>==<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tabDelta<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="br0">&#41;</span>-<span class="nu0">1</span> &amp;&amp; rapport==rapportMin
+                indiceVarSortante=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>
+                rapportMin=rapport
+            endif
+            <span class="kw1">if</span> rapport&lt;rapportMin &amp;&amp; rapport&gt;=<span class="nu0">0</span>
+                indiceVarSortante=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>
+                rapportMin=rapport
+            endif
+        endif
+    endfor
+    <span class="kw1">if</span> indiceVarSortante==<span class="nu0">1</span>
+        <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span>&quot;Pas de variable sortante&quot;<span class="br0">&#41;</span>
+        <span class="kw1">return</span>
+    endif
+    <span class="co1">%Coefficient principal à 1 et coefficients secondaires à 0</span>
+    tabDelta=normalisation<span class="br0">&#40;</span>tabDelta,indiceVarEntrante,indiceVarSortante<span class="br0">&#41;</span>
+    <span class="co1">%Stockage de la position des différentes variables</span>
+    x<span class="br0">&#40;</span>indiceVarSortante-<span class="nu0">1</span><span class="br0">&#41;</span>=indiceVarEntrante
+<span class="kw1">end</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Seconde it\u00e9ration&quot;,&quot;hid&quot;:&quot;seconde_iteration&quot;,&quot;codeblockOffset&quot;:12,&quot;secid&quot;:13,&quot;range&quot;:&quot;8338-12560&quot;} -->
+<h3 class="sectionedit16" id="troisieme_iteration">Troisième itération</h3>
+<div class="level3">
+
+<p>
+On continue de <strong>résoudre</strong> en <strong><span style="color:#ff0000;">privilégiant</span></strong> $\delta$ comme variable <strong><span style="color:#008000;">sortante</span></strong> si égalité des rapports.
+</p>
+
+<p>
+Choix des variables <strong>entrante</strong> et <strong>sortante</strong> :
+</p>
+<div class="table sectionedit17"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  <span style="color:#ff0000;">$x_2$</span>  </th><th class="col3 centeralign">  $\delta$  </th><th class="col4 centeralign">  $y_1$  </th><th class="col5 centeralign">  $y_2$  </th><th class="col6 centeralign">  $y_3$  </th><td class="col7"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  $\frac{7}{8}$  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  -$\frac{3}{8}$  </td><td class="col6 centeralign">  -$\frac{5}{8}$  </td><td class="col7 centeralign">  $\frac{1}{4}$  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  $\frac{13}{4}$  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  -$\frac{1}{4}$  </td><td class="col6 centeralign">  -$\frac{3}{4}$  </td><td class="col7 centeralign">  $\frac{21}{2}$  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $x_1$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  -$\frac{5}{8}$  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  $\frac{1}{8}$  </td><td class="col6 centeralign">  -$\frac{1}{8}$  </td><td class="col7 centeralign">  $\frac{1}{4}$  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  <span style="color:#ff0000;">$\delta$</span>  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  $\frac{7}{8}$  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  -$\frac{3}{8}$  </td><td class="col6 centeralign">  -$\frac{5}{8}$  </td><td class="col7 centeralign">  $\frac{1}{4}$  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table8&quot;,&quot;secid&quot;:17,&quot;range&quot;:&quot;12792-13313&quot;} -->
+<p>
+On ramène le coefficient <strong>principal</strong> à 1 et les coefficients <strong>secondaires</strong> à 0 :
+</p>
+<div class="table sectionedit18"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $\delta$  </th><th class="col4 centeralign">  $y_1$  </th><th class="col5 centeralign">  $y_2$  </th><th class="col6 centeralign">  $y_3$  </th><td class="col7"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  <span style="color:#008000;"><strong>0</strong></span>  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -$\frac{26}{7}$  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  $\frac{8}{7}$  </td><td class="col6 centeralign">  $\frac{11}{7}$  </td><td class="col7 centeralign">  $\frac{67}{7}$  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $x_1$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  $\frac{5}{7}$  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  -$\frac{1}{7}$  </td><td class="col6 centeralign">  -$\frac{4}{7}$  </td><td class="col7 centeralign">  $\frac{3}{7}$  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  $\frac{8}{7}$  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  -$\frac{3}{7}$  </td><td class="col6 centeralign">  -$\frac{5}{7}$  </td><td class="col7 centeralign">  $\frac{2}{7}$  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table9&quot;,&quot;secid&quot;:18,&quot;range&quot;:&quot;13403-13859&quot;} -->
+<p>
+On a terminé la première phase.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">return</span><span class="br0">&#40;</span>tabDelta<span class="sy0">,</span>x<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab">endfunction</pre>
+
+<p>
+Maintenant que nous avons fini la résolution du problème <strong><span style="color:#008000;">auxiliaire</span></strong>, deux cas de figure se présentent en fonction de la valeur de l&#039;<strong>optimum</strong> (en vert) :
+</p>
+<ul>
+<li class="level1"><div class="li">  il est <strong>nul</strong> et on peut passer à la <strong><span style="color:#ff0000;">seconde phase.</span></strong></div>
+</li>
+<li class="level1"><div class="li">  il est <strong>strictement positif</strong> et le problème n&#039;admet pas d&#039;<strong><span style="color:#ff0000;">optimum.</span></strong></div>
+</li>
+</ul>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#On regarde si on peut passer à la seconde phase</span>
+<span class="kw1">if</span> tabDelta<span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span>-<span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">&gt;</span><span class="nu0">0</span>:
+    <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;Le problème n'a pas d'optimum&quot;</span><span class="br0">&#41;</span>
+    exit<span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab"><span class="co1">%On regarde si on peut passer à la seconde phase</span>
+<span class="kw1">if</span> tabDelta<span class="br0">&#40;</span><span class="nu0">1</span>,<span class="kw1">end</span><span class="br0">&#41;</span>&gt;<span class="nu0">0</span>
+    <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span>&quot;Le problème n'a pas d'optimum&quot;<span class="br0">&#41;</span>
+    <span class="kw1">return</span>
+endif</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Troisi\u00e8me it\u00e9ration&quot;,&quot;hid&quot;:&quot;troisieme_iteration&quot;,&quot;codeblockOffset&quot;:14,&quot;secid&quot;:16,&quot;range&quot;:&quot;12561-14695&quot;} -->
+<h2 class="sectionedit19" id="seconde_phase">Seconde phase</h2>
+<div class="level2">
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">def</span> phase2<span class="br0">&#40;</span>tabDelta<span class="sy0">,</span>x<span class="sy0">,</span>tab<span class="br0">&#41;</span>:</pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab"><span class="kw1">function</span> <span class="br0">&#91;</span>tabDelta,x<span class="br0">&#93;</span>=phase2<span class="br0">&#40;</span>tabDelta,x,tab<span class="br0">&#41;</span></pre>
+
+<p>
+On commence par retirer la colonne de $\delta$ :
+</p>
+<div class="table sectionedit20"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  $\frac{8}{7}$  </td><td class="col5 centeralign">  $\frac{11}{7}$  </td><td class="col6 centeralign">  $\frac{67}{7}$  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $x_1$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  -$\frac{1}{7}$  </td><td class="col5 centeralign">  -$\frac{4}{7}$  </td><td class="col6 centeralign">  $\frac{3}{7}$  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  -$\frac{3}{7}$  </td><td class="col5 centeralign">  -$\frac{5}{7}$  </td><td class="col6 centeralign">  $\frac{2}{7}$  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table10&quot;,&quot;secid&quot;:20,&quot;range&quot;:&quot;14922-15281&quot;} -->
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#Suppression de la colonne delta</span>
+tabGauche<span class="sy0">=</span>tabDelta<span class="br0">&#91;</span>:<span class="sy0">,</span>:-<span class="nu0">2</span><span class="br0">&#93;</span>
+tabDroite<span class="sy0">=</span>tabDelta<span class="br0">&#91;</span>:<span class="sy0">,</span>-<span class="nu0">1</span>:<span class="br0">&#93;</span>
+tabDelta<span class="sy0">=</span>np.<span class="me1">concatenate</span><span class="br0">&#40;</span><span class="br0">&#40;</span>tabGauche<span class="sy0">,</span>tabDroite<span class="br0">&#41;</span><span class="sy0">,</span>axis<span class="sy0">=</span><span class="nu0">1</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab"><span class="co1">%Suppression de la colonne delta</span>
+tabGauche=tabDelta<span class="br0">&#40;</span>:,<span class="nu0">1</span>:end-<span class="nu0">2</span><span class="br0">&#41;</span>
+tabDroite=tabDelta<span class="br0">&#40;</span>:,<span class="kw1">end</span><span class="br0">&#41;</span>
+tabDelta=<span class="br0">&#91;</span>tabGauche,tabDroite<span class="br0">&#93;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Seconde phase&quot;,&quot;hid&quot;:&quot;seconde_phase&quot;,&quot;codeblockOffset&quot;:18,&quot;secid&quot;:19,&quot;range&quot;:&quot;14696-15618&quot;} -->
+<h3 class="sectionedit21" id="reecriture_du_critere_initial">Réécriture du critère initial</h3>
+<div class="level3">
+
+<p>
+Vous aurez remarqué que la première ligne du tableau est <strong><span style="color:#008000;">nulle</span></strong>, ce qui nous empêche de continuer la résolution du problème de manière <strong>standard</strong>. Nous allons donc remplir cette première ligne en <strong><span style="color:#ff0000;">reformulant</span></strong> le <strong>critère initial</strong> (le contenu du “max” de notre problème) en fonction des <strong>variables nulles</strong> (vous savez, celles qui ne sont pas présentes dans la première colonne du tableau). Dans notre cas, nous réécrirons $x_1+2x_2$ en fonction de $y_2$ et $y_3$.
+</p>
+
+<p>
+D&#039;après l&#039;avant-dernière ligne du tableau,
+$$x_1-\frac{1}{7}y_2-\frac{4}{7}y_3=\frac{3}{7}$$
+donc
+$$x_1=\frac{3}{7}+\frac{1}{7}y_2+\frac{4}{7}y_3$$
+D&#039;après la dernière ligne du tableau,
+$$x_2-\frac{3}{7}y_2-\frac{5}{7}y_3=\frac{2}{7}$$
+donc
+$$x_2=\frac{2}{7}+\frac{3}{7}y_2+\frac{5}{7}y_3$$
+Ainsi,
+$$x_1+2x_2=1+y_2+\frac{14}{7}y_3$$
+</p>
+
+<p>
+On peut alors compléter le tableau :
+</p>
+<div class="table sectionedit22"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  <span style="color:#ff0000;">1</span>  </td><td class="col5 centeralign">  <span style="color:#ff0000;">$\frac{14}{7}$</span>  </td><td class="col6 centeralign">  <span style="color:#ff0000;">-1</span>  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  $\frac{8}{7}$  </td><td class="col5 centeralign">  $\frac{11}{7}$  </td><td class="col6 centeralign">  $\frac{67}{7}$  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $x_1$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  -$\frac{1}{7}$  </td><td class="col5 centeralign">  -$\frac{4}{7}$  </td><td class="col6 centeralign">  $\frac{3}{7}$  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  -$\frac{3}{7}$  </td><td class="col5 centeralign">  -$\frac{5}{7}$  </td><td class="col6 centeralign">  $\frac{2}{7}$  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table11&quot;,&quot;secid&quot;:22,&quot;range&quot;:&quot;16561-16985&quot;} -->
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#Réécriture du critère initial</span>
+<span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>x.<span class="me1">size</span><span class="br0">&#41;</span>:
+    <span class="kw1">if</span> x<span class="br0">&#91;</span>i<span class="br0">&#93;</span><span class="sy0">&lt;</span>tabDelta.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>-tabDelta.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>:
+        tabDelta<span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span>tabDelta.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>-tabDelta.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>:<span class="br0">&#93;</span>-<span class="sy0">=</span>tab<span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span>x<span class="br0">&#91;</span>i<span class="br0">&#93;</span><span class="br0">&#93;</span>*tabDelta<span class="br0">&#91;</span>i+<span class="nu0">1</span><span class="sy0">,</span>tabDelta.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>-tabDelta.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>:<span class="br0">&#93;</span></pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab"><span class="co1">%Réécriture du critère initial</span>
+<span class="kw1">for</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>=<span class="nu0">1</span>:<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>x<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="br0">&#41;</span>
+    <span class="kw1">if</span> x<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a><span class="br0">&#41;</span>&lt;<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tabDelta<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="br0">&#41;</span>-<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tabDelta<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>+<span class="nu0">1</span>
+        tabDelta<span class="br0">&#40;</span><span class="nu0">1</span>,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tabDelta<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="br0">&#41;</span>-<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tabDelta<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>+<span class="nu0">1</span>:<span class="kw1">end</span><span class="br0">&#41;</span>-=tab<span class="br0">&#40;</span><span class="nu0">1</span>,x<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a><span class="br0">&#41;</span><span class="br0">&#41;</span>*tabDelta<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>+<span class="nu0">1</span>,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tabDelta<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="br0">&#41;</span>-<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tabDelta<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>+<span class="nu0">1</span>:<span class="kw1">end</span><span class="br0">&#41;</span>
+    endif
+endfor</pre>
+
+<p>
+On a terminé la seconde phase.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">return</span><span class="br0">&#40;</span>tabDelta<span class="sy0">,</span>x<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab">endfunction</pre>
+
+<p>
+On va alors rassembler toutes les fonctions que nous avons créées dans une seule :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">def</span> simplexePhases<span class="br0">&#40;</span>tab<span class="sy0">,</span>x<span class="br0">&#41;</span>:
+    <span class="co1">#Construction du tableau du problème auxiliaire</span>
+    tabDelta<span class="sy0">=</span>auxiliaire<span class="br0">&#40;</span>tab<span class="br0">&#41;</span>
+    <span class="co1">#Première phase</span>
+    tabDelta<span class="sy0">,</span>x<span class="sy0">=</span>phase1<span class="br0">&#40;</span>tabDelta<span class="sy0">,</span>x<span class="br0">&#41;</span>
+    <span class="co1">#On regarde si on peut passer à la seconde phase</span>
+    <span class="kw1">if</span> tabDelta<span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span>-<span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">&gt;</span><span class="nu0">0</span>:
+        <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;Le problème n'a pas d'optimum&quot;</span><span class="br0">&#41;</span>
+        exit<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="co1">#Seconde phase</span>
+    tabDelta<span class="sy0">,</span>x<span class="sy0">=</span>phase2<span class="br0">&#40;</span>tabDelta<span class="sy0">,</span>x<span class="sy0">,</span>tab<span class="br0">&#41;</span>
+    <span class="co1">#Retour à la méthode standard</span>
+    <span class="kw1">return</span><span class="br0">&#40;</span>tabDelta<span class="sy0">,</span>x<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab"><span class="kw1">function</span> <span class="br0">&#91;</span>tabDelta,x<span class="br0">&#93;</span>=simplexePhases<span class="br0">&#40;</span>tab,x<span class="br0">&#41;</span>
+    <span class="co1">%Construction du tableau du problème auxiliaire</span>
+    tabDelta=auxiliaire<span class="br0">&#40;</span>tab<span class="br0">&#41;</span>
+    <span class="co1">%Première phase</span>
+    <span class="br0">&#91;</span>tabDelta,x<span class="br0">&#93;</span>=phase1<span class="br0">&#40;</span>tabDelta,x<span class="br0">&#41;</span>
+    <span class="co1">%On regarde si on peut passer à la seconde phase</span>
+    <span class="kw1">if</span> tabDelta<span class="br0">&#40;</span><span class="nu0">1</span>,<span class="kw1">end</span><span class="br0">&#41;</span>&gt;<span class="nu0">0</span>
+        <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span>&quot;Le problème n'a pas d'optimum&quot;<span class="br0">&#41;</span>
+        <span class="kw1">return</span>
+    endif
+    <span class="co1">%Seconde phase</span>
+    <span class="br0">&#91;</span>tabDelta,x<span class="br0">&#93;</span>=phase2<span class="br0">&#40;</span>tabDelta,x,tab<span class="br0">&#41;</span>
+endfunction</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;R\u00e9\u00e9criture du crit\u00e8re initial&quot;,&quot;hid&quot;:&quot;reecriture_du_critere_initial&quot;,&quot;codeblockOffset&quot;:22,&quot;secid&quot;:21,&quot;range&quot;:&quot;15619-18675&quot;} -->
+<h3 class="sectionedit23" id="resolution_du_probleme">Résolution du problème</h3>
+<div class="level3">
+
+<p>
+On applique la méthode <strong><span style="color:#008000;">standard</span></strong>.
+</p>
+
+<p>
+Choix des variables <strong>entrante</strong> et <strong>sortante</strong> :
+</p>
+<div class="table sectionedit24"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  <span style="color:#ff0000;">$y_3$</span>  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  $\frac{14}{7}$  </td><td class="col6 centeralign">  -1  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  <span style="color:#ff0000;">$y_1$</span>  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  $\frac{8}{7}$  </td><td class="col5 centeralign">  $\frac{11}{7}$  </td><td class="col6 centeralign">  $\frac{67}{7}$  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $x_1$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  -$\frac{1}{7}$  </td><td class="col5 centeralign">  -$\frac{4}{7}$  </td><td class="col6 centeralign">  $\frac{3}{7}$  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  -$\frac{3}{7}$  </td><td class="col5 centeralign">  -$\frac{5}{7}$  </td><td class="col6 centeralign">  $\frac{2}{7}$  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table12&quot;,&quot;secid&quot;:24,&quot;range&quot;:&quot;18817-19224&quot;} -->
+<p>
+On ramène le coefficient <strong>principal</strong> à 1 et les coefficients <strong>secondaires</strong> à 0 :
+</p>
+<div class="table sectionedit25"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $y_1$  </th><th class="col4 centeralign">  $y_2$  </th><th class="col5 centeralign">  $y_3$  </th><td class="col6"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -$\frac{14}{11}$  </td><td class="col4 centeralign">  -$\frac{5}{11}$  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  -$\frac{145}{11}$  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  $\frac{7}{11}$  </td><td class="col4 centeralign">  $\frac{8}{11}$  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  $\frac{67}{11}$  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $x_1$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  $\frac{4}{11}$  </td><td class="col4 centeralign">  $\frac{3}{11}$  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  $\frac{43}{11}$  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $x_2$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  $\frac{5}{11}$  </td><td class="col4 centeralign">  $\frac{1}{11}$  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  $\frac{51}{11}$  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table13&quot;,&quot;secid&quot;:25,&quot;range&quot;:&quot;19314-19724&quot;} -->
+<p>
+Et voilà ! On a trouvé l&#039;<strong><span style="color:#ffa500;">optimum</span></strong> de notre problème en $(\frac{43}{11},\frac{51}{11})$ de valeur $\frac{145}{11}$ !
+</p>
+
+<p>
+On n&#039;a plus qu&#039;à appeler <code>simplexePhases</code> au moment opportun et on aura terminé ! On va donc rajouter, juste après le <code>while</code> de <code>simplexeStandard</code>, une vérification de la négativité ou non d&#039; une variable (et donc si on doit ou non appliquer la méthode des phases pour transformer le tableau en quelque chose de résoluble) :
+</p>
+<pre class="code python">...
+<span class="co1">#Tant que les coefficients de Lf sont positifs</span>
+<span class="kw1">while</span> <span class="br0">&#40;</span>tab<span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span>:-<span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">&gt;</span>np.<span class="me1">zeros</span><span class="br0">&#40;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span>tab.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>-<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>.<span class="kw2">any</span><span class="br0">&#40;</span><span class="br0">&#41;</span>:
+    <span class="co1">#Si une des variables est négative on applique la méthode des phases</span>
+    <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span>tab.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>:
+        <span class="kw1">if</span> tab<span class="br0">&#91;</span>i<span class="sy0">,</span>-<span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">&lt;</span><span class="nu0">0</span>:
+            tab<span class="sy0">,</span>x<span class="sy0">=</span>simplexePhases<span class="br0">&#40;</span>tab<span class="sy0">,</span>x<span class="br0">&#41;</span>
+    <span class="co1">#Recherche de la variable entrante</span>
+    indiceVarEntrante<span class="sy0">=</span>variableEntrante<span class="br0">&#40;</span>tab<span class="br0">&#41;</span>
+    ...</pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab"><span class="sy0">...</span>
+<span class="co1">%Tant que les coefficients de Lf dont positifs</span>
+<span class="kw1">while</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/sum.html"><span class="kw2">sum</span></a><span class="br0">&#40;</span>tab<span class="br0">&#40;</span><span class="nu0">1</span>,<span class="nu0">1</span>:end-<span class="nu0">1</span><span class="br0">&#41;</span>&gt;<span class="nu0">0</span><span class="br0">&#41;</span>&gt;<span class="nu0">0</span>
+    <span class="co1">%Si une des variables est négative on applique la méthode des phases</span>
+    <span class="kw1">for</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>=<span class="nu0">2</span>:<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tab<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+        <span class="kw1">if</span> tab<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>,<span class="kw1">end</span><span class="br0">&#41;</span>&lt;<span class="nu0">0</span>
+            <span class="br0">&#91;</span>tab,x<span class="br0">&#93;</span>=simplexePhases<span class="br0">&#40;</span>tab,x<span class="br0">&#41;</span>
+        endif
+    endfor
+    <span class="co1">%Recherche de la variable entrante</span>
+    indiceVarEntrante=variableEntrante<span class="br0">&#40;</span>tab<span class="br0">&#41;</span>
+    <span class="sy0">...</span></pre>
+
+<p>
+<a href="/doku.php?id=cpp:simplexecoupes" class="wikilink1" title="cpp:simplexecoupes">Méthode des coupes</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;R\u00e9solution du probl\u00e8me&quot;,&quot;hid&quot;:&quot;resolution_du_probleme&quot;,&quot;codeblockOffset&quot;:28,&quot;secid&quot;:23,&quot;range&quot;:&quot;18676-&quot;} -->

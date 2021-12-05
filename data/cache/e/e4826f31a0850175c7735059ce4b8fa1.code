@@ -1,0 +1,14 @@
+<span class="co1">#Librairies </span>
+<span class="kw1">from</span> sklearn.<span class="me1">metrics</span> <span class="kw1">import</span> mean_squared_error<span class="co1">#Mesure de précision</span>
+<span class="kw1">from</span> sklearn.<span class="me1">linear_model</span> <span class="kw1">import</span> Ridge<span class="co1">#Régression Ridge</span>
+&nbsp;
+data <span class="sy0">=</span> data.<span class="me1">select_dtypes</span><span class="br0">&#40;</span>exclude<span class="sy0">=</span><span class="br0">&#91;</span><span class="st0">'object'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="co1">#Filtration des variables qualitatives</span>
+&nbsp;
+y <span class="sy0">=</span> data<span class="br0">&#91;</span><span class="st0">'G3'</span><span class="br0">&#93;</span><span class="co1">#Variable cible</span>
+X <span class="sy0">=</span> data.<span class="me1">drop</span><span class="br0">&#40;</span>columns<span class="sy0">=</span><span class="br0">&#91;</span><span class="st0">'G3'</span><span class="br0">&#93;</span><span class="sy0">,</span> axis<span class="sy0">=</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="co1">#Variables explicatives</span>
+&nbsp;
+ridge <span class="sy0">=</span> Ridge<span class="br0">&#40;</span>alpha<span class="sy0">=</span><span class="nu0">1</span><span class="sy0">,</span> solver<span class="sy0">=</span><span class="st0">&quot;auto&quot;</span><span class="br0">&#41;</span><span class="co1">#Algorithme Ridge, avec alpha = 1 et un choix de solveur automatique, qui s'adaptera en fonction des données</span>
+&nbsp;
+ridge.<span class="me1">fit</span><span class="br0">&#40;</span>X_train<span class="sy0">,</span> y_train<span class="br0">&#41;</span><span class="co1">#Entrainement du modèle</span>
+ridge_pre <span class="sy0">=</span> ridge.<span class="me1">predict</span><span class="br0">&#40;</span>X_test<span class="br0">&#41;</span><span class="co1">#Prédictions</span>
+mean_squared_error<span class="br0">&#40;</span>y_test<span class="sy0">,</span> ridge_pre<span class="br0">&#41;</span><span class="co1">#Résultat de performance</span>

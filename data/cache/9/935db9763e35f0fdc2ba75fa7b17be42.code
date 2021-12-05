@@ -1,0 +1,4 @@
+<span class="kw1">from</span> sklearn.<span class="me1">preprocessing</span> <span class="kw1">import</span> StandardScaler
+scaler <span class="sy0">=</span> StandardScaler<span class="br0">&#40;</span><span class="br0">&#41;</span>
+scaler.<span class="me1">fit_transform</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span>
+data <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>data<span class="sy0">,</span> index <span class="sy0">=</span> data.<span class="me1">index</span><span class="sy0">,</span> columns <span class="sy0">=</span> data.<span class="me1">columns</span><span class="br0">&#41;</span>

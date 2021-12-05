@@ -1,0 +1,1 @@
+superheat<span class="br0">&#40;</span>data<span class="sy0">,</span> legend <span class="sy0">=</span> F<span class="sy0">,</span> scale <span class="sy0">=</span> T<span class="br0">&#41;</span><span class="co1"># data etant le jeu de données à observer, # legend = F enlève la barre de couleur d'intervalle de valeurs, # scale permet la normalisation des valeurs.</span>

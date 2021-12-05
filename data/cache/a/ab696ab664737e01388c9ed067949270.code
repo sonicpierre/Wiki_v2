@@ -1,0 +1,2 @@
+<span class="kw1">from</span> sklearn.<span class="me1">cluster</span> <span class="kw1">import</span> KMeans
+model <span class="sy0">=</span> KMean<span class="br0">&#40;</span><span class="br0">&#41;</span>

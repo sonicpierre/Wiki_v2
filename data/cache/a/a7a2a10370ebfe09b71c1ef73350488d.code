@@ -1,0 +1,6 @@
+<span class="kw1">from</span> sklearn.<span class="me1">preprocessing</span> <span class="kw1">import</span> StandardScaler
+<span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+&nbsp;
+scaler <span class="sy0">=</span> StandardScaler<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="co1">#Appel du transformeur</span>
+X <span class="sy0">=</span> scaler.<span class="me1">fit_transform</span><span class="br0">&#40;</span>X<span class="br0">&#41;</span><span class="co1">#Application à l'ensemble des données</span>
+pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>X<span class="sy0">,</span> columns<span class="sy0">=</span>iris.<span class="me1">feature_names</span><span class="br0">&#41;</span><span class="co1">#Affichage du dataset normalisé</span>

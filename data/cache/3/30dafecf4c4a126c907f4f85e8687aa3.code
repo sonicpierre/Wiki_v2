@@ -1,0 +1,1 @@
+<a href="http://www.cmake.org/cmake/help/cmake2.6docs.html#command:set"><span class="kw1">set</span></a><span class="sy0">(</span>EXECUTABLE_OUTPUT_PATH <span class="st0">&quot;./bin&quot;</span><span class="sy0">)</span>

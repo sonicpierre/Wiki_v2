@@ -1,0 +1,216 @@
+
+<p>
+<a href="/doku.php?id=cpp:commande_systeme" class="wikilink1" title="cpp:commande_systeme"> Commandes système</a>
+</p>
+
+<h2 class="sectionedit1" id="acceder_a_la_console">Accéder à la console</h2>
+<div class="level2">
+
+<p>
+Il est possible sur Linux d&#039;ouvrir le terminal avec un <span style="color:#008000;"><strong>raccourci</strong></span>. Sur Mac et Windows, c&#039;est un tout petit peu plus long.
+</p>
+<div class="table sectionedit2"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1">Windows</th><th class="col2" colspan="2">Mac</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">Ctrl+Alt+T</td><td class="col1">Taper cmd dans la barre de recherche à côté de Démarrer, choisir Invite de commandes</td><td class="col2" colspan="2">Launchpad, saisir Terminal dans le champ de recherche, choisir Terminal. </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:2,&quot;range&quot;:&quot;225-422&quot;} -->
+<p>
+Si le raccourci Linux ne marche pas pour vous vous pouvez tout aussi bien rechercher Terminal dans le menu des applications.
+Il faut savoir que puisque Mac possède le même noyau que Linux, <span style="color:#ff0000;"><strong>les commandes à entrer dans le terminal sur Mac sont sauf précision contraire les mêmes que sur Linux</strong></span>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Acc\u00e9der \u00e0 la console&quot;,&quot;hid&quot;:&quot;acceder_a_la_console&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;48-742&quot;} -->
+<h2 class="sectionedit3" id="commandes_generales">Commandes générales</h2>
+<div class="level2">
+
+<p>
+Dans cette partie, nous allons prendre comme <span style="color:#ff0000;"><strong>fil conducteur</strong></span> pour introduire les différentes commandes l&#039;installation d&#039;un logiciel de traitement d&#039;images, <span style="color:#ffa500;"><strong>Gimp</strong></span>. Bien sûr, vous pouvez choisir le logiciel que vous voulez :)
+</p>
+
+<p>
+Pour cela, nous allons utiliser la commande
+</p>
+<div class="table sectionedit4"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1">Windows</th><th class="col2" colspan="2">Mac</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">apt</td><td class="col1">choco</td><td class="col2" colspan="2">brew cask</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:4,&quot;range&quot;:&quot;1087-1131&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Commandes g\u00e9n\u00e9rales&quot;,&quot;hid&quot;:&quot;commandes_generales&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;743-1132&quot;} -->
+<h3 class="sectionedit5" id="l_aide">L&#039;aide</h3>
+<div class="level3">
+
+<p>
+Je vais tout de suite vous donner une <span style="color:#008000;"><strong>astuce</strong></span> très utile : lorsque vous voulez savoir à quoi sert une commande, vous pouvez demander son <span style="color:#ff0000;"><strong>manuel</strong></span> avec la commande
+</p>
+<div class="table sectionedit6"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux et mac</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">man</td><td class="col1" colspan="2">help</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table2&quot;,&quot;secid&quot;:6,&quot;range&quot;:&quot;1353-1388&quot;} -->
+<p>
+Par exemple l&#039;aide de <span style="color:#800000;"><strong>apt</strong></span> donne
+</p>
+<pre class="code">man apt</pre>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Adecouvrirlaconsole&amp;media=cpp:man_apt.png" class="media" title="cpp:man_apt.png"><img src="/lib/exe/fetch.php?w=1000&amp;tok=af53d5&amp;media=cpp:man_apt.png" class="media" alt="" width="1000" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;L&#039;aide&quot;,&quot;hid&quot;:&quot;l_aide&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;1133-1490&quot;} -->
+<h3 class="sectionedit7" id="mode_administrateur">Mode administrateur</h3>
+<div class="level3">
+
+<p>
+Pour pouvoir exécuter certaines commandes, comme l&#039;installation de paquets, il faut les droits d&#039;administrateur.
+</p>
+<div class="table sectionedit8"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">sudo</td><td class="col1" colspan="2">runas</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table3&quot;,&quot;secid&quot;:8,&quot;range&quot;:&quot;1634-1665&quot;} -->
+<p>
+Pour utiliser <span style="color:#800000;"><strong>runas</strong></span> il faut rajouter en paramètre le nom de la machine et du compte administrateur
+</p>
+<pre class="code">runas /user:NomMachine\NomCompteAdministrateur</pre>
+
+<p>
+Vous trouverez ces deux informations en utilisant la commande 
+</p>
+<pre class="code">net user</pre>
+
+<p>
+<strong>Note</strong> : je trouve que sur Windows le moyen le plus rapide pour passer en mode administrateur est de tout simplement faire <strong>Clic droit&gt;Exécuter en tant qu&#039;administrateur</strong> quand vous voulez ouvrir la console.
+</p>
+
+<p>
+Si vous êtes sur une version de Linux ne possédant pas la commande <span style="color:#800000;"><strong>sudo</strong></span>, vous pouvez utiliser à la place
+</p>
+<pre class="code">su root</pre>
+
+<p>
+suivi de votre mot de passe pour passer en mode administrateur.
+</p>
+
+<p>
+<strong>Note : </strong>Alors que <span style="color:#800000;"><strong>sudo</strong></span> sert à lancer la commande donnée en paramètre en tant qu&#039;administrateur, <span style="color:#800000;"><strong>su</strong></span> et <span style="color:#800000;"><strong>runas</strong></span> vous connectent en tant qu&#039;administrateur exécutant toutes les commandes que vous entrez par la suite en tant qu&#039;administrateur. Vous pouvez quitter ce mode en réutilisant <span style="color:#800000;"><strong>su/runas</strong></span>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Mode administrateur&quot;,&quot;hid&quot;:&quot;mode_administrateur&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:7,&quot;range&quot;:&quot;1491-2744&quot;} -->
+<h3 class="sectionedit9" id="la_gestion_de_paquets">La gestion de paquets</h3>
+<div class="level3">
+
+<p>
+On y arrive finalement !
+</p>
+
+<p>
+Pour installer des logiciels sur Linux il faut installer ce qui s&#039;appelle un <span style="color:#008000;"><strong>paquet</strong></span> (package en anglais). Il y a des gestionnaires de paquets pour gérer ça à partir de la  console et <strong>installer</strong>, <strong>mettre à jour</strong> ou <strong>désinstaller</strong> rapidement des applications. 
+</p>
+
+<p>
+Le plus intéressant est que ces gestionnaires de paquets permettent de <span style="color:#ff0000;"><strong>mettre à jour tout ses paquets avec une seule commande</strong></span> ! Plus besoin d&#039;aller sur des sites parfois douteux et de risquer d’attraper des logiciels malveillants. Les gestionnaires de paquets sont très utilisés sur Linux et moins sur les autres systèmes d&#039;exploitation mais nous en verrons un compatible avec Windows et un compatible avec Mac.
+</p>
+
+<p>
+Si vous êtes sur Linux la commande à utiliser est déjà installée par défaut. Sur Debian, la commande est <span style="color:#800000;"><strong>apt</strong></span>. Si vous êtes sur <span style="color:#ffa500;"><strong>Fedora</strong></span> ou <span style="color:#ffa500;"><strong>CentOS</strong></span> par exemple, il faut utiliser <span style="color:#800000;"><strong>rpm</strong></span> et si vous êtes sur <span style="color:#ffa500;"><strong>Arch</strong></span> la commande est <span style="color:#800000;"><strong>pacman</strong></span>.
+</p>
+
+<p>
+Sur Windows, il faut installer <span style="color:#800000;"><strong>Chocolatey</strong></span>. Pour ce faire, ouvrez le Windows Powershell (Win+X,A) et entrez 
+</p>
+<pre class="code">Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString(&#039;https://chocolatey.org/install.ps1&#039;))</pre>
+
+<p>
+ Vous pouvez ensuite fermer la fenêtre et retourner sur le terminal classique.
+</p>
+
+<p>
+Sur Mac, on aura besoin d&#039;<span style="color:#800000;"><strong>Homebrew</strong></span>. Tout d&#039;abord, installons Xcode avec 
+</p>
+<pre class="code">xcode-select --install</pre>
+
+<p>
+Ensuite, installons Homebrew 
+</p>
+<pre class="code">/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)&quot;</pre>
+
+<p>
+Finalement entrez cette commande et Homebrew sera en état de marche !
+</p>
+<pre class="code">brew doctor</pre>
+
+<p>
+<strong>Note :</strong> les commandes de gestion de paquets doivent être exécutées en tant qu&#039;<span style="color:#008000;"><strong>administrateur</strong></span>
+</p>
+<div class="table sectionedit10"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1">Windows</th><th class="col2">Mac</th><th class="col3" colspan="2">Utilité</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">apt update</td><td class="col1">choco outdated</td><td class="col2">brew cask outdated</td><td class="col3" colspan="2">Rechercher des mises à jour de tous les paquets</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">apt upgrade</td><td class="col1">choco upgrade all</td><td class="col2">brew cask upgrade</td><td class="col3" colspan="2">Installer les mises à jour repérées par la commande du dessus</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">apt search gimp</td><td class="col1">choco search gimp</td><td class="col2">brew search gimp</td><td class="col3" colspan="2">Rechercher un package dont le nom est fourni en paramètre (ici Gimp)</td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">apt install gimp</td><td class="col1">choco install gimp</td><td class="col2">brew cask install gimp</td><td class="col3" colspan="2">Installer un package dont le nom est fourni en paramètre (ici Gimp)</td>
+	</tr>
+	<tr class="row5">
+		<td class="col0">apt remove gimp</td><td class="col1">choco uninstall gimp</td><td class="col2">brew cask uninstall gimp</td><td class="col3" colspan="2">Supprimer un package dont le nom est fourni en paramètre (ici Gimp)</td>
+	</tr>
+	<tr class="row6">
+		<td class="col0">apt show gimp</td><td class="col1">choco search gim</td><td class="col2">brew list –versions gimp</td><td class="col3" colspan="2">Consulter la version d&#039;un package dont le nom est fourni en paramètre (ici Gimp)</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table4&quot;,&quot;secid&quot;:10,&quot;range&quot;:&quot;4746-5519&quot;} -->
+<p>
+Il y a même une commande assez récente du nom de <span style="color:#800000;"><strong>snap</strong></span> qui marche dans tous les systèmes Linux et qui vise à améliorer <span style="color:#800000;"><strong>apt</strong></span>. je ne vais pas m&#039;étendre sur le sujet mais vous pouvez aller chercher des <a href="https://doc.ubuntu-fr.org/snap" class="urlextern" title="https://doc.ubuntu-fr.org/snap" rel="nofollow">informations supplémentaires</a> si ça vous intéresse ;) 
+</p>
+
+<p>
+<strong>Note :</strong> Pour la gestion des versions de python un package manager spécial est utilisé du nom de <a href="https://pip.pypa.io/en/stable/" class="urlextern" title="https://pip.pypa.io/en/stable/" rel="nofollow">pip</a>.
+</p>
+
+<p>
+Maintenant qu&#039;on a installé notre premier logiciel entièrement avec la console vous avez <span style="color:#008000;"><strong>la base de la base</strong></span> pour utiliser votre console, il est temps de découvrir comment faire des <span style="color:#ffa500;"><strong>merveilles</strong></span> avec !
+</p>
+
+<p>
+<a href="/doku.php?id=cpp:les_dossiers_et_fichiers" class="wikilink1" title="cpp:les_dossiers_et_fichiers"> Les dossiers et fichiers</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La gestion de paquets&quot;,&quot;hid&quot;:&quot;la_gestion_de_paquets&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:9,&quot;range&quot;:&quot;2745-&quot;} -->

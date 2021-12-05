@@ -1,0 +1,3 @@
+library<span class="br0">&#40;</span>tidyr<span class="br0">&#41;</span>
+data <span class="sy0">&lt;</span>- Filter<span class="br0">&#40;</span><span class="kw1">is</span>.<span class="me1">numeric</span><span class="sy0">,</span> data<span class="br0">&#41;</span><span class="co1">#Filtration des variables numériques</span>
+data <span class="sy0">&lt;</span>- drop_na<span class="br0">&#40;</span>data<span class="br0">&#41;</span>

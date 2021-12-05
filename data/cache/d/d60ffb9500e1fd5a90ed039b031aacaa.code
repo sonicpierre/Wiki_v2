@@ -1,0 +1,2 @@
+  <span class="kw2">tar</span> xvf openjdk-14.0.2_linux-x64_bin.tar.gz <span class="co0"># Décompression de l'archive</span>
+  <span class="kw2">mv</span> .<span class="sy0">/</span>jdk-14.0.2 <span class="sy0">/</span>opt<span class="sy0">/</span> <span class="co0"># Mise du JDK dans le dossier système recommandé</span>

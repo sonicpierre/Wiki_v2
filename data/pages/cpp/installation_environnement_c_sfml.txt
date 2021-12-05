@@ -1,0 +1,73 @@
+{{ :cpp:c_pres.png?500 |}}
+
+Le C++ (1980) est un langage mis à jour régulièrement particulièrement <color #ed1c24>**puissant**</color>. Il croise plusieurs paradigmes de programmation (objet, procédural). Le langage est compatible avec le <color #ed1c24>**langage C**</color> et c'est pourquoi il est très utilisé sur des outils où il est important d'obtenir de <color #ed1c24>**bonnes performances**</color>.
+
+===== Compilateur =====
+
+Le compilateur sert à convertir du code source lisible par l'humain en code binaire exécutable par un ordinateur.
+\\
+\\
+{{ :cpp:compil.png?850 | }}
+\\
+En c++ il en existe plusieurs, qui changent  :
+  * la plateforme visée
+  * la plateforme source
+  * les optimisations
+  * les paramètres de configurations possibles (optimisation, message d'informations, ...)
+  * les messages d'erreurs
+
+^  Plateforme  ^  Compilateur  ^
+|  Windows  |  MSVC, MinGW, Cygwin  |
+|  Linux  |  Clang, g++/gcc  |
+
+On va utiliser [[http://www.mingw.org/ | MinGW]] pour windows il améliore cygwin et évite d'installer tout l'environnement lourd de microsoft.
+Sous Linux on utilisera [[ https://gcc.gnu.org/ | g++]] qui est le compilateur développé par [[ https://www.gnu.org/home.fr.html | GNU ]]. 
+
+==== Windows ====
+
+MinGW s'installe d'une manière assez particulière. Il faut d'abord un [[ https://osdn.net/projects/mingw/releases/ | gestionnaire de module ]]. Il est conseillé de laisser le répertoire d'installation par défaut.
+Il faut ensuite sélectionner dans le bandeau de gauche "Basic Setup". Dans la partie de droite sélectionnez alors "mingw32-base-bin" et "mingw32-gcc-g++-bin" comme sur l'image. Il ne reste qu'à appliquer les changements.
+{{ :cpp:mingw.png?850 |}}
+
+==== Linux ====
+
+Sur Ubuntu et Debian la commande suivante permettra d'installer le compilateur :
+
+<code bash>
+sudo apt install g++
+</code>
+===== Environnement de développement intégré =====
+
+La philosophie de développement en C/C++ est très différente entre Windows et Linux :
+  * Windows : Visual Studio est utilisé très majoritairement
+  * Linux : Majoritairement pas d'IDE, seulement un éditeur de texte (VS Code/vim)
+
+Avec Linux, l'appel du compilateur se fait souvent grâce à des plugins pour des éditeurs de texte.
+
+On va utiliser [[http://www.codeblocks.org/ | Code::Blocks]] car il est léger et fonctionne sur Linux et sur Windows.
+
+==== Windows ====
+
+Il s'installe simplement à partir d'un [[ https://sourceforge.net/projects/codeblocks/ | exécutable ]].
+Il devrait détecter le compilateur "GNU C Compiler". Dans ce cas tout est bon, sinon il faudra redémarrer l'ordinateur et recommencer l'installation.
+
+==== Linux ====
+
+Il suffit d'utiliser les dépots de logiciels d'Ubuntu :
+
+<code bash>
+sudo apt install codeblocks
+</code>
+===== Installation de SFML =====
+
+{{ :cpp:sfml.png?500 |}}
+
+SFML est une bibliothèque permettant de faire des **<fc #008000>rendus graphiques</fc>** en C++. Certains de ces modules permettent également de gérer **l'audio** et **le réseau**. Tous ces éléments ne sont pas gérés nativement en multi-plateforme en C++.
+De plus comme c'est une bibliothèque assez **<fc #008000>bas niveau</fc>** (plus proche de la machine), vous aurez plus de travail à faire mais vous saurez plus précisémment ce que fera votre code (et vous pourrez **<fc #008000>optimiser</fc>**).
+
+Ca ne sert à rien de réinventer la roue, je vous renvoie vers le [[ https://www.sfml-dev.org/tutorials/2.0/start-cb-fr.php | tutoriel officiel ]].
+
+Voila une petite vidéo qui montre également comment paramétrer Code::Blocks, on utilise ici la version linux 64 bits de SFML. L'archive a été décompressé dans le dossier /mnt/tuto/wikic++.
+
+{{ :cpp:installationcpp.webm?950x450 | Vidéo sur l'installation de SFML dans Code::Blocks}}
+<alert success>**Approfondir :** Un aspect important en C/C++ est la compilation, je vous conseille d'approfondir le sujet avec [[cpp:cmake | CMake]]. C'est l'outil le plus puissant, il est même considéré comme nécessaire par de nombreux développeurs.</alert>

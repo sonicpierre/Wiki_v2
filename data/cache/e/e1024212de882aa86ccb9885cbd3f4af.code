@@ -1,0 +1,2 @@
+<span class="kw1">from</span> scipy <span class="kw1">import</span> optimize
+<span class="kw1">import</span> matplotlib.<span class="me1">pyplot</span> <span class="kw1">as</span> plt

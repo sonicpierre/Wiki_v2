@@ -1,0 +1,9 @@
+RecupertionDesDonnees <span class="sy0">&lt;</span>- function<span class="br0">&#40;</span>cheminComplet<span class="sy0">,</span> cheminArrivee<span class="br0">&#41;</span><span class="br0">&#123;</span>
+     <span class="kw1">if</span><span class="br0">&#40;</span><span class="sy0">!</span><span class="kw2">dir</span>.<span class="me1">exists</span><span class="br0">&#40;</span>cheminArrivee<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#123;</span>
+         <span class="kw2">dir</span>.<span class="me1">create</span><span class="br0">&#40;</span>cheminArrivee<span class="sy0">,</span> recursive <span class="sy0">=</span> TRUE<span class="br0">&#41;</span>
+     <span class="br0">&#125;</span>
+     tgz_path <span class="sy0">=</span> <span class="kw2">file</span>.<span class="me1">path</span><span class="br0">&#40;</span>cheminArrivee<span class="sy0">,</span> <span class="st0">&quot;housing.tgz&quot;</span><span class="br0">&#41;</span>
+     download.<span class="kw2">file</span><span class="br0">&#40;</span>url<span class="sy0">=</span>CHEMIN_DE_TELECHARGEMENT_COMPLET<span class="sy0">,</span> destfile <span class="sy0">=</span> tgz_path<span class="br0">&#41;</span>
+     untar<span class="br0">&#40;</span><span class="kw3">tarfile</span> <span class="sy0">=</span> tgz_path<span class="sy0">,</span> exdir <span class="sy0">=</span> cheminArrivee<span class="br0">&#41;</span>
+<span class="br0">&#125;</span>
+RecupertionDesDonnees<span class="br0">&#40;</span>CHEMIN_DE_TELECHARGEMENT_COMPLET<span class="sy0">,</span> CHEMIN_DE_DEPOT<span class="br0">&#41;</span>

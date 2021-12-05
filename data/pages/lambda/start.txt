@@ -1,0 +1,114 @@
+====== Configuration d'un personnage avec le JSON ======
+Chaque personnage est décrit par un fichier JSON unique, il contient donc les informations sur le personnage ainsi que la description des sorts qu'il a.
+
+
+===== Création du personnage =====
+
+Le personnage doit posséder les balises suivantes obligatoirement.
+<Code>
+{
+    "name": "Testi",
+    "description": "The Test Hero",
+    "stats": { ... },
+    "spells": [ ... ]
+}
+</Code>
+
+==== Détails de fonctionnement ====
+
+=== Nom et description ===
+Les balises **name** et **description** sont utilisées pour spécifier le nom et la description du personnage.
+
+=== Statistiques ===
+La balise **stats** contient l'ensemble des statistiques initiales du personnages. Toutes les statistiques qui ne seront pas inscrite à l'intérieur auront pour valeur par défaut **0**.  Une description approfondie des statistiques est disponnible [[lambda:Statistiques | ici]].
+On utilisera alors les statistiques comme étant les clés comme le montre l'exemple ci-dessous :
+<code json>
+"stats":
+{
+    "hp": 2000,
+    "mp": 800,
+    "str": 100,
+    "arm": 100,
+    "int": 100,
+    "spi": 100,
+    "spd": 415
+}
+</code>
+On peut également ajouter des effets et des marques par défaut. Il n'y a aucune limite sur le nombre de statistiques possibles.
+Dans cet exemple on ajoutera un effet de taunt de 1 tour et 10 marques noires.
+<code json>
+"stats":
+{
+    "taunt": 1,
+    "blackSeal": 10
+}
+</code>
+Attention, la valeur de la statistique doit être un **nombre entier**.
+
+=== Sorts ===
+La balise **spells** permet de définir l'ensemble des sorts du personnage sous la forme d'un tableau. Les sorts sont numérotés à partir de **0**.
+On peut donc créer autant de sorts que l'on souhaite, cependant seuls les 4 premiers seront utilisés par défaut sur le personnage.
+<code json>
+"spells":
+[
+    { Spell 0 },
+    { Spell 1},
+    ...
+]
+</code>
+La description d'un sort étant complexe, elle sera détaillée dans une [[lambda:Sorts | page séparée]].
+
+
+
+
+===== Exemple complet =====
+
+
+<code json>
+ spells =
+[
+    {
+        name: "value"
+        "targetEffect":
+        [
+            {
+                typeOfTarget:Abolute/relatif/selection
+                targetAvailable:Ennemy/Ally (rien pour les deux)
+                effets:
+                [
+                    {
+                        "target": (Dépend de type of Target) 
+                        "stats":"taunt"
+                        "type":"="
+                        "value":
+                        {
+                            "type": "physical",
+                            "formula":
+                            {
+                                "base": 150,
+                                "str": 0.5
+                            }
+                        }
+                    },
+                ]
+
+            },
+            {
+                targetSelection:fefeef
+                effets:
+                [
+                ]
+
+            }
+
+
+        ]
+    }
+]
+</code>
+<code json>
+{
+"value":"test",
+"coucou":2
+}
+</code>

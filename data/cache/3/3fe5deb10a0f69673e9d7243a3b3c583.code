@@ -1,0 +1,24 @@
+<span class="kw1">function</span> <span class="br0">&#91;</span>y<span class="br0">&#93;</span>= dicho_rec<span class="br0">&#40;</span>a,b, <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a><span class="br0">&#41;</span>
+&nbsp;
+  c=<span class="nu0">0</span>;
+  <span class="kw1">if</span> <span class="br0">&#40;</span>b-a&lt;<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a><span class="br0">&#41;</span>
+    y=<span class="br0">&#40;</span>a+b<span class="br0">&#41;</span>./<span class="nu0">2</span>;
+  <span class="kw1">else</span>
+    c = <span class="br0">&#40;</span>a+b<span class="br0">&#41;</span>./<span class="nu0">2</span>;
+  endif
+&nbsp;
+  <span class="kw1">if</span> <span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>.*f<span class="br0">&#40;</span>c<span class="br0">&#41;</span>&lt;<span class="nu0">0</span><span class="br0">&#41;</span>
+    y = dicho_rec<span class="br0">&#40;</span>a,c<span class="br0">&#41;</span>;
+  <span class="kw1">else</span> 
+    y = dicho_rec<span class="br0">&#40;</span>c,b<span class="br0">&#41;</span>;
+  endif
+&nbsp;
+endfunction
+&nbsp;
+#Script:
+a =<span class="nu0">0</span>; #borne <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/inf.html"><span class="kw2">inf</span></a>
+b = <span class="nu0">10</span>; #borne sup
+<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a> = 1e-12; #précision
+nIter = <span class="nu0">0</span>;#nombre d'itérations
+&nbsp;
+<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span>&quot;Le zéro de cette fonction sur <span class="br0">&#91;</span>a;b<span class="br0">&#93;</span> est:&quot;<span class="br0">&#41;</span>,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span>regula<span class="br0">&#40;</span>a, b, <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a>, nIter<span class="br0">&#41;</span><span class="br0">&#41;</span>;

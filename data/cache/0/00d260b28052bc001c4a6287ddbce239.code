@@ -1,0 +1,15 @@
+<span class="kw1">def</span> regula_falsi<span class="br0">&#40;</span>f<span class="sy0">,</span> a<span class="sy0">,</span> b<span class="sy0">,</span> epsilon<span class="br0">&#41;</span>:
+    nIter <span class="sy0">=</span> <span class="nu0">0</span> <span class="co1">#nombre ditérations</span>
+&nbsp;
+    <span class="kw1">if</span> f<span class="br0">&#40;</span>a<span class="br0">&#41;</span> * f<span class="br0">&#40;</span>b<span class="br0">&#41;</span> <span class="sy0">&gt;</span> <span class="nu0">0</span>:
+        <span class="kw1">return</span> <span class="kw2">None</span>
+    u<span class="sy0">,</span> v <span class="sy0">=</span> <span class="kw2">float</span><span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw2">float</span><span class="br0">&#40;</span>b<span class="br0">&#41;</span>
+    <span class="kw1">while</span> <span class="br0">&#40;</span><span class="kw2">abs</span><span class="br0">&#40;</span>f<span class="br0">&#40;</span>u<span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="sy0">&gt;</span> epsilon<span class="br0">&#41;</span>:
+        i <span class="sy0">=</span> i+<span class="nu0">1</span>
+        w <span class="sy0">=</span> u -f<span class="br0">&#40;</span>u<span class="br0">&#41;</span>*<span class="br0">&#40;</span>v-u<span class="br0">&#41;</span>/<span class="br0">&#40;</span>f<span class="br0">&#40;</span>v<span class="br0">&#41;</span>-f<span class="br0">&#40;</span>u<span class="br0">&#41;</span><span class="br0">&#41;</span>
+        <span class="kw1">if</span> f<span class="br0">&#40;</span>u<span class="br0">&#41;</span> * f<span class="br0">&#40;</span>w<span class="br0">&#41;</span> <span class="sy0">&lt;=</span> <span class="nu0">0</span>:
+            v <span class="sy0">=</span> w
+        <span class="kw1">else</span>:
+            u <span class="sy0">=</span> w
+    <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;Nb d'Itérations':&quot;</span><span class="sy0">,</span> nIter<span class="br0">&#41;</span>
+    <span class="kw1">return</span> w

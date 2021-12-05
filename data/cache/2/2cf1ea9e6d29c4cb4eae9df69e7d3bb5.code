@@ -1,0 +1,9 @@
+<span class="kw1">try</span>:
+    <span class="co1">#On commence par récupérer le curseur pour pouvoir l'utiliser</span>
+    <span class="kw1">with</span> connection.<span class="me1">cursor</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="kw1">as</span> cursor:
+&nbsp;
+        <span class="co1"># On prépare notre requète</span>
+        sql <span class="sy0">=</span> <span class="st0">&quot;SELECT * from Region&quot;</span>
+&nbsp;
+        <span class="co1"># Exécutez la requête (Execute Query).</span>
+        cursor.<span class="me1">execute</span><span class="br0">&#40;</span>sql<span class="br0">&#41;</span>

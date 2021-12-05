@@ -1,0 +1,3 @@
+SL.<span class="me1">rpart</span>.<span class="me1">tune</span> <span class="sy0">&lt;</span>- function<span class="br0">&#40;</span>...<span class="br0">&#41;</span><span class="br0">&#123;</span>
+  SL.<span class="me1">rpart</span><span class="br0">&#40;</span>...<span class="sy0">,</span>maxdepth <span class="sy0">=</span> <span class="nu0">2</span><span class="br0">&#41;</span>
+<span class="br0">&#125;</span>

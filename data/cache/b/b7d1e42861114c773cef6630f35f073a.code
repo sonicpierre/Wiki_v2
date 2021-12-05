@@ -1,0 +1,19 @@
+<span class="kw1">function</span> <span class="br0">&#91;</span>y<span class="br0">&#93;</span>=regula<span class="br0">&#40;</span>a, b, <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a><span class="br0">&#41;</span>
+&nbsp;
+  <span class="kw1">if</span> <span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>.*f<span class="br0">&#40;</span>b<span class="br0">&#41;</span>&gt;<span class="nu0">0</span><span class="br0">&#41;</span>
+    <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span><span class="co2">'TVI non applicable'</span><span class="br0">&#41;</span>;
+  <span class="kw1">else</span>
+    <span class="kw1">while</span> <span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/abs.html"><span class="kw2">abs</span></a><span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="br0">&#41;</span>&gt;<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a><span class="br0">&#41;</span> #condition d'arret
+      c = a - <span class="br0">&#40;</span><span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>*<span class="br0">&#40;</span>b-a<span class="br0">&#41;</span><span class="br0">&#41;</span>/<span class="br0">&#40;</span>f<span class="br0">&#40;</span>b<span class="br0">&#41;</span> - f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;
+      <span class="kw1">if</span> <span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>.*f<span class="br0">&#40;</span>c<span class="br0">&#41;</span> &lt;= <span class="nu0">0</span><span class="br0">&#41;</span> #c remplace b
+          b = c;
+      <span class="kw1">else</span> #c remplace a
+          a = c;
+      endif
+    endwhile
+    y = c;
+  endif
+endfunction
+&nbsp;
+#Script:
+<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span>regula<span class="br0">&#40;</span><span class="nu0">0</span>, <span class="nu0">10</span>, 1e-12<span class="br0">&#41;</span><span class="br0">&#41;</span>;

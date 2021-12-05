@@ -1,0 +1,2 @@
+<span class="kw1">def</span> TVI<span class="br0">&#40;</span>f<span class="sy0">,</span> a<span class="sy0">,</span> b<span class="br0">&#41;</span>:
+    <span class="kw1">return</span> <span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>*f<span class="br0">&#40;</span>b<span class="br0">&#41;</span><span class="sy0">&lt;=</span><span class="nu0">0</span><span class="br0">&#41;</span>

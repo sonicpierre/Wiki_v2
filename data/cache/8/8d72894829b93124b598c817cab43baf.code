@@ -1,0 +1,4 @@
+<span class="co1">// Début du fichier </span>
+<span class="kw1">import</span> <span class="co2">java.util.ArrayList</span><span class="sy0">;</span>
+<span class="co1">// Intérieur d'une classe ou fonction</span>
+ArrayList<span class="sy0">&lt;</span>int<span class="sy0">&gt;</span> maListe <span class="sy0">=</span> <span class="kw1">new</span> ArrayList<span class="sy0">&lt;</span>int<span class="sy0">&gt;</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>

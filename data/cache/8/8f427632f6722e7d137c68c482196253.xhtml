@@ -1,0 +1,121 @@
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ageometrique&amp;media=cpp:dessinateur.jpg" class="media" title="cpp:dessinateur.jpg"><img src="/lib/exe/fetch.php?w=500&amp;tok=86fcd2&amp;media=cpp:dessinateur.jpg" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<h2 class="sectionedit1" id="mise_en_equation_du_probleme">Mise en équation du problème</h2>
+<div class="level2">
+
+<p>
+Tout d&#039;abord, posons quelques notations :
+</p>
+<ul>
+<li class="level1"><div class="li"> $x_1$ le nombre de <strong><span style="color:#ffc0cb;">dagues antiques</span></strong></div>
+</li>
+<li class="level1"><div class="li"> $x_2$ le nombre de <strong><span style="color:#fa8072;">montres magiques</span></strong></div>
+</li>
+</ul>
+
+<p>
+Notre but principal est de maximiser les revenus, c&#039;est-à-dire :
+</p>
+<p class="divalign-center">$\underset{x}{max}(142x_1+241x_2)$</p><!--divalign-->
+
+<p>
+Cependant, il faut respecter certaines contraintes concernant les <span style="color:#008000;"><strong>matières premières</strong></span> car nous n&#039;en avons qu&#039;une quantité limitée :
+</p>
+<p class="divalign-center">$\begin{cases} \underset{x}{max}(142x_1+241x_2) \\ 0.23x_1+0.7x_2 \le 20.21 \\ 0.015x_1+0.015x_2 \le 0.705 \\ 1.8x_1+1.1x_2 \le 75 \end{cases} $</p><!--divalign-->
+
+<p>
+Finalement il faut que les quantités d&#039;<strong><span style="color:#008000;">objets produits</span></strong> soient positives :
+</p>
+<p class="divalign-center">$\begin{cases} \underset{x}{max}(142x_1+241x_2) \\ 0.23x_1+0.7x_2 \le 20.21 \\ 0.015x_1+0.015x_2 \le 0.705 \\ 1.8x_1+1.1x_2 \le 75 \\ x_1,x_2 \ge 0\end{cases}$</p><!--divalign-->
+
+<p>
+Et voilà ! Nous avons donc un système linéaire qui décrit notre problème !
+</p>
+
+<p>
+<div class='alert alert-info'>Il est possible que vous réalisiez un problème de minimisation et non de maximisation. Il est possible que vous ayez un $min$ au lieu d&#039;un $max$ et des ≥ au lieu de ≤. Sachez que cela ne change pas grand chose à la méthode géométrique, faites juste attention quand vous tracez le domaine des contraintes (ne “coloriez” pas le mauvais côté).</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Mise en \u00e9quation du probl\u00e8me&quot;,&quot;hid&quot;:&quot;mise_en_equation_du_probleme&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;34-1382&quot;} -->
+<h2 class="sectionedit2" id="la_methode_geometrique">La méthode géométrique</h2>
+<div class="level2">
+
+<p>
+La méthode consiste tracer un graphe dont les axes seront $x_1$ et $x_2$, à construire le domaine des contraintes $C$ et à déterminer par la suite le <strong><span style="color:#ffa500;">point optimal</span></strong>. J&#039;utiliserai l&#039;outil <a href="https://www.desmos.com/calculator/o2b8mnfigk?lang=fr" class="urlextern" title="https://www.desmos.com/calculator/o2b8mnfigk?lang=fr" rel="nofollow">Desmos</a> pour tracer les courbes.
+</p>
+
+<p>
+Tout d&#039;abord, commençons par le graphe :
+</p>
+<p class="divalign-center"><a href="/lib/exe/detail.php?id=cpp%3Ageometrique&amp;media=cpp:grapheopti0.png" class="media" title="cpp:grapheopti0.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=8b8245&amp;media=cpp:grapheopti0.png" class="media" alt="" width="400" /></a></p><!--divalign-->
+
+<p>
+ Puisque $x_1$ et $x_2$ doivent être positifs on peut déjà restreindre $C$ :
+</p>
+<p class="divalign-center"><a href="/lib/exe/detail.php?id=cpp%3Ageometrique&amp;media=cpp:grapheopti1.png" class="media" title="cpp:grapheopti1.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=de012e&amp;media=cpp:grapheopti1.png" class="media" alt="" width="400" /></a></p><!--divalign-->
+
+<p>
+On ajoute la contrainte $0.23x_1+0.7x_2 \le 20.21$ :
+</p>
+<p class="divalign-center"><a href="/lib/exe/detail.php?id=cpp%3Ageometrique&amp;media=cpp:grapheopti2.png" class="media" title="cpp:grapheopti2.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=53bba6&amp;media=cpp:grapheopti2.png" class="media" alt="" width="400" /></a></p><!--divalign-->
+
+<p>
+<div class='alert alert-info'>Pour tracer la droite de contrainte, placez le point $(0,\frac{20.21}{0.7})$ et le point ($(\frac{20.21}{0.23},0)$ puis reliez les</div>
+</p>
+
+<p>
+On continue avec la contrainte $0.015x_1+0.015x_2 \le 0.705$ :
+</p>
+<p class="divalign-center"><a href="/lib/exe/detail.php?id=cpp%3Ageometrique&amp;media=cpp:grapheopti3.png" class="media" title="cpp:grapheopti3.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=da71a4&amp;media=cpp:grapheopti3.png" class="media" alt="" width="400" /></a></p><!--divalign-->
+
+<p>
+Et on termine avec la contrainte $1.8x_1+1.1x_2 \le 75$ :
+</p>
+<p class="divalign-center"><a href="/lib/exe/detail.php?id=cpp%3Ageometrique&amp;media=cpp:grapheopti4.png" class="media" title="cpp:grapheopti4.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=b45ffe&amp;media=cpp:grapheopti4.png" class="media" alt="" width="400" /></a></p><!--divalign-->
+
+<p>
+Nous avons donc tracé le domaine des contraintes $C$. N&#039;importe quel point à l&#039;intérieur de la <strong>zone incolore</strong> respecte les contraintes du problème il faut maintenant déterminer le <strong><span style="color:#ffa500;">point optimal</span></strong> qui va générer le plus de profits.
+</p>
+
+<p>
+Nous allons tracer diverses <strong>lignes de niveau</strong> $L_b$ sur notre graphe. Ces lignes sont des droites d&#039;équation $142x_1+241x_2=b$ et sont toutes parallèles entre elles pour des différentes valeurs de b.
+</p>
+
+<p>
+Commençons par tracer $L_{3000}$ :
+</p>
+<p class="divalign-center"><a href="/lib/exe/detail.php?id=cpp%3Ageometrique&amp;media=cpp:grapheopti5.png" class="media" title="cpp:grapheopti5.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=f3b937&amp;media=cpp:grapheopti5.png" class="media" alt="" width="400" /></a></p><!--divalign-->
+
+<p>
+Puis $L_{7000}$ :
+</p>
+<p class="divalign-center"><a href="/lib/exe/detail.php?id=cpp%3Ageometrique&amp;media=cpp:grapheopti6.png" class="media" title="cpp:grapheopti6.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=14882a&amp;media=cpp:grapheopti6.png" class="media" alt="" width="400" /></a></p><!--divalign-->
+
+<p>
+Nous en déduisons donc que pour augmenter les bénéfices, il faut <em>“monter”</em> la <strong>ligne de niveau</strong>. Il est alors assez clair que le <strong><span style="color:#ffa500;">point optimal</span></strong> $(x_1,x_2)$ se trouve à l&#039;intersection des zones rouge et bleue, ce qui veut dire qu&#039;il est solution du système : 
+</p>
+<p class="divalign-center">$\begin{cases} 0.23x_1+0.7x_2 = 20.21 \\ 0.015x_1+0.015x_2 = 0.705 \end{cases} \iff \begin{cases} x_1=27 \\ x_2=20 \end{cases}$</p><!--divalign-->
+
+<p>
+<div class='alert alert-info'>Il est possible que dans certains problèmes, il n&#039;y ait pas de point optimal mais une droite optimale (la ligne de niveau est parallèle avec l&#039;une des droites de contraintes</div>
+</p>
+
+<p>
+On conclut donc que l&#039;alchimiste doit réaliser 27 <strong><span style="color:#ffc0cb;">dagues antiques</span></strong> et 20 <strong><span style="color:#fa8072;">montres magiques</span></strong> pour avoir le profit maximal de $142*27+241*20=8654$ <strong><span style="color:#ffa500;">pièces d&#039;or</span></strong>.
+</p>
+<p class="divalign-center"><a href="/lib/exe/detail.php?id=cpp%3Ageometrique&amp;media=cpp:grapheopti7.png" class="media" title="cpp:grapheopti7.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=15006c&amp;media=cpp:grapheopti7.png" class="media" alt="" width="400" /></a></p><!--divalign-->
+
+<p>
+Et voilà pour la <strong>méthode géométrique</strong> ! Elle a l&#039;avantage d&#039;être très visuelle et simple à comprendre mais est limitée à la dimension deux. Pour résoudre de tels problèmes dans des dimensions supérieures, nous aurons besoin de la <strong>méthode du simplexe</strong>.
+</p>
+
+<p>
+<a href="/doku.php?id=cpp:simplexe" class="wikilink1" title="cpp:simplexe">Méthode du simplexe</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La m\u00e9thode g\u00e9om\u00e9trique&quot;,&quot;hid&quot;:&quot;la_methode_geometrique&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;1383-&quot;} -->

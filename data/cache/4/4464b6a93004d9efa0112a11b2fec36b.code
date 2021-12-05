@@ -1,0 +1,2 @@
+<span class="co1">#On ajoute 10 jours après mon anniversaire</span>
+date_ajout <span class="sy0">=</span> date + <span class="nu0">10</span>

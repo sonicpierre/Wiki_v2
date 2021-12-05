@@ -1,0 +1,47 @@
+{{ :cpp:optimisationimage.jpeg?550 |}}
+
+  * **Sujet** : Dans cette section, nous présenterons les différentes méthodes d'optimisation permettant de déterminer les paramètres d’entrée maximisant (ou minimisant) la valeur d'une fonction. Nous appliquerons les algorithmes vus dans ce cours à une situation concrète : la vente de bière.  
+  * **Outils nécessaires** : Nous utiliserons les langages [[https://fr.wikipedia.org/wiki/MATLAB|Matlab]]  et [[https://fr.wikipedia.org/wiki/Python_(langage)|Python]]. J'utilise personnellement   [[https://pyzo.org/start.html|Pyzo]] pour Python et Octave GUI pour Matlab. 
+  * **Prérequis** : Il est nécessaire d'avoir certaines notions de mathématiques (dérivée, gradient...) et d'informatique (itération, recursivité) pour comprendre ce chapitre. Savoir manipuler les outils mathématiques exposés [[cpp:OperationMatricielle | ici]] peut être un plus.
+  * **Temps** : Il faut  environ 10 h pour maitriser les concepts abordés.
+
+<alert warning>**<fs large>Important :</fs>** vous trouverez l'ensemble des codes [[https://github.com/LlamasPartan/Optimisation| ici]]</alert>
+
+
+
+=====Les grandes méthodes d'optimisation=====
+
+{{ :cpp:cave_biere.jpg?direct&500 |}}
+
+Supposons que vous ayez un stock de fûts de bière et que vous souhaitiez savoir quand ce stock sera totalement épuisé (pour partir en vacances ou bien refaire le stock).
+
+Par chance, un de vos amis vous a fourni une fonction ($f(t) = t^{2} - 10$) qui prédit très précisément l'évolution potentielle de votre stock au cours des prochains mois. Grâce à ce cours, vous pourrez déterminer, expérimentalement, le zéro  de la fonction qui s'annule sur un intervalle de temps connu.
+
+  * [[cpp:Qu'est-ce que l'optimisation ? | L'optimisation, pourquoi, comment ?]]
+  * [[cpp:Dichotomie |Méthode dichotomique]]
+  * [[cpp:Newton et Regula Falsi |Méthode Newton et  Regula Falsi]]
+
+
+=====Méthode du simplexe=====
+
+{{ :cpp:alchimie.jpg?340 |}}
+
+ Mettons-nous dans la peau d'un **<fc #008000>alchimiste</fc>** astucieux. Nous avons à notre disposition :
+  * 20,21 kg de sable des âmes
+  * 705 g de rouge-pierre
+  * 75 kg de débris antiques
+Avec ces composants, nous pouvons réaliser des dagues antiques ou des montres magiques que nous pouvons vendre, respectivement, au prix de 142 ou 241 pièces d'or. Notre but est donc de maximiser nos profits avec la matière première que nous possédons en sachant que :
+  * une dague antique requiert 230 g de sable des âmes, 15 g de rouge-pierre et 1,8 kg de débris antiques
+  * une montre magique requiert 700 g de sable des âmes, 15 g de rouge-pierre et 1,1 kg de débris antiques
+
+<color #ed1c24>**Essayons maintenant de gagner un maximum de pièces d'or !!**</color>
+
+  * [[cpp:géométrique|Mathématisation et méthode géométrique]]
+  * [[cpp:simplexe|Méthode du simplexe]]
+  * [[cpp:simplexePhase|Méthode des phases]]
+  * [[cpp:simplexecoupes|Méthode des coupes]]
+
+
+=====Page en construction ou futures pages=====
+
+  * [[cpp:Future page ou page en construction optimisation| Future page ou page en construction]]

@@ -1,0 +1,3 @@
+library<span class="br0">&#40;</span>factoMineR<span class="br0">&#41;</span>
+&nbsp;
+res.<span class="me1">PCA</span> <span class="sy0">=</span> PCA<span class="br0">&#40;</span>scale<span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Création du modèle de réduction</span>

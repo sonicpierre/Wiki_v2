@@ -1,0 +1,2 @@
+fdist <span class="sy0">=</span> FreqDist<span class="br0">&#40;</span>text3<span class="br0">&#41;</span>
+fdist.<span class="me1">hapaxes</span><span class="br0">&#40;</span><span class="br0">&#41;</span>

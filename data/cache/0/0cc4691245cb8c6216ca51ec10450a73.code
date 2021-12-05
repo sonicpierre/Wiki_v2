@@ -1,0 +1,11 @@
+<span class="kw1">import</span> statsmodels.<span class="me1">api</span> <span class="kw1">as</span> sm
+&nbsp;
+X <span class="sy0">=</span> sm.<span class="me1">add_constant</span><span class="br0">&#40;</span>X<span class="br0">&#41;</span><span class="co1">#Ajout de la constante aux données</span>
+Regression_Lin <span class="sy0">=</span> sm.<span class="me1">OLS</span><span class="br0">&#40;</span>y<span class="sy0">,</span>X<span class="br0">&#41;</span>.<span class="me1">fit</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="co1">#Ajustement des données</span>
+Regression_Lin.<span class="me1">summary</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="sy0">&lt;</span>/<span class="kw3">code</span>
+&nbsp;
+__Code R__
+&nbsp;
+<span class="sy0">&lt;</span><span class="kw3">code</span> python<span class="sy0">&gt;</span>
+summary<span class="br0">&#40;</span>Regression_Lin<span class="br0">&#41;</span>

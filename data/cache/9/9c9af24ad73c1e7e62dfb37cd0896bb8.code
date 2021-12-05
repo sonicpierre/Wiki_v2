@@ -1,0 +1,2 @@
+X_Centered <span class="sy0">=</span> X - X.<span class="me1">mean</span><span class="br0">&#40;</span>axis<span class="sy0">=</span><span class="nu0">0</span><span class="br0">&#41;</span><span class="co1">#Centrage des données par rapport à la moyenne </span>
+U<span class="sy0">,</span> s<span class="sy0">,</span> Vt <span class="sy0">=</span> np.<span class="me1">linalg</span>.<span class="me1">svd</span><span class="br0">&#40;</span>X_Centered<span class="br0">&#41;</span><span class="co1">#Décompostion SVD de la matrice de données</span>

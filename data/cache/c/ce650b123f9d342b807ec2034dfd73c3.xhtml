@@ -1,0 +1,143 @@
+
+<h1 class="sectionedit1" id="configuration_d_un_personnage_avec_le_json">Configuration d&#039;un personnage avec le JSON</h1>
+<div class="level1">
+
+<p>
+Chaque personnage est décrit par un fichier JSON unique, il contient donc les informations sur le personnage ainsi que la description des sorts qu&#039;il a.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Configuration d&#039;un personnage avec le JSON&quot;,&quot;hid&quot;:&quot;configuration_d_un_personnage_avec_le_json&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-213&quot;} -->
+<h2 class="sectionedit2" id="creation_du_personnage">Création du personnage</h2>
+<div class="level2">
+
+<p>
+Le personnage doit posséder les balises suivantes obligatoirement.
+</p>
+<pre class="prettyprint  ">
+{
+    &quot;name&quot;: &quot;Testi&quot;,
+    &quot;description&quot;: &quot;The Test Hero&quot;,
+    &quot;stats&quot;: { ... },
+    &quot;spells&quot;: [ ... ]
+}
+</pre>
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Cr\u00e9ation du personnage&quot;,&quot;hid&quot;:&quot;creation_du_personnage&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;214-439&quot;} -->
+<h3 class="sectionedit3" id="details_de_fonctionnement">Détails de fonctionnement</h3>
+<div class="level3">
+
+</div>
+
+<h4 id="nom_et_description">Nom et description</h4>
+<div class="level4">
+
+<p>
+Les balises <strong>name</strong> et <strong>description</strong> sont utilisées pour spécifier le nom et la description du personnage.
+</p>
+
+</div>
+
+<h4 id="statistiques">Statistiques</h4>
+<div class="level4">
+
+<p>
+La balise <strong>stats</strong> contient l&#039;ensemble des statistiques initiales du personnages. Toutes les statistiques qui ne seront pas inscrite à l&#039;intérieur auront pour valeur par défaut <strong>0</strong>.  Une description approfondie des statistiques est disponnible <a href="/doku.php?id=lambda:statistiques" class="wikilink2" title="lambda:statistiques" rel="nofollow"> ici</a>.
+On utilisera alors les statistiques comme étant les clés comme le montre l&#039;exemple ci-dessous :
+</p>
+<pre class="code json">&quot;stats&quot;:
+{
+    &quot;hp&quot;: 2000,
+    &quot;mp&quot;: 800,
+    &quot;str&quot;: 100,
+    &quot;arm&quot;: 100,
+    &quot;int&quot;: 100,
+    &quot;spi&quot;: 100,
+    &quot;spd&quot;: 415
+}</pre>
+
+<p>
+On peut également ajouter des effets et des marques par défaut. Il n&#039;y a aucune limite sur le nombre de statistiques possibles.
+Dans cet exemple on ajoutera un effet de taunt de 1 tour et 10 marques noires.
+</p>
+<pre class="code json">&quot;stats&quot;:
+{
+    &quot;taunt&quot;: 1,
+    &quot;blackSeal&quot;: 10
+}</pre>
+
+<p>
+Attention, la valeur de la statistique doit être un <strong>nombre entier</strong>.
+</p>
+
+</div>
+
+<h4 id="sorts">Sorts</h4>
+<div class="level4">
+
+<p>
+La balise <strong>spells</strong> permet de définir l&#039;ensemble des sorts du personnage sous la forme d&#039;un tableau. Les sorts sont numérotés à partir de <strong>0</strong>.
+On peut donc créer autant de sorts que l&#039;on souhaite, cependant seuls les 4 premiers seront utilisés par défaut sur le personnage.
+</p>
+<pre class="code json">&quot;spells&quot;:
+[
+    { Spell 0 },
+    { Spell 1},
+    ...
+]</pre>
+
+<p>
+La description d&#039;un sort étant complexe, elle sera détaillée dans une <a href="/doku.php?id=lambda:sorts" class="wikilink1" title="lambda:sorts"> page séparée</a>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;D\u00e9tails de fonctionnement&quot;,&quot;hid&quot;:&quot;details_de_fonctionnement&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;440-1996&quot;} -->
+<h2 class="sectionedit4" id="exemple_complet">Exemple complet</h2>
+<div class="level2">
+<pre class="code json"> spells =
+[
+    {
+        name: &quot;value&quot;
+        &quot;targetEffect&quot;:
+        [
+            {
+                typeOfTarget:Abolute/relatif/selection
+                targetAvailable:Ennemy/Ally (rien pour les deux)
+                effets:
+                [
+                    {
+                        &quot;target&quot;: (Dépend de type of Target) 
+                        &quot;stats&quot;:&quot;taunt&quot;
+                        &quot;type&quot;:&quot;=&quot;
+                        &quot;value&quot;:
+                        {
+                            &quot;type&quot;: &quot;physical&quot;,
+                            &quot;formula&quot;:
+                            {
+                                &quot;base&quot;: 150,
+                                &quot;str&quot;: 0.5
+                            }
+                        }
+                    },
+                ]
+&nbsp;
+            },
+            {
+                targetSelection:fefeef
+                effets:
+                [
+                ]
+&nbsp;
+            }
+&nbsp;
+&nbsp;
+        ]
+    }
+]</pre>
+<pre class="code json">{
+&quot;value&quot;:&quot;test&quot;,
+&quot;coucou&quot;:2
+}</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Exemple complet&quot;,&quot;hid&quot;:&quot;exemple_complet&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:4,&quot;range&quot;:&quot;1997-&quot;} -->

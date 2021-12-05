@@ -1,0 +1,5 @@
+library<span class="br0">&#40;</span>datasets<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>dplyr<span class="br0">&#41;</span>
+data<span class="br0">&#40;</span>iris<span class="br0">&#41;</span>
+X <span class="sy0">&lt;</span>- <span class="kw3">select</span><span class="br0">&#40;</span>iris<span class="sy0">,</span> <span class="st0">&quot;Sepal.Length&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Sepal.Width&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Petal.Length&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Petal.Width&quot;</span><span class="br0">&#41;</span>
+y <span class="sy0">&lt;</span>- iris$Species

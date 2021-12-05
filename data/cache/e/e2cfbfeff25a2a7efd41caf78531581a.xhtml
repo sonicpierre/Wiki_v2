@@ -1,0 +1,282 @@
+
+<p>
+ <a href="/doku.php?id=cpp:natural_langage_processing" class="wikilink1" title="cpp:natural_langage_processing"> Natural Langage Processing</a>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ala_stylometrie&amp;media=cpp:stylometrie_illu.png" class="media" title="cpp:stylometrie_illu.png"><img src="/lib/exe/fetch.php?w=585&amp;tok=54b973&amp;media=cpp:stylometrie_illu.png" class="media" alt="" width="585" /></a>
+</p>
+
+<p>
+Comme vous vous en êtes sûrement rendu compte, il y a plusieurs façons de dire la même chose. Certains auteurs comme Queneau qui a écrit la même histoire (à deux paragraphes prés) de 100 façons différentes. Cette richesse a donné naissance à un domaine du NLP, la stylométrie.  
+</p>
+
+<h1 class="sectionedit1" id="la_stylometrie_et_ses_possibilites">La stylométrie et ses possibilités</h1>
+<div class="level1">
+
+<p>
+Il est évident que les chercheurs de stylométrie n&#039;ont pas attendu l&#039;apparition des ordinateurs et du Machine Learning pour commencer à étudier le domaine. Cependant, il faut bien avouer que l&#039;apparition de moyens informatiques a considérablement accéléré les découvertes. La stylométrie a d&#039;abord été voué à développer des techniques permettant d&#039;attribuer à chacun des textes un auteur quand il était inconnu. Ces mêmes techniques ont permis d&#039;éviter les problèmes de plagiat qui sont de plus en plus fréquent dans le monde universitaire. Un corpus connu et extrêmement étudié dans la discipline, les <a href="https://en.wikipedia.org/wiki/The_Federalist_Papers" class="urlextern" title="https://en.wikipedia.org/wiki/The_Federalist_Papers" rel="nofollow"> Federalist Papers</a> ont été au centre des pré-occupations durant plusieurs années. L&#039;auteur de certains textes était inconnu (Alexander Hamilton, James Madison, ou John Jay) et l&#039;étude de la stylométrie a pu apporter une solution.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ala_stylometrie&amp;media=cpp:federalist.jpg" class="media" title="cpp:federalist.jpg"><img src="/lib/exe/fetch.php?w=200&amp;tok=d50597&amp;media=cpp:federalist.jpg" class="mediacenter" alt="" width="200" /></a>
+</p>
+
+<p>
+Il faut bien comprendre que même si l&#039;attribution d&#039;auteur est l&#039;un des problèmes majeur de la stylométrie, il a été possible d&#039;aller plus loin en déterminant le genre, le profil psychologique de l&#039;écrivain ou encore si il avait des syndromes de maladie neuro-dégénératrice. Ces approches restent encore controversées mais elles pourraient bien avoir un impact sociétal considérable. Enfin, l&#039;étude de la complexité du texte donne l&#039;espoir de pouvoir modifier certains textes automatiquement pour les rendre accessibles à un plus grand nombre.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La stylom\u00e9trie et ses possibilit\u00e9s&quot;,&quot;hid&quot;:&quot;la_stylometrie_et_ses_possibilites&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;396-1960&quot;} -->
+<h1 class="sectionedit2" id="les_frequences_de_mots">Les fréquences de mots</h1>
+<div class="level1">
+
+<p>
+Il est important de savoir transformer son texte de manière à le rendre interprétable qu&#039;on veuille le décrire ou qu&#039;on veuille appliquer des algorithmes de Machine Learning dessus. Certains algorithmes comme les réseaux de neuronne récurrents sont capables de prendre en entrée le texte brut mais c&#039;est un cas particulier. Bien souvent, il est nécessaire de passer par une phase d&#039;embedding. 
+</p>
+
+<p>
+<div class='alert alert-info'><strong>Définition :</strong> L&#039;embedding est le fait de trouver un moyen de transformer son texte en chiffre le rendant ainsi exploitable par l&#039;ordinateur. Les modèle permettant sont appelés des transformers (word2vect, Bert, Text Vectorisation).</div>
+</p>
+
+<p>
+Avant de transformer nos données commençons par les charger et se les approprier sur notre environnement :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+<span class="kw1">import</span> requests
+&nbsp;
+<span class="co1">#On lit les données</span>
+url <span class="sy0">=</span> <span class="st0">&quot;http://ptrckprry.com/course/ssd/data/federalist.json&quot;</span>
+s<span class="sy0">=</span>requests.<span class="me1">get</span><span class="br0">&#40;</span>url<span class="br0">&#41;</span>.<span class="me1">content</span>
+pd.<span class="me1">read_json</span><span class="br0">&#40;</span>s<span class="sy0">,</span> lines<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#On répartit les données en fonction des auteurs</span>
+data_JAY <span class="sy0">=</span> data<span class="br0">&#91;</span>data<span class="br0">&#91;</span><span class="st0">&quot;author&quot;</span><span class="br0">&#93;</span> <span class="sy0">==</span> <span class="st0">&quot;JAY&quot;</span><span class="br0">&#93;</span>
+data_HAMILTON <span class="sy0">=</span> data<span class="br0">&#91;</span>data<span class="br0">&#91;</span><span class="st0">&quot;author&quot;</span><span class="br0">&#93;</span> <span class="sy0">==</span> <span class="st0">&quot;HAMILTON&quot;</span><span class="br0">&#93;</span>
+data_MADISON <span class="sy0">=</span> data<span class="br0">&#91;</span>data<span class="br0">&#91;</span><span class="st0">&quot;author&quot;</span><span class="br0">&#93;</span> <span class="sy0">==</span> <span class="st0">&quot;MADISON&quot;</span><span class="br0">&#93;</span></pre>
+
+<p>
+Nous allons maintenant voir les différentes utilisations de la fréquence pour faire de la description mais aussi pour faire de l&#039;embedding. 
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les fr\u00e9quences de mots&quot;,&quot;hid&quot;:&quot;les_frequences_de_mots&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;1961-3320&quot;} -->
+<h2 class="sectionedit3" id="les_frequences_pour_la_description">Les fréquences pour la description</h2>
+<div class="level2">
+
+<p>
+La notion de vocabulaire et l&#039;étude de sa richesse est au centre des travaux de stylométrie. Nous allons décrire les différentes mesures grâce en prenant comme texte : “Les partisants de la république et de la dictature ont mangé le repas de Noel à la même table.” Avant de faire une étude de fréquence il est nécessaire de regrouper les textes d&#039;un même auteur et appliquer une tokennisation. Sur notre texte on obtient donc [“Les”, “partisants”, “de”, “la”, “république”, “et”, “de”, “la”, “dictature”, “ont”, “mangé”, “le”, “repas”, “de”, “Noel”, “à”, “la”, “même”, “table”].
+</p>
+
+<p>
+<em class="u">Code Python correspondant :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> nltk.<span class="kw3">tokenize</span> <span class="kw1">import</span> RegexpTokenizer
+tokenizer <span class="sy0">=</span> RegexpTokenizer<span class="br0">&#40;</span>r<span class="st0">'<span class="es0">\w</span>+'</span><span class="br0">&#41;</span>
+&nbsp;
+texte_JAY <span class="sy0">=</span> <span class="st0">&quot; &quot;</span>.<span class="me1">join</span><span class="br0">&#40;</span><span class="kw2">list</span><span class="br0">&#40;</span>data_JAY<span class="br0">&#91;</span><span class="st0">&quot;text&quot;</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+texte_HAMILTON <span class="sy0">=</span> <span class="st0">&quot; &quot;</span>.<span class="me1">join</span><span class="br0">&#40;</span><span class="kw2">list</span><span class="br0">&#40;</span>data_HAMILTON<span class="br0">&#91;</span><span class="st0">&quot;text&quot;</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+texte_MADISON <span class="sy0">=</span> <span class="st0">&quot; &quot;</span>.<span class="me1">join</span><span class="br0">&#40;</span><span class="kw2">list</span><span class="br0">&#40;</span>data_MADISON<span class="br0">&#91;</span><span class="st0">&quot;text&quot;</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+token_JAY <span class="sy0">=</span> tokenizer.<span class="kw3">tokenize</span><span class="br0">&#40;</span>texte_JAY<span class="br0">&#41;</span>
+token_HAMILTON <span class="sy0">=</span> tokenizer.<span class="kw3">tokenize</span><span class="br0">&#40;</span>texte_HAMILTON<span class="br0">&#41;</span>
+token_MADISON <span class="sy0">=</span> tokenizer.<span class="kw3">tokenize</span><span class="br0">&#40;</span>texte_MADISON<span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les fr\u00e9quences pour la description&quot;,&quot;hid&quot;:&quot;les_frequences_pour_la_description&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:3,&quot;range&quot;:&quot;3321-4397&quot;} -->
+<h3 class="sectionedit4" id="mesure_de_vocabulaire_classique">Mesure de vocabulaire classique</h3>
+<div class="level3">
+
+<p>
+Commençons par la manière classique de décrire le vocabulaire, il s&#039;agit du nombre de mots dans le texte en interdisant les doublons. Les mots correspondant à cette mesure sont les suivants : [“Les”, “partisants”, “de”, “la”, “république”, “et”, “dictature”, “ont”, “mangé”, “le”, “repas”, “Noel”, “à”, “même”, “table”] nous noterons cette liste $Voc_t$ et $n_t$ son effectif. On utilise alors la formule suivante ,avec $n$ l&#039;effectif total, pour calculer notre metric :
+</p>
+
+<p>
+$$Voc(x) = \frac{n_t}{n}$$
+</p>
+
+<p>
+Pour notre texte on arrive donc à 0.789, il existe plusieurs variantes où on peut diviser par $\sqrt{n}$ ou encore $\log{(n)}$.
+</p>
+
+<p>
+<em class="u">Code Python correspondant :</em>
+</p>
+<pre class="code python">&nbsp;</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Mesure de vocabulaire classique&quot;,&quot;hid&quot;:&quot;mesure_de_vocabulaire_classique&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:4,&quot;range&quot;:&quot;4398-5134&quot;} -->
+<h3 class="sectionedit5" id="les_hapaxes">Les hapaxes</h3>
+<div class="level3">
+
+<p>
+Quand on cherche à connaître la diversité du vocabulaire d&#039;un auteur il est aussi possible de chercher à quantifier le nombre de mots uniques qu&#039;il utilise. Il s&#039;agit des mots qui apparaissent une seule fois dans le texte. Sur notre exemple les hapaxes seraient [“Les”, “partisants”, “république”, “et”, “dictature”, “ont”, “mangé”, “le”, “repas”,  “Noel”, “à” ,“même”, “table”].
+</p>
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> Il est important de préciser que nous avons appliqué ici sur une seule phrase, sur un texte complet les mots comme “Les”, “à” ou encore “et” ont beaucoup moins de chances d&#039;être des hapaxes.</div>
+</p>
+
+<p>
+<em class="u">Code Python correspondant</em>
+</p>
+<pre class="code python">&nbsp;</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les hapaxes&quot;,&quot;hid&quot;:&quot;les_hapaxes&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:5,&quot;range&quot;:&quot;5135-5831&quot;} -->
+<h3 class="sectionedit6" id="content_words">Content words</h3>
+<div class="level3">
+
+<p>
+Une autre metric plus coûteuse mais aussi plus efficace se base sur les <strong><span style='color:#ed1c24; '>contents words</span></strong>. On appelle “content words” les mots qui sont soit des noms, des verbes ou encore des adjectifs (certaines variantes ajoutent les adverbes). Sur notre exemple on arrive à la liste suivante [“partisants”, “république”, “dictature”, “ont”, “mangé”, “repas”, “Noel”, “table”]. Notons $CW(x)$ ces mots, la formule s&#039;adapte ainsi :
+</p>
+
+<p>
+$$Voc(x) = \frac{CW}{n}$$
+</p>
+
+<p>
+Avec cette méthode on obtient 0.42. L&#039;un problème de cette méthode est qu&#039;elle nécessite un POS tagger qui est un modèle permettant de labelliser chacun des mots dans la phrase par sa place grammaticale. Ce modèle comme tout modèle de Machine Learning a une précision qu&#039;il faut contrôler pour ne pas biaiser l&#039;étude. Il faut aussi être sûr que le corpus a une qualité qui permet ce traitement car si les phrases sont trop males formées les prédictions sont faussées.
+</p>
+
+<p>
+<em class="u">Code Python correspondant :</em>
+</p>
+
+<p>
+Pour permettre le calcul de cette metric nous utilisons la librairie Spacy et son modèle “fr_core_news_sm” qui a une précision de 96% sur les tâches de POS Tagging.
+</p>
+<pre class="code python">&nbsp;</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Content words&quot;,&quot;hid&quot;:&quot;content_words&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:6,&quot;range&quot;:&quot;5832-7038&quot;} -->
+<h3 class="sectionedit7" id="longueur_des_mots">Longueur des mots</h3>
+<div class="level3">
+
+<p>
+Il existe une dernière catégorie de mesure permettant de quantifier la richesse du vocabulaire en regardant la longueur des mots utilisés. Ce type de mesure est plus stable mais est plus difficile à calculer. Voici la formule à appliquer :
+</p>
+
+<p>
+$$Voc(x) = c . \left [ -\frac{1}{n} + \sum_{r=1} \frac{r}{n} * \frac{r}{n} * |Voc_r(x)| \right ]$$
+</p>
+<div class="table sectionedit8"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Variable  </th><th class="col1 centeralign">  Signification  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  $c$  </td><td class="col1 centeralign">  Constante de valeur $10^4$  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  $n$  </td><td class="col1 centeralign">  Taille du vocabulaire total  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  $Voc_r$  </td><td class="col1 centeralign">  Nombre de mots dans le texte ayant une taille r  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:8,&quot;range&quot;:&quot;7412-7593&quot;} -->
+<p>
+Appliquons la formule à notre exemple [“Les”, “partisants”, “de”, “la”, “république”, “et”, “de”, “la”, “dictature”, “ont”, “mangé”, “le”, “repas”, “de”, “Noel”, “à”, “la”, “même”, “table”] :
+</p>
+<ul>
+<li class="level1"><div class="li"> Mot de taille 1, $\left (\frac{1}{19} \right )^2 * 1 = 0.003$</div>
+</li>
+<li class="level1"><div class="li"> Mot de taille 2, $\left (\frac{2}{19} \right )^2 * 8 = 0.088$</div>
+</li>
+<li class="level1"><div class="li"> …</div>
+</li>
+<li class="level1"><div class="li"> Mot de taille 10, $\left (\frac{10}{19} \right )^2 * 2 = 0.554$</div>
+</li>
+</ul>
+
+<p>
+On termine en faisant la somme et on multiplie par $c$.
+</p>
+
+<p>
+<em class="u">Code Python correspondant</em>
+</p>
+<pre class="code python">&nbsp;</pre>
+
+<p>
+<strong>Résultats :</strong>
+</p>
+
+<p>
+On peut ensuite recenser les différentes mesures pour les interpréter ou permettre une attribution d&#039;auteur sur un texte inconnu.
+</p>
+<div class="table sectionedit9"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0 leftalign">              </td><th class="col1 centeralign">  Standard  </th><th class="col2 centeralign">  Hapaxes  </th><th class="col3 centeralign">  Content Words  </th><th class="col4 centeralign">  Longueur de mots  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0"> Hamilton </th><td class="col1 leftalign">    </td><td class="col2 leftalign">   </td><td class="col3 leftalign">    </td><td class="col4"></td>
+	</tr>
+	<tr class="row2">
+		<th class="col0"> Jay </th><td class="col1 leftalign">    </td><td class="col2 leftalign">    </td><td class="col3"></td><td class="col4"></td>
+	</tr>
+	<tr class="row3">
+		<th class="col0"> Madison </th><td class="col1 leftalign">    </td><td class="col2 leftalign">     </td><td class="col3"></td><td class="col4"></td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:9,&quot;range&quot;:&quot;8265-8413&quot;} -->
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> Un vocabulaire pauvre n&#039;est pas toujours synonyme d&#039;un niveau d&#039;écriture faible. Le romancier américain Ernest Hemingway, par exemple, était célèbre pour employer un nombre étonnamment faible de mots différents, cependant il a gagné le prix Nobel de littérature en 1954.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Longueur des mots&quot;,&quot;hid&quot;:&quot;longueur_des_mots&quot;,&quot;codeblockOffset&quot;:5,&quot;secid&quot;:7,&quot;range&quot;:&quot;7039-8732&quot;} -->
+<h2 class="sectionedit10" id="les_frequences_pour_les_modeles">Les fréquences pour les modèles</h2>
+<div class="level2">
+
+<p>
+Pour utiliser la fréquence comme embedding, on récupère les $n$ mots les plus fréquents pour chacun des auteurs. Ces mots et leurs fréquences caractérisent l&#039;ensemble des textes d&#039;un auteur. Dans cette technique et dans beaucoup d&#039;autres, la question des stopwords (mot sans information) se pose. Faut-il les garder ou les exclure de l&#039;étude ? Cependant, la véritable question à se poser est : Est-ce que la fréquence des stopwords est dénué d&#039;information dans notre étude. Ici, j&#039;ai choisi qu&#039;il était judicieux de les garder mais il s&#039;agit d&#039;un choix subjectif. Calculons les mots les plus fréquents et de calculer leur fréquences :
+</p>
+<pre class="code python"><span class="kw1">from</span> <span class="kw3">collections</span> <span class="kw1">import</span> Counter
+&nbsp;
+counter_JAY <span class="sy0">=</span> Counter<span class="br0">&#40;</span>token_JAY<span class="br0">&#41;</span>
+counter_HAMILTON <span class="sy0">=</span> Counter<span class="br0">&#40;</span>token_HAMILTON<span class="br0">&#41;</span>
+counter_MADISON <span class="sy0">=</span> Counter<span class="br0">&#40;</span>token_MADISON<span class="br0">&#41;</span>
+&nbsp;
+JAY_freq_word <span class="sy0">=</span> <span class="br0">&#91;</span>word<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> <span class="kw1">for</span> word <span class="kw1">in</span> counter_JAY.<span class="me1">most_common</span><span class="br0">&#40;</span><span class="nu0">150</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+HAMILTON_freq_word <span class="sy0">=</span> <span class="br0">&#91;</span>word<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> <span class="kw1">for</span> word <span class="kw1">in</span> counter_HAMILTON.<span class="me1">most_common</span><span class="br0">&#40;</span><span class="nu0">150</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+MADISON_freq_word <span class="sy0">=</span> <span class="br0">&#91;</span>word<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> <span class="kw1">for</span> word <span class="kw1">in</span> counter_MADISON.<span class="me1">most_common</span><span class="br0">&#40;</span><span class="nu0">150</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+&nbsp;
+<span class="co1">#Calcule de la fréquence relative JAY</span>
+liste_freq_JAY <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+<span class="kw1">for</span> a <span class="kw1">in</span> liste_commun:
+    compteur <span class="sy0">=</span> <span class="nu0">0</span>
+    <span class="kw1">for</span> i <span class="kw1">in</span> token_JAY:
+        <span class="kw1">if</span> <span class="br0">&#40;</span>i <span class="sy0">==</span> a<span class="br0">&#41;</span>:
+            compteur+<span class="sy0">=</span><span class="nu0">1</span>
+    liste_freq_JAY.<span class="me1">append</span><span class="br0">&#40;</span>compteur/<span class="kw2">len</span><span class="br0">&#40;</span>token_JAY<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+ <span class="co1">#Faire de même avec MADISON et HAMILTON</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ala_stylometrie&amp;media=cpp:freq_federalist.png" class="media" title="cpp:freq_federalist.png"><img src="/lib/exe/fetch.php?w=700&amp;tok=0fb3bd&amp;media=cpp:freq_federalist.png" class="mediacenter" alt="" width="700" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les fr\u00e9quences pour les mod\u00e8les&quot;,&quot;hid&quot;:&quot;les_frequences_pour_les_modeles&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:10,&quot;range&quot;:&quot;8733-10145&quot;} -->
+<h1 class="sectionedit11" id="visualiser_les_variables_de_stylometrie">Visualiser les variables de stylométrie</h1>
+<div class="level1">
+
+<p>
+<a href="https://computationalstylistics.github.io/projects/bootstrap-networks/" class="urlextern" title="https://computationalstylistics.github.io/projects/bootstrap-networks/" rel="nofollow">https://computationalstylistics.github.io/projects/bootstrap-networks/</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Visualiser les variables de stylom\u00e9trie&quot;,&quot;hid&quot;:&quot;visualiser_les_variables_de_stylometrie&quot;,&quot;codeblockOffset&quot;:7,&quot;secid&quot;:11,&quot;range&quot;:&quot;10146-&quot;} -->

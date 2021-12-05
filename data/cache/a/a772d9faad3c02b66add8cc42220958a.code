@@ -1,0 +1,2 @@
+<span class="co1">%Intégration quad</span>
+<span class="br0">&#91;</span>v, err<span class="br0">&#93;</span> = intg<span class="br0">&#40;</span>-<span class="nu0">10</span>, <span class="nu0">10</span>, P<span class="br0">&#41;</span>

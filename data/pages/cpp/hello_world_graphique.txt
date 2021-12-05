@@ -1,0 +1,507 @@
+{{ :cpp:helloworld.png?500 |}}
+
+Nous allons dans cette page introduire le langage Java et C++. Pour obtenir le résultat ci-dessous grace aux librairies installées préalablement. Vous trouverez le code complet concernant cette page [[https://github.com/LlamasPartan/Programmation_Objet_Jeux2D/tree/Cours_1_Hello_World_Graphique|ici]].
+
+^  C++  ^  Java  ^
+|  {{ :cpp:sfmlresultat.png?400 |}}   |  {{ :cpp:screenshot_resultat_hello_world.png?400 |}}  |
+
+<alert warning>**Attention :** Nous allons utiliser certains concepts objets comme la notion d'héritage sans les expliquer directement. Ne soyez pas trop frustré, nous les développerons dans les pages qui suiveront. Cette page présentera des premiers résultats tout en attisant votre curiosité.</alert>
+
+=====Environnement de travail et éléments syntaxiques=====
+
+====Environnement de travail====
+
+Pour suivre ce tuto vous devriez avoir l'environnement de travail suivant qu'il est nécessaire de mettre en place si vous n'avez pas suivie cette [[cpp: Installation environnement Java & JavaFX | page]] concernant le Java ou cette [[cpp: Installation environnement C++ & SFML | page]] concernant le C++.
+
+__En Java :__
+
+^  Arborescence fichier  ^  module-info.java  ^
+| <code bash>
+Game
+├── bin
+└── src
+    ├── fr
+    │   └── game
+    │       └── Main.java
+    └── module-info.java
+</code> | <code java>
+module GameModule {
+	requires javafx.base;
+	requires javafx.controls;
+	requires javafx.graphics;
+}
+</code> |
+
+__En C++ :__
+
+<code bash>
+Game
+├── bin
+├── Game.cbp
+├── Game.depend
+├── Game.layout
+├── main.cpp
+└── obj
+</code>
+
+====Eléments syntaxiques communs====
+
+On va commencer par voir quelques points de syntaxe communs aux deux langages.
+
+=== Instructions ===
+
+**<color #ed1c24>Chaque instruction se termine par un **;**.</color>** On évitera de mettre plus d'une instruction par ligne pour garder une bonne lisibilité.
+
+=== Nomenclature ===
+^Elément ^ Manière d'écrire ^ Description ^ Exemple ^
+| variable et fonctions | Camel Case | Commence par une minuscule et sépare les mots par une majuscule | maVariable |
+| classe | Pascal Case | Commence par une majuscule et sépare les mots par une majuscule | MaClasse |
+
+=== Commentaires ===
+Les commentaires sont des informations écrites dans le code source. Il ne faut pas en abuser car ils réduisent la lisibilité du code. Mais ils permettent d'expliquer globalement une fonction ou une classe.
+
+Il y a deux manières de faire des commentaires :
+| <code java>
+// Seul la fin de la ligne 
+// est en commentaire
+</code> | <code java>
+/* Le commentaire ne s'arrete 
+que lorsqu'on atteint
+les caractères suivants */
+</code> |
+
+Certains outils permettent de créer de la documentation à partir des commentaires, si l'on respecte une certaine syntaxe en les écrivant. 
+  * Je vous renvoie sur un tutoriel pour comprendre la [[ https://openclassrooms.com/fr/courses/1115306-presentation-de-la-javadoc | Javadoc ]] utilisée évidemment en Java.
+  * Pour le C++, [[ https://franckh.developpez.com/tutoriels/outils/doxygen/ | doxygen ]] est très utilisé.
+
+=== Conditions ===
+
+Une condition se fait avec un bloc **if**, qu'on lirait **si** <condition> **alors** <instructions>.
+<code java> 
+if (/*condition*/)  { 
+  /*instructions*/
+}
+</code>
+On peut le compléter en ajoutant un **else**, qu'on lirait **si** <condition> **alors** <instructions> **sinon** <autres instructions>.
+<code java>
+if (/*condition*/) {
+  /*instructions*/
+} else {
+  /*autres instructions*/
+}
+</code>
+
+On peut enfin chaîner les conditions grâce à des **sinon si**.
+Les deux codes suivants sont donc équivalents.
+| <code java>
+if (/*condition*/) {
+  /*instructions A*/
+} else {
+  if (/*condition 2*/) {
+    /*instructions B*/
+  } else {
+    /*instructions C*/
+  }
+}
+</code> | <code java>
+if (/*condition*/) {
+  /*instructions A*/
+} else if (/*condition 2*/) {
+  /*instructions B*/
+} else {
+    /*instructions C*/
+}
+</code> |
+
+Cela est dû au fait que si on ne met pas d'accolades après un **else** ou après **la condition d'un if**, seule l'instruction suivante est prise en compte.
+Pour illustrer cela voici deux codes équivalents.
+
+| <code java>
+if (/*condition*/) {
+  /*instructions A*/
+} 
+</code> | <code java>
+if (/*condition*/)
+  /*instructions A*/
+</code> |
+
+Le retour à la ligne dans ce cas là est parfois éviter pour réduire la taille du code. On obtient donc :
+<code java>
+if (/*condition*/) /*instructions A*/
+</code>
+
+=== Boucles ===
+
+Les boucles permettent de répéter des instructions selon certaines conditions.
+De la même manière que pour les blocs conditionnels, si on veut répéter seulement une instruction alors les accolades sont facultatives.
+
+^  Tant que  ^  Faire tant que  ^
+|<code java>
+while (/*condition*/) {
+  /*instructions*/
+}
+</code>  |<code java>
+do {
+  /*instructions*/
+} while (/*condition*/);
+</code>  |
+
+<alert danger>**Attention :** ne pas oublier le **;** après la condition. </alert>
+
+==Pour==
+
+Cette boucle est principalement utilisée pour faire un certain nombre de fois une instructions. 
+L'ensemble des éléments de la première ligne ne sont pas obligatoires. Si rien n'est mis la boucle sera infinie.
+
+<code java>
+for (/*initialisation*/; /*condition*/; /*instruction*/) {
+  /*instructions*/
+}
+</code> 
+
+==== Eléments syntaxiques différents ====
+
+Le placement des accolades délimitant un bloc d'instructions est un des plus grands débats de l'informatique moderne. On le montre ici avec un if, mais c'est valable pour les boucles et la création de classes.
+
+^ Java ^ C++ ^
+| <code java>
+if (/*condition*/) {
+  // Instructions
+} 
+</code> | <code cpp>
+if (/*condition*/)
+{
+  // Instructions
+} 
+</code> |
+
+===== Préparation du premier fichier =====
+__En Java :__
+
+Les dossiers contenant les sources en java sont appellés "**packages**".
+
+Un fichier source a besoin de <color #ed1c24>**connaître dans quel package il se trouve**</color>. On lui indique donc grace au <color #ed1c24>**mot clef package**</color>, suivi de l'arborescence complète depuis la racine du projet (le dossier src dans eclipse). On utilisera des <color #ed1c24>**points**</color> pour <color #ed1c24>**séparer les dossiers**</color>.
+
+Dans notre exemple le fichier Main.java se trouve dans le dossier fr/game, on aura donc :
+
+<code java>
+package fr.game;
+</code>
+
+Tout le code fais en Java doit être fait au sein de **class**. On va donc créer une classe, il faut qu'elle est le nom du fichier.
+<code java>
+class Main {
+}
+</code>
+
+__En C++ :__
+
+<color #ed1c24>**Contrairement à Java**</color> tout le code C++ n'a pas besoin d'être inscrit dans une classe. Il n'y a pas non plus besoin dire dans quel dossier se trouve le fichier car la manière dont les fichiers sont gérés à la <color #ed1c24>**compilation est différentes**</color>. 
+
+Le C++ rassemble <color #ed1c24>**tout dans un seul fichier binaire**</color> alors que le Java crée une archive (.jar) contenant tous les fichiers compilés.
+
+====== Début du programme ======
+
+L'ordinateur a besoin de savoir par où commence le programme. La même méthode est utilisée en Java et en c++ : la fonction **main**.
+Elle est donc unique et obligatoire, sinon l'ordinateur ne peut pas démarrer le programme.
+
+__En Java :__
+
+<code java>
+public static void main(String[] args) {
+//Votre future code
+}
+</code>
+
+__En C++ :__
+<code cpp>
+int main(int argc, char** argv)
+{
+//Votre futur code
+}
+</code>
+**Décomposition du code :**
+
+  * En Java, c'est un tableau de chaîne de caractères
+  * En C++ c'est un entier <color #ed1c24>**et**</color> un tableau de chaîne de caractères.
+
+Dans les deux cas, l'objectif est de pouvoir parcourir des chaînes de caractères contenant les arguments de lancement du programme.
+
+<code bash>
+game -easy
+</code>
+Si on lance notre jeu avec cette ligne de commande, on aura :
+^ Element ^ Valeur ^ Accès en Java ^ Accès en C++ ^
+| Nombre d'arguments de lancement | 3 | args.length() | argc |
+| Premier argument | game | args[0] | argv[0] |
+| Deuxième argument | -easy | args[1] | argv[1] |
+==== Valeur de retour ====
+La valeur de retour d'un programme permet de savoir si il a réussi ou si il a rencontré un problème.
+Cette valeur est toujours représentée par <color #ed1c24>un entier (**int**)</color> en Java et en C++.
+
+__En C++ :__
+
+Pour renvoyer cette valeur il suffit d'ajouter dans la fonction main :
+
+<code cpp> return 15;</code>
+
+__En Java :__
+
+La fonction main <color #ed1c24>ne renvoie pas de valeur **(void)**</color>. On utilise une autre fonction pour renvoyer ce code d'erreur. Elle est présente dans la classe **System**, on peut donc l'appeller comme cela :
+
+<code java> System.exit(15);</code>
+
+La version Java est plus simple car elle permet de quitter le programme depuis n'importe où en cas d'erreur sans avoir besoin de faire remonter le code d'erreur jusqu'à la fonction main.
+
+<alert warning>**Remarque :** Il y a une fonction similaire en C++ pour simplifier le renvoie de code d'erreur : [[https://en.cppreference.com/w/cpp/utility/program/exit | std::exit ]]</alert>
+
+====== Création d'une fenêtre ======
+
+Utilisons les librairies JavaFx et SFML que nous avons installé. Elles vont nous permettre de faire afficher la fenêtre graphique et dessiner dedans.
+
+====En Java :====
+
+Pour créer la fenêtre en Java, on va devoir modifier la classe qu'on a déjà créée et faire appel à la librairie JavaFX.
+
+<code java>
+public class Main extends Application {
+
+    public static void main(String[] args) {
+    }
+ }
+</code>
+
+**Décomposons ce code :**
+
+  * <color #ed1c24>**extends Application**</color> On va ajouter un héritage depuis la classe Application cela nous permet d'utiliser ses fonctionnalités. Cette notion est au cœur de la programmation orientée objet (POO) et nous la développerons tout au long de ce tutoriel.
+  * <color #ed1c24>**public**</color> : Il existe différents niveaux de visibilité pour tout les éléments que l'on crée en POO. Encore une fois, il s'agit d'un concept important de la POO et nous le développeront ultérieurement.
+
+
+<color #00a2e8>**Erreur :**</color> Elle vous indique qu'eclipse ne sait pas trouver la classe Application. Vous pouvez donc ajouter entre la déclaration du package et la classe une ligne pour faire l'importation de la bonne classe :
+
+<code java> import javafx.application.Application; </code>
+
+L'erreur suivante va apparaître. La classe application dont on a décidé d'hériter nous oblige à définir la fonction **start**. Il nous propose même de l'ajouter automatiquement.
+
+On aura donc la fonction suivante, écrite dans la classe Main :
+<code java> 
+@Override
+public void start(Stage primaryStage) {
+}
+</code>
+**@Override** signifie que Application avait déjà sa propre fonction start et que vous voulez la changer. On reviendra là-dessus plus tard.
+
+Il manquera alors un import vers la classe Stage. Vous pouvez l'ajouter manuellement comme précédemment (javafx.stage.Stage).
+
+<alert info>**Info :** Ctrl+Shift+O sous Eclipse ajoutera tous les imports nécessaires et retirera ceux qui ne le sont pas</alert> 
+
+Si à l'ajout il y a une ambiguïté sur quelle classe importer, une interface vous laissera choisir.
+
+{{ :cpp:auto_import_eclipse.png?400 | Importation automatique dans eclipse}}
+
+C'est le primaryStage du paramêtre qui va nous permettre de configurer notre fenêtre.
+On peut donc ajouter la configuration suivante dans la fonction **start**. Dans l'ordre on choisit le titre, la hauteur (en pixel) et la largeur (en pixel) de la fenêtre.
+<code java>
+primaryStage.setTitle("Tuto");
+primaryStage.setHeight(720);
+primaryStage.setWidth(1280);
+</code>
+Il ne reste alors plus qu'à afficher la fenêtre. On ajoute donc à la fin de la fonction **start** :
+<code java>primaryStage.show();</code>
+
+====En C++ :====
+
+Le C++ est moins verbeux encore une fois, il ne va donc pas nous demander de créer de classe pour faire une fenêtre.
+
+Ceci ne va pas nous empêcher d'utiliser SFML pour créer la fenêtre. On commence par ajouter <color #ed1c24>dans la fonction main</color> la création de la fenêtre. La largeur, la hauteur (en pixel) et le titre se déclarent directement au moment de la création.
+
+<code cpp>
+sf::RenderWindow window(sf::VideoMode(1280, 720), "Tuto");
+</code>
+
+**Décomposons ce code :**
+  * <color #ed1c24>**sf::**</color> indique un **namespace**, c'est une sorte de catégorie définie par les créateurs d'SFML qui vont contenir des classes, fonctions, etc.
+  * <color #ed1c24>**VideoMode**</color> permet de configurer l'affichage du programme (comme la résolution de la fenêtre par exemple) voici la  [[ https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1VideoMode.php | documentation ]] pour en savoir plus.
+  * <color #ed1c24>**RenderWindow**</color> est ce qui va nous permettre d'ajouter des éléments à dessiner.
+
+<color #ff7f27>**Erreur :**</color> Comme **sf::RenderWindow** appartient à SFML, il faut indiquer au compilateur qu'on a besoin d'une partie d'SFML dans ce fichier.
+ Cette ligne va inclure ce dont on a besoin.
+
+<code cpp>
+#include <SFML/Graphics.hpp>
+</code>
+
+Il y a 2 façons d'importer des fichiers en C++ :
+
+  * <color #ed1c24>**Des chevrons  < >**</color> pour encadrer le nom du fichier lorsqu'il fait parti des dossiers d'installations de bibliothèques. On<color #ed1c24> **précisera**</color> dans ce cas l'<color #ed1c24>**extension**</color>.
+  * <color #ed1c24>**Des guillemets " "**</color> pour encadrer le nom du fichier lorsqu'il se trouve dans l'arborescence du projet.
+
+Dans notre cas, le fichier <color #ed1c24>**ne se trouve pas dans l'arborescence du programme**</color>, on a simplement indiqué dans les paramètres de code::blocks où trouver <color #ed1c24>**le dossier SFML**</color>. On utilise donc la notation avec les chevrons et on précise l'extension.
+
+<alert info>**Remarque :** Si le fichier demandé fait parti de la bibliothèque standard du C++ ou du C, il n'y aura pas besoin de préciser l'extension.</alert>
+
+Pour afficher la fenêtre, SMFL nous oblige à faire une boucle. On ajoute donc dans la fonction **main** :
+<code cpp>
+while (window.isOpen())
+{
+    window.display();
+}
+</code>
+
+
+=====Ajout de formes à l'écran=====
+On utilise souvent des rectangles lorsque l'on fait des jeux ou des simulations pour rapidement afficher un objet et avoir <color #ed1c24>**un premier aperçu du rendu final**</color> et des proportions même si le résultat n'est pas excessivement beau.
+==== Création des formes ====
+
+Avant d'afficher une forme, il faut tout d'abord la créer.
+
+__En C++ :__
+
+La création et la configuration des éléments se fait en dehors de la boucle qui va les afficher :
+
+<code cpp>
+sf::RectangleShape rectangle(sf::Vector2f(50, 150));
+sf::CircleShape cercle(50);
+</code>
+
+**Décomposition du code :**
+
+  * <color #ed1c24>**sf::Vector2f**</color> : On définit un vecteur à 2 dimensions contenant des nombres décimaux (float en anglais) qui est la largeur et la longueur en pixel
+  * <color #ed1c24>**sf::CircleShape**</color> : Permet de créer un cercle en précisant le rayon du cercle
+
+__En Java :__
+
+<code java>
+  Rectangle rectangle = new Rectangle(50, 150);
+  Circle cercle = new Circle(50);
+</code>
+
+==== Configuration des formes ====
+On va maintenant positionner les formes dans la fenêtre et choisir leur couleur. On définir les positions en utilisant des vecteurs comme lorsque l'on avait définit les tailles précédemment.
+
+  * Pour le rectangle, le positionnement se fait toujours par rapport à l'origine de la forme, qui se trouve sur <color #ed1c24>**le coin en haut à gauche**</color>.
+
+  * Pour le cercle, on change le <color #ed1c24>**placement de l'origine**</color> pour le mettre au centre du cercle, c'est plus intuitif pour travailler.
+
+__En C++ :__
+
+<code cpp>
+rectangle.setPosition(sf::Vector2f(100, 100));
+circle.setOrigin(50, 50);
+circle.setPosition(sf::Vector2f(30, 30));
+    
+rectangle.setFillColor(sf::Color::Green);
+circle.setFillColor(sf::Color::Blue);
+</code>
+
+__En Java :__
+
+L'origine des formes est également sur le coin en haut à gauche en Java, cependant le cercle change cela pour utiliser une origine en son centre.
+
+<code java>
+rectangle.setX(100);
+rectangle.setY(100);
+circle.setCenterX(30);
+circle.setCenterY(30);
+        
+rectangle.setFill(Color.GREEN);
+circle.setFill(Color.BLUE);
+</code>
+==== Affichage des formes ====
+
+On va maintenant demander aux fenêtres de dessiner les formes que l'on vient de créer.
+
+__En C++ :__
+
+Dans la boucle d'affichage, on va ajouter avant le **window.display()** :
+<code cpp>
+window.clear(); // On efface l'image précédente
+window.draw(rectangle); // Affichage du rectangle
+window.draw(circle); // Affichage du cercle
+</code>
+
+__En Java :__
+
+On a besoin d'ajouter un panneau pour contenir nos éléments.
+<code java>
+Pane root = new Pane(); // Création du panneau
+root.getChildren().add(rectangle); // Ajout du rectangle au panneau
+root.getChildren().add(circle); // Ajout du cercle au panneau
+</code>
+
+Il reste à demander à la fenêtre d'afficher ce panneau, pour cela on passe par une scène.
+
+<code java>
+primaryStage.setScene(new Scene(root, 1280, 720));
+</code>
+
+
+
+=====Fermeture de la fenêtre=====
+
+Savoir ouvrir une fenêtre, c'est bien, savoir la refermer c'est bien aussi...
+
+__En C++ :__
+
+Pour cela SFML utilise des événements. Si un événement se produit, il est ajouté à une liste. On peut ensuite parcourir cette liste et les traiter en fonction de leur type.
+<code cpp>
+sf::Event event;
+while (window.pollEvent(event))
+{
+    if (event.type == sf::Event::Closed)
+    {
+        window.close();
+    }
+}
+</code> 
+Il faut faire cette<color #ed1c24> **gestion des événements**</color> dans la boucle d'affichage, pour qu'à chaque fois que la fenêtre est redessinée, on vérifie si il y a un événement à traiter. 
+Ici on vérifie seulement si l'utilisateur a <color #ed1c24>**voulu fermer le programme**</color>.
+
+__En Java :__
+
+La fermeture de la fenêtre est gérée directement par JavaFX. On peut tout de même redéfinir le comportement lorsque la fenêtre se ferme, mais ceci sera vu ultérieurement lors de la gestion des events.
+
+
+===== Amélioration du code =====
+==== Correction en Java ====
+
+La taille de la fenêtre en Java est différente de celle en C++. C'est dû au fait que JavaFX utilise la taille passée en paramètre pour l'ensemble de la fenêtre, alors que SFML l'utilise pour seulement la partie utilisable de la fenêtre.
+
+Pour corriger ça on modifie le code Java en retirant :
+<code java>
+primaryStage.setWidth(1280);
+primaryStage.setHeight(720);
+</code>
+Et en ajoutant juste après la création du panneau (**Pane root = new Pane()**):
+<code java>
+root.setPrefSize(1280, 720);
+</code>
+
+==== Suppressions des constantes ====
+Beaucoup de constantes ont été utilisées pour réaliser le code de cette page. C'est une mauvaise pratique pour deux raisons :
+  * Si une constante est utilisée plusieurs fois, il faut modifier partout (sans rien oublier)
+  * Il n'est pas facile de relire le code en le comprenant (on oublie leur utilité)
+On va donc remplacer les constantes définissant la taille de la fenêtre par **WIDTH** et **HEIGHT** qui seront des variables constantes.
+
+Par convention, on nomme les constantes toujours en majuscule dans les deux langages.
+
+__En C++ :__
+
+On crée les variables constantes avant la fonction **main**:
+<code cpp>
+constexpr int WIDTH = 1280;
+constexpr int HEIGHT = 720;
+</code>
+
+**constexpr** est un mot clé permettant de préciser que la variable ne sera jamais modifié et que le compilateur peut la  remplacer par sa valeur là où elle est utilisée.
+La variable n'aura donc pas d'existence lors de l'exécution du programme.
+
+Le mot **constexpr** n'est valable<color #ed1c24> **que pour des types simples**</color> (appelés "primitifs"), comme : int, char, float, ...
+
+__En Java :__
+
+On crée les variables au début de la classe **Main**:
+<code java>
+public static final int WIDTH = 1280;
+public static final int HEIGHT = 720;
+</code>

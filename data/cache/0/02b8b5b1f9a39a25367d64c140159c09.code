@@ -1,0 +1,9 @@
+<span class="kw1">def</span> loiPoisson<span class="br0">&#40;</span>parametre<span class="br0">&#41;</span>:
+    n<span class="sy0">,</span> proba <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">,</span> np.<span class="me1">exp</span><span class="br0">&#40;</span>-parametre<span class="br0">&#41;</span>
+    F <span class="sy0">=</span> proba
+    U <span class="sy0">=</span> np.<span class="kw3">random</span>.<span class="me1">uniform</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="kw1">while</span> U<span class="sy0">&gt;</span>F:
+        proba <span class="sy0">=</span> <span class="br0">&#40;</span>parametre / <span class="br0">&#40;</span>n + <span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span> * proba
+        F <span class="sy0">=</span> F + proba
+        n <span class="sy0">=</span> n + <span class="nu0">1</span>
+    <span class="kw1">return</span> n

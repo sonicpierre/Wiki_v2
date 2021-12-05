@@ -1,0 +1,373 @@
+[[cpp:IA| Machine Learning]]
+
+{{:cpp:titre_reg_log.png?500|Régression logistique}}
+
+=====La régression logistique=====
+
+La régression logistique est utilisée pour estimer la probabilité, qu'une observation appartienne à une classe
+donnée. Considérons pour cela un cas d'application : l'attribution de crédit bancaire.
+
+Le classificateur va retourner la probabilité que Marie, 65 ans et retraitée, obtienne un crédit. Dans le cas où cette probabilité est supérieure ou égale à 50 %, le modèle prédit que Marie aura son crédit. Sinon 
+elle ne l'a pas.  Cet aspect explicatif rend la régression logistique très populaire dans les domaines de la santé, bancaire ou encore ingénierie.
+
+<alert warning> **Attention :**  Malgré le fait qu'elle soit appelée "régression", la régression logistique est en réalité utilisée pour des travaux de classification.</alert>
+
+Il existe deux extensions de la régression logistique, dont la particularité réside dans le nombre de classes à prédire : 
+  * <fc #ff0000>**La régression multinomiale ou softmax : **</fc> Cas de régression logistique où la variable cible a plus de deux classes non ordonnées  (**Ex :** Prédiction d'un type de cancer).
+  * <fc #ff0000>**La régression logistique ordinale :**</fc> Cas de régression multinomiale où les classes sont reliées par une relation d'ordre (**Ex :** Stades d'avancement d'une épidémie).
+
+<alert info> **Dataset :**  On utilisera le dataset de détection de fraudes, pour un cabinet d'audit, disponible sur [[https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/R%C3%A9gression/R%C3%A9gression%20logistique| ici]].</alert>
+
+====Estimation des probabilités====
+
+Le modèle de régression logistique estime la probabilité qu'une observation $X_{i}$, appartienne à une classe particulière. Mais alors comment cela est-il fait ?
+
+L'estimation se fait comme dans une régression linéaire, où le modèle calcule la somme pondérée des caractéristiques d'entrée, mais au lieu de retourner une valeur continue comme en [[regression_supervisee#theorie|régression linéaire]], il fournit la logistique $p$ du résultat. C'est-à-dire qu'il passe l'expression de la régression linéaire dans la fonction logistique, qui va renvoyer des valeurs entre 0 et 1 (interprétées comme des probabilités).
+
+$$p = \sigma(X^{T}.\theta)$$
+
+Avec :
+  * $\theta$ le vecteur des coefficients du modèle.
+  * $X = (X_{0}, X_{1},...,X_{n})$ les valeurs d'entrainement.
+  * $\sigma$ la fonction logistique. 
+
+====La fonction logistique====
+
+La régression logistique est un estimateur probabiliste, dont la modélisation suit celle des fonctions mathématiques dites sigmoïdes, caractérisées par leur forme en “S”.  Toutefois dans le cadre d'une régression logistique, la fonction sigmoïde utilisée est la <fc #ff0000>**fonction logistique**</fc>.
+
+Elle correspond à la fonction de répartition de la loi logistique, et est donnée par :
+
+$$\sigma(t) = \frac{1}{1 + e^{-t}}, \text{tel que } \sigma(t) \in [0, 1]$$ 
+
+{{ :cpp:logistic_fct_.png?600 |Fonction logistique}}
+
+;#;**Figure 1 :**  Fonction logistique
+;#;
+====Prédictions====
+
+Ainsi, dès lors que le modèle a estimé la probabilité p, qu'une observation appartienne à la classe positive, il peut alors effectuer sa prédiction.
+\[ ŷ  =
+\begin{cases}
+0 & \text{si } p < 0.5\\
+1 &\text{si } p \ge 0.5
+\end{cases} \]
+
+Il est nécessaire d'être vigilant, concernant les prédictions proches des frontières de décision. En effet, un léger ajustement du paramétrage peut faire
+passer une probabilité de 48 % à 51 %, ce qui altérera la décision. 
+
+====Fonction de coût et entrainement====
+
+L'entrainement de la régression logistique se fait de façon à trouver le vecteur de paramètres $\theta$, qui permet de d'estimer des 
+probabilités élevées pour les observations positives et des probabilités basses pour les observations négatives (**cf Figure 1**).  
+
+Sur l'ensemble du jeu de données, cette fonction, aussi appelée <fc #ff0000>**perte logistique**</fc>, est le coût moyen sur l'ensemble des observations, et est donnée par : 
+
+$$J(\theta) = - \frac{1}{m} \sum_{i = 1}^{m}[y^{(i)}log(p^{(i)}) + (1 - y^{(i)})log(1 - p^{(i)})]$$
+
+^      Paramètre        ^ Signification^
+|   $y^{(i)}$     | Probabilité cible que l'observation i appartienne à la classe positive. |
+|    $m$     | Nombre total d'observations. |
+|    $p^{(i)}$     | Probabilité estimée que l'observation i appartienne à la classe positive. |
+
+<alert info> **Remarque :** Il n'existe pas de solution analytique pour résoudre $J(\Theta)$, mais une solution reste trouvable numériquement grâce à une descente de gradient. Vous pouvez cliquer [[regression_supervisee|ici]] pour plus 
+d'informations sur cette méthode.</alert>
+
+La dérivée partielle de la fonction de coût permet de calculer le vecteur gradient, à utiliser dans l'algorithme de descente de gradient. Elle est donnée par : 
+
+$$\frac{\partial}{\partial \theta_{j}} J(\theta) = \frac{1}{m}\sum_{i = 1}^{m} \underbrace{ (\sigma(\theta^{T}X^{(i)})  - y^{(i)})}_{\text{Erreur de prédiction}} X^{(i)}_{j} $$
+
+
+
+^      Paramètre        ^ Signification^
+|   $y^{(i)}$     | Probabilité cible que l'observation i appartienne à la classe positive. |
+|    $m$     | Nombre total d'observations. |
+|    $X^{(i)}_{j}$     | Valeur de la $j^{ième}$ observation. |
+|    $\sigma(\theta^{T}X^{(i)})$     | Probabilité estimée que l'observation i appartienne à la classe positive. |
+
+====Frontières de décision====
+
+Le choix du classificateur de mettre une observation $X_{i}$ dans une classe précise, se fait à partir de la lecture des probabilités d'appartenance.
+
+{{ :cpp:decision_boudary.png?600 |Frontières de décision}}
+
+;#;**Figure 2 :**  Frontières de décision pour la détection de fraude et probabilités associées
+;#;
+
+Lorsque l'audit de fraude est donnée par une valeur inférieure ou égale à 1, le classifieur estime avec de fortes probabilités que l'observation décrit une situation normale.
+Au contraire, à partir d'une valeur d'audit de risque égale à 1.2, la probabilité d'être dans un cas de fraude est de 60 %. La frontière de décision  se situe donc aux alentours d'une valeur d'audit de risque égale à 1.1.
+
+**Sources :**
+  * Machine Learning avec Scikit-Learn, 2e édition, Aurélien Géron
+  * Data science : fondamentaux et études de cas, Eric Biernat et Michel Lutz
+
+=====Modèle de prédiction : Régression logistique=====
+
+Commençons par créer le classificateur pour la détection de fraude.
+
+===Estimateur===
+
+__Code Python__
+
+<code python>
+from sklearn.linear_model import LogisticRegression
+
+model = LogisticRegression(solver='liblinear').fit(X_train,y_train)#Entrainement de l'estimateur avec solver='liblinear' car il est plus adapté aux petits datasets
+y_pred = model.predict(X_test)#Prédiction sur les données X
+y_prob = model.predict_proba(X_test)#Prédiction des probabilités d'appartenance
+</code>
+
+^  Solveur  ^  Fonctionnement  ^ Spécificités ^Temps d'exécution^
+|  newton-cg  |  Utilise la matrice hessienne (matrice de dérivées partielles secondes) de la fonction de coût, dans la recherche des paramètres optimaux.  | Fonctionne lentement avec les grands datasets. | 1100 s|
+|  lbfgs  |  Approxime la matrice hessienne de la fonction de coût, en évaluant les différents gradients successifs.   | Solveur par défaut, il est très rapide avec les grands datasets. | 13 s|
+|  liblinear  | Utilise une descente de coordonnées, pour minimiser la fonction de coût.   | Fonctionne bien avec de petits jeux de données. |1578 s|
+|  sag  |  Utilise la descente de gradient stochastique moyenne.  | Rapide pour les grands jeux de données. |85 s|
+|  saga  |  Extension du solveur **sag**, qui permet l'utilisation de la régularisation L1.  | Rapide pour les grands datastes .|104 s|
+
+<fc #ff0000>**N.B : **</fc> Les temps d'exécution ont été calculé en prenant en compte 30.000 observations du dataset MNIST.
+
+{{ :cpp:solveurs.png?600 |Spécificités des solveurs}}
+
+;#;**Figure 3 :**  Spécificités des solveurs
+;#;
+
+<alert info> **Remarque :**  Sous R, certains solveurs ne sont pas implémentés. Vous n'aurez donc la possibilité de n'utiliser que la méthode de Newton.</alert>
+
+__Code R__
+
+<code python>
+library(glmnet)
+
+model <- glm(Risk~., family = binomial(logit), data = data_train)#Entrainement de l'estimateur, en précisant
+#family = binomial pour la régression logistique binaire
+y_prob <- predict(model, newdata = X_test, type = 'response')#Calcul des probabilités d'appartenance à la classe positive, sur les données de test
+y_pred <- ifelse(y_prob > 0.5, 1, 0)#Prédiction sur les données X de test
+</code>
+
+
+===Evaluation de l'estimation===
+
+__Code Python__
+
+<code python>
+from sklearn.metrics import classification_report, confusion_matrix, log_loss
+
+print(confusion_matrix(y_test, y_pred))#Matrice de confusion
+print(classification_report(y_test, y_pred))#Résumé des résultats de classification
+print('Perte logistique :', log_loss(y_test, y_prob))#Calcul de la perte logistique, métrique importante de la régression logistique. Plus elle est petite, meilleure sont les prédictions
+</code>
+
+__Code R__
+
+<code python>
+library(MLmetrics)
+
+LogLoss(y_pred, y_test)#Calcul de la perte logistique
+table(y_test, y_pred)#Construction de la matrice de confusion
+</code>
+
+**Résultat**
+
+<alert info> **Remarque :**  Pour plus d'informations sur la matrice de confusion, consultez la page sur [[evaluer_son_modele_de_classification|évaluation du modèle de classification]].</alert>
+
+
+{{ :cpp:report_.png?500 |Résultats de classification}}
+
+Il en ressort que sur 102 observations de situations normales, l'estimateur a réussi à toutes les identifier correctement. Pour les 54 observations de cas de fraudes, il est parvenu à en identifier correctement 52. 
+
+===Régularisation===
+
+Il est nécessaire de réduire la variance du modèle afin d'améliorer ses performances. C'est pourquoi la régression logistique permet de définir un paramètre de régularisation, qui va permettre de pénaliser le modèle avec les normes L1 et L2.
+
+<alert info> **Remarque :**  Consultez la page [[regression_regularisee|régression polynomiale et régressions régularisées]], pour plus d'informations sur la régularisation.</alert>
+
+__Code Python__
+
+<code python>
+model = LogisticRegression(solver='liblinear',C=.05, penalty='l2').fit(X_train,y_train)#Entrainement de l'estimateur en définissant un coefficient de régularisation C, et le type de régularisation utilisée
+y_pred = model.predict(X_test)#Prédiction sur les données X
+y_prob = model.predict_proba(X_test)#Prédiction des probabilités d'appartenance
+</code>
+
+__Code R__
+
+<alert info> **Remarque :** Il est nécessaire de convertir les données X de test et d'entrainement en matrices.</alert>
+
+<code python>
+library(glmnet)
+
+model <- glmnet(X_train, y_train, family = 'binomial', alpha = 0, lambda = 0.05)#Entrainement du classificateur avec 
+#une régularisation L2 avec alpha = 0, un coefficient de régularisation lambda et family qui définit la régression logistique
+y_prob <- predict(model, newx = X_test, type = 'response')#Prédiction des probabilités sur les données de test
+y_pred <- ifelse(y_prob > 0.5, 1,0)#Prédiction de l'état de la fraude
+</code>
+
+**Résultat**
+
+{{ :cpp:regularized_report.png?500 |Résultat après régularisation}}
+
+L'interprétation de la matrice de confusion est la même que dans le cas précédent. On remarque tout de même une légère perte de précision au niveau de la perte logistique.
+
+==Sources==
+
+  * [[https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html|Documentation Sklearn]]
+  * [[https://www.r-bloggers.com/how-to-perform-a-logistic-regression-in-r/|R-bloggers]]
+  * [[https://towardsdatascience.com/dont-sweat-the-solver-stuff-aea7cddc3451|TowardDataScience]]
+  * [[http://www.sthda.com/english/articles/36-classification-methods-essentials/149-penalized-logistic-regression-essentials-in-r-ridge-lasso-and-elastic-net/|STHDA]]
+  * Machine Learning avec Scikit-Learn, 2e édition,  Aurélien Géron
+  * Data science : fondamentaux et études de cas, Eric Biernat et Michel Lutz
+
+=====L'odds ratio=====
+
+{{ :cpp:odds_representation.png?1000 |Explication de l'odds ratio}}
+
+Il s'agit d'une valeur statistique interprétée comme un rapport de chance.  Elle permet de déterminer **si une variable est un facteur de risque** pour un résultat en particulier.
+
+On sait que la régression logistique utilise la fonction logistique pour modéliser une régression linéaire. De ce fait on a la relation $p = \sigma(X^{T}.\theta)$ et par définition de la fonction logistique, cette relation revient à calculer le logarithme de  l'odds :  $$ln(\frac{p}{1-p}) = ln(odds) = a.x_{0} + b.x_{1} + c.x_{2} + d$$
+
+Avec :
+  *a, b, c et d des coefficients du modèle
+  *$x_{0}, x_{1},  x_{2}$ des variables du modèle
+ 
+====Interprétation de l'odds-ratio====
+
+Selon le résultat de l'odds pour une variable, l'interprétation associée à cette variable sera différente. Pour une meilleure compréhension, nous interprèterons l'odds d'une variable (présence ou non d'un symptôme) par rapport au risque d'être malade.
+
+  * Si odds-ratio < 1, alors la maladie sera plus fréquente pour les observations (individus) qui **n'ont pas** le symptôme.
+  * Si odds-ratio = 1, alors la maladie est **indépendante** du symptôme.
+  * Si odds-ratio > 1, alors la maladie sera plus fréquente chez les observations (individus) qui **possèdent** le symptôme.
+
+Le passage au logarithme fait que, pour une **variable continue**, les coefficients ne sont plus des pentes, mais des augmentations ou diminution en fonction de la variation **d'une unité** des $x_{i}$. 
+
+La valeur de l'odds de chaque variable sera égale à l'exponentiel des coefficients estimés du modèle de régression linéaire, pour cette variable. 
+
+__Code Python__
+
+Pour avoir toutes les informations statistiques on va utiliser la bibliothèque statasmodel.
+
+<code python>
+import statsmodels.api as sm 
+
+RegLog = sm.Logit(y_train,X_train)#Entrainement du modèle
+RegLog = RegLog.fit(method="lbfgs")#Ajustement du modèle
+np.exp(RegLog.params)#Odds ratio
+</code>
+
+__Code R__
+
+<code python>
+exp(coef(model))
+</code>
+
+**Resultat**
+
+{{ :cpp:odds_res.png?200 |Odds ratio du modèle}}
+
+;#;**Figure 4 :** Odds ratio par variables
+;#;
+
+**Sources**
+  * [[https://perso.univ-rennes1.fr/valerie.monbet/ExposesM2/2013/La%20re%CC%81gression%20logistique.pdf|Sonia NEJI et Anne-Hélène JIGOREL, Université Rennes 1]]
+=====La régression softmax=====
+
+Il s'agit du cas où le modèle de régression logistique cherche à prédire plus de deux classes non ordonnées. De plus, elle ne doit être utilisée que pour des classes qui ne peuvent survenir en même temps, par exemple plusieurs variétés d'une même plante.
+
+====Estimation des probabilités====
+
+Le fonctionnement de la régression softmax repose sur une fonction : la fonction softmax. 
+Commençons par considérer une observation $\bf{x}$, pour laquelle le modèle softmax va d'abord calculer un score $S_{k}(\bf{x})$, pour chaque
+classe k.
+
+$$S_{k}(\bf{x}) = (\theta^{(k)})^{T}x$$
+
+^      Paramètre        ^ Signification^
+|   $\bf{x}$     | Observation d'une variable. |
+|   $k$     | Entier définissant la k-ième classe. |
+|    $\Theta$     | Vecteur de paramètres, regroupant à la fois le terme constant $\theta_{0}$ et les coefficients de pondération $\theta_{1}$ à $\theta_{n}$. |
+
+Une fois que le score de chaque classe a été calculé pour l'observation $\bf{x}$, il est alors possible d'estimer la probabilité $P_{k}$,  que l'observation appartienne à la classe k. Cela se fait en transformant les scores par la <fc #ff0000>**fonction softmax**</fc>.
+
+$$P_{k} = \sigma(S(\bf{x}))_{k} = \frac{exp(S_{k}(\bf{x}))}{\sum_{j = 1}^{K}exp(S_{j}(\bf{x}))}$$
+
+^      Paramètre        ^ Signification^
+|   $K$     | Nombre de classes. |
+|   $S(\bf{x})$     | Vecteur des scores de chaque classe pour l'observation $\bf{x}$. |
+|    $\sigma(S(\bf{x}))_{k}$     | Probabilité estimée que $\bf{x}$ $\in$ k, en considérant les scores de chaque classe pour l'observation $\bf{x}$ .|
+
+====Prédictions====
+
+Et tout comme la régression logistique, la régression softmax prédit la classe qui a la plus forte probabilité estimée.
+
+$$ \text{y = argmax}_{k}^{} P_{k}$$
+
+On retourne ainsi la valeur de la variable k, qui maximise la fonction $P_{k}$.
+
+====Entrainement et fonction de coût====
+
+L'objectif de l'entrainement du modèle softmax, est de d'estimer une probabilité importante pour la classe cible, et donc des probabilités faibles pour les autres.
+
+Il s'agira donc de minimiser une fonction coût appelée <fc #ff0000>**entropie croisée**</fc>, qui pénalise le modèle lorsqu'il estime une probabilité faible pour la classe cible.
+
+$$J(\Theta) = -\frac{1}{m}\sum_{i = 1}^{m}\sum_{k = 1}^{K}y_{k}^{(i)}log(p_{k}^{(i)})$$
+
+<alert info> **Remarque :** L'entropie croisée est couramment utilisée pour mesurer la cohérence entre un ensemble de probabilités estimées d'appartenance à des classes et les classes ciblées. </alert>
+
+^      Paramètre        ^ Signification^
+|   $y_{k}^{(i)}$     | Probabilité cible que la classe i appartienne à la classe k. |
+|   $K$     | Nombre total de classes. |
+|    $p_{k}^{(i)}$     | Probabilité estimée que la classe i appartienne effectivement à la classe k.|
+|    $m$     | Nombre total d'observations. |
+
+Le vecteur gradient de l'entropie croisée permet d'utiliser une descente de gradient pour trouver la matrice $\theta$ qui minimise la fonction de coût. Il est donné par :
+
+$$\nabla_{\theta^{k}}J(\theta) = \frac{1}{m} \sum_{i = 1}^{m} (p_{k}^{(i)} - y^{(i)}_{k}) X^{(i)} $$ 
+
+^      Paramètre        ^ Signification^
+|   $y_{k}^{(i)}$     | Probabilité cible que la classe i appartienne à la classe k. |
+|   $X^{(i)}$     | Valeur de la $i^{ième}$ observation. |
+|    $p_{k}^{(i)}$     | Probabilité estimée que la classe i appartienne effectivement à la classe k.|
+|    $m$     | Nombre total d'observations. |
+
+==Source==
+
+  * Machine Learning avec Scikit-Learn, 2e édition, Aurélien Géron
+
+
+=====Modèle de prédiction : Régression softmax=====
+
+Par défaut, la classe LogisticRegression de Scikit-Learn utilise la méthode <fc #ff0000>**one-vs-the-rest**</fc> lors de la prédiction sur plus de deux classes. Néanmoins, pour la transformer en régression softmax, il est nécessaire d'initialiser l'hyper-paramètre <fc #ff0000>**multi_class**</fc>. 
+
+<alert info> **Dataset :**  On utilisera le dataset de qualité de vin, disponible sur [[https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Classification/Data%20vin| ici]].</alert>
+
+__Code Python__
+
+<code python>
+model = LogisticRegression(solver = 'newton-cg',multi_class = "multinomial", penalty = 'l2', C = 0.6000000000000001).fit(X_train,y_train)#Entrainement de l'estimateur
+y_pred = model.predict(X_test)#Prédiction sur les données X
+y_prob = model.predict_proba(X_test)#Prédiction des probabilités d'appartenance
+</code>
+
+__Code R__
+
+<code python>
+model <- glmnet(X_train, y_train, family = 'multinomial',  type.logistic = "Newton", alpha = 0, lambda = 0.6000000000000001)#Entrainement de l'estimateur
+y_pred <- predict(model, newx = X_test, type = 'class')#Prédiction des classes 
+y_prob <- predict(model, newx = X_test, type = 'response')#Prédiction des probabilités d'appartenance
+</code>
+
+{{ :cpp:multinomial_data.png?500 |Résultat de classification multinomiale}}
+
+Il en ressort que pour 7 observations de classe "1", le classifieur a réussi à toutes les déterminer. Il en est de même pour les 17 observations de classe "2".
+Enfin pour les 12 observations de classe "3", le modèle a réussi à en déterminer 11, en classant une observation appartenant à la classe "2".
+
+
+
+=====Régression logistique : Avantages & inconvénients=====
+
+^      Avantages        ^ Inconvénients ^
+|   Explicabilité des résultats obtenus.   | L'hypothèse de linéarité du score, compromet les relations complexes entre variables. |
+|   Modèle peu susceptible d'être en situation d'over-fitting, du fait de la simplicité de l'algorithme.     | Très bonnes performances pour une classification binaire, mais plus il y a de classes à prédire, moins bonne sera la qualité de l'algorithme.|
+
+<alert warning> La régression logistique constitue la base de ce qu'on appelle les réseaux de neurones. Il s'agit d'un réseau à un neurone.</alert>
+
+==Source==
+  * Big Data et Machine Learning, Manuel du data scientist, P. Lemberger, M. Batty, M. Morel, JL. Raffaelli

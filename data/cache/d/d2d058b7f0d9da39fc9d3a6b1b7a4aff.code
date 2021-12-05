@@ -1,0 +1,5 @@
+install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;quantable&quot;</span><span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>quantable<span class="br0">&#41;</span>
+&nbsp;
+X <span class="sy0">&lt;</span>- robustscale<span class="br0">&#40;</span>X<span class="br0">&#41;</span><span class="co1">#Normalisation des données</span>
+X <span class="sy0">&lt;</span>- X$data<span class="co1">#Récupère les données normalisées</span>

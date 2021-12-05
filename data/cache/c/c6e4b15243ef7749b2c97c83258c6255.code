@@ -1,0 +1,1 @@
+summary.<span class="me1">aov</span><span class="br0">&#40;</span>aov<span class="br0">&#40;</span>y <span class="sy0">~</span>.<span class="sy0">,</span> data <span class="sy0">=</span> data<span class="br0">&#41;</span><span class="br0">&#41;</span>

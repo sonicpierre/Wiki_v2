@@ -1,0 +1,2 @@
+plt.<span class="me1">plot</span><span class="br0">&#40;</span>X<span class="br0">&#41;</span>
+plt.<span class="me1">legend</span><span class="br0">&#40;</span>iris.<span class="me1">feature_names</span><span class="br0">&#41;</span>

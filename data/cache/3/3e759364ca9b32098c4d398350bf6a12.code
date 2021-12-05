@@ -1,0 +1,12 @@
+<span class="kw1">from</span> sklearn.<span class="me1">ensemble</span> <span class="kw1">import</span> StackingClassifier
+&nbsp;
+<span class="kw1">from</span> sklearn.<span class="me1">ensemble</span> <span class="kw1">import</span> RandomForestClassifier
+<span class="kw1">from</span> sklearn.<span class="me1">svm</span> <span class="kw1">import</span> SVC
+<span class="kw1">from</span> sklearn.<span class="me1">preprocessing</span> <span class="kw1">import</span> StandardScaler
+<span class="kw1">from</span> sklearn.<span class="me1">pipeline</span> <span class="kw1">import</span> make_pipeline
+<span class="kw1">from</span> sklearn.<span class="me1">linear_model</span> <span class="kw1">import</span> LogisticRegression
+&nbsp;
+estimators <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#40;</span><span class="st0">'rf'</span><span class="sy0">,</span> RandomForestClassifier<span class="br0">&#40;</span>n_estimators<span class="sy0">=</span><span class="nu0">10</span><span class="sy0">,</span> random_state<span class="sy0">=</span><span class="nu0">42</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+     <span class="br0">&#40;</span><span class="st0">'svc'</span><span class="sy0">,</span> make_pipeline<span class="br0">&#40;</span>StandardScaler<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> SVC<span class="br0">&#40;</span>random_state<span class="sy0">=</span><span class="nu0">42</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+clf <span class="sy0">=</span> StackingClassifier<span class="br0">&#40;</span>estimators<span class="sy0">=</span>estimators<span class="sy0">,</span> final_estimator<span class="sy0">=</span>LogisticRegression<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+clf.<span class="me1">fit</span><span class="br0">&#40;</span>data_train<span class="sy0">,</span>data_res<span class="br0">&#41;</span>

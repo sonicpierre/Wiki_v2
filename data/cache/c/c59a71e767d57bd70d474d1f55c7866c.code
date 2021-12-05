@@ -1,0 +1,4 @@
+<span class="kw1">from</span> sklearn.<span class="me1">decomposition</span> <span class="kw1">import</span> KernelPCA
+&nbsp;
+model <span class="sy0">=</span> KernelPCA<span class="br0">&#40;</span>n_components<span class="sy0">=</span><span class="nu0">24</span><span class="sy0">,</span> kernel<span class="sy0">=</span><span class="st0">&quot;rbf&quot;</span><span class="sy0">,</span> gamma<span class="sy0">=</span><span class="nu0">15</span><span class="br0">&#41;</span>
+model.<span class="me1">fit_transform</span><span class="br0">&#40;</span>face<span class="br0">&#41;</span>

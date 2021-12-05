@@ -1,0 +1,379 @@
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aoperationmatricielle&amp;media=cpp:schemamaths.png" class="media" title="cpp:schemamaths.png"><img src="/lib/exe/fetch.php?w=450&amp;tok=82c510&amp;media=cpp:schemamaths.png" class="mediacenter" alt="" width="450" /></a>
+<br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Sujet :</strong> les mathématiques sont aujourd&#039;hui de plus en plus présentes dans nos vies. Les comprendre de façon théorique est essentiel pour mieux les utiliser dans les matières scientifiques. Cette page est destinée à donner une première approche didactique de notions mathématiques apprises souvent, dans un premier temps, de façon purement théorique.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Prérequis :</strong> il est nécessaire d&#039;avoir une idée des algorithmes utilisés pour les utiliser correctement. Prendre le temps de comprendre la théorie est indispensable pour ne pas obtenir de résultats aberrants.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Outils :</strong> l&#039;ensemble des opérations sera traité en Python, Scilab et R. Ces langages sont couramment utilisés dans le traitement des problématiques purement mathématiques.</div>
+</li>
+</ul>
+
+<p>
+<div class='alert alert-warning'> <strong>Attention :</strong> il est fortement conseillé d&#039;utiliser R sous Windows pour ne pas avoir de problèmes d&#039;installation de package. </div>
+</p>
+
+<h2 class="sectionedit1" id="definir_un_objet_mathematique">Définir un objet mathématique</h2>
+<div class="level2">
+
+<p>
+Ici sont exposées des variables utiles en mathématiques. Nous utiliserons la librairie <strong>numpy</strong> pour le code Python.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;D\u00e9finir un objet math\u00e9matique&quot;,&quot;hid&quot;:&quot;definir_un_objet_mathematique&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;967-1130&quot;} -->
+<h3 class="sectionedit2" id="les_variables">Les variables</h3>
+<div class="level3">
+<div class="table sectionedit3"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0 leftalign">                    </td><th class="col1 centeralign">   Python  </th><th class="col2 centeralign">  R  </th><th class="col3 centeralign">  Scilab  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 centeralign">  Variable  </th><td class="col1 centeralign">  <pre class="code python">A <span class="sy0">=</span> <span class="nu0">5</span></pre>
+</td><td class="col2 centeralign">  <pre class="code python">A<span class="sy0">&lt;</span>-<span class="nu0">5</span></pre>
+</td><td class="col3 centeralign">  <pre class="code scilab"> A <span class="sy0">=</span> <span class="nu0">5</span> </pre>
+</td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  Vecteur  </th><td class="col1 centeralign">  <pre class="code python"> A<span class="sy0">=</span>np.<span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">2</span><span class="sy0">,</span><span class="nu0">3</span><span class="br0">&#93;</span><span class="br0">&#41;</span> </pre>
+</td><td class="col2 centeralign">  <pre class="code python">A<span class="sy0">&lt;</span>-c<span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">2</span><span class="sy0">,</span><span class="nu0">3</span><span class="br0">&#41;</span></pre>
+</td><td class="col3 centeralign">  <pre class="code scilab"> A <span class="sy0">=</span> <span class="br0">&#91;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">2</span><span class="sy0">,</span><span class="nu0">3</span><span class="br0">&#93;</span> </pre>
+</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:3,&quot;range&quot;:&quot;1154-1445&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les variables&quot;,&quot;hid&quot;:&quot;les_variables&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;1131-1446&quot;} -->
+<h3 class="sectionedit4" id="definir_une_matrice">Définir une matrice</h3>
+<div class="level3">
+
+<p>
+<em class="u">Code Python :</em>
+</p>
+<pre class="code python">np.<span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">2</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">,</span><span class="br0">&#91;</span><span class="nu0">4</span><span class="sy0">,</span><span class="nu0">5</span><span class="sy0">,</span><span class="nu0">6</span><span class="br0">&#93;</span><span class="sy0">,</span><span class="br0">&#91;</span><span class="nu0">7</span><span class="sy0">,</span><span class="nu0">8</span><span class="sy0">,</span><span class="nu0">9</span><span class="br0">&#93;</span><span class="br0">&#93;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R :</em>
+</p>
+<pre class="code python">Pierre <span class="sy0">&lt;</span>- c<span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">2</span><span class="sy0">,</span><span class="nu0">3</span><span class="br0">&#41;</span>
+Nathalie <span class="sy0">&lt;</span>- c<span class="br0">&#40;</span><span class="nu0">4</span><span class="sy0">,</span><span class="nu0">5</span><span class="sy0">,</span><span class="nu0">6</span><span class="br0">&#41;</span>
+Jacques <span class="sy0">&lt;</span>- c<span class="br0">&#40;</span><span class="nu0">7</span><span class="sy0">,</span><span class="nu0">8</span><span class="sy0">,</span><span class="nu0">9</span><span class="br0">&#41;</span>
+matrix<span class="br0">&#40;</span>c<span class="br0">&#40;</span>Pierre<span class="sy0">,</span> Nathalie<span class="sy0">,</span> Jacques<span class="br0">&#41;</span><span class="sy0">,</span> nrow<span class="sy0">=</span><span class="nu0">3</span><span class="sy0">,</span> ncol<span class="sy0">=</span><span class="nu0">3</span><span class="sy0">,</span> byrow<span class="sy0">=</span>T<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code Scilab :</em>
+</p>
+<pre class="code scilab">A <span class="sy0">=</span> <span class="br0">&#91;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">2</span><span class="sy0">,</span><span class="nu0">1</span><span class="sy0">;</span><span class="nu0">4</span><span class="sy0">,</span><span class="nu0">5</span><span class="sy0">,</span><span class="nu0">6</span><span class="sy0">;</span><span class="nu0">7</span><span class="sy0">,</span><span class="nu0">8</span><span class="sy0">,</span><span class="nu0">9</span><span class="br0">&#93;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;D\u00e9finir une matrice&quot;,&quot;hid&quot;:&quot;definir_une_matrice&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:4,&quot;range&quot;:&quot;1447-1787&quot;} -->
+<h3 class="sectionedit5" id="declarer_sa_fonction">Déclarer sa fonction</h3>
+<div class="level3">
+
+<p>
+Il est possible d&#039;utiliser la méthode vue au-dessus pour déclarer la fonction $f$. Cependant, quand il s&#039;agit de fonctions purement mathématiques, il existe des raccourcis syntaxiques.
+</p>
+
+<p>
+<em class="u">Code Python :</em>
+</p>
+<pre class="code python">f <span class="sy0">=</span> <span class="kw1">lambda</span> x: x**<span class="nu0">4</span> - <span class="nu0">5</span>* x**<span class="nu0">2</span> + <span class="nu0">4</span></pre>
+
+<p>
+<em class="u">Code R :</em>
+</p>
+<pre class="code python">f <span class="sy0">&lt;</span>- <span class="br0">&#123;</span>function<span class="br0">&#40;</span>x<span class="br0">&#41;</span> x^<span class="nu0">4</span> -  <span class="nu0">5</span>*x^<span class="nu0">2</span> + <span class="nu0">4</span><span class="br0">&#125;</span></pre>
+
+<p>
+<em class="u">Code Scilab :</em>
+</p>
+<pre class="code matlab"><span class="kw1">function</span> y=P<span class="br0">&#40;</span>x<span class="br0">&#41;</span>
+y=<span class="br0">&#40;</span>x^<span class="nu0">4</span> - <span class="nu0">5</span>*x^<span class="nu0">2</span> + <span class="nu0">4</span><span class="br0">&#41;</span>
+endfunction</pre>
+
+<p>
+<div class='alert alert-info'><strong>Info :</strong> pour les fonctions plus conséquentes, un code plus adapté est abordé dans la suite de la page.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;D\u00e9clarer sa fonction&quot;,&quot;hid&quot;:&quot;declarer_sa_fonction&quot;,&quot;codeblockOffset&quot;:9,&quot;secid&quot;:5,&quot;range&quot;:&quot;1788-2375&quot;} -->
+<h2 class="sectionedit6" id="operations_matricielles">Opérations matricielles</h2>
+<div class="level2">
+
+<p>
+Pour cette partie, nous prendrons les matrices A, B et C définies ci-dessous :
+</p>
+
+<p>
+$$A = \begin{pmatrix} 1 &amp; 3 &amp; 1 \\ 5 &amp; 6 &amp; 4 \\ 7 &amp; 3 &amp; 1\end{pmatrix}  B = \begin{pmatrix} 4 &amp; 5 &amp; 7 \\ 1 &amp; 9 &amp; 3 \\ 6 &amp; 2 &amp; 2\end{pmatrix} C = \begin{pmatrix} 4 &amp; 5 &amp; 7 \\ 1 &amp; 9 &amp; 3 \end{pmatrix}$$
+</p>
+
+<p>
+Il est nécessaire d&#039;installer certaines librairies :
+</p>
+
+<p>
+<em class="u">Code Python :</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> numpy <span class="kw1">as</span> np
+<span class="kw1">from</span> scipy.<span class="me1">linalg</span> <span class="kw1">import</span> lu</pre>
+
+<p>
+<em class="u">Code R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>corpcor<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>matrixcalc<span class="br0">&#41;</span></pre>
+<div class="table sectionedit7"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0 leftalign">                    </td><th class="col1 centeralign">   Python  </th><th class="col2 centeralign">  R  </th><th class="col3 centeralign">  Scilab  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 centeralign">  Multiplication  </th><td class="col1 centeralign">  <pre class="code python">  A.<span class="me1">dot</span><span class="br0">&#40;</span>B<span class="br0">&#41;</span>  </pre>
+</td><td class="col2 centeralign">  <pre class="code python">A%*%B</pre>
+</td><td class="col3 centeralign">  <pre class="code scilab"> A<span class="sy0">*</span>B </pre>
+</td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  Inverse  </th><td class="col1 centeralign">  <pre class="code python">np.<span class="me1">linalg</span>.<span class="me1">inv</span><span class="br0">&#40;</span>A<span class="br0">&#41;</span></pre>
+</td><td class="col2 centeralign">  <pre class="code python">solve<span class="br0">&#40;</span>A<span class="br0">&#41;</span></pre>
+</td><td class="col3 centeralign">  <pre class="code scilab"><a href="http://www.scilab.org/product/dic-mat-sci/M2SCI_doc.htm"><span class="kw3">inv</span></a><span class="br0">&#40;</span>A<span class="br0">&#41;</span></pre>
+</td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  Transposée  </th><td class="col1 centeralign">   <pre class="code python"> np.<span class="me1">transpose</span><span class="br0">&#40;</span>A<span class="br0">&#41;</span> </pre>
+</td><td class="col2 centeralign">  <pre class="code python">aperm<span class="br0">&#40;</span>A<span class="br0">&#41;</span></pre>
+</td><td class="col3 centeralign">  <pre class="code scilab"> A<span class="co2">'</span> </pre>
+</td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  Trace  </th><td class="col1 centeralign">   <pre class="code python"> np.<span class="me1">trace</span><span class="br0">&#40;</span>A<span class="br0">&#41;</span> </pre>
+</td><td class="col2 centeralign">  <pre class="code python"><span class="kw2">sum</span><span class="br0">&#40;</span>diag<span class="br0">&#40;</span>A<span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+</td><td class="col3 centeralign">  <pre class="code scilab"> <a href="http://www.scilab.org/product/dic-mat-sci/M2SCI_doc.htm"><span class="kw3">trace</span></a><span class="br0">&#40;</span>A<span class="br0">&#41;</span> </pre>
+</td>
+	</tr>
+	<tr class="row5">
+		<th class="col0 centeralign">  Déterminant  </th><td class="col1 centeralign">   <pre class="code python"> np.<span class="me1">linalg</span>.<span class="me1">det</span><span class="br0">&#40;</span>A<span class="br0">&#41;</span> </pre>
+</td><td class="col2 centeralign">  <pre class="code python">det<span class="br0">&#40;</span>A<span class="br0">&#41;</span></pre>
+</td><td class="col3 centeralign">  <pre class="code scilab"> <a href="http://www.scilab.org/product/dic-mat-sci/M2SCI_doc.htm"><span class="kw3">det</span></a><span class="br0">&#40;</span>A<span class="br0">&#41;</span> </pre>
+</td>
+	</tr>
+	<tr class="row6">
+		<th class="col0 centeralign">  Factorisation <a href="https://fr.wikipedia.org/wiki/D%C3%A9composition_LU" class="urlextern" title="https://fr.wikipedia.org/wiki/D%C3%A9composition_LU" rel="nofollow"> LU</a>  </th><td class="col1 centeralign">   <pre class="code python">P<span class="sy0">,</span> L<span class="sy0">,</span> U <span class="sy0">=</span> lu<span class="br0">&#40;</span>A<span class="br0">&#41;</span></pre>
+</td><td class="col2 centeralign">  <pre class="code python">lu.<span class="me1">decomposition</span><span class="br0">&#40;</span>A<span class="br0">&#41;</span></pre>
+</td><td class="col3 centeralign">  <pre class="code scilab"><span class="br0">&#91;</span>L<span class="sy0">,</span> U<span class="br0">&#93;</span> <span class="sy0">=</span> <a href="http://www.scilab.org/product/dic-mat-sci/M2SCI_doc.htm"><span class="kw3">lu</span></a> <span class="br0">&#40;</span>A<span class="br0">&#41;</span></pre>
+</td>
+	</tr>
+	<tr class="row7">
+		<th class="col0 centeralign">  Décomposition <a href="https://fr.wikipedia.org/wiki/D%C3%A9composition_en_valeurs_singuli%C3%A8res" class="urlextern" title="https://fr.wikipedia.org/wiki/D%C3%A9composition_en_valeurs_singuli%C3%A8res" rel="nofollow"> SVD</a>  </th><td class="col1 centeralign">   <pre class="code python"> np.<span class="me1">linalg</span>.<span class="me1">svd</span><span class="br0">&#40;</span>C<span class="br0">&#41;</span> </pre>
+</td><td class="col2 centeralign">  <pre class="code python">svd<span class="br0">&#40;</span>C<span class="br0">&#41;</span></pre>
+</td><td class="col3 centeralign">  <pre class="code scilab"> <span class="br0">&#91;</span>U<span class="sy0">,</span> S<span class="sy0">,</span> V<span class="br0">&#93;</span> <span class="sy0">=</span> <a href="http://www.scilab.org/product/dic-mat-sci/M2SCI_doc.htm"><span class="kw3">svd</span></a><span class="br0">&#40;</span>C<span class="br0">&#41;</span> </pre>
+</td>
+	</tr>
+	<tr class="row8">
+		<th class="col0 centeralign">  Pseudo-inverse  </th><td class="col1 centeralign">   <pre class="code python"> np.<span class="me1">linalg</span>.<span class="me1">pinv</span><span class="br0">&#40;</span>C<span class="br0">&#41;</span> </pre>
+</td><td class="col2 centeralign">  <pre class="code python">pseudoinverse<span class="br0">&#40;</span>C<span class="br0">&#41;</span></pre>
+</td><td class="col3 centeralign">  <pre class="code scilab"> <a href="http://www.scilab.org/product/dic-mat-sci/M2SCI_doc.htm"><span class="kw3">pinv</span></a><span class="br0">&#40;</span>C<span class="br0">&#41;</span> </pre>
+</td>
+	</tr>
+	<tr class="row9">
+		<th class="col0 centeralign">  Valeurs propres  </th><td class="col1 centeralign">   <pre class="code python">np.<span class="me1">linalg</span>.<span class="me1">eigh</span><span class="br0">&#40;</span>A<span class="br0">&#41;</span></pre>
+</td><td class="col2 centeralign">  <pre class="code python">eigen<span class="br0">&#40;</span>A<span class="br0">&#41;</span></pre>
+</td><td class="col3 centeralign">  <pre class="code scilab"><span class="br0">&#91;</span>VectPro<span class="sy0">,</span> ValPro<span class="br0">&#93;</span> <span class="sy0">=</span> <a href="http://www.scilab.org/product/dic-mat-sci/M2SCI_doc.htm"><span class="kw3">spec</span></a><span class="br0">&#40;</span>A<span class="br0">&#41;</span></pre>
+</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:7,&quot;range&quot;:&quot;2913-4297&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Op\u00e9rations matricielles&quot;,&quot;hid&quot;:&quot;operations_matricielles&quot;,&quot;codeblockOffset&quot;:12,&quot;secid&quot;:6,&quot;range&quot;:&quot;2376-4298&quot;} -->
+<h2 class="sectionedit8" id="conditions_et_boucles_dans_une_fonction">Conditions et boucles dans une fonction</h2>
+<div class="level2">
+
+<p>
+ Dans les algorithmes, il est courant d&#039;avoir des conditions, des boucles et des fonctions à définir en amont c&#039;est pourquoi nous allons traduire l&#039;algorithme ci- dessous dans les 3 langages.
+</p>
+
+<p>
+<em class="u">Code Python :</em>
+</p>
+<pre class="code python"><span class="co1">#Déclaration de la fonction</span>
+<span class="kw1">def</span> maFonction<span class="br0">&#40;</span>x<span class="sy0">,</span>y<span class="br0">&#41;</span>:
+    <span class="co1">#Utilisation fréquente du for pour les boucles</span>
+    <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>y<span class="br0">&#41;</span>:
+        <span class="co1">#On écrit une condition</span>
+        <span class="kw1">if</span><span class="br0">&#40;</span>i<span class="sy0">!=</span><span class="nu0">3</span><span class="br0">&#41;</span>:
+            <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;Vive l'Auvergne !&quot;</span><span class="br0">&#41;</span>
+        <span class="kw1">else</span>:
+            <span class="kw1">return</span><span class="br0">&#40;</span>x+<span class="nu0">5</span><span class="br0">&#41;</span> <span class="co1">#return va mettre un terme à la boucle et renvoyer une valeur</span>
+<span class="co1">#Appel de la fonction</span>
+Resultat <span class="sy0">=</span> maFonction<span class="br0">&#40;</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">20</span><span class="br0">&#41;</span>
+<span class="co1"># Resultat aura la valeur 5 dans ce cas</span></pre>
+
+<p>
+<em class="u">Code R :</em>
+</p>
+<pre class="code python"> maFonction <span class="sy0">&lt;</span>- function<span class="br0">&#40;</span>x<span class="sy0">,</span> y<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+     <span class="kw1">for</span> <span class="br0">&#40;</span>i <span class="kw1">in</span> <span class="nu0">1</span>:y<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+         <span class="kw1">if</span><span class="br0">&#40;</span>i<span class="sy0">!=</span><span class="nu0">3</span><span class="br0">&#41;</span><span class="br0">&#123;</span>
+             <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;Vive l'AuveRgne !!&quot;</span><span class="br0">&#41;</span>
+         <span class="br0">&#125;</span> <span class="kw1">else</span> <span class="br0">&#123;</span>
+             <span class="kw1">return</span><span class="br0">&#40;</span>x +<span class="nu0">5</span><span class="br0">&#41;</span>
+         <span class="br0">&#125;</span>
+     <span class="br0">&#125;</span>
+ <span class="br0">&#125;</span>
+Resultat <span class="sy0">=</span> maFonction<span class="br0">&#40;</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">20</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code Scilab :</em>
+</p>
+<pre class="code matlab"><span class="kw1">function</span> <span class="br0">&#91;</span>Resultat<span class="br0">&#93;</span> = maFonction<span class="br0">&#40;</span>x,y<span class="br0">&#41;</span>
+  Resultat = x + <span class="nu0">5</span>
+  <span class="kw1">for</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a> = <span class="nu0">1</span>:y
+  <span class="kw1">if</span><span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>~=<span class="nu0">3</span><span class="br0">&#41;</span>
+  <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span>&quot;Auvergne&quot;<span class="br0">&#41;</span>
+  <span class="kw1">else</span>
+  <span class="kw1">return</span> Resultat
+  <span class="kw1">end</span>
+  <span class="kw1">end</span>
+  endfunction</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Conditions et boucles dans une fonction&quot;,&quot;hid&quot;:&quot;conditions_et_boucles_dans_une_fonction&quot;,&quot;codeblockOffset&quot;:41,&quot;secid&quot;:8,&quot;range&quot;:&quot;4299-5434&quot;} -->
+<h2 class="sectionedit9" id="operations_numeriques_sur_les_fonctions">Opérations numériques sur les fonctions</h2>
+<div class="level2">
+
+<p>
+Il est important de préciser qu&#039;il existe plusieurs algorithmes d&#039;intégration. On ne va présenter, ici, qu&#039;une application rapide à utiliser seulement dans le cas où le calcul n&#039;est pas le centre de la problématique traitée. Cependant, rappelons qu&#039;il est toujours bon d&#039;aller voir les <strong><span style='color:#ed1c24; '>préconditions</span></strong> avant d&#039;appliquer le code ci-dessous.
+</p>
+
+<p>
+$$f : x \mapsto x^{4} - 5 x^{2} + 4$$
+$$g : (x,y) \mapsto x^{4} - 5 y^{2} + 4$$
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Op\u00e9rations num\u00e9riques sur les fonctions&quot;,&quot;hid&quot;:&quot;operations_numeriques_sur_les_fonctions&quot;,&quot;codeblockOffset&quot;:44,&quot;secid&quot;:9,&quot;range&quot;:&quot;5435-5942&quot;} -->
+<h3 class="sectionedit10" id="integration">Intégration</h3>
+<div class="level3">
+
+<p>
+Nous allons ici décrire 3 méthodes utilisées pour calculer des intégrales dans des problématiques scientifiques.
+</p>
+
+<p>
+<strong>Intégration utilisant la méthode de Simpson</strong>
+</p>
+
+<p>
+<em class="u">Code Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> scipy <span class="kw1">import</span> integrate
+x <span class="sy0">=</span> np.<span class="me1">linspace</span><span class="br0">&#40;</span>-<span class="nu0">10</span><span class="sy0">,</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">10000</span><span class="br0">&#41;</span>
+integrate.<span class="me1">simps</span><span class="br0">&#40;</span>f<span class="br0">&#40;</span>x<span class="br0">&#41;</span><span class="sy0">,</span> x<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>pracma<span class="br0">&#41;</span>
+integral<span class="br0">&#40;</span>f<span class="sy0">,</span> -<span class="nu0">10</span><span class="sy0">,</span> <span class="nu0">10</span><span class="sy0">,</span> method<span class="sy0">=</span> <span class="st0">&quot;Simpson&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code Scilab :</em>
+</p>
+<pre class="code matlab"><span class="kw1">function</span> S = Simpson<span class="br0">&#40;</span>f,a,b,N<span class="br0">&#41;</span>
+  h = <span class="br0">&#40;</span>b-a<span class="br0">&#41;</span>/N
+  pivots_ext = a + h*<span class="br0">&#91;</span><span class="nu0">1</span>:N-<span class="nu0">1</span><span class="br0">&#93;</span>
+  pivots_mil = a + <span class="nu0">0.5</span>*h*<span class="br0">&#40;</span><span class="nu0">2</span>*<span class="br0">&#91;</span><span class="nu0">1</span>:N<span class="br0">&#93;</span>-<span class="nu0">1</span><span class="br0">&#41;</span>
+  S = <span class="br0">&#40;</span>h/<span class="nu0">6</span><span class="br0">&#41;</span>*<span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>+f<span class="br0">&#40;</span>b<span class="br0">&#41;</span>+<span class="nu0">2</span>*<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/sum.html"><span class="kw2">sum</span></a><span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/feval.html"><span class="kw2">feval</span></a><span class="br0">&#40;</span>pivots_ext,f<span class="br0">&#41;</span><span class="br0">&#41;</span>+<span class="nu0">4</span>*<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/sum.html"><span class="kw2">sum</span></a><span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/feval.html"><span class="kw2">feval</span></a><span class="br0">&#40;</span>pivots_mil,f<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+endfunction</pre>
+
+<p>
+<strong>Intégration utilisant la <a href="https://en.wikipedia.org/wiki/QUADPACK" class="urlextern" title="https://en.wikipedia.org/wiki/QUADPACK" rel="nofollow"> librairie QUADRAPACK de FORTRAN</a></strong>
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> scipy.<span class="me1">integrate</span> <span class="kw1">import</span> quad
+Val<span class="sy0">,</span> err <span class="sy0">=</span> quad<span class="br0">&#40;</span>f<span class="sy0">,</span> -<span class="nu0">10</span><span class="sy0">,</span> <span class="nu0">10</span><span class="br0">&#41;</span> <span class="co1">#Calcule l'intégrale sur l'intervalle [-10,10]</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>pracma<span class="br0">&#41;</span>
+quad<span class="br0">&#40;</span>f<span class="sy0">,</span> -<span class="nu0">10</span><span class="sy0">,</span> <span class="nu0">10</span><span class="sy0">,</span> <span class="nu0">1e-4</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En Scilab :</em>
+</p>
+<pre class="code matlab"><span class="br0">&#91;</span>v, err<span class="br0">&#93;</span> = intg<span class="br0">&#40;</span>-<span class="nu0">10</span>, <span class="nu0">10</span>, P<span class="br0">&#41;</span></pre>
+
+<p>
+<strong> Intégration multiple</strong>
+</p>
+
+<p>
+<em class="u">Code Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> scipy.<span class="me1">integrate</span> <span class="kw1">import</span> nquad
+Val<span class="sy0">,</span> err <span class="sy0">=</span> nquad<span class="br0">&#40;</span>g<span class="sy0">,</span> <span class="br0">&#91;</span><span class="br0">&#91;</span>-<span class="nu0">10</span><span class="sy0">,</span> <span class="nu0">10</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="br0">&#91;</span>-<span class="nu0">5</span><span class="sy0">,</span><span class="nu0">5</span><span class="br0">&#93;</span><span class="br0">&#93;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R :</em>
+</p>
+<pre class="code python">integral2<span class="br0">&#40;</span>g<span class="sy0">,</span>-<span class="nu0">10</span><span class="sy0">,</span><span class="nu0">10</span><span class="sy0">,</span>-<span class="nu0">5</span><span class="sy0">,</span><span class="nu0">5</span><span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Int\u00e9gration&quot;,&quot;hid&quot;:&quot;integration&quot;,&quot;codeblockOffset&quot;:44,&quot;secid&quot;:10,&quot;range&quot;:&quot;5943-7200&quot;} -->
+<h3 class="sectionedit11" id="derivation">Dérivation</h3>
+<div class="level3">
+
+<p>
+<div class='alert alert-warning'> <strong>Attention :</strong> avant de calculer une dérivée, il est nécessaire de vérifier qu&#039;elle existe !!</div>
+</p>
+
+<p>
+<em class="u">Code Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> scipy.<span class="me1">misc</span> <span class="kw1">import</span> derivative
+derivative<span class="br0">&#40;</span>f<span class="sy0">,</span> <span class="nu0">2</span><span class="sy0">,</span> <span class="nu0">0.01</span><span class="br0">&#41;</span> <span class="co1">#derivative(Fonction, Abscisse demandé, Erreur)</span></pre>
+
+<p>
+<em class="u">Code R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>Deriv<span class="br0">&#41;</span>
+fDeriv <span class="sy0">&lt;</span>- Deriv<span class="br0">&#40;</span>f<span class="br0">&#41;</span>
+fDeriv<span class="br0">&#40;</span><span class="nu0">3</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code Scilab :</em>
+</p>
+<pre class="code matlab">numderivative<span class="br0">&#40;</span>f,<span class="nu0">3</span><span class="br0">&#41;</span></pre>
+
+<p>
+<div class='alert alert-success'>
+<strong>Approfondir</strong> : vous trouverez, <a href="/doku.php?id=cpp:optimisation_lineaire" class="wikilink1" title="cpp:optimisation_lineaire">ici</a>, des pages sur les algorithmes d&#039;optimisation mettant en application les méthodes mathématiques permettant la recherche de 0.
+</div>
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.it-swarm.dev/fr/r/fonctions-de-type-lambda-dans-r/941551321/" class="urlextern" title="https://www.it-swarm.dev/fr/r/fonctions-de-type-lambda-dans-r/941551321/" rel="nofollow">https://www.it-swarm.dev/fr/r/fonctions-de-type-lambda-dans-r/941551321/</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.rdocumentation.org/packages/pracma/versions/1.9.9/topics/integral" class="urlextern" title="https://www.rdocumentation.org/packages/pracma/versions/1.9.9/topics/integral" rel="nofollow">https://www.rdocumentation.org/packages/pracma/versions/1.9.9/topics/integral</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://informathix.tuxfamily.org/?q=node/53" class="urlextern" title="http://informathix.tuxfamily.org/?q=node/53" rel="nofollow">http://informathix.tuxfamily.org/?q=node/53</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;D\u00e9rivation&quot;,&quot;hid&quot;:&quot;derivation&quot;,&quot;codeblockOffset&quot;:52,&quot;secid&quot;:11,&quot;range&quot;:&quot;7201-&quot;} -->

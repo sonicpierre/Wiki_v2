@@ -1,0 +1,2 @@
+texte.<span class="me1">replace</span><span class="br0">&#40;</span>u<span class="st0">'<span class="es0">\x</span>a0'</span><span class="sy0">,</span> u<span class="st0">' '</span><span class="br0">&#41;</span> <span class="co1">#Va permettre d'enlever les \xa0.</span>
+<span class="co1">#Resultat : 'Vous pouvez partager vos connaissances en l’améliorant (comment ?) selon les</span>

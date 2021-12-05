@@ -1,0 +1,290 @@
+[[cpp:simplexePhase|Méthode des phases]]
+
+{{  :cpp:coupes.jpg?500  |}}
+
+Supposons que j'aie en ma possession 69 **diamants** et 19 g d'**or** que je peux transformer en deux types de **<fc #ff0000>bijoux</fc>** :
+  * une <fc #008000>**paire de boucles d'oreilles**</fc> nécessitant 6 **diamants** et 2 g d'**or** et se vendant à 150 **<fc #ffa500>pièces d'or</fc>**
+  * un **<fc #008000>collier</fc>** utilisant 20 **diamants** et 4 g d'**or** d'une valeur de 600 **<fc #ffa500>pièces d'or</fc>**
+
+Soit, en langage mathématique :
+;#;
+$\begin{cases} \underset{x}{max}(150x_1+600x_2) \\ 6x_1+20x_2 \le 69 \\ 2x_1+4x_2 \le 19 \\ x_1,x_2 \ge 0\end{cases}$
+;#;
+Si nous résolvons ce problème par la méthode **standard** nous arrivons sur le tableau suivant :
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  | |
+^  $f$  |  -30  |  0  |  -30  |  0  |  -2070  |
+^  $x_2$  |  $\frac{3}{10}$  |  1  |  $\frac{1}{20}$  |  0  |  $\frac{69}{20}$  |
+^  $y_2$  |  $\frac{4}{5}$  |  0  |  -$\frac{1}{5}$  |  1  |  $\frac{26}{5}$  |
+La solution est donc de fabriquer 0 **<fc #008000>boucles d'oreilles</fc>** et $\frac{69}{20}$ **<fc #008000>colliers</fc>**... J'imagine que vous voyez le problème. Il est possible que nous voulions, dans certains cas, avoir uniquement des résultats **<fc #ff0000>entiers</fc>** même si cela **réduit** indéniablement l'optimum avec des nombres réels. Nous devons donc changer le problème par :
+;#;
+$\begin{cases} \underset{x}{max}(150x_1+600x_2) \\ 6x_1+20x_2 \le 69 \\ 2x_1+4x_2 \le 19 \\ x_1,x_2 \in\mathbb{N}\end{cases}$
+;#;
+<alert info>La méthode des coupes consiste à **appliquer** un algorithme sur un tableau **résolu** pour arriver à des résultats entiers</alert>
+
+=====Résolution du tableau sans nombres entiers=====
+
+On commence par appliquer notre code élaboré dans les parties **précédentes** pour arriver à un **optimum** pour des variables **<fc #ff0000>non entières</fc>** :
+
+__En Python :__
+<code python>
+tab3=np.array([
+[150.,600,0,0,0],
+[6,20,1,0,69],
+[2,4,0,1,19]])
+#On résout le tableau par la méthode standard
+tabCoupe,x=simplexeStandard(tab)
+</code>
+
+__En Matlab :__
+<code matlab>
+tab3=[
+150,600,0,0,0;
+6,20,1,0,69;
+2,4,0,1,19]
+%On résout le tableau par la méthode standard
+[tabCoupe,x]=simplexeStandard(tab)
+</code>
+
+=====La boucle principale=====
+
+Tant qu'il y a des coefficients **<fc #008000>non entiers</fc>** dans la dernière colonne on continue d'itérer :
+
+__En Python :__
+<code python>
+#On repère les coefficients non entiers de la dernière colonne
+indiceCoefsFrac=[]
+for i in range(1,tabCoupe.shape[0]):
+    if np.around(tabCoupe[i,-1]%1,5)!=0 and np.around(tabCoupe[i,-1]%1,5)!=1:
+        indiceCoefsFrac.append(i)
+#Tant qu'il y a des coefficients non entiers sur la dernière colonne on continue
+while len(indiceCoefsFrac)>0:
+</code>
+
+__En Matlab :__
+<code matlab>
+%On repère les coefficients non entiers de la dernière colonne
+indiceCoefsFrac=[]
+for i=2:size(tabCoupe)(1)
+    if round(100000*mod(tabCoupe(i,end),1))/100000!=0 && round(100000*mod(tabCoupe(i,end),1))/100000!=1
+        indiceCoefsFrac(end+1)=i
+    endif
+endfor
+%Tant qu'il y a des coefficients non entiers sur la dernière colonne on continue
+while size(indiceCoefsFrac)(1)>0
+</code>
+
+<alert info> La façon dont les nombres réels sont codés implique l'utilisation d'arrondis afin d'éviter la survenue de quelques **problèmes ** après plusieurs itérations de notre algorithme.</alert>
+=====La coupe=====
+
+On va chercher la ligne dont la valeur de la **<fc #008000>partie fractionnaire</fc>** du coefficient de la dernière colonne est la plus **<fc #ff0000>élevée</fc>**. La meilleure façon de vous expliquer ce qu'est la partie fractionnaire est d'utiliser quelques exemples :
+^  Nombre  ^  Partie entière  ^  Partie fractionnaire  ^
+|  10.4  |  10  |  0.4  |
+|  $\frac{13}{9}$  |  1  |  $\frac{4}{9}$  |
+|  -2.4  |  -3  |  0.6  |
+|  -$\frac{1}{5}$  |  -1  |  $\frac{4}{5}$  |
+Comme vous l'aurez remarqué, un nombre est la **somme** de sa partie entière et de sa partie fractionnaire, la partie fractionnaire étant comprise **entre 0 et 1**.
+
+Dans notre cas, la partie fractionnaire de la première ligne  du tableau est **<fc #008000>$\frac{9}{20}$</fc>** et celle de la seconde ligne est $\frac{1}{5}$ donc nous allons ajouter une **<fc #ff0000>coupe</fc>** de la première ligne.
+
+__En Python :__
+<code python>
+#Recherche de la plus grande partie fractionnaire
+indiceFracMax=indiceCoefsFrac[0]
+fracMax=tabCoupe[indiceCoefsFrac[0],-1]%1
+for i in indiceCoefsFrac:
+    frac=tabCoupe[i,-1]%1
+    if frac>fracMax:
+        indiceFracMax=i
+        fracMax=frac
+</code>
+
+__En Matlab :__
+<code matlab>
+%Recherche de la plus grande partie fractionnaire
+indiceFracMax=indiceCoefsFrac(1)
+fracMax=mod(tabCoupe(indiceCoefsFrac(1),end),1)
+for i=indiceCoefsFrac
+    frac=mod(tabCoupe(i,end),1)
+    if frac>fracMax
+        indiceFracMax=i
+        fracMax=frac
+    endif
+endfor
+</code>
+
+Ajouter une **<fc #ff0000>coupe</fc>** consiste à rajouter une **<fc #008000>contrainte</fc>** constituée de **<fc #ff0000>l'opposée</fc>** des parties **fractionnaires** de la ligne que l'on a choisie de couper. On va donc rajouter à notre tableau la colonne $z_1$ et la ligne coupe :
+
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  <fc #ff0000>$z_1$</fc>  | |
+^  $f$  |  -30  |  0  |  -30  |  0  |  <fc #ff0000>0</fc>  |  -2070  |
+^  $x_2$  |  $\frac{3}{10}$  |  1  |  $\frac{1}{20}$  |  0  |  <fc #ff0000>0</fc>  |  $\frac{69}{20}$  |
+^  $y_2$  |  $\frac{4}{5}$  |  0  |  -$\frac{1}{5}$  |  1  |  <fc #ff0000>0</fc>  |  $\frac{26}{5}$  |
+^  <fc #ff0000>$z_1$</fc>  |  <fc #ff0000>-$\frac{3}{10}$</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>-$\frac{1}{20}$</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>1</fc>  |  <fc #ff0000>-$\frac{9}{20}$</fc>  |
+
+__En Python :__
+<code python>
+#Insertion de la ligne coupe
+ligneCoupe=-(tabCoupe[[indiceFracMax],:]%1)
+tabCoupe=np.concatenate((tabCoupe,ligneCoupe))
+#Insertion de la colonne de la nouvelle variable z
+tabGauche=tabCoupe[:,:-1]
+tabMilieu=np.zeros((tabCoupe.shape[0],1))
+tabMilieu[-1,0]=1
+tabDroite=tabCoupe[:,-1:]
+tabCoupe=np.concatenate((tabGauche,tabMilieu,tabDroite),axis=1)
+</code>
+
+__En Matlab :__
+<code matlab>
+%Insertion de la ligne coupe
+ligneCoupe=-mod(tabCoupe(indiceFracMax,:),1)
+tabCoupe=[tabCoupe;ligneCoupe]
+%Insertion de la colonne de la nouvelle variable z
+tabGauche=tabCoupe(:,1:end-1)
+tabMilieu=zeros(size(tabCoupe)(1),1)
+tabMilieu(end,1)=1
+tabDroite=tabCoupe(:,end)
+tabCoupe=[tabGauche,tabMilieu,tabDroite]
+</code>
+=====Choix de la variable sortante=====
+
+$z_1$ est choisie **<fc #ff0000>systématiquement</fc>** en tant que variable **sortante** :
+
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $z_1$  | |
+^  $f$  |  -30  |  0  |  -30  |  0  |  0  |  -2070  |
+^  $x_2$  |  $\frac{3}{10}$  |  1  |  $\frac{1}{20}$  |  0  |  0  |  $\frac{69}{20}$  |
+^  $y_2$  |  $\frac{4}{5}$  |  0  |  -$\frac{1}{5}$  |  1  |  0  |  $\frac{26}{5}$  |
+^  <fc #ff0000>$z_1$</fc>  |  -$\frac{3}{10}$  |  0  |  -$\frac{1}{20}$  |  0  |  1  |  -$\frac{9}{20}$  |
+
+__En Python :__
+<code python>
+#Choix de la variable sortante
+indiceVarSortante=tabCoupe.shape[0]-1
+</code>
+
+__En Matlab :__
+<code matlab>
+%Choix de la variable sortante
+indiceVarSortante=size(tabCoupe)(1)
+</code>
+=====Choix de la variable entrante=====
+
+Au lieu de comparer les rapports des coefficients sur les lignes comme on en a l'habitude, on va comparer les **rapports** des coefficients des **<fc #008000>colonnes</fc>** et prendre le plus **<fc #ff0000>faible</fc>** :
+| ^  <fc #ff0000>$x_1$</fc>  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $z_1$  | |
+^  $f$  |  <fc #008000>-30</fc>  |  0  |  <fc #008000>-30</fc>  |  0  |  0  |  -2070  |
+^  $x_2$  |  $\frac{3}{10}$  |  1  |  $\frac{1}{20}$  |  0  |  0  |  $\frac{69}{20}$  |
+^  $y_2$  |  $\frac{4}{5}$  |  0  |  -$\frac{1}{5}$  |  1  |  0  |  $\frac{26}{5}$  |
+^  <fc #ff0000>$x_1$</fc>  |  <fc #008000>-$\frac{3}{10}$</fc>  |  0  |  <fc #008000>-$\frac{1}{20}$</fc>  |  0  |  1  |  -$\frac{9}{20}$  |
+$\frac{-30}{-\frac{3}{10}}=$ <fc #ff0000>100</fc> et $\frac{-30}{-\frac{1}{20}}=600$ donc la variable entrante est $x_1$.
+
+__En Python :__
+<code python>
+#Choix de la variable entrante
+rapportMin=np.inf
+for i in range(tabCoupe.shape[1]-1):
+    if tabCoupe[indiceVarSortante,i]*tabCoupe[0,i]!=0:
+        rapport=tabCoupe[0,i]/tabCoupe[indiceVarSortante,i]
+        if rapport<rapportMin:
+            indiceVarEntrante=i
+            rapportMin=rapport
+</code>
+
+__En Matlab :__
+<code matlab>
+%Choix de la variable entrante
+rapportMin=Inf
+for i=1:size(tabCoupe)(2)-1
+    if tabCoupe(indiceVarSortante,i)*tabCoupe(1,i)!=0
+        rapport=tabCoupe(1,i)/tabCoupe(indiceVarSortante,i)
+        if rapport<rapportMin
+            indiceVarEntrante=i
+            rapportMin=rapport
+        endif
+    endif
+endfor
+</code>
+=====Normalisation du tableau=====
+
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $z_1$  | |
+^  $f$  |  0  |  0  |  -25  |  0  |  -100  |  -2025  |
+^  $x_2$  |  0  |  1  |  0  |  0  |  1  |  3  |
+^  $y_2$  |  0  |  0  |  -$\frac{1}{3}$  |  1  |   $\frac{8}{3}$  |  4  |
+^  $x_1$  |  1  |  0  |  $\frac{1}{6}$  |  0  |  -$\frac{10}{3}$  |  $\frac{3}{2}$  |
+On remarque qu'on a **<fc #ff0000>réduit</fc>** la valeur de l'optimum mais que $x_2$ est maintenant **<fc #008000>entier</fc>** ! On est sur la bonne voie !
+
+__En Python :__
+<code python>
+#Coefficient principal à 1 et coefficients secondaires à 0
+tabCoupe=normalisation(tabCoupe,indiceVarEntrante,indiceVarSortante)
+</code>
+
+__En Matlab :__
+<code matlab>
+%Coefficient principal à 1 et coefficients secondaires à 0
+tabCoupe=normalisation(tabCoupe,indiceVarEntrante,indiceVarSortante)
+</code>
+
+On termine alors l'itération avec le **stockage** de la position des variables de la dernière colonne et on repart à la **recherche** de coefficients **non entiers** dans la dernière colonne :
+
+__En Python :__
+<code python>
+#Stockage de la position des différentes variables
+x=np.concatenate((x,np.array([indiceVarEntrante])))
+#On repère les coefficients non entiers de la dernière colonne
+indiceCoefsFrac=[]
+for i in range(1,tabCoupe.shape[0]):
+    if np.around(tabCoupe[i,-1]%1,5)!=0 and np.around(tabCoupe[i,-1]%1,5)!=1:
+        indiceCoefsFrac.append(i)
+</code>
+
+__En Matlab :__
+<code matlab>
+    %Stockage de la position des différentes variables
+    x(end+1)=indiceVarEntrante
+    %On vérifie s'il y a des coefficients non entiers sur la dernière colonne
+    indiceCoefsFrac=[]
+    for i=2:size(tabCoupe)(1)
+        if round(100000*mod(tabCoupe(i,end),1))/100000!=0 && round(100000*mod(tabCoupe(i,end),1))/100000!=1
+            indiceCoefsFrac(end+1)=i
+        endif
+    endfor
+endwhile
+</code>
+=====Seconde itération=====
+
+La seule ligne **éligible** est la troisième (les coefficients en dernière colonne des autres lignes sont entiers). On rajoute la colonne $z_2$ et la ligne coupe :
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $z_1$  ^  $z_2$  | |
+^  $f$  |  0  |  0  |  -25  |  0  |  -100  |  0  |  -2025  |
+^  $x_2$  |  0  |  1  |  0  |  0  |  1  |  0  |  3  |
+^  $y_2$  |  0  |  0  |  -$\frac{1}{3}$  |  1  |   $\frac{8}{3}$  |  0  |  4  |
+^  $x_1$  |  1  |  0  |  $\frac{1}{6}$  |  0  |  -$\frac{10}{3}$  |  0  |  $\frac{3}{2}$  |
+^  $z_2$  |  0  |  0  |  -$\frac{1}{6}$  |  0  |  -$\frac{2}{3}$  |  1  |  -$\frac{1}{2}$  |
+
+La variable sortante est **automatiquement** $z_2$.
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $z_1$  ^  $z_2$  | |
+^  $f$  |  0  |  0  |  -25  |  0  |  -100  |  0  |  -2025  |
+^  $x_2$  |  0  |  1  |  0  |  0  |  1  |  0  |  3  |
+^  $y_2$  |  0  |  0  |  -$\frac{1}{3}$  |  1  |   $\frac{8}{3}$  |  0  |  4  |
+^  $x_1$  |  1  |  0  |  $\frac{1}{6}$  |  0  |  -$\frac{10}{3}$  |  0  |  $\frac{3}{2}$  |
+^  <fc #ff0000>$z_2$</fc>  |  0  |  0  |  -$\frac{1}{6}$  |  0  |  -$\frac{2}{3}$  |  1  |  -$\frac{1}{2}$  |
+
+$\frac{-25}{-\frac{1}{6}}=$ <fc #ff0000>150</fc> et $\frac{-100}{-\frac{2}{3}}=150$ donc la variable entrante est $y_1$ (l'autre aurait aussi été correcte mais par convention on choisit la colonne de plus faible indice) :
+| ^  $x_1$  ^  $x_2$  ^  <fc #ff0000>$y_1$</fc>  ^  $y_2$  ^  $z_1$  ^  $z_2$  | |
+^  $f$  |  0  |  0  |  -25  |  0  |  -100  |  0  |  -2025  |
+^  $x_2$  |  0  |  1  |  0  |  0  |  1  |  0  |  3  |
+^  $y_2$  |  0  |  0  |  -$\frac{1}{3}$  |  1  |   $\frac{8}{3}$  |  0  |  4  |
+^  $x_1$  |  1  |  0  |  $\frac{1}{6}$  |  0  |  -$\frac{10}{3}$  |  0  |  $\frac{3}{2}$  |
+^  <fc #ff0000>$y_1$</fc>  |  0  |  0  |  -$\frac{1}{6}$  |  0  |  -$\frac{2}{3}$  |  1  |  -$\frac{1}{2}$  |
+
+On **normalise** le tableau :
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $z_1$  ^  $z_2$  | |
+^  $f$  |  0  |  0  |  0  |  0  |  0  |  -150  |  -1950  |
+^  $x_2$  |  0  |  1  |  0  |  0  |  1  |  0  |  3  |
+^  $y_2$  |  0  |  0  |  0  |  1  |   4  |  0  |  5  |
+^  $x_1$  |  1  |  0  |  0  |  0  |  -4  |  0  |  1  |
+^  $y_1$  |  0  |  0  |  1  |  0  |  4  |  -6  |  3  |
+
+=====Résultat final et code complet=====
+
+On trouve donc un revenu optimum de 1950 **<fc #ffa500>pièces d'or</fc>** en fabriquant 1 **<fc #008000>paire de boucles</fc>** d'oreilles et 3 **<fc #008000>colliers</fc>**. Il s'agit, bien sûr, d'un optimum **<fc #ff0000>inférieur</fc>** à celui obtenu avec des nombres non entiers car on a rajouté une contrainte à chaque coupe.
+
+<alert info>**Info :** vous trouverez le code complet [[https://github.com/LlamasPartan/Optimisation/tree/master/Simplexe/M%C3%A9thode%20des%20coupes| ici]].</alert>

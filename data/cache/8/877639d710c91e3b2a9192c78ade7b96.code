@@ -1,0 +1,4 @@
+library<span class="br0">&#40;</span>imager<span class="br0">&#41;</span>
+&nbsp;
+img <span class="sy0">&lt;</span>- load.<span class="me1">image</span><span class="br0">&#40;</span><span class="st0">&quot;raton_laveur.png&quot;</span><span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>img<span class="br0">&#41;</span>

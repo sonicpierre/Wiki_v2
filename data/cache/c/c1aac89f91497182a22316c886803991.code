@@ -1,0 +1,3 @@
+install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">'libcoin'</span><span class="sy0">,</span> dependencies <span class="sy0">=</span> T<span class="br0">&#41;</span>
+install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">'C50'</span><span class="sy0">,</span> dependencies <span class="sy0">=</span> T<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span><span class="st0">'C50'</span><span class="br0">&#41;</span>

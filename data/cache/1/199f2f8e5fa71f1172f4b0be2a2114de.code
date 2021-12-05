@@ -1,0 +1,3 @@
+library<span class="br0">&#40;</span>dbscan<span class="br0">&#41;</span>
+hd <span class="sy0">=</span> hdbscan<span class="br0">&#40;</span>data<span class="sy0">,</span> minPts <span class="sy0">=</span> <span class="nu0">12</span><span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>hd<span class="sy0">,</span> show_flat <span class="sy0">=</span> T<span class="br0">&#41;</span>

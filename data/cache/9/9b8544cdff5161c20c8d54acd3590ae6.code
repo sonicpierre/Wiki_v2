@@ -1,0 +1,1 @@
+target_compile_options<span class="sy0">(</span><span class="re0">${CMAKE_PROJECT_NAME}</span> /Wall<span class="sy0">)</span>

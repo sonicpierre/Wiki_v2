@@ -1,0 +1,2 @@
+<span class="co1">%Coefficient principal à 1 et coefficients secondaires à 0</span>
+tabDelta=normalisation<span class="br0">&#40;</span>tabDelta,indiceVarEntrante,indiceVarSortante<span class="br0">&#41;</span>

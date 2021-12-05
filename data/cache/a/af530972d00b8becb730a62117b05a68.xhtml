@@ -1,0 +1,317 @@
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Adichotomie&amp;media=cpp:scier.jpg" class="media" title="cpp:scier.jpg"><img src="/lib/exe/fetch.php?w=500&amp;tok=2cd38b&amp;media=cpp:scier.jpg" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+La dichotomie est une des méthodes les plus connues en optimisation, nous allons détailler ici l&#039;implémentation de son algorithme normal et récursif en les commentant. 
+</p>
+
+<h2 class="sectionedit1" id="declarer_la_fonction_a_traiter">Déclarer la fonction à traiter</h2>
+<div class="level2">
+
+<p>
+Commençons pas déclarer la fonction, ce qui nous permettra de la manipuler et travailler avec :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1"># Definition fonction</span>
+f <span class="sy0">=</span> <span class="kw1">lambda</span> x: x**<span class="nu0">2</span> - <span class="nu0">10</span></pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab">f=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/inline.html"><span class="kw2">inline</span></a><span class="br0">&#40;</span><span class="co2">'x.*x -10;'</span><span class="br0">&#41;</span>; <span class="co1">%definition de la fonction</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Adichotomie&amp;media=cpp:fonctioaoptimiser.png" class="media" title="cpp:fonctioaoptimiser.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=779e3b&amp;media=cpp:fonctioaoptimiser.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;D\u00e9clarer la fonction \u00e0 traiter&quot;,&quot;hid&quot;:&quot;declarer_la_fonction_a_traiter&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;202-576&quot;} -->
+<h2 class="sectionedit2" id="la_dichotomie">La dichotomie</h2>
+<div class="level2">
+
+<p>
+Vous cherchez la fève dans la galette des rois et cette année vous avez décidé de maximiser vous chances en utilisant les Mathématiques. Précisons aussi que depuis la naissance, vous pouvez présentir dans quelle moitié de la galette se trouve la fève.
+</p>
+
+<p>
+Vous voulez bien évidemment ne pas abîmer le gateau pour que votre belle mère ait sa part. Une technique simple pour arriver à ce résultat est de couper le gateau en deux, et de selectionner la moitié qui contient la fève. Oubliez ensuite la partie sans fève du gateau et recoupez la partie qui nous intèresse en deux. En réitèrant ce procédé, vous serez sûr d&#039;arriver rapidement à trouver la part de galette qui contient la fève, sans avoir à saccager toute la galette. 
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La dichotomie&quot;,&quot;hid&quot;:&quot;la_dichotomie&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:2,&quot;range&quot;:&quot;577-1352&quot;} -->
+<h3 class="sectionedit3" id="theorie">Théorie</h3>
+<div class="level3">
+
+<p>
+<a href="/lib/exe/fetch.php?media=cpp:zeromod.png" class="media" title="cpp:zeromod.png"><img src="/lib/exe/fetch.php?w=300&amp;tok=c1f746&amp;media=cpp:zeromod.png" class="mediacenter" alt="" width="300" /></a>
+</p>
+
+<p>
+Cette méthode s&#039;appelle la dichotomie. On recherche en fait le zéro de notre fonction (la fève), sur un intervalle réel (la galette) sans le parcourir en entier, pour cela on divise l&#039;intervalle en deux à chaque itération (coup de couteau) et on ne garde que le sous-intervalle contenant notre zéro. Cette algorithme s&#039;appuie directement sur le <a href="https://fr.wikipedia.org/wiki/Th%C3%A9or%C3%A8me_des_valeurs_interm%C3%A9diaires" class="urlextern" title="https://fr.wikipedia.org/wiki/Th%C3%A9or%C3%A8me_des_valeurs_interm%C3%A9diaires" rel="nofollow">théorème des valeurs intermédiaires</a>. 
+</p>
+
+<p>
+<div class='alert alert-info'><strong>Info :</strong> Le théorème des valeurs intermédiaires n&#039;est applicable que pour les fonctions continues sur [$a$;$b$]. Pour vérifier simplement qu&#039;une fonction est continue on peut vérifier si elle est dérivale sur interval</div>
+</p>
+
+<p>
+<strong>Algorithme associé :</strong>
+</p>
+<pre class="code">Précondition : il existe un unique m, zéro de la fonction f, sur l&#039;intervalle [a,b]
+PostCondition : la fonction doit renvoyer ce zéro avec une précision epsilon
+
+Si f(a) * f(b) &gt; 0 alors  //TVI non applicable
+    Retourner None
+ Fin Si
+Tant que (b - a) &gt; ε 
+    m ← (a + b) / 2
+    Si (f(a)*f(m) ≤ 0) alors
+       b ← m
+    sinon
+       a ← m
+    Fin Si
+ Fin Tant que</pre>
+
+<p>
+<em class="u"><strong>Source</strong></em>: 
+<a href="https://fr.wikipedia.org/wiki/M%C3%A9thode_de_dichotomie#:~:text=La%20m%C3%A9thode%20de%20dichotomie%20ou,un%20z%C3%A9ro%20de%20la%20fonction." class="urlextern" title="https://fr.wikipedia.org/wiki/M%C3%A9thode_de_dichotomie#:~:text=La%20m%C3%A9thode%20de%20dichotomie%20ou,un%20z%C3%A9ro%20de%20la%20fonction." rel="nofollow">Algorithme dichotomie wikipedia</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Th\u00e9orie&quot;,&quot;hid&quot;:&quot;theorie&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:3,&quot;range&quot;:&quot;1353-2753&quot;} -->
+<h3 class="sectionedit4" id="dichotomie_classique">Dichotomie classique</h3>
+<div class="level3">
+
+<p>
+<em class="u"><strong>Rappels:</strong></em>
+</p>
+<div class="table sectionedit5"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0"> Variable</td><th class="col1 centeralign">  Signification  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">     a    </td><td class="col1 centeralign">       borne inférieur     </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">        b    </td><td class="col1 centeralign">    borne supérieur  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">        w   </td><td class="col1 centeralign">   nouvelle borne, moyenne des deux anciennes bornes  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">        $\epsilon$    </td><td class="col1 centeralign">     précision   </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:5,&quot;range&quot;:&quot;2801-3025&quot;} -->
+</div>
+
+<h4 id="verifier_la_condition_du_tvi">Vérifier la condition du TVI</h4>
+<div class="level4">
+
+<p>
+Avant toute chose codons une fonction qui permet de vérifier si les conditions du TVI sont respectées :
+</p>
+
+<p>
+<em class="u">En Python:</em>
+</p>
+<pre class="code python"><span class="kw1">def</span> TVI<span class="br0">&#40;</span>f<span class="sy0">,</span> a<span class="sy0">,</span> b<span class="br0">&#41;</span>:
+    <span class="kw1">return</span> <span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>*f<span class="br0">&#40;</span>b<span class="br0">&#41;</span><span class="sy0">&lt;=</span><span class="nu0">0</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En Matlab:</em>
+</p>
+<pre class="code matlab"><span class="kw1">function</span> <span class="br0">&#91;</span>y<span class="br0">&#93;</span> = TVI<span class="br0">&#40;</span>a, b<span class="br0">&#41;</span>
+  y = <span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>.*f<span class="br0">&#40;</span>b<span class="br0">&#41;</span> &lt;=<span class="nu0">0</span><span class="br0">&#41;</span>;
+endfunction</pre>
+
+</div>
+
+<h4 id="corps_de_l_algorithme">Corps de l&#039;algorithme</h4>
+<div class="level4">
+
+<p>
+Maintenant que nous avons tous les outils nous pouvons commencer à traduire le corps de l&#039;algorithme :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">def</span> dicho<span class="br0">&#40;</span>f<span class="sy0">,</span> a<span class="sy0">,</span> b<span class="sy0">,</span> epsilon<span class="br0">&#41;</span>:
+    <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw1">not</span> TVI<span class="br0">&#40;</span>f<span class="sy0">,</span> a<span class="sy0">,</span> b<span class="br0">&#41;</span><span class="br0">&#41;</span>: <span class="co1">#TVI non applicable</span>
+        <span class="kw1">return</span> <span class="kw2">None</span>
+    <span class="kw1">else</span>:
+        u<span class="sy0">,</span> v <span class="sy0">=</span> <span class="kw2">float</span><span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw2">float</span><span class="br0">&#40;</span>b<span class="br0">&#41;</span> <span class="co1">#transforme a et b en réels</span>
+        <span class="kw1">while</span> <span class="kw2">abs</span><span class="br0">&#40;</span>v - u<span class="br0">&#41;</span> <span class="sy0">&gt;</span> <span class="nu0">2</span> * epsilon:
+            w <span class="sy0">=</span> <span class="br0">&#40;</span>u + v<span class="br0">&#41;</span> / <span class="nu0">2</span>
+            <span class="kw1">if</span> f<span class="br0">&#40;</span>u<span class="br0">&#41;</span> * f<span class="br0">&#40;</span>w<span class="br0">&#41;</span> <span class="sy0">&lt;=</span> <span class="nu0">0</span>:
+                v <span class="sy0">=</span> w
+            <span class="kw1">else</span>:
+                u <span class="sy0">=</span> w
+        <span class="kw1">return</span> <span class="br0">&#40;</span>u + v<span class="br0">&#41;</span> / <span class="nu0">2</span>
+    <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;La valeur du zéro de cette fonction sur (-10,10) à 1e-3 pret est:&quot;</span><span class="sy0">,</span>dicho<span class="br0">&#40;</span>f<span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">10</span><span class="sy0">,</span> <span class="nu0">1e-3</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;</pre>
+
+<p>
+<em class="u">En Matlab:</em>
+</p>
+<pre class="code matlab"><span class="kw1">function</span> <span class="br0">&#91;</span>m<span class="br0">&#93;</span> = dicho<span class="br0">&#40;</span>a,b,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a><span class="br0">&#41;</span>
+  <span class="kw1">if</span> <span class="br0">&#40;</span>TVI<span class="br0">&#40;</span>a,b<span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="kw1">while</span> <span class="br0">&#40;</span>b-a &gt;= <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a><span class="br0">&#41;</span>
+        m=<span class="br0">&#40;</span>a+b<span class="br0">&#41;</span>/<span class="nu0">2</span>;
+        <span class="kw1">if</span> f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>*f<span class="br0">&#40;</span>m<span class="br0">&#41;</span>&lt;<span class="nu0">0</span>
+          b=m;
+        <span class="kw1">else</span>
+          a=m;
+        endif
+    endwhile
+  <span class="kw1">else</span> 
+    <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span><span class="co2">'TVI non applicable'</span><span class="br0">&#41;</span>
+    <span class="kw1">return</span> 
+  endif
+&nbsp;
+endfunction
+&nbsp;
+##Affichage
+<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span><span class="co2">'Le zéro de la fonction f sur [0;10] est:'</span><span class="br0">&#41;</span>,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span>dicho<span class="br0">&#40;</span><span class="nu0">0</span>,<span class="nu0">10</span>,1e-12<span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+<p>
+ <strong>Résultats :</strong>
+</p>
+
+<p>
+Chaque trait représente la découpe de l&#039;intervalle, correspondant à l&#039;itération en cours, à la moitié.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Adichotomie&amp;media=cpp:resultatdico.png" class="media" title="cpp:resultatdico.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=59be19&amp;media=cpp:resultatdico.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+<div class="table sectionedit6"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0 leftalign">              </td><th class="col1 leftalign"> Temps d&#039;exécution                  </th><th class="col2 leftalign"> Complexité          </th><th class="col3"> Nombre d&#039;itérations </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 leftalign"> Dichotomie Classique      </th><td class="col1 centeralign">          0.23 secondes           </td><td class="col2 centeralign">                logarithmique ($log_2(b-a))$               </td><td class="col3 centeralign">                 42 (pour a=0, b=10)                    </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:6,&quot;range&quot;:&quot;4541-4823&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Dichotomie classique&quot;,&quot;hid&quot;:&quot;dichotomie_classique&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:4,&quot;range&quot;:&quot;2754-4823&quot;} -->
+<h3 class="sectionedit7" id="dichotomie_recursive">Dichotomie récursive</h3>
+<div class="level3">
+
+<p>
+<br/>
+
+<a href="/lib/exe/detail.php?id=cpp%3Adichotomie&amp;media=cpp:recursif.jpg" class="media" title="cpp:recursif.jpg"><img src="/lib/exe/fetch.php?w=350&amp;tok=885023&amp;media=cpp:recursif.jpg" class="mediacenter" alt="" width="350" /></a>
+</p>
+
+<p>
+On appelle fonction récursive toute fonction qui s&#039;appelle elle même au moins une fois. La récursivité même si elle complexifie parfois la compréhension d&#039;un algorithme peut le rendre plus efficace et plus rapide. Pour les algorithmes de tri on remarque que les tris récursifs sont plus efficaces que les les tri “normaux”.
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.lucaswillems.com/fr/articles/17/recursivite-accelerer-algorithmes" class="urlextern" title="https://www.lucaswillems.com/fr/articles/17/recursivite-accelerer-algorithmes" rel="nofollow">https://www.lucaswillems.com/fr/articles/17/recursivite-accelerer-algorithmes</a></div>
+</li>
+</ul>
+
+<p>
+<strong>Algorithme associé :</strong>
+</p>
+<pre class="code">Précondition : il existe un unique c, zéro de la fonction f, sur l&#039;intervalle [a,b]
+PostCondition : la fonction doit renvoyer ce zéro avec une précision prec (ou epsilon)
+
+Fonction dicho_rec(Entrée fonction f,entrée:sortie entier borne_a, entree/sortie entier borne_b,entrée entier prec):
+    
+    Variable
+        entier c //milieu de a et b
+    Début
+        Si borne_b-borne_a&lt;=prec faire
+            (borne_a+borne_b)/2 -&gt; dicho_rec
+        Sinon
+            (borne_a+borne_b)/2-&gt; c
+        Fin Si
+        
+        Si f(borne_a)*f(c) &lt;= 0
+           dicho_rec(f,borne_a,c,prec)-&gt; dicho_rec
+        Sinon
+           dicho_rec(f,c,borne_b,prec) -&gt; dicho_rec
+        Fin Si
+    Fin</pre>
+
+<p>
+<br/>
+
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">def</span> dicho_rec<span class="br0">&#40;</span>f<span class="sy0">,</span>a<span class="sy0">,</span> b<span class="sy0">,</span>prec<span class="br0">&#41;</span>:
+    a<span class="sy0">,</span> b <span class="sy0">=</span> <span class="kw2">float</span><span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw2">float</span><span class="br0">&#40;</span>b<span class="br0">&#41;</span> <span class="co1">#convertion bornes a et b  en réels</span>
+    <span class="kw1">if</span> b-a<span class="sy0">&lt;=</span>prec: <span class="co1">#condition d'arret</span>
+        <span class="kw1">return</span> <span class="br0">&#40;</span>a+b<span class="br0">&#41;</span>/<span class="nu0">2</span>
+    <span class="kw1">else</span>:
+        c <span class="sy0">=</span> <span class="br0">&#40;</span>a+b<span class="br0">&#41;</span>/<span class="nu0">2</span>
+&nbsp;
+    <span class="kw1">if</span> f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>*f<span class="br0">&#40;</span>c<span class="br0">&#41;</span> <span class="sy0">&lt;=</span> <span class="nu0">0</span>: <span class="co1">#si on peut appliquer le TVI entre a et c, c remplace b</span>
+        <span class="kw1">return</span> dicho_rec<span class="br0">&#40;</span>f<span class="sy0">,</span>a<span class="sy0">,</span>c<span class="sy0">,</span>prec<span class="br0">&#41;</span>
+    <span class="kw1">else</span>: <span class="co1">#sinon c remplace a</span>
+        <span class="kw1">return</span> dicho_rec<span class="br0">&#40;</span>f<span class="sy0">,</span>c<span class="sy0">,</span>b<span class="sy0">,</span>prec<span class="br0">&#41;</span>
+<span class="co1"># Résultats</span>
+<span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;La valeur du zéro de cette fonction sur (a,b) est:&quot;</span><span class="sy0">,</span> dicho_rec<span class="br0">&#40;</span>f<span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">1e-12</span><span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code matlab">#Fonction:
+<span class="kw1">function</span> <span class="br0">&#91;</span>y<span class="br0">&#93;</span>= dicho_rec<span class="br0">&#40;</span>a,b, <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a><span class="br0">&#41;</span>
+&nbsp;
+  c=<span class="nu0">0</span>;
+  <span class="kw1">if</span> <span class="br0">&#40;</span>b-a&lt;<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a><span class="br0">&#41;</span>
+    y=<span class="br0">&#40;</span>a+b<span class="br0">&#41;</span>./<span class="nu0">2</span>;
+  <span class="kw1">else</span>
+    c = <span class="br0">&#40;</span>a+b<span class="br0">&#41;</span>./<span class="nu0">2</span>;
+  endif
+&nbsp;
+  <span class="kw1">if</span> <span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>.*f<span class="br0">&#40;</span>c<span class="br0">&#41;</span>&lt;<span class="nu0">0</span><span class="br0">&#41;</span>
+    y = dicho_rec<span class="br0">&#40;</span>a,c, <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a><span class="br0">&#41;</span>;
+  <span class="kw1">else</span> 
+    y = dicho_rec<span class="br0">&#40;</span>c,b, <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a><span class="br0">&#41;</span>;
+  endif
+&nbsp;
+endfunction
+&nbsp;
+resultat = dicho<span class="br0">&#40;</span><span class="nu0">1</span>,<span class="nu0">10</span>,1e-12<span class="br0">&#41;</span>;
+<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span><span class="co2">'racine'</span><span class="br0">&#41;</span>,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span>resultat<span class="br0">&#41;</span></pre>
+
+<p>
+<br/>
+
+</p>
+<div class="table sectionedit8"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0 leftalign">              </td><th class="col1 leftalign"> Temps d&#039;exécution                  </th><th class="col2 leftalign"> Complexité          </th><th class="col3"> Nombre d&#039;itérations </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 leftalign"> Dichotomie Récursive     </th><td class="col1 centeralign">          0.0017 secondes           </td><td class="col2 centeralign">                logarithmique ($log_2(b-a))$               </td><td class="col3 centeralign">                 42 (pour a=0, b=10)                    </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table2&quot;,&quot;secid&quot;:8,&quot;range&quot;:&quot;6897-7181&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Dichotomie r\u00e9cursive&quot;,&quot;hid&quot;:&quot;dichotomie_recursive&quot;,&quot;codeblockOffset&quot;:7,&quot;secid&quot;:7,&quot;range&quot;:&quot;4824-&quot;} -->

@@ -1,0 +1,13 @@
+library<span class="br0">&#40;</span>Metrics<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>dplyr<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>glmnet<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>caret<span class="br0">&#41;</span>
+&nbsp;
+data <span class="sy0">&lt;</span>- Filter<span class="br0">&#40;</span><span class="kw1">is</span>.<span class="me1">numeric</span><span class="sy0">,</span> data<span class="br0">&#41;</span><span class="co1">#Filtre des variables numériques</span>
+&nbsp;
+ridge <span class="sy0">&lt;</span>- glmnet<span class="br0">&#40;</span>X_train<span class="sy0">,</span> y_train<span class="sy0">,</span> alpha <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">,</span> <span class="kw1">lambda</span> <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">,</span> standardize <span class="sy0">=</span> F<span class="br0">&#41;</span><span class="co1">#Définition du modèle de régression Ridge</span>
+<span class="co1">#Le paramètre alpha = 0 définit la régression Ridge, lambda = 1 est la constante de contrôle de la quantité de régularisation et standardize = F </span>
+<span class="co1">#définit si les données doivent être normalisées (ici c'est non car elles sont toutes à la même échelle).</span>
+&nbsp;
+ridge_pred <span class="sy0">&lt;</span>- predict<span class="br0">&#40;</span>ridge<span class="sy0">,</span> s <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">,</span> newx <span class="sy0">=</span> X_test<span class="br0">&#41;</span><span class="co1">#Prédictions</span>
+mse<span class="br0">&#40;</span>y_test<span class="sy0">,</span> ridge_pred<span class="br0">&#41;</span><span class="co1">#Evaluation du modèle</span>

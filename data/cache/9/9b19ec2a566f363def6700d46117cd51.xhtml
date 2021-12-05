@@ -1,0 +1,17 @@
+
+<h1 class="sectionedit1" id="trucs_astuces_en_bash">Trucs &amp; Astuces en Bash</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Trucs &amp; Astuces en Bash&quot;,&quot;hid&quot;:&quot;trucs_astuces_en_bash&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-39&quot;} -->
+<h2 class="sectionedit2" id="afficher_tout_les_arguments_passes_en_parametre_du_script">Afficher tout les arguments passés en paramètre du script</h2>
+<div class="level2">
+<pre class="code bash"><span class="co0">#!/bin/bash</span>
+&nbsp;
+<span class="kw1">while</span> <span class="kw3">test</span> <span class="re4">$#</span> <span class="re5">-gt</span> <span class="nu0">0</span> ; <span class="kw1">do</span>
+        <span class="kw3">echo</span> <span class="re4">$1</span>
+        <span class="kw3">shift</span>
+<span class="kw1">done</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Afficher tout les arguments pass\u00e9s en param\u00e8tre du script&quot;,&quot;hid&quot;:&quot;afficher_tout_les_arguments_passes_en_parametre_du_script&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;40-&quot;} -->

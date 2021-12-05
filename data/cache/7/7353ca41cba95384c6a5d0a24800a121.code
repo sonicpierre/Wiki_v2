@@ -1,0 +1,3 @@
+<span class="kw1">function</span> <span class="br0">&#91;</span>y<span class="br0">&#93;</span> = df<span class="br0">&#40;</span>x<span class="br0">&#41;</span>
+  numderivative<span class="br0">&#40;</span>f,<span class="nu0">3</span><span class="br0">&#41;</span>
+endfunction

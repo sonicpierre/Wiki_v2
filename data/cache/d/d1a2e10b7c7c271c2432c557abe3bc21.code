@@ -1,0 +1,5 @@
+<span class="kw1">from</span> sklearn.<span class="me1">linear_model</span> <span class="kw1">import</span> LogisticRegression
+&nbsp;
+model <span class="sy0">=</span> LogisticRegression<span class="br0">&#40;</span>solver<span class="sy0">=</span><span class="st0">'liblinear'</span><span class="br0">&#41;</span>.<span class="me1">fit</span><span class="br0">&#40;</span>X_train<span class="sy0">,</span>y_train<span class="br0">&#41;</span><span class="co1">#Entrainement de l'estimateur avec solver='liblinear' car il est plus adapté aux petits datasets</span>
+y_pred <span class="sy0">=</span> model.<span class="me1">predict</span><span class="br0">&#40;</span>X_test<span class="br0">&#41;</span><span class="co1">#Prédiction sur les données X</span>
+y_prob <span class="sy0">=</span> model.<span class="me1">predict_proba</span><span class="br0">&#40;</span>X_test<span class="br0">&#41;</span><span class="co1">#Prédiction des probabilités d'appartenance</span>

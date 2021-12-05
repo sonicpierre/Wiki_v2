@@ -1,0 +1,12 @@
+ <span class="kw1">def</span> dicho_rec<span class="br0">&#40;</span>f<span class="sy0">,</span>a<span class="sy0">,</span> b<span class="sy0">,</span>prec<span class="br0">&#41;</span>:
+     a<span class="sy0">,</span> b <span class="sy0">=</span> <span class="kw2">float</span><span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw2">float</span><span class="br0">&#40;</span>b<span class="br0">&#41;</span> <span class="co1">#convertion bornes a et b  en réels</span>
+     <span class="kw1">if</span> b-a<span class="sy0">&lt;=</span>prec: <span class="co1">#condition d'arret</span>
+         <span class="kw1">return</span> <span class="br0">&#40;</span>a+b<span class="br0">&#41;</span>/<span class="nu0">2</span>
+     <span class="kw1">else</span>:
+         c <span class="sy0">=</span> <span class="br0">&#40;</span>a+b<span class="br0">&#41;</span>/<span class="nu0">2</span>
+     <span class="kw1">if</span> f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>*f<span class="br0">&#40;</span>c<span class="br0">&#41;</span> <span class="sy0">&lt;=</span> <span class="nu0">0</span>: <span class="co1">#si on peut appliquer le TVI entre a et c, c remplace b</span>
+         <span class="kw1">return</span> dicho_rec<span class="br0">&#40;</span>f<span class="sy0">,</span>a<span class="sy0">,</span>c<span class="sy0">,</span>prec<span class="br0">&#41;</span>
+     <span class="kw1">else</span>: <span class="co1">#sinon c remplace a</span>
+         <span class="kw1">return</span> dicho_rec<span class="br0">&#40;</span>f<span class="sy0">,</span>c<span class="sy0">,</span>b<span class="sy0">,</span>prec<span class="br0">&#41;</span>
+ <span class="co1"># Résultats</span>
+ <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;La valeur du zéro de cette fonction sur (a,b) est:&quot;</span><span class="sy0">,</span> dicho_rec<span class="br0">&#40;</span>f<span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">1e-12</span><span class="br0">&#41;</span><span class="br0">&#41;</span>

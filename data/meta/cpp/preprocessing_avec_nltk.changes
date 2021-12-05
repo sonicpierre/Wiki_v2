@@ -1,0 +1,153 @@
+1592212285	86.216.219.72	C	cpp:preprocessing_avec_nltk	pierrevirgaux			250
+1592213135	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux			186
+1592213614	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Preprocessing avec nltk]		-28
+1592214621	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	Approche du NLP		423
+1592221295	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Nettoyage des données] 		877
+1592222868	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Nettoyage des données] 		0
+1592237259	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Nettoyage des données] 		665
+1592252959	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Nettoyage des données] 		-118
+1592297786	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Nettoyage des données] 		2116
+1592303471	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Preprocessing avec nltk] 		29
+1592314912	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[N_grams] 		1555
+1592320477	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Visualiser les données] 		1441
+1592322421	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Preprocessing avec nltk] 		93
+1592339325	82.64.124.27	e	cpp:preprocessing_avec_nltk	pierrevirgaux	[Preprocessing avec nltk] 		-27
+1592340170	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Preprocessing avec nltk] 		268
+1592340750	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Normalisation du texte] 		143
+1592341374	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Suppression des stopwords] 		321
+1592341615	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Stemming] 		113
+1592341795	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Tokénisation] 		245
+1592341867	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Tokénisation] 		0
+1592342504	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Tokénisation] 		196
+1592342651	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Tokénisation] 		192
+1592342693	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[N_grams] 		110
+1592342714	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[N_grams] 		2
+1592342727	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[N_grams] 		-2
+1592342748	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[N_grams] 		2
+1592343590	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Visualiser les données] 		229
+1592343831	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Visualiser les données] 		222
+1592344264	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Visualiser les données] 		240
+1592344348	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Visualiser les données] 		-59
+1592344413	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Visualiser les données] 		23
+1592344567	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Visualiser les données] 		210
+1592344610	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Normalisation du texte] 		0
+1592344650	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Suppression des stopwords] 		0
+1592344680	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Stemming] 		0
+1592344881	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Visualiser les données] 		-37
+1592345076	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Visualiser les données] 		205
+1592381224	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Corrélation entre mots] 		311
+1592381284	86.216.219.72	e	cpp:preprocessing_avec_nltk	pierrevirgaux	[Corrélation entre mots] 		19
+1592381412	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Corrélation entre mots] 		279
+1592402727	86.216.219.72	e	cpp:preprocessing_avec_nltk	pierrevirgaux	[LDA] 		524
+1592406501	86.216.219.72	e	cpp:preprocessing_avec_nltk	pierrevirgaux	[LDA] 		47
+1592410073	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Tf-IDF] 		1530
+1592410111	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[LDA] 		152
+1592410127	86.216.219.72	e	cpp:preprocessing_avec_nltk	pierrevirgaux	[LDA] 		2
+1592458877	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Tf-IDF] 		-456
+1592458915	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Tf-IDF] 		-19
+1592465064	86.216.219.72	e	cpp:preprocessing_avec_nltk	pierrevirgaux	[Tf-IDF] 		422
+1592465944	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Tf-IDF] 		834
+1592466187	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Tf-IDF] 		212
+1592466594	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[N_grams] 		236
+1592466705	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[N_grams] 		189
+1592466773	86.216.219.72	e	cpp:preprocessing_avec_nltk	pierrevirgaux	[Preprocessing avec nltk] 		69
+1592466877	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Preprocessing avec nltk] 		43
+1592467645	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Tf-IDF et LDA] 		-86
+1592467662	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Tf-IDF] 		-16
+1592467688	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[LDA] 		-954
+1592468068	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Tf-IDF] 		459
+1592474406	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Preprocessing avec nltk] 		3
+1592474420	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Preprocessing avec nltk] 		0
+1592474526	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Nettoyage des données] 		3
+1592474543	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Nettoyage des données] 		-1
+1592474654	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Nettoyage des données] 		-12
+1592474884	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Nettoyage des données] 		12
+1592474951	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Tokénisation] 		2
+1592475046	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Tokénisation] 		16
+1592475329	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Tokénisation] 		0
+1592475435	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Normalisation du texte] 		16
+1592475545	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Suppression des stopwords] 		4
+1592475568	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Suppression des stopwords] 		0
+1592475771	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Stemming] 		18
+1592475824	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Stemming] 		-12
+1592475866	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Stemming] 		-6
+1592476294	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[N_grams] 		2
+1592476366	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[N_grams] 		0
+1592476397	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[N_grams] 		-6
+1592476501	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Visualiser les données] 		-2
+1592476561	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Visualiser les données] 		2
+1592476768	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Visualiser les données] 		0
+1592476826	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Lemmatization] 		80
+1592476968	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Visualiser les données] 		-6
+1592477062	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Corrélation entre mots] 		-23
+1592477104	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Corrélation entre mots] 		1
+1592477154	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Corrélation entre mots] 		4
+1592477215	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Tf-IDF] 		-2
+1592477366	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Tf-IDF] 		11
+1592477510	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Tf-IDF] 		-2
+1592596825	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Preprocessing avec nltk] 		519
+1592650982	82.64.124.27	e	cpp:preprocessing_avec_nltk	pierrevirgaux	[Preprocessing avec nltk] 		-439
+1592651055	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Preprocessing avec nltk] 		-517
+1592654472	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Preprocessing avec nltk] 		153
+1592679638	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux			694
+1593098564	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux			-83
+1593342246	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Nettoyage des données] 		1
+1593342283	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Suppression des stopwords] 		1
+1593342311	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Stemming] 		-2
+1593342360	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Visualiser les données] 		-1
+1593342381	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Corrélation entre mots] 		0
+1593342446	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Tf-IDF] 		1
+1593342471	91.69.217.178	E	cpp:preprocessing_avec_nltk	danilouchouchou	[Conclusion] 		1
+1593423944	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Visualiser les données] 		46
+1593426755	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Visualiser la richesse lexicale] 		1339
+1593426885	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Visualiser la richesse lexicale] 		-2
+1593427070	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Visualiser la richesse lexicale] 		67
+1593427133	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux			24
+1593502888	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux			-23
+1593502975	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux			37
+1593548325	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Preprocessing avec nltk] 		-35
+1593548373	82.64.124.27	E	cpp:preprocessing_avec_nltk	pierrevirgaux			0
+1593680900	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Visualiser la richesse lexicale] 		61
+1593680925	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux			1
+1593686573	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Visualiser la richesse lexicale] 		23
+1593687099	86.216.219.72	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Visualiser la richesse lexicale] 		-9
+1606302553	88.124.10.73	E	cpp:preprocessing_avec_nltk	malama			0
+1606302656	88.124.10.73	E	cpp:preprocessing_avec_nltk	malama	[Nettoyage des données] 		2
+1606302843	88.124.10.73	E	cpp:preprocessing_avec_nltk	malama	[Tokénisation] 		0
+1606302863	88.124.10.73	E	cpp:preprocessing_avec_nltk	malama	[Tokénisation] 		1
+1606303061	88.124.10.73	E	cpp:preprocessing_avec_nltk	malama	[Tokénisation] 		5
+1606303295	88.124.10.73	E	cpp:preprocessing_avec_nltk	malama	[Normalisation du texte] 		0
+1606303318	88.124.10.73	E	cpp:preprocessing_avec_nltk	malama	[Normalisation du texte] 		1
+1606303433	88.124.10.73	E	cpp:preprocessing_avec_nltk	malama	[Suppression des stopwords] 		5
+1606303746	88.124.10.73	E	cpp:preprocessing_avec_nltk	malama	[Stemming] 		11
+1606304408	88.124.10.73	E	cpp:preprocessing_avec_nltk	malama	[Stemming] 		1
+1606304607	88.124.10.73	E	cpp:preprocessing_avec_nltk	malama	[N_grams] 		5
+1606304708	88.124.10.73	E	cpp:preprocessing_avec_nltk	malama	[Visualiser les données] 		5
+1606304759	88.124.10.73	E	cpp:preprocessing_avec_nltk	malama	[Les wordCloud] 		1
+1606304984	88.124.10.73	E	cpp:preprocessing_avec_nltk	malama	[Les wordCloud] 		1
+1606305042	88.124.10.73	E	cpp:preprocessing_avec_nltk	malama	[Visualiser les fréquences dans un histogramme] 		1
+1606305244	88.124.10.73	E	cpp:preprocessing_avec_nltk	malama	[Visualiser la richesse lexicale] 		2
+1606305296	88.124.10.73	E	cpp:preprocessing_avec_nltk	malama	[Visualiser la richesse lexicale] 		2
+1606305551	88.124.10.73	E	cpp:preprocessing_avec_nltk	malama	[Visualiser la richesse lexicale] 		0
+1606305686	88.124.10.73	E	cpp:preprocessing_avec_nltk	malama	[Visualiser la richesse lexicale] 		5
+1606585671	213.56.170.38	E	cpp:preprocessing_avec_nltk	malama	[Visualiser la richesse lexicale] 		-3
+1606585811	213.56.170.38	E	cpp:preprocessing_avec_nltk	malama	[Corrélation entre mots] 		2
+1606585857	213.56.170.38	E	cpp:preprocessing_avec_nltk	malama	[Corrélation entre mots] 		0
+1606586041	213.56.170.38	E	cpp:preprocessing_avec_nltk	malama	[Tf-IDF] 		-14
+1606586195	213.56.170.38	E	cpp:preprocessing_avec_nltk	malama	[Tf-IDF] 		0
+1606586411	213.56.170.38	E	cpp:preprocessing_avec_nltk	malama	[Tf-IDF] 		2
+1606586558	213.56.170.38	E	cpp:preprocessing_avec_nltk	malama	[Tf-IDF] 		4
+1606586689	213.56.170.38	E	cpp:preprocessing_avec_nltk	malama	[Tf-IDF] 		2
+1606586852	213.56.170.38	E	cpp:preprocessing_avec_nltk	malama	[Tf-IDF] 		4
+1606587208	213.56.170.38	E	cpp:preprocessing_avec_nltk	malama	[Conclusion] 		11
+1606835802	88.124.10.73	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Tokénisation] 		12
+1606835872	88.124.10.73	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Tokénisation] 		1
+1606836026	88.124.10.73	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Suppression des stopwords] 		17
+1606836117	88.124.10.73	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Stemming] 		-3
+1606836327	88.124.10.73	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Corrélation entre mots] 		16
+1606836423	88.124.10.73	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Tf-IDF] 		-6
+1606836509	88.124.10.73	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Tf-IDF] 		22
+1606836551	88.124.10.73	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Tf-IDF] 		0
+1606836732	88.124.10.73	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Conclusion] 		0
+1606837079	88.124.10.73	E	cpp:preprocessing_avec_nltk	pierrevirgaux	[Corrélation entre mots] 		-20
+1619986491	86.242.139.99	E	cpp:preprocessing_avec_nltk	pierrevirgaux			65

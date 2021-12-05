@@ -1,0 +1,6 @@
+<span class="kw1">from</span> scipy <span class="kw1">import</span> misc
+<span class="kw1">import</span> matplotlib.<span class="me1">pyplot</span> <span class="kw1">as</span> plt 
+&nbsp;
+face <span class="sy0">=</span> misc.<span class="me1">face</span><span class="br0">&#40;</span>gray<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span>
+plt.<span class="me1">imshow</span><span class="br0">&#40;</span>face<span class="sy0">,</span> cmap<span class="sy0">=</span>plt.<span class="me1">cm</span>.<span class="me1">gray</span><span class="br0">&#41;</span>
+plt.<span class="me1">show</span><span class="br0">&#40;</span><span class="br0">&#41;</span>

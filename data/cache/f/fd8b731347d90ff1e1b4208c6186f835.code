@@ -1,0 +1,2 @@
+config <span class="sy0">=</span> <span class="br0">&#123;</span><span class="st0">'algorithm'</span> : <span class="st0">'C4.5'</span><span class="br0">&#125;</span> <span class="co1">#On spécifie le modèle que l'on va entraîner</span>
+model <span class="sy0">=</span> chef.<span class="me1">fit</span><span class="br0">&#40;</span>dataFrame<span class="sy0">,</span> config<span class="br0">&#41;</span>

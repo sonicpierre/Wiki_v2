@@ -1,0 +1,4 @@
+library<span class="br0">&#40;</span>dplyr<span class="br0">&#41;</span>
+data_original <span class="sy0">=</span> read.<span class="kw3">csv</span><span class="br0">&#40;</span><span class="st0">&quot;BTC-EUR.csv&quot;</span><span class="br0">&#41;</span>
+data_original %<span class="sy0">&gt;</span>%
+    <span class="kw3">select</span><span class="br0">&#40;</span><span class="st0">&quot;Date&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Volume&quot;</span><span class="br0">&#41;</span>

@@ -1,0 +1,9 @@
+<span class="kw1">from</span> sklearn.<span class="me1">feature_selection</span> <span class="kw1">import</span> RFE
+<span class="kw1">from</span> sklearn.<span class="me1">linear_model</span> <span class="kw1">import</span> LinearRegression
+&nbsp;
+reg_lin <span class="sy0">=</span> LinearRegression<span class="br0">&#40;</span><span class="br0">&#41;</span>
+modele_step <span class="sy0">=</span> RFE<span class="br0">&#40;</span>reg_lin<span class="sy0">,</span>n_features_to_select<span class="sy0">=</span><span class="nu0">2</span><span class="sy0">,</span> step<span class="sy0">=</span><span class="nu0">1</span><span class="br0">&#41;</span>
+&nbsp;
+modele_step.<span class="me1">fit</span><span class="br0">&#40;</span>X<span class="sy0">,</span>y<span class="br0">&#41;</span>
+<span class="co1">#Permet de savoir quelles sont les variables qui ont été gardé</span>
+modele_step.<span class="me1">support_</span>

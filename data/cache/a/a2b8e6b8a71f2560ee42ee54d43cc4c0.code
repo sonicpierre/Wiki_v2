@@ -1,0 +1,1 @@
+X_recovered <span class="sy0">=</span> model.<span class="me1">inverse_transform</span><span class="br0">&#40;</span>X_reduced<span class="br0">&#41;</span>

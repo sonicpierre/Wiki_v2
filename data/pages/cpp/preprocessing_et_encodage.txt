@@ -1,0 +1,460 @@
+[[cpp:IA| Machine Learning]]
+{{  :cpp:process.png?400  |Pré-traitement }}
+
+Le pré-traitement des données nécessite de la patience et peut représenter jusqu'à 80 % du travail d'un data scientist.  Il se fait à tâton, parallèlement à la phase de création du modèle, selon les hypothèses émises.
+
+
+{{ :cpp:data_prepro.png?800 |Objectifs du pré-traitement des données}}
+
+<alert info>**<fs large>Remarque :</fs>**  les méthodes d'extraction d'informations et de sélection de variables sont disponibles [[data_exploration|ici]].</alert>
+
+
+
+=====Les valeurs manquantes=====
+
+<alert info>**Remarque :**  traiter les valeurs manquantes nécessite d'abord de les visualiser. Vous pouvez vous référer au graphique disponible sur [[visualiser_le_dataset|visualiser les valeurs manquantes]].\\
+\\
+ Consultez aussi la page [[scrapper_les_donnees|constituer le dataset]] pour savoir comment récupérer les données depuis une page web.</alert>
+
+
+Considérons le dataset sur le Covid19 disponible sur [[https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports_us/07-09-2020.csv|GitHub]]. La collecte des données étant difficile et réglementée, il est quasi impossible de regrouper certaines informations
+ce qui implique d'avoir un dataset sale sur lequel il faut traiter les valeurs manquantes.
+
+{{ :cpp:dirry_data.png?600 |Dataset avec des données manquantes}}
+
+Pour ce type de problème, il existe deux solutions : 
+
+|              ^ Fonctionnement                  ^ Quand utiliser         ^Inconvénients ^
+^ Suppression       | Supprime les lignes comportant des valeurs manquantes.            |Lorsque les valeurs manquantes ne sont pas nombreuses ou pour un premier test afin d'évaluer les résultats d'un modèle.    |Possible suppression d'un grand nombre d'observations, perte d'informations. |
+^ Imputation    | Remplace les valeurs manquantes par une valeur statistique (moyenne, médiane etc.). |Pour explorer d'autres possibilités après la suppression.                 |La valeur statistique dépend du problème et des données. Peut corrompre les données si elles sont mal imputées. |
+
+====Suppression des valeurs manquantes====
+
+__Code Python__
+
+<code python>
+data = data.dropna(axis=0)#On utilise la fonction dropna() en précisant l'axe des lignes (axis=0).
+</code>
+
+__Code R__
+
+<code python>
+library(tidyr)
+
+data <- drop_na(data)
+</code>
+
+====Imputation des valeurs manquantes====
+
+L'imputation des données manquantes par une valeur statistique se fait selon leur répartition :
+  * Lorsque les données suivent une distribution normale, on impute par la moyenne.
+  * Lorsqu'elles suivent une distribution asymétrique, on impute par la médiane.
+
+{{ :cpp:distr.jpg?600 |Répartition des données}}
+
+;#;Légende :  asymétrie à gauche, distribution normale au centre, asymétrie à droite
+;#;
+
+Pour effectuer la même opération d'imputation sur l'ensemble des variables **quantitatives** : 
+
+__Code Python__
+
+<code python>
+from sklearn.impute import SimpleImputer#Importation du transformeur
+
+imputer = SimpleImputer(missing_values = np.nan, strategy = 'median')#Création d'un transformeur qui identifie la forme des valeurs manquantes avec missing_values et définie une stratégie d'imputation (on a choisi la médiane).
+imputer.fit_transform(data)#Application de la transformation sur l'ensemble des données
+
+data = pd.DataFrame(imputer.fit_transform(data), index=df.index, columns=data.columns)#Transformation du tableau numpy obtenu après transformation, en tableau pandas.
+</code>
+
+__Code R__
+
+<code python>
+library(useful)
+
+simple.impute(data ,  fun = median)
+</code>
+
+Pour appliquer la transformation sur une variable particulière :
+
+__Code Python__
+
+<code python>
+data['Recovered'] = data['Recovered'].fillna(data['Recovered'].median())#Application de l'imputation par la moyenne sur la variable "Recovered".
+</code>
+
+__Code R__
+
+<code python>
+install.packages("zoo")
+library(zoo)
+data$Recovered <- na.aggregate(data$Recovered, FUN = median)
+</code>
+
+====Astuces====
+
+Une autre méthode d'imputation efficace consiste à utiliser l'algorithme KNN (K-nearest neighbors) qui remplace toutes les valeurs manquantes par les valeurs des plus proches voisins.
+
+__Code Python__
+
+<code python>
+imputer = KNNImputer(n_neighbors=1)#Utilisation de l'algorithme KNN en prenant en compte la similarité d'un voisin semblable pour l'imputation.
+imputer.fit_transform(df)#Application de la transformation à toutes les données
+
+df = pd.DataFrame(imputer.fit_transform(df), index=df.index, columns=df.columns)#Conversion du tableau numpy obtenu en DataFrame pandas.
+</code>
+
+__Code R__
+
+<code python>
+install.packages("VIM")
+library(VIM)
+data <- kNN(data, k=1, imp_var=FALSE)#L'argument imp_var indique si on affiche ou non l'état d'imputation.
+</code>
+
+**Source :**
+  * [[https://support.zendesk.com/hc/fr/articles/228989407-Moyenne-par-rapport-%C3%A0-M%C3%A9diane|Zendesk]]
+  * [[https://www.youtube.com/watch?v=QVEJJNsz-eM&list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&index=26|Machine Learnia]]
+  * [[http://www.educatim.fr/tq/co/Module_TQ_web/co/asymetrie.html|educatim]]
+
+
+=====L'encodage des données=====
+
+La plupart des algorithmes de Machine Learning prenant des valeurs numériques en entrée, il est nécessaire de remplacer chaque valeur qualitative par une valeur numérique qui lui sera propre : c'est l'encodage. 
+
+De plus, la manière dont l'encodage est effectué a son importance. En effet, il peut créer des distances qui n'ont pas lieu d'être ce qui a pour conséquence de tromper certains algorithmes et conduire à des prédictions erronées. 
+
+{{ :cpp:distance.png?600 |Notion de distance dans l'encodage de données}}
+
+Pour pallier cette difficulté,  il existe l'encodage ordinal et l'encodage One-Hot, selon qu'il y a un ordre dans les données ou non.
+
+Considérons le dataset suivant :
+
+__Code Python__
+
+<code python>
+import pandas as pd
+
+data = {'Etudiant':['Romain', 'Adèle', 'Johan', 'Xavier', 'Cassandra', 'Elise'], 'Appreciation':['B', 'TB', 'AB', 'B', 'AB', 'TB']}#Création des colonnes du dataset de leurs attributs
+
+df = pd.DataFrame(data, index =['1', '2', '3', '4', '5', '6'])#Numérotation des index
+</code>
+
+__Code R__
+
+<code python>
+Etudiant <- c('Romain','Adèle','Johan','Xavier','Cassandra','Elise')#Création de la colonne des noms d'étudiants et ses valeurs
+Appreciation <- c('B','TB','AB','B','AB','TB')#Création de la colonne d'appréciations et ses valeurs
+
+df <- data.frame(Etudiant, Appreciation)#Jointure pour créer le dataframe
+</code>
+
+<alert info>**<fs large>Remarque :</fs>**  pour chaque type d'encodage, il existe des algorithmes permettant de traiter une variable en particulier (données y) ou plusieurs variables en même temps (données X).</alert>
+
+====Encodage ordinal====
+
+<color #ed1c24>Traitement d'une variable particulière : </color>
+
+__Code Python__
+
+<code python>
+import numpy as np
+from sklearn.preprocessing import LabelEncoder
+ 
+y = df['Appreciation']#Déclaration de la colonne à traiter
+encoder = LabelEncoder()#Appel du transformateur
+encoder.fit_transform(y)#Application de la transformation à l'ensemble des attributs de y
+</code>
+
+__Code R__
+
+<code python>
+install.packages("superml")
+install.packages("CatEncoders")
+library(CatEncoders)
+library(superml)
+
+y <- factor(df$Appreciation)#Déclaration des attributs à encoder. Il est nécessaire de convertir la variable en facteur.
+encoder <- LabelEncoder.fit(y)#Application de l'encodage aux données
+val <- transform(encoder, y)#Transformation des données, qu'on récupère dans une variable pour pouvoir les décoder
+</code>
+
+**Résultat**
+
+{{ :cpp:avant_apres.png?400 |Avant et après traitement}}
+
+Il est possible de décoder les valeurs numériques obtenues.
+
+__Code Python__
+
+<code python>
+encoder.inverse_transform(np.array([0, 1, 2, 2, 0]))#Définition des valeurs à décoder
+</code>
+
+__Code R__
+
+Sous R, le processus est différent : il est nécessaire de récupérer les valeurs encodées dans une variable. Puis, de passer cette dernière dans la fonction de décodage contrairement au Python où on donne les valeurs dont on veut le décodage.
+
+<code python>
+inverse.transform(encoder, val)#On réintroduit les valeurs encodées dans une fonction de décodage
+</code>
+
+**Résultat**
+
+{{ :cpp:sac.png?400 |}}
+
+
+====Encodage One-Hot====
+
+<alert info>**<fs large>Remarque :</fs>**  ce type d'encodage ne fonctionne généralement pas bien si la variable prend plus de 15 valeurs différentes. En effet, l'encodage OneHot crée une variable pour chacune des valeurs encodées ce qui réduit, à terme, les performances de la machine. Les data scientists créent donc eux-mêmes leurs propres fonctions d'encodage afin de pallier ce genre de problème.</alert>
+
+<color #ed1c24>Traitement d'une variable particulière : </color>
+
+__Code Python__
+
+<code python>
+import numpy as np
+from sklearn.preprocessing import LabelBinarizer
+ 
+y = df['Etudiant']#Colonne à traiter
+encoder = LabelBinarizer()#Appel du transformeur
+encoder.fit_transform(y)#Application de la transformation au dataset
+</code>
+
+__Code R__
+
+Il n'existe pas, à proprement parlé, de fonction LabelBinarizer sous R. Toutefois, l'encodage reste possible grâce à dummyVars(). Cette fonction permet de traiter à la fois les données y et X.
+<code python>
+library(caret)
+  
+encode_data <- dummyVars(" ~ Etudiant", data = df)#On définit la variable à encoder.
+encoder <- data.frame(predict(encode_data, newdata  = df))#Application de l'encodage
+  
+###Astuce données X###
+  
+encode_data <- dummyVars(" ~ Etudiant + Appreciation", data = df)#Encodage de certaines variables en même temps.
+encode_data <- dummyVars(" ~ .", data = df)#Encodage de toutes les variables qualitatives ⇔ OneHotEncoder().
+</code>
+
+**Résultat**
+
+{{ :cpp:labelbinarizer.png?200 |Encodage OneHot}}
+
+<color #ed1c24>Synthèse : </color>
+
+|              ^ Encodage Ordinal                ^ Encodage One-Hot          ^
+^Données y (une colonne à la fois)     |LabelEncoder | LabelBinarizer|
+^Données X (plusieurs colonnes en même temps) |OrdinalEncoder |OneHotEncoder|
+
+
+**Sources :**
+  * [[https://www.kaggle.com/alexisbcook/categorical-variables|Kaggle]]
+  * [[https://www.youtube.com/watch?v=OGWwzm304Xs&list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&index=24|Machine Learnia]]
+  * [[https://amunategui.github.io/dummyVar-Walkthrough/|amunategui]]
+
+
+=====Normalisation des données=====
+
+Les opérations de normalisation permettent de mettre les données quantitatives à la même échelle et sont importantes car il est plus facile pour la machine de traiter des valeurs entre 0 et 1 que celles entre 10.000 et 100.000 par exemple.
+
+Cet exemple utilise le dataset des fleurs [[visualiser_le_dataset|d'iris]].
+
+====La standardisation====
+
+La standardisation transforme chaque variable X pour qu'elle soit de moyenne nulle et d'écart-type un. Cette méthode est sensible aux valeurs aberrantes. 
+
+**Théorie**
+
+$$
+X_{standardisé} = \frac{X - \mu_{X}}{\sigma_{X}}
+$$
+
+^      Paramètres        ^ Signification^
+| $\mu_{X}$| Moyenne initiale |
+| $X$     | Vecteur initial |
+| $\sigma_{X} $    | Écart-type initial |
+
+__Code Python__
+
+<code python>
+from sklearn.preprocessing import StandardScaler
+import pandas as pd
+
+scaler = StandardScaler()#Appel du transformeur
+X = scaler.fit_transform(X)#Application à l'ensemble des données
+pd.DataFrame(X, columns=iris.feature_names)#Affichage du dataset normalisé
+</code>
+
+__Code R__
+
+<code python>
+X <- scale(X)
+</code>
+
+====Normalisation robuste====
+
+La normalisation dite robuste transforme le vecteur en soustrayant à chaque valeur la médiane et en divisant par l'écart  interquartile. Cette méthode est moins sensible aux valeurs aberrantes puisqu'elle soustrait la médiane. 
+
+==Théorie==
+
+$$
+X_{normalisé} = \frac{X - m}{Q_{3} - Q_{1}}
+$$
+
+^      Paramètres        ^ Signification^
+| $Q_{3} - Q_{1}$| Écart interquartile |
+| $X$     | Vecteur initial |
+| m     | Médiane initiale |
+
+__Code Python__
+
+<code python>
+from sklearn.preprocessing import RobustScaler
+import pandas as pd
+
+scaler = RobustScaler()#Appel du transformeur
+X = scaler.fit_transform(X)#Application à l'ensemble du dataset
+pd.DataFrame(X, columns=iris.feature_names) #Affichage du dataset normalisé
+</code>
+
+__Code R__
+
+<code python>
+library(quantable)
+
+X <- robustscale(X)#Normalisation des données
+X <- X$data#Récupère les données normalisées
+</code>
+
+**Observations**
+
+{{ :cpp:normalisation.png?900 |Représentation des valeurs originales et normalisées}}
+
+====Les valeurs aberrantes====
+
+Elles correspondent aux données très atypiques par rapport à l'ensemble du dataset et leur suppression dépend de l'objectif. En détection de fraude par exemple, le data scientist va surtout s'intéresser aux données atypiques.
+
+Pour l'exemple, on va introduire des valeurs aberrantes dans le dataset des [[visualiser_le_dataset|fleurs d'iris]].
+
+==Introduction des valeurs aberrantes==
+
+__Code Python__
+
+<code python>
+outliers = np.full((10,4), 100) + np.random.randn(10,4)#Introduction de valeurs aberrantes 
+X = np.vstack((X, outliers))#Fait les jointures verticale des tableaux de données
+</code>
+
+__Code R__
+
+<code python>
+outliers <- data.frame(matrix(c(rep(0, 10)) + rnorm(10, 100, 1), 10, 4))#Génération d'une matrice d'outliers ayant 10 lignes, 4 colonnes et dont les valeurs suivent une loi normale de moyenne 100.
+names(outliers) <- names(X)#Attribution du nom des colonnes de X aux colonnes du tableau des outliers, car il est nécessaire que les colonnes aient le même nom pour les fusionner.
+X <- rbind(X, outliers)#Ajout des outliers au dataset de base
+</code>
+
+==Détection des valeurs aberrantes==
+
+<code python>
+from sklearn.ensemble import IsolationForest
+
+model = IsolationForest(contamination=0.06)#Contamination étant le taux supposé de contamination du dataset.
+model.fit(X)#Entrainement du modele de détection
+</code>
+
+__Code R__
+
+<code python>
+install.packages("isotree")
+install.packages("solitude")
+library(solitude)
+library(isotree)
+
+
+model <- isolationForest$new()#Appel du modèle de détection
+model$fit(X)#Ajustement sur les données
+outliers_pred <- model$predict(X)#Prédiction des outliers : Retourne un tableau récapitulatif qui donne le score d'anomalie. Celui-ci défini si une valeur est aberrante si elle est proche de 1 et non aberrante si autour de 0.5
+</code>
+
+**Résultat**
+
+{{ :cpp:outliers_data.png?600 |}}
+
+==Suppression des valeurs aberrantes==
+
+__Code Python__
+
+<code python>
+outliers =  model.predict(X) == -1 #Retourne un tableau numpy contenant des 1 (données sans anomalies) et des -1 (donnes aberrantes).
+normal = model.predict(X) != -1#On récupère les données non aberrantes
+X = X[normal]#Boolean indexing pour avoir un tableau avec uniquement les données non aberrantes
+X = pd.DataFrame(X, columns=iris.feature_names)#Création d'un DataFrame pandas 
+</code>
+
+__Code R__
+
+<code python>
+X_final <- data.frame(outliers_pred)#On récupère les données prédites sous forme de data frame
+X_final <- X_final[with(X_final, order(id)),]#Puis on le tri en fonction de leur id, de façon à avoir la correspondance avec les données de X
+X <- cbind(X, X_final$anomaly_score)#Jointure du dataframe original avec la colonne d'anomalie
+X <- subset(X, X_final$anomaly_score <= 0.57)#On ne conserve que les éléments ayant moins de 0.57 de score d'anomalie
+X <- select(X, -`X_final$anomaly_score`)#On supprime la colonne des scores d'anomalie qui est inutile
+</code>
+
+**Sources :**
+  * [[ https://abcdr.thinkr.fr/comment-rajouter-des-lignes-ou-des-colonnes-dans-jeux-de-donnees-sous-r-cbind-rbind/|ABCD'R]]
+  * [[https://en.wikipedia.org/wiki/Isolation_forest#:~:text=Anomaly%20score,-The%20algorithm%20for&text=if%20s%20is%20close%20to,doesn't%20have%20any%20anomaly|Wikipedia]]
+
+=====Les pipelines=====
+
+<alert warning>**Remarque :**  il est nécessaire de connaitre entièrement le processus de conception d'un modèle.</alert>
+
+Les pipelines constituent un moyen d'organiser les étapes de pré-traitement et de modélisation ce qui permet de combiner ces phases comme s'il ne s'agissait que d'une seule.
+
+{{:cpp:pipeline_.png?800|}}
+
+Il devient plus simple d'appliquer l'ensemble des opérations faites sur les données d'entraînement aux données de test/validation. Les pipelines permettent aussi de : 
+  * rendre le code plus propre.
+  * réduire les erreurs de traitement entre les datasets d'entraînement, de test et de validation.
+  * faciliter le déploiement du modèle.
+
+Prédiction de la classe des [[visualiser_le_dataset|fleurs d'iris]], en utilisant un pipeline dans le processus.
+
+__Code Python__
+
+Ici le pipeline va normaliser et classifier.
+
+<code python>
+from sklearn.linear_model import SGDClassifier
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+
+modele = make_pipeline(StandardScaler(),#Constitution de la pipeline où on défini un transformeur et l'estimateur à utiliser.
+                         SGDClassifier())
+
+modele.fit(X_train, X_test)#Entrainement du modèle
+</code>
+
+__Code R__
+
+Ici le pipeline va encoder les données.
+
+<code python>
+#Librairies nécessaires pour faire une pipeline
+library(magrittr)
+library(dplyr)
+
+encoder <- . %>% factor %>%
+            LabelEncoder.fit %>%
+            transform(., data$Species)
+
+data$Species = encoder(data$Species)
+</code>
+
+<alert info>**Info :** on remarque clairement que les pipelines utilisent le principe de la programmation fonctionnelle en composant les fonctions. </alert>
+
+**Sources **
+
+  * Image : [[https://www.xylos.com/fr/learning/blog/astuce-1-traitement-donnees-excel-vba-copier-cellules|xylos]]
+  * [[https://www.datacamp.com/community/tutorials/pipe-r-tutorial|DataCamp]]

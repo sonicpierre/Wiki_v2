@@ -1,0 +1,311 @@
+1597847452	88.124.10.73	C	cpp:acp	pierrevirgaux	créée		10140
+1597847480	88.124.10.73	E	cpp:acp	pierrevirgaux	[Les règles d'association] 		-738
+1597847593	88.124.10.73	E	cpp:acp	pierrevirgaux			-6953
+1597848012	88.124.10.73	E	cpp:acp	pierrevirgaux			-20
+1597848366	88.124.10.73	E	cpp:acp	pierrevirgaux			60
+1598632077	91.69.217.178	E	cpp:acp	danilouchouchou			45
+1598632094	91.69.217.178	E	cpp:acp	danilouchouchou			2
+1598652216	91.69.217.178	E	cpp:acp	danilouchouchou			43
+1598656173	91.69.217.178	E	cpp:acp	danilouchouchou			501
+1598867951	89.88.75.36	E	cpp:acp	danilouchouchou			0
+1598868001	89.88.75.36	E	cpp:acp	danilouchouchou			7
+1598868092	89.88.75.36	E	cpp:acp	danilouchouchou			2
+1598879218	89.88.75.36	E	cpp:acp	danilouchouchou			5
+1598892700	89.88.75.36	E	cpp:acp	danilouchouchou	[Variance et composantes principales] 		215
+1598892891	89.88.75.36	E	cpp:acp	danilouchouchou			3
+1598909438	89.88.75.36	E	cpp:acp	danilouchouchou	[Variance et composantes principales] 		88
+1598909476	89.88.75.36	E	cpp:acp	danilouchouchou	[Variance et composantes principales] 		0
+1598910663	89.88.75.36	E	cpp:acp	danilouchouchou	[Variance et composantes principales] 		84
+1598911496	89.88.75.36	E	cpp:acp	danilouchouchou			59
+1598913619	89.88.75.36	E	cpp:acp	danilouchouchou			464
+1598913650	89.88.75.36	E	cpp:acp	danilouchouchou			31
+1598913901	89.88.75.36	E	cpp:acp	danilouchouchou			22
+1598914339	89.88.75.36	E	cpp:acp	danilouchouchou			-101
+1598914732	89.88.75.36	E	cpp:acp	danilouchouchou			0
+1598914770	89.88.75.36	E	cpp:acp	danilouchouchou	[Analyse des Composantes Principales] 		-184
+1598914833	89.88.75.36	E	cpp:acp	danilouchouchou	[Variance et composantes principales] 		1
+1598914857	89.88.75.36	E	cpp:acp	danilouchouchou	[Variance et composantes principales] 		-1
+1598915280	89.88.75.36	E	cpp:acp	danilouchouchou	[Variance et composantes principales] 		1
+1598921211	89.88.75.36	E	cpp:acp	danilouchouchou	[Variance et composantes principales] 		338
+1598921232	89.88.75.36	E	cpp:acp	danilouchouchou	[Variance et composantes principales] 		1
+1598960988	89.88.75.36	E	cpp:acp	danilouchouchou	[Analyse des Composantes Principales] 		3
+1598962819	89.88.75.36	E	cpp:acp	danilouchouchou	[Variance et composantes principales] 		14
+1598962843	89.88.75.36	E	cpp:acp	danilouchouchou	[Analyse des Composantes Principales] 		1
+1598965522	89.88.75.36	E	cpp:acp	danilouchouchou	[Variance et composantes principales] 		675
+1598968545	89.88.75.36	E	cpp:acp	danilouchouchou	[Projection dimensionnelle] 		22
+1598970290	89.88.75.36	E	cpp:acp	danilouchouchou			1
+1598970601	89.88.75.36	E	cpp:acp	danilouchouchou	[Construction du modèle de réduction] 		-5
+1598971635	89.88.75.36	E	cpp:acp	danilouchouchou	[Construction du modèle de réduction] 		393
+1598972536	89.88.75.36	E	cpp:acp	danilouchouchou	[Construction du modèle de réduction] 		34
+1598972820	89.88.75.36	E	cpp:acp	danilouchouchou	[Construction du modèle de réduction] 		376
+1598973061	89.88.75.36	E	cpp:acp	danilouchouchou	[Construction du modèle de réduction] 		24
+1598973137	89.88.75.36	E	cpp:acp	danilouchouchou	[Construction du modèle de réduction] 		57
+1598974977	89.88.75.36	E	cpp:acp	danilouchouchou	[Construction du modèle de réduction] 		595
+1598976636	89.88.75.36	E	cpp:acp	danilouchouchou	[Compression d'images] 		113
+1598976697	89.88.75.36	E	cpp:acp	danilouchouchou			24
+1598976715	89.88.75.36	E	cpp:acp	danilouchouchou			0
+1598976722	89.88.75.36	E	cpp:acp	danilouchouchou			0
+1598976730	89.88.75.36	E	cpp:acp	danilouchouchou			0
+1598976739	89.88.75.36	E	cpp:acp	danilouchouchou			0
+1598979397	89.88.75.36	E	cpp:acp	danilouchouchou	[PCA randomisé] 		297
+1598979833	89.88.75.36	E	cpp:acp	danilouchouchou	[PCA incrémentale] 		158
+1598981234	89.88.75.36	E	cpp:acp	danilouchouchou	[PCA incrémentale] 		131
+1598981252	89.88.75.36	E	cpp:acp	danilouchouchou	[PCA incrémentale] 		28
+1599048923	89.88.75.36	E	cpp:acp	danilouchouchou	[Optimisations de l'algorithme PCA] 		157
+1599055020	89.88.75.36	E	cpp:acp	danilouchouchou	[Optimisation de l'algorithme PCA] 		1
+1599058151	89.88.75.36	E	cpp:acp	danilouchouchou	[PCA à noyau] 		318
+1599058245	89.88.75.36	E	cpp:acp	danilouchouchou			2
+1599073219	89.88.75.36	E	cpp:acp	danilouchouchou	[ACP à noyau] 		165
+1599132595	89.88.75.36	E	cpp:acp	danilouchouchou	[Théorie] 		574
+1599132641	89.88.75.36	E	cpp:acp	danilouchouchou	[Théorie] 		97
+1599133388	89.88.75.36	E	cpp:acp	danilouchouchou	[Théorie] 		713
+1599133511	89.88.75.36	E	cpp:acp	danilouchouchou	[Théorie] 		97
+1599133698	89.88.75.36	E	cpp:acp	danilouchouchou	[Théorie] 		168
+1599133793	89.88.75.36	E	cpp:acp	danilouchouchou	[Théorie] 		1
+1599134066	89.88.75.36	E	cpp:acp	danilouchouchou	[Théorie] 		0
+1599142243	89.88.75.36	E	cpp:acp	danilouchouchou	[ACP randomisé] 		1
+1599143626	89.88.75.36	E	cpp:acp	danilouchouchou	[ACP randomisée] 		539
+1599152832	89.88.75.36	E	cpp:acp	danilouchouchou	[ACP incrémentale] 		436
+1599156441	89.88.75.36	E	cpp:acp	danilouchouchou	[ACP à noyau] 		443
+1599160504	89.88.75.36	E	cpp:acp	danilouchouchou	[La méthode du noyau] 		2
+1599160547	89.88.75.36	E	cpp:acp	danilouchouchou	[La méthode du noyau] 		-303
+1599160565	89.88.75.36	E	cpp:acp	danilouchouchou	[ACP à noyau] 		102
+1599160589	89.88.75.36	E	cpp:acp	danilouchouchou	[La méthode du noyau] 		-138
+1599162918	89.88.75.36	E	cpp:acp	danilouchouchou	[ACP à noyau] 		232
+1599206972	176.180.88.225	E	cpp:acp	danilouchouchou			4
+1599207008	176.145.91.35	E	cpp:acp	danilouchouchou			-1
+1599207189	176.180.88.225	E	cpp:acp	danilouchouchou			-3
+1599345832	89.88.75.36	E	cpp:acp	danilouchouchou	[Construction du modèle de réduction] 		-352
+1599479486	217.119.181.222	E	cpp:acp	danilouchouchou	[ACP à noyau] 		-236
+1599484520	217.119.181.222	E	cpp:acp	danilouchouchou	[ACP à noyau] 		393
+1599484559	217.119.181.222	E	cpp:acp	danilouchouchou	[ACP à noyau] 		1
+1599485862	217.119.181.222	E	cpp:acp	danilouchouchou	[ACP à noyau] 		433
+1599486806	217.119.181.222	E	cpp:acp	danilouchouchou	[ACP à noyau] 		2
+1599486900	217.119.181.222	E	cpp:acp	danilouchouchou	[ACP à noyau] 		134
+1599487397	217.119.181.222	E	cpp:acp	danilouchouchou	[ACP à noyau] 		28
+1599501775	89.88.75.36	E	cpp:acp	danilouchouchou	[ACP à noyau] 		1
+1599507040	89.88.75.36	E	cpp:acp	danilouchouchou	[Construction du modèle de réduction] 		90
+1599507160	89.88.75.36	E	cpp:acp	danilouchouchou			-54
+1599509688	89.88.75.36	E	cpp:acp	danilouchouchou	[Construction du modèle de réduction] 		76
+1599509765	89.88.75.36	E	cpp:acp	danilouchouchou	[Construction du modèle de réduction] 		98
+1599509852	89.88.75.36	E	cpp:acp	danilouchouchou	[Compression d'images] 		-18
+1599567635	217.119.181.222	E	cpp:acp	danilouchouchou	[Théorie] 		2
+1599567803	217.119.181.222	E	cpp:acp	danilouchouchou	[Théorie] 		0
+1599640913	89.88.75.36	E	cpp:acp	danilouchouchou	[Théorie] 		-86
+1599640933	89.88.75.36	E	cpp:acp	danilouchouchou	[Construction du modèle de réduction] 		86
+1599641143	89.88.75.36	E	cpp:acp	danilouchouchou	[Analyse des Composantes Principales] 		-172
+1599641165	89.88.75.36	E	cpp:acp	danilouchouchou	[Projection dimensionnelle] 		171
+1599644710	89.88.75.36	E	cpp:acp	danilouchouchou	[Théorie] 		214
+1599646229	89.88.75.36	E	cpp:acp	danilouchouchou	[ACP randomisée] 		169
+1599652900	217.119.181.222	E	cpp:acp	danilouchouchou	[ACP à noyau] 		155
+1599652970	176.145.64.49	E	cpp:acp	danilouchouchou	[ACP à noyau] 		225
+1599653007	217.119.181.222	E	cpp:acp	danilouchouchou	[ACP à noyau] 		0
+1599657817	217.119.181.222	E	cpp:acp	danilouchouchou	[ACP incrémentale] 		144
+1599659358	176.145.85.101	E	cpp:acp	danilouchouchou	[ACP incrémentale] 		202
+1599659572	217.119.181.222	E	cpp:acp	danilouchouchou	[ACP incrémentale] 		170
+1599660673	176.145.93.109	E	cpp:acp	danilouchouchou	[ACP randomisée] 		188
+1599992446	188.141.243.39	E	cpp:acp	pierrevirgaux			-47
+1600007183	89.88.75.36	E	cpp:acp	danilouchouchou			408
+1600007323	89.88.75.36	E	cpp:acp	danilouchouchou	[Variance et composantes principales] 		-19
+1600008290	89.88.75.36	E	cpp:acp	danilouchouchou	[Théorie] 		18
+1600010323	89.88.75.36	E	cpp:acp	danilouchouchou	[Construction du modèle de réduction] 		-5
+1600010456	89.88.75.36	E	cpp:acp	danilouchouchou	[Construction du modèle de réduction] 		2
+1600011301	89.88.75.36	E	cpp:acp	danilouchouchou	[Construction du modèle de réduction] 		-93
+1600011567	89.88.75.36	E	cpp:acp	danilouchouchou	[Construction du modèle de réduction] 		-9
+1600011683	89.88.75.36	E	cpp:acp	danilouchouchou	[Compression d'images] 		-31
+1600012325	89.88.75.36	E	cpp:acp	danilouchouchou	[Théorie] 		-91
+1600012585	89.88.75.36	E	cpp:acp	danilouchouchou	[Théorie] 		-82
+1600169268	217.119.181.222	E	cpp:acp	danilouchouchou	[ACP à noyau] 		3
+1600182811	217.119.181.222	E	cpp:acp	danilouchouchou			273
+1600185022	89.88.75.36	E	cpp:acp	danilouchouchou	[Algorithme LLE] 		-11
+1600243133	217.119.181.222	E	cpp:acp	danilouchouchou	[Locally Linear Emdedding] 		54
+1600251000	217.119.181.222	E	cpp:acp	danilouchouchou	[Locally Linear Emdedding] 		201
+1600282973	89.88.75.36	E	cpp:acp	danilouchouchou	[Locally Linear Emdedding] 		17
+1600285430	89.88.75.36	E	cpp:acp	danilouchouchou	[Locally Linear Emdedding] 		176
+1600519017	89.88.75.36	E	cpp:acp	danilouchouchou			-1
+1600524795	89.88.75.36	E	cpp:acp	danilouchouchou			-67
+1600527713	89.88.75.36	E	cpp:acp	danilouchouchou	[Théorie] 		351
+1600529748	89.88.75.36	E	cpp:acp	danilouchouchou	[ACP randomisée] 		-55
+1600534881	89.88.75.36	E	cpp:acp	danilouchouchou	[ACP à noyau] 		284
+1600534929	89.88.75.36	E	cpp:acp	danilouchouchou	[ACP à noyau] 		3
+1600535157	89.88.75.36	E	cpp:acp	danilouchouchou	[Locally Linear Emdedding] 		126
+1600535180	89.88.75.36	E	cpp:acp	danilouchouchou	[Locally Linear Emdedding] 		0
+1600535856	89.88.75.36	E	cpp:acp	danilouchouchou	[ACP à noyau] 		0
+1600536275	188.141.243.39	E	cpp:acp	pierrevirgaux			-14
+1600550880	89.88.75.36	E	cpp:acp	danilouchouchou	[Théorie] 		267
+1600551342	89.88.75.36	E	cpp:acp	danilouchouchou	[Théorie] 		89
+1600604451	89.88.75.36	E	cpp:acp	danilouchouchou	[ACP randomisée] 		17
+1600607108	89.88.75.36	E	cpp:acp	danilouchouchou	[ACP randomisée] 		199
+1600792028	89.88.75.36	E	cpp:acp	pierrevirgaux			6
+1600792578	89.88.75.36	E	cpp:acp	pierrevirgaux	[Variance et composantes principales] 		31
+1600792623	89.88.75.36	E	cpp:acp	pierrevirgaux	[Variance et composantes principales] 		-4
+1600792728	89.88.75.36	E	cpp:acp	pierrevirgaux	[Variance et composantes principales] 		45
+1600792748	89.88.75.36	E	cpp:acp	pierrevirgaux	[Variance et composantes principales] 		11
+1600793152	89.88.75.36	E	cpp:acp	pierrevirgaux	[Théorie] 		28
+1600793486	89.88.75.36	E	cpp:acp	pierrevirgaux	[Théorie] 		-4
+1600793600	89.88.75.36	E	cpp:acp	pierrevirgaux	[Projection dimensionnelle] 		-172
+1600793726	89.88.75.36	E	cpp:acp	pierrevirgaux	[Construction du modèle de réduction] 		159
+1600794427	89.88.75.36	E	cpp:acp	pierrevirgaux	[Théorie] 		-2
+1600794473	89.88.75.36	E	cpp:acp	pierrevirgaux	[Compression d'images] 		-100
+1600794559	89.88.75.36	E	cpp:acp	pierrevirgaux	[Importation de l'image] 		122
+1600794749	89.88.75.36	E	cpp:acp	pierrevirgaux	[Importation de l'image] 		-94
+1600794765	89.88.75.36	E	cpp:acp	pierrevirgaux	[Chaoix des variables] 		-1
+1600794858	89.88.75.36	E	cpp:acp	pierrevirgaux	[Construction du modèle de réduction] 		0
+1600794988	89.88.75.36	E	cpp:acp	pierrevirgaux	[Choix des variables] 		28
+1600795228	89.88.75.36	E	cpp:acp	pierrevirgaux			-6204
+1600796351	89.88.75.36	E	cpp:acp	pierrevirgaux			56
+1600852418	89.88.75.36	E	cpp:acp	danilouchouchou			-3
+1600853105	89.88.75.36	E	cpp:acp	danilouchouchou			-224
+1600853167	89.88.75.36	E	cpp:acp	danilouchouchou	[Quand utiliser une ACP ?]		34
+1600853176	89.88.75.36	E	cpp:acp	danilouchouchou	[Quand utiliser une ACP ?] 		2
+1600853210	89.88.75.36	E	cpp:acp	danilouchouchou	[Quand utiliser une ACP ?] 		2
+1600853227	89.88.75.36	E	cpp:acp	danilouchouchou	[Variance et composantes principales] 		7
+1600853234	89.88.75.36	E	cpp:acp	danilouchouchou	[Quand utiliser une ACP ?] 		188
+1600853258	89.88.75.36	E	cpp:acp	danilouchouchou	[Quand utiliser une ACP ?] 		38
+1600857233	89.88.75.36	E	cpp:acp	danilouchouchou			-45
+1600857664	89.88.75.36	E	cpp:acp	danilouchouchou			-191
+1600858140	89.88.75.36	E	cpp:acp	danilouchouchou			346
+1600858544	89.88.75.36	E	cpp:acp	danilouchouchou			277
+1600858585	89.88.75.36	E	cpp:acp	danilouchouchou	[Variance et composantes principales] 		-3
+1600858867	89.88.75.36	E	cpp:acp	danilouchouchou	[Variance et composantes principales] 		-24
+1600859133	89.88.75.36	E	cpp:acp	danilouchouchou	[Variance et composantes principales] 		-3
+1600859641	89.88.75.36	E	cpp:acp	danilouchouchou	[Recherche des composants principales] 		2
+1600888504	89.88.75.36	E	cpp:acp	danilouchouchou	[Projection dimensionnelle] 		-2
+1600893087	89.88.75.36	E	cpp:acp	danilouchouchou	[Projection dimensionnelle] 		-3
+1600893413	89.88.75.36	E	cpp:acp	danilouchouchou	[Construction du modèle de réduction] 		-245
+1600893500	89.88.75.36	E	cpp:acp	danilouchouchou	[Recherche des composants principales] 		245
+1600895470	89.88.75.36	E	cpp:acp	danilouchouchou	[Recherche des composants principales] 		213
+1600896030	89.88.75.36	E	cpp:acp	danilouchouchou	[Recherche des composants principales] 		-94
+1600896102	89.88.75.36	E	cpp:acp	danilouchouchou	[Recherche des composants principales] 		92
+1600896978	89.88.75.36	E	cpp:acp	danilouchouchou	[Projection dimensionnelle] 		224
+1600955530	217.119.181.222	E	cpp:acp	danilouchouchou	[Construction du modèle de réduction] 		144
+1600960602	217.119.181.222	E	cpp:acp	danilouchouchou	[Compression d'images] 		-18
+1600960789	217.119.181.222	E	cpp:acp	danilouchouchou	[Compression d'images] 		-2
+1601031030	217.119.181.222	E	cpp:acp	danilouchouchou	[Compression d'images] 		15
+1601031357	217.119.181.222	E	cpp:acp	danilouchouchou	[Compression d'images] 		136
+1601031428	217.119.181.222	E	cpp:acp	danilouchouchou	[Importation de l'image] 		0
+1601031469	217.119.181.222	E	cpp:acp	danilouchouchou	[Compression d'images] 		-1
+1601031491	217.119.181.222	E	cpp:acp	danilouchouchou	[Traitement d'une image] 		-3
+1601031611	217.119.181.222	E	cpp:acp	danilouchouchou	[Compression d'image] 		-5
+1601031883	217.119.181.222	E	cpp:acp	danilouchouchou	[Compression d'image] 		158
+1601032102	217.119.181.222	E	cpp:acp	danilouchouchou	[Entrainement du modèle et décompression image] 		-543
+1601032171	217.119.181.222	E	cpp:acp	danilouchouchou	[Recherche des composants principales] 		-1
+1601032179	217.119.181.222	E	cpp:acp	danilouchouchou	[Recherche des composants principales] 		1
+1601032191	217.119.181.222	E	cpp:acp	danilouchouchou	[Recherche des composants principales] 		-1
+1601032200	217.119.181.222	E	cpp:acp	danilouchouchou	[Recherche des composants principales] 		2
+1601032324	217.119.181.222	E	cpp:acp	danilouchouchou	[Entrainement du modèle et décompression image] 		22
+1601032397	217.119.181.222	E	cpp:acp	danilouchouchou	[Entrainement du modèle et décompression image] 		7
+1601032843	217.119.181.222	E	cpp:acp	danilouchouchou	[Construction du modèle de réduction] 		159
+1601033109	217.119.181.222	E	cpp:acp	danilouchouchou	[Quand utiliser une ACP ?] 		-38
+1601033207	217.119.181.222	E	cpp:acp	danilouchouchou	[Quand utiliser une ACP ?] 		163
+1601033213	217.119.181.222	E	cpp:acp	danilouchouchou	[Quand utiliser une ACP ?] 		1
+1601033375	217.119.181.222	E	cpp:acp	danilouchouchou	[Quand utiliser une ACP ?] 		85
+1601034125	217.119.181.222	E	cpp:acp	danilouchouchou	[Quand utiliser une ACP ?] 		113
+1601034140	217.119.181.222	E	cpp:acp	danilouchouchou	[Quand utiliser une ACP ?] 		0
+1601034307	217.119.181.222	E	cpp:acp	danilouchouchou	[Quand utiliser une ACP ?] 		61
+1601035815	217.119.181.222	E	cpp:acp	danilouchouchou	[Comment choisir le nombre optimal de variables ?] 		124
+1601036109	217.119.181.222	E	cpp:acp	danilouchouchou	[Variance expliquée] 		0
+1601108384	91.69.217.178	E	cpp:acp	danilouchouchou	[Variance expliquée] 		374
+1601110039	91.69.217.178	E	cpp:acp	danilouchouchou	[Méthode de Kaiser-Guttman] 		165
+1601111061	91.69.217.178	E	cpp:acp	danilouchouchou	[Recherche des composants principales] 		293
+1601111388	91.69.217.178	E	cpp:acp	danilouchouchou	[Recherche des composants principales] 		-293
+1601111436	91.69.217.178	E	cpp:acp	danilouchouchou	[Recherche des composants principales] 		302
+1601111551	91.69.217.178	E	cpp:acp	danilouchouchou	[Quand utiliser une ACP ?] 		161
+1601113389	91.69.217.178	E	cpp:acp	danilouchouchou	[Construction du modèle de réduction] 		3
+1601113426	91.69.217.178	E	cpp:acp	danilouchouchou	[Construction du modèle de réduction] 		14
+1601113695	91.69.217.178	E	cpp:acp	danilouchouchou	[Méthode de Kaiser-Guttman] 		86
+1601113731	91.69.217.178	E	cpp:acp	danilouchouchou	[Méthode de Kaiser-Guttman] 		-3
+1601116138	91.69.217.178	E	cpp:acp	danilouchouchou	[Méthode de Kaiser-Guttman] 		83
+1601116230	91.69.217.178	E	cpp:acp	danilouchouchou	[Méthode de Kaiser-Guttman] 		63
+1601116265	91.69.217.178	E	cpp:acp	danilouchouchou	[Méthode de Kaiser-Guttman] 		43
+1601117470	91.69.217.178	E	cpp:acp	danilouchouchou	[Méthode de Kaiser-Guttman] 		234
+1601117495	91.69.217.178	E	cpp:acp	danilouchouchou	[Règle de Karlis – Saporta - Spinaki] 		4
+1601123521	91.69.217.178	E	cpp:acp	danilouchouchou	[Méthode de Kaiser-Guttman] 		1
+1601125812	91.69.217.178	E	cpp:acp	danilouchouchou	[Méthode de Kaiser-Guttman] 		122
+1601151140	91.69.217.178	E	cpp:acp	danilouchouchou	[Méthode de Kaiser-Guttman] 		201
+1601152956	91.69.217.178	E	cpp:acp	danilouchouchou	[Règle de Karlis – Saporta - Spinaki] 		112
+1601152979	91.69.217.178	E	cpp:acp	danilouchouchou	[Méthode de Kaiser-Guttman] 		9
+1601221040	91.69.217.178	E	cpp:acp	danilouchouchou	[Règle de Karlis – Saporta - Spinaki] 		-517
+1601221216	91.69.217.178	E	cpp:acp	danilouchouchou			-4
+1601221298	91.69.217.178	E	cpp:acp	danilouchouchou			0
+1601232451	91.69.217.178	E	cpp:acp	danilouchouchou	[Variance expliquée] 		2
+1601232499	91.69.217.178	E	cpp:acp	danilouchouchou	[Variance expliquée] 		-3
+1601234587	91.69.217.178	E	cpp:acp	danilouchouchou	[Variance expliquée] 		223
+1601235055	91.69.217.178	E	cpp:acp	danilouchouchou	[Variance expliquée] 		154
+1601236117	91.69.217.178	E	cpp:acp	danilouchouchou	[Variance expliquée] 		1
+1601289815	91.69.217.178	E	cpp:acp	danilouchouchou			-12
+1601312598	91.69.217.178	E	cpp:acp	danilouchouchou	[Recherche des composants principales] 		449
+1601312671	91.69.217.178	E	cpp:acp	danilouchouchou	[Projection dimensionnelle] 		205
+1601312748	91.69.217.178	E	cpp:acp	danilouchouchou	[Traitement d'images] 		108
+1601317483	188.141.243.39	E	cpp:acp	pierrevirgaux			14
+1601317662	188.141.243.39	E	cpp:acp	pierrevirgaux	[Méthode de Kaiser-Guttman] 		2
+1601317791	188.141.243.39	E	cpp:acp	pierrevirgaux	[Quand utiliser une ACP ?] 		-2
+1601317816	188.141.243.39	E	cpp:acp	pierrevirgaux	[Méthode de Kaiser-Guttman] 		0
+1601321938	91.69.217.178	E	cpp:acp	danilouchouchou	[Quand utiliser une ACP ?] 		109
+1601454774	89.88.75.36	E	cpp:acp	danilouchouchou			2
+1601458420	89.88.75.36	E	cpp:acp	danilouchouchou	[Entrainement du modèle et décompression image] 		205
+1601471029	89.88.75.36	E	cpp:acp	danilouchouchou	[Evaluer l'erreur de reconstruction] 		-204
+1602060842	217.119.181.222	E	cpp:acp	pierrevirgaux	[Variance expliquée] 		-4
+1602594381	91.69.217.178	E	cpp:acp	danilouchouchou	[Quand utiliser une ACP ?] 		8
+1602864850	176.145.84.168	E	cpp:acp	danilouchouchou	[Quand utiliser une ACP ?] 		51
+1602864859	176.145.84.168	E	cpp:acp	danilouchouchou	[Quand utiliser une ACP ?] 		0
+1603217306	89.88.75.36	E	cpp:acp	danilouchouchou			2
+1603217464	89.88.75.36	E	cpp:acp	danilouchouchou			-4
+1603217489	89.88.75.36	E	cpp:acp	danilouchouchou			15
+1603217536	89.88.75.36	E	cpp:acp	danilouchouchou	[Variance et composantes principales] 		-9
+1603218872	89.88.75.36	E	cpp:acp	danilouchouchou	[Recherche des composants principales] 		-13
+1603218941	89.88.75.36	E	cpp:acp	danilouchouchou	[Recherche des composants principales] 		10
+1603219029	89.88.75.36	E	cpp:acp	danilouchouchou	[Recherche des composants principales] 		96
+1603219428	89.88.75.36	E	cpp:acp	danilouchouchou	[Recherche des composants principales] 		-81
+1603219653	89.88.75.36	E	cpp:acp	danilouchouchou	[Recherche des composants principales] 		250
+1603221091	89.88.75.36	E	cpp:acp	danilouchouchou	[Compression d'image] 		45
+1603221127	89.88.75.36	E	cpp:acp	danilouchouchou	[Entrainement du modèle et décompression image] 		-25
+1603221144	89.88.75.36	E	cpp:acp	danilouchouchou	[Modèle de compression] 		-2
+1603223858	89.88.75.36	E	cpp:acp	danilouchouchou	[Méthode de Kaiser-Guttman] 		8
+1603223942	89.88.75.36	E	cpp:acp	danilouchouchou	[Méthode de Kaiser-Guttman] 		75
+1603229905	89.88.75.36	E	cpp:acp	danilouchouchou	[Recherche des composants principales] 		64
+1603378528	217.119.181.222	E	cpp:acp	danilouchouchou	[Quand utiliser une ACP ?] 		145
+1603539047	88.124.10.73	E	cpp:acp	pierrevirgaux			-15
+1603963105	91.69.217.178	E	cpp:acp	danilouchouchou	[Modèle de décompression d'images] 		0
+1603963128	91.69.217.178	E	cpp:acp	danilouchouchou	[Méthode de Kaiser-Guttman] 		0
+1604655962	88.124.10.73	E	cpp:acp	pierrevirgaux	[Construction du modèle de réduction] 		0
+1604657108	88.124.10.73	E	cpp:acp	pierrevirgaux	[Construction du modèle de réduction] 		-79
+1606588460	213.56.170.38	E	cpp:acp	malama			1
+1606588580	213.56.170.38	E	cpp:acp	malama			7
+1606588691	213.56.170.38	E	cpp:acp	malama			7
+1606588733	213.56.170.38	E	cpp:acp	malama			10
+1606588927	213.56.170.38	E	cpp:acp	malama			3
+1606588948	213.56.170.38	E	cpp:acp	malama	[Variance et composantes principales] 		0
+1606589020	213.56.170.38	E	cpp:acp	malama	[Variance et composantes principales] 		-2
+1606589116	213.56.170.38	E	cpp:acp	malama	[Variance et composantes principales] 		1
+1606589147	213.56.170.38	E	cpp:acp	malama	[Variance et composantes principales] 		0
+1606589174	213.56.170.38	E	cpp:acp	malama	[Recherche des composants principales] 		0
+1606589432	213.56.170.38	E	cpp:acp	malama			-2
+1606589522	213.56.170.38	E	cpp:acp	malama	[Recherche des composants principales] 		-5
+1606589565	213.56.170.38	E	cpp:acp	malama	[Recherche des composants principales] 		1
+1606589636	213.56.170.38	E	cpp:acp	malama	[Projection dimensionnelle] 		-1
+1606589726	213.56.170.38	E	cpp:acp	malama	[Recherche des composants principales] 		1
+1606590108	213.56.170.38	E	cpp:acp	malama	[Construction du modèle de réduction] 		2
+1606590210	213.56.170.38	E	cpp:acp	malama	[Construction du modèle de réduction] 		0
+1606590266	213.56.170.38	E	cpp:acp	malama	[Construction du modèle de réduction] 		0
+1606590360	213.56.170.38	E	cpp:acp	malama	[Construction du modèle de réduction] 		0
+1606590408	213.56.170.38	E	cpp:acp	malama	[Traitement d'images] 		0
+1606590453	213.56.170.38	E	cpp:acp	malama	[Traitement d'images] 		-1
+1606590481	213.56.170.38	E	cpp:acp	malama	[Modèle de décompression d'images] 		0
+1606590581	213.56.170.38	E	cpp:acp	malama	[Modèle de décompression d'images] 		0
+1606590659	213.56.170.38	E	cpp:acp	malama	[Modèle de décompression d'images] 		0
+1606590740	213.56.170.38	E	cpp:acp	malama	[Modèle de décompression d'images] 		3
+1606590801	213.56.170.38	E	cpp:acp	malama	[Modèle de décompression d'images] 		7
+1606590851	213.56.170.38	E	cpp:acp	malama	[Modèle de décompression d'images] 		-1
+1606590896	213.56.170.38	E	cpp:acp	malama	[Modèle de décompression d'images] 		0
+1606590973	213.56.170.38	E	cpp:acp	malama	[Variance expliquée] 		1
+1606591033	213.56.170.38	E	cpp:acp	malama	[Variance expliquée] 		-2
+1606591062	213.56.170.38	E	cpp:acp	malama	[Variance expliquée] 		1
+1606591209	213.56.170.38	E	cpp:acp	malama	[Méthode de Kaiser-Guttman] 		1
+1606591257	213.56.170.38	E	cpp:acp	malama	[Méthode de Kaiser-Guttman] 		0
+1606591506	213.56.170.38	E	cpp:acp	malama	[Quand utiliser une ACP ?] 		-8
+1606837180	88.124.10.73	E	cpp:acp	pierrevirgaux	[Variance et composantes principales] 		-2
+1606837327	88.124.10.73	E	cpp:acp	pierrevirgaux	[Projection dimensionnelle] 		-7
+1606837429	88.124.10.73	E	cpp:acp	pierrevirgaux	[Projection dimensionnelle] 		-11
+1606837514	88.124.10.73	E	cpp:acp	pierrevirgaux	[Construction du modèle de réduction] 		8
+1606837628	88.124.10.73	E	cpp:acp	pierrevirgaux	[Construction du modèle de réduction] 		-10

@@ -1,0 +1,5 @@
+tree_mod <span class="sy0">=</span> DecisionTreeRegressor<span class="br0">&#40;</span><span class="br0">&#41;</span>
+tree_mod.<span class="me1">fit</span><span class="br0">&#40;</span>data_train_train<span class="sy0">,</span> data_train_test<span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">from</span> sklearn.<span class="me1">metrics</span> <span class="kw1">import</span> mean_squared_error
+mean_squared_error<span class="br0">&#40;</span>tree_mod.<span class="me1">predict</span><span class="br0">&#40;</span>data_train_train<span class="br0">&#41;</span><span class="sy0">,</span> data_train_test<span class="br0">&#41;</span>

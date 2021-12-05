@@ -1,0 +1,7 @@
+<span class="co1">#Feature Scaling permet de recalibrer les variables quand elles ne sont pas à la même échelle</span>
+<span class="co1">#seed fixe la valeur de départ</span>
+sgd_reg <span class="sy0">&lt;</span>- gradDescentR.<span class="me1">learn</span><span class="br0">&#40;</span>donneeTotales<span class="sy0">,</span> featureScaling <span class="sy0">=</span> FALSE<span class="sy0">,</span> learningMethod <span class="sy0">=</span> <span class="st0">&quot;SGD&quot;</span><span class="sy0">,</span> seed <span class="sy0">=</span> <span class="nu0">1</span><span class="br0">&#41;</span>
+<span class="co1">#Remarque importante par desfaut le taux d'apprentissage est à 0.1 et le nombre maximum d'itération est de 10 </span>
+<span class="co1">#ce qui est loi d'être optimal dans certains cas proposons une alternative</span>
+sgd_reg <span class="sy0">&lt;</span>- gradDescentR.<span class="me1">learn</span><span class="br0">&#40;</span>donneeTotales<span class="sy0">,</span> featureScaling <span class="sy0">=</span> FALSE<span class="sy0">,</span> learningMethod <span class="sy0">=</span> <span class="st0">&quot;SGD&quot;</span><span class="sy0">,</span> seed <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">,</span> control <span class="sy0">=</span> <span class="kw2">list</span><span class="br0">&#40;</span>maxIter <span class="sy0">=</span> <span class="nu0">100</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="kw1">print</span><span class="br0">&#40;</span>mgd2$model<span class="br0">&#41;</span>

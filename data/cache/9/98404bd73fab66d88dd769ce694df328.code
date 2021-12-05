@@ -1,0 +1,5 @@
+<span class="co1">#importation de la fonction apriori</span>
+<span class="kw1">from</span> mlxtend.<span class="me1">frequent_patterns</span> <span class="kw1">import</span> apriori
+&nbsp;
+<span class="co1">#itemsets frequents</span>
+freq_itemsets <span class="sy0">=</span> apriori<span class="br0">&#40;</span>Dataframe<span class="sy0">,</span>min_support<span class="sy0">=</span><span class="nu0">0.025</span><span class="sy0">,</span>max_len<span class="sy0">=</span><span class="nu0">4</span><span class="sy0">,</span>use_colnames<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span>

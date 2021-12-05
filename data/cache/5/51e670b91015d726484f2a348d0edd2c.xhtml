@@ -1,0 +1,405 @@
+
+<p>
+<a href="/doku.php?id=cpp:ia" class="wikilink1" title="cpp:ia"> Machine Learning</a>
+<a href="/lib/exe/detail.php?id=cpp%3Amanipuler_son_dataset&amp;media=cpp:manipulation.png" class="media" title="cpp:manipulation.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=7788ea&amp;media=cpp:manipulation.png" class="mediacenter" title=" Manipulation du dataset" alt=" Manipulation du dataset" width="400" /></a>
+</p>
+
+<p>
+Une fois le dataset constitué il peut être intéressant d&#039;être à l&#039;aise avec et de savoir le manipuler. Le but étant de construire de nouvelles variables, d&#039;en supprimer ou encore de faire ressortir des informations précises. Le modèle que nous constituerons pourra se basera sur ce dataset il est donc primordiale qu&#039;il soit de optimisé au maximum.
+</p>
+
+<p>
+<div class='alert alert-info'> <strong>DataSet :</strong> On travaillera avec un dataset de caractéristiques de logements, disponible sur <a href="https://www.kaggle.com/htagholdings/property-sales" class="urlextern" title="https://www.kaggle.com/htagholdings/property-sales" rel="nofollow">kaggle</a>. Le dataset sera contenu dans une variable nommée data. </div>
+</p>
+
+<h2 class="sectionedit1" id="decouper_son_dataset">Découper son dataset</h2>
+<div class="level2">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Amanipuler_son_dataset&amp;media=cpp:decoupedataset.jpg" class="media" title="cpp:decoupedataset.jpg"><img src="/lib/exe/fetch.php?w=400&amp;tok=fa8281&amp;media=cpp:decoupedataset.jpg" class="mediacenter" alt="" width="400" /></a> <a href="/lib/exe/detail.php?id=cpp%3Amanipuler_son_dataset&amp;media=cpp:datasetlogement.png" class="media" title="cpp:datasetlogement.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=d49347&amp;media=cpp:datasetlogement.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<p>
+Il est important de bien savoir découper son dataset après l&#039;avoir visualisé. En effet, il faut toujours garder un jeux de données test qui permettra d&#039;évaluer notre modèle à la toute fin de l&#039;entrainement. Même si on se coupe d&#039;une partie des données qui pourraient améliorer l&#039;entrainement, cette étape nous permettra de mieux comprendre la réaction du modèle construit. Souvent, on utilise <strong>20%</strong> du dataset pour l&#039;entrainement. 
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">model_selection</span> <span class="kw1">import</span> train_test_split
+data_train<span class="sy0">,</span> data_test <span class="sy0">=</span> train_test_split<span class="br0">&#40;</span>data<span class="sy0">,</span> test_size <span class="sy0">=</span> <span class="nu0">0.2</span><span class="sy0">,</span> random_state<span class="sy0">=</span><span class="nu0">0</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python"><span class="kw2">set</span>.<span class="me1">seed</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="br0">&#41;</span>
+dt <span class="sy0">=</span> sort<span class="br0">&#40;</span>sample<span class="br0">&#40;</span>nrow<span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="sy0">,</span> nrow<span class="br0">&#40;</span>data<span class="br0">&#41;</span>*<span class="nu0">.7</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+data_train<span class="sy0">&lt;</span>-data<span class="br0">&#91;</span>dt<span class="sy0">,</span><span class="br0">&#93;</span>
+data_test<span class="sy0">&lt;</span>-data<span class="br0">&#91;</span>-dt<span class="sy0">,</span><span class="br0">&#93;</span></pre>
+
+<p>
+<div class='alert alert-danger'> <strong>Attention :</strong> Si vous importez de nouvelles données il faut faire attention à les couper avant de les mélanger avec le reste des données sous peine de voir votre modèle s&#039;entrainer sur des données qui étaient anciennements des données de test et donc fausser la future évaluation </div>
+</p>
+
+<p>
+Par la suite et dans les futurs chapitres nous partirons du principe que nous travaillons avec le jeux d&#039;entrainement.
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.listendata.com/2015/02/splitting-data-into-training-and-test.html" class="urlextern" title="https://www.listendata.com/2015/02/splitting-data-into-training-and-test.html" rel="nofollow">https://www.listendata.com/2015/02/splitting-data-into-training-and-test.html</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;D\u00e9couper son dataset&quot;,&quot;hid&quot;:&quot;decouper_son_dataset&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;688-2085&quot;} -->
+<h3 class="sectionedit2" id="recuperation_d_information_statistique">Récupération d&#039;information statistique</h3>
+<div class="level3">
+
+<p>
+Il est souvent intéressant de compléter la visualisation graphique des données par une visualisation plus statistique. Les informations comme la moyenne, la médianne on encore les écarts type seront intéressantes pour choisir le bon modèle mais aussi repérer des résultats aberrant de prédiction.  
+</p>
+
+<p>
+Plusieurs méthodes sont déjà implémentés dans les librairies gérant le dataset pour récupérer des informations <strong>globales</strong> sur le dataset :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">data.<span class="me1">head</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="co1">#Correspond aux premières lignes du dataset </span>
+data.<span class="me1">tail</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="co1">#Correspond aux dernières lignes du dataset</span>
+data.<span class="me1">shape</span> <span class="co1">#Donne le nombre de ligne et du colonnes du dataset</span>
+data.<span class="me1">describe</span><span class="br0">&#40;</span>include <span class="sy0">=</span> <span class="st0">'all'</span><span class="br0">&#41;</span> <span class="co1">#Voir résultat</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">head<span class="br0">&#40;</span>data<span class="br0">&#41;</span> <span class="co1">#Correspond aux premières lignes du dataset </span>
+tail<span class="br0">&#40;</span>data<span class="br0">&#41;</span> <span class="co1">#Correspond aux dernières lignes du dataset</span>
+summary<span class="br0">&#40;</span>data<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Amanipuler_son_dataset&amp;media=cpp:resumedataset.png" class="media" title="cpp:resumedataset.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=9628dd&amp;media=cpp:resumedataset.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<p>
+Parfois, il est plus intéressant de récupérer <strong>une colonne particulière</strong> pour lui appliquer des traitements spécifiques :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">data.<span class="me1">price</span> <span class="co1">#Récupérer la colonne price qui peut être très intéressante si on veut prédire le prix des appartements</span>
+data.<span class="me1">price</span>.<span class="me1">sort_values</span><span class="br0">&#40;</span>ascending <span class="sy0">=</span> <span class="kw2">False</span><span class="br0">&#41;</span> <span class="co1">#Va permettre de trier la colonne de façon décroissante</span>
+data.<span class="me1">price</span>.<span class="me1">argsort</span> <span class="co1">#Va permettre d'obtenir les indices des éléments triés</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>dplyr<span class="br0">&#41;</span>
+<span class="co1">#Récupérer la colonne price</span>
+data$price
+<span class="co1">#OU</span>
+data %<span class="sy0">&gt;</span>%
+        <span class="kw3">select</span><span class="br0">&#40;</span>price<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Permet de trier la colonne de façon décroissante</span>
+data %<span class="sy0">&gt;</span>%
+        arrange<span class="br0">&#40;</span>desc<span class="br0">&#40;</span>price<span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;R\u00e9cup\u00e9ration d&#039;information statistique&quot;,&quot;hid&quot;:&quot;recuperation_d_information_statistique&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:2,&quot;range&quot;:&quot;2086-3759&quot;} -->
+<h2 class="sectionedit3" id="filtrer_ses_donnees">Filtrer ses données</h2>
+<div class="level2">
+
+<p>
+Nous allons ici présenter deux méthodes python qui sont intéressantes pour sélectionner qu&#039;<strong>une partie du dataset</strong> et ainsi la traiter séparemment. Nous présenterons une méthode en R qui permet d&#039;obtenir le même résultat.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Filtrer ses donn\u00e9es&quot;,&quot;hid&quot;:&quot;filtrer_ses_donnees&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:3,&quot;range&quot;:&quot;3760-4025&quot;} -->
+<h3 class="sectionedit4" id="boolean_indexing">Boolean indexing</h3>
+<div class="level3">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Amanipuler_son_dataset&amp;media=cpp:booleanindexing.png" class="media" title="cpp:booleanindexing.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=b9b380&amp;media=cpp:booleanindexing.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<p>
+Nous allons ici essayer de récupérer tous les appartements ayant un prix supérieur à un 450000$. Il y a 2 étapes pour faire du boolean indexing. On commence par créer une colonne de booleans qui permet de savoir si la condition est respectée.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">tableauDeBoolean <span class="sy0">=</span> data.<span class="me1">price</span> <span class="sy0">&gt;</span> <span class="nu0">450000</span> <span class="co1">#On regarde les appartements supérieurs à 450000</span></pre>
+
+<p>
+On peut ensuite faire la sélection en fonction du tableau de boolean que l&#039;on a construit précédemment :
+</p>
+<pre class="code python">data<span class="br0">&#91;</span>tableauDeBoolean<span class="br0">&#93;</span></pre>
+
+<p>
+<em class="u">Code R :</em>
+</p>
+
+<p>
+Il est possible d&#039;appliquer cette technique sur une seul colonne. Il faudra faire une boucle pour l&#039;appliquer à toutes les colonnes.
+</p>
+<pre class="code python">tableauDeBoolean <span class="sy0">&lt;</span>- data$price <span class="sy0">&gt;</span> <span class="nu0">450000</span>
+data$price<span class="br0">&#91;</span>tableauDeBoolean<span class="br0">&#93;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Amanipuler_son_dataset&amp;media=cpp:resbooleanindexing.png" class="media" title="cpp:resbooleanindexing.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=d3fc85&amp;media=cpp:resbooleanindexing.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://bookdown.org/ndphillips/YaRrr/logical-indexing.html" class="urlextern" title="https://bookdown.org/ndphillips/YaRrr/logical-indexing.html" rel="nofollow">https://bookdown.org/ndphillips/YaRrr/logical-indexing.html</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Boolean indexing&quot;,&quot;hid&quot;:&quot;boolean_indexing&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:4,&quot;range&quot;:&quot;4026-5016&quot;} -->
+<h3 class="sectionedit5" id="slicing">Slicing</h3>
+<div class="level3">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Amanipuler_son_dataset&amp;media=cpp:slicing.jpg" class="media" title="cpp:slicing.jpg"><img src="/lib/exe/fetch.php?w=400&amp;tok=f48f46&amp;media=cpp:slicing.jpg" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<p>
+Pour faire du slicing, il faut concidérer que le dataset est une matrice donc en informatique un tableau à 2 dimensions. On pourra ainsi récupérer que certaines partie du dataset.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">data.<span class="me1">iloc</span><span class="br0">&#91;</span><span class="nu0">20</span>:<span class="nu0">50</span><span class="sy0">,</span> :<span class="br0">&#93;</span> <span class="co1"># Permet de récupérer les lignes de 20 à 50 et toutes les colonnes</span>
+data.<span class="me1">iloc</span><span class="br0">&#91;</span><span class="nu0">20</span><span class="sy0">,</span><span class="nu0">50</span><span class="sy0">,</span> <span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">2</span><span class="br0">&#93;</span><span class="br0">&#93;</span> <span class="co1"># Permet de récupérer les lignes de 20 à 50 et les deux colonnes d'indice 0 et 2</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python"><span class="kw2">slice</span><span class="br0">&#40;</span>data<span class="sy0">,</span> <span class="nu0">20</span>:<span class="nu0">50</span><span class="br0">&#41;</span> <span class="co1"># Permet de récupérer les lignes de 20 à 50 et toutes les colonnes</span>
+ <span class="co1"># Permet de récupérer les lignes de 20 à 50 et les deux colonnes d'indice 0 et 2</span>
+<span class="kw2">slice</span><span class="br0">&#40;</span>data<span class="sy0">,</span> <span class="nu0">20</span>:<span class="nu0">50</span><span class="br0">&#41;</span> %<span class="sy0">&gt;</span>%
+                   <span class="kw3">select</span><span class="br0">&#40;</span>datesold<span class="sy0">,</span> postcode<span class="br0">&#41;</span></pre>
+
+<p>
+Il est possible aussi de faire la sélection pas par les indices mais par une condition, il s&#039;agit d&#039;une alternative au boolean indexing.
+</p>
+<pre class="code python">data.<span class="me1">loc</span><span class="br0">&#91;</span>data.<span class="me1">price</span><span class="sy0">&gt;</span><span class="nu0">450000</span><span class="sy0">,</span> :<span class="br0">&#93;</span> <span class="co1">#Permet de récupérer tout les logements supérieurs à 450 000 $ et toutes les colonnes</span>
+data.<span class="me1">loc</span><span class="br0">&#91;</span><span class="br0">&#40;</span>data<span class="br0">&#91;</span><span class="st0">'price'</span><span class="br0">&#93;</span><span class="sy0">&gt;</span><span class="nu0">450000</span><span class="br0">&#41;</span> &amp; <span class="br0">&#40;</span>data<span class="br0">&#91;</span><span class="st0">'propertyType'</span><span class="br0">&#93;</span> <span class="sy0">==</span> <span class="st0">&quot;house&quot;</span><span class="br0">&#41;</span><span class="sy0">,</span>:<span class="br0">&#93;</span> <span class="co1">#Permet de récupérer les maisons supérieurs à 450 000 $</span></pre>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Amanipuler_son_dataset&amp;media=cpp:resslicing.png" class="media" title="cpp:resslicing.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=9db2f3&amp;media=cpp:resslicing.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://larmarange.github.io/analyse-R/manipuler-les-donnees-avec-dplyr.html" class="urlextern" title="http://larmarange.github.io/analyse-R/manipuler-les-donnees-avec-dplyr.html" rel="nofollow">http://larmarange.github.io/analyse-R/manipuler-les-donnees-avec-dplyr.html</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Slicing&quot;,&quot;hid&quot;:&quot;slicing&quot;,&quot;codeblockOffset&quot;:9,&quot;secid&quot;:5,&quot;range&quot;:&quot;5017-6302&quot;} -->
+<h3 class="sectionedit6" id="filtrer_en_r">Filtrer en R</h3>
+<div class="level3">
+
+<p>
+Il existe une fonction de la librairie <strong>dplyr</strong> qui permet de filtrer facilement un dataset.
+</p>
+<pre class="code python"><span class="co1">#Donnera toutes les maisons supérieurs à 400000$.</span>
+<span class="kw2">filter</span><span class="br0">&#40;</span>data<span class="sy0">,</span> price <span class="sy0">&gt;</span> <span class="nu0">400000</span><span class="sy0">,</span> propertyType <span class="sy0">==</span> <span class="st0">&quot;house&quot;</span><span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Filtrer en R&quot;,&quot;hid&quot;:&quot;filtrer_en_r&quot;,&quot;codeblockOffset&quot;:12,&quot;secid&quot;:6,&quot;range&quot;:&quot;6303-6548&quot;} -->
+<h2 class="sectionedit7" id="operation_sur_les_colonnes">Opération sur les colonnes</h2>
+<div class="level2">
+
+<p>
+Nous allons décrire ici comment manipuler les colonnes en particulier pour mieux contrôler son dataset.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Op\u00e9ration sur les colonnes&quot;,&quot;hid&quot;:&quot;operation_sur_les_colonnes&quot;,&quot;codeblockOffset&quot;:13,&quot;secid&quot;:7,&quot;range&quot;:&quot;6549-6694&quot;} -->
+<h3 class="sectionedit8" id="ajouter_une_nouvelle_colonne">Ajouter une nouvelle colonne</h3>
+<div class="level3">
+
+<p>
+Il est parfois intéressant de créer ses propres colonnes en faisant des opérations combinant plusieurs colonnes. Ainsi, on fait apparaître une colonne avec plus d&#039;information qui sera plus utile pour la construction du modèle.
+</p>
+
+<p>
+Nous alons calculer la variable qui donne le prix par chambre :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">data<span class="br0">&#91;</span><span class="st0">&quot;price_per_room&quot;</span><span class="br0">&#93;</span> <span class="sy0">=</span> data<span class="br0">&#91;</span><span class="st0">&quot;price&quot;</span><span class="br0">&#93;</span>/data<span class="br0">&#91;</span><span class="st0">&quot;bedrooms&quot;</span><span class="br0">&#93;</span></pre>
+
+<p>
+<em class="u">En R:</em>
+</p>
+<pre class="code python">data %<span class="sy0">&gt;</span>%
+        mutate<span class="br0">&#40;</span>price_per_room <span class="sy0">=</span> price / bedrooms<span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Ajouter une nouvelle colonne&quot;,&quot;hid&quot;:&quot;ajouter_une_nouvelle_colonne&quot;,&quot;codeblockOffset&quot;:13,&quot;secid&quot;:8,&quot;range&quot;:&quot;6695-7216&quot;} -->
+<h3 class="sectionedit9" id="supprimer_une_colonne">Supprimer une colonne</h3>
+<div class="level3">
+
+<p>
+Il est parfois nécessaire de supprimer des colonnes qui n&#039;apportent que peu d&#039;information. Ceci permet d&#039;éviter l&#039;<strong>overfitting</strong> qui fait perdre de la généralité au modèle (il s&#039;agit d&#039;un problème courrant en Machine Learning, nous le reverrons dans de futurs pages).
+</p>
+
+<p>
+Supprimons ici la colonne “postcode”
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+data.<span class="me1">drop</span><span class="br0">&#40;</span><span class="st0">&quot;postcode&quot;</span><span class="sy0">,</span> axis<span class="sy0">=</span><span class="nu0">1</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">data<span class="br0">&#91;</span><span class="sy0">,</span>-<span class="nu0">2</span><span class="br0">&#93;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Supprimer une colonne&quot;,&quot;hid&quot;:&quot;supprimer_une_colonne&quot;,&quot;codeblockOffset&quot;:15,&quot;secid&quot;:9,&quot;range&quot;:&quot;7217-7697&quot;} -->
+<h3 class="sectionedit10" id="divers">Divers</h3>
+<div class="level3">
+
+<p>
+<strong>Renomer les colonnes</strong>
+</p>
+
+<p>
+Il est parfois nécessaire de renommer ses colonnes pour mieux visuliser son dataset et mieux se rappeler de chacune des variables.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">data_train.<span class="me1">rename</span><span class="br0">&#40;</span>columns<span class="sy0">=</span><span class="br0">&#123;</span><span class="st0">'Code postal'</span>: <span class="st0">'CodePostal'</span><span class="br0">&#125;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">data %<span class="sy0">&gt;</span>%
+    rename<span class="br0">&#40;</span>CodePostal <span class="sy0">=</span> postcode<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Amanipuler_son_dataset&amp;media=cpp:groupbyetcount.png" class="media" title="cpp:groupbyetcount.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=62a926&amp;media=cpp:groupbyetcount.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<p>
+<strong>Compter les éléments dans une colonne</strong>
+</p>
+
+<p>
+Il peut être intéressant de compter les occurences dans une colonne pour mieux voir la répartition des éléments. Ici comptons combien nous avons de maisons et d&#039;appartements dans notre dataset.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">data_train.<span class="me1">groupby</span><span class="br0">&#40;</span><span class="st0">&quot;propertyType&quot;</span><span class="br0">&#41;</span>.<span class="me1">count</span><span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">data %<span class="sy0">&gt;</span>%
+     count<span class="br0">&#40;</span>propertyType<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Changer la place d&#039;une colonne dans un dataFrame</strong>
+</p>
+
+<p>
+Imaginons que nous voulions mettre le prix sur la dernière colonne à droite du dataFrame.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">dataFrame <span class="sy0">=</span> data<span class="br0">&#91;</span><span class="br0">&#91;</span><span class="st0">'datesold'</span><span class="sy0">,</span><span class="st0">'CodePostal'</span><span class="sy0">,</span><span class="st0">'bedrooms'</span><span class="sy0">,</span><span class="st0">'price_per_room'</span><span class="sy0">,</span><span class="st0">'price'</span><span class="br0">&#93;</span><span class="br0">&#93;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">dataFrame <span class="sy0">&lt;</span>- data<span class="br0">&#91;</span><span class="sy0">,</span> c<span class="br0">&#40;</span><span class="st0">&quot;datesold&quot;</span><span class="sy0">,</span><span class="st0">&quot;CodePostal&quot;</span><span class="sy0">,</span><span class="st0">&quot;bedrooms&quot;</span><span class="sy0">,</span><span class="st0">&quot;price_per_room&quot;</span><span class="sy0">,</span><span class="st0">&quot;price&quot;</span><span class="br0">&#41;</span><span class="br0">&#93;</span></pre>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://learn.datacamp.com/" class="urlextern" title="https://learn.datacamp.com/" rel="nofollow">https://learn.datacamp.com/</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://informatique-mia.inrae.fr/r4ciam/node/145" class="urlextern" title="http://informatique-mia.inrae.fr/r4ciam/node/145" rel="nofollow">http://informatique-mia.inrae.fr/r4ciam/node/145</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Divers&quot;,&quot;hid&quot;:&quot;divers&quot;,&quot;codeblockOffset&quot;:17,&quot;secid&quot;:10,&quot;range&quot;:&quot;7698-8989&quot;} -->
+<h2 class="sectionedit11" id="apprendre_a_croiser_les_variables">Apprendre à croiser les variables</h2>
+<div class="level2">
+
+<p>
+Il est parfois nécessaire de croiser les variables pour mieux comprendre les relations qui les lient. Ici nous allons essayer de faire ressortir le nombre de maisons et d&#039;appartements par code postal différent.
+</p>
+
+<p>
+<em class="u">En Python : </em>
+</p>
+<pre class="code python">pd.<span class="me1">crosstab</span><span class="br0">&#40;</span>data_train<span class="br0">&#91;</span><span class="st0">&quot;CodePostal&quot;</span><span class="br0">&#93;</span><span class="sy0">,</span> data_train<span class="br0">&#91;</span><span class="st0">&quot;propertyType&quot;</span><span class="br0">&#93;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">CrossTable<span class="br0">&#40;</span>data$postcode<span class="sy0">,</span> data$propertyType<span class="sy0">,</span> prop.<span class="me1">r</span> <span class="sy0">=</span> FALSE<span class="sy0">,</span> prop.<span class="me1">c</span> <span class="sy0">=</span> FALSE<span class="sy0">,</span> prop.<span class="me1">t</span> <span class="sy0">=</span> FALSE<span class="sy0">,</span> prop.<span class="me1">chisq</span> <span class="sy0">=</span> FALSE<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Amanipuler_son_dataset&amp;media=cpp:crosstab.png" class="media" title="cpp:crosstab.png"><img src="/lib/exe/fetch.php?w=200&amp;tok=970eca&amp;media=cpp:crosstab.png" class="mediacenter" alt="" width="200" /></a>
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Data_Manipulation_Pandas.pdf" class="urlextern" title="http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Data_Manipulation_Pandas.pdf" rel="nofollow">http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Data_Manipulation_Pandas.pdf</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.rdocumentation.org/packages/gmodels/versions/2.18.1/topics/CrossTable" class="urlextern" title="https://www.rdocumentation.org/packages/gmodels/versions/2.18.1/topics/CrossTable" rel="nofollow">https://www.rdocumentation.org/packages/gmodels/versions/2.18.1/topics/CrossTable</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Apprendre \u00e0 croiser les variables&quot;,&quot;hid&quot;:&quot;apprendre_a_croiser_les_variables&quot;,&quot;codeblockOffset&quot;:23,&quot;secid&quot;:11,&quot;range&quot;:&quot;8990-&quot;} -->

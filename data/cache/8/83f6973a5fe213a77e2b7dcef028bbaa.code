@@ -1,0 +1,2 @@
+control_param <span class="sy0">=</span> rpart.<span class="me1">control</span><span class="br0">&#40;</span>max_depth <span class="sy0">=</span> <span class="nu0">3</span><span class="sy0">,</span> minsplit <span class="sy0">=</span> <span class="nu0">50</span><span class="br0">&#41;</span>
+model <span class="sy0">=</span> rpart<span class="br0">&#40;</span>y <span class="sy0">~</span> .<span class="sy0">,</span> data<span class="sy0">,</span> control <span class="sy0">=</span> control_param<span class="br0">&#41;</span>

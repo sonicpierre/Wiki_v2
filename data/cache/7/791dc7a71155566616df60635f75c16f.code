@@ -1,0 +1,8 @@
+<span class="kw1">import</span> statsmodels.<span class="me1">tsa</span>.<span class="me1">stattools</span> <span class="kw1">as</span> st
+<span class="kw1">import</span> statsmodels.<span class="me1">graphics</span>.<span class="me1">tsaplots</span> <span class="kw1">as</span> stplot
+&nbsp;
+n<span class="sy0">,</span> m <span class="sy0">=</span> <span class="nu0">12</span><span class="sy0">,</span> <span class="nu0">8</span>
+&nbsp;
+<span class="kw1">with</span> plt.<span class="me1">rc_context</span><span class="br0">&#40;</span><span class="br0">&#41;</span>:
+    plt.<span class="me1">rc</span><span class="br0">&#40;</span><span class="st0">&quot;figure&quot;</span><span class="sy0">,</span> figsize<span class="sy0">=</span><span class="br0">&#40;</span>n<span class="sy0">,</span>m<span class="br0">&#41;</span><span class="br0">&#41;</span>
+    stplot.<span class="me1">plot_acf</span><span class="br0">&#40;</span>sun_rate<span class="sy0">,</span> lags <span class="sy0">=</span> <span class="nu0">500</span><span class="sy0">,</span> title <span class="sy0">=</span> <span class="st0">&quot;ACF pour contrôler la saisonnalité&quot;</span><span class="br0">&#41;</span>

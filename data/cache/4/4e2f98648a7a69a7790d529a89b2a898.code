@@ -1,0 +1,9 @@
+{
+    #Autre attributs du personnage
+    &quot;spells&quot;:
+    [
+        { Sort n°0 },
+        { Sort n°1 },
+        ...
+    ]
+}

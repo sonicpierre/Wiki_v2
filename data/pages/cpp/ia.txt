@@ -1,0 +1,48 @@
+{{ :cpp:machinelearningpres.jpeg?500 |}}
+
+  * **Sujet** : ici, nous allons présenter les différentes méthodes de Machine Learning en se centrant sur la pratique tout en proposant des résumés de la théorie.
+  * **Outils nécessaires** : nous emploierons les  langages R et Python. Nous vous invitons à utiliser Jupyter notebook pour Python et RStudio pour R. Concernant les données, nous nous servirons des datasets, open sources simples d'accès.
+  * **Prérequis** : il est préférable d'avoir quelques notions de mathématiques et d'informatique. Toutefois, vous pouvez vous en passer dans les premiers chapitres. Certaines notions concernant le lien entre maths et informatique, abordées [[cpp:OperationMatricielle | ici]], pourront vous être utiles.
+  * **Temps** : il faut compter environ 30 h pour maitriser les concepts abordés.
+
+<alert warning>**<fs large>Indication :</fs>** il est vivement conseillé d'utiliser RStudio sur Windows pour une meilleure installation des packages ce qui vous simplifiera grandement la tâche.</alert>
+
+
+[[cpp:Qu'est-ce que le machine learning ? | Qu'est-ce que le Machine Learning ?]]
+
+=====Constitution du dataset=====
+
+  * [[cpp:Création et opération sur dataframe | Depuis un fichier ou une BDD]]
+  * [[cpp:Scrapper les données | Depuis une page Web]]
+
+=====Exploration du dataset=====
+
+  * [[cpp:Visualiser le dataset | Visualiser le dataset]]
+  * [[cpp:Le Clustering | Le Clustering]]
+  * [[cpp: ACP| ACP]]
+
+
+=====Préparation des données=====
+
+  * [[cpp:Manipuler son Dataset | Manipuler et découper son DataSet]]
+  * [[cpp:Preprocessing et encodage | Preprocessing et encodage]]
+
+
+=====Les régressions=====
+
+  * [[cpp:Régression supervisée | Régression linéaire et descente de gradient]]
+  * [[cpp:Régression lineaire interpret Daniel | Régression linéaire en statistique]]
+  *  [[cpp:Régression régularisée | Régression polynomiale et régressions régularisées]]
+  * [[cpp:Régression logistique | Régression logistique]]
+
+
+
+
+=====Les arbres et modèles d'ensemble=====
+
+  * [[cpp:Arbres de classification | Les arbres de classification et de régression]]
+  * [[cpp:Autre algorithme classification | Autres arbres de classification]]
+  * [[cpp:Les forêt de classification et de régression | Les modèles d'ensemble]]
+=====Page en construction ou futures pages=====
+
+  * [[cpp:Future page ou page en construction IA| Futures pages ou pages en constructions IA]]

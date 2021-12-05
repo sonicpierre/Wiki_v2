@@ -1,0 +1,4 @@
+<span class="co1">%u' *v &lt;=&gt; produit scalaire ente u et v</span>
+&nbsp;
+r_old = A*x-b;
+p_old = -r_old;

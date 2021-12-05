@@ -1,0 +1,3 @@
+<span class="kw1">from</span> statsmodels.<span class="me1">stats</span>.<span class="me1">stattools</span> <span class="kw1">import</span> durbin_watson
+&nbsp;
+durbin_watson<span class="br0">&#40;</span>Regression_Lin.<span class="me1">resid</span><span class="br0">&#41;</span>

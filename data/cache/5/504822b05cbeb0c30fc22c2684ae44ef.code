@@ -1,0 +1,1 @@
+derivee <span class="sy0">=</span> <span class="kw1">lambda</span> x:  <span class="nu0">2</span>*x

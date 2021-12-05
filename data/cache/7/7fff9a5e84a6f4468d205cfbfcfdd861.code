@@ -1,0 +1,2 @@
+h <span class="sy0">=</span> hclust<span class="br0">&#40;</span>distance<span class="sy0">,</span> <span class="st0">&quot;ward.D2&quot;</span><span class="br0">&#41;</span><span class="co1">#Création des paramètres du dendroramme</span>
+plot<span class="br0">&#40;</span>h<span class="br0">&#41;</span><span class="co1">#Création du dendrogramme</span>

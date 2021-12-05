@@ -1,0 +1,1 @@
+install.<span class="me1">packages</span><span class="br0">&#40;</span>chemin_de_votre_archive<span class="sy0">,</span> repos <span class="sy0">=</span> NULL<span class="sy0">,</span> <span class="kw2">type</span><span class="sy0">=</span><span class="st0">&quot;source&quot;</span><span class="br0">&#41;</span>

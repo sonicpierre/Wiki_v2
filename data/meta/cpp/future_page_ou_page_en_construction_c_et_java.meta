@@ -1,0 +1,26 @@
+a:2:{s:7:"current";a:9:{s:4:"date";a:2:{s:7:"created";i:1597488167;s:8:"modified";i:1598887596;}s:7:"creator";s:14:"Pierre Virgaux";s:4:"user";s:13:"pierrevirgaux";s:11:"last_change";a:8:{s:4:"date";i:1598887596;s:2:"ip";s:11:"89.88.75.36";s:4:"type";s:1:"E";s:2:"id";s:49:"cpp:future_page_ou_page_en_construction_c_et_java";s:4:"user";s:15:"danilouchouchou";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:2;}s:11:"contributor";a:2:{s:13:"pierrevirgaux";s:14:"Pierre Virgaux";s:15:"danilouchouchou";s:6:"Daniel";}s:8:"relation";a:3:{s:5:"media";a:2:{s:24:"cpp:pageconstruction.png";b:1;s:18:"cpp:futurepage.jpg";b:1;}s:10:"references";a:8:{s:23:"cpp:controler_le_joueur";b:1;s:34:"cpp:lire_et_interpreter_un_fichier";b:0;s:23:"cpp:animer_les_textures";b:0;s:26:"cpp:animer_les_deplacement";b:0;s:23:"cpp:generer_les_ennemis";b:0;s:27:"cpp:les_actions_des_ennemis";b:0;s:26:"cpp:decrire_le_deplacement";b:0;s:34:"cpp:faire_jouer_2_joueurs_en_local";b:0;}s:10:"firstimage";s:24:"cpp:pageconstruction.png";}s:5:"title";s:18:"Gérer les actions";s:11:"description";a:2:{s:15:"tableofcontents";a:6:{i:0;a:4:{s:3:"hid";s:17:"gerer_les_actions";s:5:"title";s:18:"Gérer les actions";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:1;a:4:{s:3:"hid";s:13:"futures_pages";s:5:"title";s:13:"Futures Pages";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:2;a:4:{s:3:"hid";s:17:"generer_une_carte";s:5:"title";s:19:"Générer une carte";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:3;a:4:{s:3:"hid";s:19:"animation_graphique";s:5:"title";s:19:"Animation graphique";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:4;a:4:{s:3:"hid";s:11:"les_ennemis";s:5:"title";s:11:"Les ennemis";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:5;a:4:{s:3:"hid";s:19:"ajouter_des_joueurs";s:5:"title";s:19:"Ajouter des joueurs";s:4:"type";s:2:"ul";s:5:"level";i:2;}}s:8:"abstract";s:355:"Gérer les actions
+
+	*   Contrôler le joueur
+
+Futures Pages
+
+
+
+Générer une carte
+
+	*   Lire et interpréter un fichier
+
+Animation graphique
+
+	*   Animer les textures
+	*   Animer les déplacement
+
+Les ennemis
+
+	*   Générer les ennemis
+	*   Les actions des ennemis
+	*   Décrire le déplacement
+
+Ajouter des joueurs
+
+	*   Faire jouer 2 joueurs en local";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}}s:10:"persistent";a:5:{s:4:"date";a:2:{s:7:"created";i:1597488167;s:8:"modified";i:1598887596;}s:7:"creator";s:14:"Pierre Virgaux";s:4:"user";s:13:"pierrevirgaux";s:11:"last_change";a:8:{s:4:"date";i:1598887596;s:2:"ip";s:11:"89.88.75.36";s:4:"type";s:1:"E";s:2:"id";s:49:"cpp:future_page_ou_page_en_construction_c_et_java";s:4:"user";s:15:"danilouchouchou";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:2;}s:11:"contributor";a:2:{s:13:"pierrevirgaux";s:14:"Pierre Virgaux";s:15:"danilouchouchou";s:6:"Daniel";}}}

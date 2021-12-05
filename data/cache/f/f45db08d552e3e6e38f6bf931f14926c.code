@@ -1,0 +1,7 @@
+poly_feature <span class="sy0">=</span> function<span class="br0">&#40;</span>feature<span class="sy0">,</span> power<span class="br0">&#41;</span><span class="br0">&#123;</span>
+  <span class="kw1">return</span><span class="br0">&#40;</span>data.<span class="me1">frame</span><span class="br0">&#40;</span>sapply<span class="br0">&#40;</span><span class="nu0">1</span>:power<span class="sy0">,</span> function<span class="br0">&#40;</span>x<span class="br0">&#41;</span><span class="br0">&#123;</span><span class="br0">&#40;</span>feature<span class="br0">&#41;</span>**x<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#125;</span><span class="co1">#Fonction de création des polynômes de degrés &quot;power&quot;, pour la variable &quot;feature&quot;.</span>
+&nbsp;
+X_poly <span class="sy0">=</span> poly_features<span class="br0">&#40;</span>X<span class="sy0">,</span><span class="nu0">2</span><span class="br0">&#41;</span><span class="co1">#Application de la fonction aux données avec un degré égal à 2.</span>
+&nbsp;
+<span class="co1">#NB : Pour avoir la colonne de biais comme dans la fonction Python, il est nécessaire de commencer la liste de degrés à 0, dans la fonction sapply de R.</span>

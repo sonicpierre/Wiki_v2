@@ -1,0 +1,32 @@
+<span class="kw1">def</span> conjgrad<span class="br0">&#40;</span>A<span class="sy0">,</span> b<span class="sy0">,</span> x<span class="br0">&#41;</span>:
+    <span class="st0">&quot;&quot;&quot;
+    Variables:
+    r_old = r_k
+    r_new = r_k+1
+    même chose pour p_old
+    np.dot &lt;=&gt; produit matrice-vecteur ou produit scalaire
+    &quot;&quot;&quot;</span>
+&nbsp;
+    <span class="co1">#Initialisation</span>
+    r_old <span class="sy0">=</span> np.<span class="me1">dot</span><span class="br0">&#40;</span>A<span class="sy0">,</span> x<span class="br0">&#41;</span>-b
+    p_old <span class="sy0">=</span> -r_old
+&nbsp;
+    <span class="co1">#Traitement boucle</span>
+    <span class="kw1">while</span> <span class="br0">&#40;</span><span class="br0">&#40;</span>r_old <span class="sy0">!=</span> np.<span class="me1">zeros</span><span class="br0">&#40;</span><span class="kw2">len</span><span class="br0">&#40;</span>b<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>.<span class="kw2">all</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>:
+&nbsp;
+        Apk <span class="sy0">=</span> np.<span class="me1">dot</span><span class="br0">&#40;</span>A<span class="sy0">,</span> p_old<span class="br0">&#41;</span>
+        alpha <span class="sy0">=</span> -np.<span class="me1">dot</span><span class="br0">&#40;</span>np.<span class="me1">transpose</span><span class="br0">&#40;</span>r_old<span class="br0">&#41;</span><span class="sy0">,</span>p_old<span class="br0">&#41;</span>/np.<span class="me1">dot</span><span class="br0">&#40;</span>np.<span class="me1">transpose</span><span class="br0">&#40;</span>p_old<span class="br0">&#41;</span><span class="sy0">,</span> Apk<span class="br0">&#41;</span> 
+&nbsp;
+        x <span class="sy0">=</span> x + np.<span class="me1">dot</span><span class="br0">&#40;</span>alpha<span class="sy0">,</span> p_old<span class="br0">&#41;</span>
+        r_new <span class="sy0">=</span> np.<span class="me1">dot</span><span class="br0">&#40;</span>A<span class="sy0">,</span> x<span class="br0">&#41;</span> - b 
+&nbsp;
+        beta <span class="sy0">=</span> np.<span class="me1">dot</span><span class="br0">&#40;</span>np.<span class="me1">transpose</span><span class="br0">&#40;</span>r_new<span class="br0">&#41;</span><span class="sy0">,</span>Apk<span class="br0">&#41;</span> / np.<span class="me1">dot</span><span class="br0">&#40;</span>np.<span class="me1">transpose</span><span class="br0">&#40;</span>p_old<span class="br0">&#41;</span><span class="sy0">,</span> Apk<span class="br0">&#41;</span>
+&nbsp;
+&nbsp;
+        p_new <span class="sy0">=</span> -r_new + np.<span class="me1">dot</span><span class="br0">&#40;</span>beta<span class="sy0">,</span> p_old<span class="br0">&#41;</span>
+&nbsp;
+        <span class="co1">#k = k+ 1</span>
+        r_old <span class="sy0">=</span> r_new
+        p_old <span class="sy0">=</span> p_new
+&nbsp;
+    <span class="kw1">return</span> x

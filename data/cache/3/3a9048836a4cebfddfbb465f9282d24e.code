@@ -1,0 +1,15 @@
+folium.<span class="me1">Choropleth</span><span class="br0">&#40;</span>
+ geo_data<span class="sy0">=</span>etat<span class="sy0">,</span> <span class="co1"># Correspondance des coordonnées géographiques grâce au fichier GEOJSON</span>
+ name<span class="sy0">=</span><span class="st0">'Pauvrete'</span><span class="sy0">,</span>
+ data<span class="sy0">=</span>donne_pauvrete<span class="sy0">,</span><span class="co1"># Utilisation des données sur la carte</span>
+ columns<span class="sy0">=</span><span class="br0">&#91;</span><span class="st0">'state_National'</span><span class="sy0">,</span> <span class="st0">'Pauvreté'</span><span class="br0">&#93;</span><span class="sy0">,</span><span class="co1"># Correspondance des colonnes à utiliser : la première étant la colonne des états et l'autre des données de pauvréte correspondants.</span>
+ <span class="co1"># Il est nécessaire de connaitre ce par quoi sont identifier les régions dans le fichier GEOJSON et ainsi les faire correspondre (dans le même ordre) dans le fichier de données. </span>
+ <span class="co1"># Par exemple ici, le GEOJSON identifie les états par leur nom, donc dans nos données les états sont connus par leur nom. Cela aurait pu être le code postal ou une aute mesure d'identification. </span>
+ key_on<span class="sy0">=</span><span class="st0">'feature.properties.name'</span><span class="sy0">,</span><span class="co1"># Correspondance des noms d'états dans le fichier GEOJSON</span>
+ fill_opacity<span class="sy0">=</span><span class="nu0">0.7</span><span class="sy0">,</span>
+ line_opacity<span class="sy0">=</span><span class="nu0">0.2</span><span class="sy0">,</span>
+ fill_color<span class="sy0">=</span><span class="st0">'YlOrRd'</span><span class="sy0">,</span> <span class="co1"># Définition de couleurs de données</span>
+ legend_name<span class="sy0">=</span><span class="st0">'Taux de pauvrete'</span><span class="sy0">,</span> <span class="co1"># Création d'une légende</span>
+<span class="br0">&#41;</span>.<span class="me1">add_to</span><span class="br0">&#40;</span>carte<span class="br0">&#41;</span> <span class="co1"># Permet d'ajouter toutes ces informations à la carte</span>
+&nbsp;
+carte <span class="co1"># Lancement de la carte</span>

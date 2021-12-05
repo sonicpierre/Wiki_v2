@@ -1,0 +1,2 @@
+<span class="co1"># Supprimer les mots vides anglais</span>
+docs <span class="sy0">&lt;</span>- tm_map<span class="br0">&#40;</span>docs<span class="sy0">,</span> removeWords<span class="sy0">,</span> stopwords<span class="br0">&#40;</span><span class="st0">&quot;english&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>

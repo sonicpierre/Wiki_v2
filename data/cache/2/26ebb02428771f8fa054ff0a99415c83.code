@@ -1,0 +1,9 @@
+<span class="kw4">float</span> Joueur<span class="sy4">::</span><span class="me2">getX</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    <span class="kw1">return</span> _positionX<span class="sy4">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw4">float</span> Joueur<span class="sy4">::</span><span class="me2">getY</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    retrun _positionY<span class="sy4">;</span>
+<span class="br0">&#125;</span>

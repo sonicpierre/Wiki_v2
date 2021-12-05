@@ -1,0 +1,8 @@
+<span class="co1">#Choix de la variable entrante</span>
+rapportMin<span class="sy0">=</span>np.<span class="me1">inf</span>
+<span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>tabCoupe.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>-<span class="nu0">1</span><span class="br0">&#41;</span>:
+    <span class="kw1">if</span> tabCoupe<span class="br0">&#91;</span>indiceVarSortante<span class="sy0">,</span>i<span class="br0">&#93;</span>*tabCoupe<span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span>i<span class="br0">&#93;</span><span class="sy0">!=</span><span class="nu0">0</span>:
+        rapport<span class="sy0">=</span>tabCoupe<span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span>i<span class="br0">&#93;</span>/tabCoupe<span class="br0">&#91;</span>indiceVarSortante<span class="sy0">,</span>i<span class="br0">&#93;</span>
+        <span class="kw1">if</span> rapport<span class="sy0">&lt;</span>rapportMin:
+            indiceVarEntrante<span class="sy0">=</span>i
+            rapportMin<span class="sy0">=</span>rapport

@@ -1,0 +1,2 @@
+library<span class="br0">&#40;</span>randomForest<span class="br0">&#41;</span>
+foret_alea <span class="sy0">=</span> randomForest<span class="br0">&#40;</span>V61<span class="sy0">~</span>.<span class="sy0">,</span> data <span class="sy0">=</span> data_train<span class="sy0">,</span> ntree <span class="sy0">=</span> <span class="nu0">500</span><span class="sy0">,</span> maxnodes <span class="sy0">=</span> <span class="nu0">2</span><span class="br0">&#41;</span>

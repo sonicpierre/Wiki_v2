@@ -1,0 +1,129 @@
+[[cpp:Commande système| Commandes système]]
+
+{{ :cpp:lesfluxs.jpg?500 |}}
+
+=====Les flux=====
+
+Quand on tape une commande, le résultat s'affiche généralement dans la <fc #008000>**console**</fc>, comme pour <fc #800000>**ls/dir**</fc> par exemple. Cependant, il est possible de <fc #ff0000>**rediriger**</fc> cette sortie dans un <fc #008000>**fichier**</fc> ou dans une <fc #008000>**autre commande**</fc>.
+
+Le but de cette partie sera de remplir les fichiers de <fc #fa8072>**Valkyries**</fc> de texte pour faire un dialogue entre elles.
+
+====Rediriger la sortie >====
+
+Vous serez surpris de savoir que vous avez déjà peut être utilisé ces flux ! En effet, un peu plus haut quand nous avons créé **Brunhilde.txt** sur Windows la commande était
+<code>echo.>Brunhilde.txt</code>
+On peut décomposer cette commande en <fc #ff0000>**trois**</fc> parties :
+<code>echo.</code>
+que vous pouvez essayer dans votre console (si vous êtes sur Linux ne mettez pas de point). Vous remarquerez que ... rien ne se passe. En effet, <fc #800000>**echo**</fc> est une commande qui sert à afficher son paramètre dans la console. Puisque nous donnons un <fc #008000>**paramètre vide**</fc> elle n'affiche rien. Essayez si vous voulez voir la commande en action
+<code>echo Je suis Brunhilde la Valkyrie</code>
+La seconde partie de la commande est
+<code>></code>
+Dans ma petite introduction, j'ai dit qu'il est possible de <fc #008000>**rediriger le résultat d'une commande**</fc> : voici l'utilité du <fc #800000> **chevron >**</fc>. Au lieu d'afficher notre texte dans la console on le <fc #ff0000>**redirige**</fc> vers la troisième partie de la commande,
+<code>Brunhilde.txt</code>
+qui est un fichier qui sera créé si il n'existe pas déjà et dont le contenu sera <fc #ff0000>**écrasé**</fc> si il existe. Le fichier que nous avions créé était <fc #008000>**vide**</fc> mais vous pouvez le remplir avec par exemple
+<code>echo Salut Hrist ça biche ? > Brunhilde.txt</code>
+<code>echo Ca biche comme jamais ma soeur ;) > Hrist.txt</code>
+
+Il est important de noter que le résultat de la commande redirigée envoyé <fc #ff0000>**écrasera**</fc> le contenu du fichier texte cible. Pour que le texte se rajoute à la suite du fichier au lieu d'effacer le contenu du fichier vous pouvez utiliser le <fc #800000>**double chevron >>**</fc>
+<code>echo Hop hop hop c'est l'heure de moissonner les âmes ! >> Brunhilde.txt</code>
+<code>echo Je te parie que j'en récupère deux fois plus que toi :) >> Hrist.txt</code>
+
+Si vous avez essayé d'envoyer le résultat d'une commande générant une <fc #ff0000>**erreur**</fc> dans un fichier, vous aurez peut-être remarqué que le message d'erreur <fc #008000>**n'a pas été envoyé**</fc> dans le fichier. Pour envoyer le flux d'erreur dans le fichier <fc #ff0000>**au lieu**</fc> du résultat de la commande, il faut utiliser
+<code>2></code>
+Cette commande <fc #ff0000>**écrasera**</fc> l'ancien contenu du fichier. Si vous voulez écrire l'erreur <fc #008000>**à la suite**</fc> du fichier il faudra choisir
+<code>2>></code>
+Pour vous donner un exemple d’utilisation, imaginez que vous exécutez régulièrement une commande <fc #008000>**très bavarde**</fc> dont vous vous fichez de la sortie console. Si un jour vous avez des <fc #ff0000>**problèmes**</fc>, vous pourrez simplement ouvrir le fichier où vous avez redirigé le message d'erreur pour connaître la source de la panne.
+
+Finalement, si vous voulez envoyer les erreurs d'une commande <fc #008000>**avec**</fc> les résultats de la commande dans un fichier, il faudra rajouter à la fin de votre ligne de commande <fc #800000>**2>&1**</fc>
+<code>echo Comment t'as eu plus d'âmes que moi -_- >> Brunhilde.txt 2>&1</code>
+
+Il peut arriver que vous ne voulez ni avoir le résultat d'une commande dans la console ni dans un ficher. Dans ce cas il faut savoir qu'il existe dans un fichier toujours vide. Il est en <fc #9400d3>**/dev/null**</fc> sur Linux et <fc #9400d3>**partout**</fc> sur Windows sous le nom de <fc #9400d3>**nul**</fc>. Oui, vous avez bien lu, <fc #9400d3>**partout**</fc> ! Il y a **<fc #fa8072>Valkyries</fc>\<fc #9400d3>nul</fc>** qui existe, **system32\<fc #9400d3>nul</fc>** ou **n'importe quel dossier\<fc #9400d3>nul</fc>**, c'est d'ailleurs pour cette raison qu'on lui fera référence par un simple <fc #9400d3>**nul**</fc>. 
+
+Comment utiliser ce fichier toujours vide me demanderez vous ? Eh bien il suffit de rediriger la sortie de la commande vers le <fc #9400d3>**fichier nul**</fc>. Par exemple, supposons que vous voulez installer un paquet sans que votre console soit remplie de lignes indiquant quels fichiers sont téléchargés, si il faut beau dehors etc.. il suffit de faire :
+
+^Linux^Windows^Mac^^
+|sudo apt install gimp>/dev/null|choco install gimp > nul (en mode administrateur)|sudo brew cask install gimp>/dev/null||
+
+**Note :** il existe deux autres <fc #008080>**fichiers spéciaux**</fc> sur Linux : <fc #9400d3>**/dev/zero**</fc> et <fc #9400d3>**/dev/random**</fc>. Le premier sert à donner un flux continu de **null** pour certains usages avancés mais peut être utilisé de la même manière que <fc #9400d3>**/dev/null**</fc> en redirection de sortie. Le second fichier fournit un générateur de caractères aléatoires utilisable encore une fois dans certaines situations.
+
+====Rediriger l'entrée <====
+
+Vous l'aurez deviné, si on peut rediriger la <fc #008000>**sortie**</fc> d'une commande on peut aussi rediriger son <fc #ff0000>**entrée**</fc>. Pour ce faire on utilise
+<code><</code>
+La redirection de l'<fc #008000>**entrée**</fc> est beaucoup moins utilisée que celle de la <fc #ff0000>**sortie**</fc> cependant. En guise d'exemple, nous utiliserons la commande <fc #800000>**sort**</fc> qui sert à trier le contenu d'un fichier.<code>sort < Brunhilde.txt</code>
+produira le même résultat que
+<code>sort Brunhilde.txt</code>
+mais le <fc #008080>**fontionnement**</fc> n'est pas le même. Sans la redirection d'<fc #008000>**entrée**</fc>, la commande ouvre et lit le fichier **Brunhilde.txt**, le trie et l'affiche. Avec la redirection, la commande reçoit le contenu du fichier, le trie et l'affiche. Ce sont deux méthodes légèrement différentes pour faire <fc #ff0000>**la même action**</fc>.
+
+====Le pipe |====
+
+Sans aucun doute une des fonctionnalités <fc #ff0000>**les plus importantes**</fc> de la console : il permet d'envoyer le résultat d'une commande en tant que source dans une autre, combinant en quelque sorte <fc #800000>**>**</fc> et <fc #800000>**<**</fc>. Pour que vous voyez ce que je veux dire, rien ne vaut un exemple. Supposons que vous affichez le contenu d'un répertoire bien rempli et que vous cherchez un dossier ou fichier en particulier. Il est possible de le retrouver en <fc #008000>**combinant**</fc> <fc #800000>**dir/ls**</fc> et <fc #800000>**find/grep**</fc>.
+
+^Linux^Windows^^
+|ls <nowiki>|</nowiki> grep Brunhilde.txt|dir <nowiki>|</nowiki> find "Brunhilde.txt"||
+
+affichera la ligne de <fc #800000>**ls/dir**</fc> faisant référence à **Brunhilde.txt**. Vous remarquerez que rien se sera affiché si vous n'êtes pas dans le dossier <fc #fa8072>**Valkyries**</fc> car <fc #800000>**ls/dir**</fc> n'affiche que le contenu du dossier courant souvenez vous !
+
+Oui, nous avons vu un peu plus haut comment utiliser une autre commande à la place pour cela mais la façon dont nous le faisons est en lisant les lignes du <fc #800000>**dir/ls**</fc> avec <fc #800000>**find/grep**</fc>, pas en cherchant dans le système de fichier.
+
+Il s'agit juste d'un exemple pour illustrer l'utilisation du pipe | qui peut combiner une <fc #008000>**multitude**</fc> de commandes (d'ailleurs les commandes de recherche de la partie précédente fouillent dans l'arborescence alors que nous nous limitons au dossier courant).
+
+=====Les processus=====
+
+====Lancer des processus en arrière plan====
+
+Jusqu'à présent, vous aurez remarqué que l'on rentrait les commandes dans le terminal <fc #ff0000>**une par une**</fc> et qu'il fallait attendre qu'elles se <fc #ff0000>**terminent**</fc> pour en relancer une autre. Rassurez vous, il est possible de contourner ce problème !
+
+Sur <fc #008080>**Linux**</fc>, si vous êtes face à un processus que vous voulez passer en <fc #008000>**arrière plan**</fc>, que ce soit car il est trop long ou autre, vous pouvez utiliser <fc #800000>**Ctrl+C**</fc> pour le mettre en pause. Ensuite si vous en restez là vous pouvez utiliser votre <fc #008000>**console**</fc> comme d'habitude mais vous pouvez aussi taper
+<code>bg</code>
+pour faire passer le processus en <fc #008000>**arrière plan**</fc>. Vous pouvez faire passer autant de processus en <fc #008000>**arrière plan**</fc> que vous voulez ! Pour consulter la <fc #ff0000>**liste**</fc> de ces processus vous pouvez bien sûr faire <fc #800000>**ps -A**</fc> mais pour n'avoir que les processus que vous avez passé en <fc #008000>**arrière plan**</fc> utilisez
+<code>jobs</code>
+Quand vous voudrez refaire passer un processus en <fc #ff0000>**premier plan**</fc> il vous suffira d'utiliser
+<code>bg</code>
+suivi éventuellement du <fc #ffa500>**numéro**</fc> du processus dans la liste de <fc #800000>**jobs**</fc> si vous en avez plusieurs lancés en <fc #008000>**arrière plan**</fc>.
+
+Il existe aussi une autre méthode qui sert à lancer un processus <fc #ff0000>**directement**</fc> en <fc #008000>**arrière plan**</fc>. Il suffit d'ajouter
+^Linux^Windows^^
+|nohup|start||
+au début de votre ligne de commande ! (bonus : sur <fc #008080>**Linux**</fc>, le processus sera toujours en marche même si vous fermez la console).
+
+====Gérer les processus en cours====
+
+Pour visualiser les <fc #9400d3>**processus**</fc> en cours, vous avez sans doute l'habitude sur <fc #008080>**Windows**</fc> d'utiliser le gestionnaire des tâches pour fermer des applications récalcitrantes et que parfois ce dernier refuse de mettre fin à la tache malgré les <fc #ff0000>**pressions répétées**</fc> de votre part sur le bouton. Eh bien figurez vous qu'il est aussi possible de faire ça à partir de la <fc #008000>**console**</fc> ! Pour afficher tous les processus en cours d'utilisation :
+^Linux^Windows^^
+|ps -A|tasklist||
+
+{{:cpp:tasklist.png?1000|}}
+
+Je sais, ça fait beaucoup de <fc #9400d3>**processus**</fc> ! Vous trouverez d'ailleurs une ligne intitulée du nom de votre navigateur sue lequel vous lisez cette page ! D'ailleurs, c'est une excellente occasion d'utiliser un <fc #800000>**pipe |**</fc> pour trouver rapidement votre navigateur !
+^Linux^Windows^^
+|ps -A <nowiki>|</nowiki> grep firefox|tasklist <nowiki>|</nowiki> find "firefox"||
+
+{{:cpp:tasklist_firefox.png?1000|}}
+
+Vous remarquerez que chaque <fc #9400d3>**processus**</fc> a un nom et identifiant propre appelé <fc #ffa500>**PID**</fc>. Pour fermer un <fc #9400d3>**processus**</fc> en particulier il vaut mieux utiliser le <fc #ffa500>**PID**</fc> mais si vous voulez fermer tout les <fc #9400d3>**processus**</fc> **firefox** par exemple le référer par son nom est la meilleure méthode.
+
+Tout d'abord, pour tuer un processus en fonction de son nom, la commande est :
+^Linux^Windows^^
+|killall -9 firefox|taskkill /f /im firefox.exe||
+Attention, si vous entrez cette commande, vous fermerez cette fenêtre et vous serez interrompu dans la lecture de cette <fc #ff00ff>**magnifique**</fc> page ;)
+
+Pour ce qui en est de mettre fin à un <fc #9400d3>**processus**</fc> précis dont le <fc #ffa500>**PID**</fc> est 12345, il faut entrer :
+^Linux^Windows^^
+|kill -9 12345|taskkill /f /PID 12345||
+
+=====Les raccourcis clavier dans la console=====
+
+====L'historique====
+Vous aurez peut être remarqué en faisant vos tests, mais il est possible d'accéder aux <fc #9400d3>**commandes**</fc> que vous avez entré précédemment avec les flèches directionnelles haut et bas. On peut même accéder à l'historique des commandes avec
+^Linux^Windows^^
+|history|doskey /h||
+Cependant, alors que <fc #008080>**Linux**</fc> mémorise les commandes entre les différentes utilisations du terminal, sur <fc #008080>**Windows**</fc> vous n'avez accès qu'aux <fc #9400d3>**commandes**</fc> que vous avez entré pendant cette session.
+
+====Affichage====
+Sur <fc #008080>**Windows**</fc>, pour effacer une ligne de commande particulièrement longue que vous avez tapée, une simple pression sur la touche <fc #800000>**échap**</fc> vous évitera de mitrailler la touche effacer. Si votre écran de console est trop rempli et que vous voulez une <fc #008000>**console propre**</fc>, presser <fc #800000>**Ctrl+L**</fc> sur <fc #008080>**Linux**</fc> ou entrez <fc #800000>**cls**</fc> sur <fc #008080>**Windows**</fc>.
+
+====Copier-Coller====
+Si vous êtes sur <fc #008080>**Windows**</fc> vous aurez sans doute remarqué que les classiques <fc #800000>**Ctrl+C**</fc> et <fc #800000>**Ctrl+V**</fc> fonctionnent à merveille. Sur <fc #008080>**Linux**</fc>, en revanche, il vous aura peut être échappé qu'il faut faire <fc #800000>**Ctrl+Maj+C**</fc> et <fc #800000>**Ctrl+Maj+V**</fc> pour arriver à ce résultat. D'ailleurs, <fc #800000>**Ctrl+C**</fc> est pour les deux systèmes la commande servant à annuler une commande, que ce soit parce qu'elle est trop lente ou parce qu'elle n'affiche que des erreurs.
+
+[[cpp:Le scripting| Introduction au scripting]]

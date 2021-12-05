@@ -1,0 +1,2 @@
+<span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+data.<span class="me1">drop</span><span class="br0">&#40;</span>data<span class="br0">&#91;</span><span class="st0">&quot;postcode&quot;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>

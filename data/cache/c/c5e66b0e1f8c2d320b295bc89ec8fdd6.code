@@ -1,0 +1,11 @@
+<span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+fitted_values <span class="sy0">=</span>  Regression_Lin.<span class="me1">predict</span><span class="br0">&#40;</span>X.<span class="me1">drop</span><span class="br0">&#40;</span><span class="st0">'Residu'</span><span class="sy0">,</span> axis <span class="sy0">=</span> <span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+residues_std <span class="sy0">=</span> Regression_Lin.<span class="me1">resid</span>/np.<span class="me1">sqrt</span><span class="br0">&#40;</span><span class="kw2">sum</span><span class="br0">&#40;</span>Regression_Lin.<span class="me1">resid</span>**<span class="nu0">2</span><span class="br0">&#41;</span>/<span class="br0">&#40;</span><span class="kw2">len</span><span class="br0">&#40;</span>Regression_Lin.<span class="me1">resid</span><span class="br0">&#41;</span>-<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+momo_smooth <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>sm.<span class="me1">nonparametric</span>.<span class="me1">lowess</span><span class="br0">&#40;</span>sqrt_residues_std<span class="sy0">,</span> fitted_values<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+sqrt_residues_std <span class="sy0">=</span> np.<span class="me1">sqrt</span><span class="br0">&#40;</span><span class="kw2">abs</span><span class="br0">&#40;</span>residues_std<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+plt.<span class="me1">scatter</span><span class="br0">&#40;</span>momo_smooth<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span> momo_smooth<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+plt.<span class="me1">scatter</span><span class="br0">&#40;</span>fitted_values<span class="sy0">,</span>sqrt_residues_std<span class="br0">&#41;</span>
+plt.<span class="me1">xlabel</span><span class="br0">&#40;</span><span class="st0">&quot;Fitted values&quot;</span><span class="br0">&#41;</span>
+plt.<span class="me1">ylabel</span><span class="br0">&#40;</span><span class="st0">&quot;Racine carrée des résidus standardisés&quot;</span><span class="br0">&#41;</span>

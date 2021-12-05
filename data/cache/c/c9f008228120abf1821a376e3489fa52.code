@@ -1,0 +1,5 @@
+module GameModule <span class="br0">&#123;</span>
+	requires javafx.<span class="me1">base</span><span class="sy0">;</span>
+	requires javafx.<span class="me1">controls</span><span class="sy0">;</span>
+	requires javafx.<span class="me1">graphics</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>

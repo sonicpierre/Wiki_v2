@@ -1,0 +1,19 @@
+Variables
+&nbsp;
+   réel a <span class="sy0">//</span>borne inferieur
+   réel b <span class="sy0">//</span>borne superieur
+   réel c <span class="sy0">//</span>nouvelle borne
+&nbsp;
+Début
+    Si <span class="br0">&#40;</span>abs<span class="br0">&#40;</span>f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">&lt;</span>=prec<span class="br0">&#41;</span> alors 
+        Renvoyer <span class="br0">&#40;</span>a -f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="sy0">*</span><span class="br0">&#40;</span>b-a<span class="br0">&#41;</span><span class="sy0">/</span><span class="br0">&#40;</span>f<span class="br0">&#40;</span>b<span class="br0">&#41;</span>-f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    Sinon     
+        c = a -f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="sy0">*</span><span class="br0">&#40;</span>b-a<span class="br0">&#41;</span><span class="sy0">/</span><span class="br0">&#40;</span>f<span class="br0">&#40;</span>b<span class="br0">&#41;</span>-f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="br0">&#41;</span> 
+    Fin Si
+&nbsp;
+    Si f<span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="sy0">*</span>f<span class="br0">&#40;</span>c<span class="br0">&#41;</span> <span class="sy0">&lt;</span>= <span class="nu0">0</span> alors
+        Renvoyer <span class="br0">&#40;</span>regu_rec<span class="br0">&#40;</span>f,a,c,prec<span class="br0">&#41;</span><span class="br0">&#41;</span>
+    Sinon    
+        Renvoyer <span class="br0">&#40;</span>regu_rec<span class="br0">&#40;</span>f,c,b,prec<span class="br0">&#41;</span><span class="br0">&#41;</span>
+    Fin si
+ Fin

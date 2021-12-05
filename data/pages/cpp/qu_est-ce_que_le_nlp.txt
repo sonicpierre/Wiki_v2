@@ -1,0 +1,55 @@
+=====Natural Langage Processing=====
+
+Le NLP est un domaine particulier du Machine Learning. Nous allons ici vous en faire une description simple pour mieux comprendre sa signification.
+
+{{ :cpp:nlpimagetete.jpg?600 |}}
+====Quels sont les thèmes liés au NLP ?====
+
+  * Analyse de sentiments : il est possible, à partir de textes produits par une personne, d'identifier ses sentiments de façon reproductible par rapport à un thème donné. Ainsi, lors d'une étude de marché, on peut savoir si une marque est perçue positivement ou négativement.
+
+  * Création de résumés d'articles : Il est possible ici de mettre en relief les axes principaux d'un texte fleuve afin d'en faire ressortir les points importants. On peut ainsi citer le modèle //Google Brain// qui a pour but l'écriture automatique de page Wikipédia à partir des 10 premiers résultats d'une recherche Google.
+
+  * Publicité ciblée : Il est possible de créer un modèle qui envoie de la publicité en analysant les commentaires. Prenons l'exemple de l'algorithme utilisé par Facebook qui fait une étude de fréquence de certains mots pour savoir s'ils sont plus utilisés à une certaine période par rapport à l'ensemble de votre corpus. 
+
+**Source :**
+  * [[https://medium.com/@mehdihadji/analyse-des-sentiments-g%C3%A9n%C3%A9ralit%C3%A9s-99ab87503a5e]]
+  * [[https://www.lesechos.fr/tech-medias/medias/lintelligence-artificielle-entre-dans-la-pub-1003025]]
+  * [[https://www.numerama.com/tech/330215-google-essaye-dentrainer-une-ia-a-ecrire-des-articles-wikipedia.html]]
+  * [[https://www.frenchweb.fr/ia-google-entraine-des-logiciels-a-creer-automatiquement-des-pages-wikipedia/317245]]
+====Quelles sont les étapes de travail en NLP ?====
+
+Rappelons le workflow sur les différents projets de NLP.
+
+{{ :cpp:cheminasuivre.png?800 |}}
+
+
+  * Regroupement des données : il faut bien comprendre que, le plus souvent, les données sont dispersées dans plusieurs pages HTML ou plusieurs fichiers textes. Il faut alors les regrouper et faire un premier nettoyage avec des librairies adaptées mais aussi avec les expressions régulières comme vu [[cpp:Scrapper les données| ici]].
+
+  * Exploration des données : il est nécessaire de bien observer ses données car il faut comprendre quel est le type de communauté derrière. Le modèle à choisir pour l'analyse de Tweet n'est pas le même que celui pour l'analyse de Thèses ou d'articles scientifiques. Pour mieux visualiser les données,  il faut parfois appliquer des traitements ce que nous avons traité [[cpp:preprocessing_avec_nltk| ici]].
+
+  * Construire et évaluer son modèle : une fois le modèle choisi, il faut l'entrainer. En Deep Learning, ceci peut prendre du temps et demander beaucoup d'énergie. Il est souvent bon de louer des supercalculateurs mais ce processus est tellement coûteux qu'entrainer un modèle en faisant changer plusieurs fois les hyper-paramètres pour repérer les plus efficaces est bien souvent impossible. Il faut ensuite évaluer son modèle avec la bonne métrique. 
+
+  * Déployer le modèle : si le langage est en perpétuelle mutation, un modèle se doit de pouvoir rester à jour c'est pourquoi la problématique de maintenance occupera toujours une place conséquente au moment du déploiement. 
+
+Il est évident que les étapes de travail en NLP sont différentes en fonction du problème même si elles suivent toujours un peu la même logique. Prenons, par exemple, les analyses pour la mise en place d'un dialogue avec un humain. Le travail sur ce sujet suit un worflow particulier :
+
+{{ :cpp:graphique_nlp.png?800 |}}
+
+**Source :**
+
+  * [[https://developers.google.com/machine-learning/guides/text-classification]]
+====Quels sont les modèles liés au NLP ?====
+
+Il y a deux façons d'aborder un problème de NLP :
+
+  * Il est possible de ne pas modifier les phrases ni les mots pour ne pas perdre le sens de la phrase, par exemple, ne pas enlever les négations. En effet, les négations sont des mots très fréquents qui polluent l'analyse des fréquences et changent radicalement le sens de la phrase. Les modèles de Deep Learning permettent cette approche. Cependant, ils nécessitent un nombre important de données et sont particulièrement coûteux en énergie lors de l'entrainement.
+
+  * Une autre approche est possible par le biais de l'analyse sémantique que nous allons aborder ici. Nous allons segmenter et nettoyer le texte pour faire une analyse de la fréquence des mots. Il s'agit bien évidemment d'un prétraitement qui pourra nous être utile par la suite pour choisir le bon modèle et l'entraîner.
+
+**Source :**
+
+"Natural Language Processing with Python", Steven Bird, Ewan Klein & Edward Loper
+
+====Quels sont les limites du NLP ?====
+
+Le langage humain est en perpétuel mutation et les sous-entendus sont multiples. Il est parfois difficile de comprendre pourquoi la machine ne comprend pas la même chose que nous tellement nous y sommes habituer. Il est nécessaire de se restreindre à une communauté en particulier pour mieu cibler le langage utilisé et mieu l'analyser. De même, la construction de phrase variant beaucoup en fonction de la langue, un modèle global traitant tout les cas n'est pour le moment pas envisageable.

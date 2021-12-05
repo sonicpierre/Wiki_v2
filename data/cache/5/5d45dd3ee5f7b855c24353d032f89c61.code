@@ -1,0 +1,2 @@
+library<span class="br0">&#40;</span>dbscan<span class="br0">&#41;</span>
+model <span class="sy0">&lt;</span>- dbscan<span class="br0">&#40;</span>data<span class="sy0">,</span> <span class="nu0">0.12</span><span class="sy0">,</span> minPts <span class="sy0">=</span> <span class="nu0">7</span><span class="br0">&#41;</span>

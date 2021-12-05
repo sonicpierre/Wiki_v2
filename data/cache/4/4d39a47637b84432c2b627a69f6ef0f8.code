@@ -1,0 +1,2 @@
+sf<span class="sy4">::</span><span class="me2">RectangleShape</span> rectangle<span class="br0">&#40;</span>sf<span class="sy4">::</span><span class="me2">Vector2f</span><span class="br0">&#40;</span><span class="nu0">50</span>, <span class="nu0">150</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy4">;</span>
+sf<span class="sy4">::</span><span class="me2">CircleShape</span> cercle<span class="br0">&#40;</span><span class="nu0">50</span><span class="br0">&#41;</span><span class="sy4">;</span>

@@ -1,0 +1,8 @@
+<span class="kw1">from</span> sklearn.<span class="me1">ensemble</span> <span class="kw1">import</span> BaggingClassifier
+<span class="kw1">from</span> sklearn.<span class="me1">tree</span> <span class="kw1">import</span> DecisionTreeClassifier
+&nbsp;
+bagging_model <span class="sy0">=</span> BaggingClassifier<span class="br0">&#40;</span>DecisionTreeClassifier<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="co1">#type d'arbre utilisé pour l'entrainement</span>
+                                  bootstrap<span class="sy0">=</span><span class="kw2">True</span><span class="sy0">,</span> 
+                                  n_estimators<span class="sy0">=</span> <span class="nu0">300</span><span class="sy0">,</span> <span class="co1">#Nombre d'arbres entraîné</span>
+                                  n_jobs<span class="sy0">=</span>-<span class="nu0">1</span><span class="sy0">,</span> <span class="co1">#Nombre de coeur CPU utilisé</span>
+                                  oob_score<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span> <span class="co1">#Possibilité de prédir la probabilité pour chaque prédiction</span>

@@ -1,0 +1,9 @@
+library<span class="br0">&#40;</span>caret<span class="br0">&#41;</span>
+&nbsp;
+encode_data <span class="sy0">&lt;</span>- dummyVars<span class="br0">&#40;</span><span class="st0">&quot; ~ Etudiant&quot;</span><span class="sy0">,</span> data <span class="sy0">=</span> df<span class="br0">&#41;</span><span class="co1">#On définit la variable à encoder.</span>
+encoder <span class="sy0">&lt;</span>- data.<span class="me1">frame</span><span class="br0">&#40;</span>predict<span class="br0">&#40;</span>encode_data<span class="sy0">,</span> newdata  <span class="sy0">=</span> df<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Application de l'encodage</span>
+&nbsp;
+<span class="co1">###Astuce données X###</span>
+&nbsp;
+encode_data <span class="sy0">&lt;</span>- dummyVars<span class="br0">&#40;</span><span class="st0">&quot; ~ Etudiant + Appreciation&quot;</span><span class="sy0">,</span> data <span class="sy0">=</span> df<span class="br0">&#41;</span><span class="co1">#Encodage de certaines variables en même temps.</span>
+encode_data <span class="sy0">&lt;</span>- dummyVars<span class="br0">&#40;</span><span class="st0">&quot; ~ .&quot;</span><span class="sy0">,</span> data <span class="sy0">=</span> df<span class="br0">&#41;</span><span class="co1">#Encodage de toutes les variables qualitatives ⇔ OneHotEncoder().</span>

@@ -1,0 +1,4 @@
+<span class="kw1">from</span> sklearn.<span class="me1">ensemble</span> <span class="kw1">import</span> IsolationForest
+&nbsp;
+model <span class="sy0">=</span> IsolationForest<span class="br0">&#40;</span>contamination<span class="sy0">=</span><span class="nu0">0.06</span><span class="br0">&#41;</span><span class="co1">#Contamination étant le taux supposé de contamination du dataset.</span>
+model.<span class="me1">fit</span><span class="br0">&#40;</span>X<span class="br0">&#41;</span><span class="co1">#Entrainement du modele de détection</span>

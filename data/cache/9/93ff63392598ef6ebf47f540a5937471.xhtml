@@ -1,0 +1,842 @@
+
+<p>
+<a href="/doku.php?id=cpp:commande_systeme" class="wikilink1" title="cpp:commande_systeme"> Commandes système</a>
+</p>
+
+<p>
+Dans cette partie nous allons faire une introduction aux scripts en décrivant 2 exemples :
+</p>
+<ul>
+<li class="level1"><div class="li"> Nous commencerons par nous familiariser aux <strong>variables</strong> et aux <strong>conditions</strong> en réalisant des opérations simples sur le prénom et l&#039;âge de l&#039;utilisateur </div>
+</li>
+<li class="level1"><div class="li"> Nous créerons un <strong><span style="color:#ff0000;">script</span></strong> qui trie automatiquement les photos d&#039;un répertoire dans des dossiers en fonction de la date.</div>
+</li>
+</ul>
+
+<h2 class="sectionedit1" id="creer_un_script_shell">Créer un script shell</h2>
+<div class="level2">
+
+<p>
+Un <strong><span style="color:#ff0000;">script</span></strong> contient en fait les <strong><span style="color:#008000;">commandes système</span></strong> des parties précédentes en rajoutant des fonctionnalités en plus comme les conditions ou bien les boucles. Le nom du langage est le <strong>Bash</strong> sur <span style="color:#008080;"><strong>Linux/Mac</strong></span> et le <strong>Batch</strong> sur <strong><span style="color:#008080;">Windows</span></strong>. Je rappelle que les commandes sur <strong><span style="color:#008080;">Mac</span></strong> sont les mêmes que sur <strong><span style="color:#008080;">Linux</span></strong>.
+</p>
+
+<p>
+Pour créer un <strong><span style="color:#ff0000;">script</span></strong>, il nous faudra créer un fichier du nom de votre choix suivi de l&#039;<strong><span style="color:#008000;">extension</span></strong> adaptée. Normalement, vous savez faire ;)
+</p>
+<div class="table sectionedit2"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">touch script.sh</td><td class="col1" colspan="2">echo.&gt;script.bat</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:2,&quot;range&quot;:&quot;1102-1154&quot;} -->
+<p>
+Pour <strong><span style="color:#008000;">tester</span></strong> tout ça, je propose d&#039;écrire
+</p>
+<pre class="code">echo Coucou</pre>
+
+<p>
+dans le fichier à l&#039;aide de votre éditeur de texte favori (vim, nano, emacs, Bloc-notes…). Pour exécuter un script, il faut faire
+</p>
+<div class="table sectionedit3"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">./script.sh</td><td class="col1" colspan="2">script.bat</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:3,&quot;range&quot;:&quot;1379-1421&quot;} -->
+<p>
+<div class='alert alert-warning'>Il est possible que vous <strong>ne puissiez pas</strong> exécuter votre programme à cause de <strong>permissions</strong>. Je vous invite à aller <strong>relire</strong> les <a href="/doku.php?id=cpp:les_dossiers_et_fichiers" class="wikilink1" title="cpp:les_dossiers_et_fichiers">pages précédentes</a> pour vous rafraichir la mémoire si vous avez oublié la commande :)</div>
+</p>
+
+<p>
+Sur <strong><span style="color:#008080;">Linux</span></strong>, pour éviter des problèmes d&#039;interprétation de langage par l&#039;ordinateur, nous rajouterons en haut de <strong><span style="color:#ff0000;">tous</span></strong> nos scripts la ligne
+</p>
+<pre class="code">#!/bin/bash</pre>
+
+<p>
+En effet, il existe <strong><span style="color:#008000;">plusieurs</span></strong> shell différents sur <strong><span style="color:#008080;">Linux</span></strong>, avec différentes syntaxes et différentes spécificités comme le <strong>ksh, csh, tcsh</strong> ou <strong>zch</strong>. Certains sont des améliorations ou des alternatives à d&#039;autres shells mais tous ont leurs points forts.
+</p>
+
+<p>
+Sur <strong><span style="color:#008080;">Windows</span></strong> vous aurez remarqué que la ligne
+</p>
+<pre class="code">echo Coucou</pre>
+
+<p>
+était affichée dans la console. Pour la <strong>masquer</strong>, vous pouvez rajouter <strong><span style="color:#ffa500;">@echo off</span></strong> au début de votre script.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Cr\u00e9er un script shell&quot;,&quot;hid&quot;:&quot;creer_un_script_shell&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;451-2448&quot;} -->
+<h2 class="sectionedit4" id="les_commentaires">Les commentaires</h2>
+<div class="level2">
+
+<p>
+Il est possible de <strong><span style="color:#ff0000;">commenter</span></strong> des lignes de code, c&#039;est à dire que le script <strong><span style="color:#ff0000;">ignorera</span></strong> ces lignes lorsque vous l&#039;exécuterez. C&#039;est particulièrement utile pour <strong><span style="color:#008000;">expliquer</span></strong> son code ou pour garder des lignes de code <strong><span style="color:#008000;">“sous le coude”</span></strong> lorsqu&#039;on ne veut tester que quelques lignes de notre script ;)
+</p>
+<div class="table sectionedit5"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">#ligne_a_commenter</td><td class="col1" colspan="2">REM ligne_a_commenter</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table2&quot;,&quot;secid&quot;:5,&quot;range&quot;:&quot;2854-2914&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les commentaires&quot;,&quot;hid&quot;:&quot;les_commentaires&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:4,&quot;range&quot;:&quot;2449-2914&quot;} -->
+<h2 class="sectionedit6" id="les_variables">Les variables</h2>
+<div class="level2">
+
+<p>
+Si vous avez déjà codé quoi que ce soit dans votre vie, vous devriez déjà être familiers au concept de <strong><span style="color:#ff0000;">variables</span></strong>. Pour les autres, disons qu&#039;une <strong><span style="color:#ff0000;">variable</span></strong> sert à <strong><span style="color:#008000;">stocker</span></strong> une information (texte, nombre) pour l&#039;<strong><span style="color:#008000;">utiliser</span></strong> plus tard dans un programme.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les variables&quot;,&quot;hid&quot;:&quot;les_variables&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:6,&quot;range&quot;:&quot;2915-3275&quot;} -->
+<h3 class="sectionedit7" id="les_chaines_de_caracteres">Les chaînes de caractères</h3>
+<div class="level3">
+
+<p>
+Créons par exemple la variable <strong><span style="color:#ffa500;">prenom</span></strong> :
+</p>
+<div class="table sectionedit8"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">prenom=&#039;Brunhilde&#039;</td><td class="col1" colspan="2">set prenom=Brunhilde</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table3&quot;,&quot;secid&quot;:8,&quot;range&quot;:&quot;3376-3435&quot;} -->
+<p>
+Vous pouvez ensuite enchaîner avec un
+</p>
+<div class="table sectionedit9"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">echo Mon prenom est $prenom</td><td class="col1" colspan="2">echo Mon prenom est %prenom%</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table4&quot;,&quot;secid&quot;:9,&quot;range&quot;:&quot;3475-3568&quot;} -->
+<p>
+pour afficher notre chère variable dans la console !
+</p>
+
+<p>
+<div class='alert alert-danger'>Soyez <strong>TRÈS</strong> respectueux de la syntaxe (les espaces surtout) parce que ces langages sont assez capricieux à ce propos… </div>
+</p>
+
+<p>
+Vous êtes peut-être en train de vous dire : “Je ne m&#039;appelle pas <strong>Brunhilde</strong> moi ? Ou alors peut être que si ? Ma vie est-elle donc un mensonge ?…”. Nous allons donc voir comment <strong><span style="color:#008000;">demander</span></strong> son nom à l&#039;utilisateur pour le stocker dans la variable <strong><span style="color:#ffa500;">prenom</span></strong>. Remplacez la ligne de déclaration de la variable <strong><span style="color:#ffa500;">prenom</span></strong> par :
+</p>
+<div class="table sectionedit10"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">read -p &#039;Entrez votre prenom : &#039; prenom</td><td class="col1" colspan="2">set /p prenom=“Entrez votre prenom : “</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table5&quot;,&quot;secid&quot;:10,&quot;range&quot;:&quot;4160-4258&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les cha\u00eenes de caract\u00e8res&quot;,&quot;hid&quot;:&quot;les_chaines_de_caracteres&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:7,&quot;range&quot;:&quot;3276-4259&quot;} -->
+<h3 class="sectionedit11" id="les_entiers">Les entiers</h3>
+<div class="level3">
+
+<p>
+Nous pouvons stocker des <strong><span style="color:#008000;">nombres entiers</span></strong> dans des <strong>variables</strong>. Intéressons nous à l’âge de l&#039;utilisateur par exemple :
+</p>
+<div class="table sectionedit12"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">let “age = 21”</td><td class="col1" colspan="2">set age=21</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table6&quot;,&quot;secid&quot;:12,&quot;range&quot;:&quot;4428-4473&quot;} -->
+<p>
+Avec les variables nombres nous pouvons bien sûr effectuer des <strong><span style="color:#ff0000;">calculs</span></strong> : somme <strong>+</strong>, soustraction <strong>-</strong>, produit <strong></strong>*, division entière <strong>/</strong> et modulo <strong>%</strong>
+</p>
+<div class="table sectionedit13"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">let “age2 = age + 2”</td><td class="col1" colspan="2">set /a age2=%age%+2</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table7&quot;,&quot;secid&quot;:13,&quot;range&quot;:&quot;4659-4719&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les entiers&quot;,&quot;hid&quot;:&quot;les_entiers&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:11,&quot;range&quot;:&quot;4260-4720&quot;} -->
+<h3 class="sectionedit14" id="les_parametres_du_script">Les paramètres du script</h3>
+<div class="level3">
+
+<p>
+Parfois, lorsqu&#039;on utilise une commande, on lui donne des <strong>paramètres</strong> comme un nom de dossier par exemple. 
+</p>
+<pre class="code">cd Valhalla</pre>
+
+<p>
+Sachez que c&#039;est aussi possible de donner des <strong><span style="color:#ff0000;">paramètres</span></strong> à votre <span style="color:#008000;"><strong>script</strong></span> à son lancement !
+</p>
+<div class="table sectionedit15"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">./script.sh param1 param2</td><td class="col1" colspan="2">script.bat param1 param2</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table8&quot;,&quot;secid&quot;:15,&quot;range&quot;:&quot;5028-5098&quot;} -->
+<p>
+Vous pouvez accéder aux paramètres ainsi qu&#039;au nom de votre script grâce aux variables :
+</p>
+<div class="table sectionedit16"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1">Windows</th><th class="col2" colspan="2">Contenu</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">$0</td><td class="col1">%0</td><td class="col2" colspan="2">Le nom du script</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">$*</td><td class="col1">%*</td><td class="col2" colspan="2">Tous les paramètres</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">$1</td><td class="col1">%1</td><td class="col2" colspan="2">Le premier paramètre</td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">…</td><td class="col1">…</td><td class="col2" colspan="2">…</td>
+	</tr>
+	<tr class="row5">
+		<td class="col0">$9</td><td class="col1">%9</td><td class="col2" colspan="2">Le neuvième paramètre</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table9&quot;,&quot;secid&quot;:16,&quot;range&quot;:&quot;5191-5418&quot;} -->
+<p>
+Par exemple pour afficher le nom du script :
+</p>
+<div class="table sectionedit17"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">echo Nom du script : $0</td><td class="col1" colspan="2">echo Nom du script : %0</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table10&quot;,&quot;secid&quot;:17,&quot;range&quot;:&quot;5465-5549&quot;} -->
+<p>
+<div class='alert alert-info'><strong>Note :</strong> Sur <strong>Linux</strong> vous pouvez utiliser <strong>$#</strong> pour connaître le nombre de paramètres.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les param\u00e8tres du script&quot;,&quot;hid&quot;:&quot;les_parametres_du_script&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:14,&quot;range&quot;:&quot;4721-5683&quot;} -->
+<h2 class="sectionedit18" id="les_conditions">Les conditions</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les conditions&quot;,&quot;hid&quot;:&quot;les_conditions&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:18,&quot;range&quot;:&quot;5684-5709&quot;} -->
+<h3 class="sectionedit19" id="sialorssinon">SI...ALORS...SINON...</h3>
+<div class="level3">
+
+<p>
+Les conditions sont une structure qui permettent d&#039;effectuer une action si, comme leur nom l&#039;indique, certaines conditions sont remplies.
+</p>
+<p class="divalign-center"><a href="/lib/exe/detail.php?id=cpp%3Ale_scripting&amp;media=cpp:age.png" class="media" title="cpp:age.png"><img src="/lib/exe/fetch.php?w=200&amp;tok=6f0314&amp;media=cpp:age.png" class="media" alt="" width="200" /></a></p><!--divalign-->
+
+<p>
+Pour se familiariser avec les <strong><span style="color:#ff0000;">conditions</span></strong>, nous allons réaliser un petit programme demandant son âge à l&#039;utilisateur et lui répondant ensuite si il est mineur ou majeur. Nous aurons donc un script de type :
+</p>
+<pre class="code">Demander l&#039;âge de l&#039;utilisateur
+Si l&#039;âge est inférieur à 18
+    Ecrire que l&#039;utilisateur est mineur
+Sinon
+    Ecrire que l&#039;utilisateur est majeur</pre>
+
+<p>
+Nous allons commencer par lui <strong><span style="color:#008000;">demander</span></strong> son âge, normalement vous savez faire :
+</p>
+<div class="table sectionedit20"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">read -p &#039;Quel est votre nombre d&#039;annees d&#039;existence ? &#039; age</td><td class="col1" colspan="2">set /p age=“Quel est votre nombre d&#039;annees d&#039;existence ? “</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table11&quot;,&quot;secid&quot;:20,&quot;range&quot;:&quot;6407-6545&quot;} -->
+<p>
+<div class='alert alert-info'><strong>Note :</strong> Vous pouvez aussi récupérer l&#039;âge de l&#039;utilisateur en paramètre de votre script et utiliser la variable <strong>$1</strong> ou <strong>%1</strong> en fonction de votre système. Cependant, vous ne pourrez pas afficher de message demandant à l&#039;utilisateur d&#039;entrer son âge !</div>
+</p>
+
+<p>
+Maintenant, on va <strong><span style="color:#008000;">comparer</span></strong> la valeur de age à l&#039;entier 18 pour savoir si la personne est mineure :
+</p>
+<div class="table sectionedit21"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">if [ $age -lt 18 ]; then</td><td class="col1" colspan="2">if %age% lss 18 (</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table12&quot;,&quot;secid&quot;:21,&quot;range&quot;:&quot;6988-7067&quot;} -->
+<p>
+<div class='alert alert-danger'>J&#039;insiste sur le fait qu&#039;il faut faire <strong>TRES</strong> attention aux espaces pour que le code puisse fonctionner :)</div>
+</p>
+
+<p>
+Ensuite, on affiche que l&#039;utilisateur est mineur (<strong><span style="color:#ffa500;">echo</span></strong> marche sur tous les systèmes je vous rappelle) :
+</p>
+<pre class="code">echo Vous etes mineur ! Retournez chercher du charbon !</pre>
+
+<p>
+On enchaîne sur le sinon qui est tout simplement :
+</p>
+<div class="table sectionedit22"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">else</td><td class="col1" colspan="2">) else (</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table13&quot;,&quot;secid&quot;:22,&quot;range&quot;:&quot;7449-7482&quot;} -->
+<p>
+Bon, pour afficher que l&#039;utilisateur est majeur vous devrez savoir :
+</p>
+<pre class="code">echo Vous etes majeur !</pre>
+
+<p>
+Finalement, nous devons donner une instruction signifiant la <strong><span style="color:#008000;">fin</span></strong> du bloc de condition :
+</p>
+<div class="table sectionedit23"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">fi</td><td class="col1" colspan="2">)</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table14&quot;,&quot;secid&quot;:23,&quot;range&quot;:&quot;7700-7724&quot;} -->
+<p>
+<div class='alert alert-warning'>Pensez bien à <strong>indenter</strong> (décaler les lignes à l&#039;intérieur d&#039;un bloc) votre code comme je l&#039;ai fait sur l&#039;exemple au début de la partie. Ce n&#039;est pas obligatoire pour que le script marche mais c&#039;est obligatoire pour que vous y <strong>compreniez</strong> quelque chose quand vous le rouvrirez dans deux semaines ! Blague à part, prenez l&#039;habitude d&#039;<strong>indenter</strong> votre code. Cela vous servira dans <strong>n&#039;importe quel langage</strong> !</div>
+</p>
+
+<p>
+Un petit <strong><span style="color:#ff0000;">récapitulatif</span></strong> du script de cette partie :
+</p>
+
+<p>
+<em>Sur Linux</em>
+</p>
+<pre class="code">#!/bin/bash
+read -p &quot;Quel est votre nombre d&#039;annees d&#039;existence ?&quot; age
+if [ $age -lt 18 ]; then
+    echo Vous etes mineur ! Retournez chercher du charbon !
+else
+    echo Vous etes majeur !
+fi</pre>
+
+<p>
+<em>Sur Windows</em>
+</p>
+<pre class="code">@echo off
+set /p age=&quot;Quel est votre nombre d&#039;annees d&#039;existence ?&quot;
+if %age% lss 18 (
+    echo Vous etes mineur ! Retournez chercher du charbon !
+) else (
+    echo Vous etes majeur !
+)</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;SI...ALORS...SINON...&quot;,&quot;hid&quot;:&quot;sialorssinon&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:19,&quot;range&quot;:&quot;5710-8683&quot;} -->
+<h3 class="sectionedit24" id="sinon_si">...SINON SI...</h3>
+<div class="level3">
+
+<p>
+Essayons maintenant de <strong><span style="color:#008000;">rajouter</span></strong> une condition, par exemple si age est supérieur à 150 on traite l&#039;utilisateur de menteur. On pourrait rajouter un <strong><span style="color:#ffa500;">if</span></strong> mais la ligne “Vous etes majeur” s&#039;afficherait quand même. Nous allons donc avoir recours à un <strong><span style="color:#ff0000;">sinon si</span></strong> glissé entre le <strong><span style="color:#ffa500;">if</span></strong> et le <strong><span style="color:#ffa500;">else</span></strong>. Le script ressemble alors à :
+</p>
+
+<p>
+<em>Sur Linux</em>
+</p>
+<pre class="code">#!/bin/bash
+read -p &quot;Quel est votre nombre d&#039;annees d&#039;existence ?&quot; age
+if [ $age -lt 18 ]; then
+    echo Vous etes mineur ! Retournez chercher du charbon !
+elif [ $age -ge 150 ]; then
+    echo Je sens de la menthe dans l&#039;air... Menteur !
+else
+    echo Vous etes majeur !
+fi</pre>
+
+<p>
+<em>Sur Windows</em>
+</p>
+<pre class="code">@echo off
+set /p age=&quot;Quel est votre nombre d&#039;annees d&#039;existence ?&quot;
+if %age% lss 18 (
+    echo Vous etes mineur ! Retournez chercher du charbon !
+) else if %age% geq 150 (
+    echo Je sens de la menthe dans l&#039;air... Menteur !
+) else (
+    echo Vous etes majeur !
+)</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;...SINON SI...&quot;,&quot;hid&quot;:&quot;sinon_si&quot;,&quot;codeblockOffset&quot;:9,&quot;secid&quot;:24,&quot;range&quot;:&quot;8684-9734&quot;} -->
+<h3 class="sectionedit25" id="les_comparateurs">Les comparateurs</h3>
+<div class="level3">
+
+<p>
+J&#039;imagine que vous n&#039;avez pas bien compris cette histoire de <strong>lss, geq, -lt</strong> ou <strong>-ge</strong> alors voici des petits <strong>tableaux récapitulatifs</strong> des comparateurs :)
+</p>
+
+<p>
+<em>Nombres</em>
+</p>
+<div class="table sectionedit26"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1">Windows</th><th class="col2" colspan="2">Opérateur</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">-eq</td><td class="col1">equ</td><td class="col2" colspan="2">=</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">-neq</td><td class="col1">neq</td><td class="col2" colspan="2">≠</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">-lt</td><td class="col1">lss</td><td class="col2" colspan="2">&lt;</td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">-le</td><td class="col1">leq</td><td class="col2" colspan="2">≤</td>
+	</tr>
+	<tr class="row5">
+		<td class="col0">-gt</td><td class="col1">gtr</td><td class="col2" colspan="2">&gt;</td>
+	</tr>
+	<tr class="row6">
+		<td class="col0">-ge</td><td class="col1">geq</td><td class="col2" colspan="2">≥</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table15&quot;,&quot;secid&quot;:26,&quot;range&quot;:&quot;9936-10048&quot;} -->
+<p>
+<em>Chaines de caractères</em>
+</p>
+<div class="table sectionedit27"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1">Windows</th><th class="col2" colspan="2">Opérateur</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">=</td><td class="col1">equ</td><td class="col2" colspan="2">=</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">!=</td><td class="col1">neq</td><td class="col2" colspan="2">≠</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table16&quot;,&quot;secid&quot;:27,&quot;range&quot;:&quot;10077-10129&quot;} -->
+<p>
+Il est aussi possible d&#039;effectuer des tests sur les <strong><span style="color:#008000;">fichiers</span></strong>
+</p>
+<div class="table sectionedit28"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1">Windows</th><th class="col2" colspan="2">Utilité</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">-e</td><td class="col1">exist</td><td class="col2" colspan="2">Vérifie que le fichier existe</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table17&quot;,&quot;secid&quot;:28,&quot;range&quot;:&quot;10213-10281&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les comparateurs&quot;,&quot;hid&quot;:&quot;les_comparateurs&quot;,&quot;codeblockOffset&quot;:11,&quot;secid&quot;:25,&quot;range&quot;:&quot;9735-10282&quot;} -->
+<h3 class="sectionedit29" id="et_et_ou_logique">ET et OU logique</h3>
+<div class="level3">
+
+<p>
+Sur <strong>Linux</strong> vous pouvez utiliser le ET logique <strong>&amp;&amp;</strong> et le OU logique <strong>||</strong> pour effectuer une action que si deux ou plus de conditions sont remplies alors que sur <strong>Windows</strong> il faut <strong>ruser</strong> :
+</p>
+<pre class="code">#ET logique
+if [ $age -ge 18 ] &amp;&amp; [ $age -lt 150 ]; then
+    echo Vous etes majeur !
+fi
+#OU logique
+if [ $age -lt 18 ] || [ $age -ge 150 ]; then
+    echo Vous etes mineur ou menteur !
+fi</pre>
+<pre class="code">REM ET logique
+if %age% geq 18 (
+    if %age% lss 150 (
+        echo Vous etes majeur !
+    )
+)
+REM OU logique
+if %age% lss 18 (
+    echo Vous etes mineur ou menteur !
+)
+if %age% geq 150
+    echo Vous etes mineur ou menteur !
+)</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;ET et OU logique&quot;,&quot;hid&quot;:&quot;et_et_ou_logique&quot;,&quot;codeblockOffset&quot;:11,&quot;secid&quot;:29,&quot;range&quot;:&quot;10283-10954&quot;} -->
+<h3 class="sectionedit30" id="la_negation">La négation</h3>
+<div class="level3">
+
+<p>
+Finalement pour faire la <strong><span style="color:#ff0000;">négation</span></strong> d&#039;une condition, c&#039;est-à-dire vérifier que la condition n&#039;est pas vérifiée, on utilise :
+</p>
+<div class="table sectionedit31"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">!</td><td class="col1" colspan="2">not</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table18&quot;,&quot;secid&quot;:31,&quot;range&quot;:&quot;11126-11151&quot;} -->
+<p>
+Par exemple pour vérifier si l&#039;utilisateur n&#039;a <strong>PAS</strong> moins de 18 ans :
+</p>
+<div class="table sectionedit32"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">if [ ! age -lt 18 ]; then</td><td class="col1" colspan="2">if not %age% lss 18(</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table19&quot;,&quot;secid&quot;:32,&quot;range&quot;:&quot;11226-11292&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La n\u00e9gation&quot;,&quot;hid&quot;:&quot;la_negation&quot;,&quot;codeblockOffset&quot;:13,&quot;secid&quot;:30,&quot;range&quot;:&quot;10955-11293&quot;} -->
+<h2 class="sectionedit33" id="trier_ses_images">Trier ses images</h2>
+<div class="level2">
+
+<p>
+Dans cette partie nous écrirons un script permettant de classer les photos du répertoire courant dans des dossiers en fonction de leur date.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Trier ses images&quot;,&quot;hid&quot;:&quot;trier_ses_images&quot;,&quot;codeblockOffset&quot;:13,&quot;secid&quot;:33,&quot;range&quot;:&quot;11294-11464&quot;} -->
+<h3 class="sectionedit34" id="connaitre_la_date_de_creation_d_une_image">Connaître la date de création d&#039;une image</h3>
+<div class="level3">
+
+<p>
+Nous allons pour cela utiliser l&#039;outil <a href="https://exiftool.org/" class="urlextern" title="https://exiftool.org/" rel="nofollow">Exiftool</a> disponible pour tous les systèmes. Vous pouvez utiliser le lien que je vous ai fourni ou passer par un <strong><span style="color:#008000;">gestionnaire de paquets</span></strong> comme on a vu au début de cet article :)
+</p>
+
+<p>
+Cette application permet de réaliser une <strong><span style="color:#ff0000;">multitude</span></strong> d&#039;opérations sur des images mais nous nous contenterons de récupérer les dates de création. Essayons le sur une image quelconque de votre ordinateur (je prends <strong>unknown.png</strong> pour l&#039;exemple) :
+</p>
+<pre class="code">exiftool unknown.png</pre>
+
+<p>
+<em>Sur Windows</em>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_scripting&amp;media=cpp:exiftool_unknown.png" class="media" title="cpp:exiftool_unknown.png"><img src="/lib/exe/fetch.php?w=1000&amp;tok=e2ac74&amp;media=cpp:exiftool_unknown.png" class="media" alt="" width="1000" /></a>
+</p>
+
+<p>
+Voilà voilà, il y a <span style="color:#008000;"><strong>pas mal d&#039;informations</strong></span> mais on va garder que celle qui nous intéresse, à savoir la <span style="color:#ff0000;"><strong>date de création/modification</strong></span> de l&#039;image (on prendra la date de modification car la date de création n&#039;est pas disponible sur <strong><span style="color:#008080;">Linux</span></strong> pour une raison obscure), et on va <span style="color:#ff0000;"><strong>mettre en forme</strong></span> un peu le résultat.
+Nous cherchons donc une commande qui nous retourne la date sous le format <strong>AAAA/MM</strong> (A pour année et M pour mois) :
+</p>
+<pre class="code">exiftool -s -s -s  unknown.png -d %Y/%m -FileModifyDate</pre>
+<p class="divalign-center"><a href="/lib/exe/detail.php?id=cpp%3Ale_scripting&amp;media=cpp:exiftool_unknown.png_blabla.png" class="media" title="cpp:exiftool_unknown.png_blabla.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=472fee&amp;media=cpp:exiftool_unknown.png_blabla.png" class="media" alt="" width="500" /></a></p><!--divalign-->
+
+<p>
+nous donne <span style="color:#ff0000;"><strong>tout de suite</strong></span> le résultat dont nous avons besoin !
+Puisque la commande est assez <strong><span style="color:#008000;">complexe</span></strong>, je vais l&#039;expliquer petit à petit ;)
+</p>
+<pre class="code">-s -s -s</pre>
+
+<p>
+signifie que l&#039;on veut le résultat sans la première colonne qui indique à quoi correspondent les valeurs.
+</p>
+<pre class="code">-d %Y/%m</pre>
+
+<p>
+sert à <strong><span style="color:#008000;">formater</span></strong> les dates de la sortie de la commande sous la forme désirée.
+</p>
+<pre class="code">-FileModifyDate</pre>
+
+<p>
+pour ne récupérer que la ligne qui nous intéresse.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Conna\u00eetre la date de cr\u00e9ation d&#039;une image&quot;,&quot;hid&quot;:&quot;connaitre_la_date_de_creation_d_une_image&quot;,&quot;codeblockOffset&quot;:13,&quot;secid&quot;:34,&quot;range&quot;:&quot;11465-13302&quot;} -->
+<h3 class="sectionedit35" id="les_boucles">Les boucles</h3>
+<div class="level3">
+
+<p>
+Bon. Maintenant qu&#039;on peut récupérer l&#039;<strong><span style="color:#ff0000;">information</span></strong> dont on a besoin sur une image, il faut le faire sur <strong><span style="color:#008000;">toutes</span></strong> les images du répertoire ! C&#039;est à ça que sert une <strong><span style="color:#ff0000;">boucle</span></strong> : répéter une même action plusieurs fois. Nous allons donc utiliser les blocs <strong><span style="color:#ffa500;">for</span></strong> et, comme quand nous avons fait des <strong><span style="color:#008000;">conditions</span></strong>, je vais vous recommander très fortement d&#039;<strong><span style="color:#ff0000;">indenter</span></strong> votre code pour que vous puissiez vous y retrouver.
+</p>
+
+<p>
+Nous allons donc faire une <strong><span style="color:#008000;">boucle</span></strong> permettant d&#039;effectuer une action sur chaque image, c&#039;est à dire chaque fichier <strong>*.png</strong> ou <strong>*.jpg</strong> (vous pouvez ajouter d&#039;autres extensions si ça vous chante)
+</p>
+<div class="table sectionedit36"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">for image in `ls *.png *.jpg`; do</td><td class="col1" colspan="2">for %%i (*.jpg *.png) do (</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table20&quot;,&quot;secid&quot;:36,&quot;range&quot;:&quot;14082-14179&quot;} -->
+<p>
+Maintenant, il faut entrer la <strong><span style="color:#ff0000;">commande</span></strong> à effectuer sur chaque fichier (on modifie légèrement la commande d&#039;avant) et stocker le résultat dans une variable (je l&#039;ai appelée <strong><span style="color:#ffa500;">creation</span></strong>) :
+</p>
+<div class="table sectionedit37"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">creation=`exiftool -s -s -s  &quot;$image&quot; -d %Y/%m -FileModifyDate`</td><td class="col1" colspan="2">for /f &quot;tokens=*&quot; %%a in (&#039; exiftool -s -s -s &quot;%%i&quot; -d %%Y/%%m -FileModifyDate &#039;) do set creation=%%a</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table21&quot;,&quot;secid&quot;:37,&quot;range&quot;:&quot;14411-14630&quot;} -->
+<p>
+<div class='alert alert-info'><strong>Note :</strong> Vous pouvez voir que nous avons mis le nom de l&#039;image entre <strong>guillemets</strong>. C&#039;est pour le cas où le nom de l&#039;image contient un <strong>espace</strong> et pour que la commande <strong>exiftool</strong> considère bien le fichier <strong>Belle Valkyrie.png</strong> comme une image et non deux.</div>
+</p>
+
+<p>
+Si vous êtes sur <strong><span style="color:#008080;">Windows</span></strong>, vous vous posez sûrement la question : “pourquoi je dois utiliser une boucle <strong><span style="color:#ffa500;">for</span></strong> pour stocker le résultat d&#039;une commande dans une variable ?”. Sachez que moi aussi, je me la pose, mais bon c&#039;est comme ça qu&#039;il faut faire. D&#039;ailleurs, si vous avez essayé d&#039;afficher le contenu de la variable création avec un <strong><span style="color:#ffa500;">echo</span></strong>, vous avez eu une <strong><span style="color:#ff0000;">erreur</span></strong> de type
+</p>
+<pre class="code">Commande ECHO désactivée</pre>
+
+<p>
+C&#039;est tout à fait <strong><span style="color:#008000;">normal</span></strong> car, voyez vous, pour créer des variables à l&#039;intérieur d&#039;une boucle en <strong>Batch</strong>, il faut ajouter
+</p>
+<pre class="code">setlocal enabledelayedexpansion</pre>
+
+<p>
+au début de votre programme (à côté du <strong><span style="color:#ffa500;">@echo off</span></strong>) et quand vous faites référence à votre variable, vous devez l&#039;appeler par
+</p>
+<pre class="code">!variable!</pre>
+
+<p>
+au lieu d&#039;utiliser les <strong>%</strong>. Je sais, ça fait beaucoup de choses pour une simple attribution de variable :)
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les boucles&quot;,&quot;hid&quot;:&quot;les_boucles&quot;,&quot;codeblockOffset&quot;:18,&quot;secid&quot;:35,&quot;range&quot;:&quot;13303-15901&quot;} -->
+<h3 class="sectionedit38" id="les_sous-chaines">Les sous-chaînes</h3>
+<div class="level3">
+
+<p>
+Pour avoir un code plus clair, nous allons maintenant stocker dans une variable <strong><span style="color:#ffa500;">annee</span></strong> et une <strong><span style="color:#ffa500;">mois</span></strong> vous l&#039;aurez deviné, l&#039;année et le mois de la création (ou modification c&#039;est la même chose) de l&#039;image. Cela va me permettre de vous montrer comment créer des <strong><span style="color:#ff0000;">sous-chaînes</span></strong> dans un script :
+</p>
+<div class="table sectionedit39"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">annee=${creation:0:4}</td><td class="col1" colspan="2">set annee=!creation:~0,4!</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">mois=${creation:5}</td><td class="col1" colspan="2">set annee=!creation:~5!</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table22&quot;,&quot;secid&quot;:39,&quot;range&quot;:&quot;16286-16467&quot;} -->
+<p>
+Le <strong><span style="color:#008000;">premier</span></strong> chiffre fait référence à l&#039;<strong><span style="color:#ff0000;">indice</span></strong> du début de la sous-chaîne (0 signifie la première lettre) et le <strong><span style="color:#008000;">second</span></strong> chiffre indique la <strong><span style="color:#ff0000;">longueur</span></strong> de la sous-chaîne (si il n&#039;est pas donné la sous-chaîne ira jusqu&#039;à la fin du mot d&#039;origine). <strong><span style="color:#ffa500;">annee</span></strong> contient donc les quatre premiers caractères de <strong><span style="color:#ffa500;">creation</span></strong> et <strong><span style="color:#ffa500;">mois</span></strong> contient tous les caractères de <strong><span style="color:#ffa500;">creation</span></strong> à partir du cinquième.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les sous-cha\u00eenes&quot;,&quot;hid&quot;:&quot;les_sous-chaines&quot;,&quot;codeblockOffset&quot;:21,&quot;secid&quot;:38,&quot;range&quot;:&quot;15902-17024&quot;} -->
+<h3 class="sectionedit40" id="le_deplacement_des_images">Le déplacement des images</h3>
+<div class="level3">
+
+<p>
+Tout d&#039;abord il faut <strong><span style="color:#ff0000;">créer</span></strong> le bon dossier d&#039;<strong><span style="color:#008000;">année</span></strong> s&#039;il n&#039;existe pas encore :
+</p>
+
+<p>
+<em>Sur Linux</em>
+</p>
+<pre class="code">if [ ! -e $annee ]; then
+    mkdir $annee
+fi</pre>
+
+<p>
+<em>Sur Windows</em>
+</p>
+<pre class="code">if not exist !annee! (
+    mkdir !annee!
+)</pre>
+
+<p>
+Pareil pour le dossier de <strong><span style="color:#008000;">mois</span></strong> :
+</p>
+
+<p>
+<em>Sur Linux</em>
+</p>
+<pre class="code">if [ ! -e $annee/$mois ]; then
+    mkdir $annee/$mois
+fi</pre>
+
+<p>
+<em>Sur Windows</em>
+</p>
+<pre class="code">if not exist !annee!\!mois! (
+    mkdir !annee!\!mois!
+)</pre>
+
+<p>
+Puis on <strong><span style="color:#ff0000;">déplace</span></strong> finalement l&#039;image au bon endroit :
+</p>
+<div class="table sectionedit41"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">mv ”$image” $annee/$mois</td><td class="col1" colspan="2">move ”%%i” !annee!\!mois!</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table23&quot;,&quot;secid&quot;:41,&quot;range&quot;:&quot;17635-17717&quot;} -->
+<p>
+<strong><span style="color:#ff00ff;">mais qu&#039;est ce que c&#039;est que ce merdier</span></strong>
+</p>
+
+<p>
+On termine par rajouter les derniers détails :
+</p>
+<div class="table sectionedit42"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">)</td><td class="col1" colspan="2">done</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table24&quot;,&quot;secid&quot;:42,&quot;range&quot;:&quot;17831-17857&quot;} -->
+<p>
+Et voilà ! Toutes nos images ont été <strong><span style="color:#008000;">classées</span></strong> par date ! Sachez que sur <strong><span style="color:#008080;">Windows</span></strong>, on préfèrera utiliser une structure avec des étiquettes <strong><span style="color:#ffa500;">GOTO</span></strong>, mais puisque c&#039;est spécifique à ce système j&#039;ai préféré ne pas aborder ce point, mais voici la <a href="https://docs.microsoft.com/fr-fr/windows-server/administration/windows-commands/goto" class="urlextern" title="https://docs.microsoft.com/fr-fr/windows-server/administration/windows-commands/goto" rel="nofollow">documentation Microsoft</a> à ce sujet.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le d\u00e9placement des images&quot;,&quot;hid&quot;:&quot;le_deplacement_des_images&quot;,&quot;codeblockOffset&quot;:21,&quot;secid&quot;:40,&quot;range&quot;:&quot;17025-18297&quot;} -->
+<h2 class="sectionedit43" id="le_path">Le path</h2>
+<div class="level2">
+
+<p>
+Cette partie n&#039;a pas forcément de rapport avec les autres, c&#039;est une sorte de <strong><span style="color:#fa8072;">bonus</span></strong>. 
+</p>
+
+<p>
+Pour <strong><span style="color:#ff0000;">exécuter</span></strong> votre script, vous avez sans doute remarqué qu&#039;il fallait être dans le bon répertoire ou, dans le cas échéant, indiquer le <strong><span style="color:#008000;">chemin</span></strong> vers le script. Mais il ne vous aura pas non plus échappé que les commandes comme <strong><span style="color:#ffa500;">cd</span></strong> ou <strong><span style="color:#ffa500;">mkdir</span></strong> sont accessibles peu importe le répertoire… Pour que votre <strong>script.bat</strong> soit accessible <span style="color:#ff0000;"><strong>à tout endroit</strong></span>, il va falloir que vous indiquez son chemin dans la variable système <strong><span style="color:#ffa500;">PATH</span></strong>. Vous pouvez d&#039;ores et déjà afficher le contenu de cette variable :
+</p>
+<div class="table sectionedit44"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">echo $PATH</td><td class="col1" colspan="2">echo %PATH%</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table25&quot;,&quot;secid&quot;:44,&quot;range&quot;:&quot;19052-19128&quot;} -->
+<p>
+La variable <strong><span style="color:#ffa500;">PATH</span></strong> est ce que l&#039;on appelle une <span style="color:#ff0000;"><strong>variable d&#039;environnement</strong></span> : une sorte de variable système. Il y en a beaucoup d&#039;autres indiquant par exemple le chemin vers le <strong>répertoire par défaut</strong> quand vous ouvrez votre console ou alors contenant votre <strong>nom d&#039;utilisateur</strong>. Vous pouvez consulter la liste des variables d&#039;environnement avec :
+</p>
+<div class="table sectionedit45"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">printenv</td><td class="col1" colspan="2">set</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table26&quot;,&quot;secid&quot;:45,&quot;range&quot;:&quot;19519-19551&quot;} -->
+<p>
+<em>Sur Linux</em>
+</p>
+
+<p>
+Vous devrez aller modifier cette variable directement dans un <strong><span style="color:#ff0000;">fichier</span></strong> placé dans votre répertoire utilisateur (le /home/nom_d_utilisateur) nommé <strong>.bashrc</strong> ou <strong>.profile</strong> en fonction de votre distribution (pour certaines d&#039;entre elles il faudra aller dans /etc/environment).
+</p>
+<pre class="code">echo &#039;export PATH=$PATH:chemin_a_ajouter&#039; &gt;&gt; ~/.bashrc</pre>
+
+<p>
+<em>Sur Windows</em>
+</p>
+
+<p>
+La meilleure façon de modifier le <strong><span style="color:#ffa500;">PATH</span></strong> est de faire comme quand vous avez installé <strong>vim</strong>. Je rappelle la procédure :
+</p>
+
+<p>
+<strong>Panneau de configuration&gt;Système et Sécurité&gt;Système&gt;Modifier les paramètres&gt;Paramètres système avancés&gt;Variables d&#039;environnement&gt;Path&gt;Modifier&gt;Nouveau&gt;<em>chemin vers le dossier où est votre script</em></strong>
+</p>
+
+<p>
+Et voilà ! Une fois un dossier enregistré dans le <strong><span style="color:#ffa500;">PATH</span></strong> vous avez accès à son contenu <span style="color:#008000;"><strong>peu importe le répertoire où vous êtes actuellement</strong></span> !
+</p>
+
+<p>
+Notre page touche à sa fin, j&#039;espère que vous aurez pu apprendre les rudiments de l&#039;utilisation de la console, ceci peu importe votre système d&#039;exploitation !
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le path&quot;,&quot;hid&quot;:&quot;le_path&quot;,&quot;codeblockOffset&quot;:25,&quot;secid&quot;:43,&quot;range&quot;:&quot;18298-&quot;} -->

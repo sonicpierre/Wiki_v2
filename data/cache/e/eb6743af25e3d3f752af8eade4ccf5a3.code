@@ -1,0 +1,19 @@
+<span class="co1">%On crée un vecteur dont l'i-ème élément est l'indice de la variable dont la valeur est à la fin de la i+1-ème ligne du tableau</span>
+x=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tab<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="br0">&#41;</span>-<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tab<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>+<span class="nu0">1</span>:<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tab<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>+<span class="nu0">1</span>
+<span class="co1">%Stockage de la position des différentes variables</span>
+x<span class="br0">&#40;</span>indiceVarSortante-<span class="nu0">1</span><span class="br0">&#41;</span>=indiceVarEntrante
+<span class="co1">%Tant que les coefficients de Lf dont positifs</span>
+<span class="kw1">while</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/sum.html"><span class="kw2">sum</span></a><span class="br0">&#40;</span>tabDelta<span class="br0">&#40;</span><span class="nu0">1</span>,<span class="nu0">1</span>:end-<span class="nu0">1</span><span class="br0">&#41;</span>&gt;<span class="nu0">0</span><span class="br0">&#41;</span>&gt;<span class="nu0">0</span>
+    <span class="co1">%Recherche de la variable entrante</span>
+    indiceVarEntrante=variableEntrante<span class="br0">&#40;</span>tabDelta<span class="br0">&#41;</span>
+    <span class="co1">%Recherche de la variable sortante</span>
+    indiceVarSortante=variableSortante<span class="br0">&#40;</span>tabDelta,indiceVarEntrante<span class="br0">&#41;</span>
+    <span class="kw1">if</span> indiceVarSortante==<span class="nu0">1</span>
+        <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span>&quot;Pas de variable sortante&quot;<span class="br0">&#41;</span>
+        <span class="kw1">return</span>
+    endif
+    <span class="co1">%Coefficient principal à 1 et coefficients secondaires à 0</span>
+    tabDelta=normalisation<span class="br0">&#40;</span>tabDelta,indiceVarEntrante,indiceVarSortante<span class="br0">&#41;</span>
+    <span class="co1">%Stockage de la position des différentes variables</span>
+    x<span class="br0">&#40;</span>indiceVarSortante-<span class="nu0">1</span><span class="br0">&#41;</span>=indiceVarEntrante
+<span class="kw1">end</span>

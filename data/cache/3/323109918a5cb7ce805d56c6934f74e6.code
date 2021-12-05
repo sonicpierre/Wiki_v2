@@ -1,0 +1,12 @@
+library<span class="br0">&#40;</span><span class="kw3">jpeg</span><span class="br0">&#41;</span>
+img <span class="sy0">&lt;</span>- readJPEG<span class="br0">&#40;</span><span class="st0">&quot;lama.jpg&quot;</span><span class="br0">&#41;</span>
+imgDm <span class="sy0">&lt;</span>- dim<span class="br0">&#40;</span>img<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># On transforme en un dataframe clair</span>
+imgRGB <span class="sy0">&lt;</span>- data.<span class="me1">frame</span><span class="br0">&#40;</span>
+    x <span class="sy0">=</span> rep<span class="br0">&#40;</span><span class="nu0">1</span>:imgDm<span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span><span class="sy0">,</span> each <span class="sy0">=</span> imgDm<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    y <span class="sy0">=</span> rep<span class="br0">&#40;</span>imgDm<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>:<span class="nu0">1</span><span class="sy0">,</span> imgDm<span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    R <span class="sy0">=</span> <span class="kw1">as</span>.<span class="me1">vector</span><span class="br0">&#40;</span>img<span class="br0">&#91;</span><span class="sy0">,,</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    G <span class="sy0">=</span> <span class="kw1">as</span>.<span class="me1">vector</span><span class="br0">&#40;</span>img<span class="br0">&#91;</span><span class="sy0">,,</span><span class="nu0">2</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    B <span class="sy0">=</span> <span class="kw1">as</span>.<span class="me1">vector</span><span class="br0">&#40;</span>img<span class="br0">&#91;</span><span class="sy0">,,</span><span class="nu0">3</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+<span class="br0">&#41;</span>

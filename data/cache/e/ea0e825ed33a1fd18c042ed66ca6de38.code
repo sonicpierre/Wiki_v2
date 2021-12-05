@@ -1,0 +1,14 @@
+tab=<span class="br0">&#91;</span>
+<span class="nu0">1</span>,<span class="nu0">2</span>,<span class="nu0">0</span>,<span class="nu0">0</span>,<span class="nu0">0</span>,<span class="nu0">0</span>;
+-<span class="nu0">1</span>,<span class="nu0">3</span>,<span class="nu0">1</span>,<span class="nu0">0</span>,<span class="nu0">0</span>,<span class="nu0">10</span>;
+<span class="nu0">5</span>,-<span class="nu0">4</span>,<span class="nu0">0</span>,<span class="nu0">1</span>,<span class="nu0">0</span>,<span class="nu0">1</span>;
+-<span class="nu0">3</span>,<span class="nu0">1</span>,<span class="nu0">0</span>,<span class="nu0">0</span>,<span class="nu0">1</span>,-<span class="nu0">1</span><span class="br0">&#93;</span>
+&nbsp;
+<span class="kw1">function</span> tabDelta=auxiliaire<span class="br0">&#40;</span>tab<span class="br0">&#41;</span>
+    tabDelta=tab
+    tabDelta<span class="br0">&#40;</span><span class="nu0">1</span>,:<span class="br0">&#41;</span>*=<span class="nu0">0</span>
+    tabGauche=tabDelta<span class="br0">&#40;</span>:,<span class="nu0">1</span>:end-<span class="nu0">1</span><span class="br0">&#41;</span>
+    tabMilieu=-<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/ones.html"><span class="kw2">ones</span></a><span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tabDelta<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>,<span class="nu0">1</span><span class="br0">&#41;</span>
+    tabDroite=tabDelta<span class="br0">&#40;</span>:,<span class="kw1">end</span><span class="br0">&#41;</span>
+    tabDelta=<span class="br0">&#91;</span>tabGauche,tabMilieu,tabDroite<span class="br0">&#93;</span>
+endfunction

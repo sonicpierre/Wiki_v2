@@ -1,0 +1,4 @@
+<span class="kw1">from</span> chefboost <span class="kw1">import</span> Chefboost <span class="kw1">as</span> chef
+data <span class="sy0">=</span> data.<span class="me1">rename</span><span class="br0">&#40;</span>columns<span class="sy0">=</span><span class="br0">&#123;</span><span class="st0">'Survived'</span>:<span class="st0">'Decision'</span><span class="br0">&#125;</span><span class="br0">&#41;</span>
+config <span class="sy0">=</span> <span class="br0">&#123;</span><span class="st0">'algorithm'</span>:<span class="st0">'ID3'</span><span class="br0">&#125;</span>
+model <span class="sy0">=</span> chef.<span class="me1">fit</span><span class="br0">&#40;</span>data<span class="sy0">,</span> config<span class="br0">&#41;</span>

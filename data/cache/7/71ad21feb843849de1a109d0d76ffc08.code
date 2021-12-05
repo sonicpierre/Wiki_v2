@@ -1,0 +1,1 @@
+plot<span class="br0">&#40;</span>iris$Sepal.<span class="me1">Length</span><span class="sy0">,</span> iris$Sepal.<span class="me1">Width</span><span class="sy0">,</span> col<span class="sy0">=</span>y<span class="br0">&#41;</span>

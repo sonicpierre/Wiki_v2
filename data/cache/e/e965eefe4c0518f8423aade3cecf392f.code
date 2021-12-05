@@ -1,0 +1,2 @@
+qqnorm<span class="br0">&#40;</span>Regression_Lin$residuals<span class="br0">&#41;</span><span class="co1">#Traçage de la courbe de distribution</span>
+qqline<span class="br0">&#40;</span>Regression_Lin$residuals<span class="br0">&#41;</span><span class="co1">#Ajout de la droite sur le graphique</span>

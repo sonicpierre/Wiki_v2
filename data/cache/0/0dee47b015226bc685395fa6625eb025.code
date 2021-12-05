@@ -1,0 +1,7 @@
+data <span class="sy0">&lt;</span>- data %<span class="sy0">&gt;</span>%
+  group_by<span class="br0">&#40;</span>state_National<span class="br0">&#41;</span> %<span class="sy0">&gt;</span>%
+  rename<span class="br0">&#40;</span>etat<span class="sy0">=</span>state_National<span class="br0">&#41;</span>
+View<span class="br0">&#40;</span>data<span class="br0">&#41;</span>
+&nbsp;
+&nbsp;
+etats <span class="sy0">&lt;</span>- geo_join<span class="br0">&#40;</span>states<span class="sy0">,</span> data<span class="sy0">,</span> <span class="st0">&quot;NAME&quot;</span><span class="sy0">,</span> <span class="st0">&quot;etat&quot;</span><span class="br0">&#41;</span><span class="co1"># &quot;NAME&quot; étant le nom des états dans le fichier de coordonnées et &quot;state&quot; leur nom dans les données.</span>

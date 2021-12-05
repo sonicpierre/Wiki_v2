@@ -1,0 +1,439 @@
+
+<p>
+<a href="/doku.php?id=cpp:ia" class="wikilink1" title="cpp:ia"> Machine Learning</a>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aacp&amp;media=cpp:presentation.png" class="media" title="cpp:presentation.png"><img src="/lib/exe/fetch.php?w=550&amp;tok=a0501c&amp;media=cpp:presentation.png" class="mediacenter" title="Fléau de la dimension" alt="Fléau de la dimension" width="550" /></a>
+</p>
+
+<p>
+L&#039;ACP (Analyse en Composantes Principales) est une méthode d&#039;apprentissage non supervisée. Son but est de réduire le nombre de dimensions d&#039;un problème (nombre de variables) en <span style="color:#ff0000;">exprimant l&#039;ensemble des données selon des axes</span>. Il s&#039;agit de combinaisons linéaires entre variables qui résument l&#039;essentiel de l&#039;information du jeu de données.
+ Les objectifs de cette méthode sont les suivants :
+</p>
+<ul>
+<li class="level1"><div class="li"> Augmenter la vitesse d&#039;entrainement du modèle.</div>
+</li>
+<li class="level1"><div class="li"> Représenter graphiquement des données de dimension n dans un espace de dimension  m, avec $m &lt;&lt; n$.</div>
+</li>
+<li class="level1"><div class="li"> Opérer des traitements sur les images (compression, suppression du bruit, etc.)</div>
+</li>
+</ul>
+
+<h4 id="visualisation_de_l_information">Visualisation de l&#039;information</h4>
+<div class="level4">
+<div class="table sectionedit1"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Mauvais point de vue  </th><th class="col1 centeralign">  Bon point de vue  </th><th class="col2 centeralign">  Mauvais point de vue  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  <a href="/lib/exe/detail.php?id=cpp%3Aacp&amp;media=cpp:lamaface.jpg" class="media" title="cpp:lamaface.jpg"><img src="/lib/exe/fetch.php?w=135&amp;tok=311cdc&amp;media=cpp:lamaface.jpg" class="media" alt="" width="135" /></a>  </td><td class="col1 centeralign">  <a href="/lib/exe/detail.php?id=cpp%3Aacp&amp;media=cpp:lamaprofil.jpg" class="media" title="cpp:lamaprofil.jpg"><img src="/lib/exe/fetch.php?w=200&amp;tok=35b3cc&amp;media=cpp:lamaprofil.jpg" class="media" alt="" width="200" /></a>  </td><td class="col2 centeralign">  <a href="/lib/exe/detail.php?id=cpp%3Aacp&amp;media=cpp:lama3d.jpg" class="media" title="cpp:lama3d.jpg"><img src="/lib/exe/fetch.php?w=220&amp;tok=2ca94b&amp;media=cpp:lama3d.jpg" class="mediacenter" alt="" width="220" /></a>  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:1,&quot;range&quot;:&quot;787-956&quot;} -->
+<p>
+Les différents points de vue ci-dessus montrent à quel point le choix de la bonne dimension permet de retenir l&#039;essentiel de l&#039;information. L&#039;aperçu 2D résume très bien l&#039;image qui fournira l&#039;ensemble des caractéristiques du lama, là où les aperçus 1D ou 3D apportent soit trop peu d&#039;informations (1D), soit trop d&#039;informations (3D).
+</p>
+
+</div>
+
+<h2 class="sectionedit2" id="variance_et_composantes_principales">Variance et composantes principales</h2>
+<div class="level2">
+
+<p>
+<div class='alert alert-info'> <strong>Rappel :</strong> la variance est une mesure importante pour quantifier l&#039;information contenue dans une variable. Si les valeurs de la variable ne changent pas, cela veut dire qu&#039;elle est constante ce qui ne nous aide pas dans la prise de décision.</div>
+</p>
+
+<p>
+La première étape de l&#039;ACP est de déterminer les axes de projection qui conservent le maximum de variance. Ainsi, après avoir déterminé l&#039;axe apportant le maximum d&#039;informations, l&#039;ACP trouve le deuxième axe (orthogonal au premier) qui contribue le plus à la variance. 
+Le processus est répété, ainsi de suite, avec autant d&#039;axes que de dimensions dans le jeu de données. 
+</p>
+
+<p>
+<div class='alert alert-info'><strong>Information :</strong> le $i^{ème}$ axe est appelé la $i^{ème}$ composante principale du jeu de données.</div>
+</p>
+
+<p>
+<span style='color:#ed1c24; '>Mais alors, comment la machine trouve-t-elle les composantes principales ?</span>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Variance et composantes principales&quot;,&quot;hid&quot;:&quot;variance_et_composantes_principales&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;1302-2225&quot;} -->
+<h3 class="sectionedit3" id="recherche_des_composantes_principales">Recherche des composantes principales</h3>
+<div class="level3">
+
+<p>
+<div class='alert alert-info'> <strong>DataSet :</strong> l&#039;ACP nécessite d&#039;avoir des données <a href="https://llamaspartan.fr/doku.php?id=cpp:preprocessing_et_encodage#normalisation_des_donnees" class="urlextern" title="https://llamaspartan.fr/doku.php?id=cpp:preprocessing_et_encodage#normalisation_des_donnees" rel="nofollow">centrées-réduites</a> que vous pouvez trouver <a href="https://github.com/LlamasPartan/Machine_Learning_Ressource/blob/master/R%C3%A9gression/R%C3%A9gression%20logistique/audit_risk.csv" class="urlextern" title="https://github.com/LlamasPartan/Machine_Learning_Ressource/blob/master/R%C3%A9gression/R%C3%A9gression%20logistique/audit_risk.csv" rel="nofollow">ici</a>. Il s&#039;agit d&#039;un dataset de détection de fraude.</div>
+</p>
+
+<p>
+Concernant le centrage-réduction, cela dépend des données :
+</p>
+<ul>
+<li class="level1"><div class="li"> Si elles sont toutes dans la même unité et varient selon des ordres de grandeur identique, le centrage suffit (on l&#039;appelle aussi ACP non-normée).</div>
+</li>
+<li class="level1"><div class="li"> Dans le cas contraire, le centrage-réduction est recommandé (ACP normée).</div>
+</li>
+</ul>
+
+<p>
+On trouve les composantes principales grâce à une méthode appelée <span style="color:#ff0000;"><strong>décomposition en valeurs singulières</strong></span>. Le but est de décomposer les données d&#039;entraînement en produit de trois matrices :
+</p>
+
+<p>
+$$X = U \Sigma V^{T}$$
+</p>
+<div class="table sectionedit4"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Paramètres  </th><th class="col1 centeralign">  Signification  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  X  </td><td class="col1 centeralign">  Matrice des données.  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  U  </td><td class="col1 centeralign">  Matrice de vecteurs propres.  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  $\Sigma$  </td><td class="col1 centeralign">  Matrice de valeurs propres.   </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">  $V^{T}$  </td><td class="col1 centeralign">  Matrice contenant les composantes principales.  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:4,&quot;range&quot;:&quot;3217-3440&quot;} -->
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+<span class="kw1">from</span> sklearn.<span class="me1">preprocessing</span> <span class="kw1">import</span> StandardScaler
+scaler <span class="sy0">=</span> StandardScaler<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="co1">#Méthode de standadisation</span>
+X_Centered <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>scaler.<span class="me1">fit_transform</span><span class="br0">&#40;</span>X_train<span class="br0">&#41;</span><span class="sy0">,</span> columns <span class="sy0">=</span> X_test.<span class="me1">columns</span><span class="br0">&#41;</span><span class="co1">#Application de la méthode sur les données</span>
+&nbsp;
+U<span class="sy0">,</span> s<span class="sy0">,</span> Vt <span class="sy0">=</span> np.<span class="me1">linalg</span>.<span class="me1">svd</span><span class="br0">&#40;</span>X_Centered<span class="br0">&#41;</span><span class="co1">#Décompostion SVD de la matrice de données</span>
+c1 <span class="sy0">=</span> Vt.<span class="me1">T</span><span class="br0">&#91;</span>:<span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="co1">#Première composante principale</span>
+c2 <span class="sy0">=</span> Vt.<span class="me1">T</span><span class="br0">&#91;</span>:<span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="co1">#Seconde composante principale</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">X_Centered <span class="sy0">&lt;</span>- scale<span class="br0">&#40;</span>X<span class="sy0">,</span> center <span class="sy0">=</span> T<span class="br0">&#41;</span><span class="co1">#Centrage des données</span>
+X_Centered <span class="sy0">&lt;</span>- <span class="kw1">as</span>.<span class="me1">data</span>.<span class="me1">frame</span><span class="br0">&#40;</span>X_Centered<span class="br0">&#41;</span><span class="co1">#Consversion de la matrice en dataframe</span>
+X_Centered <span class="sy0">&lt;</span>- subset<span class="br0">&#40;</span>X_Centered<span class="sy0">,</span> <span class="kw3">select</span> <span class="sy0">=</span> -c<span class="br0">&#40;</span><span class="nu0">24</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Suppression de la colonne de valeurs manquantes générées</span>
+&nbsp;
+SVDecomp <span class="sy0">&lt;</span>- svd<span class="br0">&#40;</span>X_Centered<span class="br0">&#41;</span><span class="co1">#Décomposition en valeurs singulières</span>
+c1 <span class="sy0">&lt;</span>- t<span class="br0">&#40;</span>SVDecomp$v<span class="br0">&#91;</span><span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="co1">#Première composante principale</span>
+c2 <span class="sy0">&lt;</span>- t<span class="br0">&#40;</span>SVDecomp$v<span class="br0">&#91;</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="co1">#Deuxième composante principale</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Recherche des composantes principales&quot;,&quot;hid&quot;:&quot;recherche_des_composantes_principales&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;2226-4364&quot;} -->
+<h2 class="sectionedit5" id="projection_dimensionnelle">Projection dimensionnelle</h2>
+<div class="level2">
+
+<p>
+Après avoir trouvé les composantes principales, il devient alors possible de réduire les données à un espace à d dimensions en les projetant dans l&#039;espace défini par les d composantes principales. De ce fait, la projection conservera le plus de variance possible.
+</p>
+
+<p>
+<strong>Théorie</strong>
+</p>
+
+<p>
+La projection du jeu de données dans l&#039;espace de moindre dimension se fait en calculant le <span style="color:#ff0000;"><strong>produit matriciel </strong></span> entre la matrice des données d&#039;entrainement et la matrice $P_{d}$, contenant les d premières colonnes de V.
+</p>
+
+<p>
+$$X_{proj} = XP_{d}$$
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">X_d <span class="sy0">=</span> Vt.<span class="me1">T</span><span class="br0">&#91;</span>:<span class="sy0">,</span>:<span class="nu0">9</span><span class="br0">&#93;</span><span class="co1">#On récupère les d = 9 premières composantes principales</span>
+X_proj <span class="sy0">=</span> X_Centered.<span class="me1">dot</span><span class="br0">&#40;</span>X_d<span class="br0">&#41;</span><span class="co1">#Projection des données d'entrainement sur l'espace à d dimension</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">X_d <span class="sy0">&lt;</span>- t<span class="br0">&#40;</span>SVDecomp$v<span class="br0">&#91;</span><span class="nu0">1</span>:<span class="nu0">9</span><span class="sy0">,</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="co1">#On récupère les d = 9 premières composantes principales</span>
+X_proj <span class="sy0">&lt;</span>- X_Centered %*% X_d<span class="co1">#Projection des données d'entrainement sur l'espace à d dimension</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Projection dimensionnelle&quot;,&quot;hid&quot;:&quot;projection_dimensionnelle&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:5,&quot;range&quot;:&quot;4365-5382&quot;} -->
+<h2 class="sectionedit6" id="construction_du_modele_de_reduction">Construction du modèle de réduction</h2>
+<div class="level2">
+
+<p>
+On va commencer par créer le modèle de réduction et l&#039;appliquer sur nos données d&#039;entrainement. Pour cela on va d&#039;abord créer un modèle de réduction entrainé sur l&#039;ensemble des variables du dataset afin de déterminer le nombre maximal de variables à garder.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">decomposition</span> <span class="kw1">import</span> PCA
+&nbsp;
+model <span class="sy0">=</span> PCA<span class="br0">&#40;</span>n_components <span class="sy0">=</span> <span class="nu0">25</span><span class="br0">&#41;</span><span class="co1">#Création du modèle de réduction sur toutes les variables du dataset</span>
+X_reduit <span class="sy0">=</span> model.<span class="me1">fit_transform</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="co1">#Application de la réduction aux données d'entrainement</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>FactoMineR<span class="br0">&#41;</span>
+&nbsp;
+model <span class="sy0">&lt;</span>- PCA<span class="br0">&#40;</span>data<span class="sy0">,</span> ncp <span class="sy0">=</span> <span class="nu0">25</span><span class="sy0">,</span> scale <span class="sy0">=</span> TRUE<span class="br0">&#41;</span><span class="co1">#Création du modèle avec centrage des données et définition du nombre de composantes à prendre en compte</span></pre>
+
+<p>
+Ensuite, nous devons choisir le bon nombre de dimensions. Pour cela, il est nécessaire de visualiser l&#039;apport d&#039;information de chacune des variables. Ce choix se fait selon la tâche à effectuer :
+</p>
+<ul>
+<li class="level1"><div class="li"> <span style="color:#ff0000;"><strong>Visualisation : </strong></span> on choisit en fonction de la dimension dans laquelle on souhaite visualiser les données.  </div>
+</li>
+<li class="level1"><div class="li"> <span style="color:#ff0000;"><strong>Réduction :</strong></span> on choisit en fonction de la contribution de chaque variable à la variance totale.</div>
+</li>
+</ul>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">12</span><span class="sy0">,</span><span class="nu0">6</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Définition de la taille du graphique</span>
+plt.<span class="me1">plot</span><span class="br0">&#40;</span>np.<span class="me1">cumsum</span><span class="br0">&#40;</span>model.<span class="me1">explained_variance_ratio_</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Affichage des variances expliquées en fonction du nombre de variables</span>
+&nbsp;
+plt.<span class="me1">xlabel</span><span class="br0">&#40;</span><span class="st0">&quot;Nombres de composantes principales&quot;</span><span class="br0">&#41;</span>
+plt.<span class="me1">ylabel</span><span class="br0">&#40;</span><span class="st0">&quot;Variance expliquée&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>explor<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Vous pouvez aussi utiliser la commande suivante, offrant plus de possibilités d'observations.</span>
+&nbsp;
+explor<span class="br0">&#40;</span>model<span class="br0">&#41;</span><span class="co1">#Ouverture d'une fenêtre permettant de visualiser les variables importantes</span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aacp&amp;media=cpp:contribution_acp.png" class="media" title="cpp:contribution_acp.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=f2d5b8&amp;media=cpp:contribution_acp.png" class="mediacenter" title="Variance expliquée en fonction du nombre de variables du jeu de données" alt="Variance expliquée en fonction du nombre de variables du jeu de données" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 1 :</strong> variance expliquée en fonction du nombre de variables du jeu de données</p><!--divalign-->
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong> la variance expliquée de $N$ correspond au pourcentage de variance totale  expliquée par la variable $N$.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Construction du mod\u00e8le de r\u00e9duction&quot;,&quot;hid&quot;:&quot;construction_du_modele_de_reduction&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:6,&quot;range&quot;:&quot;5383-7559&quot;} -->
+<h2 class="sectionedit7" id="traitement_d_images">Traitement d&#039;images</h2>
+<div class="level2">
+
+<p>
+Lorsqu&#039;on travaille avec des images, il peut être nécessaire d&#039;utiliser l&#039;ACP pour réduire le bruit ou encore compresser l&#039;image. Cependant, ce type d&#039;opérations cause une perte d&#039;informations et l&#039;algorithme de décompression ne pourra retourner que des valeurs proches de celles de l&#039;état d&#039;origine.
+</p>
+
+<p>
+<strong>Théorie</strong>
+</p>
+
+<p>
+La remise en forme des données se fait grâce au produit entre la matrice de données projetées et la transposée de la matrice $P_{d}$. 
+</p>
+
+<p>
+$$X_{Décompressé} = X_{proj}P_{d}^{T}$$
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">X_decompressed <span class="sy0">=</span> X_proj.<span class="me1">dot</span><span class="br0">&#40;</span>X_d.<span class="me1">T</span><span class="br0">&#41;</span><span class="co1">#Produit matriciel d'inversion de la méthode ACP</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">X_decompressed <span class="sy0">&lt;</span>- X_proj %*% t<span class="br0">&#40;</span>X_d<span class="br0">&#41;</span><span class="co1">#Produit matriciel d'inversion de la méthode ACP</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Traitement d&#039;images&quot;,&quot;hid&quot;:&quot;traitement_d_images&quot;,&quot;codeblockOffset&quot;:8,&quot;secid&quot;:7,&quot;range&quot;:&quot;7560-8340&quot;} -->
+<h3 class="sectionedit8" id="modele_de_decompression_d_images">Modèle de décompression d&#039;images</h3>
+<div class="level3">
+
+</div>
+
+<h4 id="importation_de_l_image">Importation de l&#039;image</h4>
+<div class="level4">
+
+<p>
+<div class='alert alert-info'> <strong>Dataset :</strong> on va reprendre l&#039;image d&#039;un raton laveur souvent utilisée en Machine Learning.</div>
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> scipy <span class="kw1">import</span> misc
+<span class="kw1">import</span> matplotlib.<span class="me1">pyplot</span> <span class="kw1">as</span> plt 
+&nbsp;
+face <span class="sy0">=</span> misc.<span class="me1">face</span><span class="br0">&#40;</span>gray<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span>
+plt.<span class="me1">imshow</span><span class="br0">&#40;</span>face<span class="sy0">,</span> cmap<span class="sy0">=</span>plt.<span class="me1">cm</span>.<span class="me1">gray</span><span class="br0">&#41;</span>
+plt.<span class="me1">show</span><span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+
+<p>
+Sous R, la librairie d&#039;importation de l&#039;image n&#039;est pas disponible. Ainsi, nous l&#039;avons téléchargée depuis Python puis importée dans l&#039;espace de travail R.
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>imager<span class="br0">&#41;</span>
+&nbsp;
+img <span class="sy0">&lt;</span>- load.<span class="me1">image</span><span class="br0">&#40;</span><span class="st0">&quot;raton_laveur.png&quot;</span><span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>img<span class="br0">&#41;</span></pre>
+
+</div>
+
+<h4 id="modele_de_compression">Modèle de compression</h4>
+<div class="level4">
+
+<p>
+Commençons par déterminer le nombre de variables à garder pour maximiser le gain d&#039;informations. Pour cela, nous allons utiliser la méthode présentée dans la partie <strong>construction du modèle de réduction</strong>.
+</p>
+
+<p>
+Il en ressort que le gain d&#039;information est maximisé à partir de 150 variables. Faisons maintenant l&#039;opération de décompression de l&#039;image après avoir réduit la dimension d&#039;origine à 150 variables.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">model <span class="sy0">=</span> PCA<span class="br0">&#40;</span>n_components <span class="sy0">=</span> <span class="nu0">150</span><span class="br0">&#41;</span><span class="co1">#Création du modèle de réduction sur toutes les variables du dataset</span>
+X_reduced <span class="sy0">=</span> model.<span class="me1">fit_transform</span><span class="br0">&#40;</span>face<span class="br0">&#41;</span><span class="co1">#Compression de l'image sur les 150 premières composantes principales </span>
+X_recovered <span class="sy0">=</span> model.<span class="me1">inverse_transform</span><span class="br0">&#40;</span>X_reduced<span class="br0">&#41;</span><span class="co1">#Décompression de l'image</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong> sous R il n&#039;existe pas de méthode inverse_transform pour l&#039;ACP  c&#039;est pourquoi nous faisons d&#039;abord 
+la décomposition en valeur singulière puis le produit matriciel nécessaire.</div>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>rsvd<span class="br0">&#41;</span>
+&nbsp;
+decomposition_svd <span class="sy0">&lt;</span>- svd<span class="br0">&#40;</span>img<span class="br0">&#41;</span><span class="co1">#Décomposition en valeur singulière</span>
+composantes_pr <span class="sy0">&lt;</span>- <span class="nu0">150</span><span class="co1">#Définition du nombre de composantes principales à conserver</span>
+img.<span class="me1">svd</span> <span class="sy0">&lt;</span>- decomposition_svd$u<span class="br0">&#91;</span><span class="sy0">,</span><span class="nu0">1</span>:composantes_pr<span class="br0">&#93;</span> %*% diag<span class="br0">&#40;</span>decomposition_svd$d<span class="br0">&#91;</span><span class="nu0">1</span>:composantes_pr<span class="br0">&#93;</span><span class="br0">&#41;</span> %*% t<span class="br0">&#40;</span>decomposition_svd$v<span class="br0">&#91;</span><span class="sy0">,</span><span class="nu0">1</span>:composantes_pr<span class="br0">&#93;</span><span class="br0">&#41;</span><span class="co1">#Produit matriciel</span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aacp&amp;media=cpp:raton_laveur_bis.png" class="media" title="cpp:raton_laveur_bis.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=7fa07a&amp;media=cpp:raton_laveur_bis.png" class="mediacenter" title="Résultat de la décompression de l&#039;image" alt="Résultat de la décompression de l&#039;image" width="800" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 2 :</strong> Résultat de la décompression de l&#039;image</p><!--divalign-->
+
+<p>
+On voit bien que les composantes principales résument l&#039;essentiel de l&#039;information de l&#039;image.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Mod\u00e8le de d\u00e9compression d&#039;images&quot;,&quot;hid&quot;:&quot;modele_de_decompression_d_images&quot;,&quot;codeblockOffset&quot;:10,&quot;secid&quot;:8,&quot;range&quot;:&quot;8341-10579&quot;} -->
+<h2 class="sectionedit9" id="comment_choisir_le_nombre_optimal_de_variables">Comment choisir le nombre optimal de variables ?</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Comment choisir le nombre optimal de variables ?&quot;,&quot;hid&quot;:&quot;comment_choisir_le_nombre_optimal_de_variables&quot;,&quot;codeblockOffset&quot;:14,&quot;secid&quot;:9,&quot;range&quot;:&quot;10580-10639&quot;} -->
+<h3 class="sectionedit10" id="variance_expliquee">Variance expliquée</h3>
+<div class="level3">
+
+<p>
+Il s&#039;agit de la méthode présentée dans la partie <strong>construction du modèle de réduction</strong>.  Elle décrit la quantité de variance totale décrite par les variables. Pourtant, elle n&#039;est pas toujours appréciée car elle ne tient pas compte des corrélations entre variables.
+</p>
+
+<p>
+Si on considère $\lambda_{i}$, la variance de la $i^{ème}$ composante, alors la variance expliquée de la $i^{ème}$ composante ($\lambda_{Expliquee}$) est donnée par :
+</p>
+
+<p>
+$$\lambda_{Expliquee} = \frac{\lambda_{i}}{\sum\limits_{i = 0}^{n} \lambda_{i}}$$
+</p>
+
+<p>
+$\lambda_{Expliquee}$ $\in$ $[0,1]$ et plus sa valeur est proche de 1, plus importante sera la composante associée.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Variance expliqu\u00e9e&quot;,&quot;hid&quot;:&quot;variance_expliquee&quot;,&quot;codeblockOffset&quot;:14,&quot;secid&quot;:10,&quot;range&quot;:&quot;10640-11323&quot;} -->
+<h3 class="sectionedit11" id="methode_de_kaiser-guttman">Méthode de Kaiser-Guttman</h3>
+<div class="level3">
+
+<p>
+La règle de Kaiser-Guttman est une méthode analytique qui établit qu&#039;une variable est intéressante lorsque sa valeur propre est supérieure à la moyenne des valeurs propres (en ACP normée elle vaut 1). Ainsi, pour $\Lambda_{i}$, la valeur propre de l&#039;axe $i$, la règle de Kaiser impose la relation suivante : 
+</p>
+
+<p>
+$$\Lambda_{i} &gt; 1 $$
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">Kaiser <span class="sy0">=</span> <span class="kw2">list</span><span class="br0">&#40;</span>model.<span class="me1">explained_variance_</span><span class="br0">&#41;</span><span class="co1">#Affichage des valeurs propres du modèle </span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">summary<span class="br0">&#40;</span>model<span class="sy0">,</span> ncp <span class="sy0">=</span> <span class="nu0">25</span><span class="br0">&#41;</span><span class="co1">#Affichage des valeurs propres des variables du dataset </span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aacp&amp;media=cpp:kaiser_critere.png" class="media" title="cpp:kaiser_critere.png"><img src="/lib/exe/fetch.php?w=700&amp;tok=3fa9f7&amp;media=cpp:kaiser_critere.png" class="mediacenter" title="Composantes principales selon le critère de Kaiser" alt="Composantes principales selon le critère de Kaiser" width="700" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 3 :</strong> Composantes principales selon le critère de Kaiser</p><!--divalign-->
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong>  ce critère n&#039;est utilisé qu&#039;en ACP normée.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;M\u00e9thode de Kaiser-Guttman&quot;,&quot;hid&quot;:&quot;methode_de_kaiser-guttman&quot;,&quot;codeblockOffset&quot;:14,&quot;secid&quot;:11,&quot;range&quot;:&quot;11324-12201&quot;} -->
+<h2 class="sectionedit12" id="quand_utiliser_une_acp">Quand utiliser une ACP ?</h2>
+<div class="level2">
+
+<p>
+L&#039;ACP est particulièrement efficace lorsque les variables sont très corrélées entre elles. Cela permet de réduire la redondance de l&#039;information sans risquer une perte conséquente.
+</p>
+
+<p>
+Ne négligeons pas le critère de linéarité des distributions car, rappelons-le, l&#039;ACP est avant tout une méthode destinée à traiter des données linéairement séparables.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aacp&amp;media=cpp:donnes_lin_sep.png" class="media" title="cpp:donnes_lin_sep.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=9103cf&amp;media=cpp:donnes_lin_sep.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<p>
+<strong>Sources</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> Machine Learning avec Scikit-Learn, 2e édition, Aurélien Géron</div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.youtube.com/watch?v=FTtzd31IAOw&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=28" class="urlextern" title="https://www.youtube.com/watch?v=FTtzd31IAOw&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=28" rel="nofollow"> Machine Learnia par Guillaume Saint-Cirgue</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Nb_Components_PCA.pdf" class="urlextern" title="http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Nb_Components_PCA.pdf" rel="nofollow">Université de Lyon 2</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://jonathanlenoir.files.wordpress.com/2013/12/analyse-en-composante-principale-acp.pdf" class="urlextern" title="https://jonathanlenoir.files.wordpress.com/2013/12/analyse-en-composante-principale-acp.pdf" rel="nofollow">Johnathan Lenoir (MCU), Université de Picardie Jules Verne</a> </div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.oranlooney.com/post/ml-from-scratch-part-6-pca/" class="urlextern" title="http://www.oranlooney.com/post/ml-from-scratch-part-6-pca/" rel="nofollow">Principal Component Analysis, Oran Looney</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Quand utiliser une ACP ?&quot;,&quot;hid&quot;:&quot;quand_utiliser_une_acp&quot;,&quot;codeblockOffset&quot;:16,&quot;secid&quot;:12,&quot;range&quot;:&quot;12202-&quot;} -->

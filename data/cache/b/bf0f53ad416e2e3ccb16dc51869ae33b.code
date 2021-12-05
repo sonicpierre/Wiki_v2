@@ -1,0 +1,10 @@
+texte_JAY <span class="sy0">=</span> <span class="st0">&quot; &quot;</span>.<span class="me1">join</span><span class="br0">&#40;</span><span class="kw2">list</span><span class="br0">&#40;</span>data_JAY<span class="br0">&#91;</span><span class="st0">&quot;text&quot;</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+texte_HAMILTON <span class="sy0">=</span> <span class="st0">&quot; &quot;</span>.<span class="me1">join</span><span class="br0">&#40;</span><span class="kw2">list</span><span class="br0">&#40;</span>data_HAMILTON<span class="br0">&#91;</span><span class="st0">&quot;text&quot;</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+texte_MADISON <span class="sy0">=</span> <span class="st0">&quot; &quot;</span>.<span class="me1">join</span><span class="br0">&#40;</span><span class="kw2">list</span><span class="br0">&#40;</span>data_MADISON<span class="br0">&#91;</span><span class="st0">&quot;text&quot;</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">from</span> nltk.<span class="kw3">tokenize</span> <span class="kw1">import</span> RegexpTokenizer
+tokenizer <span class="sy0">=</span> RegexpTokenizer<span class="br0">&#40;</span>r<span class="st0">'<span class="es0">\w</span>+'</span><span class="br0">&#41;</span>
+&nbsp;
+token_JAY <span class="sy0">=</span> tokenizer.<span class="kw3">tokenize</span><span class="br0">&#40;</span>texte_JAY<span class="br0">&#41;</span>
+token_HAMILTON <span class="sy0">=</span> tokenizer.<span class="kw3">tokenize</span><span class="br0">&#40;</span>texte_HAMILTON<span class="br0">&#41;</span>
+token_MADISON <span class="sy0">=</span> tokenizer.<span class="kw3">tokenize</span><span class="br0">&#40;</span>texte_MADISON<span class="br0">&#41;</span>

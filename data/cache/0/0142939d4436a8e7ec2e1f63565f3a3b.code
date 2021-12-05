@@ -1,0 +1,5 @@
+<span class="co1">#Paramètre dans l'URL</span>
+parametre <span class="sy0">=</span> <span class="br0">&#123;</span><span class="st0">'page'</span> : <span class="nu0">2</span><span class="br0">&#125;</span>
+r <span class="sy0">=</span> requests.<span class="me1">get</span><span class="br0">&#40;</span><span class="st0">'https://graphcomment.com/api/moderation/ai'</span><span class="sy0">,</span> params<span class="sy0">=</span>parametre<span class="sy0">,</span> timeout<span class="sy0">=</span> <span class="nu0">2</span><span class="sy0">,</span> auth<span class="sy0">=</span><span class="br0">&#40;</span><span class="st0">'ai'</span><span class="sy0">,</span> <span class="st0">'Rtafg8956xfdx2fsdfimAZ6bdxff956x1'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="co1">#Permet d'avoir un boolean indiquant si la requête c'est bien passée</span>
+r.<span class="me1">ok</span>

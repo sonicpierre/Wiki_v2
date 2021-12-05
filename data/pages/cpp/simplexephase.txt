@@ -1,0 +1,507 @@
+[[cpp:simplexe|Méthode du simplexe]]
+
+{{ :cpp:phase.jpg?500 |}}
+
+<alert info>Vous trouverez le code complet [[https://github.com/LlamasPartan/Optimisation/tree/master/Simplexe/M%C3%A9thode%20des%20phases|ici]].</alert>
+
+Je vous ai dit, un peu plus tôt dans le cours, que la méthode du **simplexe** consistait à itérer de **<fc #008000>sommet en sommet</fc>** en partant de l'origine jusqu'à ce que l'on trouve le sommet **<fc #ff0000>optimal</fc>**. 
+Seulement voilà : on est partis du principe que l'**origine** se trouvait dans le domaine des contraintes mais ce **<fc #ff0000>n'est pas</fc>** forcément le cas.
+
+Considérons le problème d'optimisation suivant :
+;#;
+$\begin{cases} \underset{x}{max}(x_1+2x_2) \\ -x_1+3x_2 \le 10 \\ 5x_1-4x_2 \le 1 \\ -3x_1+x_2 \le -1 \\ x_1,x_2 \ge 0\end{cases}$
+;#;
+Comme vous pouvez le voir, $(0,0)$ **<fc #ff0000>ne fait pas</fc>** partie du domaine des contraintes (la troisième **contrainte** n'est pas respectée) :
+;#;
+{{:cpp:grapheoptiphase.png?400|}}
+;#;
+Vous remarquez aussi que nous avons une variable ($y_3$) **<fc #008000>négative</fc>** ce qui est **<fc #ff0000>interdit</fc>** (cela signifie que nous avons dépassé les contraintes) :
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  1  |  2  |  0  |  0  |  0  |  0  |
+^  $y_1$  |  -1  |  3  |  1  |  0  |  0  |  10  |
+^  $y_2$  |  5  |  -4  |  0  |  1  |  0  |  1  |
+^  $y_3$  |  -3  |  1  |  0  |  0  |  1  |  -1  |
+
+__En Python :__
+<code python>
+tab=np.array([
+[1,2,0,0,0,0],
+[-1,3,1,0,0,10],
+[5,-4,0,1,0,1],
+[-3,1,0,0,1,-1]])
+</code>
+
+__En Matlab :__
+<code matlab>
+tab=[
+1,2,0,0,0,0;
+-1,3,1,0,0,10;
+5,-4,0,1,0,1;
+-3,1,0,0,1,-1]
+</code>
+
+=====Le problème auxiliaire=====
+
+Nous allons résoudre un problème **<fc #008000>auxiliaire</fc>** au problème actuel pour **générer** un sommet dans le domaine des contraintes. Il nous servira de point  de départ pour la méthode classique des tableaux. Ainsi, un problème de forme :
+;#;
+$\begin{cases} \underset{x}{max}(c|x) \\ Ax \le b, x \ge 0 \end{cases}$
+;#;
+devient :
+;#;
+$\begin{cases} \underset{x}{max}(0|x)-\delta \\ Ax-\delta e \le b \\ x,\delta \ge 0 \end{cases}$
+;#;
+avec $e$ vecteur unité
+
+Notre problème du début devient alors :
+;#;
+$\begin{cases} \underset{x}{max}(0x_1+0x_2-\delta) \\ -x_1+3x_2-\delta \le 10 \\ 5x_1-4x_2-\delta \le 1 \\ -3x_1+x_2-\delta \le -1 \\ x_1,x_2,\delta \ge 0\end{cases}$
+;#;
+
+| ^  $x_1$  ^  $x_2$  ^  $\delta$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  0  |  0  |  -1  |  0  |  0  |  0  |  0  |
+^  $y_1$  |  -1  |  3  |  -1  |  1  |  0  |  0  |  10  |
+^  $y_2$  |  5  |  -4  |  -1  |  0  |  1  |  0  |  1  |
+^  $y_3$  |  -3  |  1  |  -1  |  0  |  0  |  1  |  -1  |
+
+<alert info>La méthode des phases ne peut pas être assimilée à  une nouvelle méthode de résolution. La méthode des phases sert à **transformer** un tableau insoluble par la méthode standard en un tableau **résoluble**. Nous implémenterons donc le code de cette page dans le code de la page **précédente** qui récupèrera le tableau **transformé** pour le résoudre de façon **standard**.</alert>
+
+<alert warning>Pour plus de clarté, on décomposera le code de cette page fonction par fonction. Puis, on les appellera toutes à la suite dans une fonction ''simplexePhases''.</alert>
+
+On va donc devoir **construire** ce tableau. On le **<fc #008000>décomposera</fc>** temporairement en trois parties (les colonnes des différentes variables, la colonne de delta et la dernière colonne) pour bien comprendre comment on le construit. Pour des raisons pratiques, on placera la colonne de $\delta$ après les variables $y$. Cela n'aura **<fc #ff0000>aucune</fc>** conséquence sur le résultat.
+
+__En Python :__
+<code python>
+def auxiliaire(tab):
+    tabDelta=tab.copy()
+    tabDelta[0,:]*=0
+    tabGauche=tabDelta[:,:-1]
+    tabMilieu=-np.ones((tabDelta.shape[0],1))
+    tabDroite=tabDelta[:,-1:]
+    tabDelta=np.concatenate((tabGauche,tabMilieu,tabDroite),axis=1)
+    return(tabDelta)
+</code>
+
+__En Matlab :__
+<code matlab>
+function tabDelta=auxiliaire(tab)
+    tabDelta=tab
+    tabDelta(1,:)*=0
+    tabGauche=tabDelta(:,1:end-1)
+    tabMilieu=-ones(size(tabDelta)(1),1)
+    tabDroite=tabDelta(:,end)
+    tabDelta=[tabGauche,tabMilieu,tabDroite]
+endfunction
+</code>
+=====Première phase=====
+
+On résout le problème **presque** comme on en a l'habitude avec la méthode des tableaux.
+
+Nous utilisons le même ''x'' que dans la page précédente, c'est- à -dire un vecteur dont l'i-ème élément est l'indice de la variable à laquelle correspond la ligne i+1 du tableau. Ce vecteur est créé dans ''simplexeStandard''.
+
+__En Python :__
+<code python>
+def phase1(tabDelta,x):
+</code>
+
+__En Matlab :__
+<code matlab>
+function [tabDelta,x]=phase1(tabDelta,x)
+</code>
+====Choix de la variable entrante====
+
+Il ne vous aura pas échappé que toutes les variables de la première ligne sont **<fc #008000>négatives</fc>** ou **<fc #008000>nulles</fc>**. Lors de la **<fc #ff0000>première</fc>** itération, la variable **<fc #008000>entrante</fc>** est **<fc #ff0000>toujours</fc>** $\delta$.
+| ^  $x_1$  ^  $x_2$  ^  <fc #ff0000>$\delta$</fc>  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  0  |  0  |  -1  |  0  |  0  |  0  |  0  |
+^  $y_1$  |  -1  |  3  |  -1  |  1  |  0  |  0  |  10  |
+^  $y_2$  |  5  |  -4  |  -1  |  0  |  1  |  0  |  1  |
+^  $y_3$  |  -3  |  1  |  -1  |  0  |  0  |  1  |  -1  |
+
+__En Python :__
+<code python>
+#Choix de la variable entrante (delta)
+indiceVarEntrante=tabDelta.shape[1]-2
+</code>
+
+__En Matlab :__
+<code matlab>
+%Choix de la variable entrante (delta)
+indiceVarEntrante=size(tabDelta)(2)-1
+</code>
+====Choix de la variable sortante====
+
+On prend comme variable **<fc #008000>sortante</fc>** la plus **<fc #ff0000>petite</fc>** variable de la dernière colonne (pas de rapports à faire).
+| ^  $x_1$  ^  $x_2$  ^  $\delta$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  0  |  0  |  -1  |  0  |  0  |  0  |  0  |
+^  $y_1$  |  -1  |  3  |  -1  |  1  |  0  |  0  |  10  |
+^  $y_2$  |  5  |  -4  |  -1  |  0  |  1  |  0  |  1  |
+^  <fc #ff0000>$\delta$</fc>  |  -3  |  1  |  -1  |  0  |  0  |  1  |  <fc #ff0000>-1</fc>  |
+
+__En Python :__
+<code python>
+#Recherche de la variable sortante (la plus petite)
+indiceVarSortante=1
+for i in range(2,tabDelta.shape[0]):
+    if tabDelta[i,-1]<tabDelta[indiceVarSortante,-1]:
+        indiceVarSortante=i
+</code>
+
+__En Matlab :__
+<code matlab>
+%Recherche de la variable sortante (la plus petite)
+indiceVarSortante=2
+for i=2:size(tabDelta)(1)
+    if tabDelta(i,end)<tabDelta(indiceVarSortante,end)
+        indiceVarSortante=i
+    endif
+endfor
+</code>
+====Le coefficient principal====
+
+On ramène le coefficient **principal** à 1.
+
+$L_3=-1*L_3$
+| ^  $x_1$  ^  $x_2$  ^  $\delta$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  0  |  0  |  -1  |  0  |  0  |  0  |  0  |
+^  $y_1$  |  -1  |  3  |  -1  |  1  |  0  |  0  |  10  |
+^  $y_2$  |  5  |  -4  |  -1  |  0  |  1  |  0  |  1  |
+^  $\delta$  |  <fc #ff0000>3</fc>  |  <fc #ff0000>-1</fc>  |  <fc #ff0000>1</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>-1</fc>  |  <fc #ff0000>1</fc>  |
+
+On réutilise, bien sûr, notre fonction de normalisation de la partie précédente.
+
+__En Python :__
+<code python>
+#Coefficient principal à 1 et coefficients secondaires à 0
+normalisation(tabDelta,indiceVarEntrante,indiceVarSortante)
+</code>
+
+__En Matlab :__
+<code matlab>
+%Coefficient principal à 1 et coefficients secondaires à 0
+tabDelta=normalisation(tabDelta,indiceVarEntrante,indiceVarSortante)
+</code>
+====Les coefficients secondaires====
+
+On ramène les coefficients **secondaires** à 0.
+
+$L_f=L_f+L_3$
+
+$L_1=L_1+L_3$
+
+$L_2=L_2+L_3$
+| ^  $x_1$  ^  $x_2$  ^  $\delta$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  <fc #ff0000>3</fc>  |  <fc #ff0000>-1</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>-1</fc>  |  <fc #ff0000>1</fc>  |
+^  $y_1$  |  <fc #ff0000>2</fc>  |  <fc #ff0000>2</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>1</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>-1</fc>  |  <fc #ff0000>11</fc>  |
+^  $y_2$  |  <fc #ff0000>8</fc>  |  <fc #ff0000>-5</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>1</fc>  |  <fc #ff0000>-1</fc>  |  <fc #ff0000>2</fc>  |
+^  $\delta$  |  3  |  -1  |  1  |  0  |  0  |  -1  |  1  |
+====Seconde itération====
+
+Seule la première itération suit un algorithme particulier. On continue la résolution de tableau par la méthode **standard** en **<fc #ff0000>privilégiant</fc>** $\delta$ comme variable **<fc #008000>sortante</fc>** en cas d'égalité de rapport de coefficient.
+
+<alert warning>Seule la première itération est sensiblement différente des autres.</alert>
+
+Choix des variables **entrante** et **sortante** :
+| ^  <fc #ff0000>$x_1$</fc>  ^  $x_2$  ^  $\delta$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  3  |  -1  |  0  |  0  |  0  |  -1  |  1  |
+^  $y_1$  |  2  |  2  |  0  |  1  |  0  |  -1  |  11  |
+^  <fc #ff0000>$y_2$</fc>  |  8  |  -5  |  0  |  0  |  1  |  -1  |  2  |
+^  $\delta$  |  3  |  -1  |  1  |  0  |  0  |  -1  |  1  |
+
+On ramène le coefficient **principal** à 1 et les coefficients **secondaires** à 0 :
+| ^  $x_1$  ^  $x_2$  ^  $\delta$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  0  |  $\frac{7}{8}$  |  0  |  0  |  -$\frac{3}{8}$  |  -$\frac{5}{8}$  |  $\frac{1}{4}$  |
+^  $y_1$  |  0  |  $\frac{13}{4}$  |  0  |  1  |  -$\frac{1}{4}$  |  -$\frac{3}{4}$  |  $\frac{21}{2}$  |
+^  $x_1$  |  1  |  -$\frac{5}{8}$  |  0  |  0  |  $\frac{1}{8}$  |  -$\frac{1}{8}$  |  $\frac{1}{4}$  |
+^  $\delta$  |  0  |  $\frac{7}{8}$  |  1  |  0  |  -$\frac{3}{8}$  |  -$\frac{5}{8}$  |  $\frac{1}{4}$  |
+
+Le code est alors **<fc #ff0000>très</fc>** similaire à celui de la méthode standard, le seul changement étant le traitement spécial de $\delta$ en tant que variable sortante. Vous remarquerez que j'introduis $x$ dans le code : il s'agit d'un vecteur servant à stocker l'appariement de chaque variable à une ligne du tableau (pour savoir que la dernière ligne c'est $\delta$ par exemple).
+
+__En Python :__
+<code python>
+#Stockage de la position des différentes variables
+x[indiceVarSortante-1]=indiceVarEntrante
+#Tant que les coefficients de Lf sont positifs
+while (tabDelta[0,:-1]>np.zeros((1,tabDelta.shape[1]-1))).any():
+    #Recherche de la variable entrante
+    indiceVarEntrante=variableEntrante(tabDelta)
+    #Recherche de la variable sortante
+    indiceVarSortante=0
+    rapportMin=np.inf
+    for i in range(1,tabDelta.shape[0]):
+        if tabDelta[i,indiceVarEntrante]>0:
+            rapport=tabDelta[i,tabDelta.shape[1]-1]/tabDelta[i,indiceVarEntrante]
+            #On privilégie delta en cas d'égalité
+            if rapport==rapportMin and x[i]==tabDelta.shape[1]-2:
+                indiceVarSortante=i
+                rapportMin=rapport
+            if rapport<rapportMin and rapport>=0:
+                indiceVarSortante=i
+                rapportMin=rapport
+    if indiceVarSortante==0:
+        print("Pas de variable sortante")
+        exit()
+    #Coefficient principal à 1 et coefficients secondaires à 0
+    normalisation(tabDelta,indiceVarEntrante,indiceVarSortante)
+    #Stockage de la position des différentes variables
+    x[indiceVarSortante-1]=indiceVarEntrante
+</code>
+
+__En Matlab :__
+<code matlab>
+%Stockage de la position des différentes variables
+x(indiceVarSortante-1)=indiceVarEntrante
+%Tant que les coefficients de Lf dont positifs
+while sum(tabDelta(1,1:end-1)>0)>0
+    %Recherche de la variable entrante
+    indiceVarEntrante=variableEntrante(tabDelta)
+    %Recherche de la variable sortante en privilégiant delta
+    indiceVarSortante=1
+    rapportMin=Inf
+    for i=2:size(tabDelta)(1)
+        if tabDelta(i,indiceVarEntrante)>0
+            rapport=tabDelta(i,size(tabDelta)(2))/tabDelta(i,indiceVarEntrante)
+            #On privilégie delta en cas d'égalité
+            if x(i-1)==size(tabDelta)(2)-1 && rapport==rapportMin
+                indiceVarSortante=i
+                rapportMin=rapport
+            endif
+            if rapport<rapportMin && rapport>=0
+                indiceVarSortante=i
+                rapportMin=rapport
+            endif
+        endif
+    endfor
+    if indiceVarSortante==1
+        disp("Pas de variable sortante")
+        return
+    endif
+    %Coefficient principal à 1 et coefficients secondaires à 0
+    tabDelta=normalisation(tabDelta,indiceVarEntrante,indiceVarSortante)
+    %Stockage de la position des différentes variables
+    x(indiceVarSortante-1)=indiceVarEntrante
+end
+</code>
+====Troisième itération====
+
+On continue de **résoudre** en **<fc #ff0000>privilégiant</fc>** $\delta$ comme variable **<fc #008000>sortante</fc>** si égalité des rapports.
+
+Choix des variables **entrante** et **sortante** :
+| ^  $x_1$  ^  <fc #ff0000>$x_2$</fc>  ^  $\delta$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  0  |  $\frac{7}{8}$  |  0  |  0  |  -$\frac{3}{8}$  |  -$\frac{5}{8}$  |  $\frac{1}{4}$  |
+^  $y_1$  |  0  |  $\frac{13}{4}$  |  0  |  1  |  -$\frac{1}{4}$  |  -$\frac{3}{4}$  |  $\frac{21}{2}$  |
+^  $x_1$  |  1  |  -$\frac{5}{8}$  |  0  |  0  |  $\frac{1}{8}$  |  -$\frac{1}{8}$  |  $\frac{1}{4}$  |
+^  <fc #ff0000>$\delta$</fc>  |  0  |  $\frac{7}{8}$  |  1  |  0  |  -$\frac{3}{8}$  |  -$\frac{5}{8}$  |  $\frac{1}{4}$  |
+
+On ramène le coefficient **principal** à 1 et les coefficients **secondaires** à 0 :
+| ^  $x_1$  ^  $x_2$  ^  $\delta$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  0  |  0  |  -1  |  0  |  0  |  0  |  <fc #008000>**0**</fc>  |
+^  $y_1$  |  0  |  0  |  -$\frac{26}{7}$  |  1  |  $\frac{8}{7}$  |  $\frac{11}{7}$  |  $\frac{67}{7}$  |
+^  $x_1$  |  1  |  0  |  $\frac{5}{7}$  |  0  |  -$\frac{1}{7}$  |  -$\frac{4}{7}$  |  $\frac{3}{7}$  |
+^  $x_2$  |  0  |  1  |  $\frac{8}{7}$  |  0  |  -$\frac{3}{7}$  |  -$\frac{5}{7}$  |  $\frac{2}{7}$  |
+
+On a terminé la première phase.
+
+__En Python :__
+<code python>
+return(tabDelta,x)
+</code>
+
+__En Matlab :__
+<code matlab>
+endfunction
+</code>
+
+Maintenant que nous avons fini la résolution du problème **<fc #008000>auxiliaire</fc>**, deux cas de figure se présentent en fonction de la valeur de l'**optimum** (en vert) :
+  *  il est **nul** et on peut passer à la **<fc #ff0000>seconde phase.</fc>**
+  *  il est **strictement positif** et le problème n'admet pas d'**<fc #ff0000>optimum.</fc>**
+
+__En Python :__
+<code python>
+#On regarde si on peut passer à la seconde phase
+if tabDelta[0,-1]>0:
+    print("Le problème n'a pas d'optimum")
+    exit()
+</code>
+
+__En Matlab :__
+<code matlab>
+%On regarde si on peut passer à la seconde phase
+if tabDelta(1,end)>0
+    disp("Le problème n'a pas d'optimum")
+    return
+endif
+</code>
+=====Seconde phase=====
+
+__En Python :__
+<code python>
+def phase2(tabDelta,x,tab):
+</code>
+
+__En Matlab :__
+<code matlab>
+function [tabDelta,x]=phase2(tabDelta,x,tab)
+</code>
+
+On commence par retirer la colonne de $\delta$ :
+
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  0  |  0  |  0  |  0  |  0  |  0  |
+^  $y_1$  |  0  |  0  |  1  |  $\frac{8}{7}$  |  $\frac{11}{7}$  |  $\frac{67}{7}$  |
+^  $x_1$  |  1  |  0  |  0  |  -$\frac{1}{7}$  |  -$\frac{4}{7}$  |  $\frac{3}{7}$  |
+^  $x_2$  |  0  |  1  |  0  |  -$\frac{3}{7}$  |  -$\frac{5}{7}$  |  $\frac{2}{7}$  |
+
+__En Python :__
+<code python>
+#Suppression de la colonne delta
+tabGauche=tabDelta[:,:-2]
+tabDroite=tabDelta[:,-1:]
+tabDelta=np.concatenate((tabGauche,tabDroite),axis=1)
+</code>
+
+__En Matlab :__
+<code matlab>
+%Suppression de la colonne delta
+tabGauche=tabDelta(:,1:end-2)
+tabDroite=tabDelta(:,end)
+tabDelta=[tabGauche,tabDroite]
+</code>
+====Réécriture du critère initial====
+
+Vous aurez remarqué que la première ligne du tableau est **<fc #008000>nulle</fc>**, ce qui nous empêche de continuer la résolution du problème de manière **standard**. Nous allons donc remplir cette première ligne en **<fc #ff0000>reformulant</fc>** le **critère initial** (le contenu du "max" de notre problème) en fonction des **variables nulles** (vous savez, celles qui ne sont pas présentes dans la première colonne du tableau). Dans notre cas, nous réécrirons $x_1+2x_2$ en fonction de $y_2$ et $y_3$.
+
+D'après l'avant-dernière ligne du tableau,
+$$x_1-\frac{1}{7}y_2-\frac{4}{7}y_3=\frac{3}{7}$$
+donc
+$$x_1=\frac{3}{7}+\frac{1}{7}y_2+\frac{4}{7}y_3$$
+D'après la dernière ligne du tableau,
+$$x_2-\frac{3}{7}y_2-\frac{5}{7}y_3=\frac{2}{7}$$
+donc
+$$x_2=\frac{2}{7}+\frac{3}{7}y_2+\frac{5}{7}y_3$$
+Ainsi,
+$$x_1+2x_2=1+y_2+\frac{14}{7}y_3$$
+
+On peut alors compléter le tableau :
+
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  0  |  0  |  0  |  <fc #ff0000>1</fc>  |  <fc #ff0000>$\frac{14}{7}$</fc>  |  <fc #ff0000>-1</fc>  |
+^  $y_1$  |  0  |  0  |  1  |  $\frac{8}{7}$  |  $\frac{11}{7}$  |  $\frac{67}{7}$  |
+^  $x_1$  |  1  |  0  |  0  |  -$\frac{1}{7}$  |  -$\frac{4}{7}$  |  $\frac{3}{7}$  |
+^  $x_2$  |  0  |  1  |  0  |  -$\frac{3}{7}$  |  -$\frac{5}{7}$  |  $\frac{2}{7}$  |
+
+__En Python :__
+<code python>
+#Réécriture du critère initial
+for i in range(x.size):
+    if x[i]<tabDelta.shape[1]-tabDelta.shape[0]:
+        tabDelta[0,tabDelta.shape[1]-tabDelta.shape[0]:]-=tab[0,x[i]]*tabDelta[i+1,tabDelta.shape[1]-tabDelta.shape[0]:]
+</code>
+
+__En Matlab :__
+<code matlab>
+%Réécriture du critère initial
+for i=1:size(x)(2)
+    if x(i)<size(tabDelta)(2)-size(tabDelta)(1)+1
+        tabDelta(1,size(tabDelta)(2)-size(tabDelta)(1)+1:end)-=tab(1,x(i))*tabDelta(i+1,size(tabDelta)(2)-size(tabDelta)(1)+1:end)
+    endif
+endfor
+</code>
+
+On a terminé la seconde phase.
+
+__En Python :__
+<code python>
+return(tabDelta,x)
+</code>
+
+__En Matlab :__
+<code matlab>
+endfunction
+</code>
+
+On va alors rassembler toutes les fonctions que nous avons créées dans une seule :
+
+__En Python :__
+<code python>
+def simplexePhases(tab,x):
+    #Construction du tableau du problème auxiliaire
+    tabDelta=auxiliaire(tab)
+    #Première phase
+    tabDelta,x=phase1(tabDelta,x)
+    #On regarde si on peut passer à la seconde phase
+    if tabDelta[0,-1]>0:
+        print("Le problème n'a pas d'optimum")
+        exit()
+    #Seconde phase
+    tabDelta,x=phase2(tabDelta,x,tab)
+    #Retour à la méthode standard
+    return(tabDelta,x)
+</code>
+
+__En Matlab :__
+<code matlab>
+function [tabDelta,x]=simplexePhases(tab,x)
+    %Construction du tableau du problème auxiliaire
+    tabDelta=auxiliaire(tab)
+    %Première phase
+    [tabDelta,x]=phase1(tabDelta,x)
+    %On regarde si on peut passer à la seconde phase
+    if tabDelta(1,end)>0
+        disp("Le problème n'a pas d'optimum")
+        return
+    endif
+    %Seconde phase
+    [tabDelta,x]=phase2(tabDelta,x,tab)
+endfunction
+</code>
+====Résolution du problème====
+
+On applique la méthode **<fc #008000>standard</fc>**.
+
+Choix des variables **entrante** et **sortante** :
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  <fc #ff0000>$y_3$</fc>  | |
+^  $f$  |  0  |  0  |  0  |  1  |  $\frac{14}{7}$  |  -1  |
+^  <fc #ff0000>$y_1$</fc>  |  0  |  0  |  1  |  $\frac{8}{7}$  |  $\frac{11}{7}$  |  $\frac{67}{7}$  |
+^  $x_1$  |  1  |  0  |  0  |  -$\frac{1}{7}$  |  -$\frac{4}{7}$  |  $\frac{3}{7}$  |
+^  $x_2$  |  0  |  1  |  0  |  -$\frac{3}{7}$  |  -$\frac{5}{7}$  |  $\frac{2}{7}$  |
+
+On ramène le coefficient **principal** à 1 et les coefficients **secondaires** à 0 :
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  0  |  0  |  -$\frac{14}{11}$  |  -$\frac{5}{11}$  |  0  |  -$\frac{145}{11}$  |
+^  $y_3$  |  0  |  0  |  $\frac{7}{11}$  |  $\frac{8}{11}$  |  1  |  $\frac{67}{11}$  |
+^  $x_1$  |  1  |  0  |  $\frac{4}{11}$  |  $\frac{3}{11}$  |  0  |  $\frac{43}{11}$  |
+^  $x_2$  |  0  |  1  |  $\frac{5}{11}$  |  $\frac{1}{11}$  |  0  |  $\frac{51}{11}$  |
+
+Et voilà ! On a trouvé l'**<fc #ffa500>optimum</fc>** de notre problème en $(\frac{43}{11},\frac{51}{11})$ de valeur $\frac{145}{11}$ !
+
+On n'a plus qu'à appeler ''simplexePhases'' au moment opportun et on aura terminé ! On va donc rajouter, juste après le ''while'' de ''simplexeStandard'', une vérification de la négativité ou non d' une variable (et donc si on doit ou non appliquer la méthode des phases pour transformer le tableau en quelque chose de résoluble) :
+
+<code python>
+...
+#Tant que les coefficients de Lf sont positifs
+while (tab[0,:-1]>np.zeros((1,tab.shape[1]-1))).any():
+    #Si une des variables est négative on applique la méthode des phases
+    for i in range(1,tab.shape[0]):
+        if tab[i,-1]<0:
+            tab,x=simplexePhases(tab,x)
+    #Recherche de la variable entrante
+    indiceVarEntrante=variableEntrante(tab)
+    ...
+</code>
+
+__En Matlab :__
+<code matlab>
+...
+%Tant que les coefficients de Lf dont positifs
+while sum(tab(1,1:end-1)>0)>0
+    %Si une des variables est négative on applique la méthode des phases
+    for i=2:size(tab)(1)
+        if tab(i,end)<0
+            [tab,x]=simplexePhases(tab,x)
+        endif
+    endfor
+    %Recherche de la variable entrante
+    indiceVarEntrante=variableEntrante(tab)
+    ...
+</code>
+
+[[cpp:simplexecoupes|Méthode des coupes]]

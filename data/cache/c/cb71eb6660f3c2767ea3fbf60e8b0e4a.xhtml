@@ -1,0 +1,232 @@
+
+<p>
+<a href="/doku.php?id=cpp:le_clustering" class="wikilink1" title="cpp:le_clustering"> Le Clustering</a>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Agaussian_mixture_models&amp;media=cpp:gmm.gif" class="media" title="cpp:gmm.gif"><img src="/lib/exe/fetch.php?w=380&amp;tok=38c604&amp;media=cpp:gmm.gif" class="mediacenter" alt="" width="380" /></a>
+<br/>
+
+L&#039;algorithme <span style='color:#ed1c24; '><strong>Gaussian Mixture Models</strong></span> (GMM) peut être vu comme une amélioration de l&#039;algorithme des K-Means. En effet, quand on associe des observations à un cluster avec les K-Means on <span style='color:#ed1c24; '><strong>ne connaît pas la probabilité</strong></span> pour chacune d&#039;entre elles <span style='color:#ed1c24; '><strong>d&#039;appartenir au cluster prédit</strong></span>.
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://towardsdatascience.com/the-5-clustering-algorithms-data-scientists-need-to-know-a36d136ef68" class="urlextern" title="https://towardsdatascience.com/the-5-clustering-algorithms-data-scientists-need-to-know-a36d136ef68" rel="nofollow">https://towardsdatascience.com/the-5-clustering-algorithms-data-scientists-need-to-know-a36d136ef68</a></div>
+</li>
+</ul>
+
+<h2 class="sectionedit1" id="l_algorithme_et_son_parametrage">L&#039;algorithme et son paramétrage</h2>
+<div class="level2">
+
+<p>
+Nous allons générer les données nécessaires à l&#039;entrainement de notre modèle. Contrairement à l&#039;algorithme de KMeans, nous allons générer des observations qui ne sont pas forcément circulaires.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">datasets</span> <span class="kw1">import</span> make_moons
+Xmoon <span class="sy0">=</span> make_moons<span class="br0">&#40;</span>n_samples<span class="sy0">=</span><span class="nu0">500</span><span class="sy0">,</span> noise <span class="sy0">=</span> <span class="nu0">0.09</span><span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+Xmoon <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>Xmoon<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>dbscan<span class="br0">&#41;</span>
+data<span class="br0">&#40;</span><span class="st0">&quot;moons&quot;</span><span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;L&#039;algorithme et son param\u00e9trage&quot;,&quot;hid&quot;:&quot;l_algorithme_et_son_parametrage&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;551-1022&quot;} -->
+<h3 class="sectionedit2" id="l_algorithme">L&#039;algorithme</h3>
+<div class="level3">
+
+<p>
+L&#039;algorithme GMM est basé sur l&#039;algorithme EM (Espérance et Maximisation).  À chaque itération, l&#039;algorithme va appliquer la partie Espérance puis la partie Maximisation tour après tour :
+</p>
+<ul>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>Espérance :</strong></span> dans cette phase, l&#039;algorithme estime, pour chaque observation, la probabilité qu&#039;elle appartienne à chacun des clusters en fonction des paramètres du cluster.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>Maximisation :</strong></span> on met à jour les paramètres du cluster en utilisant les observations pondérées par leur probabilité. On appelle chacune de ces probabilités les responsabilités des clusters. La maximisation sera très influencée par les observations dont le cluster est très responsable.  </div>
+</li>
+</ul>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">mixture</span> <span class="kw1">import</span> GaussianMixture
+GMM <span class="sy0">=</span> GaussianMixture<span class="br0">&#40;</span><span class="nu0">6</span><span class="sy0">,</span> covariance_type<span class="sy0">=</span><span class="st0">'full'</span><span class="sy0">,</span> random_state<span class="sy0">=</span><span class="nu0">0</span><span class="br0">&#41;</span>.<span class="me1">fit</span><span class="br0">&#40;</span>Xmoon<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>ClusterR<span class="br0">&#41;</span>
+gmm <span class="sy0">=</span> GMM<span class="br0">&#40;</span>moons<span class="sy0">,</span> gaussian_comps <span class="sy0">=</span> <span class="nu0">4</span><span class="br0">&#41;</span>
+prediction <span class="sy0">=</span> predict_GMM<span class="br0">&#40;</span>moons<span class="sy0">,</span> gmm$centroids<span class="sy0">,</span> gmm$covariance_matrices<span class="sy0">,</span> gmm$weights<span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>moons<span class="sy0">,</span> col <span class="sy0">=</span> prediction$cluster_labels<span class="br0">&#41;</span></pre>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Agaussian_mixture_models&amp;media=cpp:gmm_result.png" class="media" title="cpp:gmm_result.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=d98ccd&amp;media=cpp:gmm_result.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> on voit rapidement que les résultats ne sont pas formidables  c&#039;est pourquoi l&#039;algorithme doit d&#039;abord être vu comme une possibilité d&#039;estimer la fonction de densité. Puis, dans un second temps, il peut être utilisé  pour faire du clustering dans certains cas spécifiques.</div>
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.ics.uci.edu/~smyth/courses/cs274/notes/EMnotes.pdf" class="urlextern" title="https://www.ics.uci.edu/~smyth/courses/cs274/notes/EMnotes.pdf" rel="nofollow">https://www.ics.uci.edu/~smyth/courses/cs274/notes/EMnotes.pdf</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;L&#039;algorithme&quot;,&quot;hid&quot;:&quot;l_algorithme&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:2,&quot;range&quot;:&quot;1023-2592&quot;} -->
+<h3 class="sectionedit3" id="choisir_la_bonne_covariance">Choisir la bonne covariance</h3>
+<div class="level3">
+
+<p>
+L&#039;entrainement d&#039;un algorithme de GMM repose sur un paramètre important : le <strong>covariance_type</strong> qui permet d&#039;ajuster la forme du cluster en modifiant la matrice de covariance calculée :
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Agaussian_mixture_models&amp;media=cpp:gmm_covariance.png" class="media" title="cpp:gmm_covariance.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=1568ef&amp;media=cpp:gmm_covariance.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+<div class="table sectionedit4"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Les covariances  </th><th class="col1 centeralign">  Signification  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  Full  </td><td class="col1"> Chaque cluster peut être d&#039;une taille quelconque. </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  Spherical  </td><td class="col1"> Les clusters sont sphériques mais peuvent être de taille différente.</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  Diag  </td><td class="col1"> Les clusters peuvent être ellipsoïdaux, de tailles différentes mais les axes ellipsoïdes doivent être parallèles.</td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">  Tied  </td><td class="col1"> Tous les clusters doivent être de la même taille, de la même orientation et de la même forme donc avoir la même matrice de covariance. </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:4,&quot;range&quot;:&quot;2855-3332&quot;} -->
+<p>
+<span style='color:#ed1c24; '>Faire varier ce paramètre fait aussi varier la complexité de l&#039;algorithme !</span>
+</p>
+
+<p>
+En effet, en appliquant les arguments <strong>spherical</strong> et <strong>diag</strong>, l&#039;algorithme va avoir une complexité en $O(kmn)$ avec k le nombre de clusters, m le nombre d&#039;observations et n le nombre de variables. En appliquant les arguments <strong>tied</strong> et <strong>full</strong>, l&#039;algorithme aura une complexité de $O(kmn^2 + kn^3)$. Il est donc nécessaire de choisir le critère en fonction du dataset.
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://jakevdp.github.io/PythonDataScienceHandbook/05.12-gaussian-mixtures.html" class="urlextern" title="https://jakevdp.github.io/PythonDataScienceHandbook/05.12-gaussian-mixtures.html" rel="nofollow">https://jakevdp.github.io/PythonDataScienceHandbook/05.12-gaussian-mixtures.html</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Choisir la bonne covariance&quot;,&quot;hid&quot;:&quot;choisir_la_bonne_covariance&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:3,&quot;range&quot;:&quot;2593-3917&quot;} -->
+<h2 class="sectionedit5" id="evaluation_du_modele">Evaluation du modèle</h2>
+<div class="level2">
+
+<p>
+Il revient, encore une fois, la problématique liée au choix du nombre de centres de <span style='color:#ed1c24; '><strong>clusters à l&#039;initialisation</strong></span>. Nous allons présenter deux <span style='color:#ed1c24; '><strong>nouveaux indices</strong></span> mieux adaptés aux clusters ovales. Ils vous permettront de mieux juger de la <span style='color:#ed1c24; '><strong>pertinence de votre partitionnement</strong></span>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Evaluation du mod\u00e8le&quot;,&quot;hid&quot;:&quot;evaluation_du_modele&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:5,&quot;range&quot;:&quot;3918-4307&quot;} -->
+<h3 class="sectionedit6" id="les_differents_criteres_de_choix">Les différents critères de choix</h3>
+<div class="level3">
+
+<p>
+Le critère d&#039;information d&#039;Akaike ou le critère d&#039;information baysienne viennent de la théorie de l&#039;information. Ils ne sont pas seulement utilisés dans l&#039;évaluation de cet algorithme mais aussi, plus largement, pour évaluer de manière générale les modèles et les comparer entre eux.
+</p>
+
+<p>
+<strong>Théorie Akaike :</strong>
+</p>
+
+<p>
+$$AIC = 2p - 2 log(L)$$
+</p>
+<div class="table sectionedit7"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Théorie  </th><th class="col1 centeralign">  Signification  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  p  </td><td class="col1 centeralign">  Nombre de paramètres appris par le modèle  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  L  </td><td class="col1 centeralign">  Fonction de vraisemblance du modèle  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:7,&quot;range&quot;:&quot;4696-4833&quot;} -->
+<p>
+<strong>Théorie Baysienne :</strong>
+</p>
+
+<p>
+$$BIC = log(m)p - 2 log(L)$$
+</p>
+
+<p>
+<span style='color:#ed1c24; '><strong>Minimiser ces indices</strong></span> revient à augmenter les performances du modèle. Notons que le BIC aura tendance à minimiser plus le nombre de paramètres tandis que le AIC ajustera souvent mieux les données. Faisons varier le nombre de centres à l&#039;initialisation pour voir l&#039;évolution du nombre des critères.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">n_components <span class="sy0">=</span> np.<span class="me1">arange</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">21</span><span class="br0">&#41;</span>
+&nbsp;
+models <span class="sy0">=</span> <span class="br0">&#91;</span>GaussianMixture<span class="br0">&#40;</span>n<span class="sy0">,</span> covariance_type<span class="sy0">=</span><span class="st0">'full'</span><span class="sy0">,</span> random_state<span class="sy0">=</span><span class="nu0">0</span><span class="br0">&#41;</span>.<span class="me1">fit</span><span class="br0">&#40;</span>Xmoon<span class="br0">&#41;</span>
+          <span class="kw1">for</span> n <span class="kw1">in</span> n_components<span class="br0">&#93;</span>
+&nbsp;
+plt.<span class="me1">plot</span><span class="br0">&#40;</span>n_components<span class="sy0">,</span> <span class="br0">&#91;</span>m.<span class="me1">bic</span><span class="br0">&#40;</span>Xmoon<span class="br0">&#41;</span> <span class="kw1">for</span> m <span class="kw1">in</span> models<span class="br0">&#93;</span><span class="sy0">,</span> label<span class="sy0">=</span><span class="st0">'BIC'</span><span class="br0">&#41;</span>
+plt.<span class="me1">plot</span><span class="br0">&#40;</span>n_components<span class="sy0">,</span> <span class="br0">&#91;</span>m.<span class="me1">aic</span><span class="br0">&#40;</span>Xmoon<span class="br0">&#41;</span> <span class="kw1">for</span> m <span class="kw1">in</span> models<span class="br0">&#93;</span><span class="sy0">,</span> label<span class="sy0">=</span><span class="st0">'AIC'</span><span class="br0">&#41;</span>
+plt.<span class="me1">legend</span><span class="br0">&#40;</span>loc<span class="sy0">=</span><span class="st0">'best'</span><span class="br0">&#41;</span>
+plt.<span class="me1">xlabel</span><span class="br0">&#40;</span><span class="st0">'n_components'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">gmmAIC <span class="sy0">=</span> Optimal_Clusters_GMM<span class="br0">&#40;</span>moons<span class="sy0">,</span> criterion <span class="sy0">=</span> <span class="st0">&quot;AIC&quot;</span><span class="sy0">,</span> max_clusters <span class="sy0">=</span> <span class="nu0">8</span><span class="br0">&#41;</span>
+gmmBIC <span class="sy0">=</span> Optimal_Clusters_GMM<span class="br0">&#40;</span>moons<span class="sy0">,</span> criterion <span class="sy0">=</span> <span class="st0">&quot;BIC&quot;</span><span class="sy0">,</span> max_clusters <span class="sy0">=</span> <span class="nu0">8</span><span class="br0">&#41;</span>
+&nbsp;
+plot<span class="br0">&#40;</span>gmmAIC<span class="sy0">,</span> <span class="kw2">type</span> <span class="sy0">=</span> <span class="st0">&quot;b&quot;</span><span class="sy0">,</span> col <span class="sy0">=</span> <span class="st0">&quot;blue&quot;</span><span class="sy0">,</span> xlab<span class="sy0">=</span><span class="st0">&quot;Nombre de clusters&quot;</span><span class="sy0">,</span> ylab<span class="sy0">=</span><span class="st0">&quot;Score AIC&quot;</span><span class="br0">&#41;</span>
+lines<span class="br0">&#40;</span>gmmBIC<span class="sy0">,</span> pch<span class="sy0">=</span><span class="nu0">18</span><span class="sy0">,</span> col<span class="sy0">=</span><span class="st0">&quot;red&quot;</span><span class="sy0">,</span> <span class="kw2">type</span><span class="sy0">=</span><span class="st0">&quot;b&quot;</span><span class="sy0">,</span> lty<span class="sy0">=</span><span class="nu0">2</span><span class="br0">&#41;</span>
+&nbsp;
+legend<span class="br0">&#40;</span><span class="nu0">5</span><span class="sy0">,</span> <span class="nu0">550</span><span class="sy0">,</span> legend<span class="sy0">=</span>c<span class="br0">&#40;</span><span class="st0">&quot;Evolution du AIC&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Evolution du BIC&quot;</span><span class="br0">&#41;</span><span class="sy0">,</span> col<span class="sy0">=</span>c<span class="br0">&#40;</span><span class="st0">&quot;blue&quot;</span><span class="sy0">,</span> <span class="st0">&quot;red&quot;</span><span class="br0">&#41;</span><span class="sy0">,</span> lty<span class="sy0">=</span><span class="nu0">1</span>:<span class="nu0">2</span><span class="sy0">,</span> cex<span class="sy0">=</span><span class="nu0">0.9</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Agaussian_mixture_models&amp;media=cpp:gmm_aikake_bic.png" class="media" title="cpp:gmm_aikake_bic.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=0e9338&amp;media=cpp:gmm_aikake_bic.png" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+On choisira ici de prendre 6 clusters car ils correspondent aux minima des fonctions.
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.jybaudot.fr/Stats/aic.html" class="urlextern" title="http://www.jybaudot.fr/Stats/aic.html" rel="nofollow">http://www.jybaudot.fr/Stats/aic.html</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les diff\u00e9rents crit\u00e8res de choix&quot;,&quot;hid&quot;:&quot;les_differents_criteres_de_choix&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:6,&quot;range&quot;:&quot;4308-&quot;} -->

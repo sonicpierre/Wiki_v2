@@ -1,0 +1,5 @@
+library<span class="br0">&#40;</span>pracma<span class="br0">&#41;</span>
+&nbsp;
+x <span class="sy0">&lt;</span>- linspace<span class="br0">&#40;</span>-<span class="nu0">5</span><span class="sy0">,</span> <span class="nu0">5</span><span class="sy0">,</span> <span class="nu0">1000</span><span class="br0">&#41;</span>
+y <span class="sy0">&lt;</span>- x**<span class="nu0">3</span>
+plt.<span class="me1">plot</span><span class="br0">&#40;</span>x<span class="sy0">,</span>y<span class="br0">&#41;</span>

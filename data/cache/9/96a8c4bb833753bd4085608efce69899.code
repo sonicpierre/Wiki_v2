@@ -1,0 +1,5 @@
+<span class="kw1">import</span> <span class="kw3">time</span> <span class="co1">#pour le chrono</span>
+&nbsp;
+<span class="co1"># Definition fonction</span>
+<span class="kw1">def</span> f<span class="br0">&#40;</span>x<span class="br0">&#41;</span>:
+    <span class="kw1">return</span> x**<span class="nu0">2</span> -<span class="nu0">10</span>

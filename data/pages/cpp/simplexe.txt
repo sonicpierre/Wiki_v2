@@ -1,0 +1,458 @@
+[[cpp:géométrique|Introduction : méthode géométrique]]
+
+{{ :cpp:tableaux.jpg?500 |}}
+
+Nous présenterons la méthode du **<fc #ff0000>simplexe</fc>** dans sa forme pratique que nous appellerons la méthode des tableaux, puis, nous la programmerons en **<fc #4682b4>Python</fc>** et **<fc #4682b4>Matlab</fc>**.
+
+=====Mise en forme=====
+
+La première chose que nous allons faire est de changer la forme de notre système pour que nous puissions appliquer la méthode du **<fc #ff0000>simplexe</fc>**. Petit rappel de la forme actuelle de notre système :
+
+;#;
+$\begin{cases} \underset{x}{max}(142x_1+241x_2) \\ 0.23x_1+0.7x_2 \le 20.21 \\ 0.015x_1+0.015x_2 \le 0.705 \\ 1.8x_1+1.1x_2 \le 75 \\ x_1,x_2 \ge 0\end{cases}$
+;#;
+
+====La forme canonique====
+
+Nous allons, dans un premier temps, réécrire le système sous sa forme dite **<fc #ff0000>canonique</fc>** :
+;#;
+$\begin{cases} \underset{x}{max}(c|x) \\ Ax \le b, x \ge 0 \end{cases}$
+;#;
+avec :
+
+  * $A$ la matrice des coefficients des contraintes $\begin{pmatrix} 0.23 & 0.7 \\ 0.015 & 0.015 \\ 1.8 & 1.1 \end{pmatrix}$
+  * $b$ le vecteur des seconds membres des contraintes $\begin{pmatrix} 20.21 \\ 0.705 \\ 75 \end{pmatrix}$
+  * $c$ le vecteur des coefficients du critère $\begin{pmatrix} 142 \\ 241 \end{pmatrix}$
+  * $x$ le vecteur des inconnues appelées variables de décision $\begin{pmatrix} x_1 \\ x_2 \end{pmatrix}$
+
+<alert info>J'ai ajouté une partie sur la mise sous forme canonique des cas **non conventionnels** dans la dernière section.</alert>
+====La forme standard====
+
+Maintenant que votre problème est sous sa forme **<fc #008000>canonique</fc>**, il faut l'écrire sous sa forme **<fc #ff0000>standard</fc>** :
+
+;#;
+$\begin{cases} \underset{x}{max}(c|x) \\ Ax = b, x \ge 0 \end{cases}$
+;#;
+
+Oui, la seule chose qui change c'est que nous avons dorénavant une **<fc #008000>égalité</fc>** au lieu d'une inégalité. Pour cela, il faut simplement ajouter des quantités appelées **<fc #ff0000>variables d'écart</fc>** aux différentes lignes du système :
+
+;#;
+$\begin{cases} \underset{x}{max}(142x_1+241x_2) \\ 0.23x_1+0.7x_2+y_1+0y_2+0y_3 = 20.21 \\ 0.015x_1+0.015x_2+0y_1+y_2+0y_3 = 0.705 \\ 1.8x_1+1.1x_2+0y_1+0y_2+y_3 = 75 \\ x_1,x_2 \ge 0\end{cases}$
+;#;
+
+Et donc, vous l'aurez deviné, $A$, $c$ et $x$ ne sont pas les mêmes que pour la forme canonique :
+
+^$$A$$^$$b$$^$$c$$^$$x$$^^
+|$$\begin{pmatrix} 0.23&0.7&1&0&0 \\ 0.015&0.015&0&1&0 \\ 1.8&1.1&0&0&1 \end{pmatrix}$$|$$\begin{pmatrix} 20.21 \\ 0.705 \\ 75 \end{pmatrix}$$|$$\begin{pmatrix} 142 \\ 241 \\ 0 \\ 0 \\ 0\end{pmatrix}$$|$$\begin{pmatrix} x_1 \\ x_2 \\ y_1 \\ y_2 \\ y_3\end{pmatrix}$$||
+=====La méthode du simplexe=====
+
+Je vais commencer par vous expliquer, rapidement, en quoi consiste cette méthode. Maintenant que vous connaissez la méthode **<fc #008000>géométrique</fc>**, vous aurez peut-être remarqué que l'**<fc #ffa500>optimum</fc>** se trouve forcément sur l'un des sommets du **domaine des contraintes** (la zone incolore). Eh bien la méthode du **<fc #ff0000>simplexe</fc>** consiste à avancer **sommet par sommet** en améliorant le critère à chaque itération. Quand il n'est plus possible d'**améliorer** le critère, c'est qu'on a trouvé le sommet **<fc #ffa500>optimal</fc>**.
+<code>
+Remplir le tableau;
+
+Tant que les coefficients de la ligne f sont positifs :
+    -> Trouver la variable d'entrée;
+    -> Trouver la variable de sortie;
+    -> Ramener le coefficient principal à 1;
+    -> Ramener les coefficients secondaires à zéro;
+</code>
+
+====Remplir le tableau====
+
+Nous allons commencer par **<fc #008000>remplir</fc>** le tableau qui a donné son nom à la méthode :
+
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  142  |  241  |  0  |  0  |  0  |  0  |
+^  $y_1$  |  0.23  |  0.7  |  1  |  0  |  0  |  20.21  |
+^  $y_2$  |  0.015  |  0.015  |  0  |  1  |  0  |  0.705  |
+^  $y_3$  |  1.8  |  1.1  |  0  |  0  |  1  |  75  |
+
+<alert info>Les valeurs des variables $x_1$, $x_2$, $y_1$, $y_2$ et $y_3$ sont visibles en dernière colonne : $y_1$ vaut 20.21, $y_2$ vaut 0.705 et $y_3$ vaut 75. Quant à $x_1$ et $x_2$, ils sont **nuls**. Souvenez-vous : je vous ai dit que cette méthode consistait à parcourir tous les sommets du domaine des contraintes. Le sommet par lequel  nous commençons est ... $(0,0)$ !</alert>
+
+__En Python :__
+
+On va importer le module numpy pour avoir accès aux matrices et on remplit chaque coefficient.
+<code python>
+import numpy as np
+
+#Initialisation
+tab=np.array([
+[142,241,0,0,0,0],
+[0.23,0.7,1,0,0,20.21],
+[0.015,0.015,0,1,0,0.705],
+[1.8,1.1,0,0,1,75]])
+</code>
+
+__En Matlab :__
+
+Pas besoin d'importer de module cette fois et on peut directement remplir la matrice en la créant :
+<code matlab>
+%Initialisation
+tab=[
+142,241,0,0,0,0;
+0.23,0.7,1,0,0,20.21;
+0.015,0.015,0,1,0,0.705;
+1.8,1.1,0,0,1,75]
+</code>
+
+<alert danger>**Danger :** en Python, les indices pour les lignes et colonnes commencent à 0 alors qu'en Matlab ils commencent à 1.</alert>
+
+====La boucle principale====
+
+Nous continuons d'itérer tant que les valeurs de la ligne $f$ sont **<fc #008000>positives</fc>**.
+
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  <fc #008000>142</fc>  |  <fc #008000>241</fc>  |  <fc #008000>0</fc>  |  <fc #008000>0</fc>  |  <fc #008000>0</fc>  |  0  |
+^  $y_1$  |  0.23  |  0.7  |  1  |  0  |  0  |  20.21  |
+^  $y_2$  |  0.015  |  0.015  |  0  |  1  |  0  |  0.705  |
+^  $y_3$  |  1.8  |  1.1  |  0  |  0  |  1  |  75  |
+
+__En Python :__
+<code python>
+#Tant que les coefficients de Lf sont positifs
+while (tab[0,:-1]>np.zeros((1,tab.shape[1]-1))).any():
+</code>
+On compare les termes de la première ligne du tableau avec une ligne de zéros et tant qu'au moins un terme est positif on continue.
+
+__En Matlab :__
+<code matlab>
+%Tant que les coefficients de Lf sont positifs
+while sum(tab(1,1:end-1)>0)>0
+</code>
+Il n'y a pas de ''.any()'' en Matlab donc on doit ruser. ''tab(1,1:end-1)>0'' vérifie si chaque terme de la première ligne de tab est positif et retourne une matrice ligne avec un 1 si c'est le cas et un 0 sinon. Je vais donner un exemple au cas où l'explication ne serait pas claire :
+''[52,33,-10]>0'' retourne ''[1 1 0]''. Ensuite, on fait la somme des coefficients de cette matrice et, si cette somme est strictement positive, c'est qu'il y a des coefficients positifs :)
+
+====La recherche de la variable entrante====
+
+À chaque itération, nous choisissons la plus **<fc #008000>grande</fc>** valeur de la ligne $f$, donc, dans notre cas, la variable **<fc #ff0000>entrante</fc>** sera $x_2$.
+
+| ^  $x_1$  ^  <fc #ff0000>$x_2$</fc>  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  142  |  <fc #ff0000>241</fc>  |  0  |  0  |  0  |  0  |
+^  $y_1$  |  0.23  |  0.7  |  1  |  0  |  0  |  20.21  |
+^  $y_2$  |  0.015  |  0.015  |  0  |  1  |  0  |  0.705  |
+^  $y_3$  |  1.8  |  1.1  |  0  |  0  |  1  |  75  |
+
+__En Python :__
+<code python>
+#Recherche de la variable entrante
+indiceVarEntrante=0
+for i in range(1,tab.shape[1]-1):
+    if tab[0,i]>tab[0,indiceVarEntrante]:
+        indiceVarEntrante=i
+</code>
+
+__En Matlab :__
+<code matlab>
+%Recherche de la variable entrante
+indiceVarEntrante=1
+for i=2:size(tab)(2)-1
+    if tab(1,i)>tab(1,indiceVarEntrante)
+        indiceVarEntrante=i
+    endif
+endfor
+</code>
+
+====La recherche de la variable sortante====
+
+Pour ce qui est de la variable **<fc #ff0000>sortante</fc>**, nous choisirons celle  dont le rapport du coefficient vert sur le coefficient orange (celui de la colonne de variables entrantes donc) est le plus **<fc #008000>faible</fc>**.
+
+<alert danger>Il faut que ce **rapport** de coefficients soit **positif** !</alert>
+<alert warning>La valeur de la variable sortante ne doit **pas** être **négative**. Nous verrons comment gérer ce cas de figure dans la page suivante.</alert>
+
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  142  |  241  |  0  |  0  |  0  |  0  |
+^  $y_1$  |  0.23  |  <fc #ffa500>0.7</fc>  |  1  |  0  |  0  |  <fc #008000>20.21</fc>  |
+^  $y_2$  |  0.015  |  <fc #ffa500>0.015</fc>  |  0  |  1  |  0  |  <fc #008000>0.705</fc>  |
+^  $y_3$  |  1.8  |  <fc #ffa500>1.1</fc>  |  0  |  0  |  1  |  <fc #008000>75</fc>  |
+
+Or <fc #ff0000>$\frac{20.21}{0.7}\approx28.9$</fc>, $\frac{0.705}{0.015}=47$ et $\frac{75}{1.1}\approx68.2$ donc notre variable sortante est $y_1$ que nous remplaçons par notre variable entrante $x_2$.
+
+<alert info>Si deux coefficients sont identiques, vous pouvez prendre celui que vous voulez. Par convention, nous prendrons la variable de la ligne de plus faible indice.</alert>
+
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  142  |  241  |  0  |  0  |  0  |  0  |
+^  <fc #ff0000>$x_2$</fc>  |  0.23  |  0.7  |  1  |  0  |  0  |  20.21  |
+^  $y_2$  |  0.015  |  0.015  |  0  |  1  |  0  |  0.705  |
+^  $y_3$  |  1.8  |  1.1  |  0  |  0  |  1  |  75  |
+
+__En Python :__
+<code python>
+#Recherche de la variable sortante
+indiceVarSortante=0
+rapportMin=np.inf
+for i in range(1,tab.shape[0]):
+    if tab[i,indiceVarEntrante]>0:
+        rapport=tab[i,tab.shape[1]-1]/tab[i,indiceVarEntrante]
+        if rapport<rapportMin and rapport>=0:
+            indiceVarSortante=i
+            rapportMin=rapport
+if indiceVarSortante==0:
+    print("Pas de variable sortante")
+    exit()
+</code>
+
+__En Matlab :__
+<code matlab>
+%Recherche de la variable sortante
+indiceVarSortante=1
+rapportMin=Inf
+for i=2:size(tab)(1)
+    if tab(i,indiceVarEntrante)>0
+        rapport=tab(i,size(tab)(2))/tab(i,indiceVarEntrante)
+        if rapport<rapportMin && rapport>=0
+            indiceVarSortante=i
+            rapportMin=rapport
+        endif
+    endif
+endfor
+if indiceVarSortante==1
+    disp("Pas de variable sortante")
+    return
+endif
+</code>
+====Le coefficient principal====
+
+Maintenant, nous devons ramener le coefficient **<fc #ff0000>principal</fc>** (l'intersection de la ligne et de la colonne $x_2$) à 1.
+
+$L_1 <- \frac{1}{0.7}L_1$
+
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  142  |  241  |  0  |  0  |  0  |  0  |
+^  $x_2$  |  <fc #ff0000>$\frac{0.23}{0.7}$</fc>  |  <fc #ff0000>1</fc>  |  <fc #ff0000>$\frac{1}{0.7}$</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>$\frac{20.21}{0.7}$</fc>  |
+^  $y_2$  |  0.015  |  0.015  |  0  |  1  |  0  |  0.705  |
+^  $y_3$  |  1.8  |  1.1  |  0  |  0  |  1  |  75  |
+
+__En Python :__
+<code python>
+#Coefficient principal à 1
+tab[indiceVarSortante,:]=1/tab[indiceVarSortante,indiceVarEntrante]*tab[indiceVarSortante,:]
+</code>
+
+__En Matlab :__
+<code matlab>
+%Coefficient principal à 1
+tab(indiceVarSortante,:)=1/tab(indiceVarSortante,indiceVarEntrante)*tab(indiceVarSortante,:)
+</code>
+
+====Les coefficients secondaires====
+
+Ensuite, nous allons ramener tous les **<fc #ff0000>autres</fc>** coefficients de la colonne de notre variable entrante ($x_2$) à 0. À partir de maintenant, je ferai des **arrondis** pour éviter les résultats à rallonge.
+
+On commence par la ligne $f$ :
+
+$L_f <- L_f - 241L_1$
+
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  <fc #ff0000>62.8</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>-344</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>-6958</fc>  |
+^  $x_2$  |  0.329  |  1  |  1.43  |  0  |  0  |  28.9  |
+^  $y_2$  |  0.015  |  0.015  |  0  |  1  |  0  |  0.705  |
+^  $y_3$  |  1.8  |  1.1  |  0  |  0  |  1  |  75  |
+
+On continue avec la seconde ligne :
+
+$L_2 <- L_2 - 0.015L_1$
+
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  62.8  |  0  |  -344  |  0  |  0  |  -6958  |
+^  $x_2$  |  0.329  |  1  |  1.43  |  0  |  0  |  28.9  |
+^  $y_2$  |  <fc #ff0000>0.01</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>-0.0214</fc>  |  <fc #ff0000>1</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>0.27</fc>  |
+^  $y_3$  |  1.8  |  1.1  |  0  |  0  |  1  |  75  |
+
+On termine avec la troisième ligne :
+
+$L_3 <- L_3 - 1.1L_1$
+
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  62.8  |  0  |  -344  |  0  |  0  |  -6958  |
+^  $x_2$  |  0.329  |  1  |  1.43  |  0  |  0  |  28.9  |
+^  $y_2$  |  0.01  |  0  |  -0.0214  |  1  |  0  |  0.27  |
+^  $y_3$  |  <fc #ff0000>1.44</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>-1.57</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>1</fc>  |  <fc #ff0000>43.2</fc>  |
+
+__En Python :__
+<code python>
+#Coefficients secondaires à 0
+for i in range(tab.shape[0]):
+    if i!=indiceVarSortante:
+        tab[i,:]-=tab[i,indiceVarEntrante]*tab[indiceVarSortante,:]
+</code>
+
+__En Matlab :__
+<code matlab>
+    %Coefficients secondaires à 0
+    for i=1:size(tab)(1)
+        if i!=indiceVarSortante
+            tab(i,:)-=tab(i,indiceVarEntrante)*tab(indiceVarSortante,:)
+        endif
+    endfor
+endwhile
+</code>
+
+
+Et voilà ! Nous en avons fini pour la **<fc #008000>première</fc>** itération. Si on le voulait, on pourrait s'en tenir là,  garder un sommet non optimal en $(0,28.9)$ et générer un bénéfice de 6958 **<fc #ffa500>pièces d'or</fc>**. Mais nous n'allons pas nous arrêter en si bon chemin !
+
+<alert info>Vous pouvez bien sûr retrouver le point $(0,28.9)$ sur le graphe !</alert>
+
+;#;
+{{:cpp:grapheopti4.png?400|}}
+;#;
+
+====La seconde itération====
+
+Allez, c'est parti pour la **<fc #008000>seconde</fc>** itération. Il n'y a plus qu'un coefficient **<fc #008000>positif</fc>** à la ligne $f$ donc on n'a pas vraiment le choix sur la variable d'**<fc #008000>entrée</fc>** :
+
+| ^  <fc #ff0000>$x_1$</fc>  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  <fc #ff0000>62.8</fc>  |  0  |  -344  |  0  |  0  |  -6958  |
+^  $x_2$  |  0.329  |  1  |  1.43  |  0  |  0  |  28.9  |
+^  $y_2$  |  0.01  |  0  |  -0.0214  |  1  |  0  |  0.27  |
+^  $y_3$  |  1.44  |  0  |  -1.57  |  0  |  1  |  43.2  |
+
+On sélectionne la variable de **<fc #008000>sortie</fc>**. $\frac{28.9}{0.329} \approx 87.8$, <fc #ff0000>$\frac{0.272}{0.01} = 27.2$</fc> et $\frac{43.2}{1.44}=30$ donc $y_2$ est la variable de sortie.
+
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  62.8  |  0  |  -344  |  0  |  0  |  -6958  |
+^  $x_2$  |  0.329  |  1  |  1.43  |  0  |  0  |  28.9  |
+^  <fc #ff0000>$x_1$</fc>  |  0.01  |  0  |  -0.0214  |  1  |  0  |  0.27  |
+^  $y_3$  |  1.44  |  0  |  -1.57  |  0  |  1  |  43.2  |
+
+Ensuite, on ramène le coefficient **<fc #008000>principal</fc>** à 1 :
+
+$L_2 <- \frac {1}{0.01}L_2$
+
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  62.8  |  0  |  -344  |  0  |  0  |  -6958  |
+^  $x_2$  |  0.329  |  1  |  1.43  |  0  |  0  |  28.9  |
+^  $x_1$  |  <fc #ff0000>1</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>-2,14</fc>  |  <fc #ff0000>100</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>27</fc>  |
+^  $y_3$  |  1.44  |  0  |  -1.57  |  0  |  1  |  43.2  |
+
+On ramène les coefficients **<fc #008000>secondaires</fc>** à 0 :
+
+$L_f <- L_f - 62.8L_2$
+
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  <fc #ff0000>0</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>-210</fc>  |  <fc #ff0000>-6280</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>-8654</fc>  |
+^  $x_2$  |  0.329  |  1  |  1.43  |  0  |  0  |  28.9  |
+^  $x_1$  |  1  |  0  |  -2,14  |  100  |  0  |  27  |
+^  $y_3$  |  1.44  |  0  |  -1.57  |  0  |  1  |  43.2  |
+
+$L_1 <- L_1 - 0.329L_2$
+
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  0  |  0  |  -210  |  -6280  |  0  |  -8654  |
+^  $x_2$  |  <fc #ff0000>0</fc>  |  <fc #ff0000>1</fc>  |  <fc #ff0000>2.13</fc>  |  <fc #ff0000>-32.9</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>20</fc>  |
+^  $x_1$  |  1  |  0  |  -2,14  |  100  |  0  |  27  |
+^  $y_3$  |  1.44  |  0  |  -1.57  |  0  |  1  |  43.2  |
+
+$L_3 <- L_3 - 1.44L_2$
+
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  0  |  0  |  -210  |  -6280  |  0  |  -8654  |
+^  $x_2$  |  0  |  1  |  2.13  |  -32.9  |  0  |  20  |
+^  $x_1$  |  1  |  0  |  -2.14  |  100  |  0  |  27  |
+^  $y_3$  |  <fc #ff0000>0</fc>  |  <fc #ff0000>0</fc>  |  <fc #ff0000>1.51</fc>  |  <fc #ff0000>-144</fc>  |  <fc #ff0000>1</fc>  |  <fc #ff0000>4.32</fc>  |
+
+Cette fois, tous les coefficients de $L_f$ sont **<fc #008000>négatifs</fc>**, ce qui signifie que nous sommes arrivés à un **<fc #ffa500>optimum</fc>**.
+
+====Résultat====
+
+Nous lisons donc sur le tableau qu'il y a un **<fc #ffa500>optimum</fc>** en $(27,20)$ qui permet de générer 8654 **<fc #ffa500>pièces d'or. </fc>**Identique aux valeurs de la méthode **<fc #008000>géométrique</fc>** (allez vérifier, vous verrez !) sauf que nous ne nous sommes pas basés sur des observations //"à la louche"// pour arriver à ce résultat comparé à la méthode géométrique :)
+
+__En Python :__
+<code python>print(tab)</code>
+;#;
+{{:cpp:simplexepython.png?400|}}
+;#;
+
+__En Matlab :__
+<code matlab>disp(tab)</code>
+;#;
+{{:cpp:simplexematlab.png?400|}}
+;#;
+
+====Code complet====
+
+J'ai placé la recherche des variables entrantes et sortantes ainsi que la normalisation du tableau (le coefficient principal à 1 et les coefficients secondaires à 0) dans des fonctions dédiées pour rendre le code plus propre.
+
+**Résultat :**
+
+<code>
+x 2 = 20
+x 1 = 27
+y 3 = 4.4
+Optimum de 8654
+</code>
+
+Vous trouverez le code complet [[https://github.com/LlamasPartan/Optimisation/tree/master/Simplexe/M%C3%A9thode%20classique| ici]].
+=====Cas non standards=====
+
+Avec l'exemple que j'ai pris, tout se passe bien dans le meilleur des mondes (c'est pour ça que je l'ai choisi d’ailleurs !) mais, il existe des situations dans lesquelles la méthode que je vous ai montrée ne suffit pas.
+
+====Mise sous forme canonique====
+
+Il est possible que votre problème d'optimisation ne soit pas aussi **<fc #008000>simplement</fc>** transformable sous forme canonique que le problème que j'ai choisi.
+
+Il peut arriver que vous vouliez, dans votre problème, **<fc #008000>minimiser</fc>** une quantité au lieu de la maximiser (je ne sais pas moi, imaginons que notre alchimiste veuille faire gagner le moins de **<fc #ffa500>pièces d'or</fc>** possible à son maître cruel). Dans ce cas, il faudra remplacer le $\underset{x}{min}(c|x)$ de votre problème par un $-\underset{x}{max}(-c|x)$
+
+De même, si vous avez des contraintes de **<fc #008000>stock minimum</fc>** (notre alchimiste veut utiliser au moins une certaine quantité de **<fc #008000>matière première</fc>**) vous utiliserez $-a_1x_1-\cdots-a_nx_n \le -b_1$ au lieu de $a_1x_1+\cdots+a_nx_n \ge b_1$
+
+Dans un cas d'**<fc #008000>égalité</fc>** de contrainte (l'alchimiste veut utiliser **TOUT** son stock) $a_1x_1+\cdots+a_nx_n=b_1$ devient $\begin{cases} a_1x_1+\cdots+a_nx_n \le b_1 \\ -a_1x_1-\cdots-a_nx_n \le -b_1\end{cases}$
+
+Finalement, si une variable de décision n'a pas de contrainte de **<fc #008000>signe</fc>**, on la décomposera en $x_i=x_i^+-x_i^-$ avec $x_i^+=max(x_i,0)$ et $x_i^-=min(-x_i,0)$ et on ajoutera la contrainte $x_i^+,x_i^- \ge 0$ au système.
+
+====Domaine des contraintes non borné====
+
+Considérons le problème d'optimisation suivant :
+;#;
+$\begin{cases} \underset{x}{max}(x_1+x_2) \\ -x_1+x_2 \le 5 \\ 2x_1-3x_2 \le 4 \\ x_1,x_2 \ge 0\end{cases}$
+;#;
+
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  | |
+^  $f$  |  1  |  1  |  0  |  0  |  0  |
+^  $y_1$  |  -1  |  1  |  1  |  0  |  5  |
+^  $y_2$  |  2  |  -3  |  0  |  1  |  4  |
+On itère une fois avec $x_1$ comme variable d'entrée et $y_2$ comme variable de sortie :
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  | |
+^  $f$  |  0  |  2.5  |  0  |  -0.5  |  -2  |
+^  $y_1$  |  0  |  -0.5  |  1  |  0.5  |  7  |
+^  $x_1$  |  1  |  -1.5  |  0  |  0.5  |  2  |
+Et là, problème : certes, on peut choisir sans difficulté la variable d'entrée mais il n'y a aucune variable de sortie éligible ! En effet, tous les rapports de coefficients sont négatifs.
+
+Jetons un coup d’œil au résultat via la méthode géométrique (la droite verte est $L_{10}$ et la droite violette est $L_{15}$) :
+;#;
+{{ :cpp:grapheoptinonborne.png?400 |}}
+;#;
+
+Voilà la raison pour laquelle on ne pouvait pas trouver le point optimal : il n'y en a pas !
+
+<alert info>Si vous faites tourner ce problème dans votre programme il vous retournera "Pas de variable sortante".</alert>
+
+====Dégénérescence des sommets====
+
+Considérons le problème d'optimisation suivant :
+;#;
+$\begin{cases} \underset{x}{max}(3x_1+2x_2) \\ 2x_1+3x_2 \le 14 \\ 2x_1+x_2 \le 10 \\ x_1+x_2 \le 6 \\ x_1,x_2 \ge 0\end{cases}$
+;#;
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  3  |  2  |  0  |  0  |  0  |  0  |
+^  $y_1$  |  2  |  3  |  1  |  0  |  0  |  14  |
+^  $y_2$  |  2  |  1  |  0  |  1  |  0  |  10  |
+^  $y_3$  |  1  |  1  |  0  |  0  |  1  |  6  |
+On itère avec $x_1$ en variable d'entrée et $y_2$ en variable de sortie :
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  0  |  0.5  |  0  |  -1.5  |  0  |  -15  |
+^  $y_1$  |  0  |  2  |  1  |  -1  |  0  |  4  |
+^  $x_1$  |  1  |  0.5  |  0  |  0.5  |  0  |  5  |
+^  $y_3$  |  0  |  0.5  |  0  |  -0.5  |  1  |  1  |
+On itère avec $x_2$ en variable d'entrée et $y_3$ en variable de sortie :
+| ^  $x_1$  ^  $x_2$  ^  $y_1$  ^  $y_2$  ^  $y_3$  | |
+^  $f$  |  0  |  0  |  0  |  -1  |  -1  |  -16  |
+^  $y_1$  |  0  |  0  |  1  |  1  |  -4  |  0  |
+^  $x_1$  |  1  |  0  |  0  |  1  |  -1  |  4  |
+^  $x_2$  |  0  |  1  |  0  |  -1  |  2  |  2  |
+Comme vous pouvez le voir, nous avons un 0 dans la colonne de droite. Certes, nous avons déjà résolu notre problème, mais dans le cas où on pourrait toujours itérer, $y_1$ serait **forcément** la variable sortante. Dans de rare cas, cela peut même causer des boucles infinies c'est pourquoi je vous conseille d'ajouter un compteur que vous incrémenterez à chaque pas de boucle qui limitera le nombre d'itérations maximal (50 devrait largement suffire).
+
+La dégénérescence des sommets correspond à un problème du type :
+;#;
+{{:cpp:grapheoptidegenere.png?400|}}
+;#;
+
+[[cpp:simplexePhase|Méthode des phases]]

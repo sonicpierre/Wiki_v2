@@ -1,0 +1,14 @@
+<span class="kw1">from</span> sklearn.<span class="me1">model_selection</span> <span class="kw1">import</span> train_test_split
+<span class="kw1">from</span> sklearn.<span class="me1">linear_model</span> <span class="kw1">import</span> SGDClassifier
+<span class="kw1">from</span> sklearn.<span class="me1">pipeline</span> <span class="kw1">import</span> make_pipeline
+<span class="kw1">from</span> sklearn.<span class="me1">preprocessing</span> <span class="kw1">import</span> StandardScaler
+&nbsp;
+&nbsp;
+X_train<span class="sy0">,</span> X_test <span class="sy0">=</span> train_test_split<span class="br0">&#40;</span>X<span class="sy0">,</span> test_size <span class="sy0">=</span> <span class="nu0">0.2</span><span class="sy0">,</span> random_state<span class="sy0">=</span><span class="nu0">0</span><span class="br0">&#41;</span><span class="co1">#On répartie l'ensemble des données dans un dataset d'entrainement et de test, en mettant 20 % des données dans le dataset de test. </span>
+<span class="co1">#Le random_state null permet de garantir la répétabilité de l'algorithme.</span>
+&nbsp;
+modele <span class="sy0">=</span> make_pipeline<span class="br0">&#40;</span>StandardScaler<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span><span class="co1">#Constitution de la pipeline où on défini un transformeur et l'estimateur à utiliser.</span>
+                         SGDClassifier<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+modele.<span class="me1">fit</span><span class="br0">&#40;</span>X_train<span class="sy0">,</span> y_train<span class="br0">&#41;</span><span class="co1">#Entrainement du modèle</span>
+modele.<span class="me1">predict</span><span class="br0">&#40;</span>X_test<span class="br0">&#41;</span><span class="co1">#Prédiction sur les données de test</span>

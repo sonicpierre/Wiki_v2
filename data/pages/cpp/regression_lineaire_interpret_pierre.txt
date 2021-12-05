@@ -1,0 +1,379 @@
+[[cpp:IA| Machine Learning]]
+
+{{ :cpp:residus.png?450 |}}
+
+Pour attester d'une relation linéaire entre la variable cible et les variables explicatives, il est nécessaire que les résidus (différence entre une valeur réelle et sa projection sur la droite de régression) respectent les conditions suivantes :
+
+  * La distribution normale des résidus
+  * L'abscence d'auto correlation
+  * Une distribution homogène des résidus donc avec une variance constante 
+
+Chacun de ces points est donc <fc #ff0000>indispensable</fc> à la validation du modèle puis à l'interprétation des résultats.
+
+<alert info> **Dataset :** Dans cette page, on utilisera des données reliant le nombre de ventes et l’investissement dans différents médias. Vous les trouverez [[https://github.com/LlamasPartan/Machine_Learning_Ressource/blob/master/R%C3%A9gression/R%C3%A9gression%20Lin%C3%A9aire/Advertising.csv| ici]].</alert>
+
+=====La distribution normale des résidus=====
+
+On peut tout d'abord commencer par afficher la distribution des résidus pour avoir une première idée de leur normalité.
+
+__Code Python :__
+
+<code python>
+import numpy as np
+import scipy.stats as stats
+import matplolib.pyplot as plt
+plt.style.use('fivethirtyeight')
+
+Regression_Lin.resid.plot(kind='density', linewidth=4, fontsize=6, label = "Distribution résidus")
+Regression_Lin.resid.hist(density = True, alpha = 0.5)
+
+mu = 0
+variance = 1
+sigma = np.sqrt(variance)
+x = np.linspace(mu - 10*sigma, mu + 10*sigma, 100)
+plt.plot(x, stats.norm.pdf(x, mu, sigma), label = "Normal Distribution")
+</code>
+
+__Code R :__
+
+<code python>
+hist(residuals(Regression_Lin),col="grey",freq=F)
+densite <- density(residuals(Regression_Lin))
+lines(densite, col = "red",lwd=3)
+</code>
+
+**Résultat :**
+
+{{ :cpp:normalite_des_res.png.png?600 |Représentation de la normalité des résidus}}
+
+;#;**Figure 1 :** Représentation de la normalité des résidus
+;#;
+
+On peut remarquer avec le graphique que la normalité des résidus n'est pas évidente.
+====Test de Shapiro-Wilk====
+
+<alert warning> **Remarque :** Pour ce test nous utiliserons un échantillon de 50 individus, parmi les 200 composants la population.</alert>
+
+Le test de Shapiro-Wilk a pour but de tester l'hypothèse $H_{0}$ telle qu'un échantillon $x_{0},x_{1},x_{2},...,x_{n}$ provient d'une population **distribuée normalement**. Ici, il permettra de vérifier la normalité des résidus de la régression linéaire. De ce fait si elle est attestée, on pourra continuer l'analyse des résultats afin de valider le modèle.
+
+Son expression est donnée par :
+
+$$ W = \frac{[\sum_{i = 1}^{n} a_{i} (x_{(n-i+1)} - x_{(i)})]^{2}}{ \sum_{i = 1}^{n} (x_{i} - \sigma_{x})^{2}}$$
+
+^      Paramètre        ^ Signification^
+|  $x_{(i)}$  | Série des observations trié dans l'ordre croissant. |
+|   $a_{i}$     | Constantes générées à partir de la moyenne et de la matrice de covariance des quantiles d'un échantillon de taille n, suivant une loi normale. **(*)**|
+
+**(*)** Les coefficients $a_{i}$ sont donnés sur cette [[http://www.santetropicale.com/SANTEMAG/algerie/stat/stat_10.htm#28|page]]. La lecture du tableau se fait en partant de n (taille de l'échantillon) et en récupérant les index $j$ correspondant. 
+
+Pour interpréter le résultat obtenu, <fc #ff0000>on compare dans un premier temps</fc>  la valeur de $W_{observée}$, à une valeur $W_{critique}$, donnée dans ce [[http://www.biostat.ulg.ac.be/pages/Site_r/normalite_files/table-W.png|tableau]]. Celle valeur critique dépend de la taille de l'échantillon et du risque. Si  $W_{observée}$ < $W_{critique}$, alors on rejete $H_{0}$. Ce qui veut dire qu'on n’admet pas la normalité des données.
+
+<fc #ff0000>Par la suite</fc> on étudie la p-valeur associée au test. Si celle-ci est inférieure au risque, alors l'échantillon ne suit pas une loi normale.
+
+**Hypothèses du test :** 
+  * $H_{0}$ les résidus suivent une distribution normale.
+  * $H_{1}$ les résidus ne suivent pas de loi normale.
+
+On commence par ajuster notre modèle avec l'échantillon des 50 individus. Les variables explicatives sont désignées par **X** et la variable cible par **y**.
+
+__Code Python__
+
+<code python>
+import scipy as sc
+from scipy import stats
+import statsmodels.api as sm
+
+X = sm.add_constant(X)#Ajout de la constante aux données
+Regression_Lin = sm.OLS(y,X).fit()#Ajustement des données
+</code>
+
+__Code R__
+
+<code python>
+Regression_Lin <- lm(Sales~., data = echantillon)#Ajustement des données
+</code>
+
+Puis on procède au **test de normalité des résidus** avec Shapiro-Wilk.
+
+__Code Python__
+
+<code python>
+sc.stats.shapiro(Regression_Lin.resid)
+</code>
+
+__Code R__
+
+<code python>
+shapiro.test(Regression_Lin$residuals)
+</code>
+
+**Résultat**
+
+{{ :cpp:test_shapiro_wilk.png?300 |Résultat test de shapiro-Wilk}}
+
+ Pour notre exemple, on observe un $W_{observée}$ < $W_{critique}$ (0.942 < 0.947) et une p-valeur = 0.01 < 0.05. Donc on rejette $H_{0}$. 
+
+**Visualisation**
+
+Les résultats de ce test se fait grâce à un diagramme quantile-quantile aussi appelé **QQ-plot**.
+
+__Code Python__
+
+<code python>
+import statsmodels
+
+statsmodels.graphics.gofplots.qqplot(Regression_Lin.resid,fit=True,line="r")
+</code>
+
+__Code R__
+
+<code python>
+qqnorm(Regression_Lin$residuals)#Traçage de la courbe de distribution
+qqline(Regression_Lin$residuals)#Ajout de la droite sur le graphique
+</code>
+
+{{ :cpp:theorical_quant.png?600 |Diagramme quantile-quantile du prix de vente}}
+
+;#;**Figure 3 :** Diagramme quantile-quantile du prix de vente
+;#;
+
+On voit que les quantiles de notre échantillon sont assez dispersés par rapport à ceux de la distribution normale (droite). Cela confirme notre décision concernant la non-normalité de l'échantillon.
+
+**Sources :**
+
+  * [[https://www.imo.universite-paris-saclay.fr/~pansu/web_ifips/Tests.pdf| J-P Lenoir, Université Paris Saclay, Les tests d'hypothèses]]
+  * [[http://www.duclert.org/r-tests-statistiques/test-shapiro-wilk-R.php|duclert.org, Aymeric Duclert]] 
+  * [[http://www.biostat.ulg.ac.be/pages/Site_r/Normalite.html#graph|Biostat.ulg.ac.be]]
+  * [[https://sites.google.com/site/rgraphiques/4--stat/r%C3%A9gressions-lin%C3%A9aires-avec-r|Régression linéaire avec R, Antoine Massé]]
+  * [[http://www.santetropicale.com/SANTEMAG/algerie/stat/stat_10.htm#28|Santetropicale.com]]
+  * [[http://eric.univ-lyon2.fr/~ricco/cours/cours/Test_Normalite.pdf| Université de Lyon 2, Test de Normalité, Ricco Rakotomalala]]
+  * [[https://becominghuman.ai/stats-models-vs-sklearn-for-linear-regression-f19df95ad99b|Becominghuman.ai, Stats Models vs SKLearn for Linear Regression
+ de Rowan Langford ]]
+
+
+=====L'auto corrélation des résidus=====
+
+Jojo choisit ses chapeaux en suivant les cycles de la mode.
+
+{{ :cpp:auto_corr_dessin.png?800 |}}
+
+En l'occurence, ici on suppose qu'un cycle dure 20 ans donc si on a le chapeau de Jojo il y a 20 ans on sait celui qu'il porte actuellement. Cependant, il y a des légères variantes aléatoires, la couleur ou des petits changements de forme, on appellera ça le bruit blanc. On peut écrire la formule suivante :
+
+$$Chapeau_{Jojo} = Chapeau_{Jojo_{-20 ans}} + Légers \, changements$$
+
+====ACF====
+
+L'Auto Correlation Function est beaucoup utilisée pour l'étude des séries temporelles afin de détecter ou par la suite modéliser l'auto corrélation. Ici, cette représentation graphique va nous permettre de détecter si les résidus sont corrélés ou non.
+
+**Formule :** 
+
+Pour calculer l'auto corrélation on peut commencer tout d'abord par calculer l'auto covariance pour un décalage entre 2 variables de $k$ et une moyenne $\mu$ de la variable $X_t$ :
+
+$$\gamma_k = E(( X_t - \mu) (X_{t+k} - \mu))$$
+
+On en tire ensuite la formule pour l'auto corrélation en divisant par la variance ($\sigma^2$) :
+
+$$\rho_k = \frac{\gamma_k}{\sigma^2}$$
+
+__Code Python :__
+
+<code python>
+from statsmodels.graphics import tsaplots
+import matplotlib.pyplot as plt
+plt.style.use('fivethirtyeight')
+
+tsaplots.plot_acf(Regression_Lin.resid)
+</code>
+
+__Code R :__
+
+<code python>
+library(lmtest)
+acf(residuals(reg_lin), main="Corrélation des résidus", ci=0.95)
+</code>
+
+**Résultat :**
+
+On obtient en abscisse le décalage (lag) et en ordonné le coefficient de corrélation.
+
+{{ :cpp:auto_corr_res.png?400 |Diagramme d'auto-corrélation des résidus}}
+
+;#;**Figure 4 :** Diagramme d'auto-corrélation des résidus
+;#;
+
+Précisons le sens des traits en pointillé. Il s'agit d'un intervalle de confiance. On peut affirmer à 95% que si les valeurs du coefficient d'auto corrélation sont dans l'intervalle, il n'y a pas d'auto corrélation. Cette variable changera en fonction de $n$ ou de la valeur de confiance choisie. 
+
+**Sources :**
+  * [[http://perso.ens-lyon.fr/lise.vaudor/autocorrelation-de-series-temporelles-ou-spatiales/|Blog R-atique, Lise Vaudor]]
+  * [[https://campus.datacamp.com/courses/time-series-analysis-in-python/some-simple-time-series?ex=1|Datacamp, Rob Reider, NYU-Courant Consultant, Quantopian]]
+  * [[http://perso.ens-lyon.fr/lise.vaudor/non-respect-des-hypotheses-du-modele-lineaire-anova-regression-cest-grave-docteur/#:~:text=Ils%20testeront%20la%20normalit%C3%A9%20des,sont%20ni%20gaussiens%2C%20ni%20homosc%C3%A9dastiques.|Blog R-atique, Lise Vaudor]]
+
+====Test Durbin-Watson====
+
+Il s'agit d'un test assez vieux datant de 1950. Il permet aussi de calculer l'auto correlation des résidus dans les modèles de régression. Cette indice varie entre 0 et 4 et permet de choisir grace au tableau ci-dessous si la variable est corrélée ou non.
+
+^  Résidu corrélé négativement  ^  On en sait rien  ^  Pas auto corrélation  ^  On en sait rien  ^  Auto corrélé positif  ^
+|  $[0,d_1]$  |  $[d_1, d_2]$  |  $[d_2, 4-d_2]$  |  $[4 - d_2, 4 - d_1]$  |  $[4-d_1,4]$  |
+
+On utilise les tables présentes [[https://www.real-statistics.com/statistics-tables/durbin-watson-table/| ici]] pour pouvoir savoir dans quelles sont les valeurs de $d_1$ et de $d_2$ à prendre. On peut aussi utiliser la p-value avec $H_0$ l'hypothèse que résidus ne soient pas auto-corrélés et $H_1$ l'hypothèse contraire afin d'accepter ou refuser l'hypothèse.
+
+**Théorie :**
+
+On cherche à voir si $\rho$ est significativement différent de 0 dans la formule ci-dessous :
+
+$$\epsilon_t = \rho \epsilon_{t-1} + u_t$$
+
+Pour savoir si $\rho$ est significatif on calcule ensuite le coefficient de Durbin-Watson avec la formule ci-dessous où $e$ est le résidu :
+
+$$DW = \frac{\sum^n_{i = 2} (e_i - e_{i-1})^2}{\sum^n_{i = 1} e_i^2}$$
+
+Notons que plus DW se rapproche de 2 plus l'hypothèse d'auto corrélation ($H_0$) peut être refusé.
+
+__Code Python :__
+
+<code python>
+from statsmodels.stats.stattools import durbin_watson
+
+durbin_watson(Regression_Lin.resid)
+</code>
+
+__Code R :__
+
+<code python>
+durbinWatsonTest(reg_lin) 
+</code>
+
+**Résultat :**
+
+<alert warning>**Attention :** Il est important de noter que les intervalles où on ne peut pas décider sont assez larges. C'est pourquoi il est nécessaire de compléter ce test avec un corrélogramme pour assurer ses conclusions sur l'auto corrélation.</alert>
+
+**Sources :**
+  * [[https://fr.wikipedia.org/wiki/Test_de_Durbin-Watson|Wikipédia]]
+  * [[https://www.statsmodels.org/stable/generated/statsmodels.stats.stattools.durbin_watson.html| Documentation statsmodels]]
+  * [[http://www.jybaudot.fr/Correl_regress/dw.html|jybaudot.fr, JY Baudot]]
+
+=====L'homogénité des résidus=====
+
+Sortons les grands mots scientifiques, y a-t-il homoscédasticité ou heteroscédasticité ? En d'autre termes, la variance des résidus est-elle constante ou non ? Il existe de nombreux tests pour vérifier ces hypothèses et il est préférable d'en faire plusieurs pour assurer ses conclusions. On peut se donner une première idée des résultats à attendre en affichant un premier graphique.
+
+__Code Python :__
+
+<code python>
+import pandas as pd
+fitted_values =  Regression_Lin.predict(X.drop('Residu', axis = 1))
+residues_std = Regression_Lin.resid/np.sqrt(sum(Regression_Lin.resid**2)/(len(Regression_Lin.resid)-1))
+momo_smooth = pd.DataFrame(sm.nonparametric.lowess(sqrt_residues_std, fitted_values))
+
+sqrt_residues_std = np.sqrt(abs(residues_std))
+
+plt.scatter(momo_smooth[0], momo_smooth[1])
+plt.scatter(fitted_values,sqrt_residues_std)
+plt.xlabel("Fitted values")
+plt.ylabel("Racine carrée des résidus standardisés")
+</code>
+
+__Code R :__
+
+<code python>
+plot(Regression_Lin, which = 3)
+</code>
+
+
+**Résultat :**
+
+{{ :cpp:heterostasticite.png?400 |}}
+
+Le but ici est de se rapprocher au plus près d'une droite plane pour conclure l'hétéroscédasticité.
+
+<alert warning>**Remarque :** Si on connait l'origine de l'hétérostaticité on peut appliquer un modèle des moindres carrés pondéré.</alert>
+====Test de Breusch-Pagan====
+
+Le test a été créé en 1979 par Adrian Pagan et Trevor Breuch. Il est utilisé si le nombre d'observations est supérieur à 50 et se compare avec le test du $\chi^2$ pour obtenir la validation ou le rejet de ses hypothèses. Explicitons les 2 hypothèses de ce test bilatéral.
+  * La première $H_0$ qui signifie que la variance est fixe :
+
+$$H_0 : y_i = \alpha + \beta x_i + \gamma x_i + \epsilon_i , \, V(\epsilon_i) = \sigma^2$$
+
+  * La seconde $H_1$ qui signifie que la variance est distribuée linéairement :
+
+$$H_1 : y_i = \alpha + \beta x_i + \gamma x_i + \epsilon_i , \, \, V(\epsilon_i) = \eta_1 + \eta_2 x_i + \eta_3 z_i + w_i$$
+
+Pour choisir entre ces 2 hypothèses on commence par calculer grâce à la MCO la formule ci-dessous : 
+
+$$\epsilon_i^2 = \eta_1 + \eta_2 x_i + \eta_3 z_i + w_i$$
+
+Ensuite on peut obtenir le coefficient de Brech-Pagan 
+
+$$BP = R^2 n$$
+
+On peut alors comparer la valeur optenue avec celle de la statistique du $\chi^2(K -1)$ pour un risque $\alpha$ où $K$ est le nombre de paramètres à estimer avec la MCO ci-dessus. Si le coefficient de Brech-Pagan est supérieur à celui du $\chi^2$ on rejette l'hypothèse $H_0$ sinon on l'accepte.
+
+__Code Python :__
+
+<code python>
+from statsmodels.compat import lzip
+import statsmodels.stats.api as sms
+
+name = ['Lagrange multiplier statistic', 'p-value',
+        'f-value', 'f p-value']
+test = sms.stats.diagnostic.het_breuschpagan(Regression_Lin.resid, Regression_Lin.model.exog)
+lzip(name, test)
+</code>
+
+__Code R :__
+
+<code python>
+library(lmtest)
+bptest(reg_lin)
+</code>
+
+<alert info>**Info :** On peut compléter ce test avec le test de White très ressemblant qui est moins fiable mais nous permet d'appuyer notre conclusion sur le premier test.</alert>
+
+**Sources :**
+  * [[https://fr.wikipedia.org/wiki/Test_de_Breusch-Pagan|Wikipédia]]
+  * [[https://econometrie.pagesperso-orange.fr/Chapitre%203/heteroscedasticite.pdf|Econométrie des séries chronologiques, Claudette Babusiaux]]
+
+
+====Test de Goldfeld-Quandt====
+
+Ce test a été formulé en 1965 pour l'appliquer il est nécessaire d'avoir un petit échantillon (inférieur à 100 individus) et avoir vérifier la normalité des résidus. On peut alors poser les 2 hypothèses qui définisse le test où $\sigma$ est l'écart type :
+
+$$H_0 : \sigma_t^2 = \sigma^2$$
+$$H_1 : \sigma_1^2 < \sigma_2^2 < \sigma_3^2 < ... < \sigma_n^2$$
+
+Pour décider entre ces deux hypothèses on suit 3 grandes étapes : 
+
+  * On commence par classer les observations celon une variable on prend généralement la variable cible
+  * On enlève un $\frac{1}{4}$ (choix arbitraire) des observations au milieu du dataset
+  * On entraîne ensuite 2 régressions linéaires, une sur chacune des parties
+
+On pourra ensuite posé 2 constantes qui nous permettrons de prendre une décision :
+
+$$RSS_1 = \epsilon_1^t \epsilon_1$$
+$$RSS_2 = \epsilon_2^t \epsilon_2$$
+
+Ensuite, on compare enfin le coefficient $\lambda = \frac{RSS_1}{RSS_2}$ à la loi de Fisher de paramètres $\frac{n - d}{2} - p - 1$ avec n le nombre d'observation, p le nombre de coefficient et d la portion soustraite dans notre cas 4 comme on a enlevé $\frac{1}{4}$. 
+
+Si il y a égalité on accepte $H_0$ sinon on rejette.
+
+__Code Python :__
+
+<code python>
+import statsmodels.stats.api as sms
+from statsmodels.compat import lzip
+
+name = ['F statistic', 'p-value']
+test = sms.het_goldfeldquandt(Regression_Lin.resid, Regression_Lin.model.exog)
+lzip(name, test)
+</code>
+
+__Code R :__
+
+<code python>
+library("lmtest")
+gqtest(Regression_Lin)
+</code>
+
+**Source :**
+  * [[https://fr.wikipedia.org/wiki/Test_de_Goldfeld_et_Quandt|Wikipédia]]
+  * [[https://sites.google.com/view/aide-python/statistiques/r%C3%A9gressions-lin%C3%A9aires-en-python| Google site]]
+  * [[https://www.statsmodels.org/dev/examples/notebooks/generated/regression_diagnostics.html| Stats Model]]

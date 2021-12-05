@@ -1,0 +1,1 @@
+tableau <span class="sy0">=</span> soup.<span class="me1">find_all</span><span class="br0">&#40;</span><span class="st0">'table'</span><span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>

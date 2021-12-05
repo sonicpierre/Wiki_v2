@@ -1,0 +1,19 @@
+<span class="kw1">function</span> <span class="br0">&#91;</span>m<span class="br0">&#93;</span> = dicho<span class="br0">&#40;</span>a,b,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a><span class="br0">&#41;</span>
+  <span class="kw1">if</span> <span class="br0">&#40;</span>TVI<span class="br0">&#40;</span>a,b<span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="kw1">while</span> <span class="br0">&#40;</span>b-a &gt;= <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/eps.html"><span class="kw2">eps</span></a><span class="br0">&#41;</span>
+        m=<span class="br0">&#40;</span>a+b<span class="br0">&#41;</span>/<span class="nu0">2</span>;
+        <span class="kw1">if</span> f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>*f<span class="br0">&#40;</span>m<span class="br0">&#41;</span>&lt;<span class="nu0">0</span>
+          b=m;
+        <span class="kw1">else</span>
+          a=m;
+        endif
+    endwhile
+  <span class="kw1">else</span> 
+    <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span><span class="co2">'TVI non applicable'</span><span class="br0">&#41;</span>
+    <span class="kw1">return</span> 
+  endif
+&nbsp;
+endfunction
+&nbsp;
+##Affichage
+<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span><span class="co2">'Le zéro de la fonction f sur [0;10] est:'</span><span class="br0">&#41;</span>,<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/disp.html"><span class="kw2">disp</span></a><span class="br0">&#40;</span>dicho<span class="br0">&#40;</span><span class="nu0">0</span>,<span class="nu0">10</span>,1e-12<span class="br0">&#41;</span><span class="br0">&#41;</span>

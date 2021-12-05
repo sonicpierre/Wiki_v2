@@ -1,0 +1,11 @@
+<span class="kw1">import</span> numpy <span class="kw1">as</span> np
+<span class="kw1">import</span> scipy.<span class="me1">stats</span> <span class="kw1">as</span> stats
+<span class="kw1">import</span> matplolib.<span class="me1">pyplot</span> <span class="kw1">as</span> plt 
+&nbsp;
+Regression_Lin.<span class="me1">resid</span>.<span class="me1">plot</span><span class="br0">&#40;</span>kind<span class="sy0">=</span><span class="st0">'density'</span><span class="sy0">,</span> linewidth<span class="sy0">=</span><span class="nu0">4</span><span class="sy0">,</span> fontsize<span class="sy0">=</span><span class="nu0">6</span><span class="sy0">,</span> label <span class="sy0">=</span> <span class="st0">&quot;Distribution résidus&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+mu <span class="sy0">=</span> <span class="nu0">0</span>
+variance <span class="sy0">=</span> <span class="nu0">1</span>
+sigma <span class="sy0">=</span> np.<span class="me1">sqrt</span><span class="br0">&#40;</span>variance<span class="br0">&#41;</span>
+x <span class="sy0">=</span> np.<span class="me1">linspace</span><span class="br0">&#40;</span>mu - <span class="nu0">10</span>*sigma<span class="sy0">,</span> mu + <span class="nu0">10</span>*sigma<span class="sy0">,</span> <span class="nu0">100</span><span class="br0">&#41;</span>
+plt.<span class="me1">plot</span><span class="br0">&#40;</span>x<span class="sy0">,</span> stats.<span class="me1">norm</span>.<span class="me1">pdf</span><span class="br0">&#40;</span>x<span class="sy0">,</span> mu<span class="sy0">,</span> sigma<span class="br0">&#41;</span><span class="sy0">,</span> label <span class="sy0">=</span> <span class="st0">&quot;Normal Distribution&quot;</span><span class="br0">&#41;</span>

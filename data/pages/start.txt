@@ -1,0 +1,61 @@
+{{ :logo.png?400 | Llamas'Partan}}
+\\
+Bienvenue sur notre site, <fc #ff0000>**rappelez-vous, malgré les apparences, les lamas trouvent toujours leur chemin dans la montagne.
+
+**</fc>
+  * [[cpp:Identite| Qui sommes-nous ?]]
+  * [[cpp:Charte d'écriture | Charte d'écriture]]
+
+====L'intelligence artificielle====
+
+{{ :intelligenceartificielle.jpg?500 | Intelligence Artificielle}}
+\\
+
+L'intelligence artificielle est un domaine en plein essor. Il est  nécessaire de se former pour savoir quand et comment proposer des solutions adaptées aux différentes problématiques. Les fiches Llamas'partan se veulent, avant tout, pratiques mais il est nécessaire d'avoir quelques bases en mathématiques.
+
+===Contenu traité dans plusieurs langages===
+
+  * [[cpp:IA| Machine Learning]]
+  * [[cpp:Natural Langage Processing | Natural Langage Processing]]
+  * [[cpp:Optimisation Linéaire| Optimisation]]
+
+===Divers===
+
+  * [[cpp:Sujets divers Mathématiques| Sujets divers]]
+
+====L'informatique par l'exemple====
+
+{{ :langagedeprog.jpeg?400 | Informatique}}
+\\
+Ici, vous n'apprendrez pas un langage de façon classique. Nous sommes partis du principe que l'apprentissage devait s'appuyer sur un support ludique pour être efficace et ce principe est développé [[https://www.codingame.com/start|ici]]. Nous y avons apporté notre patte en proposant, pour chaque chapitre, des solutions utilisant plusieurs technologies.
+
+===Contenu dans plusieurs langages===
+
+  * [[cpp:Jouer et coder| C++ et Java dans un jeu 2D]]
+  * [[cpp:Commande système| Commandes système]]
+
+===Divers===
+
+  * [[cpp:Sujets divers informatique| Sujets divers]]
+====Communication====
+
+{{ :communicationima.png?400 | Communication}}
+\\
+Apprendre à communiquer aujourd'hui est devenu une priorité pour les métiers scientifiques c'est pourquoi, dans cette section, nous traiterons des différentes façons d'y parvenir. Nous donnerons aussi des indications afin d'assurer avec succès la veille technologique qui reste une des parties cruciales du métier d'ingénieur.  
+
+  * [[cpp:Veille technologique | Veille Technologique]]
+====Travaux étudiants====
+
+{{ :travailetudiant.jpg?400 | Travaux étudiants}}
+\\
+Aujourd'hui, décrocher un stage ou un emploi dépend principalement de son réseau. Notre association a décidé de faire son possible pour endiguer ce système qui  désavantage beaucoup d'étudiants. Nous publierons tous les travaux jugés satisfaisants par un comité neutre.
+
+  * [[Livres de l'association | Livres de l'association]]
+  * [[Meilleurs travaux étudiants | Meilleur travaux étudiants]]
+  * [[cpp:Travaux DataJam/Hackathon | Travaux DataJam/Hackathon]]
+
+<color #ed1c24>N'hésitez pas à nous contacter si vous souhaitez participer en écrivant à llamas.partan@gmail.com.</color>
+
+**Ce projet a pu être lancé grâce à l'appel à projet de la CAF du 63 et nous les en remercions : **
+
+{{:caf_puy_de_dome.jpg?170 |}} {{ :projet-toi_logo12-25.jpg?200 |}}

@@ -1,0 +1,5 @@
+  <span class="kw1">public</span> <span class="kw1">override</span> <span class="kw4">void</span> _Ready<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#123;</span>
+  	animatedSprite <span class="sy0">=</span> <span class="br0">&#40;</span>AnimatedSprite<span class="br0">&#41;</span> GetNode<span class="br0">&#40;</span><span class="st0">&quot;AnimatedSprite&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+	collisionShape <span class="sy0">=</span> <span class="br0">&#40;</span>CollisionShape2D<span class="br0">&#41;</span> GetNode<span class="br0">&#40;</span><span class="st0">&quot;CollisionShape2D&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+	particle2D <span class="sy0">=</span> <span class="br0">&#40;</span>Particles2D<span class="br0">&#41;</span> GetNode<span class="br0">&#40;</span><span class="st0">&quot;Particles2D&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>

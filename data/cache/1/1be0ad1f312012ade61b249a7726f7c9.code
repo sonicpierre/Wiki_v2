@@ -1,0 +1,6 @@
+<span class="st0">&quot;&quot;&quot;
+np.dot &lt;=&gt; produit matrice-vecteur ou produit scalaire
+&quot;&quot;&quot;</span>
+<span class="co1">#Initialisation</span>
+r_old <span class="sy0">=</span> np.<span class="me1">dot</span><span class="br0">&#40;</span>A<span class="sy0">,</span> x<span class="br0">&#41;</span>-b
+p_old <span class="sy0">=</span> -r_old

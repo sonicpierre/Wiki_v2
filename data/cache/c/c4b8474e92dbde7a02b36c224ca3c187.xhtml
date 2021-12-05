@@ -1,0 +1,181 @@
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ales_distances&amp;media=cpp:mesurer.jpg" class="media" title="cpp:mesurer.jpg"><img src="/lib/exe/fetch.php?w=400&amp;tok=fad9d4&amp;media=cpp:mesurer.jpg" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<h2 class="sectionedit1" id="quelle_distance_choisir_en_machine_learning">Quelle distance choisir en Machine Learning ?</h2>
+<div class="level2">
+
+<p>
+Il est parfois nécessaire d&#039;adapter la distance pour calculer l&#039;éloignement aux centres de gravité. Il en existe plusieurs et nous allons décrire ici les principales.
+</p>
+<div class="table sectionedit2"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Manhattan et Euclidien  </th><th class="col1 centeralign">  Cosine et Euclidien  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  <a href="/lib/exe/detail.php?id=cpp%3Ales_distances&amp;media=cpp:manhattan_distance.svg.png" class="media" title="cpp:manhattan_distance.svg.png"><img src="/lib/exe/fetch.php?w=300&amp;tok=d35857&amp;media=cpp:manhattan_distance.svg.png" class="mediacenter" alt="" width="300" /></a>  </td><td class="col1 centeralign">  <a href="/lib/exe/detail.php?id=cpp%3Ales_distances&amp;media=cpp:cosine_euclidien.png" class="media" title="cpp:cosine_euclidien.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=3ad287&amp;media=cpp:cosine_euclidien.png" class="mediacenter" alt="" width="400" /></a>  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:2,&quot;range&quot;:&quot;258-400&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Quelle distance choisir en Machine Learning ?&quot;,&quot;hid&quot;:&quot;quelle_distance_choisir_en_machine_learning&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;30-401&quot;} -->
+<h3 class="sectionedit3" id="distance_euclidienne">Distance Euclidienne</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>Signification :</strong></span> Il s&#039;agit ici de la distance classique entre 2 points à vol d&#039;oiseau.</div>
+</li>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>Formule :</strong></span> $$\sum_{i=1}^{n} \sqrt{(x_{i} - y_{i})^2}$$</div>
+</li>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>Utilisation :</strong></span> Cette mesure est la plus utilisée car elle permet de gérer à la fois les valeurs faibles mais aussi les fortes valeurs.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Distance Euclidienne&quot;,&quot;hid&quot;:&quot;distance_euclidienne&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;402-802&quot;} -->
+<h3 class="sectionedit4" id="distance_manhattan">Distance Manhattan</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>Signification :</strong></span> Cette mesure est aussi appelé “distance en taxi”, il s&#039;agit de se déplacer d&#039;un point A à B en respectant un quadrillage. Vous remarquerez surement que quel que soit le chemin emprunter la distance sera la même (quand on va dans le sens inverse, on soustrait). </div>
+</li>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>Formule :</strong></span> $$\sum_{i=1}^{k=1}|x_{i}-y_{i}|$$</div>
+</li>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>Utilisation :</strong></span> Il est préférable d&#039;utiliser cette mesure quand vos vecteurs ont plus de 20 dimensions. De plus elle n&#039;accorde que peu d&#039;importance aux grandes variations entre les composantes d&#039;un vecteur.</div>
+</li>
+</ul>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://fr.wikipedia.org/wiki/Distance_de_Manhattan#/media/Fichier:Manhattan_distance.svg" class="urlextern" title="https://fr.wikipedia.org/wiki/Distance_de_Manhattan#/media/Fichier:Manhattan_distance.svg" rel="nofollow">https://fr.wikipedia.org/wiki/Distance_de_Manhattan#/media/Fichier:Manhattan_distance.svg</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://penseeartificielle.fr/choisir-distance-machine-learning/" class="urlextern" title="https://penseeartificielle.fr/choisir-distance-machine-learning/" rel="nofollow">https://penseeartificielle.fr/choisir-distance-machine-learning/</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Distance Manhattan&quot;,&quot;hid&quot;:&quot;distance_manhattan&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;803-1642&quot;} -->
+<h3 class="sectionedit5" id="distance_minkowski_tchebychev_et_fractionnaire">Distance Minkowski, Tchebychev et fractionnaire</h3>
+<div class="level3">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ales_distances&amp;media=cpp:mincowsky.png" class="media" title="cpp:mincowsky.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=eaa665&amp;media=cpp:mincowsky.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+<ul>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>Signification :</strong></span> Il s&#039;agit de généralisations des distances de Manhattan et Euclidienne. On a dessiné ci-dessus le cercle unitaire en utilisant la distance de Minkowsky en faisant varier le paramètre p. </div>
+</li>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>Formule :</strong></span>$$\sqrt[x]{\sum_{i=1}^{n} |x_{i} - y{i}|^x}$$</div>
+</li>
+</ul>
+
+<p>
+Toute la différence entre Minkowski, Tchebychev et fractionnaire est dans la définition du x :
+</p>
+<ul>
+<li class="level1"><div class="li"> Si x est égale à la dimension des vecteurs ($L^{x}$) alors il s&#039;agit de la distance de Minkowski</div>
+</li>
+<li class="level1"><div class="li"> Si x tend vers $+\infty$ alors il s&#039;agit de la distance de Tchebychev</div>
+</li>
+<li class="level1"><div class="li"> Si x vaut l&#039;inverse de la dimension du vecteur ($\frac{1}{p}$) alors il s&#039;agit de la distance fractionnaire</div>
+</li>
+</ul>
+
+<p>
+Il est intéressant de remarquer que si $x=1$ il s&#039;agit de la distance de Mannathan et si $x=2$ il s&#039;agit de la distance Euclidienne.
+<br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>Utilisation Minkowski et Tchebychev:</strong></span> On utilise ces distances quand on veut donner de l&#039;importance aux valeurs élevées par rapport aux autres.</div>
+</li>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>Utilisation distance fractionnaire:</strong></span> Cette mesure n&#039;est pas souvent utilisée, elle favorisera les données à valeur faibles. On remarquera aussi que dans les espaces au nombre de dimension élevé elle rend la convergence des algorithmes plus élevée. </div>
+</li>
+</ul>
+
+<p>
+<strong>Source </strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://fr.qwe.wiki/wiki/Minkowski_distance" class="urlextern" title="https://fr.qwe.wiki/wiki/Minkowski_distance" rel="nofollow">https://fr.qwe.wiki/wiki/Minkowski_distance</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Distance Minkowski, Tchebychev et fractionnaire&quot;,&quot;hid&quot;:&quot;distance_minkowski_tchebychev_et_fractionnaire&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;1643-3108&quot;} -->
+<h3 class="sectionedit6" id="distance_haversine">Distance Haversine</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>Signification :</strong></span> Cette distance est utilisée quand on veut savoir la distance entre deux points placés sur une sphère.</div>
+</li>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>Formule :</strong></span> $$d = 2r\, arcsin(\sqrt{hav(\varphi_{1} - \varphi_{2}) + cos(\varphi_{1})  cos(\varphi_{2}) hav(\lambda_{1} - \lambda_{2})})$$ </div>
+</li>
+</ul>
+<div class="table sectionedit7"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Théorie  </th><th class="col1 centeralign">  Signification  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  $\varphi_{1},\varphi_{2}$  </td><td class="col1 centeralign">  Longitude du point 1 et 2  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  $\lambda_{1},\lambda_{2}$  </td><td class="col1 centeralign">  Latitude du point 1 et 2  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  $r$  </td><td class="col1 centeralign">  Rayon de la sphère (Terre 6371 km)  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">  $hav(\theta)$  </td><td class="col1 centeralign">  $sin^{2}(\frac{\theta}{2})$  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:7,&quot;range&quot;:&quot;3459-3716&quot;} -->
+<p>
+La formule de harvesine est une généralisation de la trigonométrie sphérique.
+</p>
+<ul>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>Utilisation :</strong></span> Il est toujours intéressant d&#039;avoir une idée globale des distances entre les villes pour permettre des regroupements.</div>
+</li>
+</ul>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://fr.wikipedia.org/wiki/Formule_de_haversine" class="urlextern" title="https://fr.wikipedia.org/wiki/Formule_de_haversine" rel="nofollow">https://fr.wikipedia.org/wiki/Formule_de_haversine</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://pypi.org/project/haversine/" class="urlextern" title="https://pypi.org/project/haversine/" rel="nofollow">https://pypi.org/project/haversine/</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Distance Haversine&quot;,&quot;hid&quot;:&quot;distance_haversine&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;3109-4083&quot;} -->
+<h2 class="sectionedit8" id="quelle_distance_choisir_en_nlp">Quelle distance choisir en NLP ?</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Quelle distance choisir en NLP ?&quot;,&quot;hid&quot;:&quot;quelle_distance_choisir_en_nlp&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;4084-4127&quot;} -->
+<h3 class="sectionedit9" id="distance_cosine">Distance Cosine</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>Signification :</strong></span> Il s&#039;agit de calculer le cosinus de l&#039;angle entre les deux vecteurs grace aux formules de trigonométrie.</div>
+</li>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>Formule :</strong></span> $$\frac{\sum_{i=1}^{k} A_{i}B_{i}} {\sqrt{\sum_{i=1}^{k} A_{i}^2}\, \sqrt{\sum_{i=1}^{k} B_{i}^2}}$$</div>
+</li>
+<li class="level1"><div class="li"> <span style='color:#ed1c24; '><strong>Utilisation :</strong></span> Cette distance est souvent utilisée en Natural Langage Processing. Elle permet entre autre de comparer le nombre d&#039;apparition d&#039;un mot dans deux textes sans se soucier des différences de taille.</div>
+</li>
+</ul>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://cmry.github.io/notes/euclidean-v-cosine" class="urlextern" title="https://cmry.github.io/notes/euclidean-v-cosine" rel="nofollow">https://cmry.github.io/notes/euclidean-v-cosine</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Distance Cosine&quot;,&quot;hid&quot;:&quot;distance_cosine&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:9,&quot;range&quot;:&quot;4128-&quot;} -->

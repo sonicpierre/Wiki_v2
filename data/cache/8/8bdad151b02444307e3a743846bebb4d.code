@@ -1,0 +1,2 @@
+<span class="co1"># Convertir le texte en minuscule</span>
+docs <span class="sy0">&lt;</span>- tm_map<span class="br0">&#40;</span>docs<span class="sy0">,</span> content_transformer<span class="br0">&#40;</span>tolower<span class="br0">&#41;</span><span class="br0">&#41;</span>

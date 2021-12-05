@@ -1,0 +1,259 @@
+
+<p>
+<a href="/doku.php?id=cpp:simplexe" class="wikilink1" title="cpp:simplexe">Méthode du simplexe</a>
+</p>
+
+<p>
+Je vous ai dit un peu plus tôt dans le cours que la méthode du simplexe consiste à itérer de sommet en sommet en partant de l&#039;origine jusqu&#039;à ce qu&#039;on trouve le sommet optimal. Seulement voilà : je suis parti du principe que l&#039;origine se trouvait dans le domaine des contraintes mais ce n&#039;est pas forcément le cas.
+</p>
+
+<p>
+Considérons le problème d&#039;optimisation suivant :
+</p>
+<p class="divalign-center">$\begin{cases} \underset{x}{max}(x_1+2x_2) \\ -x_1+3x_2 \ge 10 \\ 5x_1-4x_2 \ge 1 \\ -3x_1+x_2 \ge -1 \\ x_1,x_2 \ge 0\end{cases}$</p><!--divalign-->
+
+<p>
+Comme vous pouvez le voir, $(0,0)$ ne fait pas partie du domaine des contraintes :
+</p>
+<p class="divalign-center"><a href="/lib/exe/detail.php?id=cpp%3Asimplexephase&amp;media=cpp:grapheoptiphase.png" class="media" title="cpp:grapheoptiphase.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=ca16fe&amp;media=cpp:grapheoptiphase.png" class="media" alt="" width="400" /></a></p><!--divalign-->
+
+<h2 class="sectionedit1" id="le_probleme_auxiliaire">Le problème auxiliaire</h2>
+<div class="level2">
+
+<p>
+Nous allons résoudre un problème auxiliaire au problème actuel pour générer un sommet dans le domaine des contraintes qui nous servira de départ pour la méthode des tableaux classique. Ainsi, un problème de forme
+</p>
+<p class="divalign-center">$\begin{cases} \underset{x}{max}(c|x) \\ Ax \le b, x \ge 0 \end{cases}$</p><!--divalign-->
+
+<p>
+devient :
+</p>
+<p class="divalign-center">$\begin{cases} \underset{x}{max}(0|x)-\delta \\ Ax-\delta e \le b \\ x,\delta \ge 0 \end{cases}$</p><!--divalign-->
+
+<p>
+avec $e$ vecteur unité
+</p>
+
+<p>
+Notre problème du début devient alors :
+</p>
+<p class="divalign-center">$\begin{cases} \underset{x}{max}(0x_1+0x_2-\delta) \\ -x_1+3x_2-\delta \ge 10 \\ 5x_1-4x_2-\delta \ge 1 \\ -3x_1+x_2-\delta \ge -1 \\ x_1,x_2,\delta \ge 0\end{cases}$</p><!--divalign-->
+<div class="table sectionedit2"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $\delta$  </th><th class="col4 centeralign">  $y_1$  </th><th class="col5 centeralign">  $y_2$  </th><th class="col6 centeralign">  $y_3$  </th><td class="col7"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  0  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  -1  </td><td class="col2 centeralign">  3  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  10  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  5  </td><td class="col2 centeralign">  -4  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  1  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  -3  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  1  </td><td class="col7 centeralign">  -1  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:2,&quot;range&quot;:&quot;1373-1664&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le probl\u00e8me auxiliaire&quot;,&quot;hid&quot;:&quot;le_probleme_auxiliaire&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;679-1665&quot;} -->
+<h2 class="sectionedit3" id="premiere_phase">Première phase</h2>
+<div class="level2">
+
+<p>
+On résout le problème presque comme on en a l&#039;habitude avec la méthode des tableaux.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Premi\u00e8re phase&quot;,&quot;hid&quot;:&quot;premiere_phase&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;1666-1781&quot;} -->
+<h3 class="sectionedit4" id="choix_de_la_variable_entrante">Choix de la variable entrante</h3>
+<div class="level3">
+
+<p>
+Il ne vous aura pas échappé que toutes les variables de la première ligne sont négatives ou nulles. Lors de la première, la variable <strong>entrante</strong> est <strong>toujours</strong> $\delta$.
+</p>
+<div class="table sectionedit5"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  <span style="color:#ff0000;">$\delta$</span>  </th><th class="col4 centeralign">  $y_1$  </th><th class="col5 centeralign">  $y_2$  </th><th class="col6 centeralign">  $y_3$  </th><td class="col7"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  0  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  -1  </td><td class="col2 centeralign">  3  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  10  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  5  </td><td class="col2 centeralign">  -4  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  1  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $y_3$  </th><td class="col1 centeralign">  -3  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  1  </td><td class="col7 centeralign">  -1  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:5,&quot;range&quot;:&quot;1999-2307&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Choix de la variable entrante&quot;,&quot;hid&quot;:&quot;choix_de_la_variable_entrante&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;1782-2308&quot;} -->
+<h3 class="sectionedit6" id="choix_de_la_variable_sortante">Choix de la variable sortante</h3>
+<div class="level3">
+
+<p>
+On prend comme variable sortante la plus petite variable de la dernière colonne.
+</p>
+<div class="table sectionedit7"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $\delta$  </th><th class="col4 centeralign">  $y_1$  </th><th class="col5 centeralign">  $y_2$  </th><th class="col6 centeralign">  $y_3$  </th><td class="col7"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  0  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  -1  </td><td class="col2 centeralign">  3  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  10  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  5  </td><td class="col2 centeralign">  -4  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  1  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  <span style="color:#ff0000;">$\delta$</span>  </th><td class="col1 centeralign">  -3  </td><td class="col2 centeralign">  1  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  1  </td><td class="col7 centeralign">  <span style="color:#ff0000;">-1</span>  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table2&quot;,&quot;secid&quot;:7,&quot;range&quot;:&quot;2430-2758&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Choix de la variable sortante&quot;,&quot;hid&quot;:&quot;choix_de_la_variable_sortante&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;2309-2759&quot;} -->
+<h3 class="sectionedit8" id="le_coefficient_principal">Le coefficient principal</h3>
+<div class="level3">
+
+<p>
+On ramène le coefficient principal à 1.
+</p>
+
+<p>
+$L_3=-1*L_3$
+</p>
+<div class="table sectionedit9"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $\delta$  </th><th class="col4 centeralign">  $y_1$  </th><th class="col5 centeralign">  $y_2$  </th><th class="col6 centeralign">  $y_3$  </th><td class="col7"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  0  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  -1  </td><td class="col2 centeralign">  3  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  10  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  5  </td><td class="col2 centeralign">  -4  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  1  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $\delta$  </th><td class="col1 centeralign">  <span style="color:#ff0000;">3</span>  </td><td class="col2 centeralign">  <span style="color:#ff0000;">-1</span>  </td><td class="col3 centeralign">  <span style="color:#ff0000;">1</span>  </td><td class="col4 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col5 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col6 centeralign">  <span style="color:#ff0000;">-1</span>  </td><td class="col7 centeralign">  <span style="color:#ff0000;">1</span>  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table3&quot;,&quot;secid&quot;:9,&quot;range&quot;:&quot;2850-3262&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le coefficient principal&quot;,&quot;hid&quot;:&quot;le_coefficient_principal&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;2760-3263&quot;} -->
+<h3 class="sectionedit10" id="les_coefficients_secondaires">Les coefficients secondaires</h3>
+<div class="level3">
+
+<p>
+On ramène les coefficients secondaires à 0.
+</p>
+
+<p>
+$L_f=L_f+L_3$
+</p>
+
+<p>
+$L_1=L_1+L_3$
+</p>
+
+<p>
+$L_2=L_2+L_3$
+</p>
+<div class="table sectionedit11"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $\delta$  </th><th class="col4 centeralign">  $y_1$  </th><th class="col5 centeralign">  $y_2$  </th><th class="col6 centeralign">  $y_3$  </th><td class="col7"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  <span style="color:#ff0000;">3</span>  </td><td class="col2 centeralign">  <span style="color:#ff0000;">-1</span>  </td><td class="col3 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col4 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col5 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col6 centeralign">  <span style="color:#ff0000;">-1</span>  </td><td class="col7 centeralign">  <span style="color:#ff0000;">1</span>  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  <span style="color:#ff0000;">2</span>  </td><td class="col2 centeralign">  <span style="color:#ff0000;">2</span>  </td><td class="col3 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col4 centeralign">  <span style="color:#ff0000;">1</span>  </td><td class="col5 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col6 centeralign">  <span style="color:#ff0000;">-1</span>  </td><td class="col7 centeralign">  <span style="color:#ff0000;">11</span>  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  <span style="color:#ff0000;">8</span>  </td><td class="col2 centeralign">  <span style="color:#ff0000;">-5</span>  </td><td class="col3 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col4 centeralign">  <span style="color:#ff0000;">0</span>  </td><td class="col5 centeralign">  <span style="color:#ff0000;">1</span>  </td><td class="col6 centeralign">  <span style="color:#ff0000;">-1</span>  </td><td class="col7 centeralign">  <span style="color:#ff0000;">2</span>  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $\delta$  </th><td class="col1 centeralign">  3  </td><td class="col2 centeralign">  -1  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  -1  </td><td class="col7 centeralign">  1  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table4&quot;,&quot;secid&quot;:11,&quot;range&quot;:&quot;3393-4043&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les coefficients secondaires&quot;,&quot;hid&quot;:&quot;les_coefficients_secondaires&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:10,&quot;range&quot;:&quot;3264-4044&quot;} -->
+<h3 class="sectionedit12" id="seconde_iteration">Seconde itération</h3>
+<div class="level3">
+
+<p>
+On recommence en prenant cette fois comme variable <strong>sortante</strong> <strong>toujours</strong> $\delta$
+</p>
+
+<p>
+Choix des la variables entrante et sortante :
+</p>
+<div class="table sectionedit13"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  <span style="color:#ff0000;">$x_1$</span>  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $\delta$  </th><th class="col4 centeralign">  $y_1$  </th><th class="col5 centeralign">  $y_2$  </th><th class="col6 centeralign">  $y_3$  </th><td class="col7"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  3  </td><td class="col2 centeralign">  -1  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  -1  </td><td class="col7 centeralign">  1  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  2  </td><td class="col2 centeralign">  2  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  -1  </td><td class="col7 centeralign">  11  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  8  </td><td class="col2 centeralign">  -5  </td><td class="col3 centeralign">  0  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  -1  </td><td class="col7 centeralign">  2  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  <span style="color:#ff0000;">$\delta$</span>  </th><td class="col1 centeralign">  3  </td><td class="col2 centeralign">  -1  </td><td class="col3 centeralign">  1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  -1  </td><td class="col7 centeralign">  1  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table5&quot;,&quot;secid&quot;:13,&quot;range&quot;:&quot;4206-4533&quot;} -->
+<p>
+On ramène le coefficient principal à 1 et les coefficients secondaires à 0 :
+</p>
+<div class="table sectionedit14"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 centeralign">  $x_1$  </th><th class="col2 centeralign">  $x_2$  </th><th class="col3 centeralign">  $\delta$  </th><th class="col4 centeralign">  $y_1$  </th><th class="col5 centeralign">  $y_2$  </th><th class="col6 centeralign">  $y_3$  </th><td class="col7"> </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 centeralign">  $f$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  0  </td><td class="col3 centeralign">  -1  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  0  </td><td class="col7 centeralign">  <span style="color:#008000;">0</span>  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  $y_1$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  $\frac{8}{3}$  </td><td class="col3 centeralign">  -$\frac{2}{3}$  </td><td class="col4 centeralign">  1  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  -$\frac{1}{3}$  </td><td class="col7 centeralign">  $\frac{31}{3}$  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  $y_2$  </th><td class="col1 centeralign">  0  </td><td class="col2 centeralign">  -$\frac{7}{3}$  </td><td class="col3 centeralign">  -$\frac{8}{3}$  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  1  </td><td class="col6 centeralign">  $\frac{5}{3}$  </td><td class="col7 centeralign">  -$\frac{2}{3}$  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 centeralign">  $x_1$  </th><td class="col1 centeralign">  1  </td><td class="col2 centeralign">  -$\frac{1}{3}$  </td><td class="col3 centeralign">  $\frac{1}{3}$  </td><td class="col4 centeralign">  0  </td><td class="col5 centeralign">  0  </td><td class="col6 centeralign">  -$\frac{1}{3}$  </td><td class="col7 centeralign">  $\frac{1}{3}$  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table6&quot;,&quot;secid&quot;:14,&quot;range&quot;:&quot;4616-5068&quot;} -->
+<p>
+Deux cas se présentent alors en fonction de la valeur de l&#039;optimum du problème auxiliaire (en vert) :
+</p>
+<ul>
+<li class="level1"><div class="li">  il est nul et on peut passer à la seconde phase</div>
+</li>
+<li class="level1"><div class="li">  il est strictement positif et le problème n&#039;admet pas d&#039;optimum</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Seconde it\u00e9ration&quot;,&quot;hid&quot;:&quot;seconde_iteration&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:12,&quot;range&quot;:&quot;4045-5298&quot;} -->
+<h2 class="sectionedit15" id="seconde_phase">Seconde phase</h2>
+<div class="level2">
+
+<p>
+On commence par retirer la colonne de $\delta$
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Seconde phase&quot;,&quot;hid&quot;:&quot;seconde_phase&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:15,&quot;range&quot;:&quot;5299-&quot;} -->

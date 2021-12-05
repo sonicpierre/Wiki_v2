@@ -1,0 +1,10 @@
+data <span class="sy0">=</span> pd.<span class="me1">read_csv</span><span class="br0">&#40;</span><span class="st0">&quot;multiTimeline.csv&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#On récupère la taille du tableau lu pour connaître la longueur de l'index à créer</span>
+nb_element <span class="sy0">=</span> data.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+&nbsp;
+<span class="co1">#On génère l'index</span>
+index <span class="sy0">=</span> pd.<span class="me1">date_range</span><span class="br0">&#40;</span>start <span class="sy0">=</span><span class="st0">'2020-02-16'</span><span class="sy0">,</span> periods<span class="sy0">=</span> nb_element<span class="sy0">,</span> freq <span class="sy0">=</span> <span class="st0">&quot;W&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#On crée le dataFrame</span>
+data.<span class="me1">index</span> <span class="sy0">=</span> index

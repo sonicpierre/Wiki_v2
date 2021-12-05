@@ -1,0 +1,7 @@
+texte <span class="sy0">=</span> soup.<span class="me1">find</span><span class="br0">&#40;</span><span class="st0">&quot;div&quot;</span><span class="sy0">,</span> <span class="br0">&#123;</span><span class="st0">&quot;class&quot;</span>: <span class="st0">&quot;mw-parser-output&quot;</span><span class="br0">&#125;</span><span class="br0">&#41;</span> <span class="co1">#Premier traitement</span>
+texte.<span class="me1">p</span> <span class="co1">#On refait une sélection derrière</span>
+<span class="co1">#Resultat : &lt;p&gt;Vous pouvez partager vos connaissances en l’améliorant... &lt;/p&gt;</span>
+texte.<span class="me1">p</span>.<span class="me1">text</span> <span class="co1">#Permet d'enlever le format html</span>
+<span class="co1">#Resultat : 'Vous pouvez partager vos connaissances en l’améliorant (comment\xa0?) selon</span>
+texte.<span class="me1">replace</span><span class="br0">&#40;</span>u<span class="st0">'<span class="es0">\x</span>a0'</span><span class="sy0">,</span> u<span class="st0">' '</span><span class="br0">&#41;</span> <span class="co1">#Va permettre d'enlever les \xa0</span>
+<span class="co1">#Resultat : 'Vous pouvez partager vos connaissances en l’améliorant (comment ?) selon les</span>

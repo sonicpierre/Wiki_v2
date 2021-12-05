@@ -1,0 +1,5 @@
+function <span class="br0">&#91;</span>Resultat<span class="br0">&#93;</span> <span class="sy0">=</span> maFonction<span class="br0">&#40;</span>x<span class="sy0">,</span>y<span class="br0">&#41;</span>
+  <span class="kw1">for</span> i <span class="sy0">=</span> <span class="nu0">1</span>:y
+  disp<span class="br0">&#40;</span><span class="st0">&quot;Auvergne&quot;</span><span class="br0">&#41;</span>
+  end
+  endfunction

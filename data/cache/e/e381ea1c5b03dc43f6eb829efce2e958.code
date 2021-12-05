@@ -1,0 +1,5 @@
+<span class="kw1">import</span> matplotlib.<span class="me1">pyplot</span> <span class="kw1">as</span> plt
+<span class="kw1">import</span> seaborn <span class="kw1">as</span> sns
+&nbsp;
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">5</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1"># Défini la taille du graphique</span>
+sns.<span class="me1">heatmap</span><span class="br0">&#40;</span>X.<span class="me1">corr</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1"># Création du graphique</span>

@@ -1,0 +1,2 @@
+<span class="co1"># Text stemming</span>
+docs <span class="sy0">&lt;</span>- tm_map<span class="br0">&#40;</span>docs<span class="sy0">,</span> stemDocument<span class="br0">&#41;</span>

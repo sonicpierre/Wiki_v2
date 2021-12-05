@@ -1,0 +1,20 @@
+<span class="kw1">from</span> scipy <span class="kw1">import</span> optimize
+<span class="kw1">import</span> matplotlib.<span class="me1">pyplot</span> <span class="kw1">as</span> plt
+&nbsp;
+&nbsp;
+__En Matlab:__
+\\
+<span class="sy0">&lt;</span><span class="kw3">code</span> matlab<span class="sy0">&gt;</span>
+function <span class="br0">&#91;</span>x<span class="br0">&#93;</span> <span class="sy0">=</span> newton<span class="br0">&#40;</span>x<span class="br0">&#41;</span>
+  eps<span class="sy0">=</span><span class="nu0">10</span>^<span class="br0">&#40;</span>-<span class="nu0">12</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  dif<span class="sy0">=</span><span class="nu0">2</span>*eps<span class="sy0">;</span>
+  x1 <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span>
+  <span class="kw1">while</span> <span class="kw2">abs</span><span class="br0">&#40;</span>dif<span class="br0">&#41;</span><span class="sy0">&gt;</span>eps 
+      x1<span class="sy0">=</span>x-f<span class="br0">&#40;</span>x<span class="br0">&#41;</span>/df<span class="br0">&#40;</span>x<span class="br0">&#41;</span><span class="sy0">;</span>
+      dif<span class="sy0">=</span><span class="kw2">abs</span><span class="br0">&#40;</span>x1-x<span class="br0">&#41;</span><span class="sy0">;</span>
+      x<span class="sy0">=</span> x1<span class="sy0">;</span>
+  end
+endfunction
+&nbsp;
+<span class="co1">#Affichage</span>
+disp<span class="br0">&#40;</span><span class="br0">&#91;</span><span class="st0">' La solution en partant de x0=10 est : '</span><span class="sy0">,</span> num2str<span class="br0">&#40;</span>newton<span class="br0">&#40;</span><span class="nu0">10</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>

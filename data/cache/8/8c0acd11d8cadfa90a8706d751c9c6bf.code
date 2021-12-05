@@ -1,0 +1,1 @@
+tableauDeBoolean <span class="sy0">=</span> data.<span class="me1">price</span> <span class="sy0">&gt;</span> <span class="nu0">450000</span> <span class="co1">#On regarde les appartements supérieurs à 450000</span>

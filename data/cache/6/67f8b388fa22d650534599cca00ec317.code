@@ -1,0 +1,1 @@
+X_decompressed <span class="sy0">=</span> X_proj.<span class="me1">dot</span><span class="br0">&#40;</span>X_d.<span class="me1">T</span><span class="br0">&#41;</span><span class="co1">#Produit matriciel d'inversion de la méthode ACP</span>

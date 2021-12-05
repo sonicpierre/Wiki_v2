@@ -1,0 +1,7 @@
+library<span class="br0">&#40;</span>gbm<span class="br0">&#41;</span>
+<span class="co1">#Notez qu'il est nécessaire d'encoder la sortie pour appliquer cette algorithme</span>
+data$V61 <span class="sy0">&lt;</span>- ifelse<span class="br0">&#40;</span>data$V61 <span class="sy0">==</span> <span class="st0">&quot;R&quot;</span><span class="sy0">,</span> <span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">0</span><span class="br0">&#41;</span>
+gbm_mod <span class="sy0">&lt;</span>- gbm<span class="br0">&#40;</span>formula <span class="sy0">=</span> V61 <span class="sy0">~</span> .<span class="sy0">,</span>
+                  data <span class="sy0">=</span> data<span class="sy0">,</span>
+                  n.<span class="me1">trees</span> <span class="sy0">=</span> <span class="nu0">3</span><span class="sy0">,</span>
+                  interaction.<span class="me1">depth</span> <span class="sy0">=</span> <span class="nu0">2</span><span class="br0">&#41;</span>

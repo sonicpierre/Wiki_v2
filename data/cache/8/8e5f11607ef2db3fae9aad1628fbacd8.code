@@ -1,0 +1,10 @@
+<span class="kw1">def</span> NewtonsMethod<span class="br0">&#40;</span>x<span class="sy0">,</span> epsilon<span class="br0">&#41;</span>:
+    dif <span class="sy0">=</span> <span class="nu0">2</span>*epsilon <span class="co1">#initialisation de la variable difference</span>
+    <span class="kw1">while</span> <span class="br0">&#40;</span>dif <span class="sy0">&gt;</span> epsilon<span class="br0">&#41;</span> :
+        x1 <span class="sy0">=</span> x - fonction<span class="br0">&#40;</span>x<span class="br0">&#41;</span> / derivee<span class="br0">&#40;</span>x<span class="br0">&#41;</span><span class="co1">#calcul recursif du prochain point</span>
+        dif <span class="sy0">=</span> <span class="kw2">abs</span><span class="br0">&#40;</span>x1 - x<span class="br0">&#41;</span>
+        x <span class="sy0">=</span> x1
+    <span class="kw1">return</span> x
+&nbsp;
+<span class="co1">#Affichage</span>
+<span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;Solution:&quot;</span> NewtonsMethod<span class="br0">&#40;</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">1e-12</span><span class="br0">&#41;</span><span class="br0">&#41;</span>

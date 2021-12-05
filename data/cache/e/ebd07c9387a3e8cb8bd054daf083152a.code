@@ -1,0 +1,18 @@
+derivee <span class="sy0">=</span><span class="kw1">lambda</span> x:  <span class="nu0">2</span>*x**<span class="nu0">2</span>
+&nbsp;
+<span class="kw1">def</span> NewtonsMethod<span class="br0">&#40;</span> x<span class="sy0">,</span> epsilon<span class="sy0">=</span><span class="nu0">0.000001</span><span class="br0">&#41;</span>:
+    n <span class="sy0">=</span> <span class="nu0">0</span> <span class="co1">#initialisation du nombre d'itérations</span>
+    dif <span class="sy0">=</span> <span class="nu0">2</span>*epsilon <span class="co1">#initialisation de la variable difference</span>
+    <span class="kw1">while</span> <span class="br0">&#40;</span>dif <span class="sy0">&gt;</span> epsilon<span class="br0">&#41;</span> :
+        x1 <span class="sy0">=</span> x - fonction<span class="br0">&#40;</span>x<span class="br0">&#41;</span> / derivee<span class="br0">&#40;</span>x<span class="br0">&#41;</span><span class="co1">#calcul recursif du prochain point</span>
+        dif <span class="sy0">=</span> <span class="kw2">abs</span><span class="br0">&#40;</span>x1 - x<span class="br0">&#41;</span>
+        x <span class="sy0">=</span> x1
+        n <span class="sy0">=</span> n+<span class="nu0">1</span> <span class="co1">#nombre d'itérations: +1</span>
+    <span class="kw1">return</span> <span class="br0">&#40;</span>x<span class="sy0">,</span> n<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># Programme principal</span>
+x  <span class="sy0">=</span> <span class="nu0">10</span> <span class="co1">#Valeur départ</span>
+<span class="br0">&#40;</span>x<span class="sy0">,</span>n<span class="br0">&#41;</span> <span class="sy0">=</span> NewtonsMethod<span class="br0">&#40;</span>x<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Affichage</span>
+<span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">'Solution : x=%f, Nombre ditérations: n=%d'</span> % <span class="br0">&#40;</span>x<span class="sy0">,</span> n<span class="br0">&#41;</span> <span class="br0">&#41;</span>

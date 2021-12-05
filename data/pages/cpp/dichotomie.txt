@@ -1,0 +1,224 @@
+{{ :cpp:scier.jpg?500 |}}
+
+La dichotomie est une des méthodes les plus connues en optimisation, nous allons détailler ici l'implémentation de son algorithme normal et récursif en les commentant. 
+
+=====Déclarer la fonction à traiter=====
+
+Commençons par déclarer la fonction ce qui nous permettra de la manipuler et de travailler avec.
+
+__En Python :__
+
+<code python>
+# Definition fonction
+f = lambda x: x**2 - 10
+
+</code>
+
+__En Matlab :__
+
+<code matlab>
+f=inline('x.*x -10;'); %definition de la fonction
+</code>
+
+**Résultat :**
+
+{{ :cpp:fonctioaoptimiser.png?400 |}}
+=====La dichotomie=====
+
+Vous cherchez la fève dans la galette des rois et cette année vous avez décidé de maximiser vos chances en utilisant les mathématiques. Précisons aussi que, depuis votre naissance, vous avez la capacité de  pressentir dans quelle moitié de la galette se trouve la fève.
+
+Vous ne voulez pas, bien évidemment, abîmer le gâteau pour que votre belle-mère ait sa part. Une technique simple pour obtenir ce résultat est de couper le gâteau en deux et de sélectionner la moitié qui contient la fève. Oubliez ensuite la partie sans fève  et recoupez la partie qui vous intéresse en deux. En réitérant ce procédé, vous serez sûr d'arriver rapidement à trouver la part de galette qui contient la fève, sans avoir à saccager toute la galette. 
+====Théorie====
+
+{{ :cpp:zeromod.png?direct&300 |}}
+
+En fait, on recherche  le zéro de notre fonction (la fève), sur un intervalle réel (la galette) sans le parcourir en entier. Pour cela, on divise l'intervalle en deux à chaque itération (coups de couteau) et on ne garde que le sous-intervalle contenant notre zéro. Cet algorithme s'appuie directement sur le [[https://fr.wikipedia.org/wiki/Th%C3%A9or%C3%A8me_des_valeurs_interm%C3%A9diaires|théorème des valeurs intermédiaires]]. 
+
+<alert info>**Info :** le théorème des valeurs intermédiaires n'est applicable que pour les fonctions continues sur [$a$;$b$]. Pour s'assurer facilement de la continuité d'une fonction, on peut vérifier si elle est dérivale sur un intervalle.</alert>
+
+**Algorithme associé :**
+
+<code>
+Précondition : il existe un unique m, zéro de la fonction f, sur l'intervalle [a,b]
+Postcondition : la fonction doit renvoyer ce zéro avec une précision epsilon
+
+Si f(a) * f(b) > 0 alors  //TVI non applicable
+    Retourner None
+ Fin Si
+Tant que (b - a) > ε 
+    m ← (a + b) / 2
+    Si (f(a)*f(m) ≤ 0) alors
+       b ← m
+    sinon
+       a ← m
+    Fin Si
+ Fin Tant que
+</code>
+
+__**Source**__: 
+[[https://fr.wikipedia.org/wiki/M%C3%A9thode_de_dichotomie#:~:text=La%20m%C3%A9thode%20de%20dichotomie%20ou,un%20z%C3%A9ro%20de%20la%20fonction.|Algorithme dichotomie wikipedia]]
+
+====Dichotomie classique====
+
+__**Rappels:**__
+| Variable^  Signification  ^
+|     a    |       borne inférieure     |
+|        b    |    borne supérieure  |
+|        w   |   nouvelle borne, moyenne des deux anciennes bornes  |
+|        $\epsilon$    |     précision   |
+
+===Vérifier la condition du TVI===
+
+Avant toute chose, codons une fonction qui permet de vérifier si les conditions du TVI sont respectées :
+
+__En Python:__
+
+<code python>
+def TVI(f, a, b):
+    return (f(a)*f(b)<=0)
+</code>
+
+__En Matlab:__
+
+<code matlab>
+function [y] = TVI(a, b)
+  y = (f(a).*f(b) <=0);
+endfunction
+</code>
+
+===Corps de l'algorithme===
+
+Maintenant que nous avons tous les outils, nous pouvons commencer à traduire le corps de l'algorithme :
+
+__En Python :__
+
+<code python>    
+def dicho(f, a, b, epsilon):
+    if (not TVI(f, a, b)): #TVI non applicable
+        return None
+    else:
+        u, v = float(a), float(b) #transforme a et b en réels
+        while abs(v - u) > 2 * epsilon:
+            w = (u + v) / 2
+            if f(u) * f(w) <= 0:
+                v = w
+            else:
+                u = w
+        return (u + v) / 2
+    print("La valeur du zéro de cette fonction sur (-10,10) à 1e-3 pret est:",dicho(f,0,10, 1e-3))
+   
+</code>
+
+
+__En Matlab:__
+
+<code matlab>
+function [m] = dicho(a,b,eps)
+  if (TVI(a,b))
+    while (b-a >= eps)
+        m=(a+b)/2;
+        if f(a)*f(m)<0
+          b=m;
+        else
+          a=m;
+        endif
+    endwhile
+  else 
+    disp('TVI non applicable')
+    return 
+  endif
+ 
+endfunction
+
+##Affichage
+disp('Le zéro de la fonction f sur [0;10] est:'),disp(dicho(0,10,1e-12))
+
+</code>
+
+ **Résultats :**
+
+Chaque trait représente la séparation en 2 parties égales de l'intervalle (historique des itérations une par couleur).
+
+{{ :cpp:resultatdico.png?600 |}}
+
+|              ^ Temps d'exécution                  ^ Complexité          ^ Nombre d'itérations ^
+^ Dichotomie Classique      |          0.23 secondes           |                logarithmique ($log_2(b-a))$               |                 42 (pour a=0, b=10)                    |
+====Dichotomie récursive====
+\\
+{{ :cpp:recursif.jpg?350 |}}
+
+On appelle fonction récursive toute fonction qui s'appelle elle-même au moins une fois. Même si la récursivité complexifie parfois la compréhension d'un algorithme, elle peut le rendre plus efficace et plus rapide. Pour les algorithmes de tri, on remarque que les tris récursifs sont plus efficaces que les tris  "normaux".
+
+**Source :**
+  * https://www.lucaswillems.com/fr/articles/17/recursivite-accelerer-algorithmes
+
+**Algorithme associé :**
+
+<code>
+Précondition : il existe un unique c, zéro de la fonction f, sur l'intervalle [a,b]
+Postcondition : la fonction doit renvoyer ce zéro avec une précision prec (ou epsilon)
+
+Fonction dicho_rec(Entrée fonction f,entrée:sortie entier borne_a, entree/sortie entier borne_b,entrée entier prec):
+    
+    Variable
+        entier c //milieu de a et b
+    Début
+        Si borne_b-borne_a<=prec faire
+            (borne_a+borne_b)/2 -> dicho_rec
+        Sinon
+            (borne_a+borne_b)/2-> c
+        Fin Si
+        
+        Si f(borne_a)*f(c) <= 0
+           dicho_rec(f,borne_a,c,prec)-> dicho_rec
+        Sinon
+           dicho_rec(f,c,borne_b,prec) -> dicho_rec
+        Fin Si
+    Fin
+</code>
+\\
+__En Python :__
+
+<code python>    
+def dicho_rec(f,a, b,prec):
+    a, b = float(a), float(b) #convertion bornes a et b  en réels
+    if b-a<=prec: #condition d'arret
+        return (a+b)/2
+    else:
+        c = (a+b)/2
+
+    if f(a)*f(c) <= 0: #si on peut appliquer le TVI entre a et c, c remplace b
+        return dicho_rec(f,a,c,prec)
+    else: #sinon c remplace a
+        return dicho_rec(f,c,b,prec)
+# Résultats
+print("La valeur du zéro de cette fonction sur (a,b) est:", dicho_rec(f,0,10,1e-12))
+</code>
+
+__En Matlab :__
+<code matlab>
+#Fonction:
+function [y]= dicho_rec(a,b, eps)
+  
+  c=0;
+  if (b-a<eps)
+    y=(a+b)./2;
+  else
+    c = (a+b)./2;
+  endif
+  
+  if (f(a).*f(c)<0)
+    y = dicho_rec(a,c, eps);
+  else 
+    y = dicho_rec(c,b, eps);
+  endif
+  
+endfunction
+
+resultat = dicho(1,10,1e-12);
+disp('racine'),disp(resultat)
+
+</code>
+\\
+|              ^ Temps d'exécution                  ^ Complexité          ^ Nombre d'itérations ^
+^ Dichotomie Récursive     |          0.0017 secondes           |                logarithmique ($log_2(b-a))$               |                 42 (pour a=0, b=10)                    |

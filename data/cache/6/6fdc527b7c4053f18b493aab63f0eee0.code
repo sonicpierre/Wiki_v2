@@ -1,0 +1,3 @@
+library<span class="br0">&#40;</span>cluster<span class="br0">&#41;</span>
+&nbsp;
+model <span class="sy0">=</span> kmeans<span class="br0">&#40;</span>x<span class="sy0">,</span>center<span class="sy0">=</span><span class="nu0">3</span><span class="br0">&#41;</span><span class="co1">#x étant la matrice de données, #center le nombre de clusters</span>

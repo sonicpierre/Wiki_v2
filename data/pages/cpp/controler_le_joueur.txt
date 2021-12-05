@@ -1,0 +1,115 @@
+====== Programmation Orientée Objet ======
+
+La programmation orientée objet (POO) est un paradigme (manière d'écrire le code) qui permet de créer des structures logiques (appelées objets) ayant des attributs et des méthodes :
+  * attribut : caractéristique (ex : position, vitesse de déplacement, couleur).
+  * méthode : fonction permettant à l'objet de réaliser une action (ex: se déplacer, attaquer).
+
+===== Création d'un objet =====
+
+Dans les deux langages que l'on voit ici, un objet ce caractérise via une classe. Dans la classe, on va définir tout ce que va contenir notre objet (le modèle). Pour comprendre le fonctionnement, on va implémenter un objet correspondant au personnage que l'on incarne dans le jeu.
+
+Tout d'abord notre personnage va avoir besoin de coordonnées 2D (x et y), ces coordonnées seront privées. On a aussi besoin d'une méthode permettant de déplacer le personnage pour le moment d'une vitesse constante. Cette méthode sera publique. On revient juste après sur "publique" et "privée".
+
+__En Java :__
+\\
+En Java, tout se fait dans un fichier qui porte le même nom que l'objet. On a donc **Joueur.class**.
+<code java>
+class Joueur {
+    public static final float VITESSE_X = 2;
+    public static final float VITESSE_Y = 2;
+
+    private float positionX;
+    private float positionY;
+    
+    public void seDeplacer() {
+        positionX += VITESSE_X;
+        positionY += VITESSE_Y;
+    }
+}
+</code>
+
+__En C++ :__
+\\
+Contrairement au java, le C++ utilise 2 fichiers pour définir un objet. Dans le premier (appelé header, ou entête en français) on va déclarer tout ce qui le caractérise. Dans le second (fichier source), on définit l'implémentation des méthodes.
+
+Le fichier d'entête : **joueur.hpp**
+<code cpp>
+class Joueur
+{
+public:
+    static constexpr float VITESSE_X = 2;
+    static constexpr float VITESSE_Y = 2; 
+private:
+    float _positionX;
+    float _positionY; 
+public:
+    void seDeplacer();
+};
+</code>
+Le fichier d'implémentation : **joueur.cpp**
+<code cpp>
+#include "joueur.hpp"
+
+void Joueur::seDeplacer()
+{
+    _positionX += VITESSE_X;
+    _positionY += VITESSE_Y;
+}
+</code>
+
+==== Encapsulation ====
+ L'intérêt de pouvoir configurer la visibilité d'un élément est l'encapsulation des informations. En programmation orientée objet, on veut qu'un objet s'occupe de lui-même et éviter au maximum qu'un objet intervienne sur un autre.
+
+Voici une règle qui fonctionne dans la majoritée des cas : Mettre tout en **private**. Si  vos classes filles ont besoin d'avoir des accès privilégiés on utilise des **méthodes protected**. Et si il faut donner des accès plus large, on peut utiliser le **public**. 
+
+==== Visibilité ====
+
+La visibilité des attributs et méthodes permet de configurer qui a accès à quel élément de l'objet.
+
+{{ :cpp:visibilite.png?800 |}}
+
+^Visibilité ^ Accès depuis l'extérieur ^ Accès depuis les classes filles ^ Accès depuis la classe uniquement ^
+| private | | | X |
+| protected |  |X | X|
+| public | X | X | X |
+
+Ici on a rendu nos attributs privés et notre méthode publique. On ne peut donc pas accéder à nos attributs en dehors de notre classe. Cependant la méthode de déplacement est, elle, accessible depuis l'extérieur.
+
+<alert info>**Info :** En Java, on peut ajouter la visibilité **package** qui s'écrit sans mot clé. Cette dernière donne l'accès à tous les fichiers dans le même package que votre classe. </alert>
+
+<color #ed1c24>Comment avoir accés aux attributs ?</color>
+
+Les **getters** et les **setters** permettent respectivement de lire (get) et de modifier (set) un attribut. Ils ont toujours une visibilité plus large que l'attribut auquel ils sont reliés.
+
+Ajoutons des getters publiques pour obtenir la position du joueur depuis l'extérieur de la classe.
+
+__En Java :__
+<code java>
+public float getX() {
+    return positionX;
+}
+
+public float getY() {
+    return positionY;
+}
+</code>
+__En C++ :__
+\\
+Dans le fichier d'entête, on se place juste après la méthode de déplacement.
+<code cpp>
+float getX();
+float getY();
+</code>
+Dans le fichier d'implémentation, on se place à la fin.
+<code cpp>
+float Joueur::getX()
+{
+    return _positionX;
+}
+
+float Joueur::getY()
+{
+    return _positionY;
+}
+</code>
+

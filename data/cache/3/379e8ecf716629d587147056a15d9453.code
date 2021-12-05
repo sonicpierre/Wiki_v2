@@ -1,0 +1,7 @@
+<span class="co1">#Librairies nécessaires pour faire une pipeline</span>
+install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;magrittr&quot;</span><span class="br0">&#41;</span>
+install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;dplyr&quot;</span><span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>magrittr<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>dplyr<span class="br0">&#41;</span>
+&nbsp;
+pipeline <span class="sy0">&lt;</span>- . %<span class="sy0">&gt;</span>% scale 

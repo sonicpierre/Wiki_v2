@@ -1,0 +1,2 @@
+<span class="kw1">from</span> scipy.<span class="me1">misc</span> <span class="kw1">import</span> derivative
+derivee <span class="sy0">=</span> <span class="kw1">lambda</span> x:  derivative<span class="br0">&#40;</span>f<span class="sy0">,</span> x<span class="sy0">,</span> <span class="nu0">0.01</span><span class="br0">&#41;</span>

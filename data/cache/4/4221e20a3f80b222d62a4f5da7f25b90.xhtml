@@ -1,0 +1,784 @@
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Avisualiser_le_dataset&amp;media=cpp:visualisationdata.jpg" class="media" title="cpp:visualisationdata.jpg"><img src="/lib/exe/fetch.php?w=580&amp;tok=e7a2af&amp;media=cpp:visualisationdata.jpg" class="media" alt="" width="580" /></a>
+<br/>
+
+<br/>
+
+Cette partie présente les différents types de graphiques qui permettent de réaliser des analyses de données pertinentes.
+Pour appliquer notre code nous utiliserons le plus souvent le dataset des fleurs d&#039;iris, qui fait parti des jeux de données de classification les plus connus.
+</p>
+
+<h5 id="importation_du_dataset">Importation du dataset</h5>
+<div class="level5">
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">datasets</span> <span class="kw1">import</span> load_iris
+&nbsp;
+iris <span class="sy0">=</span> load_iris<span class="br0">&#40;</span><span class="br0">&#41;</span>
+X <span class="sy0">=</span> iris.<span class="me1">data</span>
+y <span class="sy0">=</span> iris.<span class="me1">target</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>datasets<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>dplyr<span class="br0">&#41;</span>
+&nbsp;
+data<span class="br0">&#40;</span>iris<span class="br0">&#41;</span>
+X <span class="sy0">&lt;</span>- <span class="kw3">select</span><span class="br0">&#40;</span>iris<span class="sy0">,</span> <span class="st0">&quot;Sepal.Length&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Sepal.Width&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Petal.Length&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Petal.Width&quot;</span><span class="br0">&#41;</span>
+y <span class="sy0">&lt;</span>- <span class="kw1">as</span>.<span class="me1">numeric</span><span class="br0">&#40;</span>iris$Species<span class="br0">&#41;</span></pre>
+
+</div>
+
+<h2 class="sectionedit1" id="graphiques_basiques">Graphiques basiques</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Graphiques basiques&quot;,&quot;hid&quot;:&quot;graphiques_basiques&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:1,&quot;range&quot;:&quot;677-707&quot;} -->
+<h3 class="sectionedit2" id="le_nuage_de_points">Le nuage de points</h3>
+<div class="level3">
+
+<p>
+Il s&#039;agit d&#039;une des meilleures façon de visualiser notre dataset où chaque point va représenter un individu. Il permet de représenter les données en fonction de plusieurs variables et d&#039;observer le degré de corrélation entre elles.
+Cependant il ne sera possible de représenter que deux variables en même temps.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> matplotlib.<span class="me1">pyplot</span> <span class="kw1">as</span> plt
+&nbsp;
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">12</span><span class="sy0">,</span><span class="nu0">6</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+plt.<span class="me1">scatter</span><span class="br0">&#40;</span>X<span class="br0">&#91;</span>:<span class="sy0">,</span> <span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span> X<span class="br0">&#91;</span>:<span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">,</span> c<span class="sy0">=</span>y<span class="sy0">,</span> alpha<span class="sy0">=</span><span class="nu0">1</span><span class="sy0">,</span> s<span class="sy0">=</span>X<span class="br0">&#91;</span>:<span class="sy0">,</span><span class="nu0">2</span><span class="br0">&#93;</span>*<span class="nu0">100</span><span class="br0">&#41;</span><span class="co1"># c définit la couleur selon le type de fleur, # alpha gère la transparence des points, # s controle la taille des points</span>
+<span class="co1"># On exprime s de cette façon pour controler la taille en fonction de la troisième variable du dataset (plus le point est gros, plus le petal de la fleur est long).</span>
+plt.<span class="me1">xlabel</span><span class="br0">&#40;</span><span class="st0">&quot;Longueur sépal&quot;</span><span class="br0">&#41;</span>
+plt.<span class="me1">ylabel</span><span class="br0">&#40;</span><span class="st0">&quot;Largeur sépal&quot;</span><span class="br0">&#41;</span>
+<span class="kw3">formatter</span> <span class="sy0">=</span> plt.<span class="me1">FuncFormatter</span><span class="br0">&#40;</span><span class="kw1">lambda</span> i<span class="sy0">,</span> *args: iris.<span class="me1">target_names</span><span class="br0">&#91;</span><span class="kw2">int</span><span class="br0">&#40;</span>i<span class="br0">&#41;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+plt.<span class="me1">colorbar</span><span class="br0">&#40;</span>ticks<span class="sy0">=</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">2</span><span class="br0">&#93;</span><span class="sy0">,</span> format<span class="sy0">=</span><span class="kw3">formatter</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">plot<span class="br0">&#40;</span>iris$Sepal.<span class="me1">Length</span><span class="sy0">,</span> iris$Sepal.<span class="me1">Width</span><span class="sy0">,</span> col<span class="sy0">=</span>y<span class="br0">&#41;</span></pre>
+
+</div>
+
+<h5 id="resultat">Résultat</h5>
+<div class="level5">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Avisualiser_le_dataset&amp;media=cpp:iriss.png" class="media" title="cpp:iriss.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=7e4f7f&amp;media=cpp:iriss.png" class="mediacenter" title="Nuage de points" alt="Nuage de points" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 1 :</strong> Nuage de points </p><!--divalign-->
+
+<p>
+<div class='alert alert-info'><strong>Remarque</strong> : On voit ici qu&#039;il y a une corrélation positive entre la longueur et la largeur du sépal pour les fleurs setosa.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le nuage de points&quot;,&quot;hid&quot;:&quot;le_nuage_de_points&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:2,&quot;range&quot;:&quot;708-2020&quot;} -->
+<h3 class="sectionedit3" id="les_courbes">Les courbes</h3>
+<div class="level3">
+
+<p>
+Les courbes peuvent être intéressantes pour visualiser l&#039;entrainement du modèle et repérer ce qui pourrait être problématique comme l&#039;overfitting. Nous l&#039;utiliserons aussi pour visualiser les descentes de gradient et d&#039;autres algorithmes très utilisés.
+</p>
+
+<p>
+<em class="u">Code Python</em> :
+</p>
+<pre class="code python"><span class="kw1">import</span> numpy <span class="kw1">as</span> np
+<span class="kw1">import</span> matplotlib.<span class="me1">pyplot</span> <span class="kw1">as</span> plt
+&nbsp;
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">8</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+x <span class="sy0">=</span> np.<span class="me1">linspace</span><span class="br0">&#40;</span>-<span class="nu0">5</span><span class="sy0">,</span> <span class="nu0">5</span><span class="sy0">,</span> <span class="nu0">1000</span><span class="br0">&#41;</span>
+y <span class="sy0">=</span> x**<span class="nu0">3</span>
+plt.<span class="me1">plot</span><span class="br0">&#40;</span>x<span class="sy0">,</span>y<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>pracma<span class="br0">&#41;</span>
+&nbsp;
+x <span class="sy0">&lt;</span>- linspace<span class="br0">&#40;</span>-<span class="nu0">5</span><span class="sy0">,</span> <span class="nu0">5</span><span class="sy0">,</span> <span class="nu0">1000</span><span class="br0">&#41;</span>
+y <span class="sy0">&lt;</span>- x**<span class="nu0">3</span>
+plt.<span class="me1">plot</span><span class="br0">&#40;</span>x<span class="sy0">,</span>y<span class="br0">&#41;</span></pre>
+
+</div>
+
+<h5 id="resultat1">Résultat</h5>
+<div class="level5">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Avisualiser_le_dataset&amp;media=cpp:courbexcube.png" class="media" title="cpp:courbexcube.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=44b874&amp;media=cpp:courbexcube.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 2 :</strong> Courbe d&#039;évolution de la fonction $X^{3}$</p><!--divalign-->
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les courbes&quot;,&quot;hid&quot;:&quot;les_courbes&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:3,&quot;range&quot;:&quot;2021-2694&quot;} -->
+<h3 class="sectionedit4" id="les_histogrammes">Les histogrammes</h3>
+<div class="level3">
+
+<p>
+Permettant de visualiser comment sont distribuées les variables, ce graphique sera d&#039;une grande aide lorsqu&#039;on voudra vérifier que nos données sont distribuées selon une loi particulière. 
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> matplotlib.<span class="me1">pyplot</span> <span class="kw1">as</span> plt
+&nbsp;
+plt.<span class="me1">hist</span><span class="br0">&#40;</span>X<span class="br0">&#91;</span>:<span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="co1"># A l'intérieur de la fonction d'histogramme on peut choisir de modifier le paramètre bins, qui </span>
+<span class="co1">#détermine le nombre de section qu'on veut dans l'histogramme.</span>
+plt.<span class="me1">xlabel</span><span class="br0">&#40;</span><span class="st0">&quot;Longueur sépal&quot;</span><span class="br0">&#41;</span>
+plt.<span class="me1">ylabel</span><span class="br0">&#40;</span><span class="st0">&quot;Nombre d<span class="es0">\'</span>apparition&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>NB :</strong> Il est possible d&#039;avoir la distribution de deux variables sur un même graphique. Il suffit (par exemple) d&#039;ajouter au code précédent, la commande de dessin pour la variable voulue. Prenons la variable 1 avec <em>plt.hist(X[:,1])</em>.
+</p>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">hist<span class="br0">&#40;</span>X$Sepal.<span class="me1">Length</span><span class="br0">&#41;</span></pre>
+
+</div>
+
+<h5 id="resultat2">Résultat</h5>
+<div class="level5">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Avisualiser_le_dataset&amp;media=cpp:his.png" class="media" title="cpp:his.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=6b5b92&amp;media=cpp:his.png" class="mediacenter" title="Histogramme" alt="Histogramme" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 3 :</strong> Distribution de la longueur du sépale pour toutes les fleurs d&#039;iris.</p><!--divalign-->
+
+<p>
+En abscisse il en ressort que le sépale le plus petit fait environ 4.5 cm et le plus long environ 8 cm. En ordonnée
+on voit par exemple qu&#039;il y a (environ) 10 fois un sépale faisant 4.5 cm.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les histogrammes&quot;,&quot;hid&quot;:&quot;les_histogrammes&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:4,&quot;range&quot;:&quot;2695-3870&quot;} -->
+<h3 class="sectionedit5" id="les_diagrammes_en_barre">Les diagrammes en barre</h3>
+<div class="level3">
+
+<p>
+Ces diagrammes sont particulièrement intéressants pour visualiser des lois discrètes en probabilité, comme une loi de Poisson définit comme suit :
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">def</span> loiPoisson<span class="br0">&#40;</span>parametre<span class="br0">&#41;</span>:
+    n<span class="sy0">,</span> proba <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">,</span> np.<span class="me1">exp</span><span class="br0">&#40;</span>-parametre<span class="br0">&#41;</span>
+    F <span class="sy0">=</span> proba
+    U <span class="sy0">=</span> np.<span class="kw3">random</span>.<span class="me1">uniform</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="kw1">while</span> U<span class="sy0">&gt;</span>F:
+        proba <span class="sy0">=</span> <span class="br0">&#40;</span>parametre / <span class="br0">&#40;</span>n + <span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span> * proba
+        F <span class="sy0">=</span> F + proba
+        n <span class="sy0">=</span> n + <span class="nu0">1</span>
+    <span class="kw1">return</span> n</pre>
+
+<p>
+On peut alors la représenter en utilisant un barplot qui rendra le rendu beaucoup plus propre qu&#039;un histogramme :
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> matplotlib.<span class="me1">pyplot</span> <span class="kw1">as</span> plt
+&nbsp;
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">4</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="co1">#La fonction table Poisson itère les simulations de Poisson et les place dans un tableau.</span>
+A <span class="sy0">=</span> tabDeLoiPoisson<span class="br0">&#40;</span><span class="nu0">0.8</span><span class="sy0">,</span> <span class="nu0">10000</span><span class="br0">&#41;</span>
+plt.<span class="me1">title</span><span class="br0">&#40;</span><span class="st0">&quot;Loi de poisson&quot;</span><span class="br0">&#41;</span>
+label<span class="sy0">,</span> nb <span class="sy0">=</span> np.<span class="me1">unique</span><span class="br0">&#40;</span>A<span class="sy0">,</span> return_counts<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span>
+plt.<span class="me1">bar</span><span class="br0">&#40;</span>label<span class="sy0">,</span>nb<span class="sy0">,</span> width<span class="sy0">=</span><span class="nu0">0.3</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python"><span class="kw1">lambda</span> <span class="sy0">&lt;</span>- <span class="nu0">.8</span><span class="co1">#Lambda</span>
+n <span class="sy0">&lt;</span>- <span class="nu0">10000</span><span class="co1">#DTaille de l'échantillon</span>
+&nbsp;
+ech <span class="sy0">&lt;</span>- rpois<span class="br0">&#40;</span>n<span class="sy0">,</span> <span class="kw1">lambda</span><span class="br0">&#41;</span><span class="co1">#Loi de Poisson</span>
+&nbsp;
+barplot<span class="br0">&#40;</span>table<span class="br0">&#40;</span>ech<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Représentation graphique</span></pre>
+
+</div>
+
+<h5 id="resultat3">Résultat</h5>
+<div class="level5">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Avisualiser_le_dataset&amp;media=cpp:barplotpython.png" class="media" title="cpp:barplotpython.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=5cb3d4&amp;media=cpp:barplotpython.png" class="mediacenter" title=" Barre Plot" alt=" Barre Plot" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 4 :</strong> Diagramme à bâton de la loi de Poisson</p><!--divalign-->
+
+</div>
+
+<h5 id="source">Source</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.sthda.com/french/wiki/ggplot2-barplots-guide-de-demarrage-rapide-logiciel-r-et-visualisation-de-donnees" class="urlextern" title="http://www.sthda.com/french/wiki/ggplot2-barplots-guide-de-demarrage-rapide-logiciel-r-et-visualisation-de-donnees" rel="nofollow">STHDA</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les diagrammes en barre&quot;,&quot;hid&quot;:&quot;les_diagrammes_en_barre&quot;,&quot;codeblockOffset&quot;:8,&quot;secid&quot;:5,&quot;range&quot;:&quot;3871-5205&quot;} -->
+<h3 class="sectionedit6" id="les_camemberts">Les camemberts</h3>
+<div class="level3">
+
+<p>
+Ce type de graphique est très utile lorsqu&#039;il s&#039;agit de représenter des données en pourcentage.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> matplotlib.<span class="me1">pyplot</span> <span class="kw1">as</span> plt
+&nbsp;
+labels <span class="sy0">=</span> <span class="st0">'Oui'</span><span class="sy0">,</span> <span class="st0">'Non'</span><span class="sy0">,</span> <span class="st0">'Peut-être'</span> <span class="co1"># Titre des données</span>
+sizes <span class="sy0">=</span> <span class="br0">&#91;</span><span class="nu0">250</span><span class="sy0">,</span> <span class="nu0">780</span><span class="sy0">,</span> <span class="nu0">1051</span><span class="br0">&#93;</span> <span class="co1"># Effectif de chaque données</span>
+colors <span class="sy0">=</span> <span class="br0">&#91;</span><span class="st0">'gold'</span><span class="sy0">,</span> <span class="st0">'lightcoral'</span><span class="sy0">,</span> <span class="st0">'lightskyblue'</span><span class="br0">&#93;</span> <span class="co1"># Définition d'une couleur</span>
+plt.<span class="me1">pie</span><span class="br0">&#40;</span>sizes<span class="sy0">,</span> labels<span class="sy0">=</span>labels<span class="sy0">,</span> colors<span class="sy0">=</span>colors<span class="sy0">,</span>autopct<span class="sy0">=</span><span class="st0">'%1.1f%%'</span><span class="sy0">,</span> startangle<span class="sy0">=</span><span class="nu0">150</span><span class="br0">&#41;</span> <span class="co1"># Génération du graphique avec # autopct permettant l'affichage des pourcentages correspondants,# startangle Réglage de la position des labels par rapport au graphique </span>
+plt.<span class="me1">axis</span><span class="br0">&#40;</span><span class="st0">'equal'</span><span class="br0">&#41;</span> <span class="co1"># Permet d'avoir un cercle arrondi</span>
+plt.<span class="me1">title</span><span class="br0">&#40;</span>u<span class="st0">'Répartition des avis'</span><span class="sy0">,</span> size <span class="sy0">=</span> <span class="st0">'x-large'</span><span class="br0">&#41;</span>
+plt.<span class="me1">show</span><span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code Python">sizes<span class="sy0">&lt;</span>- c<span class="br0">&#40;</span><span class="nu0">250</span><span class="sy0">,</span> <span class="nu0">780</span><span class="sy0">,</span> <span class="nu0">1051</span><span class="br0">&#41;</span>
+labels <span class="sy0">&lt;</span>- c<span class="br0">&#40;</span><span class="st0">&quot;Oui&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Non&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Peut-être&quot;</span><span class="br0">&#41;</span>
+colors <span class="sy0">&lt;</span>- c<span class="br0">&#40;</span><span class="st0">&quot;gold&quot;</span><span class="sy0">,</span> <span class="st0">&quot;lightcoral&quot;</span><span class="sy0">,</span> <span class="st0">&quot;lightskyblue&quot;</span><span class="br0">&#41;</span>
+pie<span class="br0">&#40;</span>sizes<span class="sy0">,</span> col <span class="sy0">=</span> colors<span class="sy0">,</span> labels <span class="sy0">=</span> paste0<span class="br0">&#40;</span>labels<span class="sy0">,</span> <span class="st0">&quot; &quot;</span><span class="sy0">,</span> <span class="kw2">round</span><span class="br0">&#40;</span>sizes / <span class="kw2">sum</span><span class="br0">&#40;</span>sizes<span class="br0">&#41;</span> * <span class="nu0">100</span><span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st0">&quot;%&quot;</span><span class="br0">&#41;</span><span class="sy0">,</span> main<span class="sy0">=</span><span class="st0">&quot;Répartition des avis&quot;</span><span class="br0">&#41;</span></pre>
+
+</div>
+
+<h5 id="resultat4">Résultat</h5>
+<div class="level5">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Avisualiser_le_dataset&amp;media=cpp:cam.png" class="media" title="cpp:cam.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=28ca2b&amp;media=cpp:cam.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 4 :</strong> Diagramme camembert</p><!--divalign-->
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les camemberts&quot;,&quot;hid&quot;:&quot;les_camemberts&quot;,&quot;codeblockOffset&quot;:11,&quot;secid&quot;:6,&quot;range&quot;:&quot;5206-6320&quot;} -->
+<h2 class="sectionedit7" id="graphiques_avances">Graphiques avancés</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Graphiques avanc\u00e9s&quot;,&quot;hid&quot;:&quot;graphiques_avances&quot;,&quot;codeblockOffset&quot;:13,&quot;secid&quot;:7,&quot;range&quot;:&quot;6321-6351&quot;} -->
+<h3 class="sectionedit8" id="graphique_3d">Graphique 3D</h3>
+<div class="level3">
+
+<p>
+Observation en trois dimensions du nuage de points généré précédemment.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> mpl_toolkits.<span class="me1">mplot3d</span> <span class="kw1">import</span> Axes3D
+<span class="kw1">import</span> matplotlib.<span class="me1">pyplot</span> <span class="kw1">as</span> plt
+&nbsp;
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">12</span><span class="sy0">,</span><span class="nu0">6</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+ax <span class="sy0">=</span> plt.<span class="me1">axes</span><span class="br0">&#40;</span>projection<span class="sy0">=</span><span class="st0">'3d'</span><span class="br0">&#41;</span>
+ax.<span class="me1">scatter</span><span class="br0">&#40;</span>X<span class="br0">&#91;</span>:<span class="sy0">,</span> <span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span> X<span class="br0">&#91;</span>:<span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">,</span> X<span class="br0">&#91;</span>:<span class="sy0">,</span> <span class="nu0">2</span><span class="br0">&#93;</span><span class="sy0">,</span> c<span class="sy0">=</span>y<span class="sy0">,</span>  alpha<span class="sy0">=</span><span class="nu0">.65</span><span class="sy0">,</span> s<span class="sy0">=</span>X<span class="br0">&#91;</span>:<span class="sy0">,</span><span class="nu0">2</span><span class="br0">&#93;</span>*<span class="nu0">100</span><span class="br0">&#41;</span>
+&nbsp;
+plt.<span class="me1">xlabel</span><span class="br0">&#40;</span><span class="st0">&quot;Longueur sépal&quot;</span><span class="br0">&#41;</span>
+plt.<span class="me1">ylabel</span><span class="br0">&#40;</span><span class="st0">&quot;Largeur sépal&quot;</span><span class="br0">&#41;</span>
+ax.<span class="me1">set_zlabel</span><span class="br0">&#40;</span><span class="st0">'Longueur pétal'</span><span class="br0">&#41;</span></pre>
+
+<p>
+Pour pouvoir visualiser le graphique dans une fenêtre et pouvoir zoomer et/ou changer de point de vue,
+ajoutez la commande suivante lors de l&#039;importation de Axes3D :
+</p>
+<pre class="code python">%matplotlib</pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>scatterplot3d<span class="br0">&#41;</span>
+&nbsp;
+colors <span class="sy0">&lt;</span>- c<span class="br0">&#40;</span><span class="st0">&quot;#999999&quot;</span><span class="sy0">,</span> <span class="st0">&quot;#E69F00&quot;</span><span class="sy0">,</span> <span class="st0">&quot;#56B4E9&quot;</span><span class="br0">&#41;</span><span class="co1"># Définition des couleurs</span>
+colors <span class="sy0">&lt;</span>- colors<span class="br0">&#91;</span><span class="kw1">as</span>.<span class="me1">numeric</span><span class="br0">&#40;</span>iris$Species<span class="br0">&#41;</span><span class="br0">&#93;</span><span class="co1"># Attribution de chaque couleur à un type de fleur</span>
+scatterplot3d<span class="br0">&#40;</span>iris<span class="br0">&#91;</span><span class="sy0">,</span><span class="nu0">1</span>:<span class="nu0">3</span><span class="br0">&#93;</span><span class="sy0">,</span> pch <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">,</span> color<span class="sy0">=</span>colors<span class="br0">&#41;</span><span class="co1"># Construction du grahique, #pch = 1 étant la forme arondie des points</span>
+legend<span class="br0">&#40;</span><span class="st0">&quot;right&quot;</span><span class="sy0">,</span> legend <span class="sy0">=</span> levels<span class="br0">&#40;</span>iris$Species<span class="br0">&#41;</span><span class="sy0">,</span>
+       col <span class="sy0">=</span>  c<span class="br0">&#40;</span><span class="st0">&quot;#999999&quot;</span><span class="sy0">,</span> <span class="st0">&quot;#E69F00&quot;</span><span class="sy0">,</span> <span class="st0">&quot;#56B4E9&quot;</span><span class="br0">&#41;</span><span class="sy0">,</span> pch <span class="sy0">=</span> <span class="nu0">1</span><span class="br0">&#41;</span><span class="co1"># Affichage de la légende et correspondance des couleurs des fleurs</span></pre>
+
+</div>
+
+<h5 id="resultat5">Résultat</h5>
+<div class="level5">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Avisualiser_le_dataset&amp;media=cpp:3dd.png" class="media" title="cpp:3dd.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=00e702&amp;media=cpp:3dd.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 5 :</strong> Représentation 3D des fleurs d&#039;iris</p><!--divalign-->
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Graphique 3D&quot;,&quot;hid&quot;:&quot;graphique_3d&quot;,&quot;codeblockOffset&quot;:13,&quot;secid&quot;:8,&quot;range&quot;:&quot;6352-7605&quot;} -->
+<h3 class="sectionedit9" id="histogramme_2d">Histogramme 2D</h3>
+<div class="level3">
+
+<p>
+Il est possible d&#039;avoir des histogrammes 2D, pour visualiser la répartition des données selon deux variables.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> matplotlib.<span class="me1">pyplot</span> <span class="kw1">as</span> plt
+&nbsp;
+plt.<span class="me1">hist2d</span><span class="br0">&#40;</span>X<span class="br0">&#91;</span>:<span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span> X<span class="br0">&#91;</span>:<span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+plt.<span class="me1">xlabel</span><span class="br0">&#40;</span><span class="st0">&quot;Longueur sépale&quot;</span><span class="br0">&#41;</span>
+plt.<span class="me1">ylabel</span><span class="br0">&#40;</span><span class="st0">&quot;Largueur sépale&quot;</span><span class="br0">&#41;</span>
+plt.<span class="me1">colorbar</span><span class="br0">&#40;</span><span class="br0">&#41;</span> </pre>
+
+<p>
+Pour avoir une meilleure vision des combinaisons les plus présentes, on peut avoir des couleurs plus claires avec la commande <em>cmap=&#039;Blues&#039;</em> dans la fonction d&#039;histogramme 2D.
+</p>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>ggplot2<span class="br0">&#41;</span>
+&nbsp;
+histo <span class="sy0">&lt;</span>- ggplot<span class="br0">&#40;</span>iris<span class="sy0">,</span> aes<span class="br0">&#40;</span>X$Sepal.<span class="me1">Length</span><span class="sy0">,</span> X$Sepal.<span class="me1">Width</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+histo <span class="sy0">&lt;</span>- histo + stat_bin2d<span class="br0">&#40;</span>bins <span class="sy0">=</span> <span class="nu0">20</span><span class="br0">&#41;</span>
+histo</pre>
+
+</div>
+
+<h5 id="resultat6">Résultat</h5>
+<div class="level5">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Avisualiser_le_dataset&amp;media=cpp:2d.png" class="media" title="cpp:2d.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=151aa3&amp;media=cpp:2d.png" class="mediacenter" title="Répartition des iris en fonction de la longueur et largeur du sépale" alt="Répartition des iris en fonction de la longueur et largeur du sépale" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 5 :</strong>  Répartition des iris en fonction de la longueur et largeur du sépale</p><!--divalign-->
+
+<p>
+Il en ressort par exemple qu&#039;il y a dix fleurs d&#039;iris qui ont une longueur de sépale d&#039;environ 6.5 cm et une largeur d&#039;environ 3 cm.
+</p>
+
+</div>
+
+<h5 id="source1">Source</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.youtube.com/watch?v=MILtbfrMGL4&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=15" class="urlextern" title="https://www.youtube.com/watch?v=MILtbfrMGL4&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=15" rel="nofollow">Machine Learnia</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Histogramme 2D&quot;,&quot;hid&quot;:&quot;histogramme_2d&quot;,&quot;codeblockOffset&quot;:16,&quot;secid&quot;:9,&quot;range&quot;:&quot;7606-8728&quot;} -->
+<h3 class="sectionedit10" id="visualiser_les_valeurs_manquantes">Visualiser les valeurs manquantes</h3>
+<div class="level3">
+
+<p>
+Lors de l&#039;exploration des données il est nécessaire de savoir où se situent les variables manquantes dans notre dataset. Cela dans le but de savoir
+de quel type de variable il s&#039;agit, de connaitre la proportion de valeurs manquantes dans l&#039;ensemble des données et ainsi prévoir les traitements à effectuer pour cela.
+</p>
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong>  Nous utiliserons les données d&#039;entrainement du Titanic disponible <a href="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Exploration%20des%20donnees/Dataset%20Titanic" class="urlextern" title="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Exploration%20des%20donnees/Dataset%20Titanic" rel="nofollow">ici</a>. </div>
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> matplotlib.<span class="me1">pyplot</span> <span class="kw1">as</span> plt
+<span class="kw1">import</span> seaborn <span class="kw1">as</span> sns
+&nbsp;
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">12</span><span class="sy0">,</span><span class="nu0">6</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+sns.<span class="me1">heatmap</span><span class="br0">&#40;</span>data.<span class="me1">isna</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> cbar<span class="sy0">=</span><span class="kw2">False</span><span class="br0">&#41;</span><span class="co1"># data étant le nom donnée au jeu de données</span>
+plt.<span class="me1">title</span><span class="br0">&#40;</span>u<span class="st0">'Répartition des valeurs manquantes'</span><span class="sy0">,</span> size <span class="sy0">=</span> <span class="st0">'x-large'</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+
+<p>
+Une légende est fournie lors de l&#039;exécution de la fonction pour identifier les valeurs manquantes et leur importance dans le jeu de données.
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>visdat<span class="br0">&#41;</span>
+&nbsp;
+vis_miss<span class="br0">&#40;</span>data<span class="br0">&#41;</span></pre>
+
+</div>
+
+<h5 id="resultat7">Résultat</h5>
+<div class="level5">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Avisualiser_le_dataset&amp;media=cpp:titanic_missing_values.png" class="media" title="cpp:titanic_missing_values.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=07aba4&amp;media=cpp:titanic_missing_values.png" class="mediacenter" title="Répartition des valeurs manquantes" alt="Répartition des valeurs manquantes" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 1 :</strong> Répartition des valeurs manquantes</p><!--divalign-->
+
+<p>
+Les traits beiges indiquent la présence de valeurs manquantes pour la variable correspondante.
+</p>
+
+</div>
+
+<h5 id="source2">Source</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li">  <a href="https://thinkr.fr/donnees-manquantes-causes-identification-et-imputation/l" class="urlextern" title="https://thinkr.fr/donnees-manquantes-causes-identification-et-imputation/l" rel="nofollow">Think R</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Visualiser les valeurs manquantes&quot;,&quot;hid&quot;:&quot;visualiser_les_valeurs_manquantes&quot;,&quot;codeblockOffset&quot;:18,&quot;secid&quot;:10,&quot;range&quot;:&quot;8729-10169&quot;} -->
+<h3 class="sectionedit11" id="visualiser_les_correlations_entre_variables">Visualiser les corrélations entre variables</h3>
+<div class="level3">
+
+<p>
+Ce graphique permet d&#039;avoir un visuel direct sur les corrélations entre les variables du dataset. Cela aide dans le choix des variables à conserver en 
+gardant celles qui sont les plus liées entre elles.
+</p>
+
+</div>
+
+<h5 id="representation_des_correlations">Représentation des corrélations</h5>
+<div class="level5">
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong>  On reprend dans cette partie le dataset des fleurs d&#039;iris. </div>
+</p>
+
+<p>
+Sous Python, les variables sont contenues dans des vecteurs. On  les transforme d&#039;abord en DataFrame, ce qui facile leur traitement.
+</p>
+<pre class="code python"><span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+&nbsp;
+X <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>X<span class="sy0">,</span> columns<span class="sy0">=</span>iris.<span class="me1">feature_names</span><span class="br0">&#41;</span></pre>
+
+<p>
+Vient alors la représentation graphique des corrélations entre variables.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> matplotlib.<span class="me1">pyplot</span> <span class="kw1">as</span> plt
+<span class="kw1">import</span> seaborn <span class="kw1">as</span> sns
+&nbsp;
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">5</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1"># Défini la taille du graphique</span>
+sns.<span class="me1">heatmap</span><span class="br0">&#40;</span>X.<span class="me1">corr</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1"># Création du graphique</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>reshape2<span class="br0">&#41;</span>
+&nbsp;
+data <span class="sy0">&lt;</span>- iris<span class="br0">&#91;</span><span class="sy0">,</span> c<span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">2</span><span class="sy0">,</span><span class="nu0">3</span><span class="sy0">,</span><span class="nu0">4</span><span class="br0">&#41;</span><span class="br0">&#93;</span> <span class="co1"># Sélection des variables à analyser</span>
+&nbsp;
+matrice_cor <span class="sy0">&lt;</span>- <span class="kw2">round</span><span class="br0">&#40;</span>cor<span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1"># Calcul de la matrice de corrélation en arrondissant les valeurs</span>
+melt_data <span class="sy0">&lt;</span>- melt<span class="br0">&#40;</span>matrice_cor<span class="br0">&#41;</span><span class="co1"># Transformation des données pour correspondre au format de représentation</span>
+ggplot<span class="br0">&#40;</span>data <span class="sy0">=</span> melt_data<span class="sy0">,</span> aes<span class="br0">&#40;</span>x<span class="sy0">=</span>Var1<span class="sy0">,</span> y<span class="sy0">=</span>Var2<span class="sy0">,</span> fill<span class="sy0">=</span>value<span class="br0">&#41;</span><span class="br0">&#41;</span> + <span class="co1"># Création du graphique</span>
+  geom_tile<span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Avisualiser_le_dataset&amp;media=cpp:heat.png" class="media" title="cpp:heat.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=aef28c&amp;media=cpp:heat.png" class="media" title="Carte de corrélations" alt="Carte de corrélations" width="800" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 6 :</strong> Carte de corrélations entre les variables</p><!--divalign-->
+
+</div>
+
+<h5 id="source3">Source</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.sthda.com/french/wiki/ggplot2-heatmap-d-une-matrice-de-corr-lation-logiciel-r-et-visualisation-de-donn-es" class="urlextern" title="http://www.sthda.com/french/wiki/ggplot2-heatmap-d-une-matrice-de-corr-lation-logiciel-r-et-visualisation-de-donn-es" rel="nofollow">STHDA</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Visualiser les corr\u00e9lations entre variables&quot;,&quot;hid&quot;:&quot;visualiser_les_correlations_entre_variables&quot;,&quot;codeblockOffset&quot;:20,&quot;secid&quot;:11,&quot;range&quot;:&quot;10170-11767&quot;} -->
+<h3 class="sectionedit12" id="carte">Carte</h3>
+<div class="level3">
+
+<p>
+Travailler avec des cartes peut être un véritable atout lorsqu&#039;il est nécessaire de visualiser des répartitions (ou des densités) à l&#039;échelle d&#039;un pays ou du monde.
+La librairie <strong>folium</strong> de python est un outil indispensable pour ce genre de travaux. La géographie de chaque pays est disponible via des fichiers GEOJSON qui permettent de faire correspondre une donnée d&#039;une région à la région dans la carte folium.
+Cela ne serait pas possible sans les fichiers opensource disponibles, aussi est-il important de mentionner les auteurs à chaque utilisation.
+</p>
+
+<p>
+<div class='alert alert-info'> Remarque : On va représenter le taux de chômage par état aux États-Unis, dont les données sont disponibles <a href="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Exploration%20des%20donnees/Data%20pour%20carte" class="urlextern" title="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Exploration%20des%20donnees/Data%20pour%20carte" rel="nofollow">ici</a>.</div>
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+
+<p>
+Commençons par importer les librairies nécessaires. 
+</p>
+<pre class="code python"><span class="kw1">from</span> <span class="kw3">urllib</span>.<span class="me1">request</span> <span class="kw1">import</span> urlopen <span class="co1"># Permet l'importation de fichier via lien internet</span>
+<span class="kw1">import</span> json <span class="co1"># Permet le traitement de fichier GEOJSON</span>
+<span class="kw1">import</span> folium <span class="co1"># Librairie de carte</span></pre>
+
+<p>
+Importation du fichier GEOJSON
+</p>
+<pre class="code python"><span class="kw1">with</span> urlopen<span class="br0">&#40;</span><span class="st0">'https://raw.githubusercontent.com/python-visualization/folium/master/examples/data/search_states.json'</span><span class="br0">&#41;</span> <span class="kw1">as</span> response:
+    etat <span class="sy0">=</span> json.<span class="me1">load</span><span class="br0">&#40;</span>response<span class="br0">&#41;</span></pre>
+
+<p>
+Importons ensuite le fichier de données et créons notre carte.
+</p>
+<pre class="code python">donne_pauvrete <span class="sy0">=</span> pd.<span class="me1">read_csv</span><span class="br0">&#40;</span><span class="st0">&quot;pauvrete.csv&quot;</span><span class="sy0">,</span>sep<span class="sy0">=</span><span class="st0">&quot;,&quot;</span><span class="br0">&#41;</span>
+carte <span class="sy0">=</span> folium.<span class="me1">Map</span><span class="br0">&#40;</span>location<span class="sy0">=</span><span class="br0">&#91;</span><span class="nu0">37</span><span class="sy0">,</span> -<span class="nu0">102</span><span class="br0">&#93;</span><span class="sy0">,</span> zoom_start<span class="sy0">=</span><span class="nu0">4</span><span class="br0">&#41;</span> <span class="co1"># location represente la géolocalisation des États-Unis (longitude, latitude), # zoom_start permet d'avoir un zoom sur cette partie du monde</span></pre>
+
+<p>
+A cet instant, si vous lancez la variable carte, vous obtiendrez une carte vierge. Il est alors nécessaire d&#039;ajouter nos données grâce au fichier GEOJSON et d&#039;utiliser type de carte adapté au problème.
+Ici nous utiliserons une carte choroplèthe.
+</p>
+<pre class="code python"> folium.<span class="me1">Choropleth</span><span class="br0">&#40;</span>
+ geo_data<span class="sy0">=</span>etat<span class="sy0">,</span> <span class="co1"># Correspondance des coordonnées géographiques grâce au fichier GEOJSON</span>
+ name<span class="sy0">=</span><span class="st0">'Pauvrete'</span><span class="sy0">,</span>
+ data<span class="sy0">=</span>donne_pauvrete<span class="sy0">,</span><span class="co1"># Utilisation des données sur la carte</span>
+ columns<span class="sy0">=</span><span class="br0">&#91;</span><span class="st0">'state_National'</span><span class="sy0">,</span> <span class="st0">'Pauvreté'</span><span class="br0">&#93;</span><span class="sy0">,</span><span class="co1"># Correspondance des colonnes à utiliser : la première étant la colonne des états et l'autre des données de pauvréte correspondants.</span>
+ <span class="co1"># Il est nécessaire de connaitre ce par quoi sont identifier les régions dans le fichier GEOJSON et ainsi les faire correspondre (dans le même ordre) dans le fichier de données. </span>
+ <span class="co1"># Par exemple ici, le GEOJSON identifie les états par leur nom, donc dans nos données les états sont connus par leur nom. Cela aurait pu être le code postal ou une aute mesure d'identification. </span>
+ key_on<span class="sy0">=</span><span class="st0">'feature.properties.name'</span><span class="sy0">,</span><span class="co1"># Correspondance des noms d'états dans le fichier GEOJSON</span>
+ fill_opacity<span class="sy0">=</span><span class="nu0">0.7</span><span class="sy0">,</span>
+ line_opacity<span class="sy0">=</span><span class="nu0">0.2</span><span class="sy0">,</span>
+ fill_color<span class="sy0">=</span><span class="st0">'YlOrRd'</span><span class="sy0">,</span> <span class="co1"># Définition de couleurs de données</span>
+ legend_name<span class="sy0">=</span><span class="st0">'Taux de pauvrete'</span><span class="sy0">,</span> <span class="co1"># Création d'une légende</span>
+<span class="br0">&#41;</span>.<span class="me1">add_to</span><span class="br0">&#40;</span>carte<span class="br0">&#41;</span> <span class="co1"># Permet d'ajouter toutes ces informations à la carte</span>
+&nbsp;
+carte <span class="co1"># Lancement de la carte</span></pre>
+
+</div>
+
+<h5 id="resultat8">Résultat</h5>
+<div class="level5">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Avisualiser_le_dataset&amp;media=cpp:us.png" class="media" title="cpp:us.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=a4bc54&amp;media=cpp:us.png" class="mediacenter" title="Taux de chômage aux Etats-Unis" alt="Taux de chômage aux Etats-Unis" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 7 :</strong> Taux de chômage aux Etats-Unis</p><!--divalign-->
+
+</div>
+
+<h5 id="source4">Source</h5>
+<div class="level5">
+
+<p>
+Nous remercions la communauté <a href="https://github.com/python-visualization/folium" class="urlextern" title="https://github.com/python-visualization/folium" rel="nofollow"> GitHub </a> pour leur travail.
+</p>
+
+<p>
+ <em class="u">Code R</em>
+</p>
+
+<p>
+Créer une carte sous R suit le même processus qu&#039;en Python, toutefois il existe des spécificités R qui seront expliquées ci-dessous.
+</p>
+
+<p>
+Importation des données de pauvreté et des coordonnées géographiques.
+</p>
+<pre class="code python">data <span class="sy0">&lt;</span>- read.<span class="kw3">csv</span><span class="br0">&#40;</span><span class="st0">&quot;pauvrete.csv&quot;</span><span class="sy0">,</span> sep <span class="sy0">=</span> <span class="st0">&quot;,&quot;</span><span class="sy0">,</span> stringsAsFactors<span class="sy0">=</span>F<span class="br0">&#41;</span>
+&nbsp;
+states <span class="sy0">&lt;</span>- states<span class="br0">&#40;</span>cb<span class="sy0">=</span>T<span class="sy0">,</span> year<span class="sy0">=</span><span class="nu0">2016</span><span class="br0">&#41;</span><span class="co1">#Pour des raisons de cohérence, les données de 2016 étaient les plus adaptées, en effet les noms des états sont rangés dans l'ordre croissant et correspondent donc au rangement de nos données.</span></pre>
+
+</div>
+
+<h5 id="explication_des_parametres">Explication des paramètres</h5>
+<div class="level5">
+<div class="table sectionedit13"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0 leftalign">              </td><th class="col1 leftalign"> Explication                  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 leftalign"> stringsAsFactors      </th><td class="col1 leftalign"> Permet que les caractères ne soient pas définis comme des facteurs d&#039;où le stringsAsFactors = False. Cela empêcherait la lecture des états lors de la jointure des données de pauvreté et des coordonnées.           </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 leftalign"> cb      </th><td class="col1"> Téléchargement du fichier d&#039;états généralisé </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 leftalign"> year    </th><td class="col1"> Année de mise à jour des données </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:13,&quot;range&quot;:&quot;15657-16069&quot;} -->
+<p>
+On regroupe les états, renommons la colonne state_National par “etat” et faisons la jointure entre les états et les coordonnées géographiques correspondantes.
+</p>
+<pre class="code python">data <span class="sy0">&lt;</span>- data %<span class="sy0">&gt;</span>%
+  group_by<span class="br0">&#40;</span>state_National<span class="br0">&#41;</span> %<span class="sy0">&gt;</span>%
+  rename<span class="br0">&#40;</span>etat<span class="sy0">=</span>state_National<span class="br0">&#41;</span>
+View<span class="br0">&#40;</span>data<span class="br0">&#41;</span>
+&nbsp;
+&nbsp;
+etats <span class="sy0">&lt;</span>- geo_join<span class="br0">&#40;</span>states<span class="sy0">,</span> data<span class="sy0">,</span> <span class="st0">&quot;NAME&quot;</span><span class="sy0">,</span> <span class="st0">&quot;etat&quot;</span><span class="br0">&#41;</span><span class="co1"># &quot;NAME&quot; étant le nom des états dans le fichier de coordonnées et &quot;state&quot; leur nom dans les données.</span></pre>
+
+<p>
+On définit ensuite les couleurs à utiliser dans la carte et on élimine les états manquants dans nos données. Ces états correspondent aux îles pour lesquelles nous n&#039;avons pas de données.
+</p>
+<pre class="code python">mypalette <span class="sy0">&lt;</span>- colorNumeric<span class="br0">&#40;</span>palette<span class="sy0">=</span><span class="st0">&quot;YlOrRd&quot;</span><span class="sy0">,</span> domain<span class="sy0">=</span>data$Pauvrete<span class="sy0">,</span> na.<span class="me1">color</span><span class="sy0">=</span><span class="st0">&quot;transparent&quot;</span><span class="br0">&#41;</span>
+etats_join <span class="sy0">&lt;</span>- subset<span class="br0">&#40;</span>etats<span class="sy0">,</span> <span class="sy0">!</span><span class="kw1">is</span>.<span class="me1">na</span><span class="br0">&#40;</span>Pauvrete<span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+</div>
+
+<h5 id="explication_des_parametres1">Explication des paramètres</h5>
+<div class="level5">
+<div class="table sectionedit14"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0 leftalign">              </td><th class="col1 leftalign"> Explication                  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 leftalign"> palette      </th><td class="col1 leftalign"> Type de couleurs utilisé          </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 leftalign"> domain     </th><td class="col1"> Données à représenter </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 leftalign"> na.color    </th><td class="col1"> Gestion de la couleur des données manquantes </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:14,&quot;range&quot;:&quot;16890-17098&quot;} -->
+<p>
+Commence alors la création de la carte.
+</p>
+<pre class="code python">leaflet<span class="br0">&#40;</span><span class="br0">&#41;</span> %<span class="sy0">&gt;</span>%
+   addProviderTiles<span class="br0">&#40;</span><span class="st0">&quot;CartoDB.Positron&quot;</span><span class="br0">&#41;</span> %<span class="sy0">&gt;</span>% <span class="co1"># Plugin permettant d'ajouter les couleurs correspondant à l'état concerné.</span>
+   setView<span class="br0">&#40;</span>-<span class="nu0">98.483330</span><span class="sy0">,</span> <span class="nu0">38.712046</span><span class="sy0">,</span> zoom <span class="sy0">=</span> <span class="nu0">4</span><span class="br0">&#41;</span> %<span class="sy0">&gt;</span>% <span class="co1"># longitude, latitude et définition du zoom.</span>
+   addPolygons<span class="br0">&#40;</span>data <span class="sy0">=</span> etats_join <span class="sy0">,</span> <span class="co1"># Variable d'états et de leurs coordonnées</span>
+               fillColor <span class="sy0">=</span> <span class="sy0">~</span>mypalette<span class="br0">&#40;</span>etats_join$Pauvrete<span class="br0">&#41;</span><span class="sy0">,</span> 
+               fillOpacity <span class="sy0">=</span> <span class="nu0">0.7</span><span class="sy0">,</span> 
+               weight <span class="sy0">=</span> <span class="nu0">0.2</span><span class="sy0">,</span> 
+               smoothFactor <span class="sy0">=</span> <span class="nu0">0.2</span><span class="br0">&#41;</span>%<span class="sy0">&gt;</span>% 
+   addLegend<span class="br0">&#40;</span>pal <span class="sy0">=</span> mypalette<span class="sy0">,</span> <span class="co1"># Utilisation de la palette de couleurs</span>
+             values <span class="sy0">=</span> etats_join$Pauvrete<span class="sy0">,</span> <span class="co1"># Données representées</span>
+             position <span class="sy0">=</span> <span class="st0">&quot;bottomright&quot;</span><span class="sy0">,</span> <span class="co1"># Positionnement de la légende</span>
+             title <span class="sy0">=</span> <span class="st0">&quot;Taux de pauvreté&quot;</span><span class="br0">&#41;</span> <span class="co1"># Titre de la légende</span>
+&nbsp;</pre>
+
+</div>
+
+<h5 id="resultat9">Résultat</h5>
+<div class="level5">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Avisualiser_le_dataset&amp;media=cpp:map.png" class="media" title="cpp:map.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=43d3c9&amp;media=cpp:map.png" class="mediacenter" title="Taux de chômage aux Etats-Unis" alt="Taux de chômage aux Etats-Unis" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 8 :</strong> Taux de chômage aux Etats-Unis</p><!--divalign-->
+
+</div>
+
+<h5 id="source5">Source</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li">  <a href="https://learn.r-journalism.com/en/mapping/census_maps/census-maps/" class="urlextern" title="https://learn.r-journalism.com/en/mapping/census_maps/census-maps/" rel="nofollow">R-journalism</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Carte&quot;,&quot;hid&quot;:&quot;carte&quot;,&quot;codeblockOffset&quot;:23,&quot;secid&quot;:12,&quot;range&quot;:&quot;11768-18148&quot;} -->
+<h2 class="sectionedit15" id="bonus">Bonus</h2>
+<div class="level2">
+
+<p>
+Ici nous allons décrire toutes les petites astuces pour améliorer les graphiques et les rendre plus jolis et compréhensibles.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Bonus&quot;,&quot;hid&quot;:&quot;bonus&quot;,&quot;codeblockOffset&quot;:31,&quot;secid&quot;:15,&quot;range&quot;:&quot;18149-18294&quot;} -->
+<h3 class="sectionedit16" id="astuces_matplotlib">Astuces matplotlib</h3>
+<div class="level3">
+
+</div>
+
+<h4 id="taille_de_la_figure">Taille de la figure</h4>
+<div class="level4">
+
+<p>
+Pour redéfinir la taille de la figure :
+</p>
+<pre class="code python">plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">15</span><span class="sy0">,</span><span class="nu0">5</span><span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+</div>
+
+<h4 id="les_subplots">Les subplots</h4>
+<div class="level4">
+
+<p>
+Les subplots sont particulièrement utiles quand on veut afficher plusieurs graphiques dans un même graphique.
+</p>
+<pre class="code python">plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">15</span><span class="sy0">,</span><span class="nu0">5</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+plt.<span class="me1">subplot</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">3</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span>
+<span class="co1">#On met ici les lignes qui définissent le premier graphique</span>
+plt.<span class="me1">subplot</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">3</span><span class="sy0">,</span><span class="nu0">2</span><span class="br0">&#41;</span>
+<span class="co1">#On met ici les lignes qui définissent le deuxième graphique</span>
+plt.<span class="me1">subplot</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">3</span><span class="sy0">,</span><span class="nu0">3</span><span class="br0">&#41;</span>
+<span class="co1">#On met ici les lignes qui définissent le troisième graphique</span></pre>
+
+</div>
+
+<h5 id="resultat10">Résultat</h5>
+<div class="level5">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Avisualiser_le_dataset&amp;media=cpp:imagesubplot.png" class="media" title="cpp:imagesubplot.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=e6c0da&amp;media=cpp:imagesubplot.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+</div>
+
+<h4 id="ecrire_sur_le_graphique">Ecrire sur le graphique</h4>
+<div class="level4">
+
+<p>
+Il est possible de rajouter du texte sur le graphique.
+</p>
+<pre class="code python">plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">8</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+plt.<span class="me1">scatter</span><span class="br0">&#40;</span>X<span class="sy0">,</span>y<span class="br0">&#41;</span>
+<span class="co1">#positionX,positionY, Titre, Taille, Couleur, Transparence, Style</span>
+plt.<span class="me1">text</span><span class="br0">&#40;</span><span class="nu0">2.2</span><span class="sy0">,</span> <span class="nu0">8</span><span class="sy0">,</span> <span class="st0">'Ici vous avez une description <span class="es0">\n</span> de votre graphique.'</span><span class="sy0">,</span> style <span class="sy0">=</span> <span class="st0">'italic'</span><span class="sy0">,</span>
+            fontweight <span class="sy0">=</span> <span class="st0">'bold'</span><span class="sy0">,</span> fontsize <span class="sy0">=</span> <span class="nu0">20</span><span class="sy0">,</span> family <span class="sy0">=</span> <span class="st0">'serif'</span><span class="br0">&#41;</span>
+plt.<span class="me1">figtext</span><span class="br0">&#40;</span><span class="nu0">0.15</span><span class="sy0">,</span> <span class="nu0">0.8</span><span class="sy0">,</span> <span class="st0">'Texte sur toute la figure'</span><span class="sy0">,</span>
+               fontsize <span class="sy0">=</span> <span class="nu0">25</span><span class="sy0">,</span> color <span class="sy0">=</span> <span class="st0">'orange'</span><span class="sy0">,</span> alpha <span class="sy0">=</span> <span class="nu0">0.5</span><span class="sy0">,</span> fontweight <span class="sy0">=</span> <span class="st0">'bold'</span><span class="br0">&#41;</span>
+<span class="co1">#shrink définit l'éloignement du texte par rapport à la flèche</span>
+<span class="co1">#xy coord de la flèche par rapport à l'échelle du graphe</span>
+<span class="co1">#xytext coordonnées du texte.</span>
+plt.<span class="me1">annotate</span><span class="br0">&#40;</span><span class="st0">'Remarque'</span><span class="sy0">,</span> xy <span class="sy0">=</span> <span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">6</span><span class="br0">&#41;</span><span class="sy0">,</span> xytext <span class="sy0">=</span> <span class="br0">&#40;</span><span class="nu0">1.3</span><span class="sy0">,</span> <span class="nu0">2.4</span><span class="br0">&#41;</span><span class="sy0">,</span>
+                arrowprops <span class="sy0">=</span> <span class="br0">&#123;</span><span class="st0">'facecolor'</span>: <span class="st0">'cyan'</span><span class="sy0">,</span> <span class="st0">'edgecolor'</span>: <span class="st0">'cyan'</span><span class="sy0">,</span>
+                              <span class="st0">'width'</span>: <span class="nu0">15</span><span class="sy0">,</span> <span class="st0">'headwidth'</span>: <span class="nu0">30</span><span class="sy0">,</span> <span class="st0">'shrink'</span>: <span class="nu0">0.1</span><span class="br0">&#125;</span><span class="br0">&#41;</span></pre>
+
+</div>
+
+<h5 id="resultat11">Résultat</h5>
+<div class="level5">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Avisualiser_le_dataset&amp;media=cpp:optionmatplotlib.png" class="media" title="cpp:optionmatplotlib.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=1f01d9&amp;media=cpp:optionmatplotlib.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+</div>
+
+<h5 id="source6">Source</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.python-simple.com/python-matplotlib/matplotlib-intro.php" class="urlextern" title="http://www.python-simple.com/python-matplotlib/matplotlib-intro.php" rel="nofollow">Python-simple</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Astuces matplotlib&quot;,&quot;hid&quot;:&quot;astuces_matplotlib&quot;,&quot;codeblockOffset&quot;:31,&quot;secid&quot;:16,&quot;range&quot;:&quot;18295-&quot;} -->

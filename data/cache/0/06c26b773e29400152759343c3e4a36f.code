@@ -1,0 +1,3 @@
+<span class="kw1">import</span> sklearn.<span class="me1">datasets</span> <span class="kw1">as</span> dt
+&nbsp;
+X<span class="sy0">,</span> y <span class="sy0">=</span> dt.<span class="me1">make_blobs</span><span class="br0">&#40;</span>n_samples <span class="sy0">=</span> <span class="nu0">100</span><span class="sy0">,</span> centers <span class="sy0">=</span> <span class="nu0">3</span><span class="sy0">,</span> cluster_std<span class="sy0">=</span><span class="nu0">0.5</span><span class="br0">&#41;</span>

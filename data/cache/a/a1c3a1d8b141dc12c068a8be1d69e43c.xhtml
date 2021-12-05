@@ -1,0 +1,230 @@
+
+<p>
+<a href="/doku.php?id=cpp:data_exploration" class="wikilink1" title="cpp:data_exploration"> Data exploration</a>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_k-means&amp;media=cpp:k-mean.gif" class="media" title="cpp:k-mean.gif"><img src="/lib/exe/fetch.php?w=500&amp;tok=61d622&amp;media=cpp:k-mean.gif" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+L&#039;algorithme des K-Means est l&#039;un des plus connus et utilisé. Il est assez simple et reste efficace.
+</p>
+
+<p>
+<strong>Animation :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="/doku.php?id=cpp:www.analyticsvidhya.com" class="wikilink2" title="cpp:www.analyticsvidhya.com" rel="nofollow">www.analyticsvidhya.com</a></div>
+</li>
+</ul>
+
+<h2 class="sectionedit1" id="principe_de_l_algorithme">Principe de l&#039;algorithme</h2>
+<div class="level2">
+
+<p>
+<div class='alert alert-info'> <strong>Rappel :</strong> Dans cette partie, on utilisera le dataset de mesures de gaz contenus dans l&#039;alcool, disponible <a href="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Exploration%20des%20donnees/Data%20gaz" class="urlextern" title="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Exploration%20des%20donnees/Data%20gaz" rel="nofollow">ici</a>. On considérera le premier relevé que l&#039;on nommera dans le code data.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Principe de l&#039;algorithme&quot;,&quot;hid&quot;:&quot;principe_de_l_algorithme&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;225-581&quot;} -->
+<h3 class="sectionedit2" id="precondition">Précondition</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Avoir une idée du nombre de clusters à trouver (Nous donnerons une astuce pour contourner un peu ce problème ci-dessous)</div>
+</li>
+<li class="level1"><div class="li"> Choisir une distance pertinante par rapport aux données voir <a href="/doku.php?id=cpp:les_distances" class="wikilink1" title="cpp:les_distances"> Bien choisir sa mesure de distance</a></div>
+</li>
+<li class="level1"><div class="li"> Normaliser ses données pour que l&#039;algorithme soit plus performant</div>
+</li>
+</ul>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">preprocessing</span> <span class="kw1">import</span> StandardScaler
+&nbsp;
+scaler <span class="sy0">=</span> StandardScaler<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="co1">#Appel du transformeur</span>
+scaler.<span class="me1">fit_transform</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="co1">#Transformation des données</span>
+data <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>scaler.<span class="me1">fit_transform</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="sy0">,</span> index <span class="sy0">=</span> data.<span class="me1">index</span><span class="sy0">,</span> columns <span class="sy0">=</span> data.<span class="me1">columns</span><span class="br0">&#41;</span><span class="co1">#Construction du DataFrame</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">data <span class="sy0">&lt;</span>- scale<span class="br0">&#40;</span>data<span class="br0">&#41;</span></pre>
+
+<p>
+<div class='alert alert-info'> <strong>Remarque :</strong> Consultez la page <a href="/doku.php?id=cpp:preprocessing_et_encodage" class="wikilink1" title="cpp:preprocessing_et_encodage">pre-processing et encodage</a> pour plus d&#039;informations.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Pr\u00e9condition&quot;,&quot;hid&quot;:&quot;precondition&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;582-1434&quot;} -->
+<h3 class="sectionedit3" id="entrainer_l_algorithme">Entraîner l&#039;algorithme</h3>
+<div class="level3">
+
+<p>
+Nous allons découper chaque itération de l&#039;algorithme en plusieurs étapes :
+</p>
+<ul>
+<li class="level1"><div class="li"> On <span style='color:#ed1c24; '><strong>calcule la distance</strong></span> entre un centre de gravité et chacune des données</div>
+</li>
+<li class="level1"><div class="li"> On recommence pour <span style='color:#ed1c24; '><strong>chacun des centres de gravité</strong></span></div>
+</li>
+<li class="level1"><div class="li"> On <span style='color:#ed1c24; '><strong>sélectionne</strong></span> pour chaque centre les <span style='color:#ed1c24; '><strong>données</strong></span> dont il est le <span style='color:#ed1c24; '><strong>plus proche</strong></span></div>
+</li>
+<li class="level1"><div class="li"> On <span style='color:#ed1c24; '><strong>déplace</strong></span> les centres pour les placer au <span style='color:#ed1c24; '><strong>centre de l&#039;ensemble sélectionné</strong></span></div>
+</li>
+</ul>
+
+<p>
+<strong>Condition d&#039;arrêt :</strong> Si les centres des clusters ne varient pas d&#039;une itération à l&#039;autre on arrête d&#039;itérer
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">cluster</span> <span class="kw1">import</span> KMeans
+&nbsp;
+model <span class="sy0">=</span> KMeans<span class="br0">&#40;</span>n_clusters <span class="sy0">=</span> <span class="nu0">3</span><span class="sy0">,</span> max_iter<span class="sy0">=</span><span class="nu0">500</span><span class="sy0">,</span> init<span class="sy0">=</span><span class="st0">'k-means++'</span><span class="br0">&#41;</span><span class="co1">#Création du modèle, initialisation du nombre de clusters et d'itérations</span>
+<span class="co1">#Définition de la méthode d'initialisation des centres de gravité</span>
+model.<span class="me1">fit</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="co1">#Entrainement du modèle</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>cluster<span class="br0">&#41;</span>
+&nbsp;
+model <span class="sy0">=</span> kmeans<span class="br0">&#40;</span>data<span class="sy0">,</span> center<span class="sy0">=</span><span class="nu0">3</span><span class="br0">&#41;</span><span class="co1">#data étant le jeu de données et center le nombre de clusters</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Entra\u00eener l&#039;algorithme&quot;,&quot;hid&quot;:&quot;entrainer_l_algorithme&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:3,&quot;range&quot;:&quot;1435-2622&quot;} -->
+<h2 class="sectionedit4" id="evaluer_son_modele">Évaluer son modèle</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u00c9valuer son mod\u00e8le&quot;,&quot;hid&quot;:&quot;evaluer_son_modele&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:4,&quot;range&quot;:&quot;2623-2654&quot;} -->
+<h3 class="sectionedit5" id="visualiser_la_forme_des_clusters">Visualiser la forme des clusters</h3>
+<div class="level3">
+
+<p>
+Un bon moyen de savoir si son modèle a fonctionné est de regarder si les prédiction sont conforment aux observations graphiques que l&#039;on a pu faire.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">12</span><span class="sy0">,</span> <span class="nu0">6</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Définition de la taille du graphique</span>
+&nbsp;
+plt.<span class="me1">scatter</span><span class="br0">&#40;</span>data<span class="br0">&#91;</span><span class="st0">'0.799_0.201'</span><span class="br0">&#93;</span><span class="sy0">,</span> data<span class="br0">&#91;</span><span class="st0">'0.799_0.201.1'</span><span class="br0">&#93;</span><span class="sy0">,</span> c<span class="sy0">=</span>model.<span class="me1">predict</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="co1">#Nuage de points des clusters </span>
+plt.<span class="me1">scatter</span><span class="br0">&#40;</span>model.<span class="me1">cluster_centers_</span><span class="br0">&#91;</span>:<span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span> model.<span class="me1">cluster_centers_</span><span class="br0">&#91;</span>:<span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">,</span> c<span class="sy0">=</span><span class="st0">'r'</span><span class="br0">&#41;</span><span class="co1">#Positionnement des centres des différent clusters</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">plot<span class="br0">&#40;</span>data<span class="sy0">,</span> col <span class="sy0">=</span> model$cluster<span class="br0">&#41;</span><span class="co1">#Nuage de points de points des clusters</span>
+points<span class="br0">&#40;</span>model$centers<span class="sy0">,</span> col <span class="sy0">=</span> <span class="nu0">1</span>:<span class="nu0">2</span><span class="sy0">,</span> pch <span class="sy0">=</span> <span class="nu0">8</span><span class="sy0">,</span> cex <span class="sy0">=</span> <span class="nu0">2</span><span class="br0">&#41;</span><span class="co1">#Positionnement des centres des clusters</span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_k-means&amp;media=cpp:clustering_clus3.png" class="media" title="cpp:clustering_clus3.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=271d63&amp;media=cpp:clustering_clus3.png" class="mediacenter" title="Résultat du clustering avec 3 clusters" alt="Résultat du clustering avec 3 clusters" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 1 :</strong> Résultat du clustering avec 3 clusters</p><!--divalign-->
+
+<p>
+<div class='alert alert-warning'><strong>Remarques :</strong> Parmi les trois clusters défini initialement, seul l&#039;un d&#039;entre eux correspond à son centre de gravité. Cela veut donc dire que le nombre de clusters défini n&#039;est pas exact, vu qu&#039;il n&#039;y a pas de convergence des deux autres centres de gravité.</div>
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://openclassrooms.com/fr/courses/4379436-explorez-vos-donnees-avec-des-algorithmes-non-supervises/4379556-definissez-les-criteres-que-doit-satisfaire-votre-clustering" class="urlextern" title="https://openclassrooms.com/fr/courses/4379436-explorez-vos-donnees-avec-des-algorithmes-non-supervises/4379556-definissez-les-criteres-que-doit-satisfaire-votre-clustering" rel="nofollow">https://openclassrooms.com/fr/courses/4379436-explorez-vos-donnees-avec-des-algorithmes-non-supervises/4379556-definissez-les-criteres-que-doit-satisfaire-votre-clustering</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Visualiser la forme des clusters&quot;,&quot;hid&quot;:&quot;visualiser_la_forme_des_clusters&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:5,&quot;range&quot;:&quot;2655-4028&quot;} -->
+<h2 class="sectionedit6" id="optimiser_son_modele">Optimiser son modèle</h2>
+<div class="level2">
+
+<p>
+L&#039;algorithme des K-means comporte plusieurs faiblesses :
+</p>
+<ul>
+<li class="level1"><div class="li"> Il est nécessaire de <span style='color:#ed1c24; '><strong>préciser le nombre de nuages</strong></span> que l&#039;on souhaite avant de lancer l&#039;algorithme ce qui peut être problématique quand on a <span style='color:#ed1c24; '><strong>aucune idée de la forme des données</strong></span>.</div>
+</li>
+<li class="level1"><div class="li"> Le <span style='color:#ed1c24; '><strong>placement initial des centre</strong></span> peut se faire de 2 façons, aléatoirement (ce qui est loin d&#039;être optimal) ou de façon qu&#039;ils soient les plus éloignés les un des autres tout en étant proche des groupes de données.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Optimiser son mod\u00e8le&quot;,&quot;hid&quot;:&quot;optimiser_son_modele&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:6,&quot;range&quot;:&quot;4029-4612&quot;} -->
+<h3 class="sectionedit7" id="astuce_pour_contourner_le_probleme">Astuce pour contourner le problème</h3>
+<div class="level3">
+
+<p>
+On utilisera une méthode appelée<span style='color:#ed1c24; '> <strong>Elbow Method</strong></span>,  qui calcule la variance expliquée par chacun des clusters. On verra ainsi la courbe de variance expliquée et on déterminera le nombre de clusters optimaux, expliquant au maximum nos données.
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python">inertia <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span><span class="co1">#Initialisation d'un tableau d'inertie</span>
+K_range <span class="sy0">=</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">20</span><span class="br0">&#41;</span><span class="co1">#Création d'une liste de nombre de cluster</span>
+<span class="kw1">for</span> k <span class="kw1">in</span> K_range:
+    model <span class="sy0">=</span> KMeans<span class="br0">&#40;</span>n_clusters <span class="sy0">=</span> k<span class="br0">&#41;</span>.<span class="me1">fit</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span><span class="co1">#Entrainement du modèle pour chaque nombre de clusters de la liste</span>
+    inertia.<span class="me1">append</span><span class="br0">&#40;</span>model.<span class="me1">inertia_</span><span class="br0">&#41;</span><span class="co1">#Ajout de l'inertie de chaque modèle</span>
+&nbsp;
+<span class="co1">#Partie visualisation</span>
+&nbsp;
+plt.<span class="me1">plot</span><span class="br0">&#40;</span>K_range<span class="sy0">,</span> inertia<span class="br0">&#41;</span><span class="co1">#Graphique d'inertie de chaque modèle en fonction du nombre de clusters associés</span>
+plt.<span class="me1">xlabel</span><span class="br0">&#40;</span><span class="st0">'Nombre de cluster'</span><span class="br0">&#41;</span>
+plt.<span class="me1">ylabel</span><span class="br0">&#40;</span><span class="st0">'Inertie expliquée'</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">R2 <span class="sy0">=</span> vector <span class="br0">&#40;</span><span class="st0">&quot;numeric&quot;</span><span class="sy0">,</span> <span class="nu0">9</span><span class="br0">&#41;</span>
+<span class="kw1">for</span><span class="br0">&#40;</span>k <span class="kw1">in</span> <span class="nu0">2</span>:<span class="nu0">10</span><span class="br0">&#41;</span>           <span class="co1">#pour i allant de 2 à</span>
+<span class="br0">&#123;</span>
+  cl <span class="sy0">=</span> kmeans<span class="br0">&#40;</span>data<span class="sy0">,</span> centers<span class="sy0">=</span>k<span class="sy0">,</span> nstart<span class="sy0">=</span><span class="nu0">5</span><span class="br0">&#41;</span>
+  R2<span class="br0">&#91;</span>k-<span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">=</span>cl$betweenss/cl$totss
+<span class="br0">&#125;</span>
+plot<span class="br0">&#40;</span><span class="nu0">2</span>:<span class="nu0">10</span><span class="sy0">,</span>R2<span class="sy0">,</span><span class="kw2">type</span><span class="sy0">=</span><span class="st0">&quot;b&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_k-means&amp;media=cpp:elbow.png" class="media" title="cpp:elbow.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=b1ea73&amp;media=cpp:elbow.png" class="mediacenter" title="Inertie des modèles en fonction du nombre de clusters" alt="Inertie des modèles en fonction du nombre de clusters" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 2 :</strong> Inertie des modèles en fonction du nombre de clusters</p><!--divalign-->
+
+<p>
+Il en ressort que le jeu de données utilisé contient cinq clusters, qu&#039;on peut mieux visualiser après modification du paramètre.
+</p>
+
+<p>
+<strong>Résultat optimal</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ale_k-means&amp;media=cpp:lustering_after_elbow.png" class="media" title="cpp:lustering_after_elbow.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=decd08&amp;media=cpp:lustering_after_elbow.png" class="mediacenter" title="Répartition des clusters après optimisation" alt="Répartition des clusters après optimisation" width="600" /></a>
+</p>
+<p class="divalign-center"><strong>Figure 3 :</strong> Clusters optimaux du jeu de données</p><!--divalign-->
+
+<p>
+<strong>Sources :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.youtube.com/watch?v=FTtzd31IAOw&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=28" class="urlextern" title="https://www.youtube.com/watch?v=FTtzd31IAOw&amp;list=PLO_fdPEVlfKqMDNmCFzQISI2H_nJcEDJq&amp;index=28" rel="nofollow"> Machine Learnia, par Guillaume Saint-Cirgue</a></div>
+</li>
+<li class="level1"><div class="li"> Cours de Data Mining : Clustering, par Astrid Jourdan, CY Tech</div>
+</li>
+<li class="level1"><div class="li"> <a href="https://lovelyanalytics.com/2017/11/18/cah-methode-mixte/" class="urlextern" title="https://lovelyanalytics.com/2017/11/18/cah-methode-mixte/" rel="nofollow">https://lovelyanalytics.com/2017/11/18/cah-methode-mixte/</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Astuce pour contourner le probl\u00e8me&quot;,&quot;hid&quot;:&quot;astuce_pour_contourner_le_probleme&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:7,&quot;range&quot;:&quot;4613-&quot;} -->

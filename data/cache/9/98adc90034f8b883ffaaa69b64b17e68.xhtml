@@ -1,0 +1,234 @@
+
+<p>
+<a href="/lib/exe/fetch.php?media=cpp:cave_biere.jpg" class="media" title="cpp:cave_biere.jpg"><img src="/lib/exe/fetch.php?w=500&amp;tok=07f6b3&amp;media=cpp:cave_biere.jpg" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+Supposons que vous ayez un stock de fûts de bière, et que vous souhaitez savoir quand ce stock sera totalement épuisé (pour partir en vacances ou bien refaire le stock).
+</p>
+
+<p>
+Par chance, un ami à vous vous à fourni une fonction ($f(t) = t^{2} - 10$) qui prédit très precisément l&#039;évolution potentielle de votre stock au cours des prochains mois. Grâce à ce cours vous pourrez déterminer le zéro expérimentalement de la fonction qui s&#039;annule sur un intervalle de temps connu.
+</p>
+
+<h3 class="sectionedit1" id="declarer_la_fonction_a_traiter">Déclarer la fonction à traiter</h3>
+<div class="level3">
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> <span class="kw3">time</span> <span class="co1">#pour le chrono</span>
+&nbsp;
+<span class="co1"># Definition fonction</span>
+<span class="kw1">def</span> f<span class="br0">&#40;</span>x<span class="br0">&#41;</span>:
+    <span class="kw1">return</span> x**<span class="nu0">2</span> -<span class="nu0">10</span></pre>
+
+<p>
+<em class="u">En Matlab :</em>
+</p>
+<pre class="code scilab">&nbsp;</pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Adichotomie&amp;media=cpp:fonctioaoptimiser.png" class="media" title="cpp:fonctioaoptimiser.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=779e3b&amp;media=cpp:fonctioaoptimiser.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;D\u00e9clarer la fonction \u00e0 traiter&quot;,&quot;hid&quot;:&quot;declarer_la_fonction_a_traiter&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;528-791&quot;} -->
+<h2 class="sectionedit2" id="la_dichotomie">La dichotomie</h2>
+<div class="level2">
+
+<p>
+Vous cherchez la fève dans la galette des rois et cette année vous avez décidé de maximiser vous chances en utilisant les Mathématiques. Précisons aussi que depuis la naissance, vous pouvez présentir dans quelle moitié de la galette se trouve la fève.
+</p>
+
+<p>
+Vous voulez bien évidemment ne pas abîmer le gateau pour que votre belle mère ait sa part. Une technique simple pour arriver à ce résultat est de couper le gateau en deux, et de selectionner la moitié qui contient la fève. Oubliez ensuite la partie sans fève du gateau et recoupez la partie qui nous intèresse en deux. En réitèrant ce procédé, vous serez sûr d&#039;arriver rapidement à trouver la part de galette qui contient la fève, sans avoir à saccager toute la galette. 
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La dichotomie&quot;,&quot;hid&quot;:&quot;la_dichotomie&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:2,&quot;range&quot;:&quot;792-1567&quot;} -->
+<h3 class="sectionedit3" id="theorie">Théorie</h3>
+<div class="level3">
+
+<p>
+<a href="/lib/exe/fetch.php?media=cpp:zeromod.png" class="media" title="cpp:zeromod.png"><img src="/lib/exe/fetch.php?w=300&amp;tok=c1f746&amp;media=cpp:zeromod.png" class="mediacenter" alt="" width="300" /></a>
+</p>
+
+<p>
+Cette méthode s&#039;appelle la dichotomie. On recherche en fait le zéro de notre fonction (la fève), sur un intervalle réel (la galette) sans le parcourir en entier, pour cela on divise l&#039;intervalle en deux à chaque itération (coup de couteau) et on ne garde que le sous-intervalle contenant notre zéro. Cette algorithme s&#039;appuie directement sur le <a href="https://fr.wikipedia.org/wiki/Th%C3%A9or%C3%A8me_des_valeurs_interm%C3%A9diaires" class="urlextern" title="https://fr.wikipedia.org/wiki/Th%C3%A9or%C3%A8me_des_valeurs_interm%C3%A9diaires" rel="nofollow">théorème des valeurs intermédiaires</a> . 
+</p>
+
+<p>
+<strong>Algorithme associé :</strong>
+</p>
+<pre class="code">PRECONDITION :
+POSTCONDITION :
+
+Tant que (b - a) &gt; ε 
+    m ← (a + b) / 2
+    Si (f(a)*f(m) ≤ 0) alors
+       b ← m
+    sinon
+       a ← m
+    Fin Si
+ Fin Tant que</pre>
+
+<p>
+<em class="u"><strong>Source</strong></em>: 
+<a href="https://fr.wikipedia.org/wiki/M%C3%A9thode_de_dichotomie#:~:text=La%20m%C3%A9thode%20de%20dichotomie%20ou,un%20z%C3%A9ro%20de%20la%20fonction." class="urlextern" title="https://fr.wikipedia.org/wiki/M%C3%A9thode_de_dichotomie#:~:text=La%20m%C3%A9thode%20de%20dichotomie%20ou,un%20z%C3%A9ro%20de%20la%20fonction." rel="nofollow">Algorithme dichotomie wikipedia</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Th\u00e9orie&quot;,&quot;hid&quot;:&quot;theorie&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:3,&quot;range&quot;:&quot;1568-2515&quot;} -->
+<h3 class="sectionedit4" id="dichotomie_classique">Dichotomie classique</h3>
+<div class="level3">
+
+<p>
+<em class="u">En Python:</em>
+</p>
+<pre class="code python"><span class="kw1">def</span> dicho<span class="br0">&#40;</span>f<span class="sy0">,</span> a<span class="sy0">,</span> b<span class="sy0">,</span> epsilon<span class="br0">&#41;</span>:
+    <span class="kw1">if</span> f<span class="br0">&#40;</span>a<span class="br0">&#41;</span> * f<span class="br0">&#40;</span>b<span class="br0">&#41;</span> <span class="sy0">&gt;</span> <span class="nu0">0</span>:
+        <span class="kw1">return</span> <span class="kw2">None</span>
+    u<span class="sy0">,</span> v <span class="sy0">=</span> <span class="kw2">float</span><span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw2">float</span><span class="br0">&#40;</span>b<span class="br0">&#41;</span>
+    <span class="kw1">while</span> <span class="kw2">abs</span><span class="br0">&#40;</span>v - u<span class="br0">&#41;</span> <span class="sy0">&gt;</span> <span class="nu0">2</span> * epsilon:
+        w <span class="sy0">=</span> <span class="br0">&#40;</span>u + v<span class="br0">&#41;</span> / <span class="nu0">2</span>
+        <span class="kw1">if</span> f<span class="br0">&#40;</span>u<span class="br0">&#41;</span> * f<span class="br0">&#40;</span>w<span class="br0">&#41;</span> <span class="sy0">&lt;=</span> <span class="nu0">0</span>:
+            v <span class="sy0">=</span> w
+        <span class="kw1">else</span>:
+            u <span class="sy0">=</span> w
+    <span class="kw1">return</span> <span class="br0">&#40;</span>u + v<span class="br0">&#41;</span> / <span class="nu0">2</span>
+<span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;La valeur du zéro de cette fonction sur (-10,10) à 1e-3 pret est:&quot;</span><span class="sy0">,</span>dicho<span class="br0">&#40;</span>f<span class="sy0">,</span>-<span class="nu0">10</span><span class="sy0">,</span><span class="nu0">10</span><span class="sy0">,</span> <span class="nu0">1e-3</span><span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En Matlab:</em>
+</p>
+<pre class="code scilab">&nbsp;</pre>
+
+<p>
+ <strong>Résultats :</strong>
+</p>
+
+<p>
+Chaque trait représente la découpe de l&#039;intervalle, corespondant à l&#039;itération en cours, à la moitié.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Adichotomie&amp;media=cpp:resultatdico.png" class="media" title="cpp:resultatdico.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=59be19&amp;media=cpp:resultatdico.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+<div class="table sectionedit5"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0 leftalign">              </td><th class="col1 leftalign"> Temps d&#039;exécution                  </th><th class="col2 leftalign"> Complexité          </th><th class="col3"> Nombre d&#039;itérations </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 leftalign"> Dichotomie Classique      </th><td class="col1 leftalign">                     </td><td class="col2 leftalign">                                </td><td class="col3 leftalign">                                     </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:5,&quot;range&quot;:&quot;3156-3379&quot;} -->
+<p>
+<div class='alert alert-info'>Ici tu peux mettre le domaine d&#039;application dans la vie réelle.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Dichotomie classique&quot;,&quot;hid&quot;:&quot;dichotomie_classique&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:4,&quot;range&quot;:&quot;2516-3465&quot;} -->
+<h3 class="sectionedit6" id="dichotomie_recursive">Dichotomie récursive</h3>
+<div class="level3">
+<pre class="code python"> <span class="co1">## Dicho avec recursivité</span>
+&nbsp;
+ start_time <span class="sy0">=</span> <span class="kw3">time</span>.<span class="kw3">time</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="co1">#début du chrono</span>
+&nbsp;
+ <span class="kw1">def</span> dicho_rec<span class="br0">&#40;</span>f<span class="sy0">,</span>a<span class="sy0">,</span> b<span class="sy0">,</span>prec<span class="br0">&#41;</span>:
+     a<span class="sy0">,</span> b <span class="sy0">=</span> <span class="kw2">float</span><span class="br0">&#40;</span>a<span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw2">float</span><span class="br0">&#40;</span>b<span class="br0">&#41;</span>
+     <span class="kw1">if</span> b-a<span class="sy0">&lt;=</span>prec:
+         <span class="kw1">return</span> <span class="br0">&#40;</span>a+b<span class="br0">&#41;</span>/<span class="nu0">2</span>
+     <span class="kw1">else</span>:
+         c <span class="sy0">=</span> <span class="br0">&#40;</span>a+b<span class="br0">&#41;</span>/<span class="nu0">2</span>
+     <span class="kw1">if</span> f<span class="br0">&#40;</span>a<span class="br0">&#41;</span>*f<span class="br0">&#40;</span>c<span class="br0">&#41;</span> <span class="sy0">&lt;=</span> <span class="nu0">0</span>:
+         <span class="kw1">return</span> dicho_rec<span class="br0">&#40;</span>f<span class="sy0">,</span>a<span class="sy0">,</span>c<span class="sy0">,</span>prec<span class="br0">&#41;</span>
+     <span class="kw1">else</span>:
+         <span class="kw1">return</span> dicho_rec<span class="br0">&#40;</span>f<span class="sy0">,</span>c<span class="sy0">,</span>b<span class="sy0">,</span>prec<span class="br0">&#41;</span>
+&nbsp;
+&nbsp;
+&nbsp;
+ <span class="co1"># Lecture de l'intervalle</span>
+ a <span class="sy0">=</span> <span class="kw2">float</span><span class="br0">&#40;</span><span class="kw2">input</span><span class="br0">&#40;</span><span class="st0">&quot;Entrer un nombre a:<span class="es0">\n</span>&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+ b <span class="sy0">=</span> <span class="kw2">float</span><span class="br0">&#40;</span><span class="kw2">input</span><span class="br0">&#40;</span><span class="st0">&quot;Entrer un nombre b:<span class="es0">\n</span>&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+ prec <span class="sy0">=</span> <span class="nu0">1e-12</span>
+&nbsp;
+ interval <span class="sy0">=</span> <span class="kw3">time</span>.<span class="kw3">time</span><span class="br0">&#40;</span><span class="br0">&#41;</span> - start_time <span class="co1">#calcul du temps</span>
+&nbsp;
+ <span class="co1"># Résultats</span>
+ <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;La valeur du zéro de cette fonction sur (a,b) est:&quot;</span><span class="sy0">,</span> dicho_rec<span class="br0">&#40;</span>f<span class="sy0">,</span>a<span class="sy0">,</span>b<span class="sy0">,</span>prec<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+ <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;Temps d'execution de la fonction:&quot;</span><span class="sy0">,</span> interval<span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Dichotomie r\u00e9cursive&quot;,&quot;hid&quot;:&quot;dichotomie_recursive&quot;,&quot;codeblockOffset&quot;:5,&quot;secid&quot;:6,&quot;range&quot;:&quot;3466-4216&quot;} -->
+<h2 class="sectionedit7" id="newton">Newton</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Newton&quot;,&quot;hid&quot;:&quot;newton&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:7,&quot;range&quot;:&quot;4217-4234&quot;} -->
+<h3 class="sectionedit8" id="theorie1">Théorie</h3>
+<div class="level3">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Th\u00e9orie&quot;,&quot;hid&quot;:&quot;theorie1&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:8,&quot;range&quot;:&quot;4235-4252&quot;} -->
+<h3 class="sectionedit9" id="python">Python</h3>
+<div class="level3">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Python&quot;,&quot;hid&quot;:&quot;python&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:9,&quot;range&quot;:&quot;4253-4268&quot;} -->
+<h3 class="sectionedit10" id="octave">Octave</h3>
+<div class="level3">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Octave&quot;,&quot;hid&quot;:&quot;octave&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:10,&quot;range&quot;:&quot;4269-4284&quot;} -->
+<h2 class="sectionedit11" id="regula_falsi">Regula Falsi</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Regula Falsi&quot;,&quot;hid&quot;:&quot;regula_falsi&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:11,&quot;range&quot;:&quot;4285-4308&quot;} -->
+<h3 class="sectionedit12" id="theorie2">Théorie</h3>
+<div class="level3">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Th\u00e9orie&quot;,&quot;hid&quot;:&quot;theorie2&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:12,&quot;range&quot;:&quot;4309-4326&quot;} -->
+<h3 class="sectionedit13" id="python1">Python</h3>
+<div class="level3">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Python&quot;,&quot;hid&quot;:&quot;python1&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:13,&quot;range&quot;:&quot;4327-4342&quot;} -->
+<h3 class="sectionedit14" id="octave1">Octave</h3>
+<div class="level3">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Octave&quot;,&quot;hid&quot;:&quot;octave1&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:14,&quot;range&quot;:&quot;4343-4358&quot;} -->
+<h2 class="sectionedit15" id="conclusion">Conclusion</h2>
+<div class="level2">
+
+<p>
+Voici les vitesses de convergence des algorithmes présentés ici:
+</p>
+<ul>
+<li class="level1"><div class="li"> Dichotomie: linéaire</div>
+</li>
+<li class="level1"><div class="li"> Newton : quadratique</div>
+</li>
+<li class="level1"><div class="li"> Regula falsi: superlinéaire</div>
+</li>
+<li class="level1"><div class="li">  Gradient: linéaire</div>
+</li>
+<li class="level1"><div class="li"> Gradient conjugué: superlinéaire</div>
+</li>
+<li class="level1"><div class="li"> BFGS: inconnu pour les fonctions non covexes (ce qui sera souvent le cas)</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Conclusion&quot;,&quot;hid&quot;:&quot;conclusion&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:15,&quot;range&quot;:&quot;4359-&quot;} -->

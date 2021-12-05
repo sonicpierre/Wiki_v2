@@ -1,0 +1,6 @@
+selected_features <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>model.<span class="me1">inverse_transform</span><span class="br0">&#40;</span>X_new<span class="br0">&#41;</span><span class="sy0">,</span> 
+                                 index<span class="sy0">=</span>X.<span class="me1">index</span><span class="sy0">,</span>
+                                 columns<span class="sy0">=</span>X.<span class="me1">columns</span><span class="br0">&#41;</span>
+&nbsp;
+&nbsp;
+selected_columns <span class="sy0">=</span> selected_features.<span class="me1">columns</span><span class="br0">&#91;</span>selected_features.<span class="me1">var</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy0">!=</span> <span class="nu0">0</span><span class="br0">&#93;</span>

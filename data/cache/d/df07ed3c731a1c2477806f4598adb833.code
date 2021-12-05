@@ -1,0 +1,2 @@
+tokenizer <span class="sy0">=</span> nltk.<span class="me1">RegexpTokenizer</span><span class="br0">&#40;</span>r<span class="st0">'<span class="es0">\w</span>+'</span><span class="br0">&#41;</span>
+tokenizer.<span class="kw3">tokenize</span><span class="br0">&#40;</span>phrase<span class="br0">&#41;</span>

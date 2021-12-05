@@ -1,0 +1,4 @@
+<span class="kw1">from</span> scipy <span class="kw1">import</span> optimize
+<span class="kw1">import</span> matplotlib.<span class="me1">pyplot</span> <span class="kw1">as</span> plt
+&nbsp;
+<span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;Le zéro de notre fonction sur [a;b] est:&quot;</span><span class="sy0">,</span> optimize.<span class="me1">newton</span><span class="br0">&#40;</span>f<span class="sy0">,</span> <span class="nu0">1.5</span><span class="sy0">,</span> fprime<span class="sy0">=</span><span class="kw1">lambda</span> x: <span class="nu0">2</span> * x<span class="br0">&#41;</span><span class="br0">&#41;</span>

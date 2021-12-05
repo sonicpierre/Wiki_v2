@@ -1,0 +1,13 @@
+leaflet<span class="br0">&#40;</span><span class="br0">&#41;</span> %<span class="sy0">&gt;</span>%
+   addProviderTiles<span class="br0">&#40;</span><span class="st0">&quot;CartoDB.Positron&quot;</span><span class="br0">&#41;</span> %<span class="sy0">&gt;</span>% <span class="co1"># Plugin permettant d'ajouter les couleurs correspondant à l'état concerné.</span>
+   setView<span class="br0">&#40;</span>-<span class="nu0">98.483330</span><span class="sy0">,</span> <span class="nu0">38.712046</span><span class="sy0">,</span> zoom <span class="sy0">=</span> <span class="nu0">4</span><span class="br0">&#41;</span> %<span class="sy0">&gt;</span>% <span class="co1"># longitude, latitude et définition du zoom.</span>
+   addPolygons<span class="br0">&#40;</span>data <span class="sy0">=</span> etats_join <span class="sy0">,</span> <span class="co1"># Variable d'états et de leurs coordonnées</span>
+               fillColor <span class="sy0">=</span> <span class="sy0">~</span>mypalette<span class="br0">&#40;</span>etats_join$Pauvrete<span class="br0">&#41;</span><span class="sy0">,</span> 
+               fillOpacity <span class="sy0">=</span> <span class="nu0">0.7</span><span class="sy0">,</span> 
+               weight <span class="sy0">=</span> <span class="nu0">0.2</span><span class="sy0">,</span> 
+               smoothFactor <span class="sy0">=</span> <span class="nu0">0.2</span><span class="br0">&#41;</span>%<span class="sy0">&gt;</span>% 
+   addLegend<span class="br0">&#40;</span>pal <span class="sy0">=</span> mypalette<span class="sy0">,</span> <span class="co1"># Utilisation de la palette de couleurs</span>
+             values <span class="sy0">=</span> etats_join$Pauvrete<span class="sy0">,</span> <span class="co1"># Données representées</span>
+             position <span class="sy0">=</span> <span class="st0">&quot;bottomright&quot;</span><span class="sy0">,</span> <span class="co1"># Positionnement de la légende</span>
+             title <span class="sy0">=</span> <span class="st0">&quot;Taux de pauvreté&quot;</span><span class="br0">&#41;</span> <span class="co1"># Titre de la légende</span>
+&nbsp;

@@ -1,0 +1,332 @@
+[[cpp:IA| Machine Learning]]
+{{ :cpp:groot.jpg?450 |}}
+\\
+Pour faire de la classification, les arbres sont particulièrement sont beaucoup utilisé. Il existe plusieurs types d'arbres pour classifier les données.
+
+======Les arbres de décision======
+
+Prenons ici l'exemple du Titanic et tentons de prédire quelles seraient vos chance de survie. Vous pouvez récupérer le dataset [[https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Classification/Titanic| ici]]. Les données ont déjà été découpées et pré-traitées (même si le pré-traitement est minime) pour simplifier les choses et se concentrer que sur les modèles. Nous allons dans un premier temps présenter l'algorithme de CART qui est le plus utilisé mais il existe d'autres [[cpp:Autre algorithme classification | algorithmes de classification]].
+
+=====Principe des arbres de décision=====
+
+Avez-vous déjà joué à "Qui suis-je ?" ? Il s'agit d'un très bon jeux de société qui résume bien l'algorithme que nous allons utiliser.
+
+{{ :cpp:arbre_binaire_vulgarisation.png?800 |}}
+
+<alert info>**Info :** Les arbres de décision ont l'avantage de ne pas nécessiter une préparation approfondie des données, pas d'obligation de normalisation, d'encodage, certains algorithmes gèrent même les valeurs manquantes.</alert>
+
+<color #ed1c24>Pourquoi nous parle-t-il d'un jeux alors que nous voulons faire des maths ?</color> 
+\\
+\\
+^  Dans "Qui suis-je ?  ^  Dans l'algorithme  ^
+|  Cornes, Couleur des yeux, Halo  |  Variables du jeux d'entrainement  |
+|  Gentil/Méchant  |  Variable cible (celle qu'on essaie de prédire)  |
+|  Tour du jeux   |  Itération de l'algorithme  |
+|  Elimination   |  Passage d'un noeud de l'arbre (une condition)  |
+|  Certification gentil   |  Arriver à une feuille de l'arbre (prédiction)  |
+
+<color #ed1c24>Est-ce que l'ordre des questions importe ?</color>
+\\
+\\
+Oui bien sûr. Ce qui compte au final c'est de trouver les <color #ed1c24>**bonnes questions**</color> à poser au bon moment pour classifier la personne le plus rapidement en gentil ou méchant. Toute les questions<color #ed1c24> **ne sont pas intéressantes**</color> à poser et c'est pourquoi ceci ne se fait pas au feeling et qu'il faut faire appelle aux Mathématiques.
+
+**Théorie**
+
+Il faut bien comprendre que nous cherchons à chaque fois la question la plus pertinente sur la variable qui apporte le plus d'information. Les formules ci-dessous sont tirées directement de la **Théorie de l'information**. Il existe deux indices nous permettant de calculer le gain.
+
+  * L'entropie $$Ent(E) = -\sum_{i=1}^{k} p_{i} * log(p_{i})$$
+
+L'entropie est une mesure héritée de la thermodynamique mais s'est étendue à de nombreux domaines dont celui de la Théorie de l'information de Shannon. Si vous êtes dans le désert et que je vous dis que demain il fera beau, ce message aura une entropie proche de 0.
+
+  * Gini $$Gini(E) = \sum_{i=1}^{k} p_{i} * (1-p_{i})$$
+
+^  Théorique  ^  Signification  ^
+|  $p_{i}$  |  La probabilité d'avoir la modalité sachant la cible i (Probabilité d'être en troisième sachant qu'il est mort)  |
+|  E  |  Ensemble total des données  |
+
+L'indice de Gini comme l'indice de l'entropie est représentatif de l'impureté. Plus l'indice est bas sur le noeud terminal (feuille) et plus la classification est de bonne qualité.
+\\
+{{ :cpp:impurete.png?700 |}}
+\\
+<color #ed1c24>Comment choisir Gini ou Entropie ?</color>
+
+Le choix ne fera pas varier beaucoup les résultats dans la pluspart des cas. L'indice de Gini est plus rapide à calculer que l'entropie mais les algorithmes utilisant l'entropie ont tendances à créer des arbres plus équilibrés que les les algorithmes utilisant l'indice de Gini.
+
+<alert info>**Info :** Il est toujours préférable d'avoir un arbre équilibré. Si un de vos noeuds terminaux contient 90% des observation votre arbre sera peu fiable.</alert>
+
+**Source :**
+  * [[http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Scikit_Learn_Decision_Tree.pdf]]
+  * [[https://towardsdatascience.com/gini-index-vs-information-entropy-7a7e4fed3fcb]]
+
+=====Arbre CART=====
+
+L'algorithme de CART (Classification And Regression Tree) est l'un des plus utilisé pour faire pousser <color #ed1c24>**des arbres binaires**</color>. Il y aura donc à chaque noeud que 2 branches filles. Cet algorithme gère autant les variables quantitatives que qualitatives. Il utilise à l'origine l'indice Gini pour calculer l'impureté et évoluer ainsi vers l'arbre optimal.
+
+**Théorie :**
+
+L'algorithme de CART coupe l'arbre en deux à chaque itération en essayant d'avoir à chaque fois la plus faible impurté. Il faut donc minimiser la fonction coût $J(k, t_{k})$ qui est calculé à chaque itération.
+
+$$J(k, t_{k}) = \frac{n_{gauche}}{n}G_{gauche} + \frac{n_{droite}}{n}G_{droite}$$
+
+^  Théorie  ^  Explication  ^
+|  $n$  |  Nombre d'observation de la variable  |
+|  $n_{gauche/droite}$  |  Nombre d'observation à gauche et à droite de la variable  |
+|  $G_{gauche/droite}$  |  Gini à gauche et à droite de l'arbre (à l'origine)  |
+
+<alert warning>**Remarque :** Il est possible en Python comme en R de prendre l'entropie pour faire fonctionner l'algorithme de CART. Il fonctionnera cependant par défaut avec l'indice de Gini.</alert>
+
+**Pratique :**
+
+Essayons de prédire si vous survivez ou non au naufrage du Titanic en utilisant cet algorithme. Quand on est en présence de données qualitatives comme ici, la manière de coder diffère en Python et en R. En Python, il est nécessaire d'encoder les variables avant d'entrainer l'arbre. Cet encodage est déjà fait pour vous simplifier la tâche.
+
+__En Python :__
+
+<code python>
+data = pd.read_csv("train_Titanic_py.csv")
+
+#On sépare les étiquettes et les jeux d'entrainement
+dataEntrainement = data.drop("Survived", axis = 1)
+dataEtiquette = data.Survived
+
+#On entraîne le modèle
+tree_clf = DecisionTreeClassifier(max_depth=3, criterion="gini")
+tree_clf.fit(dataEntrainement, dataEtiquette)
+</code>
+
+__En R :__
+
+<code python>
+data("ptitanic")
+
+#Charger les librairies
+library(rpart)
+library(rpart.plot)
+
+#Entraîner le modèle
+model <- rpart(formula = survived~.,
+               data = ptitanic,
+               method = "class",
+               parms = list(split = "gini"))
+</code>
+
+Il est possible ensuite de visualiser les résultats grâce aux librairies adaptées.
+
+__En Python :__
+
+<code python>
+plt.figure(figsize=(15,15))
+plot_tree(tree_clf,feature_names = list(dataEntrainement.columns),class_names= ["Survived", "Died"] ,filled=True)
+</code>
+
+
+__En R :__
+
+<code python>
+prp(model, extra = 3)
+</code>
+
+**Résultat :**
+
+{{ :cpp:arbredetaille.png?700 |}}
+
+On en déduit que Jojo qui avait pris sa place en troisième est sûrement mort.
+
+<alert warning>**Remarque :** L'algorithme CART est un algorithme glouton. A chaque qu'il coupe, il est certain d'avoir une faible impureté, cependant globalement 3 tours après ce n'était peut-être pas la bonne découpe. La recherche de l'arbre optimal est d'une complexité NP-complet.</alert>
+
+**Source :**
+  * [[https://www.imo.universite-paris-saclay.fr/~goude/Materials/ProjetMLF/cart.html]]
+  * [[https://cel.archives-ouvertes.fr/cel-02281064/document]]
+  * [[https://apiacoa.org/blog/2014/02/initiation-a-rpart.fr.html]]
+
+======Les arbres de régression======
+
+Il est possible de faire de la régression avec les arbres. Le principe ne sera plus de prédire une classe mais une valeur. Essayons ici d'entraîner un modèle sur des données cubiques que nous allons générer.
+
+=====Générer les données et entraîner l'arbre=====
+
+Nous allons ici générer les données grace à la fonction $f(x) = 0.11 x^{3} + x + 2 + bruit$. Le bruit sera une combinaison linéaire d'échantillons suivants la loi normale.
+
+__En Python :__
+
+<code python>
+import numpy as np
+m = 100
+X = np.linspace(-15, 15, m).reshape((m, 1))
+y = 0.11 * X**3 + X + 2 + 25* np.random.randn(m,1)
+</code>
+
+__En R :__
+
+<code python>
+library(pracma)
+ 
+m = 100
+X = linspace(-15, 15, m)
+y = 0.11 * X**3 + X + 2 + 25 * rnorm(m)
+data = data.frame(X,y)
+</code>
+
+{{ :cpp:fonctionx3.png?400 |}}
+
+On peut entrainer ensuite le modèle de CART qui ne va pas essayer ici de minimiser l'indice de Gini mais le MSE. La fonction à minimiser sera donc :
+
+$$J(k,t_{k}) = \frac{n_{gauche}}{n}MSE_{gauche} + \frac{n_{droite}}{n}MSE_{droite}$$
+
+La formule caractérisant le MSE qui a été largement abordé [[cpp:Régression supervisée | ici ]] se particularise aux arbres :
+
+$$MSE_{noeud} = \overset{}{\underset{i \in noeud}{\sum}} ( ŷ_{noeud} - y^{(i)})^2 $$
+\\
+Avec $$ŷ_{noeud} = \frac{1}{n_{noeud}}{\underset{i \in noeud}{\sum}} y^{i}$$
+
+__En Python :__
+
+<code python>
+from sklearn.tree import DecisionTreeRegressor
+tree_reg = DecisionTreeRegressor(max_depth= 3)
+tree_reg.fit(X,y)
+</code>
+
+__En R :__
+
+<code python>
+library(rpart)
+model <- rpart(y~., data=data, method = "anova")
+</code>
+
+=====Visualiser l'arbre et la régression=====
+
+On peut ensuite afficher l'arbre produit, comme pour la classification, les arbres de régression sont faciles à lire et on a un regard total sur les règles construites. 
+
+__En Python :__
+
+<code python>
+from sklearn.tree import plot_tree
+plt.figure(figsize=(15,15))
+plot_tree(tree_reg,filled=True)
+</code>
+
+__En R :__
+
+<code python>
+library(rpart.plot)
+prp(model, extra = 1)
+</code>
+
+{{ :cpp:treereg.png?700 |}}
+
+On peut ensuite afficher les prédictions sur un graphe pour voir quel forme a la régression construite.
+
+__En Python :__
+
+<code python>
+import matplotlib.pyplot as plt
+donneTest = np.linspace(-15,15, 10000).reshape((10000, 1))
+plt.figure(figsize=(10,10))
+plt.scatter(X,y)
+plt.plot(donneTest, tree_reg.predict(donneTest), color= "red")
+</code>
+
+__En R :__
+
+<code python>
+echantillon <- data.frame(linspace(-15,15,10000))
+colnames(echantillon) <- "X"
+prediction <- rpart.predict(modele, newdata = echantillon)
+plot(X,y)
+lines(linspace(-15,15,10000), prediction)
+</code>
+
+{{ :cpp:resulatatregtree.png?500 |}}
+
+======Avoir la main verte======
+
+La construction d'arbres est souvent régi par de nombreux paramètres qu'il est bon de bien savoir choisir pour avoir le modèle optimal. 
+=====Savoir contrôler la pousse de l'arbre=====
+
+Il faut savoir régler avec précision la profondeur de l'arbre ainsi que les paramètres permettant d'éviter l'overfitting sous peine d'avoir un modèle pas assez généraliste.
+
+^  Underfiting  ^  Overfiting  ^
+| {{ :cpp:sousajustementtree.png?400 |}}   |  {{ :cpp:overfitingsurregression.png?400 |}}  |
+
+Pour ce problème il existe des hyper paramètres qui permettent de limiter la construction de l'arbre.
+
+__En Python :__
+
+<code python>
+#max_depth : Limiter la profondeur de l'arbre
+#min_samples_split : Donner un nombre minimum d'éléments pour un noeud terminal
+#max_leaf_nodes  : Maximum de noeuds terminaux (Propre au Python)
+tree = DecisionTreeClassifier(max_depth= 3, max_leaf_nodes= 8, min_samples_split= 50)
+</code>
+
+__En R :__
+
+<code python>
+#cp est un indice de complexité
+control_param = rpart.control(max_depth = 3, minsplit = 50, cp = 0.01)
+model = rpart(y ~ ., data, control = control_param)
+</code>
+
+**Source :**
+  * [[https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html]]
+  * [[https://www.rdocumentation.org/packages/rpart/versions/4.1-15/topics/rpart.control]]
+  * [[https://www.rdocumentation.org/packages/rpart/versions/4.1-15/topics/rpart]]
+=====Evaluations spécifiques aux arbres=====
+
+Nous avons maintenant une idée des hyper paramètres à faire varier pour trouver le modèle optimal mais comment les choisir ? Nous allons présenter une méthode pour chacun des langages qui permet de trouver certains paramètres optimaux rapidement dans des problèmes de classification. 
+
+__En Python :__
+
+J'ai écrit [[https://github.com/LlamasPartan/Machine_Learning_Ressource/blob/master/Classification/ControlOverFiting.py| ici]] une fonction maison qui vous permettra de rapidement visualiser quel est la profondeur de l'arbre optimal pour optenir un meilleur résultat.
+
+<code python>
+from sklearn.metrics import accuracy_score
+from sklearn.tree import DecisionTreeClassifier
+
+plt.figure(figsize=(15,7))
+plt.subplot(1,2,1)
+controlOverFiting(data_train, data_test, "Survived", couleur="blue")
+plt.subplot(1,2,2)
+controlOverFiting(data_train, data_test, "Survived", indice= "entropy", couleur="red")
+</code>
+
+{{ :cpp:compareprecisionginientropy.png?800 |}}
+
+Il en ressort que pour avoir un arbre le plus performant, il faut utiliser l'indice "entropy" et une profondeur de 9.
+
+<code python>
+tree_clf = DecisionTreeClassifier(max_depth=9, criterion = "entropy")
+</code>
+
+**Source :**
+  * [[https://towardsdatascience.com/decision-tree-build-prune-and-visualize-it-using-python-12ceee9af752]]
+
+__En R :__
+
+Ré-entrainons un modèle d'arbre sur les données du titanic de manière à le rendre le plus complet possible. 
+
+<code python>
+control_model <- rpart.control(minsplit = 5, cp = 0)
+model <- rpart(survived ~., data=ptitanic, control = control_model)
+
+plotcp(model)
+</code>
+
+{{ :cpp:controleoverfitingtree.png?600 |}}
+
+On observe clairement que l'entrainement du modèle lui a permis de gagner en précision jusqu'au point cp = 0.0047. On va donc "élaguer" notre arbre en ce point et ainsi obtenir la meilleur précision possible.
+
+<code python>
+#En lisant et en reportant dans la fonction prune
+model_opti <- prune(model, cp=0.0047)
+#De façon automatique
+model_opti <- prune(model,cp=model$cptable[which.min(model$cptable[,4]),1])
+</code>
+
+<alert success>**Approfondir :** Nous reverrons l'optimisation des paramètres avec des méthodes spécifiques comme la méthode grid.</alert>
+
+=====Conclusion=====
+
+Les arbres sont très intéressants pour se donner une idée rapide des performances possibles avec un premier modèle. Ils ont malheureusement tendances à être instables : une petite variation dans les données va entrainer une grosse variation dans la construction du modèle. C'est pourquoi, il est intéressant de travailler avec des [[cpp:Les forêt de classification et de régression |  forêts aléatoires]] qui sont plus stables et souvent plus performantes mais plus couteuses à entraîner.
+
+<alert info>**Info :** Vous pouvez aller plus loin concernant les arbres. J'ai écrit [[cpp:Autre algorithme classification | ici]] une page traitant des algorithmes de CHAID, ID3, C4.5, MARS et de leur mise en place en R et en Python.</alert>

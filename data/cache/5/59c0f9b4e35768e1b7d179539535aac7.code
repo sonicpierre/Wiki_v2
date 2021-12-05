@@ -1,0 +1,8 @@
+<span class="co1">#On charge les fichiers</span>
+inventory_sets <span class="sy0">=</span> pd.<span class="me1">read_csv</span><span class="br0">&#40;</span><span class="st0">'inventory_sets.csv'</span><span class="br0">&#41;</span>
+<span class="kw3">sets</span> <span class="sy0">=</span> pd.<span class="me1">read_csv</span><span class="br0">&#40;</span><span class="st0">'sets.csv'</span><span class="br0">&#41;</span>
+themes <span class="sy0">=</span> pd.<span class="me1">read_csv</span><span class="br0">&#40;</span><span class="st0">&quot;themes.csv&quot;</span><span class="br0">&#41;</span>
+<span class="co1">#On rassemble les fichiers qui ont une collonne en commun </span>
+dataInter <span class="sy0">=</span> pd.<span class="me1">merge</span><span class="br0">&#40;</span>inventory_sets<span class="sy0">,</span> <span class="kw3">sets</span><span class="sy0">,</span> on<span class="sy0">=</span><span class="br0">&#91;</span><span class="st0">&quot;set_num&quot;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+<span class="co1">#On rassemble les fichiers sur des colonnes qui n'ont pas le même nom</span>
+dataFinale <span class="sy0">=</span> pd.<span class="me1">merge</span><span class="br0">&#40;</span>dataInter<span class="sy0">,</span> themes<span class="sy0">,</span> left_on<span class="sy0">=</span><span class="br0">&#91;</span><span class="st0">&quot;theme_id&quot;</span><span class="br0">&#93;</span><span class="sy0">,</span> right_on<span class="sy0">=</span><span class="br0">&#91;</span><span class="st0">&quot;id&quot;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>

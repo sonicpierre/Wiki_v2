@@ -1,0 +1,4 @@
+<span class="kw1">while</span> <span class="br0">&#40;</span>window.<span class="me1">isOpen</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    window.<span class="me1">display</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy4">;</span>
+<span class="br0">&#125;</span>

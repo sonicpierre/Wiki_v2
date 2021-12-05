@@ -1,0 +1,561 @@
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aarbres_de_classification&amp;media=cpp:groot.jpg" class="media" title="cpp:groot.jpg"><img src="/lib/exe/fetch.php?w=450&amp;tok=cfe800&amp;media=cpp:groot.jpg" class="mediacenter" alt="" width="450" /></a>
+<br/>
+
+Pour faire de la classification, les arbres sont particulièrement utiliser pour des problèmes de classification. Il existe plusieurs types d&#039;arbres pour classifier les données.
+</p>
+
+<h1 class="sectionedit1" id="les_arbres_de_decision">Les arbres de décision</h1>
+<div class="level1">
+
+<p>
+Prenons ici l&#039;exemple du Titanic et tentons de prédire quelles seraient vos chance de survie. Vous pouvez récupérer le dataset <a href="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Classification/Titanic" class="urlextern" title="https://github.com/LlamasPartan/Machine_Learning_Ressource/tree/master/Classification/Titanic" rel="nofollow"> ici</a>. Les données ont déjà été découpé et pré-traités pour simplifier les choses et se concentrer que sur les modèles. Nous essayerons plusieurs algorithmes en présentant et nous pourrons ainsi présenter des comparaisons.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les arbres de d\u00e9cision&quot;,&quot;hid&quot;:&quot;les_arbres_de_decision&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;211-710&quot;} -->
+<h2 class="sectionedit2" id="principe_des_arbres_de_decision">Principe des arbres de décision</h2>
+<div class="level2">
+
+<p>
+Avez-vous déjà joué à “Qui suis-je ?” ? Il s&#039;agit d&#039;un très bon jeux de société qui résume bien l&#039;algorithme que nous allons utiliser.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aarbres_de_classification&amp;media=cpp:arbre_binaire_vulgarisation.png" class="media" title="cpp:arbre_binaire_vulgarisation.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=67e61f&amp;media=cpp:arbre_binaire_vulgarisation.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+
+<p>
+<div class='alert alert-info'><strong>Info :</strong> Les arbres de décision ont l&#039;avantage de ne pas nécessiter une préparation aprofondie des données, pas d&#039;obligation de normalisation, d&#039;encodage, certains algorithmes gèrent même les valeurs manquantes.</div>
+</p>
+
+<p>
+<span style='color:#ed1c24; '>Pourquoi nous parle-t-il d&#039;un jeux alors que nous voulons faire des maths ?</span>
+</p>
+<div class="table sectionedit3"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Dans “Qui suis-je ?  </th><th class="col1 centeralign">  Dans l&#039;algorithme  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  Cornes, Couleur des yeux, Halo  </td><td class="col1 centeralign">  Variables du jeux d&#039;entrainement  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  Gentil/Méchant  </td><td class="col1 centeralign">  Variable cible (celle qu&#039;on essaie de prédire)  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  Tour du jeux   </td><td class="col1 centeralign">  Itération de l&#039;algorithme  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">  Elimination   </td><td class="col1 centeralign">  Passage d&#039;un noeud de l&#039;arbre (une condition)  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 centeralign">  Certification gention   </td><td class="col1 centeralign">  Arriver à une feuille de l&#039;arbre (prédiction)  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:3,&quot;range&quot;:&quot;1290-1686&quot;} -->
+<p>
+<span style='color:#ed1c24; '>Est-ce que l&#039;ordre des questions importe ?</span>
+</p>
+
+<p>
+Oui bien sûr. Ce qui compte au final c&#039;est de trouver les <span style='color:#ed1c24; '><strong>bonnes questions</strong></span> à poser au bon moment pour classifier la personne le plus rapidement en gentil ou méchant. Toute les questions<span style='color:#ed1c24; '> <strong>ne sont pas intéressantes</strong></span> à poser et c&#039;est pourquoi ceci ne se fait pas au feeling et qu&#039;il faut faire appelle aux Mathématiques.
+</p>
+
+<p>
+<strong>Théorie</strong>
+</p>
+
+<p>
+Il faut bien comprendre que nous cherchons à chaque fois la question la plus pertinante sur la variable qui apporte le plus d&#039;information. Les formules ci-dessous sont tirées directement de la <strong>Théorie de l&#039;information</strong>. Il existe deux indices nous permettant de calculer le gain.
+</p>
+<ul>
+<li class="level1"><div class="li"> L&#039;entropie $$Ent(E) = -\sum_{i=1}^{k} p_{i} * log(p_{i})$$</div>
+</li>
+</ul>
+
+<p>
+L&#039;entropie est une mesure hérité de la thermodynamique mais c&#039;est étendu à de nombreux domaines dont celui de la Théorie de l&#039;information de Shannon. Si vous êtes dans le désert et que je vous dis que demain il fera beau, ce message aura une entropie proche de 0.
+</p>
+<ul>
+<li class="level1"><div class="li"> Gini $$Gini(E) = \sum_{i=1}^{k} p_{i} * (1-p_{i})$$</div>
+</li>
+</ul>
+<div class="table sectionedit4"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Théorique  </th><th class="col1 centeralign">  Signification  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  $p_{i}$  </td><td class="col1 centeralign">  La probabilité d&#039;avoir la modalité sachant la cible i  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  E  </td><td class="col1 centeralign">  Ensemble total des données  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:4,&quot;range&quot;:&quot;2826-2974&quot;} -->
+<p>
+L&#039;indice de Gini comme l&#039;indice de l&#039;entropie est aussi représentatif de l&#039;impureté. Plus l&#039;indice est bas sur le noeud terminal (feuille) et plus la classification est de bonne qualité.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aarbres_de_classification&amp;media=cpp:impurete.png" class="media" title="cpp:impurete.png"><img src="/lib/exe/fetch.php?w=700&amp;tok=947de8&amp;media=cpp:impurete.png" class="mediacenter" alt="" width="700" /></a>
+</p>
+
+<p>
+<span style='color:#ed1c24; '>Comment choisir Gini ou Entropie ?</span>
+</p>
+
+<p>
+Le choix ne fera pas varier beaucoup les résultats dans la pluspart des cas. L&#039;indice de Gini est plus rapide à calculer que l&#039;entropie mais les algorithmes utilisant l&#039;entropie ont tendances à créer des arbres plus équilibrés que les les algorithmes utilisant l&#039;indice de Gini.
+</p>
+
+<p>
+<div class='alert alert-info'><strong>Info :</strong> Il est toujours préférable d&#039;avoir un arbre équilibré, ils sont plus fiables.</div>
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Scikit_Learn_Decision_Tree.pdf" class="urlextern" title="http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Scikit_Learn_Decision_Tree.pdf" rel="nofollow">http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Scikit_Learn_Decision_Tree.pdf</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://towardsdatascience.com/gini-index-vs-information-entropy-7a7e4fed3fcb" class="urlextern" title="https://towardsdatascience.com/gini-index-vs-information-entropy-7a7e4fed3fcb" rel="nofollow">https://towardsdatascience.com/gini-index-vs-information-entropy-7a7e4fed3fcb</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Principe des arbres de d\u00e9cision&quot;,&quot;hid&quot;:&quot;principe_des_arbres_de_decision&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;711-3855&quot;} -->
+<h2 class="sectionedit5" id="arbre_cart">Arbre CART</h2>
+<div class="level2">
+
+<p>
+L&#039;algorithme de CART (Classification And Regression Tree) est l&#039;un des plus utilisé pour faire pousser <span style='color:#ed1c24; '><strong>des arbres binaires</strong></span>. Il y aura donc à chaque noeud que 2 branches filles. Cet algorithme utilise l&#039;indice Gini pour calculer l&#039;impureté et évoluer ainsi vers l&#039;arbre optimal.
+</p>
+
+<p>
+<strong>Théorie :</strong>
+</p>
+
+<p>
+L&#039;algorithme de CART coupe l&#039;arbre en deux à chaque itération en essayant d&#039;avoir à chaque fois la plus faible impurté. Il faut donc minimiser la fonction coût $J(k, t_{k})$ qui est calculé à chaque itération.
+</p>
+
+<p>
+$$J(k, t_{k}) = \frac{n_{gauche}}{n}G_{gauche} + \frac{n_{droite}}{n}G_{droite}$$
+</p>
+<div class="table sectionedit6"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Théorie  </th><th class="col1 centeralign">  Explication  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  $n$  </td><td class="col1 centeralign">  Nombre d&#039;observation de la variable  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  $n_{gauche/droite}$  </td><td class="col1 centeralign">  Nombre d&#039;observation à gauche et à droite de la variable  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  $G_{gauche/droite}$  </td><td class="col1 centeralign">  Gini à gauche et à droite de l&#039;arbre (à l&#039;origine)  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table2&quot;,&quot;secid&quot;:6,&quot;range&quot;:&quot;4507-4760&quot;} -->
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> Il est possible en Python de prendre l&#039;entropie pour faire fonctionner l&#039;algorithme de CART.</div>
+</p>
+
+<p>
+<strong>Pratique :</strong>
+</p>
+
+<p>
+Essayons de prédire si vous survivez ou non au naufrage du Titanic en utilisant cet algorithme. Quand on est en précense de données qualitatives comme ici, la manière de coder diffère en Python et en R. En Python, il est nécessaire d&#039;encoder les variables avant d&#039;entrainer l&#039;arbre. Cet encodage est déjà fait pour vous simplifier la tache.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">data <span class="sy0">=</span> pd.<span class="me1">read_csv</span><span class="br0">&#40;</span><span class="st0">&quot;train_Titanic_py.csv&quot;</span><span class="br0">&#41;</span>
+<span class="co1">#On sépare les étiquettes et les jeux d'entrainement</span>
+dataEntrainement <span class="sy0">=</span> data.<span class="me1">drop</span><span class="br0">&#40;</span><span class="st0">&quot;Survived&quot;</span><span class="sy0">,</span> axis <span class="sy0">=</span> <span class="nu0">1</span><span class="br0">&#41;</span>
+dataEtiquette <span class="sy0">=</span> data.<span class="me1">Survived</span>
+&nbsp;
+<span class="co1">#On entraîne le modèle</span>
+tree_clf <span class="sy0">=</span> DecisionTreeClassifier<span class="br0">&#40;</span>max_depth<span class="sy0">=</span><span class="nu0">3</span><span class="sy0">,</span> criterion<span class="sy0">=</span><span class="st0">&quot;gini&quot;</span><span class="br0">&#41;</span>
+tree_clf.<span class="me1">fit</span><span class="br0">&#40;</span>dataEntrainement<span class="sy0">,</span> dataEtiquette<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python"><span class="co1">#Charger le fichier</span>
+data <span class="sy0">&lt;</span>- read.<span class="kw3">csv</span><span class="br0">&#40;</span><span class="st0">&quot;train_Titanic_R.csv&quot;</span><span class="sy0">,</span> row.<span class="me1">names</span> <span class="sy0">=</span> <span class="nu0">1</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Charger les librairies</span>
+library<span class="br0">&#40;</span>rpart<span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>rpart.<span class="me1">plot</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Entraîner le modèle</span>
+model <span class="sy0">&lt;</span>- rpart<span class="br0">&#40;</span>formula <span class="sy0">=</span> Survived<span class="sy0">~</span>.<span class="sy0">,</span>
+               data <span class="sy0">=</span> data<span class="sy0">,</span>
+               method <span class="sy0">=</span> <span class="st0">&quot;class&quot;</span><span class="sy0">,</span>
+               parms <span class="sy0">=</span> <span class="kw2">list</span><span class="br0">&#40;</span>split <span class="sy0">=</span> <span class="st0">&quot;gini&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+<p>
+Il est possible ensuite de visualiser les réusltats grace aux librairies adaptées.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">15</span><span class="sy0">,</span><span class="nu0">15</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+plot_tree<span class="br0">&#40;</span>tree_clf<span class="sy0">,</span>feature_names <span class="sy0">=</span> <span class="kw2">list</span><span class="br0">&#40;</span>dataEntrainement.<span class="me1">columns</span><span class="br0">&#41;</span><span class="sy0">,</span>class_names<span class="sy0">=</span> <span class="br0">&#91;</span><span class="st0">&quot;Survived&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Died&quot;</span><span class="br0">&#93;</span> <span class="sy0">,</span>filled<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">prp<span class="br0">&#40;</span>model<span class="sy0">,</span> extra <span class="sy0">=</span> <span class="nu0">3</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aarbres_de_classification&amp;media=cpp:arbredetaille.png" class="media" title="cpp:arbredetaille.png"><img src="/lib/exe/fetch.php?w=700&amp;tok=f59e34&amp;media=cpp:arbredetaille.png" class="mediacenter" alt="" width="700" /></a>
+</p>
+
+<p>
+On en déduit que Jojo qui avait pris sa place en troisième est sûrement mort.
+</p>
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> L&#039;algorithme CART est un algorithme glouton. A chaque qu&#039;il coupe, il est certain d&#039;avoir une faible impureté, cependant globalement 3 tours après ce n&#039;était peut-être pas la bonne découpe. La recherche de l&#039;arbre optimal est d&#039;une complexité NP-complet.</div>
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.imo.universite-paris-saclay.fr/~goude/Materials/ProjetMLF/cart.html" class="urlextern" title="https://www.imo.universite-paris-saclay.fr/~goude/Materials/ProjetMLF/cart.html" rel="nofollow">https://www.imo.universite-paris-saclay.fr/~goude/Materials/ProjetMLF/cart.html</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://cel.archives-ouvertes.fr/cel-02281064/document" class="urlextern" title="https://cel.archives-ouvertes.fr/cel-02281064/document" rel="nofollow">https://cel.archives-ouvertes.fr/cel-02281064/document</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Arbre CART&quot;,&quot;hid&quot;:&quot;arbre_cart&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;3856-6878&quot;} -->
+<h2 class="sectionedit7" id="les_autres_algorithmes_de_decision">Les autres algorithmes de décision</h2>
+<div class="level2">
+
+</div>
+
+<h4 id="arbre_id3_ou_quinlan">Arbre ID3 ou Quinlan</h4>
+<div class="level4">
+
+<p>
+On tire aussi de ces indices la formule qui permet d&#039;avoir le gain utilisé à l&#039;origine dans l&#039;algorithme ID3 qui, quand il sera maximal garantira un maximum d&#039;information :
+</p>
+
+<p>
+$$Gain = Indice(E) - \sum_{i=1}^{k} p_{i} * Indice(E_{i})$$
+</p>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>RKEEL<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> chefboost <span class="kw1">import</span> Chefboost <span class="kw1">as</span> chef
+data <span class="sy0">=</span> data.<span class="me1">rename</span><span class="br0">&#40;</span>columns<span class="sy0">=</span><span class="br0">&#123;</span><span class="st0">'Survived'</span>:<span class="st0">'Decision'</span><span class="br0">&#125;</span><span class="br0">&#41;</span>
+config <span class="sy0">=</span> <span class="br0">&#123;</span><span class="st0">'algorithm'</span>:<span class="st0">'ID3'</span><span class="br0">&#125;</span>
+model <span class="sy0">=</span> chef.<span class="me1">fit</span><span class="br0">&#40;</span>data<span class="sy0">,</span> config<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://zestedesavoir.com/tutoriels/962/les-arbres-de-decisions/premiere-version-id13/" class="urlextern" title="https://zestedesavoir.com/tutoriels/962/les-arbres-de-decisions/premiere-version-id13/" rel="nofollow">https://zestedesavoir.com/tutoriels/962/les-arbres-de-decisions/premiere-version-id13/</a></div>
+</li>
+</ul>
+
+</div>
+
+<h4 id="arbre_chaid">Arbre CHAID</h4>
+<div class="level4">
+
+<p>
+l&#039;arbre de CHAID (CHi-squared Automatic Interaction Detection) est l&#039;un des premiers algorithmes à avoir été implémenté dans des logiciels comerciaux. Il est basé sur le test du Khi2 permettant de séparer à chaque fois les variables les plus importantes des autres. 
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> chefboost <span class="kw1">import</span> Chefboost <span class="kw1">as</span> chef 
+config <span class="sy0">=</span> <span class="br0">&#123;</span><span class="st0">'algorithm'</span>:<span class="st0">'ID3'</span><span class="br0">&#125;</span>
+model <span class="sy0">=</span> chef.<span class="me1">fit</span><span class="br0">&#40;</span>data<span class="sy0">,</span> config<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R : </em>
+</p>
+<pre class="code python">install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;partykit&quot;</span><span class="br0">&#41;</span>
+install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;CHAID&quot;</span><span class="sy0">,</span> repos<span class="sy0">=</span><span class="st0">&quot;http://R-Forge.R-project.org&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.rocq.inria.fr/axis/modulad/archives/numero-33/tutorial-rakotomalala-33/rakotomalala-33-tutorial.pdf" class="urlextern" title="https://www.rocq.inria.fr/axis/modulad/archives/numero-33/tutorial-rakotomalala-33/rakotomalala-33-tutorial.pdf" rel="nofollow">https://www.rocq.inria.fr/axis/modulad/archives/numero-33/tutorial-rakotomalala-33/rakotomalala-33-tutorial.pdf</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://sefiks.com/2020/03/18/a-step-by-step-chaid-decision-tree-example/#:~:text=CHAID%20in%20Python&amp;text=Herein%2C%20you%20can%20find%20the,as%20gradient%20boosting%20and%20adaboost." class="urlextern" title="https://sefiks.com/2020/03/18/a-step-by-step-chaid-decision-tree-example/#:~:text=CHAID%20in%20Python&amp;text=Herein%2C%20you%20can%20find%20the,as%20gradient%20boosting%20and%20adaboost." rel="nofollow">https://sefiks.com/2020/03/18/a-step-by-step-chaid-decision-tree-example/#:~:text=CHAID%20in%20Python&amp;text=Herein%2C%20you%20can%20find%20the,as%20gradient%20boosting%20and%20adaboost.</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://presmarymethuen.org/fr/dictionary/what-are-the-differences-between-id3-c4-5-and-cart/" class="urlextern" title="https://presmarymethuen.org/fr/dictionary/what-are-the-differences-between-id3-c4-5-and-cart/" rel="nofollow">https://presmarymethuen.org/fr/dictionary/what-are-the-differences-between-id3-c4-5-and-cart/</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.r-bloggers.com/chaid-and-r-when-you-need-explanation-may-15-2018/" class="urlextern" title="https://www.r-bloggers.com/chaid-and-r-when-you-need-explanation-may-15-2018/" rel="nofollow">https://www.r-bloggers.com/chaid-and-r-when-you-need-explanation-may-15-2018/</a></div>
+</li>
+</ul>
+
+</div>
+
+<h4 id="arbre_c45">Arbre C4.5</h4>
+<div class="level4">
+
+</div>
+
+<h4 id="synthese">Synthèse</h4>
+<div class="level4">
+<div class="table sectionedit8"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0 leftalign">                   </td><th class="col1 centeralign">  Avantages  </th><th class="col2 centeralign">  Inconvénients  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 centeralign">  Arbre C4.5  </th><td class="col1 centeralign">  Gère les points de données incomplets, Résout les problèmes d&#039;over-fiting grace à l&#039;élagage  </td><td class="col2 centeralign">  L&#039;algorithme est particulièrement censible au bruit dans les données  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 centeralign">  Arbre ID3  </th><td class="col1 centeralign">  Pas de réel avantage, historiquement il s&#039;agit du premier des 3 à avoir été créé  </td><td class="col2 centeralign">  Overfiting sur des petits échantillons, Ne gère pas les attributs numériques, Nécessite beaucoup de ressource machine  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 centeralign">  Arbre CART  </th><td class="col1 centeralign">  Gère facilement les valeurs aberrantes, Gère les variables numériques et catégorielles  </td><td class="col2 centeralign">  Les arbres formés sont instables (petit changement de données implique de gros changements de l&#039;arbre)  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table3&quot;,&quot;secid&quot;:8,&quot;range&quot;:&quot;8656-9358&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les autres algorithmes de d\u00e9cision&quot;,&quot;hid&quot;:&quot;les_autres_algorithmes_de_decision&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:7,&quot;range&quot;:&quot;6879-9359&quot;} -->
+<h1 class="sectionedit9" id="les_arbres_de_regression">Les arbres de régression</h1>
+<div class="level1">
+
+<p>
+Il est possible de faire de la régression avec les arbres. Le principe ne sera plus de prédire une classe mais une valeur. Essayons ici d&#039;entraîner un modèle sur des données cubiques que nous allons générer.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les arbres de r\u00e9gression&quot;,&quot;hid&quot;:&quot;les_arbres_de_regression&quot;,&quot;codeblockOffset&quot;:8,&quot;secid&quot;:9,&quot;range&quot;:&quot;9360-9614&quot;} -->
+<h2 class="sectionedit10" id="generer_les_donnees_et_entrainer_l_arbre">Générer les données et entraîner l&#039;arbre</h2>
+<div class="level2">
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> numpy <span class="kw1">as</span> np
+m <span class="sy0">=</span> <span class="nu0">100</span>
+X <span class="sy0">=</span> np.<span class="me1">linspace</span><span class="br0">&#40;</span>-<span class="nu0">15</span><span class="sy0">,</span> <span class="nu0">15</span><span class="sy0">,</span> m<span class="br0">&#41;</span>.<span class="me1">reshape</span><span class="br0">&#40;</span><span class="br0">&#40;</span>m<span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+y <span class="sy0">=</span> <span class="nu0">0.11</span> * X**<span class="nu0">3</span> + X + <span class="nu0">2</span> + <span class="nu0">25</span>* np.<span class="kw3">random</span>.<span class="me1">randn</span><span class="br0">&#40;</span>m<span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>pracma<span class="br0">&#41;</span>
+&nbsp;
+m <span class="sy0">=</span> <span class="nu0">100</span>
+X <span class="sy0">=</span> linspace<span class="br0">&#40;</span>-<span class="nu0">15</span><span class="sy0">,</span> <span class="nu0">15</span><span class="sy0">,</span> m<span class="br0">&#41;</span>
+y <span class="sy0">=</span> <span class="nu0">0.11</span> * X**<span class="nu0">2</span> + X + <span class="nu0">2</span> + <span class="nu0">25</span> * rnorm<span class="br0">&#40;</span>m<span class="br0">&#41;</span>
+data <span class="sy0">=</span> data.<span class="me1">frame</span><span class="br0">&#40;</span>X<span class="sy0">,</span>y<span class="br0">&#41;</span></pre>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aarbres_de_classification&amp;media=cpp:fonctionx3.png" class="media" title="cpp:fonctionx3.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=72bd18&amp;media=cpp:fonctionx3.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+<p>
+On peut entrainer ensuite le modèle de CART qui ne va pas essayer ici de minimiser l&#039;indice de Gini mais le MSE. La fonction à minimiser sera donc :
+</p>
+
+<p>
+$$J(k,t_{k}) = \frac{n_{gauche}}{n}MSE_{gauche} + \frac{n_{droite}}{n}MSE_{droite}$$
+</p>
+
+<p>
+La formule caractérisant le MSE qui a été largement abordé <a href="/doku.php?id=cpp:regression_supervisee" class="wikilink1" title="cpp:regression_supervisee"> ici </a> se particularise aux arbres :
+</p>
+
+<p>
+$$MSE_{noeud} = \overset{}{\underset{i \in noeud}{\sum}} ( ŷ_{noeud} - y^{(i)})^2 $$
+<br/>
+
+Avec $$ŷ_{noeud} = \frac{1}{n_{noeud}}{\underset{i \in noeud}{\sum}} y^{i}$$
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">tree</span> <span class="kw1">import</span> DecisionTreeRegressor
+tree_reg <span class="sy0">=</span> DecisionTreeRegressor<span class="br0">&#40;</span>max_depth<span class="sy0">=</span> <span class="nu0">3</span><span class="br0">&#41;</span>
+tree_reg.<span class="me1">fit</span><span class="br0">&#40;</span>X<span class="sy0">,</span>y<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>rpart<span class="br0">&#41;</span>
+rpart<span class="br0">&#40;</span>y<span class="sy0">~</span>.<span class="sy0">,</span> data<span class="sy0">=</span>data<span class="sy0">,</span> method <span class="sy0">=</span> <span class="st0">&quot;anova&quot;</span><span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;G\u00e9n\u00e9rer les donn\u00e9es et entra\u00eener l&#039;arbre&quot;,&quot;hid&quot;:&quot;generer_les_donnees_et_entrainer_l_arbre&quot;,&quot;codeblockOffset&quot;:8,&quot;secid&quot;:10,&quot;range&quot;:&quot;9615-10794&quot;} -->
+<h2 class="sectionedit11" id="visualiser_l_arbre_et_la_regression">Visualiser l&#039;arbre et la régression</h2>
+<div class="level2">
+
+<p>
+On peut ensuite afficher l&#039;arbre produit, comme pour la classification, les arbres de régression sont faciles à lire et on a un regard total sur les règles construites. 
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">tree</span> <span class="kw1">import</span> plot_tree
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">15</span><span class="sy0">,</span><span class="nu0">15</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+plot_tree<span class="br0">&#40;</span>tree_reg<span class="sy0">,</span>filled<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>rpart.<span class="me1">plot</span><span class="br0">&#41;</span>
+prp<span class="br0">&#40;</span>model<span class="sy0">,</span> extra <span class="sy0">=</span> <span class="nu0">1</span><span class="br0">&#41;</span></pre>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aarbres_de_classification&amp;media=cpp:treereg.png" class="media" title="cpp:treereg.png"><img src="/lib/exe/fetch.php?w=700&amp;tok=502112&amp;media=cpp:treereg.png" class="mediacenter" alt="" width="700" /></a>
+</p>
+
+<p>
+On peut ensuite afficher les prédictions sur un graphe pour voir quel forme a la régression construite.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">import</span> matplotlib.<span class="me1">pyplot</span> <span class="kw1">as</span> plt
+donneTest <span class="sy0">=</span> np.<span class="me1">linspace</span><span class="br0">&#40;</span>-<span class="nu0">15</span><span class="sy0">,</span><span class="nu0">15</span><span class="sy0">,</span> <span class="nu0">10000</span><span class="br0">&#41;</span>.<span class="me1">reshape</span><span class="br0">&#40;</span><span class="br0">&#40;</span><span class="nu0">10000</span><span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">10</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+plt.<span class="me1">scatter</span><span class="br0">&#40;</span>X<span class="sy0">,</span>y<span class="br0">&#41;</span>
+plt.<span class="me1">plot</span><span class="br0">&#40;</span>donneTest<span class="sy0">,</span> tree_reg.<span class="me1">predict</span><span class="br0">&#40;</span>donneTest<span class="br0">&#41;</span><span class="sy0">,</span> color<span class="sy0">=</span> <span class="st0">&quot;red&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aarbres_de_classification&amp;media=cpp:resulatatregtree.png" class="media" title="cpp:resulatatregtree.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=803faf&amp;media=cpp:resulatatregtree.png" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Visualiser l&#039;arbre et la r\u00e9gression&quot;,&quot;hid&quot;:&quot;visualiser_l_arbre_et_la_regression&quot;,&quot;codeblockOffset&quot;:12,&quot;secid&quot;:11,&quot;range&quot;:&quot;10795-11641&quot;} -->
+<h1 class="sectionedit12" id="avoir_la_main_verte">Avoir la main verte</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Avoir la main verte&quot;,&quot;hid&quot;:&quot;avoir_la_main_verte&quot;,&quot;codeblockOffset&quot;:15,&quot;secid&quot;:12,&quot;range&quot;:&quot;11642-11674&quot;} -->
+<h2 class="sectionedit13" id="savoir_controler_la_pousse_de_l_arbre">Savoir contrôler la pousse de l&#039;arbre</h2>
+<div class="level2">
+
+<p>
+Il faut savoir régler avec précision la profondeur de l&#039;arbre ainsi que les paramètres permettant d&#039;éviter l&#039;overfitting sous peine d&#039;avoir un modèle pas assez généraliste.
+</p>
+<div class="table sectionedit14"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Underfiting  </th><th class="col1 centeralign">  Overfiting  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 leftalign"> <a href="/lib/exe/detail.php?id=cpp%3Aarbres_de_classification&amp;media=cpp:sousajustementtree.png" class="media" title="cpp:sousajustementtree.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=7dbbc2&amp;media=cpp:sousajustementtree.png" class="mediacenter" alt="" width="400" /></a>   </td><td class="col1 centeralign">  <a href="/lib/exe/detail.php?id=cpp%3Aarbres_de_classification&amp;media=cpp:overfitingsurregression.png" class="media" title="cpp:overfitingsurregression.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=d194ba&amp;media=cpp:overfitingsurregression.png" class="mediacenter" alt="" width="400" /></a>  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table4&quot;,&quot;secid&quot;:14,&quot;range&quot;:&quot;11906-12031&quot;} -->
+<p>
+Pour ce problème il existe des hyper paramètres qui permettent de limiter la construction de l&#039;arbre.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="co1">#max_depth : Limiter la profondeur de l'arbre</span>
+<span class="co1">#min_samples_split : Donner un nombre minimum d'éléments pour un noeud terminal</span>
+<span class="co1">#max_leaf_nodes  : Maximum de noeuds terminaux (Propre au Python)</span>
+tree <span class="sy0">=</span> DecisionTreeClassifier<span class="br0">&#40;</span>max_depth<span class="sy0">=</span> <span class="nu0">3</span><span class="sy0">,</span> max_leaf_nodes<span class="sy0">=</span> <span class="nu0">8</span><span class="sy0">,</span> min_samples_split<span class="sy0">=</span> <span class="nu0">50</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">control_param <span class="sy0">=</span> rpart.<span class="me1">control</span><span class="br0">&#40;</span>max_depth <span class="sy0">=</span> <span class="nu0">3</span><span class="sy0">,</span> minsplit <span class="sy0">=</span> <span class="nu0">50</span><span class="br0">&#41;</span>
+model <span class="sy0">=</span> rpart<span class="br0">&#40;</span>y <span class="sy0">~</span> .<span class="sy0">,</span> data<span class="sy0">,</span> control <span class="sy0">=</span> control_param<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html" class="urlextern" title="https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html" rel="nofollow">https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.rdocumentation.org/packages/rpart/versions/4.1-15/topics/rpart.control" class="urlextern" title="https://www.rdocumentation.org/packages/rpart/versions/4.1-15/topics/rpart.control" rel="nofollow">https://www.rdocumentation.org/packages/rpart/versions/4.1-15/topics/rpart.control</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.rdocumentation.org/packages/rpart/versions/4.1-15/topics/rpart" class="urlextern" title="https://www.rdocumentation.org/packages/rpart/versions/4.1-15/topics/rpart" rel="nofollow">https://www.rdocumentation.org/packages/rpart/versions/4.1-15/topics/rpart</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Savoir contr\u00f4ler la pousse de l&#039;arbre&quot;,&quot;hid&quot;:&quot;savoir_controler_la_pousse_de_l_arbre&quot;,&quot;codeblockOffset&quot;:15,&quot;secid&quot;:13,&quot;range&quot;:&quot;11675-12890&quot;} -->
+<h2 class="sectionedit15" id="evaluations_specifiques_aux_arbres">Evaluations spécifiques aux arbres</h2>
+<div class="level2">
+
+<p>
+Nous avons maintenant une idée des hyper paramètres à faire varier pour trouver le modèle optimal mais comment les choisir ? Nous allons présenter une méthode pour chacun des langages qui permet de trouver certains paramètres optimaux rapidement. 
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+
+<p>
+J&#039;ai écrit <a href="https://github.com/LlamasPartan/Machine_Learning_Ressource/blob/master/Classification/ControlOverFiting.py" class="urlextern" title="https://github.com/LlamasPartan/Machine_Learning_Ressource/blob/master/Classification/ControlOverFiting.py" rel="nofollow"> ici</a> une fonction maison qui vous permettra de rapidement visualiser quel est la profondeur de l&#039;arbre optimal pour optenir un meilleur résultat.
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">metrics</span> <span class="kw1">import</span> accuracy_score
+<span class="kw1">from</span> sklearn.<span class="me1">tree</span> <span class="kw1">import</span> DecisionTreeClassifier
+&nbsp;
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">15</span><span class="sy0">,</span><span class="nu0">7</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+plt.<span class="me1">subplot</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">2</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span>
+controlOverFiting<span class="br0">&#40;</span>data_train<span class="sy0">,</span> data_test<span class="sy0">,</span> <span class="st0">&quot;Survived&quot;</span><span class="sy0">,</span> couleur<span class="sy0">=</span><span class="st0">&quot;blue&quot;</span><span class="br0">&#41;</span>
+plt.<span class="me1">subplot</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">2</span><span class="sy0">,</span><span class="nu0">2</span><span class="br0">&#41;</span>
+controlOverFiting<span class="br0">&#40;</span>data_train<span class="sy0">,</span> data_test<span class="sy0">,</span> <span class="st0">&quot;Survived&quot;</span><span class="sy0">,</span> indice<span class="sy0">=</span> <span class="st0">&quot;entropy&quot;</span><span class="sy0">,</span> couleur<span class="sy0">=</span><span class="st0">&quot;red&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aarbres_de_classification&amp;media=cpp:compareprecisionginientropy.png" class="media" title="cpp:compareprecisionginientropy.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=5d4ffc&amp;media=cpp:compareprecisionginientropy.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+
+<p>
+Il en ressort que pour avoir un arbre le plus performant, il faut utiliser l&#039;indice “entropy” et une profondeur de 9.
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://towardsdatascience.com/decision-tree-build-prune-and-visualize-it-using-python-12ceee9af752" class="urlextern" title="https://towardsdatascience.com/decision-tree-build-prune-and-visualize-it-using-python-12ceee9af752" rel="nofollow">https://towardsdatascience.com/decision-tree-build-prune-and-visualize-it-using-python-12ceee9af752</a></div>
+</li>
+</ul>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">&nbsp;</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Evaluations sp\u00e9cifiques aux arbres&quot;,&quot;hid&quot;:&quot;evaluations_specifiques_aux_arbres&quot;,&quot;codeblockOffset&quot;:17,&quot;secid&quot;:15,&quot;range&quot;:&quot;12891-&quot;} -->

@@ -1,0 +1,9 @@
+<span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+&nbsp;
+<span class="co1">#Date sous la forme d'une chaine de caractère comme on pourrait le lire dans un fichier</span>
+mon_annive <span class="sy0">=</span> <span class="st0">&quot;24-10-1998&quot;</span>
+mon_annive_melange <span class="sy0">=</span> <span class="st0">&quot;10/24/1998&quot;</span>
+&nbsp;
+<span class="co1">#Date transformée</span>
+date_mon_annive <span class="sy0">=</span> pd.<span class="me1">to_datetime</span><span class="br0">&#40;</span>mon_annive<span class="br0">&#41;</span>
+date_mon_annive <span class="sy0">=</span> pd.<span class="me1">to_datetime</span><span class="br0">&#40;</span>mon_annive_melange<span class="sy0">,</span> format<span class="sy0">=</span><span class="st0">&quot;%m/%d/%Y&quot;</span><span class="br0">&#41;</span>

@@ -1,0 +1,2 @@
+<span class="kw1">import</span> numpy <span class="kw1">as</span> np
+<span class="kw1">from</span> scipy.<span class="me1">linalg</span> <span class="kw1">import</span> lu

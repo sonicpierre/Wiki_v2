@@ -1,0 +1,2 @@
+library<span class="br0">&#40;</span>adabag<span class="br0">&#41;</span>
+m.<span class="me1">boosting</span> <span class="sy0">&lt;</span>- boosting<span class="br0">&#40;</span>V61 <span class="sy0">~</span> .<span class="sy0">,</span> data <span class="sy0">=</span> data<span class="sy0">,</span> boos <span class="sy0">=</span> TRUE<span class="sy0">,</span> mfinal <span class="sy0">=</span> <span class="nu0">100</span><span class="br0">&#41;</span>

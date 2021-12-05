@@ -1,0 +1,5 @@
+<span class="kw1">import</span> statsmodels.<span class="me1">api</span> <span class="kw1">as</span> sm 
+&nbsp;
+RegLog <span class="sy0">=</span> sm.<span class="me1">Logit</span><span class="br0">&#40;</span>y_train<span class="sy0">,</span>X_train<span class="br0">&#41;</span><span class="co1">#Entrainement du modèle</span>
+RegLog <span class="sy0">=</span> RegLog.<span class="me1">fit</span><span class="br0">&#40;</span>method<span class="sy0">=</span><span class="st0">&quot;lbfgs&quot;</span><span class="br0">&#41;</span><span class="co1">#Ajustement du modèle</span>
+np.<span class="me1">exp</span><span class="br0">&#40;</span>RegLog.<span class="me1">params</span><span class="br0">&#41;</span><span class="co1">#Odds ratio</span>

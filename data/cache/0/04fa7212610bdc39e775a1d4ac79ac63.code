@@ -1,0 +1,7 @@
+Game
+├── <span class="sy0">&lt;</span><span class="kw3">fc</span> <span class="co0">#ff0000&gt;bin&lt;/fc&gt;</span>
+└── src
+    ├── fr
+    │   └── game
+    │       └── Main.java
+    └── module-info.java

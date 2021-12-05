@@ -1,0 +1,10 @@
+<span class="kw1">import</span> requests
+<span class="kw1">import</span> <span class="kw3">urllib</span>.<span class="me1">request</span>
+<span class="kw1">import</span> <span class="kw3">time</span>
+<span class="kw1">from</span> bs4 <span class="kw1">import</span> BeautifulSoup
+<span class="kw1">import</span> numpy <span class="kw1">as</span> np
+<span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+<span class="kw1">from</span> <span class="kw3">urllib</span>.<span class="me1">request</span> <span class="kw1">import</span> urlopen
+url <span class="sy0">=</span> <span class="st0">'https://fr.wikipedia.org/wiki/Lama_(animal)'</span>
+html <span class="sy0">=</span> urlopen<span class="br0">&#40;</span>url<span class="br0">&#41;</span> 
+soup <span class="sy0">=</span> BeautifulSoup<span class="br0">&#40;</span>html<span class="sy0">,</span> <span class="st0">'html.parser'</span><span class="br0">&#41;</span>

@@ -1,0 +1,215 @@
+{{ :cpp:illustration_serie_temp.jpg?500 |}}
+
+Savoir manipuler les séries temporelles est fort utile mais savoir prévoir les fluctuations futures est d'autant plus important. Nous allons ici décrire des notions propres aux séries temporelles qui permettront par la suite de développer les modèles spécifiques. Il existe principalement 2 types de modèles, les <color #ed1c24>**modèles déterministe**</color> que nous allons aborder ici et les <color #ed1c24>**modèles stochastique**</color> que nous aborderons ultérieurement. 
+
+=====Modèles additif et multiplicatif=====
+
+Nous allons étudier 2 modèles déterministes : le modèle additif et le modèle multiplicatif.
+
+{{ :cpp:modele_additif_multiplicatif.png?800 |}}
+
+On remarque tout de suite une différence significative dans la représentation de ces deux types de modèles. Cette différence se retrouvera bien entendu dans les  relations mathématiques permettant de les modéliser :
+
+^  Modèle additif  ^  Modèle multiplicatif  ^
+|  $X_t = Z_t + S_t + \epsilon_t$  |  $ X_t = Z_t  (1 + S_t) (1 + \epsilon_t)$  |
+
+avec $Z_t$ représentant la tendance, $S_t$ la saisonnalité et $\epsilon_t$ le bruit. Le bruit est la composante aléatoire qui n'est pas modéliser par les deux autres composantes.
+
+<color #ed1c24>Mais comment choisir le bon modèle ?</color> 
+
+Il existe trois méthodes qui permettent de savoir quel est le modèle le plus adapté, il est important de toutes les tester et comparer leurs résultats pour avoir les bonnes conclusions.
+
+{{ :cpp:methode_bande.png?800 |}}
+
+**Technique :** On trace 2 droites passant respectivement par les maximas et minimas.
+
+**Règle de décision :** Si les droites sont parallèle alors le modèle est aditif sinon il est multiplicatif.
+
+{{ :cpp:methode_profil.png?800 |}}
+
+**Technique :** On découpe la série temporelle par période observée et on superpose les différents morceaux.
+
+**Règle de décision :** Si on observe des courbes globalement similaires avec un simple décalage de valeur on est avec un modèle aditif sinon on est avec un modèle multiplicatif.
+
+**Méthode analytique :** On calcule les moyenne et écarts types des différentes périodes. On construit ensuite la régression linéaire tels que :
+
+$$\sigma = a \bar{x} + b$$
+
+**Règle de décision :** Si a est nul alors le modèle est additif sinon il est multiplicatif.
+
+Il est conseillé d'utiliser une simple feuille de calcule avec Libre Office ou Excel pour trouver le type de modèle. L'utilisation de Python ou R ici n'ajoutera que des difficultés inutiles. Il est important de baser son choix sur les 3 méthodes pour être sûr de choisir le bon modèle.
+
+<alert warning>**Remarque :** Ces notions ne sont pas propres aux modèles déterministes nous les retrouverons dans la construction de modèle stochastiques.</alert>
+
+**Source :**
+  * [[https://www.math.univ-toulouse.fr/~lagnoux/Poly_SC.pdf]]
+Nous avons choisi notre modèle maintenant il est temps de reprendre chaque élément qui compose la série temporelle et essayer de le déterminer.
+
+<alert info>**Info :** Nous utiliserons des données simulées présentent ici.</alert>
+
+Supposons que vous ayez cette série temporelle et que vous vouliez comprendre comment elle est construite pour pouvoir par la suite la simuler dans le temps et faire des prédictions.
+
+
+
+ =====Tendance=====
+
+Une façon de transformer la série temporelle est de la supposer sans composante saisonnière. On arrive donc à la formule suivante :
+
+$$X_t = m_t + \epsilon_t$$
+
+L'expression de m_t peut varier allant du simple cas linéaire avec $m_t = \beta_0 + \beta_1 t$ à des expressions polynomiales d'ordre supérieur $m_t =  \beta_0 + \beta_1 t + \beta_2 t^2 + ... + \beta_n t^n$ ou encore des expressions faisant appels à des coefficients exponentielles. 
+
+Dans le cas "simple" où il faut estimer $\beta_0$ et $\beta_1$ on utilise la méthode des Moindres Carrés Ordinaires qui a été développé plus en détail [[cpp:Régression lineaire interpret Daniel | ici]]. On arrive alors aux formules suivantes :
+
+$$\beta_0 = \bar{X} - \beta_1 \bar{t} \,\,\,\;\; \beta_1 = \frac{Cov(t,X)}{Var(t)}$$
+
+Dans notre cas particulier nous pouvons dire que $Var(t) = \frac{n^2 -1}{12}$ et $Cov(t,X) = \frac{1}{n}\sum^n_{t=1}t*X_t - \bar{t} *\bar{X}$. Nous allons commencer par déterminer la tendance sans l'aide de librairies spécifiques au calcul de la tendance.
+
+__En Python :__
+
+<code python> 
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+
+#On crée une colonne de temps discret
+data["Temps"] = np.linspace(1,100,100)
+
+#On entraîne une  régression linéaire et on fait les prédictions
+linear_reg = LinearRegression().fit(np.array(data["Temps"]).reshape(-1,1), np.array(data["Valeurs"]).reshape(-1,1))
+data["Tendance"] = linear_reg.predict(np.array(data["Temps"]).reshape(-1,1))
+
+#On récupère la série sans tendance
+data["Valeur sans tendance"] = data["Valeurs"].sub(data["Tendance"])
+</code>
+
+__En R :__
+
+<code python> 
+
+</code>
+
+On peut aussi utiliser les librairies spécifiques pour ce traitement.
+
+<code python>
+from statsmodels.tsa.tsatools import detrend
+data["Valeur sans tendance"] = detrend(data["Valeurs"], 1)
+</code>
+
+**Résultats :**
+
+{{ :cpp:tendance_serie_temp.png?500 |}}
+
+En regardant les coefficients de la régression linéaire on arrive à exprimer la tendance comme $T = 5.08 * t - 2.20$.
+=====Saisonalité dans la série=====
+
+Quelle est une des différences principales entre une série temporelle et un dataframe classique ? Les données liées au temps ont un ordre qui fait toute la différence. Les mesures faites d'aujourd'hui sont peut-être liées à celles de hier ou à celles de la saison dernière. Il a peut-être une périodicité (saisonnalité) qui permettrait de mieux comprendre la série pour à terme faire des prédictions concernant les futures fluctuations.
+
+====Détecter la saisonnalité====
+
+Il est possible de détecter la saisonnalité en regardant le graphique et en essayant de repérer un pattern qui se répèterait. Prenons par exemple l'ensoleillement par moyen par jour.
+
+{{ :cpp:saisonalite.jpg?600 |}}
+
+On remarque ici en regardant le graphique que la fréquence de la saisonnalité n'est pas évidente du plus elle est difficile à quantifier. C'est pourquoi il existe des techniques analytiques pour reconnaître la saisonnalité. Il s'agit du test ACF qui permet de calculer l'auto corrélation avec un décalage donné dans le temps.
+
+__En Python :__
+
+<code python>
+import statsmodels.tsa.stattools as st
+import statsmodels.graphics.tsaplots as stplot
+
+n, m = 12, 8
+
+with plt.rc_context():
+    plt.rc("figure", figsize=(n,m))
+    stplot.plot_acf(sun_rate, lags = 500, title = "ACF pour contrôler la saisonnalité")
+</code>
+
+__En R :__
+
+<code python>
+
+</code>
+
+{{ :cpp:acf.png?700 |}}
+
+On voit tout de suite la présence d'une saisonnalité qui se détecte à chaque fois que la courbe passe de croissante à décroissante et inversement. On peut même quantifier cette saisonnalité par lecture graphique on optient environ 80 mois donc environ 7 ans. Essayez de trouver la saisonnalité de la série que l'on essaie de décomposer.
+
+====Désaisonnaliser====
+
+Il existe plusieurs méthodes pour désaisonaliser une série, la plus connue est celle par moyenne mobile.
+
+Commençons par une explication intuitive afin de mieux comprendre le principe et le calcul de la moyenne mobile.
+
+{{ :cpp:moyenne_mobile_5.png?900 |}}
+
+On peut exprimer d'un point de vue mathématiques la moyenne mobile tout d'abord quand l'ordre est paire :
+
+$$y_t = \frac{1}{2m} \biggl(\frac{1}{2} x_{t-m} + \sum^{m-1}_{i = -m + 1} x_{t + i} + \frac{1}{2} x_{t+m} \biggr) $$
+
+On a ici $m$ qui est l'ordre de la moyenne voulu et $t$ l'indice voulu. Dans le cas d'un ordre impaire on aurait :
+
+$$y_t = \frac{1}{2m + 1} \sum^{m}_{i = -m} x_{t+i}$$
+
+Une fois le calcul de la moyenne mobile fait, il est possible de calculer des coefficients saisonniers correspondant à chacune des périodes. Pour cela, on fait la moyenne des mois de janvier puis ceux de février et ainsi de suite si la périodicité est le mois ou la moyenne des trimestres 1 puis des trimestres 2 si la périodicité est trimestrielle. Dans notre cas précis on optient 12 coefficients saisonniers correspondant à chacune des périodes.
+
+__En Python :__
+
+<code python>
+#On calcule la moyenne mobile d'ordre 12
+moyenne_mobile = data_sans_tendance.rolling(12).mean()
+
+#On enlève les valeurs manquantes
+soustraction = soustraction.dropna()
+
+#On calcule les coefficients saisonniers
+coeff_saisonnier = []
+for a in range(0,12):
+    total = 0
+    compteur = 0
+    for i in range(soustraction.shape[0]):
+        if(i % 12 == a):          
+            total += soustraction.iloc[i]
+            compteur += 1
+    coeff_saisonnier.append(total/compteur)
+</code>
+
+__En R :__
+
+<code python>
+
+</code>
+
+**Souce :**
+
+  * [[https://rpubs.com/brodseba/timeserie]]
+  * [[http://www.xavierdupre.fr/app/ensae_teaching_cs/helpsphinx/notebooks/td2a_timeseries.html]]
+  * [[https://www.dataquest.io/blog/tutorial-time-series-analysis-with-pandas/]]
+
+=====Recomposer la série =====
+
+Nous allons ici présenter les outils pour faire chacune de ces étapes automatiquement. Ceci vous simplifiera grandement la vie et permettra de gagner du temps sur des études parfois longues à effectuer from scratch. 
+
+__En Python :__
+
+<code python>
+from statsmodels.tsa.seasonal import seasonal_decompose
+
+n, m = 12, 8
+
+with plt.rc_context():
+    plt.rc("figure", figsize=(n,m))
+    seasonal_decompose(data, period = 12, model = "multiplicatif").plot()
+</code>
+
+__En R :__
+
+<code python>
+
+</code>
+
+**Résultat :**
+
+{{ :cpp:decomposition_total.png?600 |}}
+
+On voit donc ici clairement que la série temporelle a été correctement décomposé. Dans ce cas précis où la série semble bien réagir à la décomposition on peut utiliser ce travail pour faire des prédictions et prévoir les fluctuations futures.

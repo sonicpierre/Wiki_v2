@@ -1,0 +1,4 @@
+install.<span class="me1">packages</span><span class="br0">&#40;</span><span class="st0">&quot;tidyr&quot;</span><span class="br0">&#41;</span>
+library<span class="br0">&#40;</span>tidyr<span class="br0">&#41;</span>
+&nbsp;
+data <span class="sy0">&lt;</span>- drop_na<span class="br0">&#40;</span>data<span class="br0">&#41;</span>

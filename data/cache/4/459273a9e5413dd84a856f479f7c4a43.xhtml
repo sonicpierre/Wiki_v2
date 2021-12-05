@@ -1,0 +1,382 @@
+
+<p>
+<a href="/doku.php?id=cpp:ia" class="wikilink1" title="cpp:ia"> Machine Learning</a>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aevaluer_son_modele_de_classification&amp;media=cpp:evaluation.jpg" class="media" title="cpp:evaluation.jpg"><img src="/lib/exe/fetch.php?w=500&amp;tok=b8a0b6&amp;media=cpp:evaluation.jpg" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+On peut ensuite évaluer le modèle pour avoir une meilleur idée de sa précision. L&#039;évaluation est une étape indispensable pour tout travail de Data Science autant pour les travaux de régression que les modèles de classification. Il est bon de pouvoir tester plusieurs methodes pour évaluer son modèle car <span style='color:#ed1c24; '><strong>toutes les précisions ne se valent pas</strong></span>.
+</p>
+
+<p>
+<div class='alert alert-info'><strong>DataSet :</strong> Nous allons 2 datasets, un premier pour entraîner des algorithmes de régression concernant le diabète et un second concernant la reconnaissance de lettres manuscrites. </div>
+</p>
+
+<h2 class="sectionedit1" id="les_differentes_erreurs">Les différentes erreurs</h2>
+<div class="level2">
+
+<p>
+Il est important de séparer son dataset correctement pour éviter la fuite de donnée (data leak) qui consisterait à entraîner des modèles sur un ensemble qui servirait ensuite à le tester.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les diff\u00e9rentes erreurs&quot;,&quot;hid&quot;:&quot;les_differentes_erreurs&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;654-885&quot;} -->
+<h3 class="sectionedit2" id="l_erreur_d_ajustement_prediction">L&#039;erreur d&#039;ajustement/prédiction</h3>
+<div class="level3">
+
+<p>
+On peut distinguer deux sortes d&#039;erreur :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Erreur d&#039;ajustement</strong> : Il s&#039;agit de l&#039;erreur commise sur les données qui ont servi à l&#039;entrainement du modèle. </div>
+</li>
+<li class="level1"><div class="li"> <strong>Erreur de prédiction</strong> : Il s&#039;agit de l&#039;erreur commise sur des données qui n&#039;ont jamais été vu par le modèle. </div>
+</li>
+</ul>
+
+<p>
+Il est intéressant de les calculer et de les comparer pour voir si notre modèle est en overfitting. Prenons par exemple un modèle qui a tendance à over-fiter facilement, l&#039;arbre de régression.
+</p>
+
+<p>
+On commence par couper en 2 le dataset pour séparer ainsi le partie pour l&#039;entrainement et le test :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">model_selection</span> <span class="kw1">import</span> train_test_split
+data_train<span class="sy0">,</span> data_test <span class="sy0">=</span> train_test_split<span class="br0">&#40;</span>data<span class="sy0">,</span> test_size <span class="sy0">=</span> <span class="nu0">0.2</span><span class="sy0">,</span> random_state<span class="sy0">=</span><span class="nu0">0</span><span class="br0">&#41;</span>
+&nbsp;
+data_train_train <span class="sy0">=</span> data_train.<span class="me1">drop</span><span class="br0">&#40;</span><span class="st0">'target'</span><span class="sy0">,</span> axis<span class="sy0">=</span><span class="nu0">1</span><span class="br0">&#41;</span>
+data_train_test <span class="sy0">=</span> data_train.<span class="me1">target</span>
+data_test_train <span class="sy0">=</span> data_test.<span class="me1">drop</span><span class="br0">&#40;</span><span class="st0">'target'</span><span class="sy0">,</span> axis<span class="sy0">=</span><span class="nu0">1</span><span class="br0">&#41;</span>
+data_test_test <span class="sy0">=</span> data_test.<span class="me1">target</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">&nbsp;</pre>
+
+<p>
+On peut ensuite entraîner un premier modèle d&#039;arbre sans mettre d&#039;hyper paramètre et calculer l&#039;erreur d&#039;ajustement. Nous utiliserons ici la RMSE (Root Mean Squared Error) pour approximer l&#039;erreur et la comparer :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">tree_mod <span class="sy0">=</span> DecisionTreeRegressor<span class="br0">&#40;</span><span class="br0">&#41;</span>
+tree_mod.<span class="me1">fit</span><span class="br0">&#40;</span>data_train_train<span class="sy0">,</span> data_train_test<span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">from</span> sklearn.<span class="me1">metrics</span> <span class="kw1">import</span> mean_squared_error
+<span class="kw1">print</span><span class="br0">&#40;</span>mean_squared_error<span class="br0">&#40;</span>tree_mod.<span class="me1">predict</span><span class="br0">&#40;</span>data_train_train<span class="br0">&#41;</span><span class="sy0">,</span> data_train_test<span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="kw1">print</span><span class="br0">&#40;</span>mean_squared_error<span class="br0">&#40;</span>tree_mod.<span class="me1">predict</span><span class="br0">&#40;</span>data_test_train<span class="br0">&#41;</span><span class="sy0">,</span> data_test_test<span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">&nbsp;</pre>
+
+<p>
+Vous remarquerez que l&#039;erreur d&#039;ajustement est bien plus faible que l&#039;erreur de précision. On peut donc dire que le modèle est en over fitting et se généralise mal. On peut bien entendu sur la profondeur de l&#039;arbre pour palier à ce problème.
+</p>
+
+<p>
+On peut visualiser l&#039;évolution de ces 2 courbes en fonction du nombre de données leur sont fournies :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">model_selection</span> <span class="kw1">import</span> learning_curve
+&nbsp;
+N <span class="sy0">,</span> train_score<span class="sy0">,</span> val_score <span class="sy0">=</span> learning_curve<span class="br0">&#40;</span>DecisionTreeRegressor<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span>data.<span class="me1">drop</span><span class="br0">&#40;</span><span class="st0">'target'</span><span class="sy0">,</span> axis <span class="sy0">=</span> <span class="nu0">1</span><span class="br0">&#41;</span><span class="sy0">,</span> data<span class="br0">&#91;</span><span class="st0">'target'</span><span class="br0">&#93;</span><span class="sy0">,</span> cv <span class="sy0">=</span> <span class="nu0">5</span><span class="sy0">,</span> scoring<span class="sy0">=</span><span class="st0">'neg_mean_squared_error'</span><span class="br0">&#41;</span>
+plt.<span class="me1">plot</span><span class="br0">&#40;</span>N<span class="sy0">,</span> val_score.<span class="me1">mean</span><span class="br0">&#40;</span>axis<span class="sy0">=</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="sy0">,</span> label<span class="sy0">=</span><span class="st0">'Erreur précision'</span> <span class="br0">&#41;</span>
+plt.<span class="me1">plot</span><span class="br0">&#40;</span>N<span class="sy0">,</span> train_score.<span class="me1">mean</span><span class="br0">&#40;</span>axis<span class="sy0">=</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="sy0">,</span> label<span class="sy0">=</span><span class="st0">'Erreur entrainement'</span><span class="br0">&#41;</span>
+plt.<span class="me1">title</span><span class="br0">&#40;</span><span class="st0">&quot;Arbre de Régression&quot;</span><span class="br0">&#41;</span>
+plt.<span class="me1">legend</span><span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">&nbsp;</pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+On a fait varier les différents modèles pour voir comment évolue les erreurs d&#039;ajustement et de précision.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aevaluer_son_modele_de_classification&amp;media=cpp:erreur_prediction_ajustement.png" class="media" title="cpp:erreur_prediction_ajustement.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=a8603b&amp;media=cpp:erreur_prediction_ajustement.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.statsoft.fr/concepts-statistiques/qualite-d-ajustement/qualite-d-ajustement.htm" class="urlextern" title="http://www.statsoft.fr/concepts-statistiques/qualite-d-ajustement/qualite-d-ajustement.htm" rel="nofollow">http://www.statsoft.fr/concepts-statistiques/qualite-d-ajustement/qualite-d-ajustement.htm</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://openclassrooms.com/fr/courses/4297211-evaluez-les-performances-dun-modele-de-machine-learning/4308241-mettez-en-place-un-cadre-de-validation-croisee" class="urlextern" title="https://openclassrooms.com/fr/courses/4297211-evaluez-les-performances-dun-modele-de-machine-learning/4308241-mettez-en-place-un-cadre-de-validation-croisee" rel="nofollow">https://openclassrooms.com/fr/courses/4297211-evaluez-les-performances-dun-modele-de-machine-learning/4308241-mettez-en-place-un-cadre-de-validation-croisee</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;L&#039;erreur d&#039;ajustement\/pr\u00e9diction&quot;,&quot;hid&quot;:&quot;l_erreur_d_ajustement_prediction&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;886-3758&quot;} -->
+<h3 class="sectionedit3" id="la_validation_croisee">La validation croisée</h3>
+<div class="level3">
+
+<p>
+Couper son dataset c&#039;est toujours se priver d&#039;une part des données sur lesquelles on ne peut pas tester ni ajuster son modèle. Lors du réglage des hyperparamètres, il faut faire attention à ne pas rendre performant le modèle que sur un jeux d&#039;entrainement précis le rendant ainsi peu généralisable (overfitting).
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aevaluer_son_modele_de_classification&amp;media=cpp:validation_croise.png" class="media" title="cpp:validation_croise.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=30a196&amp;media=cpp:validation_croise.png" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+On fait donc varier la <span style='color:#7092be; '><strong>partie du jeux de donnée permettant l&#039;entraînement</strong></span> et le <span style='color:#ed1c24; '><strong>test du modèle</strong></span>. On respecte bien entendu le fait de ne jamais entraîner un modèle sur l&#039;ensemble où on le teste et on a ainsi une idée plus globale de l&#039;erreur.
+</p>
+
+<p>
+La découpe “classique” ne prend pas forcément en compte le fait que les classes soient déséquilibrées.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aevaluer_son_modele_de_classification&amp;media=cpp:stratifiation.png" class="media" title="cpp:stratifiation.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=2675e1&amp;media=cpp:stratifiation.png" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+La validation croisée lors de la découpe en K sous ensembles doit respecter les proportions de chacune des classes on appelle ce principe la stratification. Heureusement cette problématique est traité automatiquement dans les librairies permettant la mise en place de la validation croisée.
+</p>
+
+<p>
+Illustrons cette technique en entraînant un régression linéaire et l&#039;évaluant grâce à une validation croisée :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">model_selection</span> <span class="kw1">import</span> cross_val_score
+&nbsp;
+lin_mod <span class="sy0">=</span> LinearRegression<span class="br0">&#40;</span><span class="br0">&#41;</span>
+scores <span class="sy0">=</span> cross_val_score<span class="br0">&#40;</span>lin_mod<span class="sy0">,</span> data_train<span class="sy0">,</span> data_etiquette<span class="sy0">,</span> scoring<span class="sy0">=</span><span class="st0">&quot;neg_mean_squared_error&quot;</span><span class="sy0">,</span> cv <span class="sy0">=</span> <span class="nu0">5</span><span class="br0">&#41;</span>
+lin_rmse <span class="sy0">=</span> np.<span class="me1">sqrt</span><span class="br0">&#40;</span>-scores<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">&nbsp;</pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+array([54.44845301, 51.5418087 , 55.78449685, 51.32305279, 55.17741631])
+</p>
+
+<p>
+Il est intéressant de calculer la moyenne avec <strong>.mean()</strong> et l&#039;écart type avec <strong>.std()</strong> pour avoir une idée des variations de cette erreur en fonction des données. Ici on obtient <strong>moyenne = 53.65</strong> et <strong>écart type = 1.86</strong>.
+</p>
+
+<p>
+<div class='alert alert-info'><strong>Info :</strong> Il existe une méthode appelée <strong>leave-one out</strong> qui conciste à couper le jeux de données en n fois. On teste donc sur une seule observation les modèles entraînés sur l&#039;ensemble du dataset moins cette observation. On peut appliquer ce principe si il n&#039;y a pas très peu d&#039;observation et si le modèle est peu couteux à entraîner.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La validation crois\u00e9e&quot;,&quot;hid&quot;:&quot;la_validation_croisee&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:3,&quot;range&quot;:&quot;3759-5999&quot;} -->
+<h2 class="sectionedit4" id="les_erreurs_de_classification">Les erreurs de classification</h2>
+<div class="level2">
+
+<p>
+La construction de ce score peut se faire en une ligne de code, cependant il est important de comprendre ce qu&#039;il se passe derrière. La construction d&#039;une matrice de confusion et les notions de rappel et précision sont essantielles pour bien comprendre tous les aspects de score F1 c&#039;est pourquoi nous allons les aborder.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les erreurs de classification&quot;,&quot;hid&quot;:&quot;les_erreurs_de_classification&quot;,&quot;codeblockOffset&quot;:8,&quot;secid&quot;:4,&quot;range&quot;:&quot;6000-6365&quot;} -->
+<h3 class="sectionedit5" id="les_matrices_de_confusion">Les matrices de confusion</h3>
+<div class="level3">
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aevaluer_son_modele_de_classification&amp;media=cpp:matricedeconfusion.png" class="media" title="cpp:matricedeconfusion.png"><img src="/lib/exe/fetch.php?w=600&amp;tok=fb566a&amp;media=cpp:matricedeconfusion.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+<p>
+Plus la matrice est proche d&#039;une matrice diagonale et plus le modèle est bon.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">metrics</span> <span class="kw1">import</span> confusion_matrix
+data_Test <span class="sy0">=</span> pd.<span class="me1">read_csv</span><span class="br0">&#40;</span><span class="st0">&quot;test_Titanic_py.csv&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+data_train<span class="sy0">=</span> data_Test.<span class="me1">drop</span><span class="br0">&#40;</span><span class="st0">&quot;Survived&quot;</span><span class="sy0">,</span> axis <span class="sy0">=</span> <span class="nu0">1</span><span class="br0">&#41;</span>
+data_test <span class="sy0">=</span> data_Test.<span class="me1">Survived</span>
+&nbsp;
+prediction <span class="sy0">=</span> tree_clf.<span class="me1">predict</span><span class="br0">&#40;</span>data_train<span class="br0">&#41;</span>
+confusion_matrix<span class="br0">&#40;</span>prediction<span class="sy0">,</span> data_test<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>caret<span class="br0">&#41;</span>
+data_test <span class="sy0">&lt;</span>- read.<span class="kw3">csv</span><span class="br0">&#40;</span><span class="st0">&quot;test_Titanic_R.csv&quot;</span><span class="sy0">,</span> row.<span class="me1">names</span> <span class="sy0">=</span> <span class="nu0">1</span><span class="br0">&#41;</span>
+<span class="co1">#On fait les prédictions</span>
+class_prediction <span class="sy0">&lt;</span>- predict<span class="br0">&#40;</span><span class="kw2">object</span> <span class="sy0">=</span> model<span class="sy0">,</span>
+                            newdata <span class="sy0">=</span> data_test<span class="sy0">,</span>
+                            <span class="kw2">type</span> <span class="sy0">=</span> <span class="st0">&quot;class&quot;</span><span class="br0">&#41;</span>
+<span class="co1">#On construit la matrice</span>
+matrice_de_Confusion <span class="sy0">&lt;</span>- table<span class="br0">&#40;</span>data_test$Survived<span class="sy0">,</span> class_prediction<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+On obtient ainsi la matrice de confusion suivante :
+</p>
+
+<p>
+$$
+\begin{pmatrix}
+274 &amp; 4\\
+12 &amp; 114
+\end{pmatrix}
+$$
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les matrices de confusion&quot;,&quot;hid&quot;:&quot;les_matrices_de_confusion&quot;,&quot;codeblockOffset&quot;:8,&quot;secid&quot;:5,&quot;range&quot;:&quot;6366-7306&quot;} -->
+<h3 class="sectionedit6" id="la_precision_et_le_rappel">La précision et le rappel</h3>
+<div class="level3">
+
+<p>
+Évaluer un modèle de classification n&#039;est pas forcément une chose aisée tout dépend du résultat voulu :
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aevaluer_son_modele_de_classification&amp;media=cpp:precisionrappel.png" class="media" title="cpp:precisionrappel.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=0a1974&amp;media=cpp:precisionrappel.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+
+<p>
+Il y a un compromis à avoir entre <strong>Rappel</strong> et <strong>Précision</strong>. Une forte précision implique un rappel plus faible et vice versa. Tout dépend des désirs du clients et du problème traité.
+<br/>
+
+Dans le cas du Titanic, vous voulez peut-être monter à bord que si vous êtes sûr de survivre donc il faut un modèle avec une forte précision.
+</p>
+
+<p>
+<strong>Théorie :</strong>
+</p>
+
+<p>
+Les scores de rappel et de précision sont calculés grace à la matrice de confusion vu précédemment. 
+</p>
+<ul>
+<li class="level1"><div class="li"> Précision : $$\frac{Vrai Positif}{Vrai Positif + Faux Positif}$$</div>
+</li>
+</ul>
+
+<p>
+<br/>
+
+<br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Rappel : $$\frac{Vrai Positif}{Vrai Positif + Faux Négatif}$$</div>
+</li>
+</ul>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">metrics</span> <span class="kw1">import</span> precision_score<span class="sy0">,</span> recall_score
+precision_score<span class="br0">&#40;</span>prediction<span class="sy0">,</span> data_test<span class="br0">&#41;</span>
+recall_score<span class="br0">&#40;</span>prediction<span class="sy0">,</span> data_test<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">precision <span class="sy0">&lt;</span>- matrice_Confusion<span class="br0">&#91;</span><span class="nu0">4</span><span class="br0">&#93;</span>/<span class="br0">&#40;</span>matrice_Confusion<span class="br0">&#91;</span><span class="nu0">4</span><span class="br0">&#93;</span> + matrice_Confusion<span class="br0">&#91;</span><span class="nu0">3</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+rappel <span class="sy0">&lt;</span>- matrice_Confusion<span class="br0">&#91;</span><span class="nu0">4</span><span class="br0">&#93;</span>/<span class="br0">&#40;</span>matrice_Confusion<span class="br0">&#91;</span><span class="nu0">4</span><span class="br0">&#93;</span> + matrice_Confusion<span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://apiacoa.org/blog/2014/02/initiation-a-rpart.fr.html" class="urlextern" title="https://apiacoa.org/blog/2014/02/initiation-a-rpart.fr.html" rel="nofollow">https://apiacoa.org/blog/2014/02/initiation-a-rpart.fr.html</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La pr\u00e9cision et le rappel&quot;,&quot;hid&quot;:&quot;la_precision_et_le_rappel&quot;,&quot;codeblockOffset&quot;:10,&quot;secid&quot;:6,&quot;range&quot;:&quot;7307-8548&quot;} -->
+<h3 class="sectionedit7" id="score_f1">Score F1</h3>
+<div class="level3">
+
+<p>
+Ce score est coramment utilisé en classification pour comparer rapidement 2 modèles de classification. Il favorise un rappel et une précision élevée, si l&#039;un des deux est plus faible alors le score s&#039;en verra amoindri.
+</p>
+
+<p>
+$$F1 = 2 \times \frac{précision \times rappel}{précision + rappel}$$
+</p>
+
+<p>
+Appliquons cette mesure à notre modèle du Titanic :
+</p>
+
+<p>
+<em class="u">Code Python</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">metrics</span> <span class="kw1">import</span> f1_score
+f1_score<span class="br0">&#40;</span>prediction<span class="sy0">,</span> data_test<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">Code R</em>
+</p>
+<pre class="code python">F1 <span class="sy0">&lt;</span>- <span class="br0">&#40;</span><span class="nu0">2</span> * precision * rappel<span class="br0">&#41;</span> / <span class="br0">&#40;</span>precision + rappel<span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Score F1&quot;,&quot;hid&quot;:&quot;score_f1&quot;,&quot;codeblockOffset&quot;:12,&quot;secid&quot;:7,&quot;range&quot;:&quot;8549-9116&quot;} -->
+<h3 class="sectionedit8" id="le_caveats">Le Caveats</h3>
+<div class="level3">
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://www.it-swarm.dev/fr/r/un-moyen-facile-de-compter-la-precision-le-rappel-et-le-score-f1-en-r/941171789/" class="urlextern" title="https://www.it-swarm.dev/fr/r/un-moyen-facile-de-compter-la-precision-le-rappel-et-le-score-f1-en-r/941171789/" rel="nofollow">https://www.it-swarm.dev/fr/r/un-moyen-facile-de-compter-la-precision-le-rappel-et-le-score-f1-en-r/941171789/</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Le Caveats&quot;,&quot;hid&quot;:&quot;le_caveats&quot;,&quot;codeblockOffset&quot;:14,&quot;secid&quot;:8,&quot;range&quot;:&quot;9117-9269&quot;} -->
+<h3 class="sectionedit9" id="la_courbe_roc">La courbe ROC</h3>
+<div class="level3">
+
+<p>
+La courbe ROC (Receiver-Operator Characteristic) 
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://openclassrooms.com/fr/courses/4297211-evaluez-les-performances-dun-modele-de-machine-learning/4308261-evaluez-un-algorithme-de-classification-qui-retourne-des-scores" class="urlextern" title="https://openclassrooms.com/fr/courses/4297211-evaluez-les-performances-dun-modele-de-machine-learning/4308261-evaluez-un-algorithme-de-classification-qui-retourne-des-scores" rel="nofollow">https://openclassrooms.com/fr/courses/4297211-evaluez-les-performances-dun-modele-de-machine-learning/4308261-evaluez-un-algorithme-de-classification-qui-retourne-des-scores</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://www.kdnuggets.com/2019/10/5-classification-evaluation-metrics-every-data-scientist-must-know.html" class="urlextern" title="https://www.kdnuggets.com/2019/10/5-classification-evaluation-metrics-every-data-scientist-must-know.html" rel="nofollow">https://www.kdnuggets.com/2019/10/5-classification-evaluation-metrics-every-data-scientist-must-know.html</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La courbe ROC&quot;,&quot;hid&quot;:&quot;la_courbe_roc&quot;,&quot;codeblockOffset&quot;:14,&quot;secid&quot;:9,&quot;range&quot;:&quot;9270-9653&quot;} -->
+<h3 class="sectionedit10" id="la_courbe_pr">La courbe PR</h3>
+<div class="level3">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La courbe PR&quot;,&quot;hid&quot;:&quot;la_courbe_pr&quot;,&quot;codeblockOffset&quot;:14,&quot;secid&quot;:10,&quot;range&quot;:&quot;9654-&quot;} -->

@@ -1,0 +1,798 @@
+
+<p>
+<a href="/doku.php?id=cpp:commande_systeme" class="wikilink1" title="cpp:commande_systeme"> Commandes système</a>
+</p>
+
+<h2 class="sectionedit1" id="naviguer_dans_le_systeme_de_fichiers">Naviguer dans le système de fichiers</h2>
+<div class="level2">
+
+<p>
+Dans cette partie nous verrons comment on peut <strong>visualiser</strong> <span style="color:#008000;"><strong>les dossiers et fichiers</strong></span> présents sur l&#039;ordinateur, les <strong>modifier</strong>, en créer ou en <strong>rechercher</strong> des particuliers. Certaines de ces actions sont tout à fait réalisables avec l&#039;explorateur de fichier mais nous nous intéressons à le faire par la console pour plusieurs raisons :
+</p>
+<ul>
+<li class="level1"><div class="li"> Dans certaines situations, comme pour la recherche de fichiers ou dossiers, il est <span style="color:#ff0000;"><strong>plus rapide</strong></span> de procéder par lignes de commande. Dans d&#039;autres, c&#039;est même nécessaire.</div>
+</li>
+<li class="level1"><div class="li"> C&#039;est intéressant d&#039;un point de vue technique d&#039;utiliser les méthodes les plus basiques sans passer par des <span style='color:#ed1c24; '><strong>logiciel tiers</strong></span>.</div>
+</li>
+<li class="level1"><div class="li"> Vous pouvez faire comme si vous étiez un <span style='color:#ed1c24; '><strong>hacker</strong></span> à taper vite dans la console.</div>
+</li>
+</ul>
+
+<p>
+Les deux derniers points ne sont peut être pas essentiels mais le premier suffit à motiver l&#039;apprentissage des commandes console qui reste très rapide.
+Pour donner un <span style="color:#ff0000;"><strong>fil rouge</strong></span> à ce que l&#039;on fera dans cette partie on va se donner le but de créer un dossier <span style="color:#ffa500;"><strong>Valhalla</strong></span> contenant quelques <span style="color:#fa8072;"><strong>Valkyries</strong></span>.
+</p>
+<p class="divalign-center"><a href="/lib/exe/detail.php?id=cpp%3Ales_dossiers_et_fichiers&amp;media=cpp:arborescence.png" class="media" title="cpp:arborescence.png"><img src="/lib/exe/fetch.php?w=200&amp;tok=a13fbe&amp;media=cpp:arborescence.png" class="media" alt="" width="200" /></a></p><!--divalign-->
+
+<p>
+<strong>Note :</strong> Vous remarquerez que parfois je ne <span style="color:#ff0000;"><strong>préciserai pas</strong></span> si la commande est à utiliser sur Windows ou Linux. Si c&#039;est le cas cela signifie que la commande est <span style="color:#ff0000;"><strong>la même pour tous les systèmes d&#039;exploitation</strong></span> !
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Naviguer dans le syst\u00e8me de fichiers&quot;,&quot;hid&quot;:&quot;naviguer_dans_le_systeme_de_fichiers&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;48-1592&quot;} -->
+<h3 class="sectionedit2" id="visualiser_l_arborescence">Visualiser l&#039;arborescence</h3>
+<div class="level3">
+
+<p>
+Maintenant qu&#039;on a vu les <strong>commandes de base</strong>, progressons vers notre objectif : le <span style="color:#ffa500;"><strong>Valhalla</strong></span>.
+Les fichiers de l&#039;ordinateur sont organisés comme <span style="color:#008000;"><strong>les branches d&#039;un arbre</strong></span> : il y a des dossiers à la racine de l&#039;ordinateur remplis de dossiers qui sont eux même remplis de dossiers etc…
+Une bonne façon de le visualiser est d&#039;utiliser la commande
+</p>
+<pre class="code">tree</pre>
+
+<p>
+qui donne sur Windows quelque chose un peu comme ça :
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Ales_dossiers_et_fichiers&amp;media=cpp:tree.png" class="media" title="cpp:tree.png"><img src="/lib/exe/fetch.php?w=1000&amp;tok=340e93&amp;media=cpp:tree.png" class="media" alt="" width="1000" /></a>
+</p>
+
+<p>
+On ne voit pas grand chose mais c&#039;est parce qu&#039;on est dans <strong>/home/user</strong> par défaut (Linux) ou <strong>C:\Users\user</strong> (Windows) et qu&#039;il y a beaucoup de choses ici. Pour commencer, on va travailler dans <span style="color:#008000;"><strong>un espace moins fourni</strong></span>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Visualiser l&#039;arborescence&quot;,&quot;hid&quot;:&quot;visualiser_l_arborescence&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;1593-2363&quot;} -->
+<h3 class="sectionedit3" id="creer_un_dossier">Créer un dossier</h3>
+<div class="level3">
+
+<p>
+Pour ça on va créer un dossier <span style="color:#008000;"><strong>entièrement par ligne de commande</strong></span>. Oui, on ne va pas ouvrir l&#039;explorateur de fichier et faire Clic droit &gt; Nouveau &gt; Dossier, on va tout faire dans la console.
+Pour ça, on utilise 
+</p>
+<pre class="code">mkdir Valhalla</pre>
+
+<p>
+Allons-y, créons le dossier <span style="color:#ffa500;"><strong>Valhalla</strong></span>. C&#039;est bon ? Si vous avez du courage, vous pouvez réafficher l&#039;arborescence des dossiers pour vérifier que <span style="color:#ffa500;"><strong>Valhalla</strong></span> a bien été créé, mais on va essayer d&#039;être malin. On va donc demander à l&#039;ordinateur de nous placer dans le dossier <span style="color:#ffa500;"><strong>Valhalla</strong></span>. 
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Cr\u00e9er un dossier&quot;,&quot;hid&quot;:&quot;creer_un_dossier&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:3,&quot;range&quot;:&quot;2364-3007&quot;} -->
+<h3 class="sectionedit4" id="se_deplacer_dans_l_arborescence">Se déplacer dans l&#039;arborescence</h3>
+<div class="level3">
+
+<p>
+Pour cela on utilise 
+</p>
+<pre class="code">cd Valhalla</pre>
+
+<p>
+ Si tout se passe bien, on devrait être dans le dossier <span style="color:#ffa500;"><strong>Valhalla</strong></span>. Si vous voulez vous pouvez chercher le dossier en passant par l&#039;explorateur de fichiers, il sera bien là. La commande <span style="color:#800000;"><strong>cd</strong></span> prend comme argument le <span style="color:#008000;"><strong>nom d&#039;un dossier fils</strong></span> du répertoire où vous vous trouvez actuellement mais vous pouvez aussi donner un <span style="color:#008000;"><strong>chemin absolu</strong></span>, c&#039;est à dire partant de la <strong>racine</strong>. Par exemple, pour<span style="color:#ff0000;"> <strong>remonter</strong></span> dans l&#039;arborescence au dossier où vous étiez avant vous pouvez faire (mettez votre nom d&#039;utilisateur et pas user hein) :
+</p>
+<div class="table sectionedit5"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">cd /home/user</td><td class="col1" colspan="2">cd \Users\user</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:5,&quot;range&quot;:&quot;3724-3772&quot;} -->
+<p>
+Ou plus simplement pour revenir en arrière dans l&#039;arborescence d&#039;un cran 
+</p>
+<pre class="code"> cd ..</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Se d\u00e9placer dans l&#039;arborescence&quot;,&quot;hid&quot;:&quot;se_deplacer_dans_l_arborescence&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:4,&quot;range&quot;:&quot;3008-3868&quot;} -->
+<h3 class="sectionedit6" id="afficher_dossiers_et_fichiers">Afficher dossiers et fichiers</h3>
+<div class="level3">
+
+<p>
+Je vous ai montré <span style="color:#800000;"><strong>tree</strong></span> tout à l&#039;heure pour afficher le contenu d&#039;un dossier mais ce n&#039;est pas la commande qu&#039;on utilise la plupart du temps.
+</p>
+<div class="table sectionedit7"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">ls</td><td class="col1" colspan="2">dir</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:7,&quot;range&quot;:&quot;4072-4098&quot;} -->
+<p>
+sont bien plus souvent utilisées car plus sobres et plus claires que <span style="color:#800000;"><strong>tree</strong></span>. En plus on peut rajouter plein d&#039;<span style="color:#ff0000;"><strong>arguments</strong></span> pour afficher ce qui nous intéresse précisément.
+</p>
+<div class="table sectionedit8"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">ls</th><th class="col1">dir</th><th class="col2" colspan="2">Utilité</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  -a  </td><td class="col1">/a</td><td class="col2" colspan="2">Affiche aussi les fichiers système et les fichiers cachés</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  -l  </td><td class="col1">-</td><td class="col2" colspan="2">Affiche plus de détails comme les droits d&#039;écriture, lecture et exécution ainsi que la date de la dernière modification (affichage par défaut pour dir)</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  -  </td><td class="col1">/d</td><td class="col2" colspan="2">Affiche moins de détails (affichage par défaut pour ls)</td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">  -R  </td><td class="col1">-</td><td class="col2" colspan="2">Affiche récursivement le contenu du répertoire courant</td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 centeralign">  -t  </td><td class="col1">/od</td><td class="col2" colspan="2">Trie par ordre de plus récente modification</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table2&quot;,&quot;secid&quot;:8,&quot;range&quot;:&quot;4313-4771&quot;} -->
+<p>
+<strong>Note :</strong> les fichiers cachés sont généralement des fichiers systèmes et ne sont pas visibles pour l&#039;utilisateur sauf par demande explicite.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Afficher dossiers et fichiers&quot;,&quot;hid&quot;:&quot;afficher_dossiers_et_fichiers&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:6,&quot;range&quot;:&quot;3869-4919&quot;} -->
+<h3 class="sectionedit9" id="creer_des_dossiers_imbriques">Créer des dossiers imbriqués</h3>
+<div class="level3">
+
+<p>
+Maintenant, un petit retour sur la création de dossiers. Imaginons vous vouliez créer un dossier <span style="color:#fa8072;"><strong>Valkyries</strong></span> dans le dossier <span style="color:#ffa500;"><strong>Valhalla</strong></span>. Pour ce faire, vous pourriez vous placer dans ce dernier et faire comme nous avons fait pour créer <span style="color:#ffa500;"><strong>Valhalla</strong></span>. Cependant, il est possible de le faire à partir du répertoire où se trouve <span style="color:#ffa500;"><strong>Valhalla</strong></span> directement. Il suffit de <span style="color:#ff0000;"><strong>donner le chemin en paramètre</strong></span> au lieu d&#039;uniquement le nom du dossier. Essayez en étant là où est Valhalla :
+</p>
+<div class="table sectionedit10"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">mkdir Valhalla/Valkyries</td><td class="col1" colspan="2">mkdir Valhalla\Valkyries</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table3&quot;,&quot;secid&quot;:10,&quot;range&quot;:&quot;5535-5605&quot;} -->
+<p>
+<strong>Resultat :</strong>
+</p>
+<pre class="code">Valhalla
+└── Valkyries</pre>
+
+<p>
+<strong>Note :</strong> Il est aussi possible de créer plusieurs dossiers <span style="color:#008000;"><strong>imbriqués</strong></span> de cette manière en faisant par exemple :
+</p>
+<div class="table sectionedit11"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">mkdir -p a/b/c/d</td><td class="col1" colspan="2">mkdir \a\b\c\d</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table4&quot;,&quot;secid&quot;:11,&quot;range&quot;:&quot;5804-5855&quot;} -->
+<p>
+Remarquez qu&#039;il faut rajouter <strong>-p</strong> sur Linux pour ne pas créer à la place le dossier nommé a/b/c/d au lieu de d dans c dans b dans a.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Cr\u00e9er des dossiers imbriqu\u00e9s&quot;,&quot;hid&quot;:&quot;creer_des_dossiers_imbriques&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:9,&quot;range&quot;:&quot;4920-5995&quot;} -->
+<h3 class="sectionedit12" id="creer_un_fichier">Créer un fichier</h3>
+<div class="level3">
+
+<p>
+Nous allons maintenant nous intéresser à la <span style="color:#008000;"><strong>copie</strong></span>, au <span style="color:#008000;"><strong>déplacement</strong></span> et au <span style="color:#008000;"><strong>renommage</strong></span> des fichiers.
+Pour cela, créons un <strong>fichier vierge</strong> avec lequel travailler pour remplir notre <span style="color:#ffa500;"><strong>Valhalla</strong></span> avec des <span style="color:#fa8072;"><strong>Valkyries</strong></span>. Placez vous dans le dossier <span style="color:#ffa500;"><strong>Valhalla</strong></span> puis :
+</p>
+<div class="table sectionedit13"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">touch Brunhilde.txt</td><td class="col1" colspan="2">echo.&gt;Brunhilde.txt</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table5&quot;,&quot;secid&quot;:13,&quot;range&quot;:&quot;6404-6463&quot;} -->
+<p>
+<strong>Résultat :</strong>
+</p>
+<pre class="code">Valhalla
+├── Brunhilde.txt
+└── Valkyries</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Cr\u00e9er un fichier&quot;,&quot;hid&quot;:&quot;creer_un_fichier&quot;,&quot;codeblockOffset&quot;:5,&quot;secid&quot;:12,&quot;range&quot;:&quot;5996-6549&quot;} -->
+<h3 class="sectionedit14" id="copier">Copier</h3>
+<div class="level3">
+
+<p>
+Créons une <span style="color:#008000;"><strong>copie</strong></span> de notre valkyrie directement dans le dossier <span style="color:#fa8072;"><strong>Valkyries</strong></span>. Pour cela entrez :
+</p>
+<div class="table sectionedit15"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">cp Brunhilde.txt Valkyries</td><td class="col1" colspan="2">copy Brunhilde.txt Valkyries</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table6&quot;,&quot;secid&quot;:15,&quot;range&quot;:&quot;6702-6777&quot;} -->
+<p>
+On peut aller vérifier que tout s&#039;est bien passé avec <span style="color:#800000;"><strong>cd</strong></span> et <span style="color:#800000;"><strong>dir/ls</strong></span> mais bon j&#039;imagine que vous commencez à comprendre le truc <img src="/lib/images/smileys/icon_smile2.gif" class="icon" alt="=)" />.
+</p>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+<pre class="code">Valhalla
+├── Brunhilde.txt
+└── Valkyries
+    └── Brunhilde.txt</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Copier&quot;,&quot;hid&quot;:&quot;copier&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:14,&quot;range&quot;:&quot;6550-7066&quot;} -->
+<h3 class="sectionedit16" id="renommer">Renommer</h3>
+<div class="level3">
+
+<p>
+Nous avons donc une <strong>Brunhilde.txt</strong> dans <span style="color:#ffa500;"><strong>Valhalla</strong></span> et une dans <strong><span style="color:#fa8072;">Valkyries</span></strong>. On va renommer la <strong>Brunhilde.txt</strong> de <span style="color:#ffa500;"><strong>Valhalla</strong></span> en <strong>Hrist.txt</strong> pour l&#039;envoyer par la suite rejoindre <strong>Brunhilde.txt</strong> dans <span style="color:#fa8072;"><strong>Valkyries</strong></span>. Vous suivez toujours ? Placez vous dans <span style="color:#ffa500;"><strong>Valhalla</strong></span> et tapez :
+</p>
+<div class="table sectionedit17"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">mv Brunhilde.txt Hrist.txt</td><td class="col1" colspan="2">move Brunhilde.txt Hrist.txt</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table7&quot;,&quot;secid&quot;:17,&quot;range&quot;:&quot;7462-7537&quot;} -->
+<p>
+Et voilà ! Une nouvelle valkyrie ! Attention, si vous renommez un fichier en un nom qui existe déjà dans le répertoire <span style="color:#ff0000;"><strong>l&#039;ancien fichier sera écrasé</strong></span> par le nouveau fichier renommé.
+</p>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+<pre class="code">Valhalla
+├── Hrist.txt
+└── Valkyries
+    └── Brunhilde.txt</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Renommer&quot;,&quot;hid&quot;:&quot;renommer&quot;,&quot;codeblockOffset&quot;:7,&quot;secid&quot;:16,&quot;range&quot;:&quot;7067-7855&quot;} -->
+<h3 class="sectionedit18" id="deplacer">Déplacer</h3>
+<div class="level3">
+
+<p>
+Envoyons donc <strong>Hrist.txt</strong> dans le dossier <span style="color:#fa8072;"><strong>Valkyries</strong></span>. Pour cela, vous verrez qu&#039;on utilise à nouveau <strong><span style="color:#800000;">mv</span>/<span style="color:#800000;">move</span></strong>, mais qu&#039;on donne cette fois un dossier en second argument au lieu d&#039;un nom. Faites attention ou vous finirez un jour par <span style="color:#ff0000;"><strong>renommer</strong></span> un dossier au lieu de le <span style="color:#ff0000;"><strong>déplacer</strong></span> !
+</p>
+<div class="table sectionedit19"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">mv Hrist.txt Valkyries</td><td class="col1" colspan="2">move Hrist.txt Valkyries</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table8&quot;,&quot;secid&quot;:19,&quot;range&quot;:&quot;8255-8322&quot;} -->
+<p>
+Encore une fois, si on déplace un fichier à un endroit où il y en a un autre du même nom <span style="color:#ff0000;"><strong>le fichier déplacé écrasera l&#039;autre</strong></span>.
+</p>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+<pre class="code">Valhalla
+└── Valkyries
+    ├── Hrist.txt
+    └── Brunhilde.txt</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;D\u00e9placer&quot;,&quot;hid&quot;:&quot;deplacer&quot;,&quot;codeblockOffset&quot;:8,&quot;secid&quot;:18,&quot;range&quot;:&quot;7856-8590&quot;} -->
+<h3 class="sectionedit20" id="supprimer">Supprimer</h3>
+<div class="level3">
+
+<p>
+Supposons maintenant que vous avez perdu la raison et que vous décidez de <span style="color:#ff0000;"><strong>supprimer</strong></span> un fichier valkyrie ou un des dossiers que vous avez créé. Attention, ces suppressions sont <span style="color:#ff0000;"><strong>définitives</strong></span>, vous ne retrouverez <span style="color:#ff0000;"><strong>pas de fichiers dans votre corbeille</strong></span> !
+</p>
+<div class="table sectionedit21"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1">Windows</th><th class="col2" colspan="2">Utilité</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">rm</td><td class="col1">del</td><td class="col2" colspan="2">Supprime le fichier passé en paramètre</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">rm -d</td><td class="col1">rmdir</td><td class="col2" colspan="2">Supprime le dossier <strong>vide</strong> passé en paramètre</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">rm -r</td><td class="col1">rmdir /s</td><td class="col2" colspan="2">Supprime le dossier passé en paramètre ainsi que tout son contenu</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table9&quot;,&quot;secid&quot;:21,&quot;range&quot;:&quot;8926-9153&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Supprimer&quot;,&quot;hid&quot;:&quot;supprimer&quot;,&quot;codeblockOffset&quot;:9,&quot;secid&quot;:20,&quot;range&quot;:&quot;8591-9154&quot;} -->
+<h3 class="sectionedit22" id="les_permissions">Les permissions</h3>
+<div class="level3">
+
+</div>
+
+<h4 id="linux">Linux</h4>
+<div class="level4">
+
+<p>
+Les utilisateurs ont tous des droits particuliers de <span style="color:#008000;"><strong>visualisation</strong></span>, <span style="color:#008000;"><strong>exécution</strong></span> et <span style="color:#008000;"><strong>modification</strong></span> des différents fichiers et dossiers du système. On peut notamment visualiser les droits avec la commande 
+</p>
+<pre class="code">ls -l</pre>
+
+<p>
+ et les modifier avec 
+</p>
+<pre class="code">chmod</pre>
+
+<p>
+ suivi de deux paramètres. Le second paramètre est la cible à modifier (on peut mettre * pour appliquer notre modification à tous les éléments du répertoire où l&#039;on se trouve).
+Le premier paramètre est composé de <span style="color:#ff0000;"><strong>trois chiffres</strong></span> indiquant les permissions pour l&#039;<span style="color:#9400d3;"><strong>utilisateur</strong></span>, les <span style="color:#9400d3;"><strong>membres du groupe</strong></span> et le <span style="color:#9400d3;"><strong>reste du monde</strong></span> respectivement.
+</p>
+<div class="table sectionedit23"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Permission</th><th class="col1" colspan="2">Poids</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">Exécution</td><td class="col1" colspan="2">1</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">Lecture</td><td class="col1" colspan="2">2</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">Ecriture</td><td class="col1" colspan="2">4</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table10&quot;,&quot;secid&quot;:23,&quot;range&quot;:&quot;9944-10006&quot;} -->
+<p>
+Pour savoir la valeur du chiffre indiquant les permissions à accorder il faut faire <span style="color:#008000;"><strong>la somme des poids</strong></span> des permissions que l&#039;on veut accorder.
+Cette commande est particulièrement utile quand vous voulez exécuter votre code et que pour une raison obscure vous n&#039;avez pas les droits requis pour le faire.
+</p>
+
+<p>
+<em class="u">Exemples</em>
+</p>
+
+<p>
+Accorder toutes les permissions à tout le monde sur tous les éléments du répertoire actuel :
+</p>
+<pre class="code">chmod 777 *</pre>
+
+<p>
+Accorder tout à l&#039;utilisateur, la lecture et l&#039;exécution aux membres du groupe et l&#039;exécution seule au reste du monde pour le fichier <strong>Brunhilde.txt</strong> (en étant dans le répertoire <span style="color:#fa8072;"><strong>Valkyries</strong></span>) :
+</p>
+<pre class="code">chmod 731 Brunhilde.txt</pre>
+
+<p>
+<strong>Note :</strong> il est aussi possible de <span style="color:#008000;"><strong>rajouter</strong></span> ou d&#039;<span style="color:#008000;"><strong>enlever</strong></span> des permissions par rapport aux permissions existantes en indiquant la cible suivie  de + ou - faisant référence à l&#039;ajout ou la suppression de la permission donnée par son initiale (c&#039;est une façon de faire différente mais qui amène aux mêmes résultats).
+</p>
+<div class="table sectionedit24"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Cible</th><th class="col1" colspan="2">Initiale</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">utilisateur</td><td class="col1" colspan="2">u</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">groupe</td><td class="col1" colspan="2">g</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">autres</td><td class="col1" colspan="2">o</td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">tous</td><td class="col1" colspan="2">a</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table11&quot;,&quot;secid&quot;:24,&quot;range&quot;:&quot;11095-11163&quot;} --><div class="table sectionedit25"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Permission</th><th class="col1" colspan="2">Initiale</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">Exécution</td><td class="col1" colspan="2">x</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">Lecture</td><td class="col1" colspan="2">r</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">Ecriture</td><td class="col1" colspan="2">w</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table12&quot;,&quot;secid&quot;:25,&quot;range&quot;:&quot;11165-11230&quot;} -->
+<p>
+<em class="u">Exemple</em>
+</p>
+
+<p>
+Ajouter à tous la permission d&#039;écriture pour le fichier <strong>Brunhilde.txt</strong> 
+</p>
+<pre class="code">chmod a+w Brunhilde.txt</pre>
+
+<p>
+Retirer les permissions de lecture et écriture et ajouter les permissions d&#039;exécution aux autres sur le répertoire courant 
+</p>
+<pre class="code">chmod o-wr+x *</pre>
+
+</div>
+
+<h4 id="windows">Windows</h4>
+<div class="level4">
+
+<p>
+Maintenant, pour ce qui en est de Windows, on utilise la commande 
+</p>
+<pre class="code">icacls</pre>
+
+<p>
+Pour afficher les permissions accordées sur <strong>Brunhilde.txt</strong> il suffit d&#039;écrire 
+</p>
+<pre class="code">icacls Brunhilde.txt</pre>
+
+<p>
+ Vous serez alors face à une liste détaillée des différents <span style="color:#008000;"><strong>droits</strong></span> de tous les utilisateurs sur le fichier. Je ne vais pas tout détailler ce que veulent dire les initiales de permissions et je vous invite à consulter le manuel de la commande, mais voici les principales :
+</p>
+<div class="table sectionedit26"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Initiale</th><th class="col1" colspan="2">Sens</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">N</td><td class="col1" colspan="2">Aucun accès</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">F</td><td class="col1" colspan="2">Accès complet</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">M</td><td class="col1" colspan="2">Accès en modification</td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">RX</td><td class="col1" colspan="2">Accès en lecture et exécution</td>
+	</tr>
+	<tr class="row5">
+		<td class="col0">R</td><td class="col1" colspan="2">Accès en lecture seule</td>
+	</tr>
+	<tr class="row6">
+		<td class="col0">W</td><td class="col1" colspan="2">Accès en écriture seule</td>
+	</tr>
+	<tr class="row7">
+		<td class="col0">D</td><td class="col1" colspan="2">Accès en suppression</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table13&quot;,&quot;secid&quot;:26,&quot;range&quot;:&quot;12030-12237&quot;} -->
+<p>
+Ensuite pour <span style="color:#008000;"><strong>ajouter</strong></span> ou <span style="color:#008000;"><strong>supprimer</strong></span> des permissions on passe par les arguments <span style="color:#800000;"><strong>/grant</strong></span> et <span style="color:#800000;"><strong>/deny</strong></span> suivi de nom de l&#039;utilisateur à qui modifier les privilèges:les initiales des privilèges. On comprend toujours mieux avec un exemple alors en voilà quelques uns :
+</p>
+<pre class="code">icacls Brunhilde.txt /grant Siegfried:F</pre>
+
+<p>
+Donne tous les privilèges à l&#039;utilisateur <strong>Siegfried</strong> sur le fichier <strong>Brunhilde.txt</strong>
+</p>
+<pre class="code">icacls Brunhilde.txt /deny Siegfried:(M,RX)</pre>
+
+<p>
+Retire le droit de modification ainsi que de lecture et exécution du fichier <strong>Brunhilde.txt</strong> à l&#039;utilisateur <strong>Siegfried</strong>
+</p>
+
+<p>
+<strong>Note :</strong> on peut aussi donner un nom de dossier en paramètre et ajouter <span style="color:#800000;"><strong>/t</strong></span> pour appliquer les modifications des permissions sur le dossier et tous ses enfants.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les permissions&quot;,&quot;hid&quot;:&quot;les_permissions&quot;,&quot;codeblockOffset&quot;:9,&quot;secid&quot;:22,&quot;range&quot;:&quot;9155-13097&quot;} -->
+<h3 class="sectionedit27" id="la_recherche_de_fichiers">La recherche de fichiers</h3>
+<div class="level3">
+
+<p>
+Il s&#039;agit sans doute du domaine où <span style="color:#008000;"><strong>le terminal brille le plus</strong></span>. Les options de recherche dans les explorateurs de fichiers se limitent généralement aux noms mais on peut dans la console aller bien plus loin.
+</p>
+
+<p>
+Les commandes de recherche de fichiers fonctionnent <span style="color:#ff0000;"><strong>récursivement</strong></span> à partir du répertoire courant, c&#039;est à dire que le terminal ne cherchera que dans les dossiers fils du dossier actuel. Pour avoir des recherches plus rapide, il peut donc être assez malin de <span style="color:#008000;"><strong>se placer à un endroit général</strong></span> où vous savez où ce que vous cherchez se trouve. Pour rechercher <strong>Brunhilde.txt</strong>, je peux me placer au répertoire par défaut mais je peux aussi me placer directement dans le répertoire <span style="color:#ffa500;"><strong>Valhalla</strong></span> pour une recherche plus rapide. Logique. Pour faire une recherche par nom :
+</p>
+<div class="table sectionedit28"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">find -name Brunhilde.txt</td><td class="col1" colspan="2">dir /s Brunhilde.txt</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table14&quot;,&quot;secid&quot;:28,&quot;range&quot;:&quot;14001-14066&quot;} -->
+<p>
+Il est aussi possible de rechercher des fichiers et dossiers à partir de fragments de nom. On utilise pour cela <strong>le caractère passe-partout</strong> <strong><span style="color:#800000;">*</span></strong> pour faire référence à plusieurs caractères quelconques. Pour chercher tous les dossiers et fichiers commençant par Valk (il fera donc apparaître <span style="color:#fa8072;"><strong>Valkyries</strong></span>) :
+</p>
+<div class="table sectionedit29"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">find -name Valk*</td><td class="col1" colspan="2">dir /s Valk*</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table15&quot;,&quot;secid&quot;:29,&quot;range&quot;:&quot;14422-14471&quot;} -->
+<p>
+Ce mode de recherche est très utilisé pour par exemple afficher tous les fichiers ayant la même extension.
+</p>
+
+<p>
+La commande <span style="color:#800000;"><strong>find</strong></span> de Linux peut de plus être accompagnée d&#039;<strong>attributs</strong> intéressants pour <span style="color:#008000;"><strong>préciser</strong></span> la recherche ou <span style="color:#008000;"><strong>exécuter une commande</strong></span> sur les éléments trouvés par exemple.
+</p>
+
+<p>
+Pour limiter la recherche aux fichiers (f) ou dossiers (d) on peut rajouter <span style="color:#800000;"><strong>-type</strong></span>
+</p>
+<pre class="code">find -type f -name &quot;Brunhilde.txt&quot;</pre>
+
+<p>
+Recherche tous les <strong>fichiers</strong> nommés <strong>Brunhilde.txt</strong> à partir du répertoire courant.
+</p>
+
+<p>
+Si on veut <span style="color:#008000;"><strong>supprimer</strong></span> tous les fichiers trouvés par la commande on peut utiliser <span style="color:#800000;"><strong>-delete</strong></span> (attention tout sera <span style="color:#ff0000;"><strong>supprimé définitivement</strong></span> sans demande de confirmation !)
+</p>
+<pre class="code">find -name &quot;*.mp3&quot; -delete</pre>
+
+<p>
+Supprime tous les fichiers <strong>mp3</strong> à partir du répertoire courant (pourquoi il vous viendrait à l&#039;idée de faire ça est une autre histoire).
+</p>
+
+<p>
+Maintenant si on veut plus généralement exécuter une commande sur les fichiers trouvés on ajoute <span style="color:#800000;"><strong>-exec</strong></span>. Attention la syntaxe est particulière !
+</p>
+<pre class="code">find -name &quot;*.exe&quot; -exec chmod a+x {} \;</pre>
+
+<p>
+Donne à tout le monde les privilèges d&#039;exécution des fichiers <strong>.exe</strong>. Bien sûr, on peut utiliser d&#039;autres commandes que <span style="color:#800000;"><strong>chmod</strong></span>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;La recherche de fichiers&quot;,&quot;hid&quot;:&quot;la_recherche_de_fichiers&quot;,&quot;codeblockOffset&quot;:19,&quot;secid&quot;:27,&quot;range&quot;:&quot;13098-15869&quot;} -->
+<h2 class="sectionedit30" id="afficher_modifier_ou_filtrer_le_contenu_d_un_fichier_texte">Afficher, modifier ou filtrer le contenu d&#039;un fichier texte</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Afficher, modifier ou filtrer le contenu d&#039;un fichier texte&quot;,&quot;hid&quot;:&quot;afficher_modifier_ou_filtrer_le_contenu_d_un_fichier_texte&quot;,&quot;codeblockOffset&quot;:22,&quot;secid&quot;:30,&quot;range&quot;:&quot;15870-15940&quot;} -->
+<h3 class="sectionedit31" id="afficher_et_modifier">Afficher et modifier</h3>
+<div class="level3">
+
+<p>
+Tout à l&#039;heure, nous avons créé des fichiers textes au nom de <span style="color:#f4a460;"><strong>valkyries</strong></span> illustres. Cependant, qu&#039;en est-il de leur contenu ? Pour afficher le contenu d&#039;un fichier dans la console on fait :
+</p>
+<div class="table sectionedit32"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">cat Brunhilde.txt</td><td class="col1" colspan="2">type Brunhilde.txt</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table16&quot;,&quot;secid&quot;:32,&quot;range&quot;:&quot;16184-16240&quot;} -->
+<p>
+Si vous exécutez la commande, vous remarquerez alors … rien. En effet, nous avons créé des fichiers vides. Il est donc temps de les remplir un peu.
+</p>
+
+<p>
+Je ne vais pas mentir, je trouve que les éditeurs de texte dans la console ne sont pas le meilleur moyen de remplir un fichier texte. Des applications comme <span style="color:#ffa500;"><strong>Sublime</strong></span>, <span style="color:#ffa500;"><strong>Atom</strong></span> ou plus simplement <span style="color:#ffa500;"><strong>Notepad++</strong></span> sont pour beaucoup bien mieux adaptées à l&#039;édition de texte.
+</p>
+
+<p>
+Pour ce qui en est d&#039;éditer du texte à partir de de la console, <span style="color:#9400d3;"><strong>Linux</strong></span> a normalement par défaut la commande <span style="color:#800000;"><strong>vi</strong></span> mais si elle ne fonctionne pas (ou que vous êtes sur Mac) vous pouvez utiliser un 
+</p>
+<pre class="code">sudo apt install vim</pre>
+
+<p>
+ et utiliser <span style="color:#800000;"><strong>vim</strong></span>.
+</p>
+
+<p>
+Si vous êtes sur <span style="color:#9400d3;"><strong>Windows</strong></span>, téléchargez <a href="https://www.vim.org/" class="urlextern" title="https://www.vim.org/" rel="nofollow">vim</a> puis
+</p>
+
+<p>
+<strong>Panneau de configuration&gt;Système et Sécurité&gt;Système&gt;Modifier les paramètres&gt;Paramètres système avancés&gt;Variables d&#039;environnement&gt;Path&gt;Modifier&gt;Nouveau&gt;<em>chemin vers <span style="color:#800000;">vim</span> (pour moi c&#039;est C:\\Program Files (x86)\Vim\vim82</em>)</strong>
+</p>
+
+<p>
+et vous aurez accès à <span style="color:#800000;"><strong>vim</strong></span> dans la console.
+</p>
+
+<p>
+Pour éditer un fichier texte, c&#039;est :
+</p>
+<div class="table sectionedit33"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Vi</th><th class="col1" colspan="2">Vim</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">vi Brunhilde.txt</td><td class="col1" colspan="2">vim Brunhilde.txt</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table17&quot;,&quot;secid&quot;:33,&quot;range&quot;:&quot;17491-17538&quot;} -->
+<p>
+Ensuite, vous appuyez sur <span style="color:#008080;"><strong>i</strong></span> pour rentrer en mode insertion, vous écrivez ce qui vous chante et vous sauvegardez et quittez avec <span style="color:#008080;"><strong>Echap</strong></span> puis <span style="color:#008080;"><strong>:wq</strong></span>.
+</p>
+
+<p>
+<strong>Note :</strong> il existe d&#039;autres alternatives à <span style="color:#800000;"><strong>vi/vim</strong></span> sous le nom de <span style="color:#800000;"><strong>nano</strong></span>, <span style="color:#800000;"><strong>neovim</strong></span> ou <span style="color:#800000;"><strong>emacs</strong></span> qui fonctionnent aussi très bien ;). Ces éditeurs de texte dans la console sont <span style="color:#008000;"><strong>très largement customisables</strong></span> et certains pourront peut être les préférer aux autres éditeurs avec interface graphique.
+</p>
+
+<p>
+Si vous essayez de lire <span style="color:#008000;"><strong>des fichiers textes bien remplis</strong></span> dans votre teminal, le résultat sera parfois illisible et vous devrez scroller longtemps pour remonter en haut du fichier. Dans ces conditions, 
+</p>
+<pre class="code">more Brunhilde.txt</pre>
+
+<p>
+ sera plus adapté car le texte s&#039;affichera petit à petit.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Afficher et modifier&quot;,&quot;hid&quot;:&quot;afficher_et_modifier&quot;,&quot;codeblockOffset&quot;:22,&quot;secid&quot;:31,&quot;range&quot;:&quot;15941-18464&quot;} -->
+<h3 class="sectionedit34" id="filtrer">Filtrer</h3>
+<div class="level3">
+
+<p>
+On va rajouter un peu de texte dans <strong>Brunhilde.txt</strong> pour avoir un support d&#039;exemple dans cette partie. Utilisez vi/vim ou un logiciel tiers et insérez :
+</p>
+<pre class="code">naguere
+naGuere
+la Guerrrrrre
+Guerre
+Guerrrrrrrette
+Lame
+arMure
+epee
+quel joli cheval
+la vache moche</pre>
+
+<p>
+Maintenant, nous allons voir <span style="color:#ff0000;"><strong>une commande très utilisée</strong></span> en tandem avec le pipe | (voir la partie sur les flux) qui est la commande pour <span style="color:#008000;"><strong>rechercher</strong></span> dans un fichier texte ou, plus généralement, dans une entée texte. La commande que nous allons utiliser permet d&#039;<span style="color:#008000;"><strong>afficher</strong></span> seulement les lignes d&#039;un texte qui vérifient les <span style="color:#008000;"><strong>conditions</strong></span> spécifiées en paramètre. Par exemple, pour afficher toutes les lignes du fichier <strong>Brunhilde.txt</strong> contenant la lettre <strong>r</strong> on ferait :
+</p>
+<div class="table sectionedit35"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Linux</th><th class="col1" colspan="2">Windows</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">grep r Brunhilde.txt</td><td class="col1" colspan="2">find “r” Brunhilde.txt</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table18&quot;,&quot;secid&quot;:35,&quot;range&quot;:&quot;19315-19378&quot;} -->
+<p>
+Résultats de la recherche : naguere, naGuere, la Guerrrrrre, Guerre, Guerrrrrrette, arMure
+</p>
+
+<p>
+Cette commande propose un certain nombre d&#039;<span style="color:#800000;"><strong>arguments</strong></span> pour augmenter les options de filtrage.
+</p>
+<div class="table sectionedit36"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">grep</th><th class="col1">find</th><th class="col2" colspan="2">Utilité</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">-v</td><td class="col1">/v</td><td class="col2" colspan="2">Affiche les lignes ne vérifiant pas les conditions mises en paramètre</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">-c</td><td class="col1">/c</td><td class="col2" colspan="2">Affiche le nombre de lignes au lieu des lignes elles-même</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">-n</td><td class="col1">/n</td><td class="col2" colspan="2">Numérote les lignes</td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">-i</td><td class="col1">/i</td><td class="col2" colspan="2">Ignore la casse</td>
+	</tr>
+	<tr class="row5">
+		<td class="col0">-r</td><td class="col1">-</td><td class="col2" colspan="2">Rechercher récursivement dans le répertoire donné en paramètre (répertoire courant si rien n&#039;est donné)</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table19&quot;,&quot;secid&quot;:36,&quot;range&quot;:&quot;19587-19930&quot;} -->
+<p>
+Note : la commande <span style="color:#800000;"><strong>grep</strong></span> de Linux est bien plus avancée que le <span style="color:#800000;"><strong>find</strong></span> de Windows car elle reconnaît <span style="color:#008000;"><strong>les expressions régulières</strong></span>. Il s&#039;agit de caractères permettant de préciser une recherche. En fait, vous avez déjà utilisé une expression régulière ! Eh oui ! Souvenez vous, dans la partie sur la recherche de fichiers par nom, nous avons utilisé <strong>“*.txt”</strong> pour faire référence aux fichiers <strong>.txt</strong>. Voici quelques autres expressions régulières sur Linux :
+</p>
+<div class="table sectionedit37"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">Symbole</th><th class="col1" colspan="2">Signification</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">.</td><td class="col1" colspan="2">Caractère quelconque</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">^</td><td class="col1" colspan="2">Début de ligne</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">$</td><td class="col1" colspan="2">Fin de ligne</td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">[]</td><td class="col1" colspan="2">Caractère au choix</td>
+	</tr>
+	<tr class="row5">
+		<td class="col0">?</td><td class="col1" colspan="2">Caractère précédent présent 0 ou 1 fois</td>
+	</tr>
+	<tr class="row6">
+		<td class="col0">*</td><td class="col1" colspan="2">Caractère précédent présent 0 ou plusieurs fois</td>
+	</tr>
+	<tr class="row7">
+		<td class="col0">+</td><td class="col1" colspan="2">Caractère précédent présent 1 ou plusieurs fois</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table20&quot;,&quot;secid&quot;:37,&quot;range&quot;:&quot;20467-20780&quot;} -->
+<p>
+Pour utiliser les expressions régulières il faut utiliser l&#039;argument <span style="color:#800000;"><strong>-E</strong></span>.
+</p>
+
+<p>
+<em class="u">Exemples</em>
+</p>
+
+<p>
+Affiche toutes les lignes contenant Gue suivi d&#039;un nombre variable de r et se terminant par e. 
+</p>
+<pre class="code">grep -E Guer+e$ Brunhilde.txt</pre>
+
+<p>
+<strong>Résultats :</strong>
+naGuere, la Guerrrrrre, Guerre.
+</p>
+
+<p>
+Affiche toutes les lignes comprenant une lettre quelconque suivie d&#039;une voyelle elle-même suivie d&#039;une lettre quelconque suivie à son tour par une voyelle. 
+</p>
+<pre class="code">grep -E .[aeiouy].[aeiouy] Brunhilde.txt</pre>
+
+<p>
+<strong>Résultats :</strong>
+naguere, naGuere, Lame, arMure, quel joli cheval.
+</p>
+
+<p>
+<a href="/doku.php?id=cpp:les_flux_et_les_processus" class="wikilink1" title="cpp:les_flux_et_les_processus"> Les flux et les processus</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Filtrer&quot;,&quot;hid&quot;:&quot;filtrer&quot;,&quot;codeblockOffset&quot;:24,&quot;secid&quot;:34,&quot;range&quot;:&quot;18465-&quot;} -->

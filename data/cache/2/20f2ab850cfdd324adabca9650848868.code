@@ -1,0 +1,7 @@
+<span class="co1">%Recherche de la variable sortante (la plus petite)</span>
+indiceVarSortante=<span class="nu0">2</span>
+<span class="kw1">for</span> <a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>=<span class="nu0">2</span>:<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/size.html"><span class="kw2">size</span></a><span class="br0">&#40;</span>tabDelta<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+    <span class="kw1">if</span> tabDelta<span class="br0">&#40;</span><a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>,<span class="kw1">end</span><span class="br0">&#41;</span>&lt;tabDelta<span class="br0">&#40;</span>indiceVarSortante,<span class="kw1">end</span><span class="br0">&#41;</span>
+        indiceVarSortante=<a href="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/i.html"><span class="kw2"><span class="re0">i</span></span></a>
+    endif
+endfor

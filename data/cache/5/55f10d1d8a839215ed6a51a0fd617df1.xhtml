@@ -1,0 +1,581 @@
+
+<p>
+<a href="/doku.php?id=cpp:ia" class="wikilink1" title="cpp:ia"> Machine Learning</a>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_supervisee&amp;media=cpp:imagecouvertureregression.png" class="media" title="cpp:imagecouvertureregression.png"><img src="/lib/exe/fetch.php?w=550&amp;tok=69551a&amp;media=cpp:imagecouvertureregression.png" class="media" alt="" width="550" /></a>
+<br/>
+
+<br/>
+
+Les différentes régressions sont le plus souvent utilisées pour prédire des cibles quantitatives (prix d&#039;appartement, nombre de morts du COVID…). Il en existe beaucoup et nous allons ici décrire les principaux. Cette documentation résumera les parties théoriques pour laisser la place à la description du contexte d&#039;utilisation et des forces et faiblesses de chacun des modèles.
+</p>
+
+<h2 class="sectionedit1" id="generation_de_points">Génération de points</h2>
+<div class="level2">
+
+<p>
+Pour commencer nous allons générer les points qui nous permettront d&#039;entraîner les modèles. On rajoute un certain bruit modélisé grâce à l&#039;aléatoire sur les données.
+</p>
+
+<p>
+<em class="u">En python :</em>
+</p>
+<pre class="code python">X <span class="sy0">=</span> <span class="nu0">2</span> * np.<span class="kw3">random</span>.<span class="me1">rand</span><span class="br0">&#40;</span><span class="nu0">100</span><span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#41;</span>
+y <span class="sy0">=</span> <span class="nu0">4</span> + <span class="nu0">3</span> * X + np.<span class="kw3">random</span>.<span class="me1">randn</span><span class="br0">&#40;</span><span class="nu0">100</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span>
+plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">8</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+plt.<span class="me1">scatter</span><span class="br0">&#40;</span>X<span class="sy0">,</span>y<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">X <span class="sy0">=</span> <span class="nu0">2</span> * rnorm<span class="br0">&#40;</span><span class="nu0">100</span><span class="sy0">,</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span>
+y <span class="sy0">=</span> <span class="nu0">4</span> + <span class="nu0">3</span> * X + rnorm<span class="br0">&#40;</span><span class="nu0">100</span><span class="sy0">,</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>X<span class="sy0">,</span>y<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_supervisee&amp;media=cpp:regressiontestpython.png" class="media" title="cpp:regressiontestpython.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=eef639&amp;media=cpp:regressiontestpython.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;G\u00e9n\u00e9ration de points&quot;,&quot;hid&quot;:&quot;generation_de_points&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;471-990&quot;} -->
+<h2 class="sectionedit2" id="les_regressions_lineaires">Les régressions linéaires</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les r\u00e9gressions lin\u00e9aires&quot;,&quot;hid&quot;:&quot;les_regressions_lineaires&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:2,&quot;range&quot;:&quot;991-1029&quot;} -->
+<h3 class="sectionedit3" id="theorie">Théorie :</h3>
+<div class="level3">
+
+<p>
+Les régressions linéaires sont de la forme $y = a * x_{0} + b * x_{1} + c * x_{2} + d$ où y est la variable prédite, $(x_{0}, x_{1}, x_{2})$ sont les variables d&#039;entrainement et $(a, b, c, d)$ sont les pondérations enfin d est le terme constant.
+</p>
+
+<p>
+On peut résumer cette équation à :
+</p>
+
+<p>
+$$ŷ = h_{\theta}(x) = \theta . x$$
+</p>
+<ol>
+<li class="level1"><div class="li"> $\theta$ est le vecteur paramètre du modèle $(a,b,c,\ldots)$</div>
+</li>
+<li class="level1"><div class="li"> $x$ sont les valeurs d&#039;entrainement $(x_{0}, x_{1}, x_{2},\ldots)$</div>
+</li>
+</ol>
+
+<p>
+Le produit scalaire entre les deux nous donnera donc 
+</p>
+
+<p>
+$$a*x_{0} + b*x_{1} + c*x_{2} \ldots$$
+</p>
+
+<p>
+On en déduit que forcément $a=1$.
+<br/>
+
+<br/>
+
+<strong>Erreur associée</strong>
+<br/>
+
+<br/>
+
+La MSE (Mean Square Error) est la plus simple à minimiser et implique que la RMSE (Root Mean Square Error) sera minimisée. Rappelons la forme qui la caractérise :
+</p>
+
+<p>
+$$MSE(X,h_{\theta}) = \frac{1}{m} \overset{m}{\underset{i = 1}{\sum}} ( \theta~^T x^{(i)} - y^{(i)})^2 $$
+<br/>
+
+</p>
+<ol>
+<li class="level1"><div class="li"> $y$ sont les valeurs cibles</div>
+</li>
+<li class="level1"><div class="li"> $m$ le nombre de valeurs d&#039;entrainement</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Th\u00e9orie :&quot;,&quot;hid&quot;:&quot;theorie&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:3,&quot;range&quot;:&quot;1030-2024&quot;} -->
+<h3 class="sectionedit4" id="methode_analytique_mathematiques">Méthode analytique (mathématiques)</h3>
+<div class="level3">
+
+<p>
+Une des méthodes pour obtenir les meilleurs coefficients le plus rapidement est l&#039;équation normale :
+</p>
+
+<p>
+$$\theta = (X~^tX)^{-1} X~^t y $$
+</p>
+
+<p>
+<strong>Pratique :</strong>
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">X_b <span class="sy0">=</span> np.<span class="me1">c_</span><span class="br0">&#91;</span>np.<span class="me1">ones</span><span class="br0">&#40;</span><span class="br0">&#40;</span><span class="nu0">100</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span> X<span class="br0">&#93;</span> <span class="co1"># ajouter x0 = 1 à chaque observation voir partie théorique</span>
+theta_best <span class="sy0">=</span> np.<span class="me1">linalg</span>.<span class="me1">inv</span><span class="br0">&#40;</span>X_b.<span class="me1">T</span>.<span class="me1">dot</span><span class="br0">&#40;</span>X_b<span class="br0">&#41;</span><span class="br0">&#41;</span>.<span class="me1">dot</span><span class="br0">&#40;</span>X_b.<span class="me1">T</span><span class="br0">&#41;</span>.<span class="me1">dot</span><span class="br0">&#40;</span>y<span class="br0">&#41;</span> <span class="co1">#.dot permet la multiplication entre matrices et .linalg.inv permet d'inverser la matrice </span>
+<span class="kw1">print</span><span class="br0">&#40;</span>theta_best<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">vecteurUnitaire <span class="sy0">&lt;</span>- rep<span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">100</span><span class="br0">&#41;</span>
+X_b <span class="sy0">=</span> matrix<span class="br0">&#40;</span>c<span class="br0">&#40;</span>vecteurUnitaire<span class="sy0">,</span> X<span class="br0">&#41;</span><span class="sy0">,</span> nrow <span class="sy0">=</span> <span class="nu0">100</span><span class="sy0">,</span> ncol <span class="sy0">=</span> <span class="nu0">2</span><span class="br0">&#41;</span>
+theta_best <span class="sy0">&lt;</span>- solve<span class="br0">&#40;</span>aperm<span class="br0">&#40;</span>X_b<span class="br0">&#41;</span> %*% X_b<span class="br0">&#41;</span> %*% aperm<span class="br0">&#40;</span>X_b<span class="br0">&#41;</span> %*% y <span class="co1">#%*% permet de faire une multiplication entre 2 matrices, aperm permet de calculer une transposée</span>
+<span class="kw1">print</span><span class="br0">&#40;</span>theta_best<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+
+array([[4.215087],
+      [2.7701154]])
+
+</p>
+
+<p>
+Si la méthode était parfaite on aurait trouvé a=4 et b=3, le bruit dans le jeu de données n’a pas donné cette possibilité.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;M\u00e9thode analytique (math\u00e9matiques)&quot;,&quot;hid&quot;:&quot;methode_analytique_mathematiques&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:4,&quot;range&quot;:&quot;2025-3039&quot;} -->
+<h3 class="sectionedit5" id="methode_utilisant_les_librairies">Méthode utilisant les librairies</h3>
+<div class="level3">
+
+<p>
+Cette méthode est prés codé et utilise la méthode des moindres carrés avec la fonction scipy.linalg.ltsq().  
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">linear_model</span> <span class="kw1">import</span> LinearRegression
+lin_reg <span class="sy0">=</span> LinearRegression<span class="br0">&#40;</span><span class="br0">&#41;</span>
+lin_reg.<span class="me1">fit</span><span class="br0">&#40;</span>X<span class="sy0">,</span>y<span class="br0">&#41;</span>
+<span class="kw1">print</span><span class="br0">&#40;</span>lin_reg.<span class="me1">intercept_</span><span class="br0">&#41;</span> <span class="co1">#Il s'agit du terme constant</span>
+<span class="kw1">print</span><span class="br0">&#40;</span>lin_reg.<span class="me1">coef_</span><span class="br0">&#41;</span>  <span class="co1">#Il s'agit des pondérations</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">model <span class="sy0">=</span> lm<span class="br0">&#40;</span>X<span class="sy0">~</span>y<span class="br0">&#41;</span>
+<span class="kw1">print</span><span class="br0">&#40;</span>coef<span class="br0">&#40;</span>model<span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+
+[4.21]
+[[9.75]]
+
+</p>
+
+<p>
+Maintenant qu&#039;on a un modèle il est intéressant de vous sa valeur MSE
+</p>
+
+<p>
+<em class="u">En python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">metrics</span> <span class="kw1">import</span> mean_squared_error
+ypred <span class="sy0">=</span> lin_reg.<span class="me1">intercept_</span> + lin_reg.<span class="me1">coef_</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> * X
+mean_squared_error<span class="br0">&#40;</span>y<span class="sy0">,</span> ypred<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">lm_mse <span class="sy0">&lt;</span>- mean<span class="br0">&#40;</span><span class="br0">&#40;</span>y - model$fitted.<span class="me1">values</span><span class="br0">&#41;</span>^<span class="nu0">2</span><span class="br0">&#41;</span>
+<span class="kw1">print</span><span class="br0">&#40;</span>lm_mse<span class="br0">&#41;</span></pre>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+0.7728972383696089
+</p>
+
+<p>
+Visualisons les résultats dans un graphique adapté pour être sûr de ses résultats :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">plt.<span class="me1">figure</span><span class="br0">&#40;</span>figsize<span class="sy0">=</span><span class="br0">&#40;</span><span class="nu0">10</span><span class="sy0">,</span><span class="nu0">8</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+plt.<span class="me1">scatter</span><span class="br0">&#40;</span>X<span class="sy0">,</span>y<span class="br0">&#41;</span>
+x <span class="sy0">=</span> np.<span class="me1">linspace</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">2</span><span class="sy0">,</span> <span class="nu0">1000</span><span class="br0">&#41;</span>
+yConstruit <span class="sy0">=</span> theta_best<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> * x + theta_best<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>
+plt.<span class="me1">plot</span><span class="br0">&#40;</span>x<span class="sy0">,</span>yConstruit<span class="br0">&#41;</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>pracma<span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>X<span class="sy0">,</span>y<span class="br0">&#41;</span>
+x <span class="sy0">=</span> linspace<span class="br0">&#40;</span>-<span class="nu0">3</span><span class="sy0">,</span><span class="nu0">30</span><span class="sy0">,</span><span class="nu0">1500</span><span class="br0">&#41;</span>
+yConstruit <span class="sy0">=</span> coef<span class="br0">&#40;</span>model<span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span> + coef<span class="br0">&#40;</span>model<span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span> * x
+lines<span class="br0">&#40;</span>yConstruit<span class="sy0">,</span> x<span class="br0">&#41;</span></pre>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_supervisee&amp;media=cpp:resregression.png" class="media" title="cpp:resregression.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=0b462e&amp;media=cpp:resregression.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;M\u00e9thode utilisant les librairies&quot;,&quot;hid&quot;:&quot;methode_utilisant_les_librairies&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:5,&quot;range&quot;:&quot;3040-4395&quot;} -->
+<h3 class="sectionedit6" id="utilisation">Utilisation :</h3>
+<div class="level3">
+<div class="table sectionedit7"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<td class="col0"> </td><th class="col1 leftalign"> Gérer beaucoup de donnée    </th><th class="col2 leftalign"> Complexité    </th><th class="col3"> Evaluer la précision</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0 leftalign"> Régression linéaire ​    </th><td class="col1">Ce modèle est optimal quand il n’y a pas trop de variables (&lt;100 000)</td><td class="col2 leftalign"> Linéaire $O(n^{2}$), sinon l&#039;inversion de la matrice est trop coûteuse.         </td><td class="col3 leftalign"> Métrique adapté RMSE	</td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:7,&quot;range&quot;:&quot;4419-4709&quot;} -->
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://openclassrooms.com/fr/courses/1393696-effectuez-vos-etudes-statistiques-avec-r/1394666-les-matrices" class="urlextern" title="https://openclassrooms.com/fr/courses/1393696-effectuez-vos-etudes-statistiques-avec-r/1394666-les-matrices" rel="nofollow">https://openclassrooms.com/fr/courses/1393696-effectuez-vos-etudes-statistiques-avec-r/1394666-les-matrices</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://fr.wikibooks.org/wiki/Programmer_en_R/Manipuler_les_matrices" class="urlextern" title="https://fr.wikibooks.org/wiki/Programmer_en_R/Manipuler_les_matrices" rel="nofollow">https://fr.wikibooks.org/wiki/Programmer_en_R/Manipuler_les_matrices</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Utilisation :&quot;,&quot;hid&quot;:&quot;utilisation&quot;,&quot;codeblockOffset&quot;:10,&quot;secid&quot;:6,&quot;range&quot;:&quot;4396-4916&quot;} -->
+<h2 class="sectionedit8" id="les_descentes_de_gradient">Les descentes de gradient</h2>
+<div class="level2">
+
+<p>
+<div class='alert alert-warning'><strong>Indication :</strong>  Il est important de normaliser les données avant d&#039;appliquer un algorithme de descente de gradient.</div>
+</p>
+
+<p>
+Nous allons ici développer la descente de gradient dans le cas d&#039;une régression linéaire mais il est important de savoir que cette méthode est une des plus utilisées dans les problèmes d&#039;optimisation.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les descentes de gradient&quot;,&quot;hid&quot;:&quot;les_descentes_de_gradient&quot;,&quot;codeblockOffset&quot;:10,&quot;secid&quot;:8,&quot;range&quot;:&quot;4917-5303&quot;} -->
+<h3 class="sectionedit9" id="les_descentes_de_gradient_classique">Les descentes de gradient classique</h3>
+<div class="level3">
+
+<p>
+Commençons par introduire le problème de la descente de gradient :
+</p>
+<div class="thumb2 tcenter"><div class="thumbinner"><a href="/lib/exe/detail.php?id=cpp%3Aregression_supervisee&amp;media=cpp:descentedegradient.png" class="media" title="cpp:descentedegradient.png"><img src="/lib/exe/fetch.php?w=950&amp;h=526&amp;tok=bca4a2&amp;media=cpp:descentedegradient.png" class="mediabox2" alt="" width="950" height="526" /></a><div class="thumbcaption" style="max-width: 944px"><div class="magnify"><a class="internal" title="Agrandir" href="/lib/exe/detail.php?id=cpp%3Aregression_supervisee&amp;media=cpp:descentedegradient.png" target="_blank"><img width="15" height="11" alt="" src="/lib/plugins/imagebox/magnify-clip.png"/></a></div> Schéma d&#039;une descente de gradient</div></div></div>
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> La fonction MSE représentative de l&#039;erreur est convexe, il y a donc pas de minimums locaux (petits creux avant le fond de la vallée).</div>
+</p>
+
+<p>
+<br/>
+
+<strong>Théorie :</strong>
+</p>
+
+<p>
+Il faut voir la complexité comme une fonction dont on cherche le minimum (la vallée). On fait varier les paramètres pour essayer d&#039;avoir un minimum d&#039;erreur. Pour cela, on calcule les dérivées partielles de cette fonction par rapport aux différents paramètres :
+</p>
+
+<p>
+$$\nabla_{\theta}MSE(\theta) = \begin{pmatrix}
+\frac{\partial }{\partial \theta_{0}} MSE(\theta)\\[4mm]
+\frac{\partial }{\partial \theta_{1}} MSE(\theta)\\[0.1mm]
+.\\[0.1mm]
+.\\[0.1mm]
+.\\[0.1mm]
+\frac{\partial }{\partial \theta_{n}} MSE(\theta)\\[0.1mm]
+\end{pmatrix}  = \frac{2}{m} + X~^t(X\theta - y)$$
+</p>
+<div class="table sectionedit10"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Paramètre  </th><th class="col1 centeralign">  Signification  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  $\nabla_{\theta}MSE(\theta)$  </td><td class="col1 centeralign">  Dérivée partielle de la fonction d&#039;erreur  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  $X$  </td><td class="col1 centeralign">  Ensemble du jeu d&#039;entrainement  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  $\theta$  </td><td class="col1 centeralign">  Paramètre de la fonction prédictive  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">  $y$  </td><td class="col1 centeralign">  Réponse aux estimations  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 centeralign">  $m$  </td><td class="col1 centeralign">  Nombre d&#039;échantillons  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:10,&quot;range&quot;:&quot;6267-6562&quot;} -->
+<p>
+On peut définir maintenant la suite qui va permettre d&#039;adapter les différents paramètres en réduisant à chaque fois l&#039;erreur.
+<br/>
+
+$$ \theta_{n+1} = \theta_{n} - \eta * \nabla_{\theta}MSE(\theta_{n})$$
+<br/>
+
+</p>
+<div class="table sectionedit11"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">      Paramètre        </th><th class="col1"> Signification</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0"> $\eta$ </td><td class="col1"> La distance du pas du Monsieur (taux d&#039;apprentissage) </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table2&quot;,&quot;secid&quot;:11,&quot;range&quot;:&quot;6772-6880&quot;} -->
+<p>
+<strong>Pratique sans librairies :</strong>
+</p>
+
+<p>
+Maintenant, nous allons mettre en place cet algorithme d&#039;un point de vue technique dans le code. Pour démarrer on fixe les constantes importantes et nécessaires à l&#039;algorithme et on fixe le point de départ aléatoirement.
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python">eta <span class="sy0">=</span> <span class="nu0">0.1</span> <span class="co1">#Taux d'apprentissage (pas du Monsieur)</span>
+n_iterations <span class="sy0">=</span> <span class="nu0">1000</span> <span class="co1">#Nombre d'itérations de l'algorithme</span>
+m <span class="sy0">=</span> <span class="nu0">100</span> <span class="co1">#Nombre d'échantillons</span>
+theta <span class="sy0">=</span> np.<span class="kw3">random</span>.<span class="me1">randn</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span> <span class="co1">#Paramètre fixé aléatoirement</span>
+X_b <span class="sy0">=</span> np.<span class="me1">c_</span><span class="br0">&#91;</span>np.<span class="me1">ones</span><span class="br0">&#40;</span><span class="br0">&#40;</span><span class="nu0">100</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span> X<span class="br0">&#93;</span> <span class="co1">#ajoute x0 = 1 à chaque observation</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">eta <span class="sy0">&lt;</span>- <span class="nu0">0.1</span>
+n_iteration <span class="sy0">&lt;</span>- <span class="nu0">100</span>
+m <span class="sy0">&lt;</span>- <span class="nu0">100</span>
+theta <span class="sy0">&lt;</span>- rnorm<span class="br0">&#40;</span><span class="nu0">2</span><span class="br0">&#41;</span>
+X_b <span class="sy0">&lt;</span>- matrix<span class="br0">&#40;</span>c<span class="br0">&#40;</span>vecteurUnitaire<span class="sy0">,</span> X<span class="br0">&#41;</span><span class="sy0">,</span> nrow <span class="sy0">=</span> <span class="nu0">100</span><span class="sy0">,</span> ncol <span class="sy0">=</span> <span class="nu0">2</span><span class="br0">&#41;</span></pre>
+
+<p>
+Il suffit ensuite de traduire la suite en langage informatique :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">for</span> iteration <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>n_iterations<span class="br0">&#41;</span>:
+    gradients <span class="sy0">=</span> <span class="nu0">2</span>/m * X_b.<span class="me1">T</span>.<span class="me1">dot</span><span class="br0">&#40;</span>X_b.<span class="me1">dot</span><span class="br0">&#40;</span>theta<span class="br0">&#41;</span>-y<span class="br0">&#41;</span>
+    theta <span class="sy0">=</span> theta - eta * gradients</pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python"><span class="kw1">for</span><span class="br0">&#40;</span>i <span class="kw1">in</span> <span class="nu0">0</span>:n_iteration<span class="br0">&#41;</span><span class="br0">&#123;</span>
+    gradient <span class="sy0">&lt;</span>- <span class="nu0">2</span>/m * aperm<span class="br0">&#40;</span>X_b<span class="br0">&#41;</span> %*% <span class="br0">&#40;</span><span class="br0">&#40;</span>X_b %*% theta<span class="br0">&#41;</span> - y<span class="br0">&#41;</span>
+    theta <span class="sy0">&lt;</span>- theta - eta * gradient 
+<span class="br0">&#125;</span></pre>
+
+<p>
+<div class='alert alert-warning'><strong>Remarque :</strong> Il est parfois plus judicieux de fixer une erreur minimale plutôt qu&#039;un nombre d&#039;itération maximal</div>
+</p>
+
+<p>
+<strong>Résultat :</strong>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_supervisee&amp;media=cpp:descentegradientpetit.png" class="media" title="cpp:descentegradientpetit.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=5843dd&amp;media=cpp:descentegradientpetit.png" class="mediacenter" title=" Mr fait des pas trop petits" alt=" Mr fait des pas trop petits" width="400" /></a> <a href="/lib/exe/detail.php?id=cpp%3Aregression_supervisee&amp;media=cpp:descentegradienttropgrand.png" class="media" title="cpp:descentegradienttropgrand.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=e214c4&amp;media=cpp:descentegradienttropgrand.png" class="medialeft" title=" Mr fait des pas trop grands" alt=" Mr fait des pas trop grands" width="400" /></a>
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Aregression_supervisee&amp;media=cpp:descentegradientok.png" class="media" title="cpp:descentegradientok.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=81a364&amp;media=cpp:descentegradientok.png" class="medialeft" title=" Mr fait la bonne taille de pas" alt=" Mr fait la bonne taille de pas" width="400" /></a>
+</p>
+
+<p>
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+<strong>Pratique avec les librairies :</strong>
+</p>
+
+<p>
+Il est aussi possible de faire une descente de gradient dans ce cas en utilisant les librairies 
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">linear_model</span> <span class="kw1">import</span> SGDRegressor
+model1 <span class="sy0">=</span> SGDRegressor<span class="br0">&#40;</span><span class="br0">&#41;</span>
+model1.<span class="me1">fit</span><span class="br0">&#40;</span>X<span class="sy0">,</span>y.<span class="me1">ravel</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+model1.<span class="me1">intercept_</span>
+model.<span class="me1">coef_</span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>gradDescent<span class="br0">&#41;</span>
+model1 <span class="sy0">&lt;</span>- gradDescentR.<span class="me1">learn</span><span class="br0">&#40;</span>Dtoy<span class="sy0">,</span> featureScaling <span class="sy0">=</span> FALSE<span class="sy0">,</span> learningMethod <span class="sy0">=</span> <span class="st0">&quot;GD&quot;</span><span class="sy0">,</span> seed <span class="sy0">=</span> <span class="nu0">1</span><span class="br0">&#41;</span>
+<span class="kw1">print</span><span class="br0">&#40;</span>model1$model<span class="br0">&#41;</span></pre>
+
+<p>
+<div class='alert alert-danger'><strong>Danger :</strong> L&#039;ensemble des données est utilisé à chaque fois ce qui est un véritable problème car le programme en est fortement ralenti.</div>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les descentes de gradient classique&quot;,&quot;hid&quot;:&quot;les_descentes_de_gradient_classique&quot;,&quot;codeblockOffset&quot;:10,&quot;secid&quot;:9,&quot;range&quot;:&quot;5304-9032&quot;} -->
+<h3 class="sectionedit12" id="les_descentes_de_gradient_stochastiques">Les descentes de gradient stochastiques</h3>
+<div class="level3">
+
+<p>
+Pour essayer de contrer la perte de temps dû au fait d&#039;appliquer les calculs sur toutes les données à chaque itération la descente de gradient stochastique est apparue.
+</p>
+
+<p>
+<strong>Théorie</strong>
+</p>
+
+<p>
+On va comparer et calculer le gradient en prenant une seule observation à chaque fois. Il y a différents avantages et des inconvénients à cela :
+</p>
+<ul>
+<li class="level1"><div class="li"> <span style='color:#22b14c; '>Ceci accélère considérablement le programme mais va rendre la descente beaucoup plus irrégulière, votre bonhomme va monter puis redescendre mais en moyenne descendra.</span></div>
+</li>
+<li class="level1"><div class="li"> <span style='color:#22b14c; '>Cette méthode est une façon d&#039;éviter les minimums locaux si la fonction représentative de l&#039;erreur en a.</span></div>
+</li>
+<li class="level1"><div class="li"><span style='color:#ed1c24; '> L&#039;algorithme n&#039;atteindra jamais le minimum exact.</span></div>
+</li>
+</ul>
+
+<p>
+<div class='alert alert-info'><strong>Info :</strong> Un autre bon moyen de mettre d&#039;éviter les minimums locaux est de faire varier le pas durant la marche. On met un grand pas au départ et on réduit petit à petit. </div>
+</p>
+
+<p>
+<strong>Pratique</strong>
+</p>
+
+<p>
+Mettons en place cet algorithme à l&#039;aide des librairies disponibles :
+</p>
+
+<p>
+<em class="u">En Python :</em>
+</p>
+<pre class="code python"><span class="kw1">from</span> sklearn.<span class="me1">linear_model</span> <span class="kw1">import</span> SGDRegressor
+<span class="co1">#eta est le taux d'apprentissage</span>
+<span class="co1">#tol est la précision visée</span>
+<span class="co1">#penalty permet de savoir si on effectue des opérations de régularisation ( prochaine page)</span>
+sgd_reg <span class="sy0">=</span> SGDRegressor<span class="br0">&#40;</span>max_iter <span class="sy0">=</span> <span class="nu0">1000</span><span class="sy0">,</span> tol<span class="sy0">=</span><span class="nu0">1e-3</span><span class="sy0">,</span> penalty<span class="sy0">=</span><span class="kw2">None</span><span class="sy0">,</span> eta<span class="sy0">=</span><span class="nu0">0.1</span><span class="br0">&#41;</span>
+sgd_reg.<span class="me1">fit</span><span class="br0">&#40;</span>X<span class="sy0">,</span> y.<span class="me1">ravel</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="co1">#ravel permet de tout mettre dans une liste à une dimension</span>
+<span class="kw1">print</span><span class="br0">&#40;</span>sgd_reg.<span class="me1">intercept_</span><span class="br0">&#41;</span> <span class="co1">#affiche le coefficient constant</span>
+<span class="kw1">print</span><span class="br0">&#40;</span>sgd_reg.<span class="me1">coef_</span><span class="br0">&#41;</span> <span class="co1">#affiche les autres coefficients </span></pre>
+
+<p>
+<em class="u">En R :</em>
+</p>
+
+<p>
+Avant d&#039;entraîner le modèle R va prendre l&#039;ensemble des données, il faudra que la variable cible se trouve à la fin 
+</p>
+<pre class="code python">library<span class="br0">&#40;</span>gradDescent<span class="br0">&#41;</span>
+donneeTotales <span class="sy0">&lt;</span>- matrix<span class="br0">&#40;</span>c<span class="br0">&#40;</span>X_b<span class="sy0">,</span> y<span class="br0">&#41;</span><span class="sy0">,</span> nrow <span class="sy0">=</span> <span class="nu0">100</span><span class="sy0">,</span> ncol <span class="sy0">=</span> <span class="nu0">2</span><span class="br0">&#41;</span></pre>
+
+<p>
+On peut maintenant entraîner le modèle
+</p>
+<pre class="code python"><span class="co1">#Feature Scaling permet de recalibrer les variables quand elles ne sont pas à la même échelle</span>
+<span class="co1">#seed fixe la valeur de départ</span>
+sgd_reg <span class="sy0">&lt;</span>- gradDescentR.<span class="me1">learn</span><span class="br0">&#40;</span>donneeTotales<span class="sy0">,</span> featureScaling <span class="sy0">=</span> FALSE<span class="sy0">,</span> learningMethod <span class="sy0">=</span> <span class="st0">&quot;SGD&quot;</span><span class="sy0">,</span> seed <span class="sy0">=</span> <span class="nu0">1</span><span class="br0">&#41;</span>
+<span class="co1">#Remarque importante par desfaut le taux d'apprentissage est à 0.1 et le nombre maximum d'itération est de 10 </span>
+<span class="co1">#ce qui est loi d'être optimal dans certains cas.</span>
+<span class="co1"># Proposons une alternative :</span>
+sgd_reg <span class="sy0">&lt;</span>- gradDescentR.<span class="me1">learn</span><span class="br0">&#40;</span>donneeTotales<span class="sy0">,</span> featureScaling <span class="sy0">=</span> FALSE<span class="sy0">,</span> learningMethod <span class="sy0">=</span> <span class="st0">&quot;SGD&quot;</span><span class="sy0">,</span> seed <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">,</span> control <span class="sy0">=</span> <span class="kw2">list</span><span class="br0">&#40;</span>maxIter <span class="sy0">=</span> <span class="nu0">100</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="kw1">print</span><span class="br0">&#40;</span>mgd2$model<span class="br0">&#41;</span></pre>
+
+<p>
+<span style='color:#22b14c; '><span style="font-size:large;"><strong>Approffondir :</strong></span> Il existe un dernier algorithme qui utilisé dans le cas de la régression linéaire. Il s&#039;agit de la descente de gradient par lot. Ici on on n&#039;utilise pas une ou toute les valeurs à chaque itération mais un lot. Il n&#039;y a pas de grosses différences notables.</span>
+</p>
+
+<p>
+<strong>Source :</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Gradient_Descent_R.pdf" class="urlextern" title="http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Gradient_Descent_R.pdf" rel="nofollow">http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Gradient_Descent_R.pdf</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Stochastic_Gradient_Descent_Python.pdf" class="urlextern" title="http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Stochastic_Gradient_Descent_Python.pdf" rel="nofollow">http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Stochastic_Gradient_Descent_Python.pdf</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les descentes de gradient stochastiques&quot;,&quot;hid&quot;:&quot;les_descentes_de_gradient_stochastiques&quot;,&quot;codeblockOffset&quot;:16,&quot;secid&quot;:12,&quot;range&quot;:&quot;9033-12036&quot;} -->
+<h2 class="sectionedit13" id="synthese">Synthèse</h2>
+<div class="level2">
+
+<p>
+Rappelons rapidements les différents algorithmes que nous avons dans cette page
+<br/>
+
+</p>
+<div class="table sectionedit14"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Algorithme  </th><th class="col1 centeralign">  m grand  </th><th class="col2 centeralign">  n grand  </th><th class="col3 rightalign">  Normalisation requise </th><th class="col4 leftalign"> Hors mémoire possible  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0 centeralign">  Equation normale  </td><td class="col1 centeralign">  rapide  </td><td class="col2 centeralign">  lent  </td><td class="col3 centeralign">  non  </td><td class="col4 centeralign">  non  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  Régression linéaire classique  </td><td class="col1 centeralign">  rapide  </td><td class="col2 centeralign">  lent  </td><td class="col3 centeralign">  non  </td><td class="col4 centeralign">  non  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  Descente de gradient classique  </td><td class="col1 centeralign">  lent  </td><td class="col2 centeralign">  rapide  </td><td class="col3 centeralign">  oui  </td><td class="col4 centeralign">  oui  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">  Descente de gradient stochastique  </td><td class="col1 centeralign">  rapide  </td><td class="col2 centeralign">  rapide  </td><td class="col3 centeralign">  oui  </td><td class="col4 centeralign">  oui  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table3&quot;,&quot;secid&quot;:14,&quot;range&quot;:&quot;12142-12517&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Synth\u00e8se&quot;,&quot;hid&quot;:&quot;synthese&quot;,&quot;codeblockOffset&quot;:19,&quot;secid&quot;:13,&quot;range&quot;:&quot;12037-&quot;} -->

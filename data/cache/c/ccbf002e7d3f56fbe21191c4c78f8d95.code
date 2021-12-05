@@ -1,0 +1,10 @@
+&quot;stats&quot;:
+{
+    &quot;hp&quot;: 2000,
+    &quot;mp&quot;: 800,
+    &quot;str&quot;: 100,
+    &quot;arm&quot;: 100,
+    &quot;int&quot;: 100,
+    &quot;spi&quot;: 100,
+    &quot;spd&quot;: 415
+}

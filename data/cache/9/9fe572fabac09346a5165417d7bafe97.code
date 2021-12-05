@@ -1,0 +1,4 @@
+<span class="co1">#max_depth : Limiter la profondeur de l'arbre</span>
+<span class="co1">#min_samples_split : Donner un nombre minimum d'éléments pour un noeud terminal</span>
+<span class="co1">#max_leaf_nodes  : Maximum de noeuds terminaux (Propre au Python)</span>
+tree <span class="sy0">=</span> DecisionTreeClassifier<span class="br0">&#40;</span>max_depth<span class="sy0">=</span> <span class="nu0">3</span><span class="sy0">,</span> max_leaf_nodes<span class="sy0">=</span> <span class="nu0">8</span><span class="sy0">,</span> min_samples_split<span class="sy0">=</span> <span class="nu0">50</span><span class="br0">&#41;</span>

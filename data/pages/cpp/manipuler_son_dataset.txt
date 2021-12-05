@@ -1,0 +1,290 @@
+[[cpp:IA| Machine Learning]]
+{{  :cpp:manipulation.png?400  | Manipulation du dataset}}
+
+
+Une fois le dataset constitué il peut être intéressant d'être à l'aise avec et de savoir le manipuler. Le but étant de construire de nouvelles variables, d'en supprimer ou encore de faire ressortir des informations précises. Le modèle que nous constituerons pourra se basera sur ce dataset il est donc primordiale qu'il soit de optimisé au maximum.
+
+<alert info> **DataSet :** On travaillera avec un dataset de caractéristiques de logements, disponible sur [[https://www.kaggle.com/htagholdings/property-sales|kaggle]]. Le dataset sera contenu dans une variable nommée data. </alert>
+
+
+=====Découper son dataset=====
+
+{{ :cpp:decoupedataset.jpg?400 |}} {{ :cpp:datasetlogement.png?400 |}}
+
+Il est important de bien savoir découper son dataset après l'avoir visualisé. En effet, il faut toujours garder un jeux de données test qui permettra d'évaluer notre modèle à la toute fin de l'entrainement. Même si on se coupe d'une partie des données qui pourraient améliorer l'entrainement, cette étape nous permettra de mieux comprendre la réaction du modèle construit. Souvent, on utilise **20%** du dataset pour l'entrainement. 
+
+__En Python :__
+
+<code python>
+from sklearn.model_selection import train_test_split
+data_train, data_test = train_test_split(data, test_size = 0.2, random_state=0)
+</code>
+
+__En R :__
+
+<code python>
+set.seed(0)
+dt = sort(sample(nrow(data), nrow(data)*.7))
+data_train<-data[dt,]
+data_test<-data[-dt,]
+</code>
+
+<alert danger> **Attention :** Si vous importez de nouvelles données il faut faire attention à les couper avant de les mélanger avec le reste des données sous peine de voir votre modèle s'entrainer sur des données qui étaient anciennements des données de test et donc fausser la future évaluation </alert>
+
+Par la suite et dans les futurs chapitres nous partirons du principe que nous travaillons avec le jeux d'entrainement.
+
+**Source :**
+  * [[https://www.listendata.com/2015/02/splitting-data-into-training-and-test.html]]
+
+====Récupération d'information statistique====
+
+Il est souvent intéressant de compléter la visualisation graphique des données par une visualisation plus statistique. Les informations comme la moyenne, la médianne on encore les écarts type seront intéressantes pour choisir le bon modèle mais aussi repérer des résultats aberrant de prédiction.  
+
+Plusieurs méthodes sont déjà implémentés dans les librairies gérant le dataset pour récupérer des informations **globales** sur le dataset :
+
+__En Python :__
+
+<code python>
+data.head() #Correspond aux premières lignes du dataset 
+data.tail() #Correspond aux dernières lignes du dataset
+data.shape #Donne le nombre de ligne et du colonnes du dataset
+data.describe(include = 'all') #Voir résultat
+</code>
+
+__En R :__
+
+<code python>
+head(data) #Correspond aux premières lignes du dataset 
+tail(data) #Correspond aux dernières lignes du dataset
+summary(data)
+</code>
+
+**Résultat :**
+
+{{ :cpp:resumedataset.png?400 |}}
+
+Parfois, il est plus intéressant de récupérer **une colonne particulière** pour lui appliquer des traitements spécifiques :
+
+__En Python :__
+
+<code python>
+data.price #Récupérer la colonne price qui peut être très intéressante si on veut prédire le prix des appartements
+data.price.sort_values(ascending = False) #Va permettre de trier la colonne de façon décroissante
+data.price.argsort #Va permettre d'obtenir les indices des éléments triés
+</code>
+
+__En R :__
+
+<code python>
+library(dplyr)
+#Récupérer la colonne price
+data$price
+#OU
+data %>%
+        select(price)
+ 
+#Permet de trier la colonne de façon décroissante
+data %>%
+        arrange(desc(price))
+</code>
+=====Filtrer ses données=====
+
+Nous allons ici présenter deux méthodes python qui sont intéressantes pour sélectionner qu'**une partie du dataset** et ainsi la traiter séparemment. Nous présenterons une méthode en R qui permet d'obtenir le même résultat.
+
+====Boolean indexing====
+
+{{ :cpp:booleanindexing.png?400 |}}
+
+Nous allons ici essayer de récupérer tous les appartements ayant un prix supérieur à un 450000<nowiki>$</nowiki>. Il y a 2 étapes pour faire du boolean indexing. On commence par créer une colonne de booleans qui permet de savoir si la condition est respectée.
+
+__Code Python__
+
+<code python>
+tableauDeBoolean = data.price > 450000 #On regarde les appartements supérieurs à 450000
+</code>
+
+On peut ensuite faire la sélection en fonction du tableau de boolean que l'on a construit précédemment :
+
+<code python>
+data[tableauDeBoolean]
+</code>
+
+__Code R :__
+
+Il est possible d'appliquer cette technique sur une seul colonne. Il faudra faire une boucle pour l'appliquer à toutes les colonnes.
+
+<code python>
+tableauDeBoolean <- data$price > 450000
+data$price[tableauDeBoolean]
+</code>
+
+**Résultat :**
+
+{{ :cpp:resbooleanindexing.png?400 |}}
+
+**Source :**
+  * https://bookdown.org/ndphillips/YaRrr/logical-indexing.html
+====Slicing====
+
+{{ :cpp:slicing.jpg?400 |}}
+
+Pour faire du slicing, il faut concidérer que le dataset est une matrice donc en informatique un tableau à 2 dimensions. On pourra ainsi récupérer que certaines partie du dataset.
+
+__En Python :__
+
+<code python>
+data.iloc[20:50, :] # Permet de récupérer les lignes de 20 à 50 et toutes les colonnes
+data.iloc[20,50, [0,2]] # Permet de récupérer les lignes de 20 à 50 et les deux colonnes d'indice 0 et 2
+</code>
+
+__En R :__
+
+<code python>
+library(dplyr)
+slice(data, 20:50) # Permet de récupérer les lignes de 20 à 50 et toutes les colonnes
+ # Permet de récupérer les lignes de 20 à 50 et les deux colonnes d'indice 0 et 2
+slice(data, 20:50) %>%
+                   select(datesold, postcode)
+</code>
+
+Il est possible aussi de faire la sélection pas par les indices mais par une condition, il s'agit d'une alternative au boolean indexing.
+
+<code python>
+data.loc[data.price>450000, :] #Permet de récupérer tout les logements supérieurs à 450 000 $ et toutes les colonnes
+data.loc[(data['price']>450000) & (data['propertyType'] == "house"),:] #Permet de récupérer les maisons supérieurs à 450 000 $
+</code>
+
+{{ :cpp:resslicing.png?400 |}}
+
+**Source :**
+  * http://larmarange.github.io/analyse-R/manipuler-les-donnees-avec-dplyr.html
+====Filtrer en R====
+
+Il existe une fonction de la librairie **dplyr** qui permet de filtrer facilement un dataset.
+
+<code python>
+#Donnera toutes les maisons supérieurs à 400000$.
+filter(data, price > 400000, propertyType == "house")
+</code>
+
+=====Opération sur les colonnes=====
+
+Nous allons décrire ici comment manipuler les colonnes en particulier pour mieux contrôler son dataset.
+
+====Ajouter une nouvelle colonne====
+
+Il est parfois intéressant de créer ses propres colonnes en faisant des opérations combinant plusieurs colonnes. Ainsi, on fait apparaître une colonne avec plus d'information qui sera plus utile pour la construction du modèle.
+
+Nous alons calculer la variable qui donne le prix par chambre :
+
+__En Python :__
+<code python>
+data["price_per_room"] = data["price"]/data["bedrooms"]
+</code>
+
+__En R:__
+<code python>
+data %>%
+        mutate(price_per_room = price / bedrooms)
+</code>
+====Supprimer une colonne====
+
+Il est parfois nécessaire de supprimer des colonnes qui n'apportent que peu d'information. Ceci permet d'éviter l'**overfitting** qui fait perdre de la généralité au modèle (il s'agit d'un problème courrant en Machine Learning, nous le reverrons dans de futurs pages).
+
+Supprimons ici la colonne "postcode"
+
+__En Python :__
+
+<code python>
+import pandas as pd
+data.drop("postcode", axis=1)
+</code>
+
+__En R :__
+
+<code python>
+data[,-2]
+</code>
+
+====Divers====
+
+**Renomer les colonnes**
+
+Il est parfois nécessaire de renommer ses colonnes pour mieux visuliser son dataset et mieux se rappeler de chacune des variables.
+
+__En Python :__
+
+<code python>
+data_train.rename(columns={'Code postal': 'CodePostal'})
+</code>
+
+__En R :__
+
+<code python>
+data %>%
+    rename(CodePostal = postcode)
+</code>
+
+**Résultat :**
+
+{{ :cpp:groupbyetcount.png?400 |}}
+
+**Compter les éléments dans une colonne**
+
+Il peut être intéressant de compter les occurences dans une colonne pour mieux voir la répartition des éléments. Ici comptons combien nous avons de maisons et d'appartements dans notre dataset.
+
+__En Python :__
+
+<code python>
+data_train.groupby("propertyType").count()
+</code>
+
+__En R :__
+
+<code python>
+data %>%
+     count(propertyType)
+</code>
+
+**Changer la place d'une colonne dans un dataFrame**
+
+Imaginons que nous voulions mettre le prix sur la dernière colonne à droite du dataFrame.
+
+__En Python :__
+
+<code python>
+dataFrame = data[['datesold','CodePostal','bedrooms','price_per_room','price']]
+</code>
+
+__En R :__
+
+<code python>
+dataFrame <- data[, c("datesold","CodePostal","bedrooms","price_per_room","price")]
+</code>
+
+**Source :**
+  * [[https://learn.datacamp.com/]]
+  * [[http://informatique-mia.inrae.fr/r4ciam/node/145]]
+=====Apprendre à croiser les variables=====
+
+Il est parfois nécessaire de croiser les variables pour mieux comprendre les relations qui les lient. Ici nous allons essayer de faire ressortir le nombre de maisons et d'appartements par code postal différent.
+
+__En Python : __
+
+<code python>
+pd.crosstab(data_train["CodePostal"], data_train["propertyType"])
+</code>
+
+__En R :__
+
+<code python>
+CrossTable(data$postcode, data$propertyType, prop.r = FALSE, prop.c = FALSE, prop.t = FALSE, prop.chisq = FALSE)
+</code>
+
+**Résultat :**
+
+{{ :cpp:crosstab.png?200 |}}
+
+**Source :**
+  * [[http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_Data_Manipulation_Pandas.pdf]]
+  * [[https://www.rdocumentation.org/packages/gmodels/versions/2.18.1/topics/CrossTable]]

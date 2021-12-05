@@ -1,0 +1,2 @@
+<span class="co1"># Definition fonction</span>
+f <span class="sy0">=</span> <span class="kw1">lambda</span> x: x**<span class="nu0">2</span> - <span class="nu0">10</span>
