@@ -135,7 +135,7 @@ function auth_loadACL() {
     $out = array();
     foreach($acl as $line) {
         $line = trim($line);
-        if(empty($line) || ($line{0} == '#')) continue; // skip blank lines & comments
+        if(empty($line) || ($line[0] == '#')) continue; // skip blank lines & comments
         list($id,$rest) = preg_split('/[ \t]+/',$line,2);
 
         // substitute user wildcard first (its 1:1)
