@@ -305,7 +305,7 @@ function mail_quotedprintable_encode($sText,$maxlen=74,$bEmulate_imap_8bit=true)
         // encode x09,x20 at lineends
         {
             $iLength = strlen($sLine);
-            $iLastChar = ord($sLine{$iLength-1});
+            $iLastChar = ord($sLine[$iLength-1]);
 
             //              !!!!!!!!
             // imap_8_bit does not encode x20 at the very end of a text,
