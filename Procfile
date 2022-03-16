@@ -1,1 +1,1 @@
-web: php -S localhost:8080/doku.php
+web: php doku.php

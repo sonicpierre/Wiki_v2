@@ -31,6 +31,7 @@ if(isset($_SERVER['HTTP_X_DOKUWIKI_DO'])) {
 }
 
 // load and initialize the core system
+require('vendor/autoload.php');
 require_once(DOKU_INC.'inc/init.php');
 
 //import variables
