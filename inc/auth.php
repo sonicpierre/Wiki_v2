@@ -1147,7 +1147,7 @@ function act_resendpwd() {
 
         // generate auth token
         $token = md5(auth_randombytes(16)); // random secret
-        $tfile = $conf['cachedir'].'/'.$token{0}.'/'.$token.'.pwauth';
+        $tfile = $conf['cachedir'].'/'.$token[0].'/'.$token.'.pwauth';
         $url   = wl('', array('do'=> 'resendpwd', 'pwauth'=> $token), true, '&');
 
         io_saveFile($tfile, $user);
