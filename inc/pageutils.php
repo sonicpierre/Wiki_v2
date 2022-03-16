@@ -616,7 +616,7 @@ function resolve_pageid($ns,&$page,&$exists,$rev='',$date_at=false ){
 function getCacheName($data,$ext=''){
     global $conf;
     $md5  = md5($data);
-    $file = $conf['cachedir'].'/'.$md5{0}.'/'.$md5.$ext;
+    $file = $conf['cachedir'].'/'.$md5[0].'/'.$md5.$ext;
     io_makeFileDir($file);
     return $file;
 }
