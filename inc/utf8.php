@@ -67,8 +67,8 @@ if(!function_exists('utf8_strip')){
         $ascii = '';
         $len = strlen($str);
         for($i=0; $i<$len; $i++){
-            if(ord($str{$i}) <128){
-                $ascii .= $str{$i};
+            if(ord($str[$i]) <128){
+                $ascii .= $str[$i];
             }
         }
         return $ascii;
