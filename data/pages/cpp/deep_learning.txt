@@ -1,9 +1,12 @@
 =====Deep Learning=====
 
-===Réseau dense simple===
+====Réseau dense simple====
 
 
-===Computer vision===
+====Computer vision====
 
 
-===Natural language processing===
+====Natural language processing====
+
+
+====Time Series & Song preprocessing====

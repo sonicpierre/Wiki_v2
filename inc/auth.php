@@ -1072,7 +1072,7 @@ function act_resendpwd() {
     if($token) {
         // we're in token phase - get user info from token
 
-        $tfile = $conf['cachedir'].'/'.$token{0}.'/'.$token.'.pwauth';
+        $tfile = $conf['cachedir'].'/'.$token[0].'/'.$token.'.pwauth';
         if(!file_exists($tfile)) {
             msg($lang['resendpwdbadauth'], -1);
             $INPUT->remove('pwauth');
