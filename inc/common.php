@@ -1619,7 +1619,7 @@ function obfuscate($email) {
             $encode = '';
             $len    = strlen($email);
             for($x = 0; $x < $len; $x++) {
-                $encode .= '&#x'.bin2hex($email{$x}).';';
+                $encode .= '&#x'.bin2hex($email[$x]).';';
             }
             return $encode;
 
