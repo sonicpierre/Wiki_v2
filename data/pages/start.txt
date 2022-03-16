@@ -16,6 +16,7 @@ L'intelligence artificielle est un domaine en plein essor. Il est  nécessaire d
 ===Contenu traité dans plusieurs langages===
 
   * [[cpp:IA| Machine Learning]]
+  * [[cpp:Deep Learning| Deep Learning]]
   * [[cpp:Natural Langage Processing | Natural Langage Processing]]
   * [[cpp:Optimisation Linéaire| Optimisation]]
 
