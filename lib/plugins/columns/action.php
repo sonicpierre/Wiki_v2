@@ -396,7 +396,7 @@ class columns_block {
      */
     private function parseAlignAttribute($syntax) {
         $result = array();
-        $align1 = $this->getAlignStyle($syntax{0});
+        $align1 = $this->getAlignStyle($syntax[0]);
         if (strlen($syntax) == 2) {
             $align2 = $this->getAlignStyle($syntax{1});
             if ($align1 != $align2) {
