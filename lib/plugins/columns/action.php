@@ -400,8 +400,8 @@ class columns_block {
         if (strlen($syntax) == 2) {
             $align2 = $this->getAlignStyle($syntax[1]);
             if ($align1 != $align2) {
-                $result[$align1] = $this->getAlignment($syntax{0});
-                $result[$align2] = $this->getAlignment($syntax{1});
+                $result[$align1] = $this->getAlignment($syntax[0]);
+                $result[$align2] = $this->getAlignment($syntax[1]);
             }
         }
         else{
