@@ -398,7 +398,7 @@ class columns_block {
         $result = array();
         $align1 = $this->getAlignStyle($syntax[0]);
         if (strlen($syntax) == 2) {
-            $align2 = $this->getAlignStyle($syntax{1});
+            $align2 = $this->getAlignStyle($syntax[1]);
             if ($align1 != $align2) {
                 $result[$align1] = $this->getAlignment($syntax{0});
                 $result[$align2] = $this->getAlignment($syntax{1});
