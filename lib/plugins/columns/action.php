@@ -405,7 +405,7 @@ class columns_block {
             }
         }
         else{
-            $result[$align1] = $this->getAlignment($syntax{0});
+            $result[$align1] = $this->getAlignment($syntax[0]);
         }
         return $result;
     }
