@@ -1,6 +1,6 @@
-=====Les réseaux de neuronne=====
+{{ :cpp:reseau_de_neurones.jpg?350 |}}
 
-Les réseaux de neuronnes sont principalements utilisés pour les données dites non-structurées comme les images, les sons ou encore les textes. Avant d'employer une de ces méthodes, il est nécessaire de bien avoir testé toutes les autres options de "Machin Learning" plus classique. En effet, à l'heure où j'écris cette documentation (30/03/2021), il est encore très difficile d'interpréter un réseau de neuronne et les résultats qui en découlent.
+Les réseaux de neuronnes sont principalements utilisés pour les données dites non-structurées comme les images, les sons ou encore les textes. Avant d'employer une de ces méthodes, il est nécessaire de bien avoir testé toutes les autres options de "Machine Learning" plus classique. En effet, à l'heure où j'écris cette documentation (30/03/2021), il est encore très difficile d'interpréter un réseau de neuronne et les résultats qui en découlent.
 
 =====Théorie=====
 
@@ -13,10 +13,28 @@ Le perceptron est l'unité élémentaire qui compose un réseau de neuronne. Pou
 {{ :cpp:perceptron.png?800 | Perceptron}}
 
 On peut décomposer l'image en différentes parties :
-  * Les données qui représentent les caractéristiques de chacune des classes que l'on veut essayer de prédire, (3, 4, 5, 1, 8), (4,6,8,2,4)....
+  * Les données qui représentent les caractéristiques de chacune des classes que l'on veut essayer de prédire, (3, 4, 5, 1, 8), (4,6,8,2,4).... 
+<alert warning>Notons qu'il est nécessaire que toutes les données qu'on présente en entrée aient la même forme. On ne peut pas donner au même réseau un vecteur de 5 pour de 6 caractéristiques.</alert>
   * Le perceptron et son expression n'est rien de plus qu'une régression linéaire. Il faut garder à l'esprit que le modèle cherche à ajuster les poids sur chacune des liaisons (w_1, w_2..., B).
   * L'activation qui est une fonction qui va prendre en entrée le résultat du perceptron (ici 0.2) et va ressortir une classe Paul ou Michel.
 
+<alert info>**<fs large>Info :</fs>** il est intéressant de noter que le modèle perceptron est équivalent à une régression logistique simple.</alert>
+
+Il s'agit du modèle initial mais il existe déjà plusieurs variations au niveau de la fonction d'activation. Nous allons décrire  mathématiquement celle qui est le plus souvent utilisées pour le perceptron.
+
+$$Sigmoid(x) = \frac{1}{1 + e^{-x}}$$
+
+Vous pouvez découvrir mathématiquement les différentes fonctions d'activation qui peuvent exister [[https://fr.wikipedia.org/wiki/Fonction_d%27activation| ici]].
 ====Réseau dense====
+
+{{ :cpp:dense_network.png?400 |}}
+
+$$Relu(x) =\left\{
+    \begin{array}{ll}
+        0 & \mbox{si } \ x<0 \\
+        x & \mbox{sinon.}
+    \end{array}
+\right.
+$$
 
 =====Implémentation=====
