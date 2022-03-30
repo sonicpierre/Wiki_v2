@@ -1,0 +1,54 @@
+
+<h2 class="sectionedit1" id="les_reseaux_de_neuronne">Les réseaux de neuronne</h2>
+<div class="level2">
+
+<p>
+Les réseaux de neuronnes sont principalements utilisés pour les données dites non-structurées comme les images, les sons ou encore les textes. Avant d&#039;employer une de ces méthodes, il est nécessaire de bien avoir testé toutes les autres options de “Machin Learning” plus classique. En effet, à l&#039;heure où j&#039;écris cette documentation (30/03/2021), il est encore très difficile d&#039;interpréter un réseau de neuronne et les résultats qui en découlent.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Les r\u00e9seaux de neuronne&quot;,&quot;hid&quot;:&quot;les_reseaux_de_neuronne&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-499&quot;} -->
+<h2 class="sectionedit2" id="theorie">Théorie</h2>
+<div class="level2">
+
+<p>
+Comme tous les modèles de Machine Learning, il est nécessaire de développer un peu de mathématiques pour bien comprendre le principe d&#039;un réseau de neuronne. 
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Th\u00e9orie&quot;,&quot;hid&quot;:&quot;theorie&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;500-684&quot;} -->
+<h3 class="sectionedit3" id="perceptron">Perceptron</h3>
+<div class="level3">
+
+<p>
+Le perceptron est l&#039;unité élémentaire qui compose un réseau de neuronne. Pour comprendre son fonctionnement imaginons que nous voulons faire la différence entre deux personnes Paul et Michel. Pour cela, nous avons un jeux de données comme toujours en Data Science qui recense pour chacun 5 données associées à leur prénom. Le réseau va donc fonctionner comme suit :
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=cpp%3Abasic_mnist&amp;media=cpp:perceptron.png" class="media" title="cpp:perceptron.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=36bd00&amp;media=cpp:perceptron.png" class="mediacenter" title=" Perceptron" alt=" Perceptron" width="800" /></a>
+</p>
+
+<p>
+On peut décomposer l&#039;image en différentes parties :
+</p>
+<ul>
+<li class="level1"><div class="li"> Les données qui représentent les caractéristiques de chacune des classes que l&#039;on veut essayer de prédire, (3, 4, 5, 1, 8), (4,6,8,2,4)….</div>
+</li>
+<li class="level1"><div class="li"> Le perceptron et son expression n&#039;est rien de plus qu&#039;une régression linéaire. Il faut garder à l&#039;esprit que le modèle cherche à ajuster les poids sur chacune des liaisons (w_1, w_2…, B).</div>
+</li>
+<li class="level1"><div class="li"> L&#039;activation qui est une fonction qui va prendre en entrée le résultat du perceptron (ici 0.2) et va ressortir une classe Paul ou Michel.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Perceptron&quot;,&quot;hid&quot;:&quot;perceptron&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;685-1671&quot;} -->
+<h3 class="sectionedit4" id="reseau_dense">Réseau dense</h3>
+<div class="level3">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;R\u00e9seau dense&quot;,&quot;hid&quot;:&quot;reseau_dense&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;1672-1694&quot;} -->
+<h2 class="sectionedit5" id="implementation">Implémentation</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Impl\u00e9mentation&quot;,&quot;hid&quot;:&quot;implementation&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;1695-&quot;} -->

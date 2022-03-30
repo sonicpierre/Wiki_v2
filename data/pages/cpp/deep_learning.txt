@@ -2,7 +2,7 @@
 
 ====Réseau dense simple====
 
-
+[[cpp:Basic MNIST| Basic MNIST]]
 ====Computer vision====
 
 

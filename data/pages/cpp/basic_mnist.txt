@@ -1,0 +1,22 @@
+=====Les réseaux de neuronne=====
+
+Les réseaux de neuronnes sont principalements utilisés pour les données dites non-structurées comme les images, les sons ou encore les textes. Avant d'employer une de ces méthodes, il est nécessaire de bien avoir testé toutes les autres options de "Machin Learning" plus classique. En effet, à l'heure où j'écris cette documentation (30/03/2021), il est encore très difficile d'interpréter un réseau de neuronne et les résultats qui en découlent.
+
+=====Théorie=====
+
+Comme tous les modèles de Machine Learning, il est nécessaire de développer un peu de mathématiques pour bien comprendre le principe d'un réseau de neuronne. 
+
+====Perceptron====
+
+Le perceptron est l'unité élémentaire qui compose un réseau de neuronne. Pour comprendre son fonctionnement imaginons que nous voulons faire la différence entre deux personnes Paul et Michel. Pour cela, nous avons un jeux de données comme toujours en Data Science qui recense pour chacun 5 données associées à leur prénom. Le réseau va donc fonctionner comme suit :
+
+{{ :cpp:perceptron.png?800 | Perceptron}}
+
+On peut décomposer l'image en différentes parties :
+  * Les données qui représentent les caractéristiques de chacune des classes que l'on veut essayer de prédire, (3, 4, 5, 1, 8), (4,6,8,2,4)....
+  * Le perceptron et son expression n'est rien de plus qu'une régression linéaire. Il faut garder à l'esprit que le modèle cherche à ajuster les poids sur chacune des liaisons (w_1, w_2..., B).
+  * L'activation qui est une fonction qui va prendre en entrée le résultat du perceptron (ici 0.2) et va ressortir une classe Paul ou Michel.
+
+====Réseau dense====
+
+=====Implémentation=====
