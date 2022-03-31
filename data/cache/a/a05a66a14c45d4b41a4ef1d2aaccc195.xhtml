@@ -47,7 +47,7 @@ On peut décomposer l&#039;image en différentes parties :
 </ul>
 
 <p>
-<div class='alert alert-info'><strong><span style="font-size:large;">Info :</span></strong> il est intéressant de noter que le modèle perceptron est équivalent à une régression logistique simple.</div>
+<div class='alert alert-info'><strong>Info</strong>: il est intéressant de noter que le modèle perceptron est équivalent à une régression logistique simple.</div>
 </p>
 
 <p>
@@ -59,11 +59,32 @@ $$Sigmoid(x) = \frac{1}{1 + e^{-x}}$$
 </p>
 
 <p>
-Vous pouvez découvrir mathématiquement d&#039;autre fonctions d&#039;activation qui peuvent être utilisées <a href="https://fr.wikipedia.org/wiki/Fonction_d%27activation" class="urlextern" title="https://fr.wikipedia.org/wiki/Fonction_d%27activation" rel="nofollow"> ici</a>. Nous savons maintenant comment un perceptron effectue une prédiction. Cependant, comment est-il possible d&#039;ajuster les poids de chacune des liaisons ? Pour cela, il faut calculer une erreur entre la valeur prédite et la valeur réelle, il existe différentes fonctions d&#039;erreur en fonction de la classe à prédire. Dans notre exemple nous avons une classe bianire, Paul ou Michel.
+Vous pouvez découvrir mathématiquement d&#039;autre fonctions d&#039;activation qui peuvent être utilisées <a href="https://fr.wikipedia.org/wiki/Fonction_d%27activation" class="urlextern" title="https://fr.wikipedia.org/wiki/Fonction_d%27activation" rel="nofollow"> ici</a>. 
+<br/>
+
+<br/>
+
+Nous savons maintenant comment un perceptron effectue une prédiction. Cependant, comment est-il possible d&#039;ajuster les poids de chacune des liaisons ? Pour cela, il faut calculer une erreur entre la valeur prédite et la valeur réelle, il existe différentes fonctions d&#039;erreur en fonction de la classe à prédire. Dans notre exemple, nous avons une classe binaire, Paul ou Michel qui peut se traduire par 1 ou 0. Nous allons donc utiliser l&#039;évaluation d&#039;erreur suivante :
+</p>
+
+<p>
+$$BinaryCrossEntropy = -\frac{1}{N} \sum^N_{i = 1} y_i * log(p(y_i)) + (1 -y_i) * log(1 - p(y_i))$$
+</p>
+
+<p>
+Cette fonction d&#039;erreur va ainsi prendre en compte la prédiction mais aussi la confiance dans cette prédiction ($p(y_i)$).
+</p>
+
+<p>
+<div class='alert alert-info'><strong>Info</strong>: Pour plus d&#039;informations sur cette fonction d&#039;erreur vous pouvez consulter cette article <a href="https://towardsdatascience.com/understanding-binary-cross-entropy-log-loss-a-visual-explanation-a3ac6025181a" class="urlextern" title="https://towardsdatascience.com/understanding-binary-cross-entropy-log-loss-a-visual-explanation-a3ac6025181a" rel="nofollow"> ici</a>.</div>
+</p>
+
+<p>
+Une fois cette erreur calculée, il est possible d&#039;appliquer une descente de gradient pour ajuster les poids. Nous n&#039;allons pas détailler ici les spécificités mathématiques de la descente de gradient mais vous pouvez les retrouver <a href="/doku.php?id=cpp:regression_supervisee" class="wikilink1" title="cpp:regression_supervisee"> ici</a>. Vous savez maintenant comment fonctionne une cellule unitaire d&#039;un réseau de neuronne.
 </p>
 
 </div>
-<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Perceptron&quot;,&quot;hid&quot;:&quot;perceptron&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;727-2880&quot;} -->
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Perceptron&quot;,&quot;hid&quot;:&quot;perceptron&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;727-3793&quot;} -->
 <h3 class="sectionedit3" id="reseau_dense">Réseau dense</h3>
 <div class="level3">
 
@@ -82,9 +103,14 @@ $$
 </p>
 
 </div>
-<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;R\u00e9seau dense&quot;,&quot;hid&quot;:&quot;reseau_dense&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;2881-3065&quot;} -->
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;R\u00e9seau dense&quot;,&quot;hid&quot;:&quot;reseau_dense&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;3794-3978&quot;} -->
 <h2 class="sectionedit4" id="implementation">Implémentation</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Impl\u00e9mentation&quot;,&quot;hid&quot;:&quot;implementation&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;3066-&quot;} -->
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Impl\u00e9mentation&quot;,&quot;hid&quot;:&quot;implementation&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;3979-4005&quot;} -->
+<h2 class="sectionedit5" id="courbes_entrainement">Courbes entraînement</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Courbes entra\u00eenement&quot;,&quot;hid&quot;:&quot;courbes_entrainement&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;4006-&quot;} -->

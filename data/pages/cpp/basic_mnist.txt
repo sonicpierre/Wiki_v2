@@ -19,13 +19,24 @@ On peut décomposer l'image en différentes parties :
   * Le perceptron et son expression n'est rien de plus qu'une régression linéaire. Il faut garder à l'esprit que le modèle cherche à ajuster les poids sur chacune des liaisons (w_1, w_2..., B).
   * L'activation qui est une fonction qui va prendre en entrée le résultat du perceptron (ici 0.2) et va ressortir une classe Paul ou Michel.
 
-<alert info>**<fs large>Info :</fs>** il est intéressant de noter que le modèle perceptron est équivalent à une régression logistique simple.</alert>
+<alert info>**Info**: il est intéressant de noter que le modèle perceptron est équivalent à une régression logistique simple.</alert>
 
 Il s'agit du modèle initial mais il existe déjà plusieurs variations au niveau de la fonction d'activation. Nous allons décrire  mathématiquement celle qui est le plus souvent utilisées pour le perceptron.
 
 $$Sigmoid(x) = \frac{1}{1 + e^{-x}}$$
 
-Vous pouvez découvrir mathématiquement d'autre fonctions d'activation qui peuvent être utilisées [[https://fr.wikipedia.org/wiki/Fonction_d%27activation| ici]]. Nous savons maintenant comment un perceptron effectue une prédiction. Cependant, comment est-il possible d'ajuster les poids de chacune des liaisons ? Pour cela, il faut calculer une erreur entre la valeur prédite et la valeur réelle, il existe différentes fonctions d'erreur en fonction de la classe à prédire. Dans notre exemple nous avons une classe bianire, Paul ou Michel.
+Vous pouvez découvrir mathématiquement d'autre fonctions d'activation qui peuvent être utilisées [[https://fr.wikipedia.org/wiki/Fonction_d%27activation| ici]]. 
+\\
+\\
+Nous savons maintenant comment un perceptron effectue une prédiction. Cependant, comment est-il possible d'ajuster les poids de chacune des liaisons ? Pour cela, il faut calculer une erreur entre la valeur prédite et la valeur réelle, il existe différentes fonctions d'erreur en fonction de la classe à prédire. Dans notre exemple, nous avons une classe binaire, Paul ou Michel qui peut se traduire par 1 ou 0. Nous allons donc utiliser l'évaluation d'erreur suivante :
+
+$$BinaryCrossEntropy = -\frac{1}{N} \sum^N_{i = 1} y_i * log(p(y_i)) + (1 -y_i) * log(1 - p(y_i))$$
+
+Cette fonction d'erreur va ainsi prendre en compte la prédiction mais aussi la confiance dans cette prédiction ($p(y_i)$).
+
+<alert info>**Info**: Pour plus d'informations sur cette fonction d'erreur vous pouvez consulter cette article [[https://towardsdatascience.com/understanding-binary-cross-entropy-log-loss-a-visual-explanation-a3ac6025181a| ici]].</alert>
+
+Une fois cette erreur calculée, il est possible d'appliquer une descente de gradient pour ajuster les poids. Nous n'allons pas détailler ici les spécificités mathématiques de la descente de gradient mais vous pouvez les retrouver [[cpp:Régression supervisée | ici]]. Vous savez maintenant comment fonctionne une cellule unitaire d'un réseau de neuronne.
 ====Réseau dense====
 
 {{ :cpp:dense_network.png?400 |}}
@@ -39,3 +50,5 @@ $$Relu(x) =\left\{
 $$
 
 =====Implémentation=====
+
+=====Courbes entraînement=====
