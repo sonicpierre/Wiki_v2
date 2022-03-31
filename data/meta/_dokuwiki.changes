@@ -39,3 +39,8 @@
 1648659245	127.0.0.1	E	cpp:basic_mnist	pierrevirgaux	[Réseau dense] 		128
 1648659300	127.0.0.1	E	cpp:basic_mnist	pierrevirgaux	[Perceptron] 		5
 1648659398	127.0.0.1	E	cpp:basic_mnist	pierrevirgaux	[Perceptron] 		166
+1648659489	127.0.0.1	E	cpp:basic_mnist	pierrevirgaux			37
+1648659530	127.0.0.1	E	cpp:basic_mnist	pierrevirgaux	[Perceptron] 		0
+1648659694	127.0.0.1	E	cpp:basic_mnist	pierrevirgaux	[Perceptron] 		83
+1648659908	127.0.0.1	E	cpp:basic_mnist	pierrevirgaux	[Perceptron] 		300
+1648659932	127.0.0.1	E	cpp:basic_mnist	pierrevirgaux	[Perceptron] 		1

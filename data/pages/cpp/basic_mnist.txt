@@ -1,3 +1,4 @@
+[[cpp:Deep Learning| Deep Learning]]
 {{ :cpp:reseau_de_neurones.jpg?350 |}}
 
 Les réseaux de neuronnes sont principalements utilisés pour les données dites non-structurées comme les images, les sons ou encore les textes. Avant d'employer une de ces méthodes, il est nécessaire de bien avoir testé toutes les autres options de "Machine Learning" plus classique. En effet, à l'heure où j'écris cette documentation (30/03/2021), il est encore très difficile d'interpréter un réseau de neuronne et les résultats qui en découlent.
@@ -24,7 +25,7 @@ Il s'agit du modèle initial mais il existe déjà plusieurs variations au nivea
 
 $$Sigmoid(x) = \frac{1}{1 + e^{-x}}$$
 
-Vous pouvez découvrir mathématiquement les différentes fonctions d'activation qui peuvent exister [[https://fr.wikipedia.org/wiki/Fonction_d%27activation| ici]].
+Vous pouvez découvrir mathématiquement d'autre fonctions d'activation qui peuvent être utilisées [[https://fr.wikipedia.org/wiki/Fonction_d%27activation| ici]]. Nous savons maintenant comment un perceptron effectue une prédiction. Cependant, comment est-il possible d'ajuster les poids de chacune des liaisons ? Pour cela, il faut calculer une erreur entre la valeur prédite et la valeur réelle, il existe différentes fonctions d'erreur en fonction de la classe à prédire. Dans notre exemple nous avons une classe bianire, Paul ou Michel.
 ====Réseau dense====
 
 {{ :cpp:dense_network.png?400 |}}
